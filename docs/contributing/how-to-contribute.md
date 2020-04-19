@@ -34,6 +34,6 @@ The Blitzjs.com website and documentation repo also has issues with [`ready to w
 - Improved logging (i.e. more clear, more beautiful)
 - Educational content like blogs, videos, courses
 
-If there's some other way you'd like to contribute, just ask us about it in slack!
+If there's some other way you'd like to contribute, ask us about it in slack!
 
 After you contribute in any way, please add yourself as a contributor via the [@all-contributors bot](https://allcontributors.org/docs/en/bot/usage)!

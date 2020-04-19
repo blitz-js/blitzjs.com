@@ -7,7 +7,12 @@
 
 module.exports = {
   someSidebar: {
+    Introduction: ["introduction/manifesto"],
     Basics: ["basics/getting-started"],
-    CLI: ["cli/commands"]
+    CLI: ["cli/commands"],
+    Contributing: [
+      "contributing/how-to-contribute",
+      "contributing/code-of-conduct"
+    ]
   }
 };

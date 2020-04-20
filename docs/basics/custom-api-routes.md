@@ -1,0 +1,12 @@
+---
+id: custom-api-routes
+title: Custom API Routes
+sidebar_label: Custom API Routes
+---
+
+### Custom API Routes
+
+Blitz.js custom API routes are exactly the same as Next.js custom API routes. If you need, read [the Next.js API route documentation](https://nextjs.org/docs/api-routes/introduction)
+
+- Unlike Next.js, your `api/` folder must be a sibling of `pages/` instead of being nested inside.
+- All React components inside an `api/` folder are accessible at a URL corresponding to it's path inside `api/`. So `app/projects/api/webhook.tsx` will be at `localhost:3000/api/webhook`.

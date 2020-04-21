@@ -2,6 +2,10 @@
   "name": "blitzjs-com",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "yarn": "^1.19.1",
+    "node": ">=12.16.1"
+  },
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -30,9 +34,9 @@
   },
   "devDependencies": {
     "alex": "^8.1.1",
-    "husky": "4.2.3",
-    "prettier": "1.19.1",
-    "pretty-quick": "2.0.1"
+    "husky": "^4.2.3",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1"
   },
   "husky": {
     "hooks": {

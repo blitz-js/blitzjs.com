@@ -19,10 +19,9 @@ module.exports = {
           label: "Docs",
           position: "left"
         },
-        { to: "blog", label: "Blog", position: "left" },
-        { to: "vision", page: "vision", label: "Vision", position: "left" },
+        { to: "docs/introduction/manifesto", page: "Manifesto", label: "Manifesto", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/blitz-js/blitz",
           label: "GitHub",
           position: "right"
         },

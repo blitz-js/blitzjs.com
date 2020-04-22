@@ -8,11 +8,12 @@
 module.exports = {
   someSidebar: {
     Introduction: ["introduction/manifesto"],
-    Basics: ["basics/getting-started"],
+    Basics: ["basics/getting-started", "basics/queries-and-mutations"],
+    Advanced: ["advanced/rpc-specification"],
     CLI: ["cli/commands"],
     Contributing: [
       "contributing/how-to-contribute",
-      "contributing/code-of-conduct"
-    ]
-  }
+      "contributing/code-of-conduct",
+    ],
+  },
 };

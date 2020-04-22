@@ -58,7 +58,7 @@ module.exports = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus"
+              href: "https://github.com/blitz-js/blitz"
             },
             {
               label: "Twitter",

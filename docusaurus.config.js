@@ -48,22 +48,14 @@ module.exports = {
           title: "Community",
           items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus"
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus"
+              label: "Slack",
+              href: "https://design.us4.list-manage.com/track/click?u=aeb422edfecb0e2dcaf70d12d&id=48a86b9bd2&e=cb4d11997f"
             }
           ]
         },
         {
           title: "Social",
           items: [
-            {
-              label: "Blog",
-              to: "blog"
-            },
             {
               label: "GitHub",
               href: "https://github.com/facebook/docusaurus"
@@ -75,7 +67,7 @@ module.exports = {
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+      copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`
     }
   },
   presets: [

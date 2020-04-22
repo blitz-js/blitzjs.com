@@ -49,7 +49,7 @@ module.exports = {
           items: [
             {
               label: "Slack",
-              href: "https://design.us4.list-manage.com/track/click?u=aeb422edfecb0e2dcaf70d12d&id=48a86b9bd2&e=cb4d11997f"
+              href: "https://slack.blitzjs.com"
             }
           ]
         },
@@ -62,7 +62,7 @@ module.exports = {
             },
             {
               label: "Twitter",
-              href: "https://twitter.com/docusaurus"
+              href: "https://twitter.com/blitz_js"
             }
           ]
         }

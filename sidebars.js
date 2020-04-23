@@ -8,11 +8,19 @@
 module.exports = {
   someSidebar: {
     Introduction: ["introduction/manifesto"],
-    Basics: ["basics/getting-started"],
+    Basics: [
+      "basics/getting-started",
+      "basics/pages-and-routing",
+      "basics/queries-and-mutations",
+      "basics/custom-api-routes",
+      "basics/deploying",
+      "basics/webpack-config"
+    ],
     CLI: ["cli/commands"],
     Contributing: [
       "contributing/how-to-contribute",
-      "contributing/code-of-conduct"
+      "contributing/code-of-conduct",
+      "contributing/future-of-blitz"
     ]
   }
 };

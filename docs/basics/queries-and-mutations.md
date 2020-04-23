@@ -61,7 +61,7 @@ function Product() {
   return <div>{product.name}</div>;
 }
 
-export default function () {
+export default function App() {
   return (
     <div>
       <ErrorBoundary
@@ -76,52 +76,9 @@ export default function () {
 }
 ```
 
-## Queries
-
-```js
-import { UserContext } from "@blitzjs/core/types";
-import { Product, FindOneProductArgs } from "app/product/ProductModel";
-
-export default async function getProduct(
-  args: FindOneProductArgs,
-  user?: UserContext
-) {
-  // Can do any pre-processing here or trigger events
-
-  const product = await Product.user(user).findOne(args);
-
-  // Can do any post-processing here or trigger events
-
-  return product;
-}
-```
-
-## Mutations
-
-```js
-import { UserContext } from "@blitzjs/core/types";
-import { Product, ProductUpdateInput } from "app/product/ProductModel";
-
-export default async function updateProduct(
-  data: ProductUpdateInput,
-  user?: UserContext
-) {
-  // Can do any pre-processing here or trigger events
-
-  const product = await Product.user(user).update({
-    where: { id: data.id },
-    data,
-  });
-
-  // Can do any post-processing here or trigger events
-
-  return product;
-}
-```
+### Queries On the Server
 
 **Queries and Mutations are transformed into RPC calls when the application is built. See the [RPC Specification](../advanced/rpc-specification) to learn more**
-
-### Queries On the Server
 
 In `getStaticProps`, a query function can be called directly without `useQuery`
 
@@ -133,7 +90,7 @@ export const getStaticProps = async (context) => {
   return { props: { product } };
 };
 
-export default function ({ product }) {
+export default function ProductListing({ product }) {
   return <div>{product.name}</div>;
 }
 ```
@@ -149,7 +106,7 @@ export const getServerSideProps = async ({params, req, res}) => {
   return {props: {product}}
 }
 
-export default function({product}) {
+export default function ProductListing({ product }) {
   return <div>{product.name}</div>
 }
 ```
@@ -163,26 +120,27 @@ Mutations are called directly, like a regular asynchronous function.
 At build time, the direct function import is swapped out for a function that executes a network call to run the mutation server-side.
 
 ```tsx
-import { useQuery } from 'blitz'
-import getProduct from '/app/products/queries/getProduct'
-import updateProduct from '/app/products/mutations/updateProduct'
-import { Formik } from 'formik';
+import { useQuery } from "blitz";
+import getProduct from "/app/products/queries/getProduct";
+import updateProduct from "/app/products/mutations/updateProduct";
+import { Formik } from "formik";
 
-function (props) {
-  const [product] = useQuery(getProduct, {where: {id: props.id}})
+export default function ProductEditForm(props) {
+  const [product] = useQuery(getProduct, { where: { id: props.id } });
   return (
     <Formik
       initialValues={product}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values)
+          const product = await updateProduct(values);
         } catch (error) {
-          alert('Error saving product')
+          alert("Error saving product");
         }
-      }}>
+      }}
+    >
       {/* ... */}
     </Formik>
-  )
+  );
 }
 ```
 

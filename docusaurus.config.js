@@ -1,96 +1,96 @@
 module.exports = {
-  title: "Blitz JS ⚡️",
-  tagline: "Focus on what matters, let Blitz handle the rest!",
-  url: "https://blitzjs.com",
-  baseUrl: "/",
-  favicon: "img/favicon.ico",
-  organizationName: "blitzjs", // Usually your GitHub org/user name.
-  projectName: "blitzjs.com", // Usually your repo name.
+  title: 'Blitz JS',
+  tagline: 'Focus on what matters, let Blitz handle the rest!',
+  url: 'https://blitzjs.com',
+  baseUrl: '/',
+  favicon: 'img/favicons/128x128-Favicon-Purple.png',
+  organizationName: 'blitzjs', // Usually your GitHub org/user name.
+  projectName: 'blitzjs.com', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "Blitz JS ⚡️",
+      title: 'Blitz JS',
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg"
+        alt: 'My Site Logo',
+        src: 'img/logo.svg',
       },
       links: [
         {
-          to: "docs/basics/getting-started",
-          label: "Docs",
-          position: "left"
+          to: 'docs/basics/getting-started',
+          label: 'Docs',
+          position: 'left',
         },
-        { to: "blog", label: "Blog", position: "left" },
-        { to: "vision", page: "vision", label: "Vision", position: "left" },
+        { to: 'blog', label: 'Blog', position: 'left' },
+        { to: 'vision', page: 'vision', label: 'Vision', position: 'left' },
         {
-          href: "https://github.com/facebook/docusaurus",
-          label: "GitHub",
-          position: "right"
+          href: 'https://github.com/facebook/docusaurus',
+          label: 'GitHub',
+          position: 'right',
         },
-        {}
-      ]
+        {},
+      ],
     },
     footer: {
-      style: "dark",
+      style: 'dark',
       links: [
         {
-          title: "Docs",
+          title: 'Docs',
           items: [
             {
-              label: "Getting Started",
-              to: "docs/basics/getting-started"
+              label: 'Getting Started',
+              to: 'docs/basics/getting-started',
             },
             {
-              label: "Versions",
-              to: "versions"
-            }
-          ]
+              label: 'Versions',
+              to: 'versions',
+            },
+          ],
         },
         {
-          title: "Community",
+          title: 'Community',
           items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus"
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
             },
             {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus"
-            }
-          ]
+              label: 'Discord',
+              href: 'https://discordapp.com/invite/docusaurus',
+            },
+          ],
         },
         {
-          title: "Social",
+          title: 'Social',
           items: [
             {
-              label: "Blog",
-              to: "blog"
+              label: 'Blog',
+              to: 'blog',
             },
             {
-              label: "GitHub",
-              href: "https://github.com/facebook/docusaurus"
+              label: 'GitHub',
+              href: 'https://github.com/facebook/docusaurus',
             },
             {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus"
-            }
-          ]
-        }
+              label: 'Twitter',
+              href: 'https://twitter.com/docusaurus',
+            },
+          ],
+        },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
-    }
+      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+    },
   },
   presets: [
     [
-      "@docusaurus/preset-classic",
+      '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/"
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'https://github.com/blitz-js/blitzjs.com/tree/master/',
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css")
-        }
-      }
-    ]
-  ]
+          customCss: require.resolve('./src/css/custom.css'),
+        },
+      },
+    ],
+  ],
 };

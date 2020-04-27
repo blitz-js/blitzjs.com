@@ -33,3 +33,8 @@
   height: 200px;
   width: 200px;
 }
+
+.videoSection {
+  text-align: center;
+  margin: 3rem auto;
+}

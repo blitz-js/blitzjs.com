@@ -7,6 +7,10 @@ module.exports = {
   organizationName: "blitzjs", // Usually your GitHub org/user name.
   projectName: "blitzjs.com", // Usually your repo name.
   themeConfig: {
+    algolia: {
+      apiKey: 'c4db860ae4162be48d4c867e33edcaa2',
+      indexName: 'blitzjs',
+    },
     navbar: {
       title: "Blitz JS ⚡️",
       logo: {

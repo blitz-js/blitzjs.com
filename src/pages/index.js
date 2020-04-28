@@ -95,7 +95,7 @@ function Home() {
       </main>
       <div className={classnames("container", styles.videoSection)}>
         <h1>Alpha Walkthrough of Blitz</h1>
-        <VideoPlayer url="/static/video/alpha_walkthrough.mp4" />
+        <VideoPlayer url={useBaseUrl("/static/video/alpha_walkthrough.mp4")} />
       </div>
     </Layout>
   );

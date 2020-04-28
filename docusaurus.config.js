@@ -23,10 +23,9 @@ module.exports = {
           label: "Docs",
           position: "left"
         },
-        { to: "blog", label: "Blog", position: "left" },
-        { to: "vision", page: "vision", label: "Vision", position: "left" },
+        { to: "docs/introduction/manifesto", page: "Manifesto", label: "Manifesto", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/blitz-js/blitz",
           label: "GitHub",
           position: "right"
         },
@@ -53,12 +52,8 @@ module.exports = {
           title: "Community",
           items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus"
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus"
+              label: "Slack",
+              href: "https://slack.blitzjs.com"
             }
           ]
         },
@@ -66,21 +61,17 @@ module.exports = {
           title: "Social",
           items: [
             {
-              label: "Blog",
-              to: "blog"
-            },
-            {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus"
+              href: "https://github.com/blitz-js/blitz"
             },
             {
               label: "Twitter",
-              href: "https://twitter.com/docusaurus"
+              href: "https://twitter.com/blitz_js"
             }
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+      copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`
     }
   },
   presets: [

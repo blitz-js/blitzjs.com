@@ -61,11 +61,11 @@ function Product() {
   return <div>{product.name}</div>;
 }
 
-export default function() {
+export default function App() {
   return (
     <div>
       <ErrorBoundary
-        fallback={error => <div>Error: {JSON.stringify(error)}</div>}
+        fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}
       >
         <Suspense fallback={<div>Loading...</div>}>
           <Product />
@@ -76,19 +76,21 @@ export default function() {
 }
 ```
 
-#### Queries On the Server
+### Queries On the Server
+
+**Queries and Mutations are transformed into RPC calls when the application is built. See the [RPC Specification](../advanced/rpc-specification) to learn more**
 
 In `getStaticProps`, a query function can be called directly without `useQuery`
 
 ```tsx
 import getProduct from "/app/products/queries/getProduct";
 
-export const getStaticProps = async context => {
+export const getStaticProps = async (context) => {
   const product = await getProduct({ where: { id: context.params?.id } });
   return { props: { product } };
 };
 
-export default function({ product }) {
+export default function ProductListing({ product }) {
   return <div>{product.name}</div>;
 }
 ```
@@ -104,7 +106,7 @@ export const getServerSideProps = async ({params, req, res}) => {
   return {props: {product}}
 }
 
-export default function({product}) {
+export default function ProductListing({ product }) {
   return <div>{product.name}</div>
 }
 ```
@@ -118,26 +120,27 @@ Mutations are called directly, like a regular asynchronous function.
 At build time, the direct function import is swapped out for a function that executes a network call to run the mutation server-side.
 
 ```tsx
-import { useQuery } from 'blitz'
-import getProduct from '/app/products/queries/getProduct'
-import updateProduct from '/app/products/mutations/updateProduct'
-import { Formik } from 'formik';
+import { useQuery } from "blitz";
+import getProduct from "/app/products/queries/getProduct";
+import updateProduct from "/app/products/mutations/updateProduct";
+import { Formik } from "formik";
 
-function (props) {
-  const [product] = useQuery(getProduct, {where: {id: props.id}})
+export default function ProductEditForm(props) {
+  const [product] = useQuery(getProduct, { where: { id: props.id } });
   return (
     <Formik
       initialValues={product}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values)
+          const product = await updateProduct(values);
         } catch (error) {
-          alert('Error saving product')
+          alert("Error saving product");
         }
-      }}>
+      }}
+    >
       {/* ... */}
     </Formik>
-  )
+  );
 }
 ```
 

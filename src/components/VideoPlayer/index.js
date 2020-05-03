@@ -3,6 +3,8 @@ import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import ReactPlayer from "react-player";
 import "./video-player.css";
 
+// Video player component we can pass a url to using the react-player library.
+// control prop determinse whether video player controls will be displayed.
 const VideoPlayer = ({ url }) => {
   if (ExecutionEnvironment.canUseDOM) {
     return (

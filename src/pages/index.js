@@ -5,6 +5,7 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
+import VideoPlayer from "../components/VideoPlayer";
 
 const features = [
   {
@@ -15,7 +16,7 @@ const features = [
         Docusaurus was designed from the ground up to be easily installed and
         used to get your website up and running quickly.
       </>
-    )
+    ),
   },
   {
     title: <>Focus on What Matters</>,
@@ -25,7 +26,7 @@ const features = [
         Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
         ahead and move your docs into the <code>docs</code> directory.
       </>
-    )
+    ),
   },
   {
     title: <>Powered by React</>,
@@ -35,8 +36,8 @@ const features = [
         Extend or customize your website layout by reusing React. Docusaurus can
         be extended while reusing the same header and footer.
       </>
-    )
-  }
+    ),
+  },
 ];
 
 function Feature({ imageUrl, title, description }) {
@@ -92,6 +93,10 @@ function Home() {
           </section>
         )}
       </main>
+      <div className={classnames("container", styles.videoSection)}>
+        <h1>Alpha Walkthrough of Blitz</h1>
+        <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
+      </div>
     </Layout>
   );
 }

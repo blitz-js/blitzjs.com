@@ -92,8 +92,8 @@ function Footer() {
           </div>
         )}
         {(logo || copyright) && (
-          <div className="text--center">
-            <div className="footer__links footer-vercel">
+          <div className="text--left">
+            <div className="footer-vercel">
               <a href="https://vercel.com/?utm_source=blitzjs">
                 Hosted on⠀
                 <svg

@@ -14,7 +14,8 @@ module.exports = {
     announcementBar: {
       id: "progress",
       content: "Site Still In Progress",
-      backgroundColor: "rgb(26, 136, 112)",
+      backgroundColor: "#303846",
+      textColor: "#ffffff",
     },
     navbar: {
       title: "Blitz JS ⚡️",

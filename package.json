@@ -19,7 +19,8 @@
     "classnames": "^2.2.6",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-player": "^2.0.0"
+    "react-player": "^2.0.0",
+    "theme-ui": "^0.3.1"
   },
   "resolutions": {
     "babel-plugin-dynamic-import-node": "2.3.0"

@@ -14,13 +14,14 @@ module.exports = {
       "basics/queries-and-mutations",
       "basics/custom-api-routes",
       "basics/deploying",
-      "basics/webpack-config"
+      "basics/webpack-config",
     ],
+    Advanced: ["advanced/rpc-specification"],
     CLI: ["cli/commands"],
     Contributing: [
       "contributing/how-to-contribute",
       "contributing/code-of-conduct",
-      "contributing/future-of-blitz"
-    ]
-  }
+      "contributing/future-of-blitz",
+    ],
+  },
 };

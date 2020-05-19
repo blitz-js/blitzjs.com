@@ -5,6 +5,7 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
+import VideoPlayer from "../components/VideoPlayer";
 
 const features = [
   "Built on Next.js",
@@ -53,6 +54,10 @@ function Home() {
           <div className="col col--6">
             <h2>Alpha Walktrough of Blitz</h2>
             {/* TODO: add video */}
+            {/* <div className={classnames("container", styles.videoSection)}>
+        <h1>Alpha Walkthrough of Blitz</h1>
+        <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
+      </div> */}
             <div style={{ width: "100%", position: "relative", paddingTop: `${720 / 1152 * 100}%`, color: "gray", backgroundColor: "lightgray" }}>
               <span style={{ position: "absolute", top: "45%", left: "35%" }}>TODO: add video</span>
             </div>
@@ -106,6 +111,10 @@ function Home() {
           </div>
         </div>
       </main>
+      <div className={classnames("container", styles.videoSection)}>
+        <h1>Alpha Walkthrough of Blitz</h1>
+        <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
+      </div>
     </Layout>
   );
 }

@@ -17,7 +17,7 @@ module.exports = {
       "basics/webpack-config",
     ],
     Advanced: ["advanced/rpc-specification"],
-    CLI: ["cli/commands"],
+    CLI: ["cli/introduction", "cli/commands"],
     Contributing: [
       "contributing/how-to-contribute",
       "contributing/code-of-conduct",

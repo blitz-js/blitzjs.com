@@ -1,0 +1,13 @@
+.newsletter-form {
+  display: flex;
+  align-items: center;
+}
+
+.newsletter-form .input {
+  border: 0;
+  flex: 1;
+  line-height: 24px;
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+}

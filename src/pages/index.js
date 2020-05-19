@@ -6,6 +6,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
 import VideoPlayer from "../components/VideoPlayer";
+import NewsletterForm from "../components/NewsletterForm";
 
 const features = [
   "Built on Next.js",
@@ -50,20 +51,10 @@ function Home() {
       <main className="container">
 
         {/* Walktrough video and About section */}
-        <div className="row padding-vert--xl">
-          <div className="col col--6">
-            <h2>Alpha Walktrough of Blitz</h2>
-            {/* TODO: add video */}
-            {/* <div className={classnames("container", styles.videoSection)}>
-        <h1>Alpha Walkthrough of Blitz</h1>
-        <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
-      </div> */}
-            <div style={{ width: "100%", position: "relative", paddingTop: `${720 / 1152 * 100}%`, color: "gray", backgroundColor: "lightgray" }}>
-              <span style={{ position: "absolute", top: "45%", left: "35%" }}>TODO: add video</span>
-            </div>
-          </div>
-          <div className="col col--5 col--offset-1">
-            <h2>About {siteConfig.title}</h2>
+        <div className="padding-vert--xl">
+
+          <div className="">
+            <h1>About {siteConfig.title}</h1>
             <p>
               Blitz brings back the <b>simplicity and conventions</b> of server-rendered frameworks like Ruby on Rails while preserving everything we love about React and client-side rendering!
             </p>
@@ -79,7 +70,8 @@ function Home() {
         {/* Features */}
         <div className="padding-vert--md">
           <h1 className="text--center">Features</h1>
-          <div className={classnames("row padding-vert--md", styles.features)}>
+          <h2 className="text--center">All full-stack features Blitz offers you out of the box!</h2>
+          <div className="row padding-vert--md">
             {features.map((feature) => {
               return (
                 <div className="col col--6 padding-vert--sm">
@@ -90,31 +82,30 @@ function Home() {
           </div>
         </div>
 
+        {/* Alpha walktrough */}
+        <div className="margin-vert--xl">
+          <h1 className="text--center">See Blitz in action!</h1>
+          <h2 className="text--center">Learn what Blitz has to offer in this alpha walktrough video.</h2>
+
+          <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
+
+        </div>
+
         {/* Newsletter sign-up */}
         <div className="margin-vert--xl padding-vert--lg hero hero--primary">
           <div className="container">
-            <div className="row">
-              <div className="col col--7">
-                <h2>Sign up for our newsletter</h2>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni a maxime quae, nisi laboriosam totam.</p>
+            <div className="row align-center">
+              <div className="col col--6">
+                <h2><span role="img" aria-label="rocket" className="margin-right--sm">🚀</span> Join the mailing list</h2>
+                <p>Want to receive the latest news and updates from the Blitz team? Sign up for our newsletter!</p>
               </div>
-              <div className="col col--4 col--offset-1">
-                {/* TODO: 1. style this form so it looks cool 2. Integrate with Mailchimp */}
-                <form>
-                  <input aria-label="Email address" type="email" required className="input" placeholder="Enter your email" />
-                  <div className="">
-                  <button class="button button--secondary button--undefined" type="submit">Subscribe</button>
-                  </div>
-                </form>
+              <div className="col col--6">
+                <NewsletterForm />
               </div>
             </div>
           </div>
         </div>
       </main>
-      <div className={classnames("container", styles.videoSection)}>
-        <h1>Alpha Walkthrough of Blitz</h1>
-        <VideoPlayer url={useBaseUrl("/video/alpha_walkthrough.mp4")} />
-      </div>
     </Layout>
   );
 }

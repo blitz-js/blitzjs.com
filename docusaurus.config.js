@@ -1,47 +1,53 @@
 module.exports = {
-  title: "Blitz JS ⚡️",
+  title: "Blitz JS",
   tagline: "Focus on what matters, let Blitz handle the rest!",
   url: "https://blitzjs.com",
   baseUrl: "/",
-  favicon: "img/favicon.ico",
+  favicon: "img/favicons/128x128-Favicon-Purple.png",
   organizationName: "blitzjs", // Usually your GitHub org/user name.
   projectName: "blitzjs.com", // Usually your repo name.
   themeConfig: {
     algolia: {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
-      indexName: "blitzjs",
+      indexName: "blitzjs"
     },
     announcementBar: {
       id: "progress",
       content: "🚧Excuse the mess — design in progress! 🚧",
       backgroundColor: "#303846",
-      textColor: "#ffffff",
+      textColor: "#ffffff"
     },
     navbar: {
-      title: "Blitz JS ⚡️",
+      title: "Blitz JS",
       logo: {
         alt: "My Site Logo",
-        src: "img/logo.svg",
+        src: "img/logo.svg"
       },
       links: [
         {
           to: "docs/basics/getting-started",
           label: "Docs",
-          position: "left",
+          position: "left"
         },
         {
           to: "docs/introduction/manifesto",
           page: "Manifesto",
           label: "Manifesto",
-          position: "left",
+          position: "left"
+        },
+        {
+          to: "docs/introduction/manifesto",
+          page: "Manifesto",
+          label: "Manifesto",
+          position: "left"
         },
         {
           href: "https://github.com/blitz-js/blitz",
           label: "GitHub",
-          position: "right",
+          position: "right"
         },
-        {},
-      ],
+        {}
+      ]
     },
     footer: {
       style: "dark",
@@ -51,39 +57,39 @@ module.exports = {
           items: [
             {
               label: "Getting Started",
-              to: "docs/basics/getting-started",
+              to: "docs/basics/getting-started"
             },
             {
               label: "Versions",
-              to: "versions",
-            },
-          ],
+              to: "versions"
+            }
+          ]
         },
         {
           title: "Community",
           items: [
             {
               label: "Slack",
-              href: "https://slack.blitzjs.com",
-            },
-          ],
+              href: "https://slack.blitzjs.com"
+            }
+          ]
         },
         {
           title: "Social",
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/blitz-js/blitz",
+              href: "https://github.com/blitz-js/blitz"
             },
             {
               label: "Twitter",
-              href: "https://twitter.com/blitz_js",
-            },
-          ],
-        },
+              href: "https://twitter.com/blitz_js"
+            }
+          ]
+        }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`,
-    },
+      copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`
+    }
   },
   presets: [
     [
@@ -91,12 +97,12 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/",
+          editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/"
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      },
-    ],
-  ],
+          customCss: require.resolve("./src/css/custom.css")
+        }
+      }
+    ]
+  ]
 };

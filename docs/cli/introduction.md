@@ -1,0 +1,25 @@
+---
+id: introduction
+title: Introduction to the Blitz CLI
+sidebar_label: Introduction
+---
+
+The Blitz CLI is your single access point for interacting with your app, from database management to code generation. It is opinionated and will guide you towards best practices, while flexible enough to allow you to build your project however you'd like.
+
+### Installation
+
+You've likely already interacted with the Blitz CLI when setting up your app. We recommend installing Blitz globally to ensure that you can quickly run Blitz commands on-demand:
+
+```bash
+# Yarn
+yarn global add blitz
+
+# npm
+npm i -g blitz
+```
+
+We do not recommend running Blitz via [`npx`](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner) for anything other than creating your first project. Because `npx` will always use the latest version of packages, every release of Blitz will be used immediately. This could introduce breaking changes in code generation, server, or core code. Using a global installation gives your project a chance to upgrade on your own schedule.
+
+### Learn More About the CLI
+
+In the following sections you can learn about all of the CLI commands, as well as take a deep dive into more complex concepts like code generation. For now, we recommend you start with reading about [the CLI commands](commands.md). The examples in the following documentation will all revolve around an example task manager app to avoid contrived examples.

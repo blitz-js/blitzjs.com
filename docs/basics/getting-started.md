@@ -50,7 +50,7 @@ model Task {
   id          Int      @default(autoincrement()) @id
   name        String
   project     Project  @relation(fields: [projectId], references: [id])
-  projectId   Id
+  projectId   Int
 }
 ```
 

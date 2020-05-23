@@ -4,16 +4,23 @@
  * work well for content-centric websites.
  */
 
+@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@200;400;600&display=swap");
+
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-primary: #6700eb;
+  --ifm-color-primary-dark: #5d00d3;
+  --ifm-color-primary-darker: #5800c8;
+  --ifm-color-primary-darkest: #4800a5;
+  --ifm-color-primary-light: #7203ff;
+  --ifm-color-primary-lighter: #780fff;
+  --ifm-color-primary-lightest: #8c32ff;
   --ifm-code-font-size: 95%;
+  --ifm-font-family-base: Libre Franklin, system-ui, -apple-system, Segoe UI,
+    Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  --ifm-color-white: #f4f4f4;
 }
 
 .docusaurus-highlight-code-line {
@@ -21,4 +28,12 @@
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+}
+
+.prism-code.language-bash
+  .token-line:first-child
+  > .token.plain:first-child:before {
+  content: "> ";
+  display: inline;
+  color: var(--ifm-color-primary);
 }

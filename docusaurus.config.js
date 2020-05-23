@@ -1,10 +1,11 @@
 module.exports = {
-  title: "Blitz JS",
-  tagline: "Focus on what matters, let Blitz handle the rest!",
+  title: "Blitz.js ⚡️",
+  tagline:
+    "Blitz is a Rails-like framework for monolithic, full-stack React apps — built on Next.js",
   url: "https://blitzjs.com",
   baseUrl: "/",
   favicon: "img/favicons/128x128-Favicon-Purple.png",
-  organizationName: "blitzjs", // Usually your GitHub org/user name.
+  organizationName: "blitz-js", // Usually your GitHub org/user name.
   projectName: "blitzjs.com", // Usually your repo name.
   themeConfig: {
     algolia: {
@@ -18,7 +19,7 @@ module.exports = {
       textColor: "#ffffff"
     },
     navbar: {
-      title: "Blitz JS",
+      title: "Blitz.js ⚡️",
       logo: {
         alt: "My Site Logo",
         src: "img/logo.svg"

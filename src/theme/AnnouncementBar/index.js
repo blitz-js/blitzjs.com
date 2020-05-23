@@ -15,7 +15,7 @@ const STORAGE_ID_KEY = "docusaurus.announcement.id";
 
 function AnnouncementBar() {
   const {
-    siteConfig: { themeConfig: { announcementBar = {} } } = {},
+    siteConfig: { themeConfig: { announcementBar = {} } } = {}
   } = useDocusaurusContext();
   const { id, content, backgroundColor, textColor } = announcementBar;
   const [isClosed, setClosed] = useState(true);

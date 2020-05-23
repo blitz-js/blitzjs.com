@@ -2,8 +2,7 @@ import React from "react"
 import {Flex, useThemeUI} from "theme-ui"
 import styled from "@emotion/styled"
 import {system} from "styled-system"
-import useMedia from "use-media-easy"
-import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment"
+import {useMedia} from "use-media"
 
 const marginLeft = system({
   space: {
@@ -40,10 +39,10 @@ const SpacedY = styled(Flex)`
 
 const Spaced = ({flexDirection = "row", ...props}) => {
   const {theme} = useThemeUI()
-  const [b1] = useMedia({query: {minWidth: theme.breakpoints[0]}})
-  const [b2] = useMedia({query: {minWidth: theme.breakpoints[1]}})
-  const [b3] = useMedia({query: {minWidth: theme.breakpoints[2]}})
-  const [b4] = useMedia({query: {minWidth: theme.breakpoints[3]}})
+  const b1 = useMedia({minWidth: theme.breakpoints[0]})
+  const b2 = useMedia({minWidth: theme.breakpoints[1]})
+  const b3 = useMedia({minWidth: theme.breakpoints[2]})
+  const b4 = useMedia({minWidth: theme.breakpoints[3]})
 
   let direction
   if (Array.isArray(flexDirection)) {
@@ -74,11 +73,4 @@ const Spaced = ({flexDirection = "row", ...props}) => {
   }
 }
 
-const WrappedSpaced = (props) => {
-  if (ExecutionEnvironment.canUseDOM) {
-    return <Spaced {...props} />
-  }
-  return null
-}
-
-export default WrappedSpaced
+export default Spaced

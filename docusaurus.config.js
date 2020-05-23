@@ -11,6 +11,12 @@ module.exports = {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
       indexName: "blitzjs"
     },
+    announcementBar: {
+      id: "progress",
+      content: "🚧Excuse the mess — design in progress! 🚧",
+      backgroundColor: "#303846",
+      textColor: "#ffffff"
+    },
     navbar: {
       title: "Blitz JS",
       logo: {
@@ -21,6 +27,12 @@ module.exports = {
         {
           to: "docs/basics/getting-started",
           label: "Docs",
+          position: "left"
+        },
+        {
+          to: "docs/introduction/manifesto",
+          page: "Manifesto",
+          label: "Manifesto",
           position: "left"
         },
         {

@@ -231,7 +231,7 @@ function Home() {
             Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and minorities
             are especially welcome.
           </Text>
-          <Text>
+          <Text sx={{mb: 3}}>
             Please read our{" "}
             <Link href="https://github.com/blitz-js/blitz/blob/canary/CODE_OF_CONDUCT.md">
               Code of Conduct.

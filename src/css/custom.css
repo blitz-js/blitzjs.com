@@ -17,10 +17,9 @@
   --ifm-color-primary-lightest: #8c32ff;
   --ifm-code-font-size: 95%;
   --ifm-container-width: 900px;
-  --ifm-font-family-base: Libre Franklin, system-ui, -apple-system, Segoe UI,
-    Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont,
-    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
+  --ifm-font-family-base: Libre Franklin, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --ifm-color-white: #f4f4f4;
 }
 
@@ -35,9 +34,7 @@
   align-items: center;
 }
 
-.prism-code.language-bash
-  .token-line:first-child
-  > .token.plain:first-child:before {
+.prism-code.language-bash .token-line:first-child > .token.plain:first-child:before {
   content: "> ";
   display: inline;
   color: var(--ifm-color-primary);

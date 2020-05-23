@@ -1,6 +1,6 @@
-import React from "react";
-import Layout from "@theme/Layout";
-import useBaseUrl from "@docusaurus/useBaseUrl";
+import React from "react"
+import Layout from "@theme/Layout"
+import useBaseUrl from "@docusaurus/useBaseUrl"
 
 function Vision() {
   return (
@@ -16,14 +16,10 @@ function Vision() {
                 <tr>
                   <th>0.0.0</th>
                   <td>
-                    <a href={useBaseUrl("/docs/basics/getting-started")}>
-                      Documentation
-                    </a>
+                    <a href={useBaseUrl("/docs/basics/getting-started")}>Documentation</a>
                   </td>
                   <td>
-                    <a href="https://github.com/blitz-js/blitzjs.com/releases">
-                      Release Notes
-                    </a>
+                    <a href="https://github.com/blitz-js/blitzjs.com/releases">Release Notes</a>
                   </td>
                 </tr>
               </tbody>
@@ -32,10 +28,10 @@ function Vision() {
         </div>
       </main>
     </Layout>
-  );
+  )
 }
 
-Vision.title = "Vision &amp; Philosophy";
-Vision.description = "The vision and philosophy of Blitz";
+Vision.title = "Vision &amp; Philosophy"
+Vision.description = "The vision and philosophy of Blitz"
 
-export default Vision;
+export default Vision

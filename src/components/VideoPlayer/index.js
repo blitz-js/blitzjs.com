@@ -1,11 +1,11 @@
-import React from "react";
-import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
-import ReactPlayer from "react-player";
-import "./video-player.css";
+import React from "react"
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment"
+import ReactPlayer from "react-player"
+import "./video-player.css"
 
 // Video player component we can pass a url to using the react-player library.
 // control prop determinse whether video player controls will be displayed.
-const VideoPlayer = ({ url }) => {
+const VideoPlayer = ({url}) => {
   if (ExecutionEnvironment.canUseDOM) {
     return (
       <div className="player-wrapper">
@@ -17,9 +17,9 @@ const VideoPlayer = ({ url }) => {
           controls={true}
         />
       </div>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
-export default VideoPlayer;
+export default VideoPlayer

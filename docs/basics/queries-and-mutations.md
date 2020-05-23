@@ -12,14 +12,14 @@ We automatically alias the root of your project, so `import db from 'db'` is imp
 
 ```ts
 // app/products/queries/getProduct.tsx
-import db, { FindOneProductArgs } from "db";
+import db, {FindOneProductArgs} from "db"
 
 export default async function getProduct(args: FindOneProductArgs) {
   // Can do any pre-processing or event triggers here
-  const product = await db.product.findOne(args);
+  const product = await db.product.findOne(args)
 
   // Can do any post-processing or event triggers here
-  return product;
+  return product
 }
 ```
 
@@ -27,14 +27,14 @@ export default async function getProduct(args: FindOneProductArgs) {
 
 ```ts
 // app/products/mutations/createProduct.tsx
-import db, { ProductCreateArgs } from "db";
+import db, {ProductCreateArgs} from "db"
 
 export default async function createProduct(args: ProductCreateArgs) {
   // Can do any pre-processing or event triggers here
-  const product = await db.product.create(args);
+  const product = await db.product.create(args)
 
   // Can do any post-processing or event triggers here
-  return product;
+  return product
 }
 ```
 
@@ -49,30 +49,28 @@ At build time, the direct function import is swapped out for a function that exe
 **React Concurrent Mode is enabled by default for Blitz apps.** So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
 
 ```tsx
-import { Suspense } from "react";
-import { useRouter, useQuery } from "blitz";
-import getProduct from "/app/products/queries/getProduct";
-import ErrorBoundary from "app/components/ErrorBoundary";
+import {Suspense} from "react"
+import {useRouter, useQuery} from "blitz"
+import getProduct from "/app/products/queries/getProduct"
+import ErrorBoundary from "app/components/ErrorBoundary"
 
 function Product() {
-  const router = useRouter();
-  const id = parseInt(router.query.id as string);
-  const [product] = useQuery(getProduct, { where: { id: props.query.id } });
-  return <div>{product.name}</div>;
+  const router = useRouter()
+  const id = parseInt(router.query.id as string)
+  const [product] = useQuery(getProduct, {where: {id: props.query.id}})
+  return <div>{product.name}</div>
 }
 
 export default function App() {
   return (
     <div>
-      <ErrorBoundary
-        fallback={error => <div>Error: {JSON.stringify(error)}</div>}
-      >
+      <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
         <Suspense fallback={<div>Loading...</div>}>
           <Product />
         </Suspense>
       </ErrorBoundary>
     </div>
-  );
+  )
 }
 ```
 
@@ -83,15 +81,15 @@ export default function App() {
 In `getStaticProps`, a query function can be called directly without `useQuery`
 
 ```tsx
-import getProduct from "/app/products/queries/getProduct";
+import getProduct from "/app/products/queries/getProduct"
 
-export const getStaticProps = async context => {
-  const product = await getProduct({ where: { id: context.params?.id } });
-  return { props: { product } };
-};
+export const getStaticProps = async (context) => {
+  const product = await getProduct({where: {id: context.params?.id}})
+  return {props: {product}}
+}
 
-export default function ProductListing({ product }) {
-  return <div>{product.name}</div>;
+export default function ProductListing({product}) {
+  return <div>{product.name}</div>
 }
 ```
 
@@ -120,27 +118,26 @@ Mutations are called directly, like a regular asynchronous function.
 At build time, the direct function import is swapped out for a function that executes a network call to run the mutation server-side.
 
 ```tsx
-import { useQuery } from "blitz";
-import getProduct from "/app/products/queries/getProduct";
-import updateProduct from "/app/products/mutations/updateProduct";
-import { Formik } from "formik";
+import {useQuery} from "blitz"
+import getProduct from "/app/products/queries/getProduct"
+import updateProduct from "/app/products/mutations/updateProduct"
+import {Formik} from "formik"
 
 export default function ProductEditForm(props) {
-  const [product] = useQuery(getProduct, { where: { id: props.id } });
+  const [product] = useQuery(getProduct, {where: {id: props.id}})
   return (
     <Formik
       initialValues={product}
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values);
+          const product = await updateProduct(values)
         } catch (error) {
-          alert("Error saving product");
+          alert("Error saving product")
         }
-      }}
-    >
+      }}>
       {/* ... */}
     </Formik>
-  );
+  )
 }
 ```
 

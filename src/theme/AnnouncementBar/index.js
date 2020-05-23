@@ -5,68 +5,58 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, useEffect } from "react";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import React, {useState, useEffect} from "react"
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 
-import styles from "./styles.module.css";
+import styles from "./styles.module.css"
 
-const STORAGE_DISMISS_KEY = "docusaurus.announcement.dismiss";
-const STORAGE_ID_KEY = "docusaurus.announcement.id";
+const STORAGE_DISMISS_KEY = "docusaurus.announcement.dismiss"
+const STORAGE_ID_KEY = "docusaurus.announcement.id"
 
 function AnnouncementBar() {
-  const {
-    siteConfig: { themeConfig: { announcementBar = {} } } = {}
-  } = useDocusaurusContext();
-  const { id, content, backgroundColor, textColor } = announcementBar;
-  const [isClosed, setClosed] = useState(true);
+  const {siteConfig: {themeConfig: {announcementBar = {}}} = {}} = useDocusaurusContext()
+  const {id, content, backgroundColor, textColor} = announcementBar
+  const [isClosed, setClosed] = useState(true)
   const handleClose = () => {
-    localStorage.setItem(STORAGE_DISMISS_KEY, true);
-    setClosed(true);
-  };
+    localStorage.setItem(STORAGE_DISMISS_KEY, true)
+    setClosed(true)
+  }
 
   useEffect(() => {
-    const viewedId = localStorage.getItem(STORAGE_ID_KEY);
-    const isNewAnnouncement = id !== viewedId;
+    const viewedId = localStorage.getItem(STORAGE_ID_KEY)
+    const isNewAnnouncement = id !== viewedId
 
-    localStorage.setItem(STORAGE_ID_KEY, id);
+    localStorage.setItem(STORAGE_ID_KEY, id)
 
     if (isNewAnnouncement) {
-      localStorage.setItem(STORAGE_DISMISS_KEY, false);
+      localStorage.setItem(STORAGE_DISMISS_KEY, false)
     }
 
-    if (
-      isNewAnnouncement ||
-      localStorage.getItem(STORAGE_DISMISS_KEY) === "false"
-    ) {
-      setClosed(false);
+    if (isNewAnnouncement || localStorage.getItem(STORAGE_DISMISS_KEY) === "false") {
+      setClosed(false)
     }
-  }, []);
+  }, [])
 
   if (!content || isClosed) {
-    return null;
+    return null
   }
 
   return (
     <div
       className={styles.announcementBar}
-      style={{ backgroundColor, color: textColor }}
-      role="banner"
-    >
-      <div
-        className={styles.announcementBarContent}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      style={{backgroundColor, color: textColor}}
+      role="banner">
+      <div className={styles.announcementBarContent} dangerouslySetInnerHTML={{__html: content}} />
 
       <button
         type="button"
         className={styles.announcementBarClose}
         onClick={handleClose}
-        aria-label="Close"
-      >
+        aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  );
+  )
 }
 
-export default AnnouncementBar;
+export default AnnouncementBar

@@ -13,6 +13,14 @@
     "deploy": "docusaurus deploy",
     "lint": "alex ."
   },
+  "prettier": {
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "trailingComma": "all",
+    "semi": false,
+    "printWidth": 100,
+    "endOfLine": "lf"
+  },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.54",
     "@docusaurus/preset-classic": "2.0.0-alpha.54",

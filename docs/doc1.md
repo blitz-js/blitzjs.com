@@ -96,8 +96,8 @@ Reference-style: ![alt text][logo]
 ## Code
 
 ```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
+var s = "JavaScript syntax highlighting"
+alert(s)
 ```
 
 ```python
@@ -112,7 +112,7 @@ But let's throw in a <b>tag</b>.
 
 ```js {2}
 function highlightMe() {
-  console.log("This line can be highlighted!");
+  console.log("This line can be highlighted!")
 }
 ```
 

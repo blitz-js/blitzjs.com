@@ -1,5 +1,5 @@
-import React from "react";
-import Layout from "@theme/Layout";
+import React from "react"
+import Layout from "@theme/Layout"
 
 function Vision() {
   return (
@@ -14,10 +14,10 @@ function Vision() {
         </div>
       </main>
     </Layout>
-  );
+  )
 }
 
-Vision.title = "Vision &amp; Philosophy";
-Vision.description = "The vision and philosophy of Blitz";
+Vision.title = "Vision &amp; Philosophy"
+Vision.description = "The vision and philosophy of Blitz"
 
-export default Vision;
+export default Vision

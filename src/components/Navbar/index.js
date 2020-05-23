@@ -260,7 +260,7 @@ function Navbar() {
           {sidebarShown && (
             <Toggle
               aria-label="Dark mode toggle in sidebar"
-              checked={isDarkTheme}
+              checked={colorMode === "dark"}
               onChange={onToggleChange}
             />
           )}

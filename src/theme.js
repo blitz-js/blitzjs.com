@@ -119,17 +119,19 @@ const baseColors = {
     "#97266d",
     "#702459",
   ],
+  brandPurple: "#6700EB",
+  darkPurple: "#45009D",
 }
 
 export default {
   useColorSchemeMediaQuery: true,
   colors: {
-    text: "#000",
+    text: baseColors.gray[9],
     textMuted: "#718096",
     background: "#fff",
 
-    primary: "#6700EB",
-    primaryHover: "#2c5282",
+    primary: baseColors.brandPurple,
+    primaryHover: baseColors.darkPurple,
 
     secondary: "#45009D",
     accent: "#639",
@@ -150,23 +152,24 @@ export default {
       },
     },
   },
-  breakpoints: ["640px", "768px", "1024px", "1280px"],
+  breakpoints: ["700px", "850px", "1024px", "1280px"],
   fonts: {
+    heading: '"Libre Franklin", serif',
     body:
       'Roboto, system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
-    heading: '"Libre-franklin", serif',
     mono: 'Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
   },
   fontSizes: [
+    "0.75rem",
     "0.875rem",
     "1rem",
+    "1.125rem",
     "1.25rem",
     "1.5rem",
     "1.875rem",
     "2.25rem",
     "3rem",
     "4rem",
-    "4.5rem",
   ],
   letterSpacings: {
     tighter: "-0.05em",
@@ -286,7 +289,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 3,
-      fontSize: 6,
+      fontSize: 8,
       mt: 2,
     },
     h2: {
@@ -295,7 +298,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 1,
-      fontSize: 5,
+      fontSize: 7,
       mt: 2,
     },
     h3: {
@@ -304,7 +307,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 1,
-      fontSize: 4,
+      fontSize: 6,
       mt: 3,
     },
     h4: {
@@ -313,7 +316,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 1,
-      fontSize: 3,
+      fontSize: 5,
     },
     h5: {
       fontFamily: "heading",
@@ -321,7 +324,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 1,
-      fontSize: 2,
+      fontSize: 4,
     },
     h6: {
       fontFamily: "heading",
@@ -329,7 +332,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 2,
-      fontSize: 1,
+      fontSize: 3,
     },
     code: {
       ".comment,.prolog,.doctype,.cdata,.punctuation,.operator,.entity,.url": {
@@ -370,6 +373,7 @@ export default {
       color: "white",
       fontWeight: "bold",
       borderRadius: "default",
+      letterSpacing: "wide",
       "&:hover": {
         backgroundColor: "primaryHover",
       },
@@ -385,6 +389,7 @@ export default {
       color: "white",
       fontWeight: "bold",
       borderRadius: "full",
+      letterSpacing: "wide",
       "&:hover": {
         backgroundColor: "primaryHover",
       },
@@ -402,6 +407,8 @@ export default {
       color: "primary",
       fontWeight: "semibold",
       borderRadius: "default",
+      letterSpacing: "wide",
+      textAlign: "center",
       "&:hover": {
         backgroundColor: "primary",
         color: "white",
@@ -421,7 +428,9 @@ export default {
       color: "white",
       fontWeight: "bold",
       borderRadius: "default",
+      letterSpacing: "wide",
       "&:hover": {
+        color: "white",
         backgroundColor: "primaryHover",
       },
     },

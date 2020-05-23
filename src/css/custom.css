@@ -5,6 +5,7 @@
  */
 
 @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@200;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;600&display=swap");
 
 /* You can override the default Infima variables here. */
 :root {
@@ -23,6 +24,11 @@
   --ifm-color-white: #f4f4f4;
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;
@@ -38,4 +44,10 @@
   content: "> ";
   display: inline;
   color: var(--ifm-color-primary);
+}
+
+/* OVERRIDE UNTIL INFIRM IS REMOVED */
+a:hover {
+  color: inherit;
+  text-decoration: inherit;
 }

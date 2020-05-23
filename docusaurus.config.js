@@ -13,7 +13,7 @@ module.exports = {
     },
     announcementBar: {
       id: "progress",
-      content: "Site Still In Progress",
+      content: "🚧Excuse the mess — design in progress! 🚧",
       backgroundColor: "#303846",
       textColor: "#ffffff",
     },

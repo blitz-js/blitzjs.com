@@ -94,12 +94,11 @@ module.exports = {
   },
   themes: [
     [
-      "@docusaurus/theme-classic",
+      require.resolve("./theme"),
       {
         customCss: require.resolve("./src/css/custom.css"),
       },
     ],
-    "@docusaurus/theme-search-algolia",
   ],
   plugins: [
     [

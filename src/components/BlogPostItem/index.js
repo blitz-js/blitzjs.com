@@ -7,10 +7,8 @@
 
 import React from "react"
 import classnames from "classnames"
-import {MDXProvider} from "@mdx-js/react"
 
 import Link from "@docusaurus/Link"
-import MDXComponents from "@site/src/components/MDXComponents"
 
 import styles from "./styles.module.css"
 
@@ -85,9 +83,7 @@ function BlogPostItem(props) {
   return (
     <article className={!isBlogPostPage ? "margin-bottom--xl" : undefined}>
       {renderPostHeader()}
-      <section className="markdown">
-        <MDXProvider components={MDXComponents}>{children}</MDXProvider>
-      </section>
+      <section>{children}</section>
       {(tags.length > 0 || truncated) && (
         <footer className="row margin-vert--lg">
           {tags.length > 0 && (

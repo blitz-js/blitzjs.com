@@ -9,13 +9,18 @@ import React from "react"
 
 import useTheme from "@site/src/hooks/useTheme"
 import ThemeContext from "@site/src/components/ThemeContext"
+import {ThemeProvider as ThemeProvider2} from "theme-ui"
+import theme from "../../theme"
+import components from "../MDXComponents"
 
 function ThemeProvider(props) {
   const {isDarkTheme, setLightTheme, setDarkTheme} = useTheme()
 
   return (
     <ThemeContext.Provider value={{isDarkTheme, setLightTheme, setDarkTheme}}>
-      {props.children}
+      <ThemeProvider2 theme={theme} components={components}>
+        {props.children}
+      </ThemeProvider2>
     </ThemeContext.Provider>
   )
 }

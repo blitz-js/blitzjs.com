@@ -6,14 +6,12 @@
  */
 
 import React from "react"
-import {MDXProvider} from "@mdx-js/react"
 
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import renderRoutes from "@docusaurus/renderRoutes"
 import Layout from "@site/src/components/Layout"
 import DocItem from "@site/src/components/DocItem"
 import DocSidebar from "@site/src/components/DocSidebar"
-import MDXComponents from "@site/src/components/MDXComponents"
 import NotFound from "@site/src/components/NotFound"
 import {matchPath} from "@docusaurus/router"
 
@@ -31,17 +29,14 @@ function DocPage(props) {
     : {}
 
   const sidebar = isHomePage ? content.metadata.sidebar : permalinkToSidebar[currentRoute.path]
-  const {
-    siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {},
-    isClient,
-  } = useDocusaurusContext()
+  const {siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {}} = useDocusaurusContext()
 
   if (!isHomePage && Object.keys(currentRoute).length === 0) {
     return <NotFound {...props} />
   }
 
   return (
-    <Layout version={version} key={isClient}>
+    <Layout version={version}>
       <div className={styles.docPage}>
         {sidebar && (
           <div className={styles.docSidebarContainer}>
@@ -54,9 +49,7 @@ function DocPage(props) {
           </div>
         )}
         <main className={styles.docMainContainer}>
-          <MDXProvider components={MDXComponents}>
-            {isHomePage ? <DocItem content={content} /> : renderRoutes(baseRoute.routes)}
-          </MDXProvider>
+          {isHomePage ? <DocItem content={content} /> : renderRoutes(baseRoute.routes)}
         </main>
       </div>
     </Layout>

@@ -13,7 +13,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl"
 
 import SearchBar from "@site/src/components/SearchBar"
 import Toggle from "@site/src/components/Toggle"
-import useThemeContext from "@site/src/hooks/useThemeContext"
+import {useColorMode} from "theme-ui"
 import useHideableNavbar from "@site/src/hooks/useHideableNavbar"
 import useLockBodyScroll from "@site/src/hooks/useLockBodyScroll"
 import useLogo from "@site/src/hooks/useLogo"
@@ -157,9 +157,9 @@ function Navbar() {
   const [sidebarShown, setSidebarShown] = useState(false)
   const [isSearchBarExpanded, setIsSearchBarExpanded] = useState(false)
 
-  const {isDarkTheme, setLightTheme, setDarkTheme} = useThemeContext()
   const {navbarRef, isNavbarVisible} = useHideableNavbar(hideOnScroll)
   const {logoLink, logoLinkProps, logoImageUrl, logoAlt} = useLogo()
+  const [colorMode, setColorMode] = useColorMode()
 
   useLockBodyScroll(sidebarShown)
 
@@ -170,10 +170,10 @@ function Navbar() {
     setSidebarShown(false)
   }, [setSidebarShown])
 
-  const onToggleChange = useCallback((e) => (e.target.checked ? setDarkTheme() : setLightTheme()), [
-    setLightTheme,
-    setDarkTheme,
-  ])
+  const onToggleChange = useCallback(
+    (e) => (e.target.checked ? setColorMode("dark") : setColorMode("default")),
+    [setColorMode],
+  )
 
   return (
     <nav
@@ -239,7 +239,7 @@ function Navbar() {
           <Toggle
             className={styles.displayOnlyInLargeViewport}
             aria-label="Dark mode toggle"
-            checked={isDarkTheme}
+            checked={colorMode === "dark"}
             onChange={onToggleChange}
           />
           <SearchBar

@@ -1,12 +1,6 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
+/** @jsx jsx */
+import {jsx} from "theme-ui"
 import React from "react"
-
 import Head from "@docusaurus/Head"
 import isInternalUrl from "@docusaurus/isInternalUrl"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
@@ -16,6 +10,8 @@ import useTOCHighlight from "@site/src/hooks/useTOCHighlight"
 
 import classnames from "classnames"
 import styles from "./styles.module.css"
+
+import {Styled} from "theme-ui"
 
 const LINK_CLASS_NAME = "table-of-contents__link"
 const ACTIVE_LINK_CLASS_NAME = "table-of-contents__link--active"
@@ -103,10 +99,10 @@ function DocItem(props) {
                 )}
                 {!hideTitle && (
                   <header>
-                    <h1 className={styles.docTitle}>{title}</h1>
+                    <Styled.h1>{title}</Styled.h1>
                   </header>
                 )}
-                <div className="markdown">
+                <div>
                   <DocContent />
                 </div>
               </article>
@@ -167,7 +163,7 @@ function DocItem(props) {
                   </div>
                 </div>
               )}
-              <div className="margin-vert--lg">
+              <div sx={{my: 4}}>
                 <DocPaginator metadata={metadata} />
               </div>
             </div>

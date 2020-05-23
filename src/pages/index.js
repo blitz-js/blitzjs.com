@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import {jsx} from "theme-ui"
 import React from "react"
 import classnames from "classnames"
 import Layout from "@site/src/components/Layout"
@@ -33,13 +35,13 @@ function Home() {
           <p className={classnames("hero__subtitle", styles.heroSubtitle)}>{siteConfig.tagline}</p>
           <div className="margin-top--xl">
             <Link
-              className="button button--secondary button--lg"
-              to={useBaseUrl("/docs/basics/getting-started")}>
+              to={useBaseUrl("/docs/basics/getting-started")}
+              sx={{variant: "buttons.bordered", fontSize: 2}}>
               Get Started
             </Link>
             <Link
-              className="button button--outline button--secondary button--lg margin-left--md"
-              to={useBaseUrl("/docs/contributing/how-to-contribute")}>
+              to={useBaseUrl("/docs/contributing/how-to-contribute")}
+              sx={{variant: "buttons.outline", fontSize: 2}}>
               Help Build Blitz
             </Link>
           </div>

@@ -37,12 +37,6 @@ module.exports = {
           position: "left",
         },
         {
-          to: "docs/introduction/manifesto",
-          page: "Manifesto",
-          label: "Manifesto",
-          position: "left",
-        },
-        {
           href: "https://github.com/blitz-js/blitz",
           label: "GitHub",
           position: "right",

@@ -21,31 +21,36 @@ const ContextReplacementPlugin = requireFromDocusaurusCore("webpack/lib/ContextR
 // Need to be inlined to prevent dark mode FOUC
 // Make sure that the 'storageKey' is the same as the one in `/src/hooks/useTheme.js`
 const storageKey = "theme"
-const noFlash = (defaultDarkMode) => `(function() {
-  var defaultDarkMode = ${defaultDarkMode};
-
-  function setDataThemeAttribute(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
-
-  function getPreferredTheme() {
-    var theme = null;
-    try {
-      theme = localStorage.getItem('${storageKey}');
-    } catch (err) {}
-
-    return theme;
-  }
-
-  var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-  var preferredTheme = getPreferredTheme();
-  if (preferredTheme !== null) {
-    setDataThemeAttribute(preferredTheme);
-  } else if (darkQuery.matches || defaultDarkMode) {
-    setDataThemeAttribute('dark');
-  }
-})();`
+// const noFlash = (defaultDarkMode) => `(function() {
+//   var defaultDarkMode = ${defaultDarkMode};
+//
+//   function setDataThemeAttribute(theme) {
+//     document.documentElement.setAttribute('data-theme', theme);
+//   }
+//
+//   function getPreferredTheme() {
+//     var theme = null;
+//     try {
+//       theme = localStorage.getItem('${storageKey}');
+//     } catch (err) {}
+//
+//     return theme;
+//   }
+//
+//   var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+//
+//   var preferredTheme = getPreferredTheme();
+//   if (preferredTheme !== null) {
+//     setDataThemeAttribute(preferredTheme);
+//   } else if (darkQuery.matches || defaultDarkMode) {
+//     setDataThemeAttribute('dark');
+//   }
+// })();`
+const noflash = `(function() { try {
+  var mode = localStorage.getItem('theme-ui-color-mode');
+  if (!mode) return
+  document.body.classList.add('theme-ui-' + mode);
+} catch (e) {} })();`
 
 module.exports = function (context, options) {
   const {
@@ -60,6 +65,10 @@ module.exports = function (context, options) {
 
     getThemePath() {
       return path.resolve(__dirname, "../src/components/")
+    },
+
+    getPathsToWatch() {
+      return [path.resolve(__dirname, "../src/**/*")]
     },
 
     getClientModules() {
@@ -137,7 +146,7 @@ module.exports = function (context, options) {
             attributes: {
               type: "text/javascript",
             },
-            innerHTML: noFlash(defaultDarkMode),
+            innerHTML: noFlash,
           },
         ],
       }

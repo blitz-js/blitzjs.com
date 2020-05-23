@@ -1,15 +1,22 @@
 module.exports = {
   title: "Blitz.js ⚡️",
-  tagline: "Blitz is a Rails-like framework for monolithic, full-stack React apps — built on Next.js",
+  tagline:
+    "Blitz is a Rails-like framework for monolithic, full-stack React apps — built on Next.js",
   url: "https://blitzjs.com",
   baseUrl: "/",
-  favicon: "img/favicon.ico",
+  favicon: "img/favicons/128x128-Favicon-Purple.png",
   organizationName: "blitz-js", // Usually your GitHub org/user name.
   projectName: "blitzjs.com", // Usually your repo name.
   themeConfig: {
     algolia: {
-      apiKey: 'c4db860ae4162be48d4c867e33edcaa2',
-      indexName: 'blitzjs',
+      apiKey: "c4db860ae4162be48d4c867e33edcaa2",
+      indexName: "blitzjs"
+    },
+    announcementBar: {
+      id: "progress",
+      content: "🚧Excuse the mess — design in progress! 🚧",
+      backgroundColor: "#303846",
+      textColor: "#ffffff"
     },
     navbar: {
       title: "Blitz.js ⚡️",
@@ -23,7 +30,18 @@ module.exports = {
           label: "Docs",
           position: "left"
         },
-        { to: "docs/introduction/manifesto", page: "Manifesto", label: "Manifesto", position: "left" },
+        {
+          to: "docs/introduction/manifesto",
+          page: "Manifesto",
+          label: "Manifesto",
+          position: "left"
+        },
+        {
+          to: "docs/introduction/manifesto",
+          page: "Manifesto",
+          label: "Manifesto",
+          position: "left"
+        },
         {
           href: "https://github.com/blitz-js/blitz",
           label: "GitHub",

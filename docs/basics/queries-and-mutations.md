@@ -65,7 +65,7 @@ export default function App() {
   return (
     <div>
       <ErrorBoundary
-        fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}
+        fallback={error => <div>Error: {JSON.stringify(error)}</div>}
       >
         <Suspense fallback={<div>Loading...</div>}>
           <Product />
@@ -85,7 +85,7 @@ In `getStaticProps`, a query function can be called directly without `useQuery`
 ```tsx
 import getProduct from "/app/products/queries/getProduct";
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async context => {
   const product = await getProduct({ where: { id: context.params?.id } });
   return { props: { product } };
 };
@@ -130,7 +130,7 @@ export default function ProductEditForm(props) {
   return (
     <Formik
       initialValues={product}
-      onSubmit={async (values) => {
+      onSubmit={async values => {
         try {
           const product = await updateProduct(values);
         } catch (error) {

@@ -92,18 +92,27 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`,
     },
   },
-  presets: [
+  themes: [
     [
-      "@docusaurus/preset-classic",
+      "@docusaurus/theme-classic",
       {
-        docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/",
-        },
-        theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
+        customCss: require.resolve("./src/css/custom.css"),
       },
     ],
+    "@docusaurus/theme-search-algolia",
+  ],
+  plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        sidebarPath: require.resolve("./sidebars.js"),
+        editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/",
+      },
+    ],
+    ["@docusaurus/plugin-content-blog"],
+    ["@docusaurus/plugin-content-pages"],
+    ...(process.env.NODE_ENV === "production"
+      ? ["@docusaurus/plugin-google-analytics", "@docusaurus/plugin-sitemap"]
+      : []),
   ],
 }

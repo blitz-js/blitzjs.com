@@ -22,8 +22,15 @@
     "endOfLine": "lf"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.54",
-    "@docusaurus/preset-classic": "2.0.0-alpha.54",
+    "@docusaurus/core": "2.0.0-alpha.55",
+    "@docusaurus/plugin-content-blog": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-content-docs": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-content-pages": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-google-analytics": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-google-gtag": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-sitemap": "^2.0.0-alpha.55",
+    "@docusaurus/theme-classic": "^2.0.0-alpha.55",
+    "@docusaurus/theme-search-algolia": "^2.0.0-alpha.55",
     "classnames": "^2.2.6",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

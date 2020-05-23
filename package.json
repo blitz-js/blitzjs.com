@@ -54,7 +54,8 @@
     "react-player": "^2.0.0",
     "react-router-dom": "^5.1.2",
     "react-toggle": "^4.1.1",
-    "theme-ui": "0.3.1"
+    "theme-ui": "0.3.1",
+    "use-media-easy": "1.2.0"
   },
   "devDependencies": {
     "alex": "^8.1.1",

@@ -6,7 +6,7 @@ module.exports = {
   baseUrl: "/",
   favicon: "img/favicons/128x128-Favicon-Purple.png",
   organizationName: "blitz-js", // Usually your GitHub org/user name.
-  projectName: "blitzjs.com", // Usually your repo name.
+  projectName: "blitz", // Usually your repo name.
   themeConfig: {
     algolia: {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
@@ -21,8 +21,8 @@ module.exports = {
     navbar: {
       title: "Blitz.js ⚡️",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "Blitz.js",
+        src: "https://github.com/blitz-js/art/blob/master/square-logo-600.png?raw=true",
       },
       links: [
         {

@@ -14,7 +14,7 @@ const NewsletterForm = () => {
         placeholder="Enter your email"
       />
       <div className="">
-        <button class="button button--secondary" type="submit">
+        <button className="button button--secondary" type="submit">
           Subscribe
         </button>
       </div>

@@ -29,17 +29,14 @@ function DocPage(props) {
     : {}
 
   const sidebar = isHomePage ? content.metadata.sidebar : permalinkToSidebar[currentRoute.path]
-  const {
-    siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {},
-    isClient,
-  } = useDocusaurusContext()
+  const {siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {}} = useDocusaurusContext()
 
   if (!isHomePage && Object.keys(currentRoute).length === 0) {
     return <NotFound {...props} />
   }
 
   return (
-    <Layout version={version} key={isClient}>
+    <Layout version={version}>
       <div className={styles.docPage}>
         {sidebar && (
           <div className={styles.docSidebarContainer}>

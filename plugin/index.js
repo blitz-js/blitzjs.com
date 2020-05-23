@@ -13,7 +13,6 @@ const openSearchTemplate = require("./templates/opensearch")
 
 const OPEN_SEARCH_FILENAME = "opensearch.xml"
 
-// Make sure that the 'storageKey' is the same as the one in `/src/hooks/useTheme.js`
 const noFlash = `(function() { try {
   var mode = localStorage.getItem('theme-ui-color-mode');
   if (!mode) return

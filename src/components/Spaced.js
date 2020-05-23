@@ -3,6 +3,7 @@ import {Flex, useThemeUI} from "theme-ui"
 import styled from "@emotion/styled"
 import {system} from "styled-system"
 import useMedia from "use-media-easy"
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment"
 
 const marginLeft = system({
   space: {
@@ -73,4 +74,11 @@ const Spaced = ({flexDirection = "row", ...props}) => {
   }
 }
 
-export default Spaced
+const WrappedSpaced = (props) => {
+  if (ExecutionEnvironment.canUseDOM) {
+    return <Spaced {...props} />
+  }
+  return null
+}
+
+export default WrappedSpaced

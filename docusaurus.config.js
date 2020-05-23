@@ -112,7 +112,7 @@ module.exports = {
     ["@docusaurus/plugin-content-blog"],
     ["@docusaurus/plugin-content-pages"],
     ...(process.env.NODE_ENV === "production"
-      ? ["@docusaurus/plugin-google-analytics", "@docusaurus/plugin-sitemap"]
+      ? [/*"@docusaurus/plugin-google-analytics",*/ "@docusaurus/plugin-sitemap"]
       : []),
   ],
 }

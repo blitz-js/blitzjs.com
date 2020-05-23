@@ -6,7 +6,6 @@
  */
 
 const path = require("path")
-const Module = require("module")
 const fs = require("fs")
 const eta = require("eta")
 const {normalizeUrl} = require("@docusaurus/utils")
@@ -14,39 +13,8 @@ const openSearchTemplate = require("./templates/opensearch")
 
 const OPEN_SEARCH_FILENAME = "opensearch.xml"
 
-const createRequire = Module.createRequire || Module.createRequireFromPath
-const requireFromDocusaurusCore = createRequire(require.resolve("@docusaurus/core/package.json"))
-const ContextReplacementPlugin = requireFromDocusaurusCore("webpack/lib/ContextReplacementPlugin")
-
-// Need to be inlined to prevent dark mode FOUC
 // Make sure that the 'storageKey' is the same as the one in `/src/hooks/useTheme.js`
-const storageKey = "theme"
-// const noFlash = (defaultDarkMode) => `(function() {
-//   var defaultDarkMode = ${defaultDarkMode};
-//
-//   function setDataThemeAttribute(theme) {
-//     document.documentElement.setAttribute('data-theme', theme);
-//   }
-//
-//   function getPreferredTheme() {
-//     var theme = null;
-//     try {
-//       theme = localStorage.getItem('${storageKey}');
-//     } catch (err) {}
-//
-//     return theme;
-//   }
-//
-//   var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-//
-//   var preferredTheme = getPreferredTheme();
-//   if (preferredTheme !== null) {
-//     setDataThemeAttribute(preferredTheme);
-//   } else if (darkQuery.matches || defaultDarkMode) {
-//     setDataThemeAttribute('dark');
-//   }
-// })();`
-const noflash = `(function() { try {
+const noFlash = `(function() { try {
   var mode = localStorage.getItem('theme-ui-color-mode');
   if (!mode) return
   document.body.classList.add('theme-ui-' + mode);
@@ -55,9 +23,8 @@ const noflash = `(function() { try {
 module.exports = function (context, options) {
   const {
     baseUrl,
-    siteConfig: {themeConfig, title, url, favicon},
+    siteConfig: {title, url, favicon},
   } = context
-  const {defaultDarkMode = false, prism: {additionalLanguages = []} = {}} = themeConfig || {}
   const {customCss} = options || {}
 
   return {
@@ -72,10 +39,7 @@ module.exports = function (context, options) {
     },
 
     getClientModules() {
-      const modules = [
-        require.resolve("infima/dist/css/default/default.css"),
-        path.resolve(__dirname, "./prism-include-languages"),
-      ]
+      const modules = [require.resolve("infima/dist/css/default/default.css")]
 
       if (customCss) {
         modules.push(customCss)
@@ -85,15 +49,7 @@ module.exports = function (context, options) {
     },
 
     configureWebpack() {
-      const prismLanguages = additionalLanguages.map((lang) => `prism-${lang}`).join("|")
-
       return {
-        plugins: [
-          new ContextReplacementPlugin(
-            /prismjs[\\/]components$/,
-            new RegExp(`^./(${prismLanguages})$`),
-          ),
-        ],
         // Ensure that algolia docsearch styles is its own chunk.
         optimization: {
           splitChunks: {

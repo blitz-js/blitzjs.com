@@ -1,9 +1,6 @@
 import React from "react"
 import Link from "@docusaurus/Link"
 import Prism from "@theme-ui/prism"
-// import CodeBlock from "@site/src/components/CodeBlock"
-
-// import styles from "./styles.module.css"
 
 export default {
   a: (props) => {
@@ -15,12 +12,4 @@ export default {
   },
   pre: ({children}) => <>{children}</>,
   code: Prism,
-  // code: (props) => {
-  //   const {children} = props
-  //   if (typeof children === "string") {
-  //     return <CodeBlock {...props} />
-  //   }
-  //   return children
-  // },
-  // pre: (props) => <div className={styles.mdxCodeBlock} {...props} />,
 }

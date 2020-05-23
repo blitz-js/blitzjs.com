@@ -1,9 +1,0 @@
-.mdxCodeBlock {
-  position: relative;
-  margin-bottom: var(--ifm-leading);
-  font-size: var(--ifm-code-font-size);
-}
-
-.mdxCodeBlock pre {
-  font-size: inherit;
-}

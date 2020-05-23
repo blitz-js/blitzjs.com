@@ -49,8 +49,6 @@
     "eta": "^1.1.1",
     "infima": "0.2.0-alpha.11",
     "parse-numeric-range": "^0.0.2",
-    "prism-react-renderer": "^1.1.0",
-    "prismjs": "^1.20.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-player": "^2.0.0",

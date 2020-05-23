@@ -54,18 +54,9 @@ module.exports = function (context, options) {
   } = context
   const {defaultDarkMode = false, prism: {additionalLanguages = []} = {}} = themeConfig || {}
   const {customCss} = options || {}
-  const pagePath = path.resolve(__dirname, "./pages/search/index.js")
 
   return {
     name: "blitz",
-
-    getThemePath() {
-      return path.resolve(__dirname, "./src")
-    },
-
-    getPathsToWatch() {
-      return [pagePath]
-    },
 
     getClientModules() {
       const modules = [
@@ -106,14 +97,6 @@ module.exports = function (context, options) {
           },
         },
       }
-    },
-
-    async contentLoaded({actions: {addRoute}}) {
-      addRoute({
-        path: normalizeUrl([baseUrl, "search"]),
-        component: pagePath,
-        exact: true,
-      })
     },
 
     async postBuild({outDir}) {

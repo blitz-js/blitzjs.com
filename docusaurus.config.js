@@ -92,16 +92,13 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} Brandon Bayer and Blitz.js contributors`,
     },
   },
-  themes: [
+  plugins: [
     [
-      "@docusaurus/theme-classic",
+      require.resolve("./plugin"),
       {
         customCss: require.resolve("./src/css/custom.css"),
       },
     ],
-    "@docusaurus/theme-search-algolia",
-  ],
-  plugins: [
     [
       "@docusaurus/plugin-content-docs",
       {

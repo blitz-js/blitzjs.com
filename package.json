@@ -2,15 +2,9 @@
   "name": "blitzjs-com",
   "version": "0.0.0",
   "private": true,
-  "engines": {
-    "yarn": "^1.19.1",
-    "node": ">=12.16.1"
-  },
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
     "lint": "alex ."
   },
   "prettier": {
@@ -20,24 +14,6 @@
     "semi": false,
     "printWidth": 100,
     "endOfLine": "lf"
-  },
-  "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.55",
-    "@docusaurus/plugin-content-blog": "^2.0.0-alpha.55",
-    "@docusaurus/plugin-content-docs": "^2.0.0-alpha.55",
-    "@docusaurus/plugin-content-pages": "^2.0.0-alpha.55",
-    "@docusaurus/plugin-google-analytics": "^2.0.0-alpha.55",
-    "@docusaurus/plugin-google-gtag": "^2.0.0-alpha.55",
-    "@docusaurus/plugin-sitemap": "^2.0.0-alpha.55",
-    "@docusaurus/theme-classic": "^2.0.0-alpha.55",
-    "@docusaurus/theme-search-algolia": "^2.0.0-alpha.55",
-    "classnames": "^2.2.6",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-player": "^2.0.0"
-  },
-  "resolutions": {
-    "babel-plugin-dynamic-import-node": "2.3.0"
   },
   "browserslist": {
     "production": [
@@ -51,15 +27,47 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && yarn run lint"
+    }
+  },
+  "dependencies": {
+    "@docusaurus/core": "2.0.0-alpha.55",
+    "@docusaurus/plugin-content-blog": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-content-docs": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-content-pages": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-google-analytics": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-google-gtag": "^2.0.0-alpha.55",
+    "@docusaurus/plugin-sitemap": "^2.0.0-alpha.55",
+    "@mdx-js/mdx": "^1.5.8",
+    "@mdx-js/react": "^1.5.8",
+    "classnames": "^2.2.6",
+    "clipboard": "^2.0.6",
+    "infima": "0.2.0-alpha.11",
+    "parse-numeric-range": "^0.0.2",
+    "prism-react-renderer": "^1.1.0",
+    "prismjs": "^1.20.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-player": "^2.0.0",
+    "react-router-dom": "^5.1.2",
+    "react-toggle": "^4.1.1",
+    "algoliasearch": "^3.24.5",
+    "algoliasearch-helper": "^3.1.1",
+    "docsearch.js": "^2.6.3",
+    "eta": "^1.1.1"
+  },
   "devDependencies": {
     "alex": "^8.1.1",
     "husky": "^4.2.3",
     "prettier": "^2.0.4",
     "pretty-quick": "^2.0.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn run lint"
-    }
+  "resolutions": {
+    "babel-plugin-dynamic-import-node": "2.3.0"
+  },
+  "engines": {
+    "node": ">=12.16.1"
   }
 }

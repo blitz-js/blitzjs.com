@@ -1,5 +1,5 @@
 import React from "react"
-import Layout from "@theme/Layout"
+import Layout from "@site/src/components/Layout"
 
 function Vision() {
   return (

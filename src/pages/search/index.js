@@ -15,10 +15,11 @@ import classnames from "classnames"
 
 import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
+// useVersioning is provided default by docusaurus
 import useVersioning from "@theme/hooks/useVersioning"
-import useSearchQuery from "@theme/hooks/useSearchQuery"
+import useSearchQuery from "@site/src/hooks/useSearchQuery"
 import Link from "@docusaurus/Link"
-import Layout from "@theme/Layout"
+import Layout from "@site/src/components/Layout"
 
 import styles from "./styles.module.css"
 

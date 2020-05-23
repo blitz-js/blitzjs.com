@@ -58,6 +58,10 @@ module.exports = function (context, options) {
   return {
     name: "blitz",
 
+    getThemePath() {
+      return path.resolve(__dirname, "../src/components/")
+    },
+
     getClientModules() {
       const modules = [
         require.resolve("infima/dist/css/default/default.css"),

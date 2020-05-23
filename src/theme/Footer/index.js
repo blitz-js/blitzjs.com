@@ -23,10 +23,10 @@ function FooterLink({ to, href, label, ...props }) {
         ? {
             target: "_blank",
             rel: "noopener noreferrer",
-            href,
+            href
           }
         : {
-            to: toUrl,
+            to: toUrl
           })}
       {...props}
     >
@@ -55,7 +55,7 @@ function Footer() {
   return (
     <footer
       className={classnames("footer", {
-        "footer--dark": footer.style === "dark",
+        "footer--dark": footer.style === "dark"
       })}
     >
       <div className="container">
@@ -76,7 +76,7 @@ function Footer() {
                           key={key}
                           className="footer__item"
                           dangerouslySetInnerHTML={{
-                            __html: item.html,
+                            __html: item.html
                           }}
                         />
                       ) : (
@@ -131,7 +131,7 @@ function Footer() {
 
             <div
               dangerouslySetInnerHTML={{
-                __html: copyright,
+                __html: copyright
               }}
             />
           </div>

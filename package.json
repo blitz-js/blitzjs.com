@@ -2,10 +2,6 @@
   "name": "blitzjs-com",
   "version": "0.0.0",
   "private": true,
-  "engines": {
-    "yarn": "^1.19.1",
-    "node": ">=12.16.1"
-  },
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -18,6 +14,23 @@
     "semi": false,
     "printWidth": 100,
     "endOfLine": "lf"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && yarn run lint"
+    }
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.55",
@@ -45,30 +58,16 @@
     "docsearch.js": "^2.6.3",
     "eta": "^1.1.1"
   },
-  "resolutions": {
-    "babel-plugin-dynamic-import-node": "2.3.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "alex": "^8.1.1",
     "husky": "^4.2.3",
     "prettier": "^2.0.4",
     "pretty-quick": "^2.0.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn run lint"
-    }
+  "resolutions": {
+    "babel-plugin-dynamic-import-node": "2.3.0"
+  },
+  "engines": {
+    "node": ">=12.16.1"
   }
 }

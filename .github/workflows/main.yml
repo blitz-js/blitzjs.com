@@ -11,8 +11,8 @@ on:
       - master
 
 jobs:
-  build_and_lint:
-    name: Build & Lint
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,9 +37,5 @@ jobs:
           CI: true
       - name: Lint Blitz Website
         run: yarn lint
-        env:
-          CI: true
-      - name: Test build of Blitz Website
-        run: yarn build
         env:
           CI: true

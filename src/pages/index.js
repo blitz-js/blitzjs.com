@@ -118,7 +118,7 @@ function Home() {
             py: 5,
           }}>
           <Spaced space={4} flexDirection="column" sx={{alignItems: "center", textAlign: "center"}}>
-            <h1 sx={{variant: ["styles.h2", null, "styles.h1"]}}>The Fullstack React Framework</h1>
+            <h1 sx={{variant: "styles.hero"}}>The Fullstack React Framework</h1>
 
             <Spaced
               space={[3, 3, 4]}

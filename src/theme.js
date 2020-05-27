@@ -169,7 +169,7 @@ export default {
     "1.875rem",
     "2.25rem",
     "2.5rem",
-    "4rem",
+    "3.25rem",
   ],
   letterSpacings: {
     tighter: "-0.05em",
@@ -282,6 +282,15 @@ export default {
       ":hover": {
         textDecoration: "underline",
       },
+    },
+    hero: {
+      fontFamily: "heading",
+      fontWeight: "heading",
+      lineHeight: "heading",
+      m: 0,
+      mb: 3,
+      fontSize: [7, 9],
+      mt: 3,
     },
     h1: {
       fontFamily: "heading",

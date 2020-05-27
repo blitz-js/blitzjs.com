@@ -14,12 +14,12 @@ module.exports = {
     },
     announcementBar: {
       id: "progress",
-      content: "🚧Excuse the mess — design in progress! 🚧",
+      content: "🚧Excuse the mess! — A real design is in progress 🚧",
       backgroundColor: "#303846",
       textColor: "#ffffff",
     },
     navbar: {
-      title: "Blitz.js ⚡️",
+      title: "Blitz.js",
       logo: {
         alt: "Blitz.js",
         src: "https://github.com/blitz-js/art/blob/master/square-logo-600.png?raw=true",

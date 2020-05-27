@@ -236,12 +236,15 @@ function Navbar() {
             .map((linkItem, i) => (
               <NavItem {...linkItem} key={i} />
             ))}
-          <Toggle
-            className={styles.displayOnlyInLargeViewport}
-            aria-label="Dark mode toggle"
-            checked={colorMode === "dark"}
-            onChange={onToggleChange}
-          />
+          {/* TEMPORARILY DISABLE DARK MODE */}
+          {false && (
+            <Toggle
+              className={styles.displayOnlyInLargeViewport}
+              aria-label="Dark mode toggle"
+              checked={colorMode === "dark"}
+              onChange={onToggleChange}
+            />
+          )}
           <SearchBar
             handleSearchBarToggle={setIsSearchBarExpanded}
             isSearchBarExpanded={isSearchBarExpanded}
@@ -257,7 +260,8 @@ function Navbar() {
             )}
             {title != null && <strong className="navbar__title">{title}</strong>}
           </Link>
-          {sidebarShown && (
+          {/* TEMPORARILY DISABLE DARK MODE */}
+          {sidebarShown && false && (
             <Toggle
               aria-label="Dark mode toggle in sidebar"
               checked={colorMode === "dark"}

@@ -44,7 +44,7 @@ function AnnouncementBar() {
   return (
     <div
       className={styles.announcementBar}
-      style={{backgroundColor, color: textColor}}
+      style={{backgroundColor: "#6700EB", color: textColor}}
       role="banner">
       <div className={styles.announcementBarContent} dangerouslySetInnerHTML={{__html: content}} />
 

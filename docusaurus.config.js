@@ -8,6 +8,7 @@ module.exports = {
   organizationName: "blitz-js", // Usually your GitHub org/user name.
   projectName: "blitz", // Usually your repo name.
   themeConfig: {
+    sidebarCollapsible: false,
     algolia: {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
       indexName: "blitzjs",
@@ -15,7 +16,6 @@ module.exports = {
     announcementBar: {
       id: "progress",
       content: "🚧Excuse the mess! — A real design is in progress 🚧",
-      backgroundColor: "#303846",
       textColor: "#ffffff",
     },
     navbar: {
@@ -31,17 +31,20 @@ module.exports = {
           position: "left",
         },
         {
-          to: "docs/introduction/manifesto",
-          page: "Manifesto",
-          label: "Manifesto",
+          href: "https://github.com/blitz-js/blitz",
+          label: "GitHub",
           position: "left",
         },
         {
-          href: "https://github.com/blitz-js/blitz",
-          label: "GitHub",
-          position: "right",
+          href: "https://github.com/blitz-js/blitz/releases",
+          label: "Releases",
+          position: "left",
         },
-        {},
+        {
+          href: "https://slack.blitzjs.com",
+          label: "Slack",
+          position: "left",
+        },
       ],
     },
     footer: {
@@ -54,10 +57,6 @@ module.exports = {
               label: "Getting Started",
               to: "docs/basics/getting-started",
             },
-            {
-              label: "Versions",
-              to: "versions",
-            },
           ],
         },
         {
@@ -67,15 +66,15 @@ module.exports = {
               label: "Slack",
               href: "https://slack.blitzjs.com",
             },
+            {
+              label: "GitHub",
+              href: "https://github.com/blitz-js/blitz",
+            },
           ],
         },
         {
           title: "Social",
           items: [
-            {
-              label: "GitHub",
-              href: "https://github.com/blitz-js/blitz",
-            },
             {
               label: "Twitter",
               href: "https://twitter.com/blitz_js",

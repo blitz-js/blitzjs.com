@@ -41,8 +41,9 @@ const Grid = styled.div`
     .benefit {
       grid-column: span 2;
     }
-    .video {
-      grid-column: span 6;
+    .video,
+    .arch-diagram {
+      grid-column: span 3;
     }
     .tenet,
     .community-half,
@@ -62,7 +63,10 @@ const Grid = styled.div`
       grid-column: span 4;
     }
     .video {
-      grid-column: 3 / -3;
+      grid-column: span 6;
+    }
+    .arch-diagram {
+      grid-column: 2 / -2;
     }
     .tenet {
       grid-column: span 6;
@@ -114,7 +118,7 @@ function Home() {
             py: 5,
           }}>
           <Spaced space={4} flexDirection="column" sx={{alignItems: "center", textAlign: "center"}}>
-            <h1 sx={{variant: ["styles.h2", null, "styles.h1"]}}>The Fullstack React Framework</h1>
+            <h1 sx={{variant: "styles.hero"}}>The Fullstack React Framework</h1>
 
             <Spaced
               space={[3, 3, 4]}
@@ -155,13 +159,11 @@ function Home() {
         </Text>
 
         <div className="skip-row" />
-        <div className="skip-row" />
 
-        <div className="video">
-          <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
+        <div className="arch-diagram">
+          <img src="/static/img/architecture-diagram.png" alt="Blitz app architecture" />
         </div>
 
-        <div className="skip-row" />
         <div className="skip-row" />
 
         <Tenet title="Fullstack & Monolithic">
@@ -218,6 +220,8 @@ function Home() {
 
         <div className="skip-row" />
 
+        <div className="skip-row" />
+
         <h2
           sx={{
             variant: ["styles.h3", null, "styles.h2"],
@@ -264,6 +268,9 @@ function Home() {
         <div className="skip-row" />
         <div className="skip-row" />
 
+        <div className="video">
+          <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
+        </div>
         <div className="video">
           <VideoPlayer url="https://www.youtube.com/watch?v=RiLYvLNDeKA" />
         </div>
@@ -318,7 +325,9 @@ function Home() {
 
       <main className="container">
         {/* Newsletter sign-up */}
-        <div className="margin-vert--xl padding-vert--lg hero hero--primary">
+        <div
+          className="margin-vert--xl padding-vert--lg hero hero--primary"
+          style={{background: "#6700eb", borderRadius: 4}}>
           <div className="container">
             <div className="row align-center">
               <div className="col col--6">

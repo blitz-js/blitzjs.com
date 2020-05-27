@@ -48,13 +48,13 @@ function AnnouncementBar() {
       role="banner">
       <div className={styles.announcementBarContent} dangerouslySetInnerHTML={{__html: content}} />
 
-      <button
+      {/*<button
         type="button"
         className={styles.announcementBarClose}
         onClick={handleClose}
         aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button>*/}
     </div>
   )
 }

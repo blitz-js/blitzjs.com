@@ -46,6 +46,12 @@ html {
   color: var(--ifm-color-primary);
 }
 
+.admonition {
+  color: #1a202c;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
 /* OVERRIDE UNTIL INFIRM IS REMOVED */
 a:hover {
   color: inherit;

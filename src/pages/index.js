@@ -161,7 +161,7 @@ function Home() {
         <div className="skip-row" />
 
         <div className="arch-diagram">
-          <img src="/static/img/architecture-diagram.png" alt="Blitz app architecture" />
+          <img src="/img/architecture-diagram.png" alt="Blitz app architecture" />
         </div>
 
         <div className="skip-row" />

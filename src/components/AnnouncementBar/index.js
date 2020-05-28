@@ -44,17 +44,17 @@ function AnnouncementBar() {
   return (
     <div
       className={styles.announcementBar}
-      style={{backgroundColor, color: textColor}}
+      style={{backgroundColor: "#6700EB", color: textColor}}
       role="banner">
       <div className={styles.announcementBarContent} dangerouslySetInnerHTML={{__html: content}} />
 
-      <button
+      {/*<button
         type="button"
         className={styles.announcementBarClose}
         onClick={handleClose}
         aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button>*/}
     </div>
   )
 }

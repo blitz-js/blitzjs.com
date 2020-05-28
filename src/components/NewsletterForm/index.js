@@ -5,9 +5,13 @@ import "./newsletter.css"
 // control prop determinse whether video player controls will be displayed.
 const NewsletterForm = () => {
   return (
-    <form className="newsletter-form">
+    <form
+      className="newsletter-form"
+      action="https://design.us4.list-manage.com/subscribe/post?u=aeb422edfecb0e2dcaf70d12d&amp;id=1a028d02ce"
+      method="post">
       <input
         aria-label="Email address"
+        name="EMAIL"
         type="email"
         required
         className="input"

@@ -7,7 +7,7 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: ["introduction/manifesto"],
+    Introduction: ["manifesto"],
     Basics: [
       "basics/getting-started",
       "basics/pages-and-routing",
@@ -16,8 +16,8 @@ module.exports = {
       "basics/deploying",
       "basics/webpack-config",
     ],
-    Advanced: ["advanced/rpc-specification"],
     CLI: ["cli/introduction", "cli/commands"],
+    Advanced: ["advanced/rpc-specification"],
     Contributing: [
       "contributing/how-to-contribute",
       "contributing/code-of-conduct",

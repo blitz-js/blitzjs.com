@@ -1,0 +1,26 @@
+---
+id: define
+title: Define Query Functions
+sidebar_label: Define Queries
+---
+
+Blitz queries are plain, asynchronous Javascript functions that always run on the server.
+
+_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_
+
+#### Example Query
+
+```ts
+// app/products/queries/getProduct.tsx
+import db, {FindOneProjectArgs} from "db"
+
+type GetProjectInput = {
+  where: FindOneProjectArgs["where"]
+}
+
+export default async function getProject({where}: GetProjectInput) {
+  const project = await db.project.findOne({where})
+
+  return project
+}
+```

@@ -1,0 +1,81 @@
+---
+id: use
+title: Using Queries
+sidebar_label: Using Queries
+---
+
+#### In a React Component
+
+Blitz provides a `useQuery` hook, which is built on [`react-query`](https://github.com/tannerlinsley/react-query). The first argument is a query function. The second argument is the input to the query function. The third argument is any valid react-query configuration item.
+
+At build time, the direct function import is swapped out for a function that executes a network call to run the query serverside.
+
+**React Concurrent Mode is enabled by default for Blitz apps.** So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
+
+```tsx
+import {Suspense} from "react"
+import {useRouter, useQuery} from "blitz"
+import getProduct from "app/products/queries/getProduct"
+import ErrorBoundary from "app/components/ErrorBoundary"
+
+function Product() {
+  const router = useRouter()
+  const productId = parseInt(router.query.productId as string)
+  const [product] = useQuery(getProduct, {where: {id: productId}})
+
+  return <div>{product.name}</div>
+}
+
+function WrappedProduct() {
+  return (
+    <div>
+      <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Product />
+        </Suspense>
+      </ErrorBoundary>
+    </div>
+  )
+}
+
+export default WrappedProduct
+```
+
+#### On the Server
+
+In `getStaticProps`, a query function can be called directly without `useQuery`
+
+```tsx
+import getProduct from "/app/products/queries/getProduct"
+
+export const getStaticProps = async (context) => {
+  const product = await getProduct({where: {id: context.params?.productId}})
+  return {props: {product}}
+}
+
+function ProductPage({product}) {
+  return <div>{product.name}</div>
+}
+
+export default ProductPage
+```
+
+In `getServerSideProps`, pass a query function to `ssrQuery` which will ensure appropriate middleware is run before/after your query function.
+
+```tsx
+import {ssrQuery} from 'blitz'
+import getProduct from '/app/products/queries/getProduct'
+
+export const getServerSideProps = async ({params, req, res}) => {
+  const product = await ssrQuery(getProduct, {where: {id: params.productId}}, {req, res}))
+  return {props: {product}}
+}
+
+function ProductPage ({product}) {
+  return <div>{product.name}</div>
+}
+
+export default ProductPage
+```
+
+For more details, read the comprehensive [Query & Mutation Usage Issue](https://github.com/blitz-js/blitz/issues/89)

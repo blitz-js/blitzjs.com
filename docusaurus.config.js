@@ -96,7 +96,7 @@ module.exports = {
       "@docusaurus/plugin-content-docs",
       {
         sidebarPath: require.resolve("./sidebars.js"),
-        editUrl: "https://github.com/blitz-js/blitzjs.com/tree/master/",
+        editUrl: "https://github.com/blitz-js/blitzjs.com/edit/master/",
       },
     ],
     ["@docusaurus/plugin-content-blog"],

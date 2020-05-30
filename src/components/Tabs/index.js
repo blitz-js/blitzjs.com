@@ -97,7 +97,11 @@ function Tabs(props) {
         ))}
       </ul>
       <div role="tabpanel" className="margin-vert--md">
-        {Children.toArray(children).filter((child) => child.props.value === selectedValue)[0]}
+        {
+          Children.toArray(children).filter(
+            (child) => child.props.value === selectedValue,
+          )[0]
+        }
       </div>
     </div>
   )

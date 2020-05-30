@@ -6,7 +6,15 @@ sidebar_label: Define Mutations
 
 Blitz mutations are plain, asynchronous Javascript functions that always run on the server.
 
-_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_
+**1. Mutations must be inside a `mutations` folder. All of the following are valid:**
+
+- `app/mutations/createProject.ts`
+- `app/projects/mutations/createProject.ts`
+- `app/admin/projects/mutations/createProject.ts`
+
+**2. Mutations must export a function as the default export**
+
+You can write any normal Node.js code here, including database access and fetching from third-party APIs.
 
 #### Example Mutation
 
@@ -19,8 +27,12 @@ type CreateProjectInput = {
 }
 
 export default async function createProject({data}: CreateProjectInput) {
+  // Can do any processing, fetching from other APIs, etc
+
   const project = await db.project.create({data})
 
   return project
 }
 ```
+
+_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_

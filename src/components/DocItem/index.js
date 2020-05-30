@@ -54,7 +54,15 @@ function DocItem(props) {
   const {url: siteUrl, title: siteTitle} = siteConfig
   const {content: DocContent} = props
   const {metadata} = DocContent
-  const {description, title, permalink, editUrl, lastUpdatedAt, lastUpdatedBy, version} = metadata
+  const {
+    description,
+    title,
+    permalink,
+    editUrl,
+    lastUpdatedAt,
+    lastUpdatedBy,
+    version,
+  } = metadata
   const {
     frontMatter: {
       image: metaImage,
@@ -77,7 +85,9 @@ function DocItem(props) {
         <meta property="og:title" content={metaTitle} />
         {description && <meta name="description" content={description} />}
         {description && <meta property="og:description" content={description} />}
-        {keywords && keywords.length && <meta name="keywords" content={keywords.join(",")} />}
+        {keywords && keywords.length && (
+          <meta name="keywords" content={keywords.join(",")} />
+        )}
         {metaImage && <meta property="og:image" content={metaImageUrl} />}
         {metaImage && <meta property="twitter:image" content={metaImageUrl} />}
         {metaImage && <meta name="twitter:image:alt" content={`Image for ${title}`} />}
@@ -168,7 +178,9 @@ function DocItem(props) {
               )}
             </div>
           </div>
-          {!hideTableOfContents && DocContent.rightToc && <DocTOC headings={DocContent.rightToc} />}
+          {!hideTableOfContents && DocContent.rightToc && (
+            <DocTOC headings={DocContent.rightToc} />
+          )}
         </div>
       </div>
     </>

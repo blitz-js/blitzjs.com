@@ -24,7 +24,7 @@ services:
     env: node
     plan: starter
     buildCommand: yarn; blitz build
-    startCommand: yarn next start -H 0.0.0.0
+    startCommand: blitz start --production -H 0.0.0.0
 ```
 
 #### With postgres database:
@@ -66,7 +66,7 @@ services:
     env: node
     plan: starter
     buildCommand: yarn; blitz db migrate; blitz build
-    startCommand: yarn next start -H 0.0.0.0
+    startCommand: blitz start --production -H 0.0.0.0
     envVars:
       - key: DATABASE_URL
         fromDatabase:

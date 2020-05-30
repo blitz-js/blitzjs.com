@@ -6,7 +6,15 @@ sidebar_label: Define Queries
 
 Blitz queries are plain, asynchronous Javascript functions that always run on the server.
 
-_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_
+**1. Queries must be inside a `query` folder. All of the following are valid:**
+
+- `app/queries/getProject.ts`
+- `app/projects/queries/getProject.ts`
+- `app/admin/projects/queries/getProject.ts`
+
+**2. Queries must export a function as the default export**
+
+You can write any normal Node.js code here, including database access and fetching from third-party APIs.
 
 #### Example Query
 
@@ -19,8 +27,12 @@ type GetProjectInput = {
 }
 
 export default async function getProject({where}: GetProjectInput) {
+  // Can do any processing, fetching from other APIs, etc
+
   const project = await db.project.findOne({where})
 
   return project
 }
 ```
+
+_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_

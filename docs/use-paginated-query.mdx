@@ -1,0 +1,121 @@
+---
+title: usePaginatedQuery API
+sidebar_label: usePaginatedQuery API
+---
+
+See the [Using Queries Guide](http://localhost:3000/docs/query-usage#pagination) for example usage.
+
+<!-- prettier-ignore -->
+```js
+const [
+  queryFunctionResults,
+  {
+    latestData,
+    isFetching,
+    failureCount,
+    refetch,
+  }
+] = useQuery(blitzQueryFunction, queryInputArguments, {
+  manual,
+  retry,
+  retryDelay,
+  staleTime,
+  cacheTime,
+  refetchInterval,
+  refetchIntervalInBackground,
+  refetchOnWindowFocus,
+  onSuccess,
+  onError,
+  onSettled,
+  suspense,
+  initialData,
+  refetchOnMount,
+})
+```
+
+### Arguments
+
+- `blitzQueryFunction:` A [Blitz query function](./queries-define)
+  - **Required**
+- `queryInputArguments`
+  - **Required**
+  - The arguments that will be passed to `blitzQueryFunction`
+- `options`
+  - Optional
+
+### Options
+
+- `manual: Boolean`
+  - Set this to `true` to disable automatic refetching when the query mounts or changes query keys.
+  - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
+- `retry: Boolean | Int | Function(failureCount, error) => shouldRetry | Boolean`
+  - If `false`, failed queries will not retry by default.
+  - If `true`, failed queries will retry infinitely.
+  - If set to an `Int`, e.g. `3`, failed queries will retry until the failed query count meets that number.
+- `retryDelay: Function(retryAttempt: Int) => Int`
+  - This function receives a `retryAttempt` integer and returns the delay to apply before the next attempt in milliseconds.
+  - A function like `attempt => Math.min(attempt > 1 ? 2 ** attempt * 1000 : 1000, 30 * 1000)` applies exponential backoff.
+  - A function like `attempt => attempt * 1000` applies linear backoff.
+- `staleTime: Int | Infinity`
+  - The time in milliseconds that cache data remains fresh. After a successful cache update, that cache data will become stale after this duration.
+  - If set to `Infinity`, query will never go stale
+- `cacheTime: Int | Infinity`
+  - The time in milliseconds that unused/inactive cache data remains in memory. When a query's cache becomes unused or inactive, that cache data will be garbage collected after this duration.
+  - If set to `Infinity`, will disable garbage collection
+- `refetchInterval: false | Integer`
+  - Optional
+  - If set to a number, all queries will continuously refetch at this frequency in milliseconds
+- `refetchIntervalInBackground: Boolean`
+  - Optional
+  - If set to `true`, queries that are set to continuously refetch with a `refetchInterval` will continue to refetch while their tab/window is in the background
+- `refetchOnWindowFocus: Boolean`
+  - Optional
+  - Set this to `false` to disable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `true`).
+  - Set this to `true` to enable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `false`.
+- `onSuccess: Function(data) => data`
+  - Optional
+  - This function will fire any time the query successfully fetches new data and will be passed the new data as a parameter
+- `onError: Function(error) => void`
+  - Optional
+  - This function will fire if the query encounters an error and will be passed the error.
+- `onSettled: Function(data, error) => data`
+  - Optional
+  - This function will fire any time the query is either successfully fetched or errors and be passed either the data or error
+- `initialData: any`
+  - Optional
+  - If set, this value will be used as the initial data for the query cache (as long as the query hasn't been created or cached yet)
+- `refetchOnMount: Boolean`
+  - Optional
+  - Defaults to `true`
+  - If set to `false`, will disable additional instances of a query to trigger background refetches
+- `suspense: Boolean`
+  - Optional
+  - Enabled by default. Set this to `false` to disable suspense mode.
+
+### Returns
+
+`[queryFunctionResults, queryExtras]`
+
+##### `queryFunctionResults: Any`
+
+- Defaults to `undefined`.
+- The last successfully resolved data for the query.
+- When fetching with new input arguments, the value will resolve to the last known successful value, regardless of input arguments
+
+##### `queryExtras: Object`
+
+- `latestData: Any`
+  - Defaults to `undefined`.
+  - The actual data object for this query and its specific input arguments
+  - When fetching an uncached query, this value will be `undefined`
+- `isFetching: Boolean`
+  - Defaults to `true` so long as `manual` is set to `false`
+  - Will be `true` if the query is currently fetching, including background fetching.
+- `failureCount: Integer`
+  - The failure count for the query.
+  - Incremented every time the query fails.
+  - Reset to `0` when the query succeeds.
+- `refetch: Function({ force, throwOnError }) => void`
+  - A function to manually refetch the query if it is stale.
+  - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
+  - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option

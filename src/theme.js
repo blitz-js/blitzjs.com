@@ -317,7 +317,7 @@ export default {
       m: 0,
       mb: 3,
       fontSize: 6,
-      mt: 5,
+      mt: 4,
     },
     h4: {
       fontFamily: "heading",
@@ -334,6 +334,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 3,
+      mt: 4,
       fontSize: 4,
     },
     h6: {

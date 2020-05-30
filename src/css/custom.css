@@ -22,6 +22,7 @@
     Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --ifm-color-white: #f4f4f4;
+  --ifm-menu-color-active: #6700eb;
 }
 
 html {

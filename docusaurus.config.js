@@ -26,7 +26,7 @@ module.exports = {
       },
       links: [
         {
-          to: "docs/basics/getting-started",
+          to: "docs/getting-started",
           label: "Docs",
           position: "left",
         },
@@ -55,7 +55,7 @@ module.exports = {
           items: [
             {
               label: "Getting Started",
-              to: "docs/basics/getting-started",
+              to: "docs/getting-started",
             },
           ],
         },

@@ -1,0 +1,31 @@
+---
+title: ssrQuery API
+sidebar_label: ssrQuery API
+---
+
+This ensures appropriate middleware is run before/after your query function
+
+<!-- prettier-ignore -->
+```js
+const queryFunctionResults = await ssrQuery(blitzQueryFunction, queryInputArguments, {req, res}))
+```
+
+### Arguments
+
+- `blitzQueryFunction:` A [Blitz query function](./queries-define)
+  - **Required**
+- `queryInputArguments`
+  - **Required**
+  - The arguments that will be passed to `blitzQueryFunction`
+- Other
+  - `req`
+    - **Required**
+    - The BlitzApiRequest object
+  - `res`
+    - **Required**
+    - The BlitzApiResponse object
+
+### Returns
+
+- `queryFunctionResults`
+  - The exact results returned from the query function

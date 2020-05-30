@@ -4,7 +4,19 @@ title: RPC Specification
 sidebar_label: RPC Specification
 ---
 
-**The RPC Specification is an advanced topic discussing the implementation behind Queries and Mutations in Blitz. See [Queries and Mutations](../basics/queries-and-mutations) to learn how the RPC Specification is used in your application.**
+This is documentation for using Blitz queries and mutations in a non-Blitz app. For example, from a mobile application or some other app.
+
+## URL
+
+All queries and mutations are exposed at a URL corresponding to it's file path.
+
+```
+File: app/products/queries/getProduct.ts
+URL: /api/products/queries/getProduct
+
+File: app/products/mutations/createProduct.ts
+URL: /api/products/mutations/createProduct
+```
 
 ## Request Details
 
@@ -24,7 +36,7 @@ HTTP/1.1 200 OK
 
 ## POST
 
-Executes the RPC.
+Executes the query or mutation.
 
 Request body must be JSON with the following keys:
 
@@ -46,8 +58,8 @@ Content-Type: application/json
 
 {
   "result": {
-    "name": "Slurm",
-    "description": "Enjoy Slurm. It's highly addictive!"
+    "name": "Hello World",
+    "description": "This is awesome :)"
   },
   "error": null
 }
@@ -86,10 +98,6 @@ Content-Type: application/json
 ```http
 HTTP/1.1 404 Not Found
 ```
-
-## Error Handling
-
-TODO
 
 ## Versioning
 

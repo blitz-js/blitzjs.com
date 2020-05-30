@@ -7,9 +7,10 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: ["manifesto"],
+    Introduction: ["manifesto", "code-of-conduct", "how-to-contribute"],
     Basics: [
       "getting-started",
+      "tutorial",
       "file-structure",
       "pages-and-routing",
       "custom-api-routes",
@@ -25,6 +26,5 @@ module.exports = {
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
     CLI: ["cli-introduction", "cli-commands"],
     Advanced: ["webpack-config", "rpc-specification"],
-    Contributing: ["how-to-contribute", "code-of-conduct", "future-of-blitz"],
   },
 }

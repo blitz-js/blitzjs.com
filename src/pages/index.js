@@ -135,7 +135,7 @@ function Home() {
 
           <Spaced space={3}>
             <Link
-              to={useBaseUrl("/docs/basics/getting-started")}
+              to={useBaseUrl("/docs/getting-started")}
               sx={{variant: "buttons.bordered", fontSize: 3}}>
               Get Started
             </Link>

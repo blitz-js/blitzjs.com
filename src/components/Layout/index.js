@@ -27,7 +27,16 @@ function Layout(props) {
     themeConfig: {image: defaultImage},
     url: siteUrl,
   } = siteConfig
-  const {children, title, noFooter, description, image, keywords, permalink, version} = props
+  const {
+    children,
+    title,
+    noFooter,
+    description,
+    image,
+    keywords,
+    permalink,
+    version,
+  } = props
   const metaTitle = title ? `${title} | ${siteTitle}` : siteTitle
 
   const metaImage = image || defaultImage
@@ -51,10 +60,14 @@ function Layout(props) {
           {description && <meta name="description" content={description} />}
           {description && <meta property="og:description" content={description} />}
           {version && <meta name="docsearch:version" content={version} />}
-          {keywords && keywords.length && <meta name="keywords" content={keywords.join(",")} />}
+          {keywords && keywords.length && (
+            <meta name="keywords" content={keywords.join(",")} />
+          )}
           {metaImage && <meta property="og:image" content={metaImageUrl} />}
           {metaImage && <meta property="twitter:image" content={metaImageUrl} />}
-          {metaImage && <meta name="twitter:image:alt" content={`Image for ${metaTitle}`} />}
+          {metaImage && (
+            <meta name="twitter:image:alt" content={`Image for ${metaTitle}`} />
+          )}
           {permalink && <meta property="og:url" content={siteUrl + permalink} />}
           {permalink && <link rel="canonical" href={siteUrl + permalink} />}
           <meta name="twitter:card" content="summary_large_image" />

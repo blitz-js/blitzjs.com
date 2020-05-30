@@ -20,7 +20,9 @@ function BlogTagsPostPage(props) {
   const {allTagsPath, name: tagName, count} = metadata
 
   return (
-    <Layout title={`Posts tagged "${tagName}"`} description={`Blog | Tagged "${tagName}"`}>
+    <Layout
+      title={`Posts tagged "${tagName}"`}
+      description={`Blog | Tagged "${tagName}"`}>
       <div className="container margin-vert--lg">
         <div className="row">
           <div className="col col--8 col--offset-2">

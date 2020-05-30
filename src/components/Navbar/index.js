@@ -213,7 +213,12 @@ function Navbar() {
           )}
           <Link className="navbar__brand" to={logoLink} {...logoLinkProps}>
             {logoImageUrl != null && (
-              <img key={isClient} className="navbar__logo" src={logoImageUrl} alt={logoAlt} />
+              <img
+                key={isClient}
+                className="navbar__logo"
+                src={logoImageUrl}
+                alt={logoAlt}
+              />
             )}
             {title != null && (
               <strong
@@ -251,12 +256,25 @@ function Navbar() {
           />
         </div>
       </div>
-      <div role="presentation" className="navbar-sidebar__backdrop" onClick={hideSidebar} />
+      <div
+        role="presentation"
+        className="navbar-sidebar__backdrop"
+        onClick={hideSidebar}
+      />
       <div className="navbar-sidebar">
         <div className="navbar-sidebar__brand">
-          <Link className="navbar__brand" onClick={hideSidebar} to={logoLink} {...logoLinkProps}>
+          <Link
+            className="navbar__brand"
+            onClick={hideSidebar}
+            to={logoLink}
+            {...logoLinkProps}>
             {logoImageUrl != null && (
-              <img key={isClient} className="navbar__logo" src={logoImageUrl} alt={logoAlt} />
+              <img
+                key={isClient}
+                className="navbar__logo"
+                src={logoImageUrl}
+                alt={logoAlt}
+              />
             )}
             {title != null && <strong className="navbar__title">{title}</strong>}
           </Link>

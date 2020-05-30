@@ -1,0 +1,74 @@
+---
+title: Getting Started with Blitz
+sidebar_label: Getting Started
+---
+
+:::caution
+Before getting started, you should know **this is alpha software**. Blitz is incomplete. There are rough spots and bugs. APIs may change. But you can build an app and deploy it to production. We're excited to see what you build!
+:::
+
+If you have any issues at all, please [open an issue](https://github.com/blitz-js/blitz/issues/new/choose) or join the [Blitz slack](https://slack.blitzjs.com) and talk to us in the **#help** channel. If you get stuck and frustrated, please don't blame yourself. This user guide, and Blitz in general, is not yet fine-tuned for those with less experience. But eventually, it will be because this is very important to us.
+
+_If you’re looking for a slower, more guided start to Blitz, read the [Blitz Beginner Tutorial](./tutorial)._
+
+### Set Up Your Computer
+
+You need Node.js 12 or newer
+
+### Install Blitz
+
+Run `npm install -g blitz`
+
+### Create a New App
+
+1. `blitz new myAppName`
+2. `cd myAppName`
+3. `blitz start`
+4. View your baby app at [http://localhost:3000](http://localhost:3000)
+
+### Set Up Your Database
+
+By default, Blitz uses Prisma 2 which is a strongly typed database client. **You probably want to read [the Prisma 2 documentation](https://www.prisma.io/docs/understand-prisma/introduction).** _Note, Prisma 2 is not required for Blitz. You can use anything you want, such as Mongo, TypeORM, etc._
+
+1. Open `db/schema.prisma` and add the following:
+
+```prisma
+model Project {
+  id        Int      @default(autoincrement()) @id
+  name      String
+  tasks     Task[]
+}
+
+model Task {
+  id          Int      @default(autoincrement()) @id
+  name        String
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   Int
+}
+```
+
+2. Run `blitz db migrate`
+
+### Scaffold out all the files for basic CRUD actions
+
+_CRUD = create, read, update, delete_
+
+1. Run `blitz generate all project` to generate fully working queries, mutations, and pages
+2. Open [http://localhost:3000/projects](http://localhost:3000/projects) to see the default project list page
+3. Explore the generated pages and view, create, update, and delete projects.
+4. Create at least one project
+5. Run `blitz generate all task --parent project` to generate fully working queries, mutations, and pages
+6. Open [http://localhost:3000/projects/1/tasks](http://localhost:3000/projects/1/tasks) to see the default task list page
+
+### You are invited to help — let’s build the future of web dev together! 🤝
+
+Blitz is just getting started, and it's going to take an entire community to bring it to fruition!
+
+How you can help:
+
+1. Tell others about Blitz
+2. Report bugs by opening an issue here on GitHub
+3. Send us feedback in the [Blitz slack](https://slack.blitzjs.com).
+4. Contribute code. We have a lot of issues that are ready to work on! Start by reading [The Contributing Guide](./how-to-contribute). Let us know if you need help.
+5. Any way you want! We totally appreciate any type of contribution, such as documentation, videos, blog posts, etc. If you have a crazy idea, feel free to run it past us in Slack! :)
+6. [Sponsorships & donations](https://github.com/blitz-js/blitz#sponsors-and-donations)

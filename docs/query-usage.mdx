@@ -1,0 +1,238 @@
+---
+title: Using Queries
+sidebar_label: Using Queries
+---
+
+## In a React Component
+
+To use one of [your Blitz queries](./query-definition), call the `useQuery` hook with:
+
+1. Your query function
+2. The input arguments for your query function
+3. Optionally, a configuration object.
+
+It returns this tuple array,`[queryFunctionResults, queryExtras]`, where `queryFunctionResults` is exactly what's returned from your query function.
+
+`useQuery` is built on [`react-query`](https://github.com/tannerlinsley/react-query), so it automatically provides awesome features such as automatic caching and revalidation.
+
+```ts
+import {useQuery} from "blitz"
+import getProject from "app/projects/queries/getProject"
+
+function App() {
+  const [project] = useQuery(getProject, {where: {id: 1}})
+}
+```
+
+For complete details, see the [`useQuery` API documentation](./use-query).
+
+:::info 🤔
+You way be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
+:::
+
+#### Full Example with Loading & Error States
+
+React Concurrent Mode is enabled by default for Blitz apps. So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
+
+```tsx
+import {Suspense} from "react"
+import {useQuery, useRouter} from "blitz"
+import getProject from "app/projects/queries/getProject"
+import ErrorBoundary from "app/components/ErrorBoundary"
+
+function Project() {
+  const router = useRouter()
+  const projectId = parseInt(router.query.projectId as string)
+  const [project] = useQuery(getProject, {where: {id: projectId}})
+
+  return <div>{project.name}</div>
+}
+
+function WrappedProject() {
+  return (
+    <div>
+      <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Project />
+        </Suspense>
+      </ErrorBoundary>
+    </div>
+  )
+}
+
+export default WrappedProject
+```
+
+### Defaults to Keep in Mind
+
+Out of the box, `useQuery` is configured with **aggressive but sane** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.**:
+
+- Query results that are _currently rendered on the screen_ will become "stale" immediately after they are resolved and will be refetched automatically in the background when they are rendered or used again. To change this, you can alter the default `staleTime` for queries to something other than `0` milliseconds.
+- Query results that become unused (all instances of the query are unmounted) will still be cached in case they are used again for a default of 5 minutes before they are garbage collected. To change this, you can alter the default `cacheTime` for queries to something other than `1000 * 60 * 5` milliseconds.
+- Stale queries will automatically be refetched in the background **when the browser window is refocused by the user**. You can disable this using the `refetchOnWindowFocus` option in queries or the global config.
+- Queries that fail will silently and automatically be retried **3 times, with exponential backoff delay** before capturing and displaying an error to the UI. To change this, you can alter the default `retry` and `retryDelay` options for queries to something other than `3` and the default exponential backoff function.
+- Query results by default are deep compared to detect if data has actually changed and if not, the data reference remains unchanged to better help with value stabilization with regards to useMemo and useCallback. The default deep compare function use here (`config.isDataEqual`) only supports comparing JSON-compatible primitives. If you are dealing with any non-json compatible values in your query responses OR are seeing performance issues with the deep compare function, you should probably disable it (`config.isDataEqual = () => false`) or customize it to better fit your needs.
+
+### Options
+
+See [the `useQuery` API documentation](./use-query) for a full list of possible options.
+
+### Dependent Queries
+
+The second query will not execute until the second function argument can be called without throwing.
+
+```tsx
+const [user] = useQuery(getUser, {where: {id: props.query.id}})
+const [projects] = useQuery(getProjects, () => ({where: {userId: user.id}}))
+```
+
+### Pagination
+
+Use the [`usePaginatedQuery`](./use-paginated-query) hook
+
+```ts
+import {Suspense, useState} from "react"
+import {Link, BlitzPage, usePaginatedQuery} from "blitz"
+import getProjects from "app/projects/queries/getProjects"
+
+const ITEMS_PER_PAGE = 3
+
+const Projects = () => {
+  const [page, setPage] = useState(0)
+  const [projects] = usePaginatedQuery(getProjects, {
+    skip: ITEMS_PER_PAGE * page,
+    first: ITEMS_PER_PAGE,
+  })
+
+  return (
+    <div>
+      {projects.map((project) => (
+        <p key={project.id}>
+          <Link href="/projects/[handle]" as={`/projects/${project.handle}`}>
+            <a>{project.name}</a>
+          </Link>
+        </p>
+      ))}
+      <button disabled={page === 0} onClick={() => setPage(page - 1)}>
+        Previous
+      </button>
+      <button
+        disabled={projects.length !== ITEMS_PER_PAGE}
+        onClick={() => setPage(page + 1)}>
+        Next
+      </button>
+    </div>
+  )
+}
+
+const Page: BlitzPage = function () {
+  return (
+    <div>
+      <h1>Projects - Paginated</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Projects />
+      </Suspense>
+    </div>
+  )
+}
+export default Page
+```
+
+### Infinite Loading (not yet implemented: [#239](https://github.com/blitz-js/blitz/issues/239))
+
+```ts
+import {useInfiniteQuery} from "blitz"
+import getProjects from "/app/projects/queries/getProjects"
+
+function Projects(props) {
+  const [
+    groupedProjects,
+    {isFetching, isFetchingMore, fetchMore, canFetchMore},
+  ] = useInfiniteQuery(
+    getProjects,
+    (page = {first: 100, skip: 0}) => ({where: {storeId: props.storeId}, ...page}),
+    {
+      getFetchMore: (lastGroup, allGroups) => lastGroup.nextPage,
+    },
+  )
+
+  return (
+    <>
+      {groupedProjects.map((group, i) => (
+        <React.Fragment key={i}>
+          {group.projects.map((project) => (
+            <p key={project.id}>{project.name}</p>
+          ))}
+        </React.Fragment>
+      ))}
+
+      <div>
+        <button onClick={() => fetchMore()} disabled={!canFetchMore || isFetchingMore}>
+          {isFetchingMore
+            ? "Loading more..."
+            : canFetchMore
+            ? "Load More"
+            : "Nothing more to load"}
+        </button>
+      </div>
+
+      <div>{isFetching && !isFetchingMore ? "Fetching..." : null}</div>
+    </>
+  )
+}
+```
+
+### Prefetching (not yet implemented: [#237](https://github.com/blitz-js/blitz/issues/237))
+
+- All queries are automatically cached, so manually calling a query function will cache it's data
+
+Both of the following will cache the `getProject` query.
+
+```ts
+const project = await getProject({where: {id: props.id}})
+```
+
+```tsx
+<button onMouseEnter={() => getProject({where: {id: projectId}})}>View Project</button>
+```
+
+## On the Server
+
+### `getStaticProps`
+
+In `getStaticProps`, a query function can be called directly without `useQuery`
+
+```tsx
+import getProject from "app/projects/queries/getProject"
+
+export const getStaticProps = async (context) => {
+  const project = await getProject({where: {id: context.params?.projectId}})
+  return {props: {project}}
+}
+
+function ProjectPage({project}) {
+  return <div>{project.name}</div>
+}
+
+export default ProjectPage
+```
+
+### `getServerSideProps`
+
+In `getServerSideProps`, pass a query function to [`ssrQuery`](./ssr-query) which will ensure appropriate middleware is run before/after your query function.
+
+```tsx
+import {ssrQuery} from 'blitz'
+import getProject from 'app/projects/queries/getProject'
+
+export const getServerSideProps = async ({params, req, res}) => {
+  const project = await ssrQuery(getProject, {where: {id: params.projectId}}, {req, res}))
+  return {props: {project}}
+}
+
+function ProjectPage ({project}) {
+  return <div>{project.name}</div>
+}
+
+export default ProjectPage
+```

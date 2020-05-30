@@ -1,0 +1,92 @@
+---
+title: Using Mutations
+sidebar_label: Using Mutations
+---
+
+Mutations are called directly, like a regular asynchronous function.
+
+```tsx
+import updateProject from 'app/projects/mutations/updateProject'
+
+function (props) {
+
+  return (
+    <Formik
+      onSubmit={async values => {
+        try {
+          const project = await updateProject(values)
+        } catch (error) {
+          alert('Error saving project')
+        }
+      }}>
+      {/* ... */}
+    </Formik>
+  )
+}
+```
+
+:::info 🤔
+You way be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
+:::
+
+## Error Handling
+
+Any errors thrown from your server code will be thrown on the client just like you'd expect. So you can use `try {} catch {}` or `.catch()`.
+
+## Cache Invalidation
+
+#### `refetch`
+
+- `useQuery` returns a `refetch` function you can use to trigger a query reload
+
+```tsx
+export default function (props) {
+  const [product, {refetch}] = useQuery(getProduct, {where: {id: props.id}})
+
+  return (
+    <Formik
+      initialValues={product}
+      onSubmit={async (values) => {
+        try {
+          const product = await updateProduct(values)
+          refetch()
+        } catch (error) {
+          alert("Error saving product")
+        }
+      }}>
+      {/* ... */}
+    </Formik>
+  )
+}
+```
+
+#### `mutate` (not yet implemented [#582](https://github.com/blitz-js/blitz/issues/582))
+
+- `useQuery` returns a `mutate` function you can use to manually update the cache
+- Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data
+- `mutate` will be fully typed for Typescript usage
+
+```tsx
+export default function (props: {query: {id: number}}) {
+  const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
+
+  return (
+    <Formik
+      initialValues={product}
+      onSubmit={async (values) => {
+        try {
+          const product = await updateProduct(values)
+          mutate(product)
+        } catch (error) {
+          alert("Error saving product")
+        }
+      }}>
+      {/* ... */}
+    </Formik>
+  )
+}
+```
+
+#### Automatically
+
+We want to somehow automatically invalidate your query cache. We're not sure how to do this yet, but we have [an open issue that you're welcome to contribute to!](https://github.com/blitz-js/blitz/issues/586)

@@ -1,0 +1,48 @@
+---
+id: pages-and-routing
+title: Pages and Routing
+sidebar_label: Pages & Routing
+---
+
+### Pages
+
+Blitz.js pages are exactly the same as Next.js pages. If you need, read [the Next.js Page documentation](https://nextjs.org/docs/basic-features/pages)
+
+- Unlike Next.js, you can have many `pages/` folders nested inside `app/`. This way pages can be organized neatly, especially for larger projects. Like this:
+  - `app/pages/about.tsx`
+  - `app/projects/pages/projects/index.tsx`
+  - `app/tasks/pages/projects/[projectId]/tasks/[taskId].tsx`
+- All React components inside a `pages/` folder are accessible at a URL corresponding to its path inside `pages/`. So `pages/about.tsx` will be at `localhost:3000/about`.
+
+The Next.js router APIs are all exported from the `blitz` package: `useRouter()`, `withRouter()`, and `Router`. If you need, read [the Next.js Router documentation](https://nextjs.org/docs/api-reference/next/router).
+
+### Routing
+
+Blitz uses the [file-system based router provided by Next.js](https://nextjs.org/docs/routing/introduction).
+
+- All components in `pages/` are mapped to a URL.
+- All http handlers in `api/` are mapped to a URL.
+- Queries and mutations are automatically exposed as an API endpoint
+  - The `app/projects/queries/getProjects.js` query will be exposed at `/api/projects/queries/getProjects`
+
+### Conventions
+
+We copied the conventions from Ruby on Rails, where it has stood the test of time. The Blitz CLI will use these conventions for code scaffolding. If you don't like them, you are free to deviate and do anything you want.
+
+- Entity names are plural
+- Each of the following have their own page: entity index, single entity show page, new entity page, and edit entity page
+- `entityId` is used from the dynamic url slug
+
+Example: You have a `Project` model and a `Task` model which belongs to a `Project`. Your routes will be:
+
+| URL Path                                  | File                                                        |
+| ----------------------------------------- | ----------------------------------------------------------- |
+| /projects                                 | app/projects/pages/projects/index.js                        |
+| /projects/new                             | app/projects/pages/projects/new.js                          |
+| /projects/[projectId]                     | app/projects/pages/projects/[projectId].js                  |
+| /projects/[projectId]/edit                | app/projects/pages/projects/[projectId]/edit.js             |
+|                                           |                                                             |
+| /projects/[projectId]/tasks               | app/tasks/pages/projects/[projectId]/tasks/index.js         |
+| /projects/[projectId]/tasks/new           | app/tasks/pages/projects/[projectId]/tasks/new.js           |
+| /projects/[projectId]/tasks/[taskId]      | app/tasks/pages/projects/[projectId]/tasks/[taskId].js      |
+| /projects/[projectId]/tasks/[taskId]/edit | app/tasks/pages/projects/[projectId]/tasks/[taskId]/edit.js |

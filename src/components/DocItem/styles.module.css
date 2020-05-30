@@ -30,7 +30,9 @@
 
 @media (min-width: 997px) and (max-width: 1320px) {
   .docItemWrapper {
-    max-width: calc(var(--ifm-container-width) - 300px - var(--ifm-spacing-horizontal) * 2);
+    max-width: calc(
+      var(--ifm-container-width) - 300px - var(--ifm-spacing-horizontal) * 2
+    );
   }
 }
 

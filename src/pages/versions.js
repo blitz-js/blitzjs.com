@@ -19,7 +19,9 @@ function Vision() {
                     <a href={useBaseUrl("/docs/basics/getting-started")}>Documentation</a>
                   </td>
                   <td>
-                    <a href="https://github.com/blitz-js/blitzjs.com/releases">Release Notes</a>
+                    <a href="https://github.com/blitz-js/blitzjs.com/releases">
+                      Release Notes
+                    </a>
                   </td>
                 </tr>
               </tbody>

@@ -7,21 +7,24 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: ["manifesto"],
+    Introduction: ["manifesto", "code-of-conduct", "how-to-contribute"],
     Basics: [
-      "basics/getting-started",
-      "basics/pages-and-routing",
-      "basics/queries-and-mutations",
-      "basics/custom-api-routes",
-      "basics/deploying",
-      "basics/webpack-config",
+      "getting-started",
+      "tutorial",
+      "file-structure",
+      "pages-and-routing",
+      "custom-api-routes",
     ],
-    CLI: ["cli/introduction", "cli/commands"],
-    Advanced: ["advanced/rpc-specification"],
-    Contributing: [
-      "contributing/how-to-contribute",
-      "contributing/code-of-conduct",
-      "contributing/future-of-blitz",
+    Queries: [
+      "query-definition",
+      "query-usage",
+      "use-query",
+      "use-paginated-query",
+      "ssr-query",
     ],
+    Mutations: ["mutation-definition", "mutation-usage"],
+    "Deploying to Production": ["deploy-render", "deploy-vercel"],
+    CLI: ["cli-introduction", "cli-commands"],
+    Advanced: ["webpack-config", "rpc-specification"],
   },
 }

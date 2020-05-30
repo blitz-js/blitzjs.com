@@ -166,8 +166,8 @@ export default {
     "1.125rem",
     "1.25rem",
     "1.5rem",
-    "1.875rem",
-    "2.25rem",
+    "1.75rem",
+    "2.2rem",
     "2.5rem",
     "3.25rem",
   ],
@@ -325,7 +325,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 3,
-      mt: 3,
+      mt: 4,
       fontSize: 5,
     },
     h5: {
@@ -334,6 +334,7 @@ export default {
       lineHeight: "heading",
       m: 0,
       mb: 3,
+      mt: 4,
       fontSize: 4,
     },
     h6: {
@@ -344,6 +345,9 @@ export default {
       mb: 2,
       fontSize: 3,
     },
+    inlineCode: {
+      backgroundColor: "codeBackground",
+    },
     code: {
       ".comment,.prolog,.doctype,.cdata,.punctuation,.operator,.entity,.url": {
         color: "codeComment",
@@ -351,14 +355,22 @@ export default {
       ".comment": {
         fontStyle: "italic",
       },
-      ".property, .tag, .boolean, .number, .constant, .symbol, .deleted, .function, .class-name, .regex, .important, .variable": {
+      ".property, .tag, .boolean, .number, .constant, .symbol,  .function, .class-name, .regex, .important, .variable": {
         color: "accent",
       },
       ".atrule, .attr-value, .keyword": {
         color: "primary",
       },
-      ".selector, .attr-name, .string, .char, .builtin, .inserted": {
+      ".selector, .attr-name, .string, .char, .builtin": {
         color: "secondary",
+      },
+      ".deleted": {
+        color: baseColors.red[7],
+        fontWeight: 600,
+      },
+      ".inserted": {
+        color: baseColors.green[7],
+        fontWeight: 600,
       },
     },
     pre: {
@@ -369,6 +381,10 @@ export default {
       border: 0,
       height: "1px",
       m: 3,
+    },
+    table: {
+      fontFamily: "mono",
+      fontSize: 1,
     },
   },
   buttons: {

@@ -12,7 +12,7 @@
     "jsxBracketSameLine": true,
     "trailingComma": "all",
     "semi": false,
-    "printWidth": 100,
+    "printWidth": 90,
     "endOfLine": "lf"
   },
   "browserslist": {

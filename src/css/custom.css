@@ -28,6 +28,8 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }
 
 .docusaurus-highlight-code-line {

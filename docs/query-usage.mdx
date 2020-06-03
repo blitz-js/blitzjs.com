@@ -1,6 +1,6 @@
 ---
 title: Using Queries
-sidebar_label: Using Queries
+sidebar_label: Use Queries
 ---
 
 ## In a React Component
@@ -182,7 +182,7 @@ function Projects(props) {
 }
 ```
 
-### Prefetching (not yet implemented: [#237](https://github.com/blitz-js/blitz/issues/237))
+### Prefetching
 
 - All queries are automatically cached, so manually calling a query function will cache it's data
 
@@ -193,7 +193,7 @@ const project = await getProject({where: {id: props.id}})
 ```
 
 ```tsx
-<button onMouseEnter={() => getProject({where: {id: projectId}})}>View Project</button>
+<a onMouseEnter={() => getProject({where: {id: projectId}})}>View Project</a>
 ```
 
 ## On the Server

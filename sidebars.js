@@ -26,7 +26,7 @@ module.exports = {
       "get-static-paths",
       "get-server-side-props",
     ],
-    Routing: ["routing", "routing-conventions", "api-routes"],
+    Routing: ["routing", "routing-conventions", "api-routes", "link", "router"],
     Queries: [
       "query-definition",
       "query-usage",

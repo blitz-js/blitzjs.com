@@ -5,7 +5,7 @@
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "lint": "alex ."
+    "lint": "alex docs/**/*.mdx"
   },
   "prettier": {
     "bracketSpacing": false,

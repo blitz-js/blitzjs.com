@@ -128,7 +128,7 @@ Now, we’ll setup the database and create your first model.
 
 Open up `db/schema.prisma`. It’s a configuration file which our default database engine Prisma uses.
 
-By default, the apps is created with SQLite. If you’re new to databases, or you’re just interested in trying Blitz, this is the easiest choice. Note that when starting your first project, you may want to use a more scalable database like PostgreSQL, to avoid the pains of switching your database down the road.
+By default, the apps is created with SQLite. If you’re new to databases, or you’re interested in trying Blitz, this is the easiest choice. Note that when starting your first project, you may want to use a more scalable database like PostgreSQL, to avoid the pains of switching your database down the road.
 
 ## Creating models
 
@@ -220,7 +220,7 @@ Let’s create some more pages. Blitz provides a handy utility for scaffolding o
 $ blitz generate all question
 ```
 
-Great! Before running the app again, we need to customise some of these pages which have just been generated. Open your text editor and look at `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
+Great! Before running the app again, we need to customise some of these pages which have been generated. Open your text editor and look at `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
 
 ```jsx
 export const QuestionsList = () => {
@@ -274,7 +274,7 @@ const question = await createQuestion({
 })
 ```
 
-Finally, we just need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace
+Finally, we need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace
 
 ```jsx
 const updated = await updateQuestion({
@@ -292,13 +292,13 @@ const updated = await updateQuestion({
 })
 ```
 
-Great! Now make sure your app is running. If it isn’t, just run `blitz start` in your terminal, and visit http://localhost:3000/questions. Play around with your new app a bit! Try creating questions, editing, and deleting them.
+Great! Now make sure your app is running. If it isn’t, run `blitz start` in your terminal, and visit http://localhost:3000/questions. Play around with your new app a bit! Try creating questions, editing, and deleting them.
 
 ## Writing a minimal form
 
 You’re doing great so far! The next thing we’ll do is give our form some real inputs. At the moment it’s giving every `Question` the same name! Have a look at `app/questions/pages/questions/new.tsx` in your editor.
 
-Delete the div that says: `<div>Put your form fields here. But for now, just click submit</div>`, and replace it with some inputs:
+Delete the div that says: `<div>Put your form fields here. But for now, click submit</div>`, and replace it with some inputs:
 
 ```jsx
 <input placeholder="Name" />
@@ -401,7 +401,7 @@ export default async function getQuestions(args: FindManyQuestionArgs) {
 }
 ```
 
-Now hop back to our main questions page in your editor, and we can list the choices of each question easily. Just add this code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page in your editor, and we can list the choices of each question . Add this code beneath the `Link` in our `QuestionsList`:
 
 ```jsx
 <ul>
@@ -491,13 +491,13 @@ return (
 ...
 ```
 
-Finally, we’ll just tell our `button` to call that function!
+Finally, we’ll tell our `button` to call that function!
 
 ```jsx
 <button onClick={() => handleVote(choice.id, choice.votes)}>Vote</button>
 ```
 
-Just to be sure, this is what all that should look like:
+To be sure, this is what all that should look like:
 
 ```jsx
 import { Suspense } from "react"
@@ -582,7 +582,7 @@ export default ShowQuestionPage
 
 ## Conclusion
 
-🥳 Congrats! You just created your very own Blitz app! Have fun playing around with it, or sharing it with your friends. Now that you’ve finished this tutorial, why not try making your voting app even better? You could try:
+🥳 Congrats! Youcreated your very own Blitz app! Have fun playing around with it, or sharing it with your friends. Now that you’ve finished this tutorial, why not try making your voting app even better? You could try:
 
 - Adding styling
 - Showing some more statistics about votes

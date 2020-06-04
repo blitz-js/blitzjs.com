@@ -137,7 +137,7 @@ function Home() {
             <Link
               to={useBaseUrl("/docs/getting-started")}
               sx={{variant: "buttons.bordered", fontSize: 3}}>
-              Get Started
+              Getting Started Docs
             </Link>
             <Link
               href="https://github.com/blitz-js/blitz"

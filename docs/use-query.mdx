@@ -11,6 +11,7 @@ const [
     isFetching,
     failureCount,
     refetch,
+    mutate,
   }
 ] = useQuery(blitzQueryFunction, queryInputArguments, {
   manual,
@@ -108,7 +109,13 @@ const [
   - The failure count for the query.
   - Incremented every time the query fails.
   - Reset to `0` when the query succeeds.
-- `refetch: Function({ force, throwOnError }) => void`
+- `refetch()` - `Function({ force, throwOnError }) => void`
   - A function to manually refetch the query if it is stale.
   - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
   - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
+- `mutate()` - `Function(newData) => void`
+  - A function to manually update the cache for a query.
+  - `newData` can be an object of new data or a function that receives the old data and returns the new data
+  - This is often used to instantly update the cache after submitting a form
+  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct
+  - See the [Blitz mutation usage docs](./mutation-usage#mutate) for example usage of `mutate()`

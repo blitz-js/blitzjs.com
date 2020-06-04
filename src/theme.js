@@ -278,7 +278,7 @@ export default {
     },
     a: {
       color: "primary",
-      textDecoration: "none",
+      textDecoration: "underline",
       ":hover": {
         textDecoration: "underline",
       },

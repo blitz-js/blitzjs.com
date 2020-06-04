@@ -26,7 +26,15 @@ module.exports = {
       "get-static-paths",
       "get-server-side-props",
     ],
-    Routing: ["routing", "routing-conventions", "api-routes", "link", "router"],
+    Routing: [
+      "routing",
+      "routing-conventions",
+      "link",
+      "route-params-query",
+      "router",
+      "api-routes",
+    ],
+    Database: ["database-overview"],
     Queries: [
       "query-definition",
       "query-usage",
@@ -36,7 +44,15 @@ module.exports = {
     ],
     Mutations: ["mutation-definition", "mutation-usage"],
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
-    CLI: ["cli-introduction", "cli-commands"],
+    CLI: [
+      "cli-overview",
+      "cli-new",
+      "cli-start",
+      "cli-build",
+      "cli-db",
+      "cli-generate",
+      "cli-console",
+    ],
     Advanced: [
       "blitz-config",
       "webpack-config",

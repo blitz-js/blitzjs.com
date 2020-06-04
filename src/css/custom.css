@@ -26,10 +26,7 @@
 }
 
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%) contrast(105%);
 }
 
 .docusaurus-highlight-code-line {

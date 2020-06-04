@@ -35,36 +35,10 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 
 ## Cache Invalidation
 
-#### `refetch`
+#### `mutate`
 
-- `useQuery` returns a `refetch` function you can use to trigger a query reload
-
-```tsx
-export default function (props) {
-  const [product, {refetch}] = useQuery(getProduct, {where: {id: props.id}})
-
-  return (
-    <Formik
-      initialValues={product}
-      onSubmit={async (values) => {
-        try {
-          const product = await updateProduct(values)
-          refetch()
-        } catch (error) {
-          alert("Error saving product")
-        }
-      }}>
-      {/* ... */}
-    </Formik>
-  )
-}
-```
-
-#### `mutate` (not yet implemented [#582](https://github.com/blitz-js/blitz/issues/582))
-
-- `useQuery` returns a `mutate` function you can use to manually update the cache
+- [`useQuery`](./use-query.mdx) returns a `mutate` function you can use to manually update the cache
 - Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data
-- `mutate` will be fully typed for Typescript usage
 
 ```tsx
 export default function (props: {query: {id: number}}) {
@@ -77,6 +51,31 @@ export default function (props: {query: {id: number}}) {
         try {
           const product = await updateProduct(values)
           mutate(product)
+        } catch (error) {
+          alert("Error saving product")
+        }
+      }}>
+      {/* ... */}
+    </Formik>
+  )
+}
+```
+
+#### `refetch`
+
+- [`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload
+
+```tsx
+export default function (props) {
+  const [product, {refetch}] = useQuery(getProduct, {where: {id: props.id}})
+
+  return (
+    <Formik
+      initialValues={product}
+      onSubmit={async (values) => {
+        try {
+          const product = await updateProduct(values)
+          refetch()
         } catch (error) {
           alert("Error saving product")
         }

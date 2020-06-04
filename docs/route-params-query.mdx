@@ -1,0 +1,42 @@
+---
+title: URL Params & Query
+sidebar_label: URL Params & Query
+---
+
+## `useParams`
+
+This hook returns all the parameters for the current route as an object. Parameter types are `string` or `string[]`
+
+```tsx
+// Page: app/products/pages/products/[id].tsx
+// URL: /app/products/pages/products/2
+
+import {useParams} from "blitz"
+
+const params = useParams()
+
+// params = {id: "2"}
+```
+
+```tsx
+// Page: app/pages/blog/[...slug].tsx
+// URL: /app/pages/blog/2020/1
+
+const params = useParams()
+
+// params = {slug: ["2020", "1"]}
+```
+
+## `useRouterQuery`
+
+This hook returns all the query parameters from the URL as an object. Parameter type is always `string`
+
+```tsx
+// URL:  /products?sort=asc&limit=10
+
+import {useRouterQuery} from "blitz"
+
+const query = useRouterQuery()
+
+// query = {sort: "asc", limit: "10"}
+```

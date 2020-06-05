@@ -7,15 +7,14 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: ["manifesto", "code-of-conduct", "how-to-contribute"],
-    Basics: [
+    Introduction: [
       "getting-started",
       "tutorial",
-      "file-structure",
-      "app-component",
-      "css",
-      "static-files",
+      "manifesto",
+      "code-of-conduct",
+      "contributing",
     ],
+    Basics: ["file-structure", "app-component", "css", "static-files"],
     Pages: [
       "pages",
       "error-pages",

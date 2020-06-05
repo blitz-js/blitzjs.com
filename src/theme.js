@@ -124,7 +124,8 @@ const baseColors = {
 }
 
 export default {
-  useColorSchemeMediaQuery: true,
+  // TODO: Disable until we have dark mode working right
+  useColorSchemeMediaQuery: false,
   colors: {
     text: baseColors.gray[9],
     textMuted: "#718096",

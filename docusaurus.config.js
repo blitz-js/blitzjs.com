@@ -9,6 +9,8 @@ module.exports = {
   projectName: "blitz", // Usually your repo name.
   themeConfig: {
     sidebarCollapsible: false,
+    // Disable docusaurus dark mode because we use our own theme-ui dark mode
+    disableDarkMode: true,
     algolia: {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
       indexName: "blitzjs",

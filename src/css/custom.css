@@ -25,10 +25,6 @@
   --ifm-menu-color-active: #6700eb;
 }
 
-html {
-  filter: grayscale(100%) contrast(105%);
-}
-
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;

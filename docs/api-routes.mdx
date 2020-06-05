@@ -4,7 +4,7 @@ sidebar_label: API Routes
 ---
 
 :::info
-Unlike Next.js, your `api/` folder must be a sibling of `pages/` instead of being nested inside.
+Unlike Next.js, your `api/` folder should be a sibling of `pages/` instead of being nested inside. But `pages/api` is still supported for compatiblility with Next.js.
 :::
 
 Any file inside an `api/` folder are accessible at a URL corresponding to it's path inside `api/`. So `app/projects/api/webhook.ts` will be at `localhost:3000/api/webhook`.

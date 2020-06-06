@@ -48,6 +48,11 @@ module.exports = {
           label: "Slack",
           position: "left",
         },
+        {
+          href: "https://github.com/blitz-js/blitz/discussions",
+          label: "Forum",
+          position: "left",
+        },
       ],
     },
     footer: {
@@ -60,6 +65,10 @@ module.exports = {
               label: "Getting Started",
               to: "docs/getting-started",
             },
+            {
+              label: "Contributing",
+              to: "docs/contributing",
+            },
           ],
         },
         {
@@ -70,8 +79,8 @@ module.exports = {
               href: "https://slack.blitzjs.com",
             },
             {
-              label: "GitHub",
-              href: "https://github.com/blitz-js/blitz",
+              label: "Forum Discussions",
+              href: "https://github.com/blitz-js/blitz/discussions",
             },
           ],
         },

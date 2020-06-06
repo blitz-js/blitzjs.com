@@ -27,6 +27,32 @@ const params = useParams()
 // params = {slug: ["2020", "1"]}
 ```
 
+## `useParam`
+
+This hook returns a single parameter cast to chosen type. Available types are: `number`, `string` and `array` which always returns an array of strings.
+
+```tsx
+// File: app/locations/pages/locations/[id]/[[...zipcode]].tsx
+// URL: /locations/2/02137
+
+import {useParam} from "blitz"
+
+const id = useParam("id", "number")
+const zipcodes = useParam("zipcode", "array")
+
+// id = 2
+// zipcodes = ["02137"]
+```
+
+```tsx
+// File: app/pages/blog/[slug].tsx
+// URL: /blog/hello-world
+
+const slug = useParam("slug", "string")
+
+// slug = "hello-world"
+```
+
 ## `useRouterQuery`
 
 This hook returns all the query parameters from the URL as an object. Parameter type is always `string`

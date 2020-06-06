@@ -1,69 +1,106 @@
 ---
-title: useQuery
-sidebar_label: useQuery
+title: useInfiniteQuery
+sidebar_label: useInfiniteQuery
 ---
 
 ### Example
 
-React Concurrent Mode is enabled by default for Blitz apps. So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
+```ts
+import {useInfiniteQuery} from "blitz"
+import getProducts from "/app/products/queries/getProducts"
 
-```tsx
-import {Suspense} from "react"
-import {useQuery, useRouter} from "blitz"
-import getProject from "app/projects/queries/getProject"
-import ErrorBoundary from "app/components/ErrorBoundary"
+function Products(props) {
+  const [
+    groupedProducts,
+    {isFetching, isFetchingMore, fetchMore, canFetchMore},
+  ] = useInfiniteQuery(
+    getProducts,
+    (page = {first: 100, skip: 0}) => ({where: {storeId: props.storeId}, ...page}),
+    {
+      getFetchMore: (lastGroup, allGroups) => lastGroup.nextPage,
+    },
+  )
 
-function Project() {
-  const router = useRouter()
-  const projectId = parseInt(router.query.projectId as string)
-  const [project] = useQuery(getProject, {where: {id: projectId}})
-
-  return <div>{project.name}</div>
-}
-
-function WrappedProject() {
   return (
-    <div>
-      <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Project />
-        </Suspense>
-      </ErrorBoundary>
-    </div>
+    <>
+      {groupedProducts.map((group, i) => (
+        <React.Fragment key={i}>
+          {group.products.map((product) => (
+            <p key={product.id}>{product.name}</p>
+          ))}
+        </React.Fragment>
+      ))}
+
+      <div>
+        <button onClick={() => fetchMore()} disabled={!canFetchMore || isFetchingMore}>
+          {isFetchingMore
+            ? "Loading more..."
+            : canFetchMore
+            ? "Load More"
+            : "Nothing more to load"}
+        </button>
+      </div>
+
+      <div>{isFetching && !isFetchingMore ? "Fetching..." : null}</div>
+    </>
   )
 }
-
-export default WrappedProject
 ```
 
-<br />
+And here's the query to work with that:
 
-> For more examples and use cases, see the [query usage documentation](./query-usage.mdx).
+```ts
+export default async function getProducts({
+  where,
+  orderBy,
+  first,
+  skip,
+}: GetProductsInput) {
+  const products = await db.product.findMany({
+    where,
+    orderBy,
+    first,
+    skip,
+  })
+
+  const count = await db.product.count()
+  const hasMore = skip < count
+  const nextPage = hasMore ? {first, skip: skip + first} : null
+
+  return {
+    products,
+    nextPage,
+  }
+}
+```
 
 ## API
 
 <!-- prettier-ignore -->
 ```js
 const [
-  queryFunctionResults,
+  groupedQueryFunctionResults,
   {
     isFetching,
     failureCount,
     refetch,
+    fetchMore,
+    canFetchMore,
     mutate,
   }
-] = useQuery(blitzQueryFunction, queryInputArguments, {
+] = useQuery(blitzQueryFunction, getQueryInputArguments, {
+  // options
+  getFetchMore: (lastPage, allPages) => pageOptions
   manual,
   retry,
   retryDelay,
-  staleTime,
+  staleTime
   cacheTime,
   refetchInterval,
   refetchIntervalInBackground,
   refetchOnWindowFocus,
   onSuccess,
   onError,
-  onSettled,
   suspense,
   initialData,
   refetchOnMount,
@@ -74,16 +111,21 @@ const [
 
 - `blitzQueryFunction:` A [Blitz query function](./query-definition)
   - **Required**
-- `queryInputArguments`
+- `getQueryInputArguments: (pageOptions) => queryInputArguments`
   - **Required**
-  - The arguments that will be passed to `blitzQueryFunction`
+  - A function that accepts the current page options and returns the `queryInputArguments`
+  - On the first page load, `pageOptions` is `undefined`.
+  - For subsequent pages, `pageOptions` is whatever is returned from `getFetchMore()`
 - `options`
   - Optional
 
 ### Options
 
+- `getFetchMore: Function(lastPage, allPages) => pageOptions | Boolean`
+  - When new data is received for this query, this function receives both the last page of the infinite list of data and the full array of all pages.
+  - It should return a **single variable** that will be passed as the argument to `getQueryInputArguments()`
 - `manual: Boolean`
-  - Set this to `true` to disable automatic refetching when the query mounts or input arguments change.
+  - Set this to `true` to disable automatic refetching when the query mounts or changes query keys.
   - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
 - `retry: Boolean | Int | Function(failureCount, error) => shouldRetry | Boolean`
   - If `false`, failed queries will not retry by default.
@@ -118,10 +160,9 @@ const [
 - `onSettled: Function(data, error) => data`
   - Optional
   - This function will fire any time the query is either successfully fetched or errors and be passed either the data or error
-- `initialData: any | Function() => any`
+- `initialData: any`
   - Optional
   - If set, this value will be used as the initial data for the query cache (as long as the query hasn't been created or cached yet)
-  - If set to a function, the function will be called **once** during the shared/root query initialization, and be expected to synchronously return the initialData
 - `refetchOnMount: Boolean`
   - Optional
   - Defaults to `true`
@@ -132,12 +173,12 @@ const [
 
 ### Returns
 
-`[queryFunctionResults, queryExtras]`
+`[groupedQueryFunctionResults, queryExtras]`
 
-##### `queryFunctionResults: Any`
+##### `groupedQueryFunctionResults: Array<any>`
 
-- Defaults to `undefined`.
-- The last successfully resolved data for the query.
+- Defaults to `[]`.
+- The array will contain each "page" of data that has been requested
 
 ##### `queryExtras: Object`
 
@@ -152,6 +193,11 @@ const [
   - A function to manually refetch the query if it is stale.
   - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
   - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
+- `fetchMore()` - `Function(pageOptionsOverride) => Promise`
+  - This function allows you to fetch the next "page" of results.
+  - `pageOptionsOverride` allows you to optionally override the result returned from your `getCanFetchMore` function
+- `canFetchMore: Boolean`
+  - If using `paginated` mode, this will be `true` if there is more data to be fetched (known via the required `getFetchMore` option function).
 - `mutate()` - `Function(newData) => void`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the old data and returns the new data

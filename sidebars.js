@@ -39,6 +39,7 @@ module.exports = {
       "query-usage",
       "use-query",
       "use-paginated-query",
+      "use-infinite-query",
       "ssr-query",
     ],
     Mutations: ["mutation-definition", "mutation-usage"],

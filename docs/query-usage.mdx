@@ -24,48 +24,15 @@ function App() {
 }
 ```
 
-For complete details, see the [`useQuery` API documentation](./use-query).
+For complete details, see the [`useQuery` documentation](./use-query).
 
 :::info 🤔
 You way be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
 :::
 
-#### Full Example with Loading & Error States
-
-React Concurrent Mode is enabled by default for Blitz apps. So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
-
-```tsx
-import {Suspense} from "react"
-import {useQuery, useRouter} from "blitz"
-import getProject from "app/projects/queries/getProject"
-import ErrorBoundary from "app/components/ErrorBoundary"
-
-function Project() {
-  const router = useRouter()
-  const projectId = parseInt(router.query.projectId as string)
-  const [project] = useQuery(getProject, {where: {id: projectId}})
-
-  return <div>{project.name}</div>
-}
-
-function WrappedProject() {
-  return (
-    <div>
-      <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Project />
-        </Suspense>
-      </ErrorBoundary>
-    </div>
-  )
-}
-
-export default WrappedProject
-```
-
 ### Defaults to Keep in Mind
 
-Out of the box, `useQuery` is configured with **aggressive but reasonable** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.**:
+Out of the box, `useQuery` and the other query hooks are configured with **aggressive but reasonable** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.**:
 
 - Query results that are _currently rendered on the screen_ will become "stale" immediately after they are resolved and will be refetched automatically in the background when they are rendered or used again. To change this, you can alter the default `staleTime` for queries to something other than `0` milliseconds.
 - Query results that become unused (all instances of the query are unmounted) will still be cached in case they are used again for a default of 5 minutes before they are garbage collected. To change this, you can alter the default `cacheTime` for queries to something other than `1000 * 60 * 5` milliseconds.
@@ -75,7 +42,7 @@ Out of the box, `useQuery` is configured with **aggressive but reasonable** defa
 
 ### Options
 
-See [the `useQuery` API documentation](./use-query) for a full list of possible options.
+See [the `useQuery` documentation](./use-query) for a full list of possible options.
 
 ### Dependent Queries
 
@@ -90,97 +57,9 @@ const [projects] = useQuery(getProjects, () => ({where: {userId: user.id}}))
 
 Use the [`usePaginatedQuery`](./use-paginated-query) hook
 
-```ts
-import {Suspense, useState} from "react"
-import {Link, BlitzPage, usePaginatedQuery} from "blitz"
-import getProjects from "app/projects/queries/getProjects"
+### Infinite Loading
 
-const ITEMS_PER_PAGE = 3
-
-const Projects = () => {
-  const [page, setPage] = useState(0)
-  const [projects] = usePaginatedQuery(getProjects, {
-    skip: ITEMS_PER_PAGE * page,
-    first: ITEMS_PER_PAGE,
-  })
-
-  return (
-    <div>
-      {projects.map((project) => (
-        <p key={project.id}>
-          <Link href="/projects/[handle]" as={`/projects/${project.handle}`}>
-            <a>{project.name}</a>
-          </Link>
-        </p>
-      ))}
-      <button disabled={page === 0} onClick={() => setPage(page - 1)}>
-        Previous
-      </button>
-      <button
-        disabled={projects.length !== ITEMS_PER_PAGE}
-        onClick={() => setPage(page + 1)}>
-        Next
-      </button>
-    </div>
-  )
-}
-
-const Page: BlitzPage = function () {
-  return (
-    <div>
-      <h1>Projects - Paginated</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Projects />
-      </Suspense>
-    </div>
-  )
-}
-export default Page
-```
-
-### Infinite Loading (not yet implemented: [#239](https://github.com/blitz-js/blitz/issues/239))
-
-```ts
-import {useInfiniteQuery} from "blitz"
-import getProjects from "/app/projects/queries/getProjects"
-
-function Projects(props) {
-  const [
-    groupedProjects,
-    {isFetching, isFetchingMore, fetchMore, canFetchMore},
-  ] = useInfiniteQuery(
-    getProjects,
-    (page = {first: 100, skip: 0}) => ({where: {storeId: props.storeId}, ...page}),
-    {
-      getFetchMore: (lastGroup, allGroups) => lastGroup.nextPage,
-    },
-  )
-
-  return (
-    <>
-      {groupedProjects.map((group, i) => (
-        <React.Fragment key={i}>
-          {group.projects.map((project) => (
-            <p key={project.id}>{project.name}</p>
-          ))}
-        </React.Fragment>
-      ))}
-
-      <div>
-        <button onClick={() => fetchMore()} disabled={!canFetchMore || isFetchingMore}>
-          {isFetchingMore
-            ? "Loading more..."
-            : canFetchMore
-            ? "Load More"
-            : "Nothing more to load"}
-        </button>
-      </div>
-
-      <div>{isFetching && !isFetchingMore ? "Fetching..." : null}</div>
-    </>
-  )
-}
-```
+Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
 ### Prefetching
 

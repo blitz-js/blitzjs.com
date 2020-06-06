@@ -1,9 +1,59 @@
 ---
-title: usePaginatedQuery API
-sidebar_label: usePaginatedQuery API
+title: usePaginatedQuery
+sidebar_label: usePaginatedQuery
 ---
 
-See the [Using Queries Guide](http://localhost:3000/docs/query-usage#pagination) for example usage.
+### Example
+
+```ts
+import {Suspense, useState} from "react"
+import {Link, BlitzPage, usePaginatedQuery} from "blitz"
+import getProjects from "app/projects/queries/getProjects"
+
+const ITEMS_PER_PAGE = 3
+
+const Projects = () => {
+  const [page, setPage] = useState(0)
+  const [projects] = usePaginatedQuery(getProjects, {
+    skip: ITEMS_PER_PAGE * page,
+    first: ITEMS_PER_PAGE,
+  })
+
+  return (
+    <div>
+      {projects.map((project) => (
+        <p key={project.id}>
+          <Link href="/projects/[handle]" as={`/projects/${project.handle}`}>
+            <a>{project.name}</a>
+          </Link>
+        </p>
+      ))}
+      <button disabled={page === 0} onClick={() => setPage(page - 1)}>
+        Previous
+      </button>
+      <button
+        disabled={projects.length !== ITEMS_PER_PAGE}
+        onClick={() => setPage(page + 1)}>
+        Next
+      </button>
+    </div>
+  )
+}
+
+const Page: BlitzPage = function () {
+  return (
+    <div>
+      <h1>Projects - Paginated</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Projects />
+      </Suspense>
+    </div>
+  )
+}
+export default Page
+```
+
+## API
 
 <!-- prettier-ignore -->
 ```js

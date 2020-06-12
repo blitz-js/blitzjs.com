@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
 
 The `context` parameter is an object containing the following keys:
 
-- `params`: If this page uses a dynamic route, `params` contains the route parameters. If the page name is `[id].js` , then `params` will look like `{ id: ... }`. To learn more, take a look at the [Dynamic Routing documentation](/docs/routing/dynamic-routes.md).
+- `params`: If this page uses a dynamic route, `params` contains the route parameters. If the page name is `[id].js` , then `params` will look like `{ id: ... }`. To learn more, take a look at the [Dynamic Routing documentation](/docs/routing#dynamic-route-segments).
 - `req`: [The HTTP IncomingMessage object](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 - `res`: [The HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
 - `query`: The query string.
@@ -90,7 +90,7 @@ export default Page
 `getServerSideProps` only runs on server-side and never runs on the browser. If a page uses `getServerSideProps` , then:
 
 - When you request this page directly, `getServerSideProps` runs at the request time, and this page will be pre-rendered with the returned props.
-- When you request this page on client-side page transitions through `<Link>` or `next/router` ([documentation](/docs/api-reference/next/router.md)), Blitz sends an API request to the server, which runs `getServerSideProps`. It’ll return JSON that contains the result of running `getServerSideProps`, and the JSON will be used to render the page. All this work will be handled automatically by Blitz, so you don’t need to do anything extra as long as you have `getServerSideProps` defined.
+- When you request this page on client-side page transitions through `<Link>` or `router` ([documentation](/docs/router)), Blitz sends an API request to the server, which runs `getServerSideProps`. It’ll return JSON that contains the result of running `getServerSideProps`, and the JSON will be used to render the page. All this work will be handled automatically by Blitz, so you don’t need to do anything extra as long as you have `getServerSideProps` defined.
 
 You can use [this tool](https://next-code-elimination.now.sh/) to verify what Blitz eliminates from the client-side bundle.
 

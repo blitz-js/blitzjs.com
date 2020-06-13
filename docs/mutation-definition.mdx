@@ -15,6 +15,13 @@ Blitz mutations are plain, asynchronous Javascript functions that always run on 
 
 You can write any normal Node.js code here, including database access and fetching from third-party APIs.
 
+#### Arguments
+
+- `input: any`
+  - The first argument is anything you need for your mutation. There are no special requirements.
+- `ctx: Record<any, unknown>`
+  - This context object is automatically provided by Blitz at run time. This is used by [HTTP Middleware](./middleware.mdx) to provide data or functions to your mutation. For example, authentication middleware can provide `ctx.session` with all the data about the current user session.
+
 #### Example Mutation
 
 ```ts
@@ -25,7 +32,10 @@ type CreateProjectInput = {
   data: ProjectCreateArgs["data"]
 }
 
-export default async function createProject({data}: CreateProjectInput) {
+export default async function createProject(
+  {data}: CreateProjectInput,
+  ctx: Record<any, unknown> = {},
+) {
   // Can do any processing, fetching from other APIs, etc
 
   const project = await db.project.create({data})

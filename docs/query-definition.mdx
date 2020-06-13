@@ -15,6 +15,13 @@ Blitz queries are plain, asynchronous Javascript functions that always run on th
 
 You can write any normal Node.js code here, including database access and fetching from third-party APIs.
 
+#### Arguments
+
+- `input: any`
+  - The first argument is anything you need for your query. There are no special requirements.
+- `ctx: Record<any, unknown>`
+  - This context object is automatically provided by Blitz at run time. This is used by [HTTP Middleware](./middleware.mdx) to provide data or functions to your query. For example, authentication middleware can provide `ctx.session` with all the data about the current user session.
+
 #### Example Query
 
 ```ts
@@ -25,7 +32,10 @@ type GetProjectInput = {
   where: FindOneProjectArgs["where"]
 }
 
-export default async function getProject({where}: GetProjectInput) {
+export default async function getProject(
+  {where}: GetProjectInput,
+  ctx: Record<any, unknown> = {},
+) {
   // Can do any processing, fetching from other APIs, etc
 
   const project = await db.project.findOne({where})

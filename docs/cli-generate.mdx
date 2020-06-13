@@ -13,10 +13,10 @@ Can generate pages, queries, and mutations. Generating `Prisma` models is coming
 blitz generate [type] [model]
 ```
 
-| Argument | Required | Description                                                                             |
-| -------- | -------- | --------------------------------------------------------------------------------------- |
-| `type`   | Yes      | Type of files to generate. Options: `all`, `crud`, `queries`, `mutations`, and `pages`. |
-| `model`  | Yes      | The model name to generate files for                                                    |
+| Argument | Required | Description                                                                                         |
+| -------- | -------- | --------------------------------------------------------------------------------------------------- |
+| `type`   | Yes      | Type of files to generate. Options: `all`, `resource`, `crud`, `queries`, `mutations`, and `pages`. |
+| `model`  | Yes      | The model name to generate files for                                                                |
 
 ##### Example Output
 
@@ -84,7 +84,7 @@ Shorthand: `-d`
 
 Displays what files would be generated but does not write the files to disk.
 
-### Examples
+#### Basic Examples
 
 ```bash
 blitz generate all project
@@ -100,4 +100,70 @@ blitz generate crud admin/topsecret/files
 
 ```bash
 blitz generate pages tasks --parent=projects
+```
+
+### Model Generation
+
+All of the following commands will generate a model in your prisma schema file:
+
+- `blitz generate all`
+- `blitz generate resource`
+- `blitz generate model`
+
+#### Model Fields
+
+Model fields can be added like this:
+
+```bash
+blitz generate model [fieldName]:[type]:[attribute]
+```
+
+- `fieldName` is the name of your database column and can be anything
+- `type` can be anything supported by Prisma including [scalar types](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model#scalar-types) and [relation types](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/relations)
+  - **Optional** - defaults to `string` if not specified
+  - Add `?` to make the type optional like this: `string?`
+- `attribute` is for adding a [prisma field attribute](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model#attributes)
+  - **Optional**
+  - Supported: `default`, `unqiue`
+  - If the attribute takes an argument, you can include it in brackets like this: `default[false]` That will set the default value to `false`
+
+##### Example 1
+
+```bash
+blitz g model project name tasks:Task[]
+```
+
+will generate this in `prisma.schema`:
+
+```prisma
+model Project {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  tasks     Task[]
+}
+```
+
+##### Example 2
+
+```bash
+blitz generate model task \
+       name \
+       completed:boolean:default[false] \
+       belongsTo:project?
+```
+
+will generate this in `prisma.schema`:
+
+```prisma
+model Task {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  completed Boolean  @default(false)
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+}
 ```

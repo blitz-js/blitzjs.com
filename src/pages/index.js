@@ -266,9 +266,7 @@ function Home() {
             You are invited to help us make Blitz the best framework we’ve ever had!
           </Text>
 
-          <Link
-            to={useBaseUrl("/docs/contributing/how-to-contribute")}
-            sx={{variant: "buttons.outline"}}>
+          <Link to={useBaseUrl("/docs/contributing")} sx={{variant: "buttons.outline"}}>
             Learn How to Contribute
           </Link>
         </Spaced>

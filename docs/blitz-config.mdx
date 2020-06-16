@@ -77,6 +77,20 @@ module.exports = {
 
 > Deployments to [Vercel](https://vercel.com) will automatically enable this target. You should not opt-into it yourself.
 
+## Middleware
+
+HTTP middleware can be added queries and mutations. [See the middleware documentation](./middleware.mdx) for full details.
+
+```js
+module.exports = {
+  middleware: [
+    (req, res, next) => {
+      res.blitzCtx.referer = req.headers.referer
+      return next()
+    },
+  ],
+```
+
 ## CDN Support with Asset Prefix
 
 To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network), you can set up an asset prefix and configure your CDN's origin to resolve to the domain that Blitz is hosted on.

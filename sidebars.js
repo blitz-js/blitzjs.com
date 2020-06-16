@@ -58,6 +58,7 @@ module.exports = {
       "webpack-config",
       "postcss-config",
       "dynamic-import",
+      "middleware",
       "measuring-performance",
       "rpc-specification",
     ],

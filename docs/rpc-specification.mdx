@@ -48,6 +48,19 @@ Response body is JSON with the following keys:
 - result - the exact result returned from the query/mutation function or null if there was an error
 - error - null if success, otherwise an object.
 
+**Example POST body:**
+
+
+```json
+{
+  "params": {
+    "where": {
+      "id": 1
+    }
+  }
+}
+```
+
 ### POST Responses
 
 #### Success

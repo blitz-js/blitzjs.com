@@ -48,7 +48,7 @@ Here's the definition of the `router` object returned by `useRouter` and `withRo
 
 - `pathname`: `String` - Current route. That is the path of the page in `/pages`
 - `query`: `Object` - All the query parameters from the current route. Parameter type is always `string`.
-- `params`: `Object` - All the parameters for the current route. Parameter types are `string` or `string[]`.
+- `params`: `Object` - All the dynamic route parameters for the current route. Parameter types are `string` or `string[]`.
 - `asPath`: `String` - Actual path (including the query) shown in the browser
 - [`push()`](#routerpush): Make page navigation
 - [`replace()`](#routerreplace): Make page navigation without adding to browser history

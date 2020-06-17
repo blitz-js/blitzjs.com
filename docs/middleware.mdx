@@ -73,7 +73,7 @@ export const middleware: Middleware[] = [
   async (req, res, next) => {
     res.blitzCtx.referer = req.headers.referer
     await next()
-    if (req.method !== "HEAD")) {
+    if (req.method !== "HEAD") {
       console.log("[Middleware] Loaded product:", res.blitzResult)
     }
   },

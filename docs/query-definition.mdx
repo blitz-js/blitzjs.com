@@ -32,10 +32,7 @@ type GetProjectInput = {
   where: FindOneProjectArgs["where"]
 }
 
-export default async function getProject(
-  {where}: GetProjectInput,
-  ctx: Record<any, unknown> = {},
-) {
+export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
   // Can do any processing, fetching from other APIs, etc
 
   const project = await db.project.findOne({where})

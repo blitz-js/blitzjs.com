@@ -62,7 +62,7 @@ Local middleware only runs for a single query or mutation. It is defined by expo
 
 ```ts
 // app/products/queries/getProduct.tsx
-import {Middleware} from 'blitz'
+import {Middleware} from "blitz"
 import db, {FindOneProjectArgs} from "db"
 
 type GetProjectInput = {
@@ -80,10 +80,9 @@ export const middleware: Middleware[] = [
 ]
 
 export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
-  console.log('Referer:', ctx.referer)
+  console.log("Referer:", ctx.referer)
   return await db.project.findOne({where})
 }
-
 ```
 
 ## Connect/Express Compatibility

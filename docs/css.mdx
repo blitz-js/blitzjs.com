@@ -13,8 +13,7 @@ For example, consider the following stylesheet named `styles.css`:
 
 ```css
 body {
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial",
-    sans-serif;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   padding: 20px 20px 60px;
   max-width: 680px;
   margin: 0 auto;
@@ -74,7 +73,8 @@ export function Button() {
       type="button"
       // Note how the "error" class is accessed as a property on the imported
       // `styles` object.
-      className={styles.error}>
+      className={styles.error}
+    >
       Destroy
     </button>
   )

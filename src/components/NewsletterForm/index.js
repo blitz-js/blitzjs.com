@@ -8,7 +8,8 @@ const NewsletterForm = () => {
     <form
       className="newsletter-form"
       action="https://design.us4.list-manage.com/subscribe/post?u=aeb422edfecb0e2dcaf70d12d&amp;id=1a028d02ce"
-      method="post">
+      method="post"
+    >
       <input
         aria-label="Email address"
         name="EMAIL"

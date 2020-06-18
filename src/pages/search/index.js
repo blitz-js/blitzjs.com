@@ -29,9 +29,7 @@ function pluralize(count, word) {
 
 function Search() {
   const {
-    siteConfig: {
-      themeConfig: {algolia: {appId = "BH4D9OD16A", apiKey, indexName} = {}},
-    } = {},
+    siteConfig: {themeConfig: {algolia: {appId = "BH4D9OD16A", apiKey, indexName} = {}}} = {},
   } = useDocusaurusContext()
   const {searchValue, updateSearchPath} = useSearchQuery()
   const {versioningEnabled, versions, latestVersion} = useVersioning()
@@ -62,8 +60,7 @@ function Search() {
 
           return {
             ...state,
-            items:
-              state.lastPage === 0 ? state.items : prevState.items.concat(state.items),
+            items: state.lastPage === 0 ? state.items : prevState.items.concat(state.items),
           }
         }
         case "advance": {
@@ -95,27 +92,22 @@ function Search() {
     }
 
     const sanitizeValue = (value) => {
-      return value.replace(
-        /algolia-docsearch-suggestion--highlight/g,
-        "search-result-match",
-      )
+      return value.replace(/algolia-docsearch-suggestion--highlight/g, "search-result-match")
     }
 
-    const items = hits.map(
-      ({url, _highlightResult: {hierarchy}, _snippetResult: snippet = {}}) => {
-        const {pathname, hash} = new URL(url)
-        const titles = Object.keys(hierarchy).map((key) => {
-          return sanitizeValue(hierarchy[key].value)
-        })
+    const items = hits.map(({url, _highlightResult: {hierarchy}, _snippetResult: snippet = {}}) => {
+      const {pathname, hash} = new URL(url)
+      const titles = Object.keys(hierarchy).map((key) => {
+        return sanitizeValue(hierarchy[key].value)
+      })
 
-        return {
-          title: titles.pop(),
-          url: pathname + hash,
-          summary: snippet.content ? `${sanitizeValue(snippet.content.value)}...` : "",
-          breadcrumbs: titles,
-        }
-      },
-    )
+      return {
+        title: titles.pop(),
+        url: pathname + hash,
+        summary: snippet.content ? `${sanitizeValue(snippet.content.value)}...` : "",
+        breadcrumbs: titles,
+      }
+    })
 
     searchResultStateDispatcher({
       type: "update",
@@ -221,7 +213,8 @@ function Search() {
             className={classnames("col", styles.searchQueryColumn, {
               "col--9": versioningEnabled,
               "col--12": !versioningEnabled,
-            })}>
+            })}
+          >
             <input
               type="search"
               name="q"
@@ -242,11 +235,13 @@ function Search() {
                 "col--3",
                 "padding-left--none",
                 styles.searchVersionColumn,
-              )}>
+              )}
+            >
               <select
                 onChange={handleSearchInputChange}
                 defaultValue={searchVersion}
-                className={styles.searchVersionInput}>
+                className={styles.searchVersionInput}
+              >
                 {versions.map((version, i) => (
                   <option key={i} value={version}>
                     {version}
@@ -272,12 +267,14 @@ function Search() {
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.algolia.com/"
-              aria-label="Search">
+              aria-label="Search"
+            >
               <svg
                 viewBox="0 0 168 24"
                 className={styles.algoliaLogo}
                 xmlns="http://www.w3.org/2000/svg"
-                aria-label="Search by Algolia">
+                aria-label="Search by Algolia"
+              >
                 <g fill="none">
                   <path
                     className={styles.algoliaLogoPathFill}
@@ -330,9 +327,7 @@ function Search() {
             searchQuery && !searchResultState.loading && (
               <p key="no-results">No results were found</p>
             ),
-            !!searchResultState.loading && (
-              <div key="spinner" className={styles.loadingSpinner} />
-            ),
+            !!searchResultState.loading && <div key="spinner" className={styles.loadingSpinner} />,
           ]
         )}
 

@@ -28,7 +28,8 @@ function FooterLink({to, href, label, ...props}) {
         : {
             to: toUrl,
           })}
-      {...props}>
+      {...props}
+    >
       {label}
     </Link>
   )
@@ -53,7 +54,8 @@ function Footer() {
     <footer
       className={classnames("footer", {
         "footer--dark": footer.style === "dark",
-      })}>
+      })}
+    >
       <div className="container">
         {links && links.length > 0 && (
           <div className="row footer__links">
@@ -97,12 +99,9 @@ function Footer() {
                   height="12"
                   viewBox="0 0 116 100"
                   fill="#fff"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M57.5 0L115 100H0L57.5 0z"
-                  />
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path fillRule="evenodd" clipRule="evenodd" d="M57.5 0L115 100H0L57.5 0z" />
                 </svg>
                 Vercel
               </a>
@@ -114,7 +113,8 @@ function Footer() {
                     href={logo.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.footerLogoLink}>
+                    className={styles.footerLogoLink}
+                  >
                     <FooterLogo alt={logo.alt} url={logoUrl} />
                   </a>
                 ) : (

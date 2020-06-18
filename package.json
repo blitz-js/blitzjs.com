@@ -8,12 +8,10 @@
     "lint": "alex docs/**/*.mdx"
   },
   "prettier": {
-    "bracketSpacing": false,
-    "jsxBracketSameLine": true,
-    "trailingComma": "all",
     "semi": false,
-    "printWidth": 90,
-    "endOfLine": "lf"
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "trailingComma": "all"
   },
   "browserslist": {
     "production": [

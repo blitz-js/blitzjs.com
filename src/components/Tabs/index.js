@@ -78,7 +78,8 @@ function Tabs(props) {
         aria-orientation="horizontal"
         className={classnames("tabs", {
           "tabs--block": block,
-        })}>
+        })}
+      >
         {values.map(({value, label}) => (
           <li
             role="tab"
@@ -91,17 +92,14 @@ function Tabs(props) {
             ref={(tabControl) => tabRefs.push(tabControl)}
             onKeyDown={(event) => handleKeydown(tabRefs, event.target, event)}
             onFocus={() => changeSelectedValue(value)}
-            onClick={() => changeSelectedValue(value)}>
+            onClick={() => changeSelectedValue(value)}
+          >
             {label}
           </li>
         ))}
       </ul>
       <div role="tabpanel" className="margin-vert--md">
-        {
-          Children.toArray(children).filter(
-            (child) => child.props.value === selectedValue,
-          )[0]
-        }
+        {Children.toArray(children).filter((child) => child.props.value === selectedValue)[0]}
       </div>
     </div>
   )

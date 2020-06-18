@@ -40,7 +40,8 @@ const Heading = (Tag) =>
           tabIndex="-1"
           className="hash-link"
           href={`#${id}`}
-          title="Direct link to heading">
+          title="Direct link to heading"
+        >
           #
         </a>
       </Tag>

@@ -54,15 +54,7 @@ function DocItem(props) {
   const {url: siteUrl, title: siteTitle} = siteConfig
   const {content: DocContent} = props
   const {metadata} = DocContent
-  const {
-    description,
-    title,
-    permalink,
-    editUrl,
-    lastUpdatedAt,
-    lastUpdatedBy,
-    version,
-  } = metadata
+  const {description, title, permalink, editUrl, lastUpdatedAt, lastUpdatedBy, version} = metadata
   const {
     frontMatter: {
       image: metaImage,
@@ -85,9 +77,7 @@ function DocItem(props) {
         <meta property="og:title" content={metaTitle} />
         {description && <meta name="description" content={description} />}
         {description && <meta property="og:description" content={description} />}
-        {keywords && keywords.length && (
-          <meta name="keywords" content={keywords.join(",")} />
-        )}
+        {keywords && keywords.length && <meta name="keywords" content={keywords.join(",")} />}
         {metaImage && <meta property="og:image" content={metaImageUrl} />}
         {metaImage && <meta property="twitter:image" content={metaImageUrl} />}
         {metaImage && <meta name="twitter:image:alt" content={`Image for ${title}`} />}
@@ -99,7 +89,8 @@ function DocItem(props) {
           <div
             className={classnames("col", {
               [styles.docItemCol]: !hideTableOfContents,
-            })}>
+            })}
+          >
             <div className={styles.docItemContainer}>
               <article>
                 {version && (
@@ -124,11 +115,7 @@ function DocItem(props) {
                   <div className="row">
                     <div className="col">
                       Idea for improving this page?
-                      <a
-                        href={editUrl}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        sx={{ml: 2}}>
+                      <a href={editUrl} target="_blank" rel="noreferrer noopener" sx={{ml: 2}}>
                         Edit it on Github
                       </a>
                     </div>
@@ -142,7 +129,8 @@ function DocItem(props) {
                                 on{" "}
                                 <time
                                   dateTime={new Date(lastUpdatedAt * 1000).toISOString()}
-                                  className={styles.docLastUpdatedAt}>
+                                  className={styles.docLastUpdatedAt}
+                                >
                                   {new Date(lastUpdatedAt * 1000).toLocaleDateString()}
                                 </time>
                                 {lastUpdatedBy && " "}
@@ -167,9 +155,7 @@ function DocItem(props) {
               )}
             </div>
           </div>
-          {!hideTableOfContents && DocContent.rightToc && (
-            <DocTOC headings={DocContent.rightToc} />
-          )}
+          {!hideTableOfContents && DocContent.rightToc && <DocTOC headings={DocContent.rightToc} />}
         </div>
       </div>
     </>

@@ -55,7 +55,8 @@ function NavLink({
                 }
               : null),
           })}
-      {...props}>
+      {...props}
+    >
       {label}
     </Link>
   )
@@ -80,7 +81,8 @@ function NavItem({items, position, className, ...props}) {
       className={classnames("navbar__item", "dropdown", "dropdown--hoverable", {
         "dropdown--left": position === "left",
         "dropdown--right": position === "right",
-      })}>
+      })}
+    >
       <NavLink
         className={navLinkClassNames(className)}
         {...props}
@@ -89,7 +91,8 @@ function NavItem({items, position, className, ...props}) {
           if (e.key === "Enter") {
             e.target.parentNode.classList.toggle("dropdown--show")
           }
-        }}>
+        }}
+      >
         {props.label}
       </NavLink>
       <ul className="dropdown__menu">
@@ -182,7 +185,8 @@ function Navbar() {
         "navbar-sidebar--show": sidebarShown,
         [styles.navbarHideable]: hideOnScroll,
         [styles.navbarHidden]: !isNavbarVisible,
-      })}>
+      })}
+    >
       <div className="navbar__inner">
         <div className="navbar__items">
           {links != null && links.length !== 0 && (
@@ -192,14 +196,16 @@ function Navbar() {
               role="button"
               tabIndex={0}
               onClick={showSidebar}
-              onKeyDown={showSidebar}>
+              onKeyDown={showSidebar}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
                 height="30"
                 viewBox="0 0 30 30"
                 role="img"
-                focusable="false">
+                focusable="false"
+              >
                 <title>Menu</title>
                 <path
                   stroke="currentColor"
@@ -213,18 +219,14 @@ function Navbar() {
           )}
           <Link className="navbar__brand" to={logoLink} {...logoLinkProps}>
             {logoImageUrl != null && (
-              <img
-                key={isClient}
-                className="navbar__logo"
-                src={logoImageUrl}
-                alt={logoAlt}
-              />
+              <img key={isClient} className="navbar__logo" src={logoImageUrl} alt={logoAlt} />
             )}
             {title != null && (
               <strong
                 className={classnames("navbar__title", {
                   [styles.hideLogoText]: isSearchBarExpanded,
-                })}>
+                })}
+              >
                 {title}
               </strong>
             )}
@@ -256,25 +258,12 @@ function Navbar() {
           />
         </div>
       </div>
-      <div
-        role="presentation"
-        className="navbar-sidebar__backdrop"
-        onClick={hideSidebar}
-      />
+      <div role="presentation" className="navbar-sidebar__backdrop" onClick={hideSidebar} />
       <div className="navbar-sidebar">
         <div className="navbar-sidebar__brand">
-          <Link
-            className="navbar__brand"
-            onClick={hideSidebar}
-            to={logoLink}
-            {...logoLinkProps}>
+          <Link className="navbar__brand" onClick={hideSidebar} to={logoLink} {...logoLinkProps}>
             {logoImageUrl != null && (
-              <img
-                key={isClient}
-                className="navbar__logo"
-                src={logoImageUrl}
-                alt={logoAlt}
-              />
+              <img key={isClient} className="navbar__logo" src={logoImageUrl} alt={logoAlt} />
             )}
             {title != null && <strong className="navbar__title">{title}</strong>}
           </Link>

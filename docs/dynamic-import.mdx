@@ -46,9 +46,7 @@ To dynamically import the `Hello` component, you can return it from the [Promise
 ```jsx
 import {dynamic} from "blitz"
 
-const DynamicComponent = dynamic(() =>
-  import("../components/hello").then((mod) => mod.Hello),
-)
+const DynamicComponent = dynamic(() => import("../components/hello").then((mod) => mod.Hello))
 
 function Home() {
   return (

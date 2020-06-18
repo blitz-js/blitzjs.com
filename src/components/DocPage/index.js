@@ -19,13 +19,7 @@ import styles from "./styles.module.css"
 
 function DocPage(props) {
   const {route: baseRoute, docsMetadata, location, content} = props
-  const {
-    permalinkToSidebar,
-    docsSidebars,
-    version,
-    isHomePage,
-    homePagePath,
-  } = docsMetadata
+  const {permalinkToSidebar, docsSidebars, version, isHomePage, homePagePath} = docsMetadata
 
   // Get case-sensitive route such as it is defined in the sidebar.
   const currentRoute = !isHomePage
@@ -34,12 +28,8 @@ function DocPage(props) {
       }) || {}
     : {}
 
-  const sidebar = isHomePage
-    ? content.metadata.sidebar
-    : permalinkToSidebar[currentRoute.path]
-  const {
-    siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {},
-  } = useDocusaurusContext()
+  const sidebar = isHomePage ? content.metadata.sidebar : permalinkToSidebar[currentRoute.path]
+  const {siteConfig: {themeConfig: {sidebarCollapsible = true} = {}} = {}} = useDocusaurusContext()
 
   if (!isHomePage && Object.keys(currentRoute).length === 0) {
     return <NotFound {...props} />

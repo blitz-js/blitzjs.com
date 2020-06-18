@@ -44,7 +44,8 @@ function DocSidebarItem({item, onItemClick, collapsible, activePath, ...props}) 
             className={classnames("menu__list-item", {
               "menu__list-item--collapsed": collapsed,
             })}
-            key={label}>
+            key={label}
+          >
             <a
               className={classnames("menu__link", {
                 "menu__link--sublist": collapsible,
@@ -52,7 +53,8 @@ function DocSidebarItem({item, onItemClick, collapsible, activePath, ...props}) 
               })}
               href="#!"
               onClick={collapsible ? handleItemClick : undefined}
-              {...props}>
+              {...props}
+            >
               {label}
             </a>
             <ul className="menu__list">
@@ -90,7 +92,8 @@ function DocSidebarItem({item, onItemClick, collapsible, activePath, ...props}) 
                   target: "_blank",
                   rel: "noreferrer noopener",
                 })}
-            {...props}>
+            {...props}
+          >
             {label}
           </Link>
         </li>
@@ -105,9 +108,8 @@ function mutateSidebarCollapsingState(item, path) {
   switch (type) {
     case "category": {
       const anyChildItemsActive =
-        items
-          .map((childItem) => mutateSidebarCollapsingState(childItem, path))
-          .filter((val) => val).length > 0
+        items.map((childItem) => mutateSidebarCollapsingState(childItem, path)).filter((val) => val)
+          .length > 0
       // eslint-disable-next-line no-param-reassign
       item.collapsed = !anyChildItemsActive
       return anyChildItemsActive
@@ -148,21 +150,16 @@ function DocSidebar(props) {
   return (
     <div className={styles.sidebar}>
       {hideOnScroll && (
-        <Link
-          tabIndex="-1"
-          className={styles.sidebarLogo}
-          to={logoLink}
-          {...logoLinkProps}>
-          {logoImageUrl != null && (
-            <img key={isClient} src={logoImageUrl} alt={logoAlt} />
-          )}
+        <Link tabIndex="-1" className={styles.sidebarLogo} to={logoLink} {...logoLinkProps}>
+          {logoImageUrl != null && <img key={isClient} src={logoImageUrl} alt={logoAlt} />}
           {title != null && <strong>{title}</strong>}
         </Link>
       )}
       <div
         className={classnames("menu", "menu--responsive", styles.menu, {
           "menu--show": showResponsiveSidebar,
-        })}>
+        })}
+      >
         <button
           aria-label={showResponsiveSidebar ? "Close Menu" : "Open Menu"}
           aria-haspopup="true"
@@ -170,10 +167,10 @@ function DocSidebar(props) {
           type="button"
           onClick={() => {
             setShowResponsiveSidebar(!showResponsiveSidebar)
-          }}>
+          }}
+        >
           {showResponsiveSidebar ? (
-            <span
-              className={classnames(styles.sidebarMenuIcon, styles.sidebarMenuCloseIcon)}>
+            <span className={classnames(styles.sidebarMenuIcon, styles.sidebarMenuCloseIcon)}>
               &times;
             </span>
           ) : (
@@ -185,7 +182,8 @@ function DocSidebar(props) {
               width={MOBILE_TOGGLE_SIZE}
               viewBox="0 0 32 32"
               role="img"
-              focusable="false">
+              focusable="false"
+            >
               <title>Menu</title>
               <path
                 stroke="currentColor"

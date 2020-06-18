@@ -50,8 +50,7 @@ function BlogPostItem(props) {
         </TitleHeading>
         <div className="margin-vert--md">
           <time dateTime={date} className={styles.blogPostDate}>
-            {month} {day}, {year}{" "}
-            {readingTime && <> · {Math.ceil(readingTime)} min read</>}
+            {month} {day}, {year} {readingTime && <> · {Math.ceil(readingTime)} min read</>}
           </time>
         </div>
         <div className="avatar margin-vert--md">
@@ -60,7 +59,8 @@ function BlogPostItem(props) {
               className="avatar__photo-link avatar__photo"
               href={authorURL}
               target="_blank"
-              rel="noreferrer noopener">
+              rel="noreferrer noopener"
+            >
               <img src={authorImageURL} alt={author} />
             </a>
           )}

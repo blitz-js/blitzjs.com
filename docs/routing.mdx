@@ -36,11 +36,10 @@ To match a dynamic segment you can use the bracket syntax. This allows you to ma
 Consider the following page `app/pages/post/[pid].js`:
 
 ```jsx
-import {useRouter} from "blitz"
+import {useParam} from "blitz"
 
 const Post = () => {
-  const router = useRouter()
-  const {pid} = router.query
+  const pid = useParam('pid')
 
   return <p>Post: {pid}</p>
 }

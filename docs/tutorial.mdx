@@ -453,7 +453,10 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 ```js
 // app/questions/queries/getQuestion.ts
 
-export default async function getQuestion({where}: GetQuestionInput) {
+export default async function getQuestion(
+  {where /* include */}: GetQuestionInput,
+  ctx: Record<any, any> = {},
+) {
   const question = await db.question.findOne({where, include: {choices: true}})
 
   return question
@@ -463,13 +466,10 @@ export default async function getQuestion({where}: GetQuestionInput) {
 ```js
 // app/questions/queries/getQuestions.ts
 
-export default async function getQuestions({
-  where,
-  orderBy,
-  cursor,
-  take,
-  skip,
-}: GetQuestionsInput) {
+export default async function getQuestions(
+  {where, orderBy, cursor, take, skip}: GetQuestionsInput,
+  ctx: Record<any, any> = {},
+) {
   const questions = await db.question.findMany({
     where,
     orderBy,

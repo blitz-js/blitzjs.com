@@ -53,8 +53,8 @@ module.exports = {
       "postcss-config",
       "dynamic-import",
       "middleware",
-      "measuring-performance",
       "rpc-specification",
+      "measuring-performance",
     ],
   },
 }

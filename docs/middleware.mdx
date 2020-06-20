@@ -85,6 +85,45 @@ export default async function getProject({where}: GetProjectInput, ctx: Record<a
 }
 ```
 
+## Communicating Between Middleware and Query/Mutation Resolvers
+
+### From Middleware to Resolvers
+
+Middleware can pass anything, including data, objects, and functions, to Blitz queries and mutations by adding to `res.blitzCtx`. At runtime, `res.blitzCtx` is automatically passed to the query/mutation handler as the second argument.
+
+1. You must add to `res.blitzCtx` **before** calling `next()`
+2. Keep in mind other middleware can also modify `res.blitzCtx`, so be sure to program defensively because anything can happen.
+
+### From Resolvers to Middleware
+
+There are two ways middleware can receive data, objects, and functions from resolvers:
+
+1. `res.blitzResult` will contain the exact result returned from the query/mutation resolver. But you must first `await next()` before reading this. `await next()` will resolve once all subsequent middleware is run, including the Blitz internal middleware that runs the query/mutation resolver.
+2. You can pass a callback into the resolver via `res.blitzCtx` and then the resolver can pass data back to the middlewary be calling `ctx.someCallback(someData)`
+
+## Error Handling
+
+#### Short Circuit the Request
+
+Normally this is the type of error you expect from middleware. Because middleware should not have business logic, so you won't be throwing authorization errors for example. Usually an error in middleware means something is really wrong with the incoming request.
+
+There are two ways to short circuit the request:
+
+1. `throw` an error from inside your middleware
+2. Pass an Error object to `next` like `next(error)`
+
+#### Handle via Normal Query/Mutation Flow
+
+Another uncommon way to handle a middleware error is to pass it to the query/mutation and then throw the error from there.
+
+```ts
+// In middleware
+res.blitzCtx.error = new Error()
+
+// In query/mutation
+if (ctx.error) throw ctx.error
+```
+
 ## Connect/Express Compatibility
 
 Blitz provides a `connectMiddleware()` function take converts connect middleware to Blitz middleware.
@@ -102,3 +141,7 @@ module.exports = {
 ### Arguments
 
 - `middleware` - Any connect/express middleware.
+
+## More Information
+
+If you'd like more details on the RPC API, see the [RPC API documentation](./rpc-specification)

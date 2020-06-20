@@ -267,7 +267,7 @@ undefined
 Before running the app again, we need to customize some of these pages which have been generated. Open your text editor and look at `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
 
 ```jsx
-export const QuestionsList: React.FC = () => {
+export const QuestionsList = () => {
   const [questions] = useQuery(getQuestions, {orderBy: {id: "desc"}})
 
   return (
@@ -287,7 +287,7 @@ export const QuestionsList: React.FC = () => {
 This won’t work though! Remember that the `Question` model we created above doesn’t have any `name` field. To fix this, replace `question.name` with `question.text`:
 
 ```jsx
-export const QuestionsList: React.FC = () => {
+export const QuestionsList = () => {
   const [questions] = useQuery(getQuestions, {orderBy: {id: "desc"}})
 
   return (
@@ -392,11 +392,11 @@ onSubmit={async (event) => {
 In the end, your page should look something like this:
 
 ```jsx
-import {Head, Link, useRouter} from "blitz"
+import {Head, Link, useRouter, BlitzPage} from "blitz"
 import createQuestion from "app/questions/mutations/createQuestion"
 import QuestionForm from "app/questions/components/QuestionForm"
 
-const NewQuestionPage: React.FC = () => {
+const NewQuestionPage: BlitzPage = () => {
   const router = useRouter()
 
   return (
@@ -564,12 +564,12 @@ To be sure, this is what all that should look like:
 
 ```jsx
 import React, {Suspense} from "react"
-import {Head, Link, useRouter, useQuery, useParam} from "blitz"
+import {Head, Link, useRouter, useQuery, useParam, BlitzPage} from "blitz"
 import getQuestion from "app/questions/queries/getQuestion"
 import deleteQuestion from "app/questions/mutations/deleteQuestion"
 import updateChoice from "app/choices/mutations/updateChoice"
 
-export const Question: React.FC = () => {
+export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
   const [question] = useQuery(getQuestion, {where: {id: questionId}})
@@ -609,14 +609,15 @@ export const Question: React.FC = () => {
             await deleteQuestion({where: {id: question.id}})
             router.push("/questions")
           }
-        }}>
+        }}
+      >
         Delete
       </button>
     </div>
   )
 }
 
-const ShowQuestionPage: React.FC = () => {
+const ShowQuestionPage: BlitzPage = () => {
   return (
     <div>
       <Head>

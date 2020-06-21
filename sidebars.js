@@ -7,7 +7,14 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: ["getting-started", "tutorial", "manifesto", "code-of-conduct", "contributing"],
+    Introduction: [
+      "getting-started",
+      "tutorial",
+      "manifesto",
+      "why-blitz",
+      "code-of-conduct",
+      "contributing",
+    ],
     Basics: ["file-structure", "app-component", "css", "static-files"],
     Pages: [
       "pages",

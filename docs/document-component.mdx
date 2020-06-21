@@ -8,7 +8,7 @@ The `Document` component in `app/pages/_document.tsx` can be used to augment you
 The default `_document.tsx` file looks like this:
 
 ```tsx
-import {Document, Html, DocumentHead, Main, NextScript /*DocumentContext*/} from "blitz"
+import {Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/} from "blitz"
 
 class MyDocument extends Document {
   // Only uncomment if you need to customize this behaviour
@@ -23,7 +23,7 @@ class MyDocument extends Document {
         <DocumentHead />
         <body>
           <Main />
-          <NextScript />
+          <BlitzScript />
         </body>
       </Html>
     )
@@ -33,7 +33,7 @@ class MyDocument extends Document {
 export default MyDocument
 ```
 
-`<Html>`, `<Head />`, `<Main />` and `<NextScript />` are required for the page to be properly rendered.
+`<Html>`, `<DocumentHead />`, `<Main />` and `<BlitzScript />` are required for the page to be properly rendered.
 
 Custom attributes are allowed as props, like `lang`:
 

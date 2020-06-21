@@ -128,7 +128,7 @@ By default, a Blitz app is created with a local SQLite database. If you’re new
 
 ## Generating content
 
-Blitz provides a handy command called [`generate`](./cli-generate) for scaffolding out boilerplate code. We'll use `generate` to create two models: `Question` and `Choice`. A `Question` has the text of the question and a list of choices. A `Choice` has the text of the choice, a vote count, and an associated question. Both models automatically come with an id, a creation timestamp, and a last updated timestamp. In addition to the database layout, passing the `all` type to the `generate` command will also generate the corresponding queries, mutations, and pages for these models!
+Blitz provides a handy command called [`generate`](./cli-generate) for scaffolding out boilerplate code. We'll use `generate` to create two models: `Question` and `Choice`. A `Question` has the text of the question and a list of choices. A `Choice` has the text of the choice, a vote count, and an associated question. Both models automatically come with an id, a creation timestamp, and a last updated timestamp.
 
 First, we'll generate everything pertaining to the `Question` model:
 
@@ -161,10 +161,10 @@ CREATE    app/questions/mutations/deleteQuestion.ts
 CREATE    app/questions/mutations/updateQuestion.ts
 ```
 
-Then, the `Choice` model:
+Then, we'll generate the `Choice` model with corresponding queries and mutations. We'll pass a type of `resource` this time as we don't need to generate pages for the `Choice` model:
 
 ```sh
-blitz generate all choice text votes:int:default[0] belongsTo:question
+blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
 
 ```
@@ -182,11 +182,6 @@ blitz generate all choice text votes:int:default[0] belongsTo:question
 
 Now run blitz db migrate to add this model to your database
 
-CREATE    app/choices/pages/choices/index.tsx
-CREATE    app/choices/pages/choices/new.tsx
-CREATE    app/choices/pages/choices/[choiceId]/edit.tsx
-CREATE    app/choices/pages/choices/[choiceId].tsx
-CREATE    app/choices/components/ChoiceForm.tsx
 CREATE    app/choices/queries/getChoices.ts
 CREATE    app/choices/queries/getChoice.ts
 CREATE    app/choices/mutations/createChoice.ts

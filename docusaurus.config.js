@@ -15,6 +15,7 @@ module.exports = {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
       indexName: "blitzjs",
     },
+    image: "img/logo-bg-purple.png",
     announcementBar: {
       id: "progress",
       content:

@@ -105,7 +105,7 @@ function Home() {
   return (
     <Layout
       title="Blitz.js - The Fullstack React Framework"
-      description="Description will go into a meta tag in <head />"
+      description="Built on Next.js. Inspired by Ruby on Rails. New Fullstack Data Layer. Fullstack has never been this easy!"
     >
       <Grid sx={{px: [3, 5]}}>
         <Spaced

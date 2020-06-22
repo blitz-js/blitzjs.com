@@ -36,7 +36,10 @@ function DocPage(props) {
   }
 
   return (
-    <Layout version={version}>
+    <Layout
+      version={version}
+      description="Built on Next.js. Inspired by Ruby on Rails. New Fullstack Data Layer. Fullstack has never been this easy!"
+    >
       <div className={styles.docPage}>
         {sidebar && (
           <div className={styles.docSidebarContainer}>

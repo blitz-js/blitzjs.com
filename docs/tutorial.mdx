@@ -253,13 +253,49 @@ undefined
 ]
 ```
 
-## Fixing generated pages
+## Fixing generated content
 
-[//]: # "Remove this section once `generate` uses actual model attributes"
+:::info
+Before running the app again, we need to customize some of the content that has been generated. Ultimately, these fixes will not be needed - but for now, we need to work around a couple outstanding issues.
+:::
 
-> Note: ultimately, this section will not be needed as the generated code will use actual model attributes. Coming soon!
+### `deleteQuestion` mutation
 
-Before running the app again, we need to customize some of these pages which have been generated. Open your text editor and look at `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
+[//]: # "Remove this section once Prisma supports cascading deletes"
+
+Prisma does not yet support "cascading deletes". In the context of this tutorial, that means it does not currently delete the `Choice` data when deleting a `Question`. We need to temporarily augment the generated `deleteQuestion` mutation in order to do this manually. Open up `app/questions/mutations/deleteQuestion.ts` in your text editor and add the following to the top of the function body:
+
+```js
+// TODO: remove once Prisma supports cascading deletes
+await db.choice.deleteMany({where: {question: {id: where.id}}})
+```
+
+The end result should be as such:
+
+```jsx
+// app/questions/mutations/deleteQuestion.ts
+
+export default async function deleteQuestion(
+  {where}: DeleteQuestionInput,
+  ctx: Record<any, any> = {},
+) {
+  // TODO: remove once Prisma supports cascading deletes
+  await db.choice.deleteMany({where: {question: {id: where.id}}})
+  const question = await db.question.delete({where})
+
+  return question
+}
+```
+
+This mutation will now delete the choices associated with the question prior to deleting the question itself.
+
+### Question pages
+
+[//]: # "Remove the following section once `generate` uses actual model attributes"
+
+The generated page content does not currently use the actual model attributes you defined during generation. It will soon, but in the meantime, let's fix the generated pages.
+
+Jump over to `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
 
 ```jsx
 export const QuestionsList = () => {

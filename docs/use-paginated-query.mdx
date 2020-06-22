@@ -16,7 +16,7 @@ const Projects = () => {
   const [page, setPage] = useState(0)
   const [projects] = usePaginatedQuery(getProjects, {
     skip: ITEMS_PER_PAGE * page,
-    first: ITEMS_PER_PAGE,
+    take: ITEMS_PER_PAGE,
   })
 
   return (

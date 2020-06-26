@@ -53,3 +53,11 @@ a:hover {
   color: inherit;
   text-decoration: inherit;
 }
+
+.highlight {
+  background: #cad9e7;
+  border-left: 4px solid var(--ifm-menu-color-active);
+  padding-left: 12px;
+  margin-left: -16px;
+  margin-right: -16px;
+}

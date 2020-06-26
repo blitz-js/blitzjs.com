@@ -38,7 +38,7 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 #### `mutate`
 
 - [`useQuery`](./use-query.mdx) returns a `mutate` function you can use to manually update the cache
-- Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data
+- Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
 
 ```tsx
 export default function (props: {query: {id: number}}) {

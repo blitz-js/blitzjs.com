@@ -18,8 +18,7 @@ module.exports = {
     image: "img/logo-bg-purple.png",
     announcementBar: {
       id: "progress",
-      content:
-        "Black Lives Matter. <a target='_blank' href='https://support.eji.org/give/153413/#!/donation/checkout'> Support the Equal Justice Initiative.</a>",
+      content: "🚧Excuse the mess! — A real design is in progress 🚧",
       textColor: "#ffffff",
     },
     navbar: {

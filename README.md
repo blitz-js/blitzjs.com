@@ -42,7 +42,7 @@ When tagging a new version, the document versioning mechanism will:
 
 [See the Docusaurus documention on versioning](https://v2.docusaurus.io/docs/versioning/#tagging-a-new-version)
 
-## Comment Highlights
+## Code Syntax Highlights
 
 Code blocks are syntax highlighted using Prism. You can call attention to specific sections in a code block using comments to begin and end a block `// highlight-start` `// highlight-end`, or highlight a single line `// highlight-line`
 

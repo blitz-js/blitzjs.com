@@ -54,10 +54,21 @@ a:hover {
   text-decoration: inherit;
 }
 
-.highlight {
-  background: #cad9e7;
+pre.prism-code .highlight {
+  background: #dce8f2;
   border-left: 4px solid var(--ifm-menu-color-active);
   padding-left: 12px;
   margin-left: -16px;
   margin-right: -16px;
+}
+
+pre.prism-code {
+  counter-reset: line;
+}
+
+pre.prism-code .token-line:before {
+  counter-increment: line;
+  content: counter(line);
+  opacity: 0.3;
+  margin-right: 8px;
 }

@@ -55,7 +55,7 @@ a:hover {
 }
 
 pre.prism-code .highlight {
-  background: #dce8f2;
+  background: #e1e6f8;
   border-left: 4px solid var(--ifm-menu-color-active);
   padding-left: 12px;
   margin-left: -16px;

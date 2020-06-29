@@ -72,3 +72,12 @@ pre.prism-code .token-line:before {
   opacity: 0.3;
   margin-right: 8px;
 }
+
+/* Disable line numbers for some languages */
+pre.prism-code.language-sh .token-line:before,
+pre.prism-code.language-bash .token-line:before,
+pre.prism-code.language-css-cgycug .token-line:before {
+  opacity: 1;
+  margin-right: 0;
+  content: "";
+}

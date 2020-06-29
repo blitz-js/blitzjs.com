@@ -344,7 +344,9 @@ const question = await createQuestion({data: {name: "MyName"}})
 with
 
 ```jsx
-const question = await createQuestion({data: {text: "Do you love Blitz?"}})
+const question = await createQuestion({
+  data: {text: "Do you love Blitz?", choices: {create: [{text: "Yes!"}]}},
+})
 ```
 
 Finally, we need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace

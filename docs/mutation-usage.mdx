@@ -121,6 +121,7 @@ export default function (props: {query: {id: number}}) {
 ```
 
 We can enhance this to support instant feedback to the user, immediately showing the edited product information, by mutating the local cache of the `getProducts` query with the changes we're about to send to the database.
+We pass `{refetch: false}` as a second argument to the mutate() function to prevent the mutation triggering a refetch of stale data while we wait for the response.
 
 ```tsx
 export default function (props: {query: {id: number}}) {

@@ -53,3 +53,31 @@ a:hover {
   color: inherit;
   text-decoration: inherit;
 }
+
+pre.prism-code .highlight {
+  background: #e1e6f8;
+  border-left: 4px solid var(--ifm-menu-color-active);
+  padding-left: 12px;
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+pre.prism-code {
+  counter-reset: line;
+}
+
+pre.prism-code .token-line:before {
+  counter-increment: line;
+  content: counter(line);
+  opacity: 0.3;
+  margin-right: 12px;
+}
+
+/* Disable line numbers for some languages */
+pre.prism-code.language-sh .token-line:before,
+pre.prism-code.language-bash .token-line:before,
+pre.prism-code.language-css-cgycug .token-line:before {
+  opacity: 1;
+  margin-right: 0;
+  content: "";
+}

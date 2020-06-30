@@ -12,6 +12,7 @@ module.exports = {
       "tutorial",
       "manifesto",
       "why-blitz",
+      "what-is-nextjs",
       "code-of-conduct",
       "contributing",
     ],

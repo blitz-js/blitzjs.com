@@ -54,6 +54,11 @@ module.exports = {
           label: "Forum",
           position: "left",
         },
+        {
+          href: "https://github.com/sponsors/blitz-js",
+          label: "♥ Donate/Sponsor",
+          position: "right",
+        },
       ],
     },
     footer: {
@@ -82,6 +87,10 @@ module.exports = {
             {
               label: "Forum Discussions",
               href: "https://github.com/blitz-js/blitz/discussions",
+            },
+            {
+              href: "https://github.com/sponsors/blitz-js",
+              label: "♥ Donate/Sponsor",
             },
           ],
         },

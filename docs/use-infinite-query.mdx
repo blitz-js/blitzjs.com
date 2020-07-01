@@ -186,9 +186,9 @@ const [
   - `pageOptionsOverride` allows you to optionally override the result returned from your `getCanFetchMore` function
 - `canFetchMore: Boolean`
   - If using `paginated` mode, this will be `true` if there is more data to be fetched (known via the required `getFetchMore` option function).
-- `mutate()` - `Function(newData) => void`
+- `mutate()` - `Function(newData, opts) => void`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the old data and returns the new data
   - This is often used to instantly update the cache after submitting a form
-  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct
+  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct. Disable refetch by passing an options object `{refetch: false}` as the second argument.
   - See the [Blitz mutation usage docs](./mutation-usage#mutate) for example usage of `mutate()`

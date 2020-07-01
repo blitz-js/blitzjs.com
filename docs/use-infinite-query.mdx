@@ -29,7 +29,7 @@ function Products(props) {
       ))}
 
       <div>
-        <button onClick={() => fetchMore()} disabled={!canFetchMore || isFetchingMore}>
+        <button onClick={() => fetchMore()} disabled={!canFetchMore || !!isFetchingMore}>
           {isFetchingMore ? "Loading more..." : canFetchMore ? "Load More" : "Nothing more to load"}
         </button>
       </div>
@@ -80,6 +80,7 @@ const [
   // options
   getFetchMore: (lastPage, allPages) => pageOptions
   manual,
+  enabled,
   retry,
   retryDelay,
   staleTime
@@ -115,10 +116,14 @@ const [
 - `manual: Boolean`
   - Set this to `true` to disable automatic refetching when the query mounts or changes query keys.
   - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
+- `enabled: Boolean`
+  - Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
+  - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
 - `retry: Boolean | Int | Function(failureCount, error) => shouldRetry | Boolean`
   - If `false`, failed queries will not retry by default.
   - If `true`, failed queries will retry infinitely.
   - If set to an `Int`, e.g. `3`, failed queries will retry until the failed query count meets that number.
+  - If set to a function `(failureCount, error) => boolean` failed queries will retry until the function returns false.
 - `retryDelay: Function(retryAttempt: Int) => Int`
   - This function receives a `retryAttempt` integer and returns the delay to apply before the next attempt in milliseconds.
   - A function like `attempt => Math.min(attempt > 1 ? 2 ** attempt * 1000 : 1000, 30 * 1000)` applies exponential backoff.
@@ -181,9 +186,10 @@ const [
   - A function to manually refetch the query if it is stale.
   - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
   - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
-- `fetchMore()` - `Function(pageOptionsOverride) => Promise`
+- `fetchMore()` - `Function(fetchMoreVariableOverride, { previous }) => Promise`
   - This function allows you to fetch the next "page" of results.
-  - `pageOptionsOverride` allows you to optionally override the result returned from your `getCanFetchMore` function
+  - fetchMoreVariableOverride allows you to optionally override the fetch more variable returned from your getCanFetchMore option to your query function to retrieve the next page of results.
+  - previous option which will determine if the data you are fetching is should be prepended instead of appended to your infinite list. e.g. `fetchMore(nextPageVars, { previous: true })`
 - `canFetchMore: Boolean`
   - If using `paginated` mode, this will be `true` if there is more data to be fetched (known via the required `getFetchMore` option function).
 - `mutate()` - `Function(newData, opts) => void`

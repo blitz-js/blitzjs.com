@@ -27,5 +27,4 @@ Assuming you already have a [Vercel](https://vercel.com) account:
    2. If using pgBouncer (default connection pool on Digital Ocean), you must add `?pgbouncer=true` to the end of your connection string for Prisma to work correctly.
 4. Change your build script in package.json to be `blitz db migrate && blitz build` so that the production DB will be migrated on each deploy
 5. Add your DB url as a secret environment variable [using the UI](https://vercel.com/blog/environment-variables-ui) or by running `vercel env add DATABASE_URL`
-6. Add `next` as a devDependency at the same version that Blitz includes (this is a temporary workaround until Blitz has first class support (very soon!))
-7. Run `git push` if using the [Git Integration](https://vercel.com/docs/v2/git-integrations) or `vercel` if using Vercel CLI
+6. Run `git push` if using the [Git Integration](https://vercel.com/docs/v2/git-integrations) or `vercel` if using Vercel CLI

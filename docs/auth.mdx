@@ -1,0 +1,298 @@
+---
+title: Auth
+sidebar_label: Auth
+---
+
+Auth broadly consists of three distinct components:
+
+1. Authentication - is someone who they claim to be?
+2. Session management - is someone logged in?
+3. Authorization - is someone allowed to perform an action?
+
+## Session Management
+
+Blitz has built in session management that can be use with any type of authentication or identity providers.
+
+Session managment peforms the following functions:
+
+1. Tracking whether a user is logged in or not
+2. Attribute multiple requests to the same user, even when they are logged out
+3. Protection against CSRF attacks
+
+### Setup
+
+To use the built-in Blitz session management, add the `sessionMiddleware` to your `blitz.config.js` file like this:
+
+```js
+// blitz.config.js
+const {sessionMiddleware} = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [sessionMiddleware()],
+}
+```
+
+Then add the following `Session` model to your Prisma schema and connect it to your `User` model
+
+```prisma
+// db/schema.prisma
+model User {
+  id        Int      @default(autoincrement()) @id
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  sessions  Session[]
+}
+
+model Session {
+  id                 Int      @default(autoincrement()) @id
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  expiresAt          DateTime?
+  handle             String   @unique
+  user               User?    @relation(fields: [userId], references: [id])
+  userId             Int?
+  hashedSessionToken String?
+  antiCSRFToken      String?
+  publicData         String?
+  privateData        String?
+}
+```
+
+### Session on the Server
+
+The `sessionMiddleware` adds the `SessionContext` class to `ctx` which is provided by Blitz as the second parameter to all queries and mutations.
+
+```ts
+// app/queries/someQuery.ts
+import {SessionContext} from "blitz"
+
+export default async function someQuery(input: any, ctx: {session?: SessionContext} = {}) {
+  // Access the SessionContext class
+  ctx.session?.userId
+  ctx.session?.roles
+  ctx.session?.create(/*...*/)
+
+  return
+}
+```
+
+### Session on the Client
+
+Blitz provides a `useSession()` hook that returns `PublicData`. This hook can be used anywhere in your application.
+
+```ts
+import {useSession} from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  return /*... */
+}
+```
+
+### Anonymous Sessions
+
+### Essential/Advanced
+
+### Types
+
+#### `SessionContext`
+
+```ts
+export interface SessionContext {
+  /**
+   * null if anonymous
+   */
+  userId: string | number | null
+  roles: string[]
+  handle: string | null
+  publicData: PublicData
+  authorize: (roleOrRoles?: string | string[]) => void
+  isAuthorized: (roleOrRoles?: string | string[]) => boolean
+  create: (publicData: PublicData, privateData?: Record<any, any>) => Promise<void>
+  revoke: () => Promise<void>
+  revokeAll: () => Promise<void>
+  getPrivateData: () => Promise<Record<any, any>>
+  setPrivateData: (data: Record<any, any>) => Promise<void>
+  setPublicData: (data: Record<any, any>) => Promise<void>
+}
+```
+
+#### `PublicData`
+
+```ts
+interface PublicData extends Record<any, any> {
+  userId: string | number | null
+  roles: string[]
+}
+```
+
+### Session Configuration
+
+```ts
+type SessionConfig = {
+  sessionExpiryMinutes?: number
+  method?: "essential" | "advanced"
+  getSession: (handle: string) => Promise<SessionModel | null>
+  getSessions: (userId: string | number) => Promise<SessionModel[]>
+  createSession: (session: SessionModel) => Promise<SessionModel>
+  updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
+  deleteSession: (handle: string) => Promise<SessionModel>
+}
+```
+
+```ts
+interface SessionModel extends Record<any, any> {
+  handle: string
+  userId?: string | number
+  expiresAt?: Date
+  hashedSessionToken?: string
+  antiCSRFToken?: string
+  publicData?: string
+  privateData?: string
+}
+```
+
+### Using without Prisma
+
+## Authentication
+
+### Email/Password
+
+This is the default
+
+Update the `User` model in your `schema.prisma` file to have the `email` and `hashedPassword` fields.
+
+```prisma
+// db/schema.prisma
+model User {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String?
+// highlight-start
+  email     String   @unique
+  hashedPassword String?
+// highlight-end
+  role      String   @default("user")
+  sessions  Session[]
+}
+```
+
+Install the `zod` and `secure-password` npm dependencies.
+
+Add the following file at `app/auth.ts`:
+
+```ts
+// app/auth.ts
+import {AuthenticationError} from "blitz"
+import SecurePassword from "secure-password"
+import db, {User} from "db"
+
+const SP = new SecurePassword()
+
+export const hashPassword = async (password: string) => {
+  const hashedBuffer = SP.hash(Buffer.from(password))
+  return hashedBuffer.toString()
+}
+
+export const authenticateUser = async (email: string, password: string) => {
+  const user = await db.user.findOne({where: {email}})
+
+  if (!user) throw new AuthenticationError()
+
+  switch (await SP.verify(Buffer.from(password), Buffer.from(user.hashedPassword))) {
+    case SecurePassword.VALID:
+      break
+    case SecurePassword.VALID_NEEDS_REHASH:
+      // Upgrade hashed password with a more secure hash
+      const improvedHash = await hashPassword(password)
+      await db.user.update({where: {id: user.id}, data: {hashedPassword: improvedHash}})
+      break
+    default:
+      throw new AuthenticationError()
+  }
+
+  delete user.hashedPassword
+  return user as Omit<User, "hashedPassword">
+}
+```
+
+Add the following `signUp` mutation at `app/users/mutations/signUp.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/signUp.ts
+import db from "db"
+import {SessionContext} from "blitz"
+import {hashPassword} from "app/auth"
+import * as z from "zod"
+
+export const SignUpInput = z.object({
+  email: z.string().email(),
+  password: z.string().min(10).max(100),
+})
+
+export default async function signUp(
+  input: z.infer<typeof SignUpInput>,
+  ctx: {session?: SessionContext} = {},
+) {
+  // This throws an error if input is invalid
+  const {email, password} = SignUpInput.parse(input)
+  const hashedPassword = await hashPassword(password)
+  const user = await db.user.create({data: {email, hashedPassword, role: "user"}})
+
+  await ctx.session.create({userId: user.id, roles: [user.role]})
+
+  return user
+}
+```
+
+Add the following `login` mutation at `app/users/mutations/login.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/login.ts
+import {SessionContext} from "blitz"
+import {authenticateUser} from "app/auth"
+import * as z from "zod"
+
+export const LoginInput = z.object({
+  email: z.string(),
+  password: z.string(),
+})
+
+export default async function login(
+  input: z.infer<typeof LoginInput>,
+  ctx: {session?: SessionContext} = {},
+) {
+  // This throws an error if input is invalid
+  const {email, password} = LoginInput.parse(input)
+
+  // This throws an error if credentials are invalid
+  const user = await authenticateUser(email, password)
+
+  await ctx.session?.create({userId: user.id, roles: [user.role]})
+
+  return user
+}
+```
+
+Add the following `logout` mutation at `app/users/mutations/logout.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/logout.ts
+import {SessionContext} from "blitz"
+
+export default async function logout(_ = null, ctx: {session?: SessionContext} = {}) {
+  return await ctx.session.revoke()
+}
+```
+
+Then add forms on your frontend that use the `signUp`, `login`, and `logout` mutations.
+
+### Third-Party
+
+TODO: Passport.js integration in progress
+
+## Authorization
+
+TODO

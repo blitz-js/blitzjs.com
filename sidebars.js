@@ -16,7 +16,7 @@ module.exports = {
       "code-of-conduct",
       "contributing",
     ],
-    Basics: ["file-structure", "app-component", "css", "static-files", "auth"],
+    Basics: ["file-structure", "app-component", "css", "static-files"],
     Pages: [
       "pages",
       "error-pages",

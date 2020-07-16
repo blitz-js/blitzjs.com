@@ -125,11 +125,10 @@ Authenticated sessions use opaque tokens that are stored in the database.
 - At login, the server creates an opaque token. This is a random, 32 character long `string` as the access token.
 - This token is sent to the frontend via `httpOnly`, `secure` cookies. Separately, the 32 character anti-csrf token is be sent to the frontend via response headers.
 - The anti-csrf token is be stored in the localstorage on the frontend.
-- The SHA256 hash of the access token will be stored in the database. This token will have the following properties mapped to it:
+- The SHA256 hash of the access token will be stored in the database. This token has the following properties mapped to it:
   - userId
-  - anti-csrf token
   - expiry time
-  - session data (this can be manipulated via the Blitz session API).
+  - session data
 - Creating a new session while another one exists results in the headers / cookies changing. However, the older session will still be alive.
 - For serious production apps, a cronjob is needed to remove all expired tokens on a regular basis.
 

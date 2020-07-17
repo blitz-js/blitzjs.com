@@ -36,7 +36,7 @@ module.exports = {
 }
 ```
 
-Then add the following `Session` model to your Prisma schema and connect it to your `User` model
+Then add the following `Session` model to your Prisma schema and connect it to your `User` model. After updating the schema file, run `blitz db migrate`
 
 ```prisma
 // db/schema.prisma
@@ -44,6 +44,7 @@ model User {
   id        Int      @default(autoincrement()) @id
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  role           String    @default("user")
   sessions  Session[]
 }
 
@@ -72,9 +73,9 @@ import {SessionContext} from "blitz"
 
 export default async function someQuery(input: any, ctx: {session?: SessionContext} = {}) {
   // Access the SessionContext class
-  ctx.session?.userId
-  ctx.session?.roles
-  ctx.session?.create(/*...*/)
+  ctx.session!.userId
+  ctx.session!.roles
+  ctx.session!.create(/*...*/)
 
   return
 }
@@ -317,7 +318,7 @@ export default async function signUp(
   const hashedPassword = await hashPassword(password)
   const user = await db.user.create({data: {email, hashedPassword, role: "user"}})
 
-  await ctx.session?.create({userId: user.id, roles: [user.role]})
+  await ctx.session!.create({userId: user.id, roles: [user.role]})
 
   return user
 }
@@ -346,7 +347,7 @@ export default async function login(
   // This throws an error if credentials are invalid
   const user = await authenticateUser(email, password)
 
-  await ctx.session?.create({userId: user.id, roles: [user.role]})
+  await ctx.session!.create({userId: user.id, roles: [user.role]})
 
   return user
 }
@@ -359,7 +360,7 @@ Add the following `logout` mutation at `app/users/mutations/logout.ts` or in any
 import {SessionContext} from "blitz"
 
 export default async function logout(_ = null, ctx: {session?: SessionContext} = {}) {
-  return await ctx.session?.revoke()
+  return await ctx.session!.revoke()
 }
 ```
 
@@ -416,7 +417,7 @@ type GetUserInput = {where: FindOneUserArgs["where"]}
 
 export default async function getUser({where}: GetUserInput, ctx: {session?: SessionContext} = {}) {
   // highlight-start
-  ctx.session?.authorize("admin")
+  ctx.session!.authorize("admin")
   // highlight-end
 
   const user = await db.user.findOne({where})

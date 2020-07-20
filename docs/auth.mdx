@@ -81,7 +81,7 @@ export default async function someQuery(input: any, ctx: {session?: SessionConte
 }
 ```
 
-You can also get the session context inside `getServerSideProps` with `getSessionContext` like this:
+You can also get the session context inside `getServerSideProps` or inside API routes with `getSessionContext` like this:
 
 ```ts
 import {getSessionContext} from "@blitzjs/server"
@@ -91,6 +91,33 @@ export const getServerSideProps = async ({req, res}) => {
   console.log("Session id:", session.userId)
 
   return {props: {}}
+}
+```
+
+#### API Routes
+
+When making a request from the client to an API route, you need to include the anti-CSRF token like this:
+
+```ts
+import {getAntiCSRFToken} from "blitz"
+
+const antiCSRFToken = getAntiCSRFToken()
+
+if (antiCSRFToken) {
+  // Set fetch request header["anti-csrf"] = antiCSRFToken
+}
+```
+
+And then you can get the sessionContext in the API route like this:
+
+```ts
+import {getSessionContext} from "@blitzjs/server"
+
+export default async function ({req, res}) {
+  const session = await getSessionContext(req, res)
+  console.log("Session id:", session.userId)
+
+  res.json({userId})
 }
 ```
 

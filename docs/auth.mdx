@@ -81,6 +81,19 @@ export default async function someQuery(input: any, ctx: {session?: SessionConte
 }
 ```
 
+You can also get the session context inside `getServerSideProps` with `getSessionContext` like this:
+
+```ts
+import {getSessionContext} from "@blitzjs/server"
+
+export const getServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+  console.log("Session id:", session.userId)
+
+  return {props: {}}
+}
+```
+
 ### Session on the Client
 
 Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata). This hook can be used anywhere in your application.

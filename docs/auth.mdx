@@ -102,6 +102,12 @@ function SomeComponent() {
 
 If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.setPublicData()` and `ctx.session.setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
 
+Anonymous sessions are JWT tokens that are stored on the client as an httpOnly cookie that never expires.
+
+`PublicData` for anonymous sessions is kept in the session JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.setPrivateData()`.
+
+The anonymous session will be created on the first network request, whether SSR or via an API. This will happen as long as `sessionMiddleware` is in your middleware chain for that request.
+
 One use case for this is saving shopping cart items for anonymous users. If an anonymous user later signs up or logs in, the anonymous session data can be merged into their new authenticated session.
 
 Anonymous session `PublicData` looks like this:
@@ -112,8 +118,6 @@ Anonymous session `PublicData` looks like this:
   roles: []
 }
 ```
-
-Public anonymous session data is stored in a JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.setPrivateData()`.
 
 ### How it Works
 

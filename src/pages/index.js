@@ -55,7 +55,7 @@ const Grid = styled.div`
   @media screen and (min-width: ${({theme}) => theme.breakpoints[1]}) {
     grid-template-columns: repeat(12, 1fr);
     grid-template-areas: "ht ht ht ht ht ht ht ht ht ht ht ht";
-    grid-template-rows: 30rem;
+    grid-template-rows: 40rem;
     grid-column-gap: 2rem;
     grid-row-gap: 3rem;
 
@@ -119,18 +119,27 @@ function Home() {
             py: 5,
           }}
         >
-          <Spaced space={4} flexDirection="column" sx={{alignItems: "center", textAlign: "center"}}>
+          <Spaced space={3} flexDirection="column" sx={{alignItems: "center", textAlign: "center"}}>
             <h1 sx={{variant: "styles.hero"}}>The Fullstack React Framework</h1>
 
             <Spaced
               space={[3, 3, 4]}
               flexDirection={["column", "column", "row"]}
-              sx={{variant: "styles.h5"}}
+              sx={{variant: "styles.h6"}}
             >
+              <div>"Zero-API" Data Layer</div>
               <div>Built on Next.js</div>
               <div>Inspired by Ruby on Rails</div>
-              <div>New Fullstack Data Layer</div>
             </Spaced>
+          </Spaced>
+
+          <Spaced
+            space={[3, 3, 4]}
+            flexDirection={["column", "column", "row"]}
+            sx={{variant: "styles.h3", fontWeight: "bold", textAlign: "center"}}
+          >
+            Makes you far more productive than <br />
+            you ever dreamed was possible 😉
           </Spaced>
 
           <Spaced space={3}>
@@ -138,7 +147,7 @@ function Home() {
               to={useBaseUrl("/docs/getting-started")}
               sx={{variant: "buttons.bordered", fontSize: 3}}
             >
-              Getting Started Docs
+              Read the Docs
             </Link>
             <Link
               href="https://github.com/blitz-js/blitz"
@@ -150,9 +159,9 @@ function Home() {
         </Spaced>
 
         <Text className="benefit" sx={{fontSize: [null, null, 3]}}>
-          New “no-API” data layer{" "}
-          <strong>lets you import server code into your React components</strong> instead of having
-          to fetch from an API.
+          “Zero-API” data layer{" "}
+          <strong>lets you import server code directly into your React components</strong> instead
+          of having to manually add API endpoints and do client-side fetching and caching.
         </Text>
         <Text className="benefit" sx={{fontSize: [null, null, 3]}}>
           Includes everything you need for production apps.{" "}
@@ -165,20 +174,6 @@ function Home() {
 
         <div className="skip-row" />
 
-        <div className="arch-diagram">
-          <img src="/img/architecture-diagram.png" alt="Blitz app architecture" />
-        </div>
-
-        <div className="skip-row" />
-
-        <Tenet title="Fullstack & Monolithic">
-          <Text>
-            Includes everything from the database to your frontend all inside a single app. Only one
-            development server. Only one thing to deploy.
-          </Text>
-          <Text>Deploy to a server or serverless</Text>
-        </Tenet>
-
         <Tenet title="API Not Required">
           <Text>
             Instead of fetching data from the backend, you import your server code into your
@@ -186,6 +181,14 @@ function Home() {
             is swapped out with an auto generated HTTP API.
           </Text>
           <Text>The generated API can also be used by third-parties</Text>
+        </Tenet>
+
+        <Tenet title="Fullstack & Monolithic">
+          <Text>
+            Includes everything from the database to your frontend all inside a single app. Only one
+            development server. Only one thing to deploy.
+          </Text>
+          <Text>Deploy to a server or serverless</Text>
         </Tenet>
 
         <Tenet title="Convention over Configuration">
@@ -225,7 +228,9 @@ function Home() {
 
         <div className="skip-row" />
 
-        <div className="skip-row" />
+        <div className="arch-diagram">
+          <img src="/img/architecture-diagram.png" alt="Blitz app architecture" />
+        </div>
 
         <h2
           sx={{

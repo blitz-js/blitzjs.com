@@ -503,6 +503,8 @@ export default passportAuth({
 })
 ```
 
+Note: The above `passport-twitter` example requires your `User` prisma model to have `email String @unique` and `name String`.
+
 #### Using a Strategy
 
 Currently only passport strategies that use a `verify` callback are supported. In the Twitter example above, the second argument to `TwitterStrategy()` is the `verify` callback.

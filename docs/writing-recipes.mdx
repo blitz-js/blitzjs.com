@@ -53,7 +53,7 @@ Eventually we expect to provide hooks into the recipe lifecycle, making some of 
 
 ### Adding Dependencies
 
-The first action we can take is adding dependencies to the user's application. This step type will automatically detect whether the user is using `yarn` or `npm` and use the proper tool. The configuration is very straightforward - it accepts a list of packages, their versions, and whether or not they should be installed as a `devDependency`.
+The first action we can take is adding dependencies to the user's application. This step type will automatically detect whether the user is using `yarn` or `npm` and use the proper tool. The configuration is very straightforward — it accepts a list of packages, their versions, and whether or not they should be installed as a `devDependency`.
 
 ```typescript
 builder.addAddDependenciesStep({
@@ -69,7 +69,11 @@ builder.addAddDependenciesStep({
 
 ### Adding files
 
-One incredibly powerful part of recipes is the ability to generate files from templates. By supplying the `templateValues` configuration, you can either supply a hard-coded object for values to interpolate in the template or a function that returns an object. The function will be passed any additional arguments passed to `blitz install` (e.g. `blitz install myrecipe --someConfig=false`). You can read more about our custom templating language [here.](templates) The template files can go anywhere in your recipe's file structure, you supply the path as a part of the recipe definition.
+One incredibly powerful part of recipes is the ability to generate files from templates. 
+
+We use a custom templating language that's easy to both read and write. [Read our template documentation to learn how to write templates](templates).
+
+By supplying the `templateValues` configuration, you can either supply a hard-coded object for values to interpolate in the template or a function that returns an object. The function will be passed any additional arguments passed to `blitz install` (e.g. `blitz install myrecipe --someConfig=false`). The template files can go anywhere in your recipe's file structure, you supply the path as a part of the recipe definition.
 
 ```typescript
 builder.addNewFilesStep({
@@ -84,7 +88,7 @@ builder.addNewFilesStep({
 
 ### Modifying existing files
 
-Arguably the most powerful part of Blitz recipes, using Recast you can write a transform that will modify an existing file. The transform function is passed the AST representing the selected file, an object for building new nodes, and an object to assist with typechecking and assertions on nodes. The Recast documentation documents all of those objects well.
+Arguably the most powerful part of Blitz recipes, using Recast you can write a transform that will modify an existing file. The transform function is passed the AST representing the selected file, an object for building new nodes, and an object to assist with typechecking and assertions on nodes. [The Recast documentation](https://github.com/benjamn/recast) documents all of those objects well.
 
 Blitz supplies some predefined transforms for you for the most common cases, but you can always write a custom transform to modify any JavaScript file you want. We also provide a convenience utility for accessing common files like `_app.tsx` or `blitz.config.js`. If the file path is a glob pattern, the installer process will prompt the user to select a file matching the pattern.
 
@@ -122,5 +126,5 @@ expect(print(addImport(parse(sampleFile), b, t, newImport)).code).toMatchSnapsho
 That's all you need to build a recipe! At this point, you can commit and push up to GitHub, and your recipe is available to the world. Users can install your recipe by passing your full repository name to `blitz install` - for example:
 
 ```bash
-blitz install someuser/my-awesome-recipe
+blitz install some-githubuser/my-awesome-recipe
 ```

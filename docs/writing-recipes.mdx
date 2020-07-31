@@ -9,11 +9,20 @@ The incredible power of Blitz Recipes isn't limited to the official recipes in t
 
 To author your own recipe, you'll want to create a new package and install a couple of dependencies. You'll only need the `ast-types` dependency if you're using a **transform** step to modify an existing file. If you're only creating new files or adding dependencies you'll only need `@blitzjs/installer`.
 
+If you're going to be writing tests for your recipe you'll need a build and test setup. We recommend [`tsdx`](https://github.com/jaredpalmer/tsdx) and Jest for building and running tests.
+
 ```bash
 yarn add -EL @blitzjs/installer ast-types
 ```
 
 The Recipe API all revolves around the `RecipeBuilder` factory. Blitz assumes that the file referenced in the `main` field of your `package.json` has a recipe as its default export, so we can go ahead and set that up.
+
+```json
+// package.json
+{
+  "main": "index.ts"
+}
+```
 
 ```typescript
 // index.ts
@@ -69,13 +78,15 @@ builder.addAddDependenciesStep({
 
 ### Adding files
 
-One incredibly powerful part of recipes is the ability to generate files from templates. 
+One incredibly powerful part of recipes is the ability to generate files from templates.
 
-We use a custom templating language that's easy to both read and write. [Read our template documentation to learn how to write templates](templates).
+We use a custom templating language that's natural to both read and write. [Read our template documentation to learn how to write templates](templates).
 
 By supplying the `templateValues` configuration, you can either supply a hard-coded object for values to interpolate in the template or a function that returns an object. The function will be passed any additional arguments passed to `blitz install` (e.g. `blitz install myrecipe --someConfig=false`). The template files can go anywhere in your recipe's file structure, you supply the path as a part of the recipe definition.
 
 ```typescript
+import {join} from "path"
+
 builder.addNewFilesStep({
   stepId: "addStyles",
   stepName: "Add base Tailwind CSS styles",
@@ -93,7 +104,7 @@ Arguably the most powerful part of Blitz recipes, using Recast you can write a t
 Blitz supplies some predefined transforms for you for the most common cases, but you can always write a custom transform to modify any JavaScript file you want. We also provide a convenience utility for accessing common files like `_app.tsx` or `blitz.config.js`. If the file path is a glob pattern, the installer process will prompt the user to select a file matching the pattern.
 
 ```typescript
-import {addImport} from "@blitzjs/installer"
+import {addImport, paths} from "@blitzjs/installer"
 
 builder.addTransformFilesStep({
   stepId: "importStyles",

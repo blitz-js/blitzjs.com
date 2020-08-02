@@ -71,6 +71,8 @@ pre.prism-code .token-line:before {
   content: counter(line);
   opacity: 0.3;
   margin-right: 12px;
+  display: inline-block;
+  min-width: 1rem;
 }
 
 /* Disable line numbers for some languages */

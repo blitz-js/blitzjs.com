@@ -1,0 +1,701 @@
+---
+title: Auth
+sidebar_label: Auth
+---
+
+Auth broadly consists of three distinct components:
+
+1. Authentication - is someone who they claim to be?
+2. Session management - is someone logged in?
+3. Authorization - is someone allowed to perform an action?
+
+## Session Management
+
+Blitz has built in session management that can be use with any type of authentication or identity providers.
+
+Session management performs the following functions:
+
+1. Tracking whether a user is logged in or not
+2. Attribute multiple requests to the same user, even when they are logged out
+3. Protection against CSRF attacks
+
+### Setup
+
+To use the built-in Blitz session management, add the `sessionMiddleware` to your `blitz.config.js` file like this:
+
+```js
+// blitz.config.js
+const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+    }),
+  ],
+}
+```
+
+Then add the following `Session` model to your Prisma schema and connect it to your `User` model. After updating the schema file, run `blitz db migrate`
+
+```prisma
+// db/schema.prisma
+model User {
+  id        Int      @default(autoincrement()) @id
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  role           String    @default("user")
+  sessions  Session[]
+}
+
+model Session {
+  id                 Int      @default(autoincrement()) @id
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  expiresAt          DateTime?
+  handle             String   @unique
+  user               User?    @relation(fields: [userId], references: [id])
+  userId             Int?
+  hashedSessionToken String?
+  antiCSRFToken      String?
+  publicData         String?
+  privateData        String?
+}
+```
+
+### Session on the Server
+
+The `sessionMiddleware` added above adds the [`SessionContext`](#sessioncontext) class to `ctx` which is provided by Blitz as the second parameter to all queries and mutations.
+
+```ts
+// app/queries/someQuery.ts
+import {SessionContext} from "blitz"
+
+export default async function someQuery(input: any, ctx: {session?: SessionContext} = {}) {
+  // Access the SessionContext class
+  ctx.session!.userId
+  ctx.session!.roles
+  ctx.session!.create(/*...*/)
+
+  return
+}
+```
+
+You can also get the session context inside `getServerSideProps` or inside API routes with `getSessionContext` like this:
+
+```ts
+import {getSessionContext} from "@blitzjs/server"
+
+export const getServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+  console.log("Session id:", session.userId)
+
+  return {props: {}}
+}
+```
+
+#### API Routes
+
+When making a request from the client to an API route, you need to include the anti-CSRF token like this:
+
+```ts
+import {getAntiCSRFToken} from "blitz"
+
+const antiCSRFToken = getAntiCSRFToken()
+
+if (antiCSRFToken) {
+  // Set fetch request header["anti-csrf"] = antiCSRFToken
+}
+```
+
+And then you can get the sessionContext in the API route like this:
+
+```ts
+import {getSessionContext} from "@blitzjs/server"
+
+export default async function ({req, res}) {
+  const session = await getSessionContext(req, res)
+  console.log("Session id:", session.userId)
+
+  res.json({userId})
+}
+```
+
+### Session on the Client
+
+Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata). This hook can be used anywhere in your application.
+
+```ts
+import {useSession} from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.userId
+  session.roles[0]
+
+  return /*... */
+}
+```
+
+### Anonymous Sessions
+
+If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.setPublicData()` and `ctx.session.setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
+
+Anonymous sessions are JWT tokens that are stored on the client as an httpOnly cookie that never expires.
+
+`PublicData` for anonymous sessions is kept in the session JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.setPrivateData()`.
+
+The anonymous session will be created on the first network request, whether SSR or via an API. This will happen as long as `sessionMiddleware` is in your middleware chain for that request.
+
+One use case for this is saving shopping cart items for anonymous users. If an anonymous user later signs up or logs in, the anonymous session data can be merged into their new authenticated session.
+
+Anonymous session `PublicData` looks like this:
+
+```
+{
+  userId: null,
+  roles: []
+}
+```
+
+### How it Works
+
+Authenticated sessions use opaque tokens that are stored in the database.
+
+### Implementation Details
+
+#### Session Creation
+
+- At login, the server creates an opaque token. This is a random, 32 character long `string` as the access token.
+- This token is sent to the frontend via `httpOnly`, `secure` cookies. Separately, the 32 character anti-csrf token is be sent to the frontend via response headers.
+- The anti-csrf token is be stored in the localstorage on the frontend.
+- The SHA256 hash of the access token will be stored in the database. This token has the following properties mapped to it:
+  - userId
+  - expiry time
+  - session data
+- Creating a new session while another one exists results in the headers / cookies changing. However, the older session will still be alive.
+- For serious production apps, a cronjob is needed to remove all expired tokens on a regular basis.
+
+#### Session Verification
+
+- For each request that requires CSRF protection, the frontend reads the localstorage and sends the anti-csrf token in the request header.
+- An incoming access token is verified by checking that it's in the db and that it has not expired. After each verification, the expiry time of the access token updated.
+- CSRF attacks are prevented by checking that the incoming anti-csrf token (from the header) is what is associated with the session.
+
+#### Session Revocation/Logout
+
+- This is done by deleting the session from the database.
+- Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
+
+### Types
+
+#### `SessionContext`
+
+```ts
+export interface SessionContext {
+  /**
+   * null if anonymous
+   */
+  userId: string | number | null
+  roles: string[]
+  handle: string | null
+  publicData: PublicData
+  authorize: (roleOrRoles?: string | string[]) => void
+  isAuthorized: (roleOrRoles?: string | string[]) => boolean
+  create: (publicData: PublicData, privateData?: Record<any, any>) => Promise<void>
+  revoke: () => Promise<void>
+  revokeAll: () => Promise<void>
+  getPrivateData: () => Promise<Record<any, any>>
+  setPrivateData: (data: Record<any, any>) => Promise<void>
+  setPublicData: (data: Record<any, any>) => Promise<void>
+}
+```
+
+#### `PublicData`
+
+```ts
+interface PublicData extends Record<any, any> {
+  userId: string | number | null
+  roles: string[]
+}
+```
+
+### Session Configuration
+
+You can customize session management by passing an object to the `sessionMiddleware` factory function.
+
+```js
+// blitz.config.js
+const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      //highlight-start
+      sessionExpiryMinutes: 1234,
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      //highlight-end
+    }),
+  ],
+}
+```
+
+Available options:
+
+```ts
+type SessionConfig = {
+  sessionExpiryMinutes?: number /* Default: 30 days */
+  sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
+  getSession: (handle: string) => Promise<SessionModel | null>
+  getSessions: (userId: string | number) => Promise<SessionModel[]>
+  createSession: (session: SessionModel) => Promise<SessionModel>
+  updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
+  deleteSession: (handle: string) => Promise<SessionModel>
+  unstable_isAuthorized: (userRoles: string[], input: any) => boolean
+}
+```
+
+```ts
+interface SessionModel extends Record<any, any> {
+  handle: string
+  userId?: string | number
+  expiresAt?: Date
+  hashedSessionToken?: string
+  antiCSRFToken?: string
+  publicData?: string
+  privateData?: string
+}
+```
+
+#### Using without Prisma
+
+Currently the session management has zero-config support for Prisma, but you can also use it with any other database by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types.
+
+### Production
+
+In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.
+
+## Authentication
+
+### Email/Password
+
+Update the `User` model in your `schema.prisma` file to have the `email` and `hashedPassword` fields.
+
+```prisma
+// db/schema.prisma
+model User {
+  id             Int       @default(autoincrement()) @id
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  name           String?
+// highlight-start
+  email          String    @unique
+  hashedPassword String?
+// highlight-end
+  role           String    @default("user")
+  sessions       Session[]
+}
+```
+
+Install the `zod` and `secure-password` npm dependencies.
+
+Add the following file at `app/auth.ts`:
+
+```ts
+// app/auth.ts
+import {AuthenticationError} from "blitz"
+import SecurePassword from "secure-password"
+import db, {User} from "db"
+
+const SP = new SecurePassword()
+
+export const hashPassword = async (password: string) => {
+  const hashedBuffer = await SP.hash(Buffer.from(password))
+  return hashedBuffer.toString("base64")
+}
+export const verifyPassword = async (hashedPassword: string, password: string) => {
+  return await SP.verify(Buffer.from(password), Buffer.from(hashedPassword, "base64"))
+}
+
+export const authenticateUser = async (email: string, password: string) => {
+  const user = await db.user.findOne({where: {email}})
+
+  if (!user || !user.hashedPassword) throw new AuthenticationError()
+
+  switch (await verifyPassword(user.hashedPassword, password)) {
+    case SecurePassword.VALID:
+      break
+    case SecurePassword.VALID_NEEDS_REHASH:
+      // Upgrade hashed password with a more secure hash
+      const improvedHash = await hashPassword(password)
+      await db.user.update({where: {id: user.id}, data: {hashedPassword: improvedHash}})
+      break
+    default:
+      throw new AuthenticationError()
+  }
+
+  delete user.hashedPassword
+  return user as Omit<User, "hashedPassword">
+}
+```
+
+Add the following `signUp` mutation at `app/users/mutations/signUp.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/signUp.ts
+import db from "db"
+import {SessionContext} from "blitz"
+import {hashPassword} from "app/auth"
+import * as z from "zod"
+
+export const SignUpInput = z.object({
+  email: z.string().email(),
+  password: z.string().min(10).max(100),
+})
+
+export default async function signUp(
+  input: z.infer<typeof SignUpInput>,
+  ctx: {session?: SessionContext} = {},
+) {
+  // This throws an error if input is invalid
+  const {email, password} = SignUpInput.parse(input)
+  const hashedPassword = await hashPassword(password)
+  const user = await db.user.create({data: {email, hashedPassword, role: "user"}})
+
+  await ctx.session!.create({userId: user.id, roles: [user.role]})
+
+  return user
+}
+```
+
+Add the following `login` mutation at `app/users/mutations/login.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/login.ts
+import {SessionContext} from "blitz"
+import {authenticateUser} from "app/auth"
+import * as z from "zod"
+
+export const LoginInput = z.object({
+  email: z.string(),
+  password: z.string(),
+})
+
+export default async function login(
+  input: z.infer<typeof LoginInput>,
+  ctx: {session?: SessionContext} = {},
+) {
+  // This throws an error if input is invalid
+  const {email, password} = LoginInput.parse(input)
+
+  // This throws an error if credentials are invalid
+  const user = await authenticateUser(email, password)
+
+  await ctx.session!.create({userId: user.id, roles: [user.role]})
+
+  return user
+}
+```
+
+Add the following `logout` mutation at `app/users/mutations/logout.ts` or in any other `mutations` folder.
+
+```ts
+// app/users/mutations/logout.ts
+import {SessionContext} from "blitz"
+
+export default async function logout(_ = null, ctx: {session?: SessionContext} = {}) {
+  return await ctx.session!.revoke()
+}
+```
+
+Then add forms on your frontend that use the `signUp`, `login`, and `logout` mutations.
+
+### Third-Party
+
+Blitz provides an adapter that lets you use any existing [Passport.js authentication strategy](http://www.passportjs.org/packages/)
+
+To use, add a new api route at `app/api/auth/[...auth].ts` with the following contents.
+
+```ts
+// app/api/auth/[...auth].ts
+import {passportAuth} from "blitz"
+import db from "db"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  strategies: [
+    // Provide initialized passport strategy here
+  ],
+})
+```
+
+If you need, you can place the api route at a different path but the filename must be `[...auth].js` or `[...auth].ts`.
+
+#### URLs
+
+The `passportAuth` adapter adds two API endpoints for each installed strategy.
+
+With the handler at `app/api/auth/[...auth].ts`, it adds the following:
+
+1. `/api/auth/[strategyName]` - URL to initiate login
+2. `/api/auth/[strategyName]/callback` - Callback URL to complete login
+
+For example with `passport-twitter` strategy, the URLs for Twitter will be:
+
+1. `/api/auth/twitter` - URL to initiate login
+2. `/api/auth/twitter/callback` - Callback URL to complete login
+
+You can determine the `strategyName` in the strategy's documentation by looking for this: `passport.authenticate('github')`. So in this case, the `strategyName` is `github`.
+
+#### Installing a Strategy
+
+To install a passport strategy add it to the `strategies` array argument for `passportAuth`, and then follow the strategy's documentation for setup.
+
+Here's an example of adding `passport-twitter`.
+
+Note that the `callbackURL` uses the callback endpoint as described above (`/api/auth/twitter/callback`)
+
+```ts
+import {passportAuth} from "blitz"
+import db from "db"
+import {Strategy as TwitterStrategy} from "passport-twitter"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  strategies: [
+    // highlight-start
+    new TwitterStrategy(
+      {
+        consumerKey: process.env.TWITTER_CONSUMER_KEY,
+        consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+        callbackURL:
+          process.env.NODE_ENV === "production"
+            ? "https://example.com/api/auth/twitter/callback"
+            : "http://localhost:3000/api/auth/twitter/callback",
+        includeEmail: true,
+      },
+      async function (_token, _tokenSecret, profile, done) {
+        const email = profile.emails && profile.emails[0]?.value
+
+        if (!email) {
+          // This can happen if you haven't enabled email access in your twitter app permissions
+          return done(new Error("Twitter OAuth response doesn't have email."))
+        }
+
+        const user = await db.user.upsert({
+          where: {email},
+          create: {
+            email,
+            name: profile.displayName,
+          },
+          update: {email},
+        })
+
+        const publicData = {userId: user.id, roles: [user.role], source: "twitter"}
+        done(null, {publicData})
+      },
+    ),
+    // highlight-end
+  ],
+})
+```
+
+Note: The above `passport-twitter` example requires your `User` prisma model to have `email String @unique` and `name String`.
+
+#### Using a Strategy
+
+Currently only passport strategies that use a `verify` callback are supported. In the Twitter example above, the second argument to `TwitterStrategy()` is the `verify` callback.
+
+Upon successful authentication with the third-party, the user will be redirected back to the above auth API route. When that happens, the `verify` callback will be called.
+
+When the `verify` callback is called, the user has been authenticated with the third-party, but **a session has not yet been created for your Blitz app**.
+
+##### Create a Session
+
+**To create a new Blitz session**, you need to call the `done()` function from your `verify` callback.
+
+```ts
+done(null, result)
+```
+
+where `result` is an object of type `VerifyCallbackResult`
+
+```ts
+export type VerifyCallbackResult = {
+  publicData: PublicData
+  privateData?: Record<string, any>
+  redirectUrl?: string
+}
+```
+
+The Blitz adapter will then call `session.create()` for you and redirect the user back to the correct place in your application.
+
+##### Return an Error
+
+If instead, you want to prevent creating a session because of some error, then call `done()` with an error as the first argument. The user will then be redirected back to the correct location.
+
+```ts
+return done(new Error("it broke"))
+```
+
+##### Showing the Error to the User
+
+Any error during this process will be provided as the `authError`query parameter.
+
+For example with `errorRedirectUrl = '/'` and `done(new Error("it broke"))`, the user will be redirected to:
+
+```
+/?authError=it broke
+```
+
+#### Redirects
+
+There are four different ways to determine the redirect URL where a user should be sent afterwards. They are listed here in order of priority. A URL provided with method #1 will override all other URLs.
+
+1. Add `redirectUrl` to the `verify` callback result
+   - Example: `done(null, {publicData, redirectUrl: '/'})`
+2. Add a `redirectUrl` query parameter to the "initiate login" url
+   - Example: `example.com/api/auth/twitter?redirectUrl='/dashboard'`
+3. Via the config passed to `passportAuth`
+   - If success, it will use `config.successRedirectUrl`
+   - If error, it will use `config.errorRedirectUrl`
+4. If none of the above are provided, it will redirect to `/`
+
+Note: If there is an error, methods #1 and #2 will override `config.errorRedirectUrl`
+
+This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on Github!
+
+## Authorization
+
+This is still a work-in-progress, but for now Blitz provides `unstable_simpleRolesIsAuthorized` as an experimental authorization implementation to get you started.
+
+### `unstable_simpleRolesIsAuthorized`
+
+To use, add it do your `sessionMiddleware` configuration:
+
+```js
+// blitz.config.js
+const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      // highlight-start
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      // highlight-end
+    }),
+  ],
+}
+```
+
+This adds the implementation for `SessionContext.authorize()`.
+
+Inside any query or mutation, call `ctx.session.authorize(roleOrRoles)` to authorize the request.
+
+- `ctx.session.authorize()`
+  - Only enforce that a user is logged in. It does not check user roles
+  - throws `AuthenticationError` if user not logged in
+- `ctx.session.authorize('admin')`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` role
+  - throws `AuthorizationError` if the user does not have `admin` role
+- `ctx.session.authorize(['admin', 'manager'])`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` or `manager` role
+  - throws `AuthorizationError` if the user does not have `admin` and does not have `manager` role
+
+```ts
+import db, {FindOneUserArgs} from "db"
+import {SessionContext} from "blitz"
+
+type GetUserInput = {where: FindOneUserArgs["where"]}
+
+export default async function getUser({where}: GetUserInput, ctx: {session?: SessionContext} = {}) {
+  // highlight-start
+  ctx.session!.authorize("admin")
+  // highlight-end
+
+  const user = await db.user.findOne({where})
+
+  return user
+}
+```
+
+## Error Handling
+
+The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.
+
+- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect urls. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
+- If `AuthorizationError`, display an error stating such.
+
+```ts
+import React from "react"
+import {Error as ErrorComponent} from "blitz"
+import {queryCache} from "react-query"
+import LoginForm from "app/components/LoginForm"
+
+export default class ErrorBoundary extends React.Component<{
+  fallback?: (error: any) => React.ReactNode
+}> {
+  state = {
+    error: null as Error | null,
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return {
+      error,
+    }
+  }
+
+  reset = () => {
+    this.setState({error: null})
+    queryCache.resetErrorBoundaries()
+  }
+
+  render() {
+    const {error} = this.state
+    if (error) {
+      if (error.name === "AuthenticationError") {
+        return <LoginForm onSuccess={this.reset} />
+      } else if (error.name === "AuthorizationError") {
+        return (
+          <ErrorComponent
+            statusCode={(error as any).statusCode}
+            title="Sorry, you are not authorized to access this"
+          />
+        )
+      } else if (this.props.fallback) {
+        return this.props.fallback(error)
+      } else {
+        throw error
+      }
+    }
+    return this.props.children
+  }
+}
+```
+
+And then wrap your entire application with the error boundary like so:
+
+```ts
+// app/pages/_app.tsx
+import {AppProps} from "blitz"
+// highlight-start
+import ErrorBoundary from "app/components/ErrorBoundary"
+// highlight-end
+
+// highlight-start
+export default function MyApp({Component, pageProps}: AppProps) {
+  // highlight-end
+  return (
+    <ErrorBoundary>
+      <Component {...pageProps} />
+    </ErrorBoundary>
+  )
+}
+```
+
+You can also place this same error boundary at lower places in your application UI tree and pass in a fallback component like `fallback={(error) => <p>Error: {error.message}</p>}`. This can be used to only display an error in a certain section of the UI, instead of replacing the entire UI.

@@ -54,7 +54,10 @@ module.exports = {
       "cli-db",
       "cli-generate",
       "cli-console",
+      "cli-install",
     ],
+    Recipes: ["using-recipes", "writing-recipes"],
+    Templates: ["templates"],
     Advanced: [
       "blitz-config",
       "webpack-config",

@@ -47,20 +47,25 @@ export default Error
 
 ## Reusing the built-in error page
 
-You can render the built-in error page by importing the `Error` component:
+You can render the built-in error page by importing `ErrorComponent`.
+
+It accepts two props:
+
+- `statusCode` - a number to display as the error code
+- `title` - a string to display as the error message
 
 ```jsx
-import {Error} from "blitz"
+import {ErrorComponent} from "blitz"
 
 export default function Page() {
-  return <Error statusCode={404} />
+  return <ErrorComponent statusCode={404} />
 }
 ```
 
 ```jsx
-import {Error} from "blitz"
+import {ErrorComponent} from "blitz"
 
 export default function Page() {
-  return <Error statusCode={401} title="Unauthorized" />
+  return <ErrorComponent statusCode={401} title="Unauthorized" />
 }
 ```

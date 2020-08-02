@@ -1,0 +1,141 @@
+---
+title: Writing Your Own Recipes
+sidebar_label: Writing Recipes
+---
+
+The incredible power of Blitz Recipes isn't limited to the official recipes in the Blitz repo. The API for building recipes is a public API (although one that is subject to change) exposed via the [`@blitzjs/installer`](https://npm.im/@blitzjs/installer) package, which can be installed into your own scripts to write a completely custom recipe. Combined with the power of [`recast`](https://github.com/benjamn/recast) for transforming existing files, fully automated code migrations are first-class citizens in the Blitz ecosystem. In fact, in the future we hope that upgrading Blitz will actually be possible with a quick `blitz install blitz@1.0.0`.
+
+### Setup
+
+To author your own recipe, you'll want to create a new package and install a couple of dependencies. You'll only need the `ast-types` dependency if you're using a **transform** step to modify an existing file. If you're only creating new files or adding dependencies you'll only need `@blitzjs/installer`.
+
+If you're going to be writing tests for your recipe you'll need a build and test setup. We recommend [`tsdx`](https://github.com/jaredpalmer/tsdx) and Jest for building and running tests.
+
+```bash
+yarn add -EL @blitzjs/installer ast-types
+```
+
+The Recipe API all revolves around the `RecipeBuilder` factory. Blitz assumes that the file referenced in the `main` field of your `package.json` has a recipe as its default export, so we can go ahead and set that up.
+
+```json
+// package.json
+{
+  "main": "index.ts"
+}
+```
+
+```typescript
+// index.ts
+import {RecipeBuilder} from "@blitzjs/installer"
+
+export default RecipeBuilder().build()
+```
+
+### Adding Metadata
+
+In addition to the actual steps of the recipe, we require that the developer supply metadata about the recipe. This allows us to display some information to the user about what they're installing, as well as where they can look for support if they need it.
+
+```typescript
+RecipeBuilder()
+  .setName("My Package")
+  .setDescription("A little bit of information about what exactly is being installed.")
+  .setOwner("Fake Author <blitz@blitzjs.com>")
+  .setRepoLink("https://github.com/fake-author/my-recipe")
+  .build()
+```
+
+This is a pretty good start, and is actually all we need to create an executable recipe that a user can run via `blitz install`. However, it's not very useful because we don't actually have any steps for the installer framework to execute. Keep reading to learn about the different actions we can execute.
+
+### Common API
+
+Each action type has a shared interface for defining a "step" in the recipe. This ensures consistency in the user experience and enables us to provide a pleasant installation experience. Each step that gets added must have a string ID that's used to internally track the progress of the installation, a display name, and an explanation for what the step is doing.
+
+```typescript
+interface Config {
+  stepId: string
+  stepName: string
+  explanation: string
+}
+```
+
+Eventually we expect to provide hooks into the recipe lifecycle, making some of the metadata like `stepId` critical.
+
+### Adding Dependencies
+
+The first action we can take is adding dependencies to the user's application. This step type will automatically detect whether the user is using `yarn` or `npm` and use the proper tool. The configuration is very straightforward — it accepts a list of packages, their versions, and whether or not they should be installed as a `devDependency`.
+
+```typescript
+builder.addAddDependenciesStep({
+  stepId: "addDeps",
+  stepName: "Add npm dependencies",
+  explanation: `We'll install the Tailwind library itself, as well as PostCSS for removing unused styles from our production bundles.`,
+  packages: [
+    {name: "tailwindcss", version: "1"},
+    {name: "postcss-preset-env", version: "latest", isDevDep: true},
+  ],
+})
+```
+
+### Adding files
+
+One incredibly powerful part of recipes is the ability to generate files from templates.
+
+We use a custom templating language that's natural to both read and write. [Read our template documentation to learn how to write templates](templates).
+
+By supplying the `templateValues` configuration, you can either supply a hard-coded object for values to interpolate in the template or a function that returns an object. The function will be passed any additional arguments passed to `blitz install` (e.g. `blitz install myrecipe --someConfig=false`). The template files can go anywhere in your recipe's file structure, you supply the path as a part of the recipe definition.
+
+```typescript
+import {join} from "path"
+
+builder.addNewFilesStep({
+  stepId: "addStyles",
+  stepName: "Add base Tailwind CSS styles",
+  explanation: `Next, we need to actually create some stylesheets! These stylesheets can either be modified to include global styles for your app, or you can stick to using classnames in your components.`,
+  targetDirectory: "./app",
+  templatePath: join(__dirname, "templates", "styles"),
+  templateValues: {},
+})
+```
+
+### Modifying existing files
+
+Arguably the most powerful part of Blitz recipes, using Recast you can write a transform that will modify an existing file. The transform function is passed the AST representing the selected file, an object for building new nodes, and an object to assist with typechecking and assertions on nodes. [The Recast documentation](https://github.com/benjamn/recast) documents all of those objects well.
+
+Blitz supplies some predefined transforms for you for the most common cases, but you can always write a custom transform to modify any JavaScript file you want. We also provide a convenience utility for accessing common files like `_app.tsx` or `blitz.config.js`. If the file path is a glob pattern, the installer process will prompt the user to select a file matching the pattern.
+
+```typescript
+import {addImport, paths} from "@blitzjs/installer"
+
+builder.addTransformFilesStep({
+  stepId: "importStyles",
+  stepName: "Import stylesheets",
+  explanation: `Finaly, we can import the stylesheets we created, into our application. For now we'll put them in document.tsx, but if you'd like to only style a part of your app with tailwind you could import the styles lower down in your component tree.`,
+  singleFileSearch: paths.app(),
+  transform(ast: ASTNode, b: builders, t: NamedTypes) {
+    const stylesImport = b.importDeclaration([], b.literal("app/styles/index.css"))
+    if (t.File.check(ast)) {
+      return addImport(ast, b, t, stylesImport)!
+    }
+    throw new Error("Not given valid source file")
+  },
+})
+```
+
+Because transforms are self-contained functions that execute on ASTs, you can actually unit test this part of your installer, which is incredibly helpful for reliability. Using `recast` directly along with snapshot testing, the tests are quick to write:
+
+```typescript
+import {parse, print} from "recast"
+
+const sampleFile = `export default function Comp() {
+  return <div>hello!</div>;
+})`
+expect(print(addImport(parse(sampleFile), b, t, newImport)).code).toMatchSnapshot()
+```
+
+### Publishing
+
+That's all you need to build a recipe! At this point, you can commit and push up to GitHub, and your recipe is available to the world. Users can install your recipe by passing your full repository name to `blitz install` - for example:
+
+```bash
+blitz install some-githubuser/my-awesome-recipe
+```

@@ -279,8 +279,10 @@ export default async function deleteQuestion(
   {where}: DeleteQuestionInput,
   ctx: Record<any, any> = {},
 ) {
+  // highlight-start
   // TODO: remove once Prisma supports cascading deletes
   await db.choice.deleteMany({where: {question: {id: where.id}}})
+  // highlight-end
   const question = await db.question.delete({where})
 
   return question
@@ -306,7 +308,7 @@ export const QuestionsList = () => {
       {questions.map((question) => (
         <li key={question.id}>
           <Link href="/questions/[questionId]" as={`/questions/${question.id}`}>
-            <a>{question.name}</a>
+            <a>{question.name}</a> // highlight-line
           </Link>
         </li>
       ))}
@@ -326,7 +328,7 @@ export const QuestionsList = () => {
       {questions.map((question) => (
         <li key={question.id}>
           <Link href="/questions/[questionId]" as={`/questions/${question.id}`}>
-            <a>{question.text}</a>
+            <a>{question.text}</a> // highlight-line
           </Link>
         </li>
       ))}
@@ -444,6 +446,7 @@ const NewQuestionPage: BlitzPage = () => {
 
         <QuestionForm
           initialValues={{}}
+          // highlight-start
           onSubmit={async (event) => {
             try {
               const question = await createQuestion({
@@ -464,6 +467,7 @@ const NewQuestionPage: BlitzPage = () => {
               alert("Error creating question " + JSON.stringify(error, null, 2))
             }
           }}
+          // highlight-end
         />
 
         <p>
@@ -600,13 +604,14 @@ import React, {Suspense} from "react"
 import {Head, Link, useRouter, useQuery, useParam, BlitzPage} from "blitz"
 import getQuestion from "app/questions/queries/getQuestion"
 import deleteQuestion from "app/questions/mutations/deleteQuestion"
-import updateChoice from "app/choices/mutations/updateChoice"
+import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
   const [question] = useQuery(getQuestion, {where: {id: questionId}})
 
+  // highlight-start
   const handleVote = async (id, votes) => {
     try {
       const updated = await updateChoice({
@@ -630,11 +635,10 @@ export const Question = () => {
           </li>
         ))}
       </ul>
-
+      // highlight-end
       <Link href="/questions/[questionId]/edit" as={`/questions/${question.id}/edit`}>
         <a>Edit</a>
       </Link>
-
       <button
         type="button"
         onClick={async () => {
@@ -657,7 +661,6 @@ const ShowQuestionPage: BlitzPage = () => {
         <title>Question</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <p>
           <Link href="/questions">

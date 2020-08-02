@@ -16,7 +16,7 @@ module.exports = {
       "code-of-conduct",
       "contributing",
     ],
-    Basics: ["file-structure", "app-component", "css", "static-files", "auth"],
+    Basics: ["file-structure", "app-component", "css", "static-files", "auth", "error-handling"],
     Pages: [
       "pages",
       "error-pages",
@@ -54,7 +54,10 @@ module.exports = {
       "cli-db",
       "cli-generate",
       "cli-console",
+      "cli-install",
     ],
+    Recipes: ["using-recipes", "writing-recipes"],
+    Templates: ["templates"],
     Advanced: [
       "blitz-config",
       "webpack-config",

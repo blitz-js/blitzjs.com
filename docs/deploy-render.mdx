@@ -41,20 +41,6 @@ You first need to change the defined datasource in `db/schema.prisma` from SQLit
 +}
 ```
 
-And you need to add this model to `db/schema.prisma` because Postgres on Render has PostGIS installed by default. You need this model in your schema, but otherwise you can totally ignore it.
-
-```prisma
-model SpatialRefSy {
-  srid      Int     @id
-  authName  String? @map("auth_name")
-  authSrid  Int?    @map("auth_srid")
-  proj4text String?
-  srtext    String?
-
-  @@map("spatial_ref_sys")
-}
-```
-
 Lastly, use this `render.yaml`:
 
 ```yaml

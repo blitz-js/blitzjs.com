@@ -19,6 +19,10 @@ Session management performs the following functions:
 2. Attribute multiple requests to the same user, even when they are logged out
 3. Protection against CSRF attacks
 
+#### Design & Implementation
+
+Blitz session management is based on the state of the art [SuperTokens library](https://supertokens.io/). [Rishabh Poddar](https://twitter.com/rishpoddar), the CTO of SuperTokens, designed and oversaw our implementation. We're extremely grateful for Rishabh's help! 🙏
+
 ### Setup
 
 To use the built-in Blitz session management, add the `sessionMiddleware` to your `blitz.config.js` file like this:

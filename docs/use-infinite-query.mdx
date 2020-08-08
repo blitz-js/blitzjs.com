@@ -52,7 +52,7 @@ export default async function getProducts({where, orderBy, take, skip}: GetProdu
   })
 
   const count = await db.product.count()
-  const hasMore = skip < count
+  const hasMore = skip + take < count
   const nextPage = hasMore ? {take, skip: skip + take} : null
 
   return {

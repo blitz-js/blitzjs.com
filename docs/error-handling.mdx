@@ -90,7 +90,7 @@ function RootErrorFallback({error, resetErrorBoundary}) {
 
 That means all errors will at least be caught at the root level. However, you can also add `<ErrorBoundary>` anywhere else in your app for more localized error handiling. If an error is caught by an `<ErrorBoundary>` somewhere down inside your app tree, then it will not reach the root ErrorBoundary unless you re-throw it.
 
-### Handing Server Errors on the Client
+### Handling Server Errors on the Client
 
 A really awesome feature of Blitz is that you can throw any error from a Blitz query or mutation and then use an ErrorBoundary on the frontend to catch and handle it.
 

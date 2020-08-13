@@ -6,19 +6,16 @@ sidebar_label: usePaginatedQuery
 ### Example
 
 ```ts
-import {Suspense, useState} from "react"
-import {Link, BlitzPage, usePaginatedQuery} from "blitz"
-import getProjects from "app/projects/queries/getProjects"
+import {usePaginatedQuery} from "blitz"
+import getProjectsPaginated from "app/projects/queries/getProjectsPaginated"
 
 const ITEMS_PER_PAGE = 3
-
 const Projects = () => {
   const [page, setPage] = useState(0)
-  const [projects] = usePaginatedQuery(getProjects, {
+  const [{projects, hasMore}] = usePaginatedQuery(getProjectsPaginated, {
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
-
   return (
     <div>
       {projects.map((project) => (
@@ -31,24 +28,36 @@ const Projects = () => {
       <button disabled={page === 0} onClick={() => setPage(page - 1)}>
         Previous
       </button>
-      <button disabled={projects.length !== ITEMS_PER_PAGE} onClick={() => setPage(page + 1)}>
+      <button disabled={!hasMore} onClick={() => setPage(page + 1)}>
         Next
       </button>
     </div>
   )
 }
+```
 
-const Page: BlitzPage = function () {
-  return (
-    <div>
-      <h1>Projects - Paginated</h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Projects />
-      </Suspense>
-    </div>
-  )
+And here's the query to work with that:
+
+```ts
+export default async function getProjects(
+  {where, orderBy, cursor, take, skip}: GetProjectsInput,
+  ctx: Record<any, any> = {},
+) {
+  const projects = await db.project.findMany({
+    where,
+    orderBy,
+    take,
+    skip,
+  })
+
+  const count = await db.project.count()
+  const hasMore = skip! + take! < count
+
+  return {
+    projects,
+    hasMore,
+  }
 }
-export default Page
 ```
 
 ## API

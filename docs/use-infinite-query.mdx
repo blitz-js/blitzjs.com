@@ -7,33 +7,30 @@ sidebar_label: useInfiniteQuery
 
 ```ts
 import {useInfiniteQuery} from "blitz"
-import getProducts from "/app/products/queries/getProducts"
+import getProjectsInfinite from "app/projects/queries/getProjectsInfinite"
 
-function Products(props) {
-  const [groupedProducts, {isFetching, isFetchingMore, fetchMore, canFetchMore}] = useInfiniteQuery(
-    getProducts,
-    (page = {take: 100, skip: 0}) => ({where: {storeId: props.storeId}, ...page}),
+function Projects(props) {
+  const [groupedProjects, {isFetching, isFetchingMore, fetchMore, canFetchMore}] = useInfiniteQuery(
+    getProjectsInfinite,
+    (page = {take: 3, skip: 0}) => page,
     {
-      getFetchMore: (lastGroup, allGroups) => lastGroup.nextPage,
+      getFetchMore: (lastGroup) => lastGroup.nextPage,
     },
   )
-
   return (
     <>
-      {groupedProducts.map((group, i) => (
+      {groupedProjects.map((group, i) => (
         <React.Fragment key={i}>
-          {group.products.map((product) => (
-            <p key={product.id}>{product.name}</p>
+          {group.projects.map((project) => (
+            <p key={project.id}>{project.name}</p>
           ))}
         </React.Fragment>
       ))}
-
       <div>
         <button onClick={() => fetchMore()} disabled={!canFetchMore || !!isFetchingMore}>
           {isFetchingMore ? "Loading more..." : canFetchMore ? "Load More" : "Nothing more to load"}
         </button>
       </div>
-
       <div>{isFetching && !isFetchingMore ? "Fetching..." : null}</div>
     </>
   )
@@ -43,20 +40,25 @@ function Products(props) {
 And here's the query to work with that:
 
 ```ts
-export default async function getProducts({where, orderBy, take, skip}: GetProductsInput) {
-  const products = await db.product.findMany({
+export default async function getProjectsInfinite({
+  where,
+  orderBy,
+  take,
+  skip,
+}: GetProjectsInfiniteInput) {
+  const projects = await db.project.findMany({
     where,
     orderBy,
     take,
     skip,
   })
 
-  const count = await db.product.count()
-  const hasMore = skip + take < count
-  const nextPage = hasMore ? {take, skip: skip + take} : null
+  const count = await db.project.count()
+  const hasMore = skip! + take! < count
+  const nextPage = hasMore ? {take, skip: skip! + take!} : null
 
   return {
-    products,
+    projects,
     nextPage,
   }
 }

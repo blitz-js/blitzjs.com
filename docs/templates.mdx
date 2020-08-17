@@ -58,6 +58,73 @@ export default function __ModelName__Home() {
 }
 ```
 
+### Conditional JSX Expressions
+
+In the case where you need to conditionally insert different JSX into your templates, the `process.env` solution isn't ideal. Because we only do naive replacement of the inner node, if you embed a `process.env` conditional in JSX you'll have something like this:
+
+```tsx
+// input
+function MyLink() {
+  return (
+    <>
+      {process.env.useLinkWrapper ? (
+        <Link>
+          <a href="//blitzjs.com">Blitz</a>
+        </Link>
+      ) : (
+        <a href="//blitzjs.com">Blitz</a>
+      )}
+    </>
+  )
+}
+
+// output
+function MyLink() {
+  return (
+    <>
+      {
+        <Link>
+          <a href="//blitzjs.com">Blitz</a>
+        </Link>
+      }
+    </>
+  )
+}
+```
+
+As you can see, the curly braces that wrap the inner script will persist in the template output. This is where we can use our custom JSX conditional syntax. The generator exposes two new JSX elements to TSX templates: `<if condition="value" />` and `<else />`. Their behavior is exactly the same as a standard `process.env` conditional. The `condition` prop on the `if` statement is read out of the template context. If its value is truthy the first child of `<if />` will be rendered, otherwise the contents of the `<else />` element will be rendered.
+
+:::info
+
+Both `<if />` and `<else />` only accept a **single child component.** You will see unexpected behavior and errors if you try to provide a fragment or multiple elements.
+
+:::
+
+```tsx
+// input
+function MyLink() {
+  return (
+    <if condition="useLinkWrapper">
+      <Link>
+        <a href="//blitzjs.com">Blitz</a>
+      </Link>
+      <else>
+        <a href="//blitzjs.com">Blitz</a>
+      </else>
+    </if>
+  )
+}
+
+// output
+function MyLink() {
+  return (
+    <Link>
+      <a href="//blitzjs.com">Blitz</a>
+    </Link>
+  )
+}
+```
+
 ---
 
 _Interested in helping with the templating language? There's plenty of room for improvement including supporting loops and iteration, actual evaluation of conditionals rather than only truthiness checks, and more! Join us in [Slack](https://slack.blitzjs.com)._

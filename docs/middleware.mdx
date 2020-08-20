@@ -32,7 +32,7 @@ const middleware: Middleware = async (req, res, next) => {
   - `req.body` - An object containing the body parsed by `content-type`, or `null` if no body was sent
 - `res`: `MiddlewareResponse`
   - An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse), plus the following:
-  - `res.blitzCtx` - An object that is passed as the second argument to queries and mutations. This how middleware communicates with the rest of your app
+  - `res.blitzCtx` - An object that is passed as the second argument to queries and mutations. This is how middleware communicates with the rest of your app
   - `res.blitzResult` - The returned result from a query or mutation. To read from this, you must first `await next()`
   - `res.status(code)` - A function to set the status code. `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
   - `res.json(json)` - Sends a JSON response. `json` must be a valid JSON object

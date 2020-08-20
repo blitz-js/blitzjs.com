@@ -288,10 +288,11 @@ function Home() {
         <div className="skip-row" />
         <div className="skip-row" />
 
-        <Feature title="Authentication Built In (Coming soon)">
+        <Feature title="Authentication Built In">
           <Text>
-            Blitz fullstack authentication is super easy and very secure. Works with any identity
-            provider, including self-hosted username and password and third-parties like Auth0.
+            Blitz fullstack authentication is super easy and very secure. New apps have email and
+            password set up by default. And the Passport.js adapter makes it a breeze to use any
+            social login.
           </Text>
         </Feature>
 
@@ -302,11 +303,11 @@ function Home() {
           </Text>
         </Feature>
 
-        <Feature title="Code Installer Recipes (Coming soon)">
+        <Feature title="Code Installer Recipes">
           <Text>
             One command to install code and/or packages into your blitz app. Examples: `blitz
-            install tailwind` or `blitz install sentry`. Uses the MDX Recipe format that Gatsby
-            created for Gatsby Recipes.
+            install tailwind` or `blitz install chakra`. Multiple offical recipes, but anyone can
+            create an publish their own.
           </Text>
         </Feature>
 

@@ -26,22 +26,9 @@ services:
     startCommand: blitz start --production -H 0.0.0.0
 ```
 
-#### With postgres database:
+#### With Postgres database:
 
-You first need to change the defined datasource in `db/schema.prisma` from SQLite to Postgres
-
-```diff
--datasource sqlite {
--  provider = "sqlite"
-- url      = "file:./db.sqlite"
--
-+datasource postgresql {
-+  provider = "postgresql"
-+  url      = env("DATABASE_URL")
-+}
-```
-
-Lastly, use this `render.yaml`:
+Update your `render.yaml` to provide the `DATABASE_URL` environment variable to connect to your database:
 
 ```yaml
 # render.yaml

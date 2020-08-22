@@ -1,11 +1,15 @@
 ---
-title: Dynamic Import
-sidebar_label: Dynamic Import
+title: Code Splitting
+sidebar_label: Code Splitting
 ---
 
-Blitz supports ES2020 [dynamic `import()`](https://github.com/tc39/proposal-dynamic-import) for JavaScript. With it you can import JavaScript modules (inc. React Components) dynamically and work with them. They also work with SSR.
+Blitz automatically optimizes your bundles and splits them up by page, so your users will only download the required assets for a given route (without an extra effort on your part!). This technique is known as [code splitting](https://reactjs.org/docs/code-splitting.html).
 
-You can think of dynamic imports as another way to split your code into manageable chunks.
+In the event you need to split or lazy-load assets within a page, Blitz supports ES2020 [dynamic `import()`](https://github.com/tc39/proposal-dynamic-import) for JavaScript. With it you can import JavaScript modules (React components, libraries, etc.) dynamically and work with them. You can think of dynamic imports as another way to split your code into manageable chunks.
+
+One reason you may want to do this is when a feature on page relies on a very large library that you don't want the user's browser to have to download unless they need it (and not all visitors to the page will need it). You can use dynamic imports to load the library only after the user has clicked a button or toggled an option somewhere on the page, for example. This helps keep the initial page load nice and fast for everyone.
+
+Another scenario that may benefit from dynamic imports is using a library that only works in the browser (perhaps it uses the `window` object without first checking if it's available). In this case, dynamically importing the library will prevent it from throwing an error when Blitz performs server-side rendering.
 
 ## Basic usage
 

@@ -62,7 +62,7 @@ module.exports = {
       "blitz-config",
       "webpack-config",
       "postcss-config",
-      "dynamic-import",
+      "code-splitting",
       "middleware",
       "rpc-specification",
       "measuring-performance",

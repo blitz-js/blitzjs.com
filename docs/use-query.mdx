@@ -62,6 +62,7 @@ const [
   refetchInterval,
   refetchIntervalInBackground,
   refetchOnWindowFocus,
+  refetchOnReconnect,
   onSuccess,
   onError,
   onSettled,
@@ -114,6 +115,9 @@ const [
   - Optional
   - Set this to `false` to disable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `true`).
   - Set this to `true` to enable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `false`.
+- `refetchOnReconnect: Boolean`
+  - Optional
+  - Set this to `true` or `false` to enable/disable automatic refetching on reconnect for this query.
 - `onSuccess: Function(data) => data`
   - Optional
   - This function will fire any time the query successfully fetches new data.

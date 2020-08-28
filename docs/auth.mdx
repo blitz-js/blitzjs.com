@@ -3,11 +3,7 @@ title: Auth
 sidebar_label: Auth
 ---
 
-Auth broadly consists of three distinct components:
-
-1. Authentication - is someone who they claim to be?
-2. Session management - is someone logged in?
-3. Authorization - is someone allowed to perform an action?
+Blitz handles auth for you out of the box - making it easy to manage sessions, authenticate users and authorize their actions. Blitz's session management is based upon the [SuperTokens library](https://supertokens.io/), whose CTO [Rishabh Poddar](https://twitter.com/rishpoddar) designed and oversaw the implementation. In your fresh Blitz app your `db/schema.prisma` file is prefilled with models for `User` and `Session`, and `blitz.config.js` has the session middleware configured. 
 
 ## Session Management
 
@@ -19,57 +15,9 @@ Session management performs the following functions:
 2. Attribute multiple requests to the same user, even when they are logged out
 3. Protection against CSRF attacks
 
-#### Design & Implementation
-
-Blitz session management is based on the state of the art [SuperTokens library](https://supertokens.io/). [Rishabh Poddar](https://twitter.com/rishpoddar), the CTO of SuperTokens, designed and oversaw our implementation. We're extremely grateful for Rishabh's help! 🙏
-
-### Setup
-
-To use the built-in Blitz session management, add the `sessionMiddleware` to your `blitz.config.js` file like this:
-
-```js
-// blitz.config.js
-const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
-
-module.exports = {
-  middleware: [
-    sessionMiddleware({
-      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
-    }),
-  ],
-}
-```
-
-Then add the following `Session` model to your Prisma schema and connect it to your `User` model. After updating the schema file, run `blitz db migrate`
-
-```prisma
-// db/schema.prisma
-model User {
-  id        Int      @default(autoincrement()) @id
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  role           String    @default("user")
-  sessions  Session[]
-}
-
-model Session {
-  id                 Int      @default(autoincrement()) @id
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  expiresAt          DateTime?
-  handle             String   @unique
-  user               User?    @relation(fields: [userId], references: [id])
-  userId             Int?
-  hashedSessionToken String?
-  antiCSRFToken      String?
-  publicData         String?
-  privateData        String?
-}
-```
-
 ### Session on the Server
 
-The `sessionMiddleware` added above adds the [`SessionContext`](#sessioncontext) class to `ctx` which is provided by Blitz as the second parameter to all queries and mutations.
+[`SessionContext`](#sessioncontext) is available off of `ctx` which is provided as the second parameter to all queries and mutations.
 
 ```ts
 // app/queries/someQuery.ts
@@ -92,7 +40,7 @@ import {getSessionContext} from "@blitzjs/server"
 
 export const getServerSideProps = async ({req, res}) => {
   const session = await getSessionContext(req, res)
-  console.log("Session id:", session.userId)
+  console.log("User ID:", session.userId)
 
   return {props: {}}
 }
@@ -119,7 +67,7 @@ import {getSessionContext} from "@blitzjs/server"
 
 export default async function ({req, res}) {
   const session = await getSessionContext(req, res)
-  console.log("Session id:", session.userId)
+  console.log("User ID:", session.userId)
 
   res.json({userId})
 }
@@ -280,140 +228,6 @@ Currently the session management has zero-config support for Prisma, but you can
 
 In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.
 
-## Authentication
-
-### Email/Password
-
-Update the `User` model in your `schema.prisma` file to have the `email` and `hashedPassword` fields.
-
-```prisma
-// db/schema.prisma
-model User {
-  id             Int       @default(autoincrement()) @id
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  name           String?
-// highlight-start
-  email          String    @unique
-  hashedPassword String?
-// highlight-end
-  role           String    @default("user")
-  sessions       Session[]
-}
-```
-
-Install the `zod` and `secure-password` npm dependencies.
-
-Add the following file at `app/auth.ts`:
-
-```ts
-// app/auth.ts
-import {AuthenticationError} from "blitz"
-import SecurePassword from "secure-password"
-import db, {User} from "db"
-
-const SP = new SecurePassword()
-
-export const hashPassword = async (password: string) => {
-  const hashedBuffer = await SP.hash(Buffer.from(password))
-  return hashedBuffer.toString("base64")
-}
-export const verifyPassword = async (hashedPassword: string, password: string) => {
-  return await SP.verify(Buffer.from(password), Buffer.from(hashedPassword, "base64"))
-}
-
-export const authenticateUser = async (email: string, password: string) => {
-  const user = await db.user.findOne({where: {email}})
-
-  if (!user || !user.hashedPassword) throw new AuthenticationError()
-
-  switch (await verifyPassword(user.hashedPassword, password)) {
-    case SecurePassword.VALID:
-      break
-    case SecurePassword.VALID_NEEDS_REHASH:
-      // Upgrade hashed password with a more secure hash
-      const improvedHash = await hashPassword(password)
-      await db.user.update({where: {id: user.id}, data: {hashedPassword: improvedHash}})
-      break
-    default:
-      throw new AuthenticationError()
-  }
-
-  delete user.hashedPassword
-  return user as Omit<User, "hashedPassword">
-}
-```
-
-Add the following `signUp` mutation at `app/users/mutations/signUp.ts` or in any other `mutations` folder.
-
-```ts
-// app/users/mutations/signUp.ts
-import db from "db"
-import {SessionContext} from "blitz"
-import {hashPassword} from "app/auth"
-import * as z from "zod"
-
-export const SignUpInput = z.object({
-  email: z.string().email(),
-  password: z.string().min(10).max(100),
-})
-
-export default async function signUp(
-  input: z.infer<typeof SignUpInput>,
-  ctx: {session?: SessionContext} = {},
-) {
-  // This throws an error if input is invalid
-  const {email, password} = SignUpInput.parse(input)
-  const hashedPassword = await hashPassword(password)
-  const user = await db.user.create({data: {email, hashedPassword, role: "user"}})
-
-  await ctx.session!.create({userId: user.id, roles: [user.role]})
-
-  return user
-}
-```
-
-Add the following `login` mutation at `app/users/mutations/login.ts` or in any other `mutations` folder.
-
-```ts
-// app/users/mutations/login.ts
-import {SessionContext} from "blitz"
-import {authenticateUser} from "app/auth"
-import * as z from "zod"
-
-export const LoginInput = z.object({
-  email: z.string(),
-  password: z.string(),
-})
-
-export default async function login(
-  input: z.infer<typeof LoginInput>,
-  ctx: {session?: SessionContext} = {},
-) {
-  // This throws an error if input is invalid
-  const {email, password} = LoginInput.parse(input)
-
-  // This throws an error if credentials are invalid
-  const user = await authenticateUser(email, password)
-
-  await ctx.session!.create({userId: user.id, roles: [user.role]})
-
-  return user
-}
-```
-
-Add the following `logout` mutation at `app/users/mutations/logout.ts` or in any other `mutations` folder.
-
-```ts
-// app/users/mutations/logout.ts
-import {SessionContext} from "blitz"
-
-export default async function logout(_ = null, ctx: {session?: SessionContext} = {}) {
-  return await ctx.session!.revoke()
-}
-```
-
-Then add forms on your frontend that use the `signUp`, `login`, and `logout` mutations.
 
 ### Third-Party
 
@@ -547,7 +361,7 @@ return done(new Error("it broke"))
 
 ##### Showing the Error to the User
 
-Any error during this process will be provided as the `authError`query parameter.
+Any error during this process will be provided as the `authError` query parameter.
 
 For example with `errorRedirectUrl = '/'` and `done(new Error("it broke"))`, the user will be redirected to:
 
@@ -627,79 +441,3 @@ export default async function getUser({where}: GetUserInput, ctx: {session?: Ses
   return user
 }
 ```
-
-## Error Handling
-
-The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.
-
-- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect urls. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
-- If `AuthorizationError`, display an error stating such.
-
-```ts
-import React from "react"
-import {Error as ErrorComponent} from "blitz"
-import {queryCache} from "react-query"
-import LoginForm from "app/components/LoginForm"
-
-export default class ErrorBoundary extends React.Component<{
-  fallback?: (error: any) => React.ReactNode
-}> {
-  state = {
-    error: null as Error | null,
-  }
-
-  static getDerivedStateFromError(error: any) {
-    return {
-      error,
-    }
-  }
-
-  reset = () => {
-    this.setState({error: null})
-    queryCache.resetErrorBoundaries()
-  }
-
-  render() {
-    const {error} = this.state
-    if (error) {
-      if (error.name === "AuthenticationError") {
-        return <LoginForm onSuccess={this.reset} />
-      } else if (error.name === "AuthorizationError") {
-        return (
-          <ErrorComponent
-            statusCode={(error as any).statusCode}
-            title="Sorry, you are not authorized to access this"
-          />
-        )
-      } else if (this.props.fallback) {
-        return this.props.fallback(error)
-      } else {
-        throw error
-      }
-    }
-    return this.props.children
-  }
-}
-```
-
-And then wrap your entire application with the error boundary like so:
-
-```ts
-// app/pages/_app.tsx
-import {AppProps} from "blitz"
-// highlight-start
-import ErrorBoundary from "app/components/ErrorBoundary"
-// highlight-end
-
-// highlight-start
-export default function MyApp({Component, pageProps}: AppProps) {
-  // highlight-end
-  return (
-    <ErrorBoundary>
-      <Component {...pageProps} />
-    </ErrorBoundary>
-  )
-}
-```
-
-You can also place this same error boundary at lower places in your application UI tree and pass in a fallback component like `fallback={(error) => <p>Error: {error.message}</p>}`. This can be used to only display an error in a certain section of the UI, instead of replacing the entire UI.

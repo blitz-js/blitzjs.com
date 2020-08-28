@@ -127,7 +127,7 @@ export default async function ({req, res}) {
 
 ### Session on the Client
 
-Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata). This hook can be used anywhere in your application.
+Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata) with `isLoading` property. This hook can be used anywhere in your application.
 
 ```ts
 import {useSession} from "blitz"
@@ -137,6 +137,7 @@ function SomeComponent() {
 
   session.userId
   session.roles[0]
+  session.isLoading
 
   return /*... */
 }

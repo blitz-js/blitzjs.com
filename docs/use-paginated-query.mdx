@@ -6,16 +6,23 @@ sidebar_label: usePaginatedQuery
 ### Example
 
 ```ts
-import {usePaginatedQuery} from "blitz"
-import getProjectsPaginated from "app/projects/queries/getProjectsPaginated"
+import {Suspense} from "react"
+import {Link, BlitzPage, usePaginatedQuery, useRouterQuery, useRouter} from "blitz"
+import getProjects from "app/products/queries/getProjects"
 
 const ITEMS_PER_PAGE = 3
+
 const Projects = () => {
-  const [page, setPage] = useState(0)
-  const [{projects, hasMore}] = usePaginatedQuery(getProjectsPaginated, {
-    skip: ITEMS_PER_PAGE * page,
+  const router = useRouter()
+  const {page = 0} = useRouterQuery()
+  const [{projects, hasMore}] = usePaginatedQuery(getProjects, {
+    skip: ITEMS_PER_PAGE * Number(page),
     take: ITEMS_PER_PAGE,
   })
+
+  const goToPreviousPage = () => router.push({query: {page: Number(page) - 1}})
+  const goToNextPage = () => router.push({query: {page: Number(page) + 1}})
+
   return (
     <div>
       {projects.map((project) => (
@@ -25,15 +32,16 @@ const Projects = () => {
           </Link>
         </p>
       ))}
-      <button disabled={page === 0} onClick={() => setPage(page - 1)}>
+      <button disabled={page === 0} onClick={goToPreviousPage}>
         Previous
       </button>
-      <button disabled={!hasMore} onClick={() => setPage(page + 1)}>
+      <button disabled={!hasMore} onClick={goToNextPage}>
         Next
       </button>
     </div>
   )
 }
+
 ```
 
 And here's the query to work with that:

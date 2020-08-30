@@ -167,6 +167,8 @@ Then, we'll generate the `Choice` model with corresponding queries and mutations
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
 
+> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
+
 ```
 ✔ Model for 'choice' created successfully:
 

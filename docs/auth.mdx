@@ -3,7 +3,9 @@ title: Auth
 sidebar_label: Auth
 ---
 
-Blitz handles auth for you out of the box - ready to manage sessions, authenticate users and authorize their actions. Blitz's session management is based upon the [SuperTokens library](https://supertokens.io/), whose CTO [Rishabh Poddar](https://twitter.com/rishpoddar) designed and oversaw the implementation. In your fresh Blitz app your `db/schema.prisma` file is prefilled with models for `User` and `Session`, and `blitz.config.js` has the session middleware configured. 
+Blitz handles auth for you out of the box - ready to manage sessions, authenticate users and authorize their actions. In your fresh Blitz app your `db/schema.prisma` file is prefilled with models for `User` and `Session`, and `blitz.config.js` has the session middleware configured. 
+
+Blitz session management is based on the state of the art [SuperTokens library](https://supertokens.io). [Rishabh Poddar](https://twitter.com/rishpoddar), the CTO of SuperTokens, designed and oversaw our implementation. We're extremely grateful for Rishabh's help! 🙏
 
 ## Session Management
 
@@ -439,5 +441,33 @@ export default async function getUser({where}: GetUserInput, ctx: {session?: Ses
   const user = await db.user.findOne({where})
 
   return user
+}
+```
+
+## Error Handling
+
+The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.	
+
+- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.	
+- If `AuthorizationError`, display an error stating such.	
+
+Out of the box `app/pages/_app.tsx` is set up ready to handle these errors in the `RootErrorFallback` function. You can customize it as required for your needs.
+
+```ts
+function RootErrorFallback({ error, resetErrorBoundary }) {
+  if (error.name === "AuthenticationError") {
+    return <LoginForm onSuccess={resetErrorBoundary} />
+  } else if (error.name === "AuthorizationError") {
+    return (
+      <ErrorComponent
+        statusCode={error.statusCode}
+        title="Sorry, you are not authorized to access this"
+      />
+    )
+  } else {
+    return (
+      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+    )
+  }
 }
 ```

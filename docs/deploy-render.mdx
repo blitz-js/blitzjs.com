@@ -35,6 +35,7 @@ Update your `render.yaml` to provide the `DATABASE_URL` environment variable to 
 services:
   - type: web
     name: myapp
+    region: oregon
     env: node
     plan: starter
     buildCommand: yarn; blitz db migrate; blitz build
@@ -49,5 +50,6 @@ services:
 
 databases:
   - name: myapp-db
+    region: oregon
     plan: starter
 ```

@@ -55,6 +55,7 @@ module.exports = {
       "cli-generate",
       "cli-console",
       "cli-install",
+      "cli-autocomplete",
     ],
     Recipes: ["using-recipes", "writing-recipes"],
     Templates: ["templates"],

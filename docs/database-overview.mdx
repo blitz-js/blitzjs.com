@@ -33,3 +33,10 @@ model Task {
 2. Then run `blitz db migrate` in your terminal to apply the changes
 3. Now you can import `db` from `db/index.ts` and create a model like this:
    - `db.project.create({data: {name: 'Hello'}})`
+
+## Switch to PostgreSQL
+
+By default, a Blitz app is created with a local SQLite database. If you want to use PostgreSQL instead, you need to perform the following steps:
+
+1. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
+2. Run `blitz db migrate`. This command will create the database (if it does not already exist) and tables based on your schema.

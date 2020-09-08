@@ -3,7 +3,7 @@ title: Auth
 sidebar_label: Auth
 ---
 
-Blitz handles auth for you out of the box - ready to manage sessions, authenticate users and authorize their actions. In your fresh Blitz app your `db/schema.prisma` file is prefilled with models for `User` and `Session`, and `blitz.config.js` has the session middleware configured. 
+Blitz handles auth for you out of the box - ready to manage sessions, authenticate users and authorize their actions. In your fresh Blitz app your `db/schema.prisma` file is prefilled with models for `User` and `Session`, and `blitz.config.js` has the session middleware configured.
 
 Blitz session management is based on the state of the art [SuperTokens library](https://supertokens.io). [Rishabh Poddar](https://twitter.com/rishpoddar), the CTO of SuperTokens, designed and oversaw our implementation. We're extremely grateful for Rishabh's help! 🙏
 
@@ -122,21 +122,24 @@ Authenticated sessions use opaque tokens that are stored in the database.
 
 #### Session Creation
 
-- At login, the server creates an opaque token. This is a random, 32 character long `string` as the access token.
-- This token is sent to the frontend via `httpOnly`, `secure` cookies. Separately, the 32 character anti-csrf token is be sent to the frontend via response headers.
-- The anti-csrf token is be stored in the localstorage on the frontend.
+- At login, the server creates two opaque tokens:
+  - An access token.
+  - An anti-csrf token.
+- Both are a 32 character long `string`.
+- The two tokens are then sent to the frontend via `httpOnly`, `secure` cookies. 
 - The SHA256 hash of the access token will be stored in the database. This token has the following properties mapped to it:
   - userId
   - expiry time
   - session data
+- The anti-csrf token is stored alongside the access token.
 - Creating a new session while another one exists results in the headers / cookies changing. However, the older session will still be alive.
 - For serious production apps, a cronjob is needed to remove all expired tokens on a regular basis.
 
 #### Session Verification
 
-- For each request that requires CSRF protection, the frontend reads the localstorage and sends the anti-csrf token in the request header.
-- An incoming access token is verified by checking that it's in the db and that it has not expired. After each verification, the expiry time of the access token updated.
-- CSRF attacks are prevented by checking that the incoming anti-csrf token (from the header) is what is associated with the session.
+- For each request that requires CSRF protection, the frontend sends the anti-csrf token in the request header.
+- An incoming access token is verified by checking that it's in the db and that it has not expired. After each verification, the expiry time of the access token is updated.
+- CSRF attacks are prevented by checking that the incoming anti-csrf token (from the header) is the one associated with the session.
 
 #### Session Revocation/Logout
 
@@ -230,7 +233,6 @@ Currently the session management has zero-config support for Prisma, but you can
 ### Production
 
 In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.
-
 
 ### Third-Party
 
@@ -447,15 +449,15 @@ export default async function getUser({where}: GetUserInput, ctx: {session?: Ses
 
 ## Error Handling
 
-The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.	
+The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.
 
-- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.	
-- If `AuthorizationError`, display an error stating such.	
+- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
+- If `AuthorizationError`, display an error stating such.
 
 Out of the box `app/pages/_app.tsx` is set up ready to handle these errors in the `RootErrorFallback` function. You can customize it as required for your needs.
 
 ```ts
-function RootErrorFallback({ error, resetErrorBoundary }) {
+function RootErrorFallback({error, resetErrorBoundary}) {
   if (error.name === "AuthenticationError") {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error.name === "AuthorizationError") {

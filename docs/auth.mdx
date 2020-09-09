@@ -126,7 +126,8 @@ Authenticated sessions use opaque tokens that are stored in the database.
   - An access token.
   - An anti-csrf token.
 - Both are a 32 character long `string`.
-- The two tokens are then sent to the frontend via `httpOnly`, `secure` cookies. 
+- The access token is sent to the frontend via an `httpOnly`, `secure` cookie.
+- The anti-csrf token is sent to the frontend via a normal, `secure` cookie that can be read from Javascript.
 - The SHA256 hash of the access token will be stored in the database. This token has the following properties mapped to it:
   - userId
   - expiry time

@@ -24,6 +24,7 @@ export default passportAuth({
   strategies: [
     // Provide initialized passport strategy here
   ],
+  secureProxy: true,
 })
 ```
 
@@ -44,6 +45,10 @@ For example with `passport-twitter` strategy, the URLs for Twitter will be:
 2. `/api/auth/twitter/callback` - Callback URL to complete login
 
 You can determine the `strategyName` in the strategy's documentation by looking for this: `passport.authenticate('github')`. So in this case, the `strategyName` is `github`.
+
+#### SSL Proxy Configuration
+
+You may need to set `secureProxy` option to `true` in case your app is located behind SSL proxy (Nginx). Proxy should be set to manage `x-forwarded-proto` header correctly.
 
 ### 2. Add a Passport Strategy
 

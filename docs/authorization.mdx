@@ -1,0 +1,86 @@
+---
+title: Authorization
+sidebar_label: Authorization
+---
+
+This is still a work-in-progress, but for now Blitz provides `unstable_simpleRolesIsAuthorized` as an experimental authorization implementation to get you started.
+
+### `unstable_simpleRolesIsAuthorized`
+
+To use, add it do your `sessionMiddleware` configuration:
+
+```js
+// blitz.config.js
+const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      // highlight-start
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      // highlight-end
+    }),
+  ],
+}
+```
+
+This adds the implementation for `SessionContext.authorize()`.
+
+Inside any query or mutation, call `ctx.session.authorize(roleOrRoles)` to authorize the request.
+
+- `ctx.session.authorize()`
+  - Only enforce that a user is logged in. It does not check user roles
+  - throws `AuthenticationError` if user not logged in
+- `ctx.session.authorize('admin')`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` role
+  - throws `AuthorizationError` if the user does not have `admin` role
+- `ctx.session.authorize(['admin', 'manager'])`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` or `manager` role
+  - throws `AuthorizationError` if the user does not have `admin` and does not have `manager` role
+
+```ts
+import db, {FindOneUserArgs} from "db"
+import {SessionContext} from "blitz"
+
+type GetUserInput = {where: FindOneUserArgs["where"]}
+
+export default async function getUser({where}: GetUserInput, ctx: {session?: SessionContext} = {}) {
+  // highlight-start
+  ctx.session!.authorize("admin")
+  // highlight-end
+
+  const user = await db.user.findOne({where})
+
+  return user
+}
+```
+
+## Error Handling
+
+The recommended way to handle Authentication and Authorization errors is to use a global error boundary component.
+
+- If `AuthenticationError`, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
+- If `AuthorizationError`, display an error stating such.
+
+Out of the box `app/pages/_app.tsx` is set up ready to handle these errors in the `RootErrorFallback` function. You can customize it as required for your needs.
+
+```ts
+function RootErrorFallback({error, resetErrorBoundary}) {
+  if (error.name === "AuthenticationError") {
+    return <LoginForm onSuccess={resetErrorBoundary} />
+  } else if (error.name === "AuthorizationError") {
+    return (
+      <ErrorComponent
+        statusCode={error.statusCode}
+        title="Sorry, you are not authorized to access this"
+      />
+    )
+  } else {
+    return (
+      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+    )
+  }
+}
+```

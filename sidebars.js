@@ -22,9 +22,9 @@ module.exports = {
       "css",
       "static-files",
       "environment-variables",
-      "auth",
       "error-handling",
     ],
+    Auth: ["auth", "session-management", "authorization", "passportjs"],
     Pages: [
       "pages",
       "error-pages",

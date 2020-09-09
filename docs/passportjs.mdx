@@ -21,7 +21,7 @@ import db from "db"
 export default passportAuth({
   successRedirectUrl: "/",
   errorRedirectUrl: "/",
-  authenticateOptions: {}, //add options we should pass to 'passport.authorize() here'
+  authenticateOptions: {}, //add options we should pass to 'passport.authorize()' here
   strategies: [
     // Provide initialized passport strategy here
   ],
@@ -114,9 +114,10 @@ import {Strategy as Auth0Strategy} from "passport-auth0"
 export default passportAuth({
   successRedirectUrl: "/",
   errorRedirectUrl: "/",
+  // highlight-start
   authenticateOptions: {scope: "openid email profile"},
+  // highlight-end
   strategies: [
-    // highlight-start
     new Auth0Strategy(
       {
         domain: process.env.AUTH0_DOMAIN,
@@ -153,7 +154,6 @@ export default passportAuth({
         done(undefined, {publicData})
       },
     ),
-    // highlight-end
   ],
 })
 ```

@@ -102,7 +102,7 @@ export default passportAuth({
 
 Note: The above `passport-twitter` example requires your `User` prisma model to have `email String @unique` and `name String`.
 
-## AuthenticateOptions
+### `authenticateOptions`
 Some strategies have to call an option like `scope` or `successMessage` inside the `passport.authenticate()` method. Add
 these options to the `passportAuth` object like this:
 

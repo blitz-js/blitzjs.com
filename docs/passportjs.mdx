@@ -24,7 +24,6 @@ export default passportAuth({
   strategies: [
     // Provide initialized passport strategy here
   ],
-  secureProxy: true,
 })
 ```
 
@@ -49,6 +48,19 @@ You can determine the `strategyName` in the strategy's documentation by looking 
 #### SSL Proxy Configuration
 
 You may need to set `secureProxy` option to `true` in case your app is located behind SSL proxy (Nginx). Proxy should be set to manage `x-forwarded-proto` header correctly.
+
+```ts
+// app/api/auth/[...auth].ts
+import {passportAuth} from "blitz"
+import db from "db"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  secureProxy: true, // highlight-line
+  strategies: [/*...*/],
+})
+```
 
 ### 2. Add a Passport Strategy
 

@@ -152,7 +152,8 @@ There are four different ways to determine the redirect URL where a user should 
 1. Add `redirectUrl` to the `verify` callback result
    - Example: `done(null, {publicData, redirectUrl: '/'})`
 2. Add a `redirectUrl` query parameter to the "initiate login" url
-   - Example: `example.com/api/auth/twitter?redirectUrl='/dashboard'`
+   - Example: `example.com/api/auth/twitter?redirectUrl=/dashboard`
+   - Example: `example.com/api/auth/twitter?redirectUrl=${router.pathname}`
 3. Via the config passed to `passportAuth`
    - If success, it will use `config.successRedirectUrl`
    - If error, it will use `config.errorRedirectUrl`

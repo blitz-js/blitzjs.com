@@ -21,7 +21,7 @@ import db from "db"
 export default passportAuth({
   successRedirectUrl: "/",
   errorRedirectUrl: "/",
-  authenticateOptions: {}, //add options we should pass to 'passport.authorize()' here
+//  authenticateOptions: {}, //optionally add options to pass to 'passport.authorize()'
   strategies: [
     // Provide initialized passport strategy here
   ],

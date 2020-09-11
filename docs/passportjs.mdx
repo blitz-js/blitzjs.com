@@ -149,7 +149,6 @@ export default passportAuth({
           userId: user.id,
           roles: [user.role],
           source: "auth0",
-          githubUsername: profile.username,
         }
         done(undefined, {publicData})
       },

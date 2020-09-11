@@ -45,6 +45,23 @@ For example with `passport-twitter` strategy, the URLs for Twitter will be:
 
 You can determine the `strategyName` in the strategy's documentation by looking for this: `passport.authenticate('github')`. So in this case, the `strategyName` is `github`.
 
+#### SSL Proxy Configuration
+
+You may need to set `secureProxy` option to `true` in case your app is located behind SSL proxy (Nginx). Proxy should be set to manage `x-forwarded-proto` header correctly.
+
+```ts
+// app/api/auth/[...auth].ts
+import {passportAuth} from "blitz"
+import db from "db"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  secureProxy: true, // highlight-line
+  strategies: [/*...*/],
+})
+```
+
 ### 2. Add a Passport Strategy
 
 Add a strategy to the `strategies` array argument for `passportAuth` in the API route, and then follow the strategy's documentation for setup.

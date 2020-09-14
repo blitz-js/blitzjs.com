@@ -4400,10 +4400,10 @@ eta@^1.1.1:
   resolved "https://registry.yarnpkg.com/eta/-/eta-1.1.1.tgz#acd575025233488a66870b02223001d4cd467441"
   integrity sha512-YRchTAXZZrrJVmlAwmLHuKmlHNJ2hO0uen8LsDqvH5kknRjh0ef+Y9kInENygCgvu7FQNJBpbyDChfMo8f5Qgw==
 
-eta@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/eta/-/eta-1.5.0.tgz#82a9387592413ccda25f7041a7101520d8d9dc59"
-  integrity sha512-CFDr+ihDcMVQA5BI+dGrqu40JOOH9lcXXiOzz3ubFmUisXNK0W7rL5B4uF75LzUAdjTOUwq9bMHqnyULK7pUAQ==
+eta@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/eta/-/eta-1.6.2.tgz#5d0dc7308f1906543b7d977b7a480b09f0ba9fac"
+  integrity sha512-PEp06q2PX12XQQl6d11yWpRZG/W6jBw7NbOQpNTLZpoofOiWg3NJxcC5iR7NkYUL1w8zngkr/76i7r3cFtFRag==
 
 etag@~1.8.1:
   version "1.8.1"

@@ -3,7 +3,11 @@ title: Database Seeds
 sidebar_label: Seeds
 ---
 
-By default, Blitz has a `db/seed.ts`, where you can add dummy data to quickly seed your environment. Only requirement is that this file makes a default export.
+## About
+
+By default, Blitz has a `db/seed.ts`, where you can add dummy data to quickly seed your environment.
+
+This is useful for rebuilding your DB after you messed it up or simply when it's full of old test data. Good seeds can also make onboarding new people to the project a lot friendlier (no more, go to this page and create a new user, then create some tasks for them but make sure to create at least one project...). Only requirement is that this file makes a default export.
 
 ## Example
 
@@ -49,4 +53,6 @@ const seed = async () => {
 export default seed
 ```
 
-2. Now simply run `blitz db seed` and you're done
+2. Now simply run `blitz db seed` and you're done. You should be all set with fresh new data in your database.
+
+> TIP: Use [faker.js](https://www.npmjs.com/package/faker) to have more realistic data (names, addresses, emails, places, dates, event lorem ipsusm)

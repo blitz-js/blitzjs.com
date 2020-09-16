@@ -1,0 +1,52 @@
+---
+title: Database Seeds
+sidebar_label: Seeds
+---
+
+By default, Blitz has a `db/seed.ts`, where you can add dummy data to quickly seed your environment. Only requirement is that this file makes a default export.
+
+## Example
+
+0. Let's say this is your example `db/schema.prisma`:
+
+```prisma
+model Project {
+  id        Int      @default(autoincrement()) @id
+  name      String
+  tasks     Task[]
+}
+
+model Task {
+  id          Int      @default(autoincrement()) @id
+  name        String
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   Int
+}
+```
+
+1. Add `db/seeds.ts`
+
+```ts
+import db from "./index"
+
+const seed = async () => {
+  const project = await db.project.create({data: {name: "FooBar"}})
+
+  for (let i = 0; i < 5; i++) {
+    await db.task.create({
+      data: {
+        name: `Task: ${i}`,
+        project: {
+          connect: {
+            id: project.id,
+          },
+        },
+      },
+    })
+  }
+}
+
+export default seed
+```
+
+2. Now simply run `blitz db seed` and you're done

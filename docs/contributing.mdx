@@ -125,3 +125,17 @@ If you run into issues that should be documented here, please submit a PR! ❤�
 ```sh
 sudo apt install -y make python build-essential
 ```
+
+#### Yarn policies error
+
+This issue is related with yarn > 1.19.1, if you get an error like this in your console:
+
+```sh
+An unexpected error occurred: "expected workspace package to exist for \"@wessberg/rollup-plugin-ts\"
+```
+
+Fix it with this command:
+
+```sh
+yarn policies set-version 1.19.1
+```

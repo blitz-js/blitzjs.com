@@ -23,3 +23,23 @@ Often during development you need a quick peek into your database, or maybe you 
 ### `blitz db reset`
 
 This will completely destroy your database and create a new one with fresh migrations. This is useful in development if you or someone else messes up your db or simply want to clean out test data.
+
+##### Options
+
+| Argument  | Shorthand | Description                 | Default |
+| --------- | --------- | --------------------------- | ------- |
+| `--force` | `-f`      | Forces DB reset without first asking the user | `false` |
+
+##### Examples
+
+```bash
+blitz db reset
+```
+
+```bash
+blitz db reset --force
+```
+
+```bash
+blitz db reset -f
+```

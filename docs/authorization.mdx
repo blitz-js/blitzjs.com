@@ -157,7 +157,7 @@ export default async function getUser({where}: GetUserInput, ctx: {session?: Ses
 }
 ```
 
-## `useEnsureHasRole(role?: string | Array<string>)`
+## `useEnsureHasRole()`
 Even though your data is secured via `ctx.session.authorize` and some parts from your ui are hidden it is still possible
 access these sites by typing in the correct URL (`/users/new`).
 To prevent users from seeing this page you can use the `useEnsureHasRole` hook.
@@ -179,7 +179,9 @@ and you can use it like this inside your page:
 
 ```ts
 const NewPlayerPage: BlitzPage = () => {
+  //highlight-start
   useEnsureHasRole("admin")
+  //highlight-end
 
   return (
     <div>

@@ -156,3 +156,43 @@ export default async function getUser({where}: GetUserInput, ctx: {session?: Ses
   return user
 }
 ```
+
+## `useEnsureHasRole(role?: string | Array<string>)`
+Even though your data is secured via `ctx.session.authorize` and some parts from your ui are hidden it is still possible
+access these sites by typing in the correct URL (`/users/new`).
+To prevent users from seeing this page you can use the `useEnsureHasRole` hook.
+The behavior is identical to `ctx.session.authorize`
+
+- `useEnsureHasRole()`
+  - Only enforce that a user is logged in. It does not check user roles
+  - throws `AuthenticationError` if user not logged in
+- `useEnsureHasRole('admin')`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` role
+  - throws `AuthorizationError` if the user does not have `admin` role
+- `useEnsureHasRole(['admin', 'manager'])`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` or `manager` role
+  - throws `AuthorizationError` if the user does not have `admin` and does not have `manager` role
+
+and you can use it like this inside your page:
+
+```ts
+const NewPlayerPage: BlitzPage = () => {
+  useEnsureHasRole("admin")
+
+  return (
+    <div>
+      <Head>
+        <title>Neuer Spieler</title>
+      </Head>
+
+      <main>
+        <NewUserForm />
+      </main>
+    </div>
+  )
+}
+```
+
+Only a user with the role `admin` will be able to access this page.

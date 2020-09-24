@@ -7,14 +7,14 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: [
-      "getting-started",
-      "tutorial",
+    Introduction: ["getting-started", "tutorial", "what-is-nextjs", "why-blitz"],
+    Community: [
+      "how-the-community-operates",
       "manifesto",
-      "why-blitz",
-      "what-is-nextjs",
-      "code-of-conduct",
+      "community-history",
       "contributing",
+      "maintainers",
+      "code-of-conduct",
     ],
     Basics: [
       "file-structure",

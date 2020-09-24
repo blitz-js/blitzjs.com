@@ -38,5 +38,14 @@ model Task {
 
 By default, a Blitz app is created with a local SQLite database. If you want to use PostgreSQL instead, you need to perform the following steps:
 
-1. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
-2. Run `blitz db migrate`. This command will create the database (if it does not already exist) and tables based on your schema.
+1. Open `db/schema.prisma` and change the db provider value from `"sqlite"` to `"postgres"` as follows:
+
+```prisma
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+```
+
+2. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
+3. Run `blitz db migrate`. This command will create the database (if it does not already exist) and tables based on your schema.

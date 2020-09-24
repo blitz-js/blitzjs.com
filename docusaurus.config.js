@@ -55,6 +55,11 @@ module.exports = {
           position: "left",
         },
         {
+          href: "https://github.com/blitz-js/blitz/wiki",
+          label: "Wiki",
+          position: "left",
+        },
+        {
           href: "https://github.com/sponsors/blitz-js",
           label: "♥ Donate/Sponsor",
           position: "right",
@@ -74,6 +79,10 @@ module.exports = {
             {
               label: "Contributing",
               to: "docs/contributing",
+            },
+            {
+              href: "https://github.com/blitz-js/blitz/wiki",
+              label: "Wiki",
             },
           ],
         },

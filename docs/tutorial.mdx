@@ -611,7 +611,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, { refetch }] = useQuery(getQuestion, { where: { id: questionId } })
 
   // highlight-start
   const handleVote = async (id, votes) => {
@@ -620,7 +620,7 @@ export const Question = () => {
         where: {id},
         data: {votes: votes + 1},
       })
-      alert("Success!" + JSON.stringify(updated))
+      refetch();
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }

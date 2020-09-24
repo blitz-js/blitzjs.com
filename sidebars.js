@@ -43,7 +43,7 @@ module.exports = {
       "router",
       "api-routes",
     ],
-    Database: ["database-overview"],
+    Database: ["database-overview", "database-seeds"],
     Queries: [
       "query-definition",
       "query-usage",

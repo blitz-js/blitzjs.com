@@ -11,9 +11,9 @@ module.exports = {
     Community: [
       "how-the-community-operates",
       "community-history",
-      "code-of-conduct",
       "contributing",
       "maintainers",
+      "code-of-conduct",
     ],
     Basics: [
       "file-structure",

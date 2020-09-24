@@ -20,10 +20,6 @@ Sometimes you need to connect to an existing database and your Blitz app will be
 
 Often during development you need a quick peek into your database, or maybe you want to seed your database with sample data after running `blitz new` so you have sample data to work with. This command opens the Prisma Studio UI at [http://localhost:5555](http://localhost:5555) to see and change data in your database with a built-in GUI, rather than needing to download your own SQL client to connect to a remote server or a `sqlite` file.
 
-### `blitz db seed`
-
-This will run `db/seeds.ts` script. This is often used to quickly setup the development environment. For examples check [seeds docs](database-seeds)
-
 ### `blitz db reset`
 
 This will completely destroy your database and create a new one with fresh migrations. This is useful in development if you or someone else messes up your db or simply want to clean out test data.

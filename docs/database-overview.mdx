@@ -49,3 +49,46 @@ datasource db {
 
 2. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
 3. Run `blitz db migrate`. This command will create the database (if it does not already exist) and tables based on your schema.
+
+### Run PostgreSQL database with docker-compose
+
+The easiest way to get a PostgreSQL database on your machine is to run PostgreSQL inside a docker container.
+
+1. Create a `docker.compose.yml` file inside the root of your project with the following content
+
+```yaml
+version: "3.7"
+
+services:
+  db:
+    image: postgres:10.7-alpine
+    volumes:
+      - data:/var/lib/postgresql/data
+    env_file: ./.env #Here we are using the already existing .env file
+    ports:
+    - "5432:5432"
+
+
+volumes:
+  data:
+```
+
+2. Inside your `.env` file add 3 new environemnt variables which are required by docker
+
+```text
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_database_name
+```
+
+3. Change the `DATABASE_URL` variable as described in the step above
+
+4. Modify your `package.json` to run the database before the start of Blitz
+
+```json
+"scripts": {
+    "start": "docker-compose up -d && blitz start",
+}
+```
+
+5. Run `blitz db migrate` to get your new database to the latest version of your migrations

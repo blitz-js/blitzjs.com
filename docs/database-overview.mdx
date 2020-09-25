@@ -61,7 +61,7 @@ version: "3.7"
 
 services:
   db:
-    image: postgres:10.7-alpine
+    image: postgres:latest
     volumes:
       - data:/var/lib/postgresql/data
     env_file: ./.env #Here we are using the already existing .env file

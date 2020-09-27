@@ -45,14 +45,14 @@ module.exports = {
     ],
     Database: ["database-overview", "database-seeds"],
     Queries: [
-      "query-definition",
+      "query-resolvers",
       "query-usage",
       "use-query",
       "use-paginated-query",
       "use-infinite-query",
       "ssr-query",
     ],
-    Mutations: ["mutation-definition", "mutation-usage"],
+    Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
     CLI: [
       "cli-overview",

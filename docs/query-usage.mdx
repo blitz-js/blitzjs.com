@@ -5,13 +5,13 @@ sidebar_label: Use Queries
 
 ## In a React Component
 
-To use one of [your Blitz queries](./query-definition), call the `useQuery` hook with:
+To use one of [your Blitz queries](./query-resolvers), call the `useQuery` hook with:
 
-1. Your query function
+1. Your query resolver
 2. The input arguments for your query function
 3. Optionally, a configuration object.
 
-It returns this tuple array,`[queryFunctionResults, queryExtras]`, where `queryFunctionResults` is exactly what's returned from your query function.
+It returns this tuple array,`[queryResult, queryExtras]`, where `queryResult` is exactly what's returned from your query function.
 
 `useQuery` is built on [`react-query`](https://github.com/tannerlinsley/react-query), so it automatically provides awesome features such as automatic caching and revalidation.
 

@@ -46,16 +46,16 @@ export default Page
 
 <!-- prettier-ignore -->
 ```js
-const queryFunctionResults = await ssrQuery(blitzQueryFunction, queryInputArguments, {req, res}))
+const queryFunctionResults = await ssrQuery(queryResolver, queryInputArguments, {req, res}))
 ```
 
 ### Arguments
 
-- `blitzQueryFunction:` A [Blitz query function](./query-definition)
+- `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
 - `queryInputArguments`
   - **Required**
-  - The arguments that will be passed to `blitzQueryFunction`
+  - The arguments that will be passed to `queryResolver`
 - Other
   - `req`
     - **Required**

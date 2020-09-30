@@ -20,7 +20,7 @@ This command starts a local development server and open up a browser window. Mos
 
 ### Deployment
 
-The `main` branch is automatically deployed to https://blitzjs.com
+The `main` branch is automatically deployed at https://blitzjs.com
 
 ## Language Translations
 

@@ -1,6 +1,6 @@
 # Blitzjs.com - Website & Docs
 
-## Website
+## Website - An Amazing Website
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 

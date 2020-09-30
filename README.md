@@ -1,3 +1,5 @@
+# An Awesome Website
+
 # Blitzjs.com - Website & Docs
 
 ## Website

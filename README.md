@@ -1,4 +1,4 @@
-# Blitzjs.com - Website & Docs
+# Blitzjs.com - Amezing Website & Docs
 
 ## Website
 

@@ -26,7 +26,7 @@ The `main` branch is automatically deployed to https://blitzjs.com
 
 We're setting up this repo to support language translations as soon as folks step up to do so. We plan to follow the same process as the reactjs.com translations.
 
-## Versioning
+## Versioning docusaurus script
 
 When we are ready to tag a new version of the docs we can run the docusaurus scripts.
 

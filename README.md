@@ -37,14 +37,14 @@ yarn run docusaurus docs:version 1.1.0
 When tagging a new version, the document versioning mechanism will:
 
 1. Copy the full docs/ folder contents into a new versioned_docs/version-/ folder.
-2. Create a versioned sidebars file based from your current sidebar configuration (if it exists). Saved it as versioned_sidebars/version--sidebars.json.
+2. Create a versioned sidebars file based from your current sidebar configuration(if it exists). Saved it as versioned_sidebars/version--sidebars.json.
 3. Append the new version number into versions.json.
 
 [See the Docusaurus documention on versioning](https://v2.docusaurus.io/docs/versioning/#tagging-a-new-version)
 
 ## Code Syntax Highlights
 
-Code blocks are syntax highlighted using Prism. You can call attention to specific sections in a code block using comments to begin and end a block `// highlight-start` `// highlight-end`, or highlight a single line `// highlight-line`
+Code blocks are syntax highlighted using Prism. You get attention to specific section in a code block using comments to begin and end a block `// highlight-start` `// highlight-end`, or highlight a single line `// highlight-line`
 
 ```
 const example = "not highlighted"

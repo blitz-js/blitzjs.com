@@ -36,7 +36,7 @@ yarn run docusaurus docs:version 1.1.0
 
 When tagging a new version, the document versioning mechanism will:
 
-1. Copy the full docs/ folder contents into a new versioned_docs/version-/ folder.
+1. Copy the full documents/ folder contents into a new versioned_documents/version-/ folder.
 2. Create a versioned sidebars file based from your current sidebar configuration (if it exists). Saved it as versioned_sidebars/version--sidebars.json.
 3. Append the new version number into versions.json.
 

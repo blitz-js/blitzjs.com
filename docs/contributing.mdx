@@ -75,6 +75,7 @@ But in the docs repo, anyone can merge PRs once someone else has approved the PR
 **2.** Clone your forked repo
 
 ```sh
+# replace USERNAME below with your GitHub username
 git clone git@github.com:USERNAME/blitz.git
 cd blitz
 ```
@@ -85,7 +86,7 @@ cd blitz
 yarn
 ```
 
-**4.** Start the package server. This must be running for any package development or example development
+**4.** Start the package server. This **must be running** for any package development or example development
 
 ```sh
 yarn dev
@@ -99,7 +100,10 @@ yarn test
 
 ### Testing Development Version of Blitz
 
-Currently to test the local dev version of Blitz, you have to test apps inside the `examples/` folder in the repo. In there, the blitz dependency will automatically use the local dev version.
+:::info
+Currently, to test the local dev version of Blitz, you can **only** test an app inside the `blitz/examples/` folder. In there, the blitz dependency will automatically use the local dev version. We mainly use the `auth` and `store` example apps. We use them for development testing and for blitz integration tests.
+You must also make sure you are running `yarn dev` in the `blitz` folder at the same time.
+:::
 
 For using in apps outside the repo, [yalc](https://github.com/whitecolor/yalc) should work, but hasn't been tested yet. If you figure out how to use yalc, please make a PR to this page explaining how to set it up!
 

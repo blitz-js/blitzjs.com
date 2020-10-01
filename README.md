@@ -2,7 +2,7 @@
 
 ## Website
 
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
+This website is built using [Docusaurus 2] (https://v2.docusaurus.io/), a modern static website generator.
 
 ### Installation
 
@@ -16,7 +16,7 @@ yarn
 yarn start
 ```
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+This command starts a local development server and opens a browser window. Most changes are reflected live without having to restart the server.
 
 ### Deployment
 
@@ -40,7 +40,7 @@ When tagging a new version, the document versioning mechanism will:
 2. Create a versioned sidebars file based from your current sidebar configuration (if it exists). Saved it as versioned_sidebars/version--sidebars.json.
 3. Append the new version number into versions.json.
 
-[See the Docusaurus documention on versioning](https://v2.docusaurus.io/docs/versioning/#tagging-a-new-version)
+[See the Docusaurus documention on versioning] (https://v2.docusaurus.io/docs/versioning/#tagging-a-new-version)
 
 ## Code Syntax Highlights
 

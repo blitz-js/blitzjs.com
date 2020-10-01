@@ -1,16 +1,16 @@
-# Blitzjs.com - Website & Docs
+# Blitzjs.com - Website & Docs!
 
-## Website
+## Website: -
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
-### Installation
+### Installation-
 
 ```
 yarn
 ```
 
-### Local Development
+### Local Development: -
 
 ```
 yarn start
@@ -18,15 +18,15 @@ yarn start
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
 
-### Deployment
+### Deployment: -
 
 The `main` branch is automatically deployed to https://blitzjs.com
 
-## Language Translations
+## Language Translations-
 
 We're setting up this repo to support language translations as soon as folks step up to do so. We plan to follow the same process as the reactjs.com translations.
 
-## Versioning
+## Versioning: -
 
 When we are ready to tag a new version of the docs we can run the docusaurus scripts.
 
@@ -42,7 +42,7 @@ When tagging a new version, the document versioning mechanism will:
 
 [See the Docusaurus documention on versioning](https://v2.docusaurus.io/docs/versioning/#tagging-a-new-version)
 
-## Code Syntax Highlights
+## Code Syntax Highlights: -
 
 Code blocks are syntax highlighted using Prism. You can call attention to specific sections in a code block using comments to begin and end a block `// highlight-start` `// highlight-end`, or highlight a single line `// highlight-line`
 
@@ -54,3 +54,5 @@ const highlighted = true
 const notHighlighted = true
 const alsoHighlighted = true // highlight-line
 ```
+
+Thank You And Have ANice Day!

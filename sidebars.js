@@ -50,9 +50,9 @@ module.exports = {
       "use-query",
       "use-paginated-query",
       "use-infinite-query",
-      "ssr-query",
     ],
     Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
+    "Queries & Mutations": ["invoke"],
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
     CLI: [
       "cli-overview",

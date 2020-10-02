@@ -52,7 +52,7 @@ module.exports = {
       "use-infinite-query",
     ],
     Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
-    "Queries & Mutations": ["invoke"],
+    "Queries & Mutations": ["invoke", "resolver-utilities"],
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
     CLI: [
       "cli-overview",

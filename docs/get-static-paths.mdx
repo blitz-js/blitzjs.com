@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 
 #### The `paths` key (required)
 
-The `paths` key determines which paths will be pre-rendered. For example, suppose that you have a page that uses dynamic routes named `app/posts/pages/posts/[id].js`. If you export `getStaticPaths` from this page and return the following for `paths`:
+The `paths` key determines which paths will be pre-rendered. For example, suppose that you have a page that uses dynamic routes named `app/modules/posts/pages/posts/[id].js`. If you export `getStaticPaths` from this page and return the following for `paths`:
 
 ```js
 return {
@@ -32,11 +32,11 @@ return {
 }
 ```
 
-Then Blitz will statically generate `posts/1` and `posts/2` at build time using the page component in `app/posts/pages/posts/[id].js`.
+Then Blitz will statically generate `posts/1` and `posts/2` at build time using the page component in `app/modules/posts/pages/posts/[id].js`.
 
 Note that the value for each `params` must match the parameters used in the page name:
 
-- If the page name is `app/posts/pages/posts/[postId]/[commentId]`, then `params` should contain `postId` and `commentId`.
+- If the page name is `app/modules/posts/pages/posts/[postId]/[commentId]`, then `params` should contain `postId` and `commentId`.
 - If the page name uses catch-all routes, for example `pages/[...slug]`, then `params` should contain `slug` which is an array. For example, if this array is `['foo', 'bar']`, then Blitz will statically generate the page at `/foo/bar`.
 
 #### The `fallback` key (required)
@@ -47,10 +47,10 @@ The object returned by `getStaticPaths` must contain a boolean `fallback` key.
 
 If `fallback` is `false`, then any paths not returned by `getStaticPaths` will result in a **404 page**. You can do this if you have a small number of paths to pre-render - so they are all statically generated during build time. It’s also useful when the new pages are not added often. If you add more items to the data source and need to render the new pages, you’d need to run the build again.
 
-Here’s an example which pre-renders one blog post per page called `app/posts/pages/posts/[id].js`. The list of blog posts will be fetched from your database or a CMS and returned by `getStaticPaths` . Then, for each page, it fetches the data for a single post using `getStaticProps`.
+Here’s an example which pre-renders one blog post per page called `app/modules/posts/pages/posts/[id].js`. The list of blog posts will be fetched from your database or a CMS and returned by `getStaticPaths` . Then, for each page, it fetches the data for a single post using `getStaticProps`.
 
 ```jsx
-// app/posts/pages/posts/[id].js
+// app/modules/posts/pages/posts/[id].js
 
 function Post({post}) {
   // Render post...
@@ -105,7 +105,7 @@ In the “fallback” version of a page:
 Here’s an example that uses `isFallback`:
 
 ```jsx
-// app/posts/pages/posts/[id].js
+// app/modules/posts/pages/posts/[id].js
 import {useRouter} from "blitz"
 
 function Post({post}) {

@@ -57,7 +57,7 @@ export default async function getThing(input, ctx: Ctx) {
 Local middleware only runs for a single query or mutation. It is defined by exporting a `middleware` array from a query or mutation.
 
 ```ts
-// app/products/queries/getProduct.tsx
+// app/modules/products/queries/getProduct.tsx
 import {Middleware} from "blitz"
 import db, {FindOneProjectArgs} from "db"
 

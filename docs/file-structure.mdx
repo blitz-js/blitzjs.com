@@ -24,66 +24,67 @@ sidebar_label: File Structure
 │   ├── layouts/
 │   │   ├── Authenticated.js
 │   │   └── Public.js
-│   ├── marketing/
-│   │   ├── components/
-│   │   │   ├── FeatureSection.js
-│   │   │   ├── Footer.js
-│   │   │   ├── Header.js
-│   │   │   ├── Screenshot.js
-│   │   │   └── Testimonial.js
-│   │   └── pages/
-│   │       ├── about.js
-│   │       ├── features.js
-│   │       ├── index.js
-│   │       └── pricing.js
+│   └── modules
+│   │   ├── marketing/
+│   │   │   ├── components/
+│   │   │   │   ├── FeatureSection.js
+│   │   │   │   ├── Footer.js
+│   │   │   │   ├── Header.js
+│   │   │   │   ├── Screenshot.js
+│   │   │   │   └── Testimonial.js
+│   │   │   └── pages/
+│   │   │       ├── about.js
+│   │   │       ├── features.js
+│   │   │       ├── index.js
+│   │   │       └── pricing.js
+│   │   ├── projects/
+│   │   │   ├── components/
+│   │   │   │   ├── Project.js
+│   │   │   │   ├── ProjectForm.js
+│   │   │   │   └── Projects.js
+│   │   │   ├── mutations/
+│   │   │   │   ├── createProject.js
+│   │   │   │   ├── createProject.test.js
+│   │   │   │   ├── deleteProject.js
+│   │   │   │   ├── deleteProject.test.js
+│   │   │   │   ├── updateProject.js
+│   │   │   │   └── updateProject.test.js
+│   │   │   ├── pages/
+│   │   │   │   └── projects/
+│   │   │   │       ├── [id]/
+│   │   │   │       │   └── edit.js
+│   │   │   │       ├── [id].js
+│   │   │   │       ├── index.js
+│   │   │   │       └── new.js
+│   │   │   └── queries/
+│   │   │       ├── getProject.js
+│   │   │       └── getProjects.js
+│   │   ├── tasks/
+│   │   │   ├── components/
+│   │   │   │   ├── Task.js
+│   │   │   │   ├── TaskForm.js
+│   │   │   │   └── Tasks.js
+│   │   │   ├── mutations/
+│   │   │   │   ├── createTask.js
+│   │   │   │   ├── deleteTask.js
+│   │   │   │   └── updateTask.js
+│   │   │   ├── pages/
+│   │   │   │   └── projects/
+│   │   │   │       └── [projectId]/
+│   │   │   │           └── tasks/
+│   │   │   │               ├── [id]/
+│   │   │   │               │   └── edit.js
+│   │   │   │               ├── [id].js
+│   │   │   │               ├── index.js
+│   │   │   │               └── new.js
+│   │   │   └── queries/
+│   │   │       ├── getTask.js
+│   │   │       └── getTasks.js
 │   ├── pages/
 │   │   ├── dashboard.js
 │   │   ├── log-in.js
 │   │   ├── settings.js
 │   │   └── sign-up.js
-│   ├── projects/
-│   │   ├── components/
-│   │   │   ├── Project.js
-│   │   │   ├── ProjectForm.js
-│   │   │   └── Projects.js
-│   │   ├── mutations/
-│   │   │   ├── createProject.js
-│   │   │   ├── createProject.test.js
-│   │   │   ├── deleteProject.js
-│   │   │   ├── deleteProject.test.js
-│   │   │   ├── updateProject.js
-│   │   │   └── updateProject.test.js
-│   │   ├── pages/
-│   │   │   └── projects/
-│   │   │       ├── [id]/
-│   │   │       │   └── edit.js
-│   │   │       ├── [id].js
-│   │   │       ├── index.js
-│   │   │       └── new.js
-│   │   └── queries/
-│   │       ├── getProject.js
-│   │       └── getProjects.js
-│   ├── tasks/
-│   │   ├── components/
-│   │   │   ├── Task.js
-│   │   │   ├── TaskForm.js
-│   │   │   └── Tasks.js
-│   │   ├── mutations/
-│   │   │   ├── createTask.js
-│   │   │   ├── deleteTask.js
-│   │   │   └── updateTask.js
-│   │   ├── pages/
-│   │   │   └── projects/
-│   │   │       └── [projectId]/
-│   │   │           └── tasks/
-│   │   │               ├── [id]/
-│   │   │               │   └── edit.js
-│   │   │               ├── [id].js
-│   │   │               ├── index.js
-│   │   │               └── new.js
-│   │   └── queries/
-│   │       ├── getTask.js
-│   │       └── getTasks.js
 │   └── tests/
 │       ├── userAuthentication.js
 │       └── userOnboarding.js
@@ -102,10 +103,10 @@ sidebar_label: File Structure
 
 Contains all your core application code.
 
-- The file structure nested inside `app` can be anything you want, but we recommend the following:
-- Typically you will have two types of "container" directories inside `app` that can be nested or combined any way you want:
-  - **entity** directories like `projects/` and `tasks/`
-  - **context** directories like `marketing/` or `admin/`.
+- The file structure nested inside `app` can be anything you want, but we recommend the following to keep all "container" directories inside `app/modules` folder.
+- Typically you will have two types of "container" directories inside `app/modules` that can be nested or combined any way you want:
+  - **entity** directories like `modules/projects/` and `modules/tasks/`
+  - **context** directories like `modules/marketing/` or `modules/admin/`.
 - Special Folder Names
   - Can exist at any level of the hierarchy inside `app`.
   - `pages/` expose a React component at a URL. Follows the same semantics as the Next.js `pages/` directory.
@@ -148,4 +149,4 @@ A configuration file with the same format as `next.config.js`
 
 ### Other Notes
 
-- All top level folders are automatically aliased. So for example you can import from `app/projects/queries/getProject` from anywhere in our app.
+- All top level folders are automatically aliased. So for example you can import from `app/modules/projects/queries/getProject` from anywhere in our app.

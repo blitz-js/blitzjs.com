@@ -8,8 +8,9 @@ Blitz mutations are plain, asynchronous JavaScript functions that always run on 
 **1. Mutations must be inside a `mutations` folder. All of the following are valid:**
 
 - `app/mutations/createProject.ts`
+- `app/modules/projects/mutations/createProject.ts`
+- `app/modules/admin/projects/mutations/createProject.ts`
 - `app/projects/mutations/createProject.ts`
-- `app/admin/projects/mutations/createProject.ts`
 
 **2. Mutations must export a function as the default export**
 
@@ -25,7 +26,7 @@ You can write any normal Node.js code here, including database access and fetchi
 #### Example Mutation
 
 ```ts
-// app/products/mutations/createProduct.tsx
+// app/modules/products/mutations/createProduct.tsx
 import {Ctx} from "blitz"
 import db, {ProjectCreateArgs} from "db"
 

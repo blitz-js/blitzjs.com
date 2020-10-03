@@ -36,10 +36,31 @@ mysite
 ├── app
 │   ├── components
 │   │   └── ErrorBoundary.tsx
+│   ├── hooks
+│   │   └── useCurrentUser.tsx
 │   ├── layouts
+│   │   └── Layout.tsx
+│   └── modules
+│   │   ├── auth
+│   │   │   │── components
+│   │   │   │   │── LoginForm.tsx
+│   │   │   │   └── SignupForm.tsx
+│   │   │   │── mutations
+│   │   │   │   │── login.ts
+│   │   │   │   │── logout.ts
+│   │   │   │   └── signup.ts
+│   │   │   │── pages
+│   │   │   │   │── login.tsx
+│   │   │   │   └── signup.tsx
+│   │   │   │── auth-utils.ts
+│   │   │   └── validations.ts
+│   │   └── users
+│   │       └── queries
+│   │           └── getCurrentUser.tsx
 │   └── pages
 │       ├── _app.tsx
 │       ├── _document.tsx
+│       └── 404.tsx
 │       └── index.tsx
 ├── db
 │   ├── migrations
@@ -63,6 +84,8 @@ mysite
 ├── tsconfig.json
 └── yarn.lock
 ```
+
+> Note: Your new blitz app is shipped with user authentication and authorization. Surprise! :-)
 
 These files are:
 
@@ -149,16 +172,16 @@ blitz generate all question text hasMany:choices
 
 Now run blitz db migrate to add this model to your database
 
-CREATE    app/questions/pages/questions/index.tsx
-CREATE    app/questions/pages/questions/new.tsx
-CREATE    app/questions/pages/questions/[questionId]/edit.tsx
-CREATE    app/questions/pages/questions/[questionId].tsx
-CREATE    app/questions/components/QuestionForm.tsx
-CREATE    app/questions/queries/getQuestions.ts
-CREATE    app/questions/queries/getQuestion.ts
-CREATE    app/questions/mutations/createQuestion.ts
-CREATE    app/questions/mutations/deleteQuestion.ts
-CREATE    app/questions/mutations/updateQuestion.ts
+CREATE    app/modules/questions/pages/questions/index.tsx
+CREATE    app/modules/questions/pages/questions/new.tsx
+CREATE    app/modules/questions/pages/questions/[questionId]/edit.tsx
+CREATE    app/modules/questions/pages/questions/[questionId].tsx
+CREATE    app/modules/questions/components/QuestionForm.tsx
+CREATE    app/modules/questions/queries/getQuestions.ts
+CREATE    app/modules/questions/queries/getQuestion.ts
+CREATE    app/modules/questions/mutations/createQuestion.ts
+CREATE    app/modules/questions/mutations/deleteQuestion.ts
+CREATE    app/modules/questions/mutations/updateQuestion.ts
 ```
 
 Then, we'll generate the `Choice` model with corresponding queries and mutations. We'll pass a type of `resource` this time as we don't need to generate pages for the `Choice` model:
@@ -184,11 +207,11 @@ blitz generate resource choice text votes:int:default[0] belongsTo:question
 
 Now run blitz db migrate to add this model to your database
 
-CREATE    app/choices/queries/getChoices.ts
-CREATE    app/choices/queries/getChoice.ts
-CREATE    app/choices/mutations/createChoice.ts
-CREATE    app/choices/mutations/deleteChoice.ts
-CREATE    app/choices/mutations/updateChoice.ts
+CREATE    app/modules/choices/queries/getChoices.ts
+CREATE    app/modules/choices/queries/getChoice.ts
+CREATE    app/modules/choices/mutations/createChoice.ts
+CREATE    app/modules/choices/mutations/deleteChoice.ts
+CREATE    app/modules/choices/mutations/updateChoice.ts
 ```
 
 > Note: you can also edit the `db/schema.prisma` file directly if needed, either instead of using `generate` or afterwards if further modifications are needed.
@@ -265,7 +288,7 @@ Before running the app again, we need to customize some of the content that has 
 
 [//]: # "Remove this section once Prisma supports cascading deletes"
 
-Prisma does not yet support "cascading deletes". In the context of this tutorial, that means it does not currently delete the `Choice` data when deleting a `Question`. We need to temporarily augment the generated `deleteQuestion` mutation in order to do this manually. Open up `app/questions/mutations/deleteQuestion.ts` in your text editor and add the following to the top of the function body:
+Prisma does not yet support "cascading deletes". In the context of this tutorial, that means it does not currently delete the `Choice` data when deleting a `Question`. We need to temporarily augment the generated `deleteQuestion` mutation in order to do this manually. Open up `app/modules/questions/mutations/deleteQuestion.ts` in your text editor and add the following to the top of the function body:
 
 ```js
 // TODO: remove once Prisma supports cascading deletes
@@ -275,7 +298,7 @@ await db.choice.deleteMany({where: {question: {id: where.id}}})
 The end result should be as such:
 
 ```jsx
-// app/questions/mutations/deleteQuestion.ts
+// app/modules/questions/mutations/deleteQuestion.ts
 
 export default async function deleteQuestion(
   {where}: DeleteQuestionInput,
@@ -299,7 +322,7 @@ This mutation will now delete the choices associated with the question prior to 
 
 The generated page content does not currently use the actual model attributes you defined during generation. It will soon, but in the meantime, let's fix the generated pages.
 
-Jump over to `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
+Jump over to `app/modules/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
 
 ```jsx
 export const QuestionsList = () => {
@@ -339,7 +362,7 @@ export const QuestionsList = () => {
 }
 ```
 
-Next, let’s apply a similar fix to `app/questions/pages/questions/new.tsx`. In the form submission, replace
+Next, let’s apply a similar fix to `app/modules/questions/pages/questions/new.tsx`. In the form submission, replace
 
 ```jsx
 const question = await createQuestion({data: {name: "MyName"}})
@@ -353,7 +376,7 @@ const question = await createQuestion({
 })
 ```
 
-Finally, we need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace
+Finally, we need to fix the edit page. Open `app/modules/questions/pages/questions/[questionId]/edit.tsx` and replace
 
 ```jsx
 const updated = await updateQuestion({
@@ -375,7 +398,7 @@ Great! Now make sure your app is running. If it isn’t, run `blitz start` in yo
 
 ## Writing a minimal form
 
-You’re doing great so far! The next thing we’ll do is give our form some real inputs. At the moment it’s giving every `Question` the same name! Have a look at `app/questions/components/QuestionForm.tsx` in your editor.
+You’re doing great so far! The next thing we’ll do is give our form some real inputs. At the moment it’s giving every `Question` the same name! Have a look at `app/modules/questions/components/QuestionForm.tsx` in your editor.
 
 Delete the div that says: `<div>Put your form fields here. But for now, just click submit</div>`, and replace it with some inputs:
 
@@ -387,7 +410,7 @@ Delete the div that says: `<div>Put your form fields here. But for now, just cli
 <input placeholder="Choice 1" />
 ```
 
-Finally, we’re going to make sure all that data is submitted. Open up `app/questions/pages/questions/new.tsx` in your editor and replace
+Finally, we’re going to make sure all that data is submitted. Open up `app/modules/questions/pages/questions/new.tsx` in your editor and replace
 
 ```jsx
 onSubmit={async () => {
@@ -430,8 +453,8 @@ In the end, your page should look something like this:
 
 ```jsx
 import {Head, Link, useRouter, BlitzPage} from "blitz"
-import createQuestion from "app/questions/mutations/createQuestion"
-import QuestionForm from "app/questions/components/QuestionForm"
+import createQuestion from "app/modules/questions/mutations/createQuestion"
+import QuestionForm from "app/modules/questions/components/QuestionForm"
 
 const NewQuestionPage: BlitzPage = () => {
   const router = useRouter()
@@ -490,7 +513,7 @@ export default NewQuestionPage
 Time for a breather. Go back to `http://localhost:3000/questions` in your browser and look at all the questions you‘ve created. How about we list these questions’ choices here too? First, we need to customize the question queries. In Prisma, you need to manually let the client know that you want to query for nested relations. Change your `getQuestion.ts` and `getQuestions.ts` files to look like this:
 
 ```js
-// app/questions/queries/getQuestion.ts
+// app/modules/questions/queries/getQuestion.ts
 
 export default async function getQuestion(
   {where /* include */}: GetQuestionInput,
@@ -503,7 +526,7 @@ export default async function getQuestion(
 ```
 
 ```js
-// app/questions/queries/getQuestions.ts
+// app/modules/questions/queries/getQuestions.ts
 
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,
@@ -536,7 +559,7 @@ Now hop back to our main questions page in your editor, and we can list the choi
 
 Magic! Let’s do one more thing–let people vote on these questions!
 
-Open `app/questions/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
+Open `app/modules/questions/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
 
 1. Replace `<h1>Question {question.id}</h1>` with `<h1>{question.text}</h1>`.
 
@@ -572,7 +595,7 @@ Now it’s time to add the vote button. In our `li`, add a `button` like so:
 Then, import the `updateChoice` mutation (generated at the beginning) and create a `handleVote` function in our page:
 
 ```jsx
-import updateChoice from "app/choices/mutations/updateChoice"
+import updateChoice from "app/modules/choices/mutations/updateChoice"
 
 ...
 
@@ -604,14 +627,14 @@ To be sure, this is what all that should look like:
 ```jsx
 import React, {Suspense} from "react"
 import {Head, Link, useRouter, useQuery, useParam, BlitzPage} from "blitz"
-import getQuestion from "app/questions/queries/getQuestion"
-import deleteQuestion from "app/questions/mutations/deleteQuestion"
-import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
+import getQuestion from "app/modules/questions/queries/getQuestion"
+import deleteQuestion from "app/modules/questions/mutations/deleteQuestion"
+import updateChoice from "app/modules/choices/mutations/updateChoice" // highlight-line
 
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, { refetch }] = useQuery(getQuestion, { where: { id: questionId } })
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
 
   // highlight-start
   const handleVote = async (id, votes) => {
@@ -620,7 +643,7 @@ export const Question = () => {
         where: {id},
         data: {votes: votes + 1},
       })
-      refetch();
+      refetch()
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }

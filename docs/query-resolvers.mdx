@@ -8,8 +8,9 @@ Blitz queries are plain, asynchronous JavaScript functions that always run on th
 **1. Queries must be inside a `queries` folder. All of the following are valid:**
 
 - `app/queries/getProject.ts`
+- `app/modules/projects/queries/getProject.ts`
+- `app/modules/admin/projects/queries/getProject.ts`
 - `app/projects/queries/getProject.ts`
-- `app/admin/projects/queries/getProject.ts`
 
 **2. Queries must export a function as the default export**
 
@@ -25,7 +26,7 @@ You can write any normal Node.js code here, including database access and fetchi
 #### Example Query
 
 ```ts
-// app/products/queries/getProduct.tsx
+// app/modules/products/queries/getProduct.tsx
 import {Ctx} from "blitz"
 import db, {FindOneProjectArgs} from "db"
 

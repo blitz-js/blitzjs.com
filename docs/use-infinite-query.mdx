@@ -7,7 +7,7 @@ sidebar_label: useInfiniteQuery
 
 ```ts
 import {useInfiniteQuery} from "blitz"
-import getProjectsInfinite from "app/projects/queries/getProjectsInfinite"
+import getProjectsInfinite from "app/modules/projects/queries/getProjectsInfinite"
 
 function Projects(props) {
   const [groupedProjects, {isFetching, isFetchingMore, fetchMore, canFetchMore}] = useInfiniteQuery(

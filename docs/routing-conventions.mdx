@@ -11,14 +11,14 @@ We copied the conventions from Ruby on Rails, where it has stood the test of tim
 
 Example: You have a `Project` model and a `Task` model which belongs to a `Project`. Your routes will be:
 
-| URL Path                                  | File                                                        |
-| ----------------------------------------- | ----------------------------------------------------------- |
-| /projects                                 | app/projects/pages/projects/index.js                        |
-| /projects/new                             | app/projects/pages/projects/new.js                          |
-| /projects/[projectId]                     | app/projects/pages/projects/[projectId].js                  |
-| /projects/[projectId]/edit                | app/projects/pages/projects/[projectId]/edit.js             |
-|                                           |                                                             |
-| /projects/[projectId]/tasks               | app/tasks/pages/projects/[projectId]/tasks/index.js         |
-| /projects/[projectId]/tasks/new           | app/tasks/pages/projects/[projectId]/tasks/new.js           |
-| /projects/[projectId]/tasks/[taskId]      | app/tasks/pages/projects/[projectId]/tasks/[taskId].js      |
-| /projects/[projectId]/tasks/[taskId]/edit | app/tasks/pages/projects/[projectId]/tasks/[taskId]/edit.js |
+| URL Path                                  | File                                                                |
+| ----------------------------------------- | ------------------------------------------------------------------- |
+| /projects                                 | app/modules/projects/pages/projects/index.js                        |
+| /projects/new                             | app/modules/projects/pages/projects/new.js                          |
+| /projects/[projectId]                     | app/modules/projects/pages/projects/[projectId].js                  |
+| /projects/[projectId]/edit                | app/modules/projects/pages/projects/[projectId]/edit.js             |
+|                                           |                                                                     |
+| /projects/[projectId]/tasks               | app/modules/tasks/pages/projects/[projectId]/tasks/index.js         |
+| /projects/[projectId]/tasks/new           | app/modules/tasks/pages/projects/[projectId]/tasks/new.js           |
+| /projects/[projectId]/tasks/[taskId]      | app/modules/tasks/pages/projects/[projectId]/tasks/[taskId].js      |
+| /projects/[projectId]/tasks/[taskId]/edit | app/modules/tasks/pages/projects/[projectId]/tasks/[taskId]/edit.js |

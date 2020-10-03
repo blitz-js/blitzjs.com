@@ -13,7 +13,7 @@ It returns this tuple array,`[invoke, mutationExtras]`, where `invoke` is an asy
 
 ```tsx
 import {useMutation} from 'blitz'
-import updateProject from 'app/projects/mutations/updateProject'
+import updateProject from 'app/modules/projects/mutations/updateProject'
 
 function (props) {
   const [updateProjectMutation] = useMutation(updateProject)

@@ -17,7 +17,7 @@ It returns this tuple array,`[queryResult, queryExtras]`, where `queryResult` is
 
 ```ts
 import {useQuery} from "blitz"
-import getProject from "app/projects/queries/getProject"
+import getProject from "app/modules/projects/queries/getProject"
 
 function App() {
   const [project] = useQuery(getProject, {where: {id: 1}})
@@ -83,7 +83,7 @@ const project = await getProject({where: {id: props.id}})
 In `getStaticProps`, a query function can be called directly without `useQuery`
 
 ```tsx
-import getProject from "app/projects/queries/getProject"
+import getProject from "app/modules/projects/queries/getProject"
 
 export const getStaticProps = async (context) => {
   const project = await getProject({where: {id: context.params?.projectId}})
@@ -103,7 +103,7 @@ In `getServerSideProps`, pass a query function to [`ssrQuery`](./ssr-query) whic
 
 ```tsx
 import {ssrQuery} from 'blitz'
-import getProject from 'app/projects/queries/getProject'
+import getProject from 'app/modules/projects/queries/getProject'
 
 export const getServerSideProps = async ({params, req, res}) => {
   const project = await ssrQuery(getProject, {where: {id: params.projectId}}, {req, res}))

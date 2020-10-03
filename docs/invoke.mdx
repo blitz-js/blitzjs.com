@@ -13,7 +13,7 @@ This is for imperatively invoking queries or mutations from your components.
 
 ```tsx
 import {invoke} from "blitz"
-import getProducts from "app/products/queries/getProducts"
+import getProducts from "app/modules/products/queries/getProducts"
 
 const Page = function ({products}) {
   return (
@@ -59,7 +59,7 @@ This is for imperatively invoking queries/mutations on the server. It ensures ap
 
 ```tsx
 import {invokeWithMiddleware, GetServerSideProps, Link, BlitzPage, PromiseReturnType} from "blitz"
-import getProducts from "app/products/queries/getProducts"
+import getProducts from "app/modules/products/queries/getProducts"
 
 type PageProps = {
   products: PromiseReturnType<typeof getProducts>

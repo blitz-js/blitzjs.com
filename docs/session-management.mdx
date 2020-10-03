@@ -200,16 +200,16 @@ Authenticated sessions use opaque tokens that are stored in the database.
 - This is done by deleting the session from the database.
 - Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
 
-## Types
+## Typescript
 
 #### `SessionContext`
 
 ```ts
-export interface SessionContext {
+interface SessionContext {
   /**
    * null if anonymous
    */
-  userId: string | number | null
+  userId: unknown
   roles: string[]
   handle: string | null
   publicData: PublicData
@@ -226,9 +226,31 @@ export interface SessionContext {
 
 #### `PublicData`
 
+By default, `PublicData` is typed as
+
 ```ts
-interface PublicData extends Record<any, any> {
-  userId: string | number | null
+interface DefaultPublicData {
+  userId: any
   roles: string[]
 }
 ```
+
+but you can, and should, extend `PublicData` to match your application. You do this as shown below.
+
+```ts
+// types.ts
+import {DefaultCtx, SessionContext, DefaultPublicData} from "blitz"
+import {User} from "db"
+
+declare module "blitz" {
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+  export interface PublicData extends DefaultPublicData {
+    userId: User["id"] // strongly types userId
+    orgId: number // adds new field to PublicData
+  }
+}
+```
+
+And then `PublicData` everywhere in your application, including `ctx.session` and `useSession` will use this type that you define.

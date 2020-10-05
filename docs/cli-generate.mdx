@@ -179,3 +179,42 @@ model Task {
   projectId Int?
 }
 ```
+
+#### Updating a model
+
+Given this schema file
+
+```prisma
+model Task {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  completed Boolean  @default(false)
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+}
+```
+
+and you want to add a new property to the `Task` model you can generate the model as usual and we will handle it for you.
+
+```bash
+blitz generate model task subheading:string
+```
+
+will update the model like this:
+
+```prisma
+model Task {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  completed Boolean  @default(false)
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+  subheading String
+}
+```
+
+

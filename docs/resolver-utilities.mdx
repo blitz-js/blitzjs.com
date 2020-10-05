@@ -10,7 +10,7 @@ This allows you to invalidate a specific query.
 ### Example
 
 ```tsx
-import {invalidateQuery} from "blitz"
+import {invalidateQuery} from "blitz" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({products}) {
@@ -18,7 +18,7 @@ const Page = function ({products}) {
     <div>
       <button
         onClick={() => {
-          invalidateQuery(getProducts)
+          invalidateQuery(getProducts) // highlight-line
         }}
       >
         Invalidate

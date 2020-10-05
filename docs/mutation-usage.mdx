@@ -45,7 +45,7 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 
 ## Cache Invalidation
 
-#### `mutate`
+#### `mutate()`
 
 - [`useQuery`](./use-query.mdx) returns a `mutate` function you can use to manually update the cache
 - Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
@@ -73,7 +73,7 @@ export default function (props: {query: {id: number}}) {
 }
 ```
 
-#### `refetch`
+#### `refetch()`
 
 - [`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload
 
@@ -98,6 +98,32 @@ export default function (props) {
     </Formik>
   )
 }
+```
+
+#### `invalidateQuery()`
+
+Another way, if you need to invalidate a query inside another component, is to use the [`invalidateQuery()`](./resolver-utilities#invalidateQuery) function provided by `blitz`.
+
+##### Example
+
+```tsx
+import {invalidateQuery} from "blitz" // highlight-line
+import getProducts from "app/products/queries/getProducts"
+
+const Page = function ({products}) {
+  return (
+    <div>
+      <button
+        onClick={() => {
+          invalidateQuery(getProducts) // highlight-line
+        }}
+      >
+        Invalidate
+      </button>
+    </div>
+  )
+}
+export default Page
 ```
 
 #### Automatically

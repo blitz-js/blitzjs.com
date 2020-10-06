@@ -53,34 +53,43 @@ All generated files are placed inside `app/modules` folder by default. This beha
 
 ### Options
 
-##### `context/model`
+##### `--root`
 
-For organization of files within your project, you can specify a nested folder path in which to generate the files.
+Shorthand: `-r`
+
+Default: `modules`
+
+Used to specify root folder which will be considered as base path when creating nested context.
 
 ```bash
-blitz generate all admin/products
+blitz generate all product --root=sections
 
-// This will generate files in `app/admin/products` instead of `app/modules/products`
+// This will generate files in `app/sections/products` instead of `app/modules/products`
 ```
 
-Alternatively, you can provide the folder path via the `--context` or `-c` options
+To generate files directly in `app/products` use `.` as root
 
 ```bash
-blitz generate all products --context=admin
+blitz generate all product --root=.
+
+// This will generate files directly in `app/products` instead of `app/modules/products`
 ```
 
-To generate files directly in `app/products` (without any nested folder) use `.` as context
+##### `--context`
+
+Shorthand: `-c`
+
+For organization of files within root, you can specify a nested folder path in which to generate the files.
 
 ```bash
-blitz generate all ./products
-
-// This will generate files in `app/products` instead of `app/modules/products`
+blitz generate all product --context=admin
+// This will generate files in `app/modules/admin/products`
 ```
 
-Or
+Alternatively, you can provide the context via the model name directly
 
 ```bash
-blitz generate all products --context=.
+blitz generate all admin/product
 ```
 
 ##### `--parent`

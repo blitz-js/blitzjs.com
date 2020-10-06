@@ -163,9 +163,13 @@ interface SessionModel extends Record<any, any> {
 }
 ```
 
-## Using without Prisma
+## Customize Session Persistence & Database Acess
 
-Currently the session management has zero-config support for Prisma, but you can also use it with any other database by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types. For example you could store session in Redis if you wanted.
+By default, session persistence is zero-config with Prisma. However, you can customize this to save sessions somewhere else, like Redis. You can also customize this if you have Prisma but want to customize the attribute names on the user or session model.
+
+Customize session persistence by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types.
+
+For reference, here's [the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/server/src/supertokens.ts#L62-L85).
 
 ## How it Works
 

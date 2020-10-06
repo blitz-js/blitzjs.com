@@ -9,11 +9,12 @@ Starts the Blitz server. It starts in development mode by default.
 
 #### Options
 
-| Option         | Shorthand | Description                                                                               | Default       |
-| -------------- | --------- | ----------------------------------------------------------------------------------------- | ------------- |
-| `--production` | ️         | Start the server in production mode. Use this when deploying to a server (not serverless) | `false`       |
-| `--hostname`   | `-H`      | Set the hostname to use for the server.                                                   | `"localhost"` |
-| `--port`       | `-p`      | Set the port you'd like the server to listen on.                                          | `3000`        |
+| Option                   | Shorthand | Description                                                                                                                                                                                            | Default       |
+| ------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| `--production`           | ️         | Start the server in production mode. Use this when deploying to a server (not serverless)                                                                                                              | `false`       |
+| `--hostname`             | `-H`      | Set the hostname to use for the server.                                                                                                                                                                | `"localhost"` |
+| `--port`                 | `-p`      | Set the port you'd like the server to listen on.                                                                                                                                                       | `3000`        |
+| `--no-incremental-build` |           | Disable incremental build and start from a fresh cache. Incremental build is automatically enabled for development mode and disabled during `blitz build` or when the `--production` flag is supplied. | `false`       |
 
 #### Examples
 

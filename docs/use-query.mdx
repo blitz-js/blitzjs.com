@@ -45,14 +45,14 @@ export default WrappedProject
 <!-- prettier-ignore -->
 ```js
 const [
-  queryFunctionResults,
+  queryResult,
   {
     isFetching,
     failureCount,
     refetch,
     mutate,
   }
-] = useQuery(blitzQueryFunction, queryInputArguments, {
+] = useQuery(queryResolver, queryInputArguments, {
   manual,
   enabled,
   retry,
@@ -73,11 +73,11 @@ const [
 
 ### Arguments
 
-- `blitzQueryFunction:` A [Blitz query function](./query-definition)
+- `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
 - `queryInputArguments`
   - **Required**
-  - The arguments that will be passed to `blitzQueryFunction`
+  - The arguments that will be passed to `queryResolver`
 - `options`
   - Optional
 
@@ -137,9 +137,9 @@ const [
 
 ### Returns
 
-`[queryFunctionResults, queryExtras]`
+`[queryResult, queryExtras]`
 
-##### `queryFunctionResults: Any`
+##### `queryResult: Any`
 
 - Defaults to `undefined`.
 - The last successfully resolved data for the query.
@@ -157,7 +157,7 @@ const [
   - A function to manually refetch the query if it is stale.
   - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
   - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
-- `mutate()` - `Function(newData, opts) => void`
+- `mutate()` - `Function(newData, opts) => Promise<void>`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the old data and returns the new data
   - This is often used to instantly update the cache after submitting a form

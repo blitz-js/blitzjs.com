@@ -78,7 +78,7 @@ const [
     canFetchMore,
     mutate,
   }
-] = useQuery(blitzQueryFunction, getQueryInputArguments, {
+] = useQuery(queryResolver, getQueryInputArguments, {
   // options
   getFetchMore: (lastPage, allPages) => pageOptions
   manual,
@@ -100,7 +100,7 @@ const [
 
 ### Arguments
 
-- `blitzQueryFunction:` A [Blitz query function](./query-definition)
+- `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
 - `getQueryInputArguments: (pageOptions) => queryInputArguments`
   - **Required**

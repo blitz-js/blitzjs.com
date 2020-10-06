@@ -3,11 +3,83 @@ title: HTTP Middleware
 sidebar_label: HTTP Middleware
 ---
 
-HTTP Middleware is the escape hatch for [queries](./query-definition.mdx) and [mutations](./mutation-definition.mdx) to access HTTP primitives. Middleware can then pass data to queries and mutations using the middleware `res.blitzCtx` parameter.
+HTTP Middleware is the escape hatch for [queries](./query-resolvers.mdx) and [mutations](./mutation-resolvers.mdx) to access HTTP primitives. Middleware can then pass data to queries and mutations using the middleware `res.blitzCtx` parameter.
 
 Middleware should not be used for business logic, because HTTP middleware is less composable and harder to test than queries and mutations. All business logic should live in queries & mutations.
 
 For example, authentication middleware can set and read cookies and pass the session object to queries and mutations via the context object. Then queries and mutations will use the session object to perform authorization and whatever else they need to do.
+
+## Global Middleware
+
+Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config.mdx) using the `middleware` key.
+
+```js
+// blitz.config.js
+module.exports = {
+  middleware: [
+    (req, res, next) => {
+      res.blitzCtx.referer = req.headers.referer
+      return next()
+    },
+  ],
+```
+
+### Global Ctx Type
+
+You can access the type of the `res.blitzCtx` parameter by importing `Ctx` from `blitz`. The default `Ctx` provided by Blitz is an empty object.
+
+You can extend the `Ctx` type by placing the following file in your project (this is included in new apps by default).
+
+```ts
+// types.ts
+import {DefaultCtx, SessionContext} from "blitz"
+
+declare module "blitz" {
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+}
+```
+
+Whatever types you add to `Ctx` add will be automatically available in your queries and mutations as shown here.
+
+```ts
+import {Ctx} from "blitz"
+
+export default async function getThing(input, ctx: Ctx) {
+  // Properly typed
+  ctx.session
+}
+```
+
+## Local Middleware
+
+Local middleware only runs for a single query or mutation. It is defined by exporting a `middleware` array from a query or mutation.
+
+```ts
+// app/products/queries/getProduct.tsx
+import {Middleware} from "blitz"
+import db, {FindOneProjectArgs} from "db"
+
+type GetProjectInput = {
+  where: FindOneProjectArgs["where"]
+}
+
+export const middleware: Middleware[] = [
+  async (req, res, next) => {
+    res.blitzCtx.referer = req.headers.referer
+    await next()
+    if (req.method !== "HEAD") {
+      console.log("[Middleware] Loaded product:", res.blitzResult)
+    }
+  },
+]
+
+export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
+  console.log("Referer:", ctx.referer)
+  return await db.project.findOne({where})
+}
+```
 
 ## Middleware API
 
@@ -40,50 +112,6 @@ const middleware: Middleware = async (req, res, next) => {
 - `next()`: `MiddlewareNext`
   - **Required**: Callback for continuing the middleware chain. You must call this inside your middleware
   - **Required:** Returns a promise so you must either `await` it or return it like `return next()`. The promise resolves once all subsequent middleware has completed (including the Blitz query or mutation).
-
-## Global Middleware
-
-Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config.mdx) using the `middleware` key.
-
-```js
-// blitz.config.js
-module.exports = {
-  middleware: [
-    (req, res, next) => {
-      res.blitzCtx.referer = req.headers.referer
-      return next()
-    },
-  ],
-```
-
-## Local Middleware
-
-Local middleware only runs for a single query or mutation. It is defined by exporting a `middleware` array from a query or mutation.
-
-```ts
-// app/products/queries/getProduct.tsx
-import {Middleware} from "blitz"
-import db, {FindOneProjectArgs} from "db"
-
-type GetProjectInput = {
-  where: FindOneProjectArgs["where"]
-}
-
-export const middleware: Middleware[] = [
-  async (req, res, next) => {
-    res.blitzCtx.referer = req.headers.referer
-    await next()
-    if (req.method !== "HEAD") {
-      console.log("[Middleware] Loaded product:", res.blitzResult)
-    }
-  },
-]
-
-export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
-  console.log("Referer:", ctx.referer)
-  return await db.project.findOne({where})
-}
-```
 
 ## Communicating Between Middleware and Query/Mutation Resolvers
 

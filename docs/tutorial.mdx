@@ -124,7 +124,7 @@ This is the simplest page possible in Blitz. To look at it, go back to your brow
 
 ## Database setup
 
-By default, a Blitz app is created with a local SQLite database. If you’re new to databases, or you’re interested in trying Blitz, this is the easiest choice. Note that when starting your first real project, you may want to use a more scalable database like PostgreSQL, to avoid the pains of switching your database down the road. Your data source can be configured in the `db/schema.prisma` file, but for now we can simply move on to the next section.
+By default, a Blitz app is created with a local SQLite database. If you’re new to databases, or you’re interested in trying Blitz, this is the easiest choice. Note that when starting your first real project, you may want to use a more scalable database like PostgreSQL, to avoid the pains of switching your database down the road. For more information, see [Database overview](database-overview.mdx). For now, we can simply move on to the next section.
 
 ## Generating content
 
@@ -166,6 +166,8 @@ Then, we'll generate the `Choice` model with corresponding queries and mutations
 ```sh
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
+
+> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
 
 ```
 ✔ Model for 'choice' created successfully:
@@ -275,10 +277,7 @@ The end result should be as such:
 ```jsx
 // app/questions/mutations/deleteQuestion.ts
 
-export default async function deleteQuestion(
-  {where}: DeleteQuestionInput,
-  ctx: Record<any, any> = {},
-) {
+export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
   await db.choice.deleteMany({where: {question: {id: where.id}}})
@@ -381,8 +380,8 @@ Delete the div that says: `<div>Put your form fields here. But for now, just cli
 <input placeholder="Name" />
 
 <input placeholder="Choice 1" />
-<input placeholder="Choice 1" />
-<input placeholder="Choice 1" />
+<input placeholder="Choice 2" />
+<input placeholder="Choice 3" />
 ```
 
 Finally, we’re going to make sure all that data is submitted. Open up `app/questions/pages/questions/new.tsx` in your editor and replace
@@ -490,11 +489,8 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 ```js
 // app/questions/queries/getQuestion.ts
 
-export default async function getQuestion(
-  {where /* include */}: GetQuestionInput,
-  ctx: Record<any, any> = {},
-) {
-  const question = await db.question.findOne({where, include: {choices: true}})
+export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
+  const question = await db.question.findFirst({where, include: {choices: true}})
 
   return question
 }
@@ -505,7 +501,7 @@ export default async function getQuestion(
 
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,
-  ctx: Record<any, any> = {},
+  ctx: Ctx,
 ) {
   const questions = await db.question.findMany({
     where,
@@ -609,7 +605,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
 
   // highlight-start
   const handleVote = async (id, votes) => {
@@ -618,7 +614,7 @@ export const Question = () => {
         where: {id},
         data: {votes: votes + 1},
       })
-      alert("Success!" + JSON.stringify(updated))
+      refetch()
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }

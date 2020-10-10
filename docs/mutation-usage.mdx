@@ -3,18 +3,26 @@ title: Using Mutations
 sidebar_label: Use Mutations
 ---
 
-Mutations are called directly, like a regular asynchronous function.
+## In a React Component
+
+To use one of [your Blitz mutations](./query-resolvers), call the `useMutation` hook with your mutation resolver.
+
+It returns this tuple array,`[invoke, mutationExtras]`, where `invoke` is an asynchronous function that you can invoke directly inside an event handler or effect.
+
+`useMutation` is a thin layer on top of the `useMutation` hook from [`react-query`](https://github.com/tannerlinsley/react-query).
 
 ```tsx
+import {useMutation} from 'blitz'
 import updateProject from 'app/projects/mutations/updateProject'
 
 function (props) {
+  const [updateProjectMutation] = useMutation(updateProject)
 
   return (
     <Formik
       onSubmit={async values => {
         try {
-          const project = await updateProject(values)
+          const project = await updateProjectMutation(values)
         } catch (error) {
           alert('Error saving project')
         }
@@ -25,17 +33,19 @@ function (props) {
 }
 ```
 
+For complete details, see the [`useMutation` documentation](./use-mutation).
+
 :::info 🤔
 You may be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
 :::
 
 ## Error Handling
 
-Any errors thrown from your server code will be thrown on the client exactly like you'd expect. So you can use `try {} catch {}` or `.catch()`.
+Any errors thrown from your server code will be thrown on the client exactly like you'd expect. So you can wrap the `invoke` in `try {} catch {}` or `.catch()`.
 
 ## Cache Invalidation
 
-#### `mutate`
+#### `mutate()`
 
 - [`useQuery`](./use-query.mdx) returns a `mutate` function you can use to manually update the cache
 - Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
@@ -43,13 +53,14 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 ```tsx
 export default function (props: {query: {id: number}}) {
   const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [updateProjectMutation] = useMutation(updateProject)
 
   return (
     <Formik
       initialValues={product}
       onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values)
+          const product = await updateProjectMutation(values)
           mutate(product)
         } catch (error) {
           alert("Error saving product")
@@ -62,20 +73,21 @@ export default function (props: {query: {id: number}}) {
 }
 ```
 
-#### `refetch`
+#### `refetch()`
 
 - [`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload
 
 ```tsx
 export default function (props) {
   const [product, {refetch}] = useQuery(getProduct, {where: {id: props.id}})
+  const [updateProjectMutation] = useMutation(updateProject)
 
   return (
     <Formik
       initialValues={product}
       onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values)
+          const product = await updateProjectMutation(values)
           refetch()
         } catch (error) {
           alert("Error saving product")
@@ -86,6 +98,32 @@ export default function (props) {
     </Formik>
   )
 }
+```
+
+#### `invalidateQuery()`
+
+Another way, if you need to invalidate a query inside another component, is to use the [`invalidateQuery()`](./resolver-utilities#invalidateQuery) function provided by `blitz`.
+
+##### Example
+
+```tsx
+import {invalidateQuery} from "blitz" // highlight-line
+import getProducts from "app/products/queries/getProducts"
+
+const Page = function ({products}) {
+  return (
+    <div>
+      <button
+        onClick={() => {
+          invalidateQuery(getProducts) // highlight-line
+        }}
+      >
+        Invalidate
+      </button>
+    </div>
+  )
+}
+export default Page
 ```
 
 #### Automatically
@@ -105,17 +143,20 @@ Here's a simple form component with an `onSubmit` function that calls an `update
 ```tsx
 export default function (props: {query: {id: number}}) {
   const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [updateProjectMutation] = useMutation(updateProject)
+
   return (
     <Formik
       initialValues={product}
       onSubmit={async (values) => {
         try {
-          const product = await updateProduct(values)
+          const product = await updateProjectMutation(values)
           mutate(product)
         } catch (error) {
           alert("Error saving product")
         }
-      }}>
+      }}
+    >
       {/* ... */}
     </Formik>
   )
@@ -128,6 +169,8 @@ We pass `{refetch: false}` as a second argument to the mutate() function to prev
 ```tsx
 export default function (props: {query: {id: number}}) {
   const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [updateProjectMutation] = useMutation(updateProject)
+
   return (
     <Formik
       initialValues={product}
@@ -135,7 +178,7 @@ export default function (props: {query: {id: number}}) {
         try {
           // Update local cache with form values without triggering refetch
           mutate(values, {refetch: false}) // highlight-line
-          const product = await updateProduct(values)
+          const product = await updateProjectMutation(values)
           // Update local cache with result, then refetch
           mutate(product)
         } catch (error) {
@@ -143,7 +186,8 @@ export default function (props: {query: {id: number}}) {
           mutate(product) // highlight-line
           alert("Error saving product")
         }
-      }}>
+      }}
+    >
       {/* ... */}
     </Formik>
   )

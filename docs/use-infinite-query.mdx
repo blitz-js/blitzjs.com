@@ -78,15 +78,15 @@ const [
     canFetchMore,
     mutate,
   }
-] = useQuery(blitzQueryFunction, getQueryInputArguments, {
-  ...queryOptions,
+] = useQuery(queryResolver, getQueryInputArguments, {
   getFetchMore: (lastPage, allPages) => fetchMoreVariable
+  ...queryOptions,
 })
 ```
 
 ### Arguments
 
-- `blitzQueryFunction:` A [Blitz query function](./query-definition)
+- `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
 - `getQueryInputArguments: (fetchMoreVariable) => queryInputArguments`
   - **Required**

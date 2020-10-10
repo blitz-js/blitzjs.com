@@ -153,7 +153,7 @@ function Home() {
               href="https://github.com/blitz-js/blitz"
               sx={{variant: "buttons.outline", fontSize: 3}}
             >
-              Github
+              GitHub
             </Link>
           </Spaced>
         </Spaced>
@@ -282,7 +282,7 @@ function Home() {
           <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
         </div>
         <div className="video">
-          <VideoPlayer url="https://www.youtube.com/watch?v=RiLYvLNDeKA" />
+          <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
         </div>
 
         <div className="skip-row" />

@@ -24,7 +24,7 @@ Blitz comes with a number of useful errors you can use throughout your applicati
   - `statusCode`: 404
   - Default `message`: "This could not be found"
 
-To use, import from `blitz` and use like any Javascript Error. If you're curious, you can [see the source code for these.](TODO)
+To use, import from `blitz` and use like any JavaScript Error. If you're curious, you can [see the source code for these.](TODO)
 
 ```ts
 import {AuthenticationError} from "blitz"
@@ -100,7 +100,7 @@ For example, with the above `_app.tsx`, you can throw `AuthenticationError` insi
 
 For errors other than what Blitz provides, it's recommended to create custom Error classes. You can then add custom data attributes that help you handle the error.
 
-Here's an example of how to create a custom error. It's a Javascript class, so you can be as creative as you want.
+Here's an example of how to create a custom error. It's a JavaScript class, so you can be as creative as you want.
 
 ```ts
 export class UsernameTakenError extends Error {

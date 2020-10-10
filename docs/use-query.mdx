@@ -55,6 +55,7 @@ const [
 ] = useQuery(queryResolver, queryInputArguments, {
   manual,
   enabled,
+  forceFetchOnMount,
   retry,
   retryDelay,
   staleTime,
@@ -63,6 +64,7 @@ const [
   refetchIntervalInBackground,
   refetchOnWindowFocus,
   refetchOnReconnect,
+  notifiyOnStatusChange,
   onSuccess,
   onError,
   onSettled,
@@ -90,6 +92,10 @@ const [
 - `enabled: Boolean`
   - Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
   - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
+- `forceFetchOnMount: Boolean`
+  - Optional
+  - Defaults to `false`
+  - Set this to `true` to always fetch when the component mounts (regardless of staleness).
 - `retry: Boolean | Int | Function(failureCount, error) => Boolean`
   - If `false`, failed queries will not retry by default.
   - If `true`, failed queries will retry infinitely.
@@ -118,6 +124,11 @@ const [
 - `refetchOnReconnect: Boolean`
   - Optional
   - Set this to `true` or `false` to enable/disable automatic refetching on reconnect for this query.
+- `notifyOnStatusChange: Boolean`
+  - Optional
+  - Whether a change to the query status should re-render a component.
+  - If set to `false`, the component will only re-render when the actual `data` or `error` changes.
+  - Defaults to `true`.
 - `onSuccess: Function(data) => data`
   - Optional
   - This function will fire any time the query successfully fetches new data.

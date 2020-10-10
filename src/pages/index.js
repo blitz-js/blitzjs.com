@@ -153,7 +153,7 @@ function Home() {
               href="https://github.com/blitz-js/blitz"
               sx={{variant: "buttons.outline", fontSize: 3}}
             >
-              Github
+              GitHub
             </Link>
           </Spaced>
         </Spaced>

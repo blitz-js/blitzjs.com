@@ -58,7 +58,9 @@ export default passportAuth({
   successRedirectUrl: "/",
   errorRedirectUrl: "/",
   secureProxy: true, // highlight-line
-  strategies: [/*...*/],
+  strategies: [
+    /*...*/
+  ],
 })
 ```
 
@@ -178,7 +180,7 @@ There are four different ways to determine the redirect URL where a user should 
 
 Note: If there is an error, methods #1 and #2 will override `config.errorRedirectUrl`
 
-This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on Github!
+This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on GitHub!
 
 ### `authenticateOptions`
 

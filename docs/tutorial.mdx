@@ -277,10 +277,7 @@ The end result should be as such:
 ```jsx
 // app/questions/mutations/deleteQuestion.ts
 
-export default async function deleteQuestion(
-  {where}: DeleteQuestionInput,
-  ctx: Record<any, any> = {},
-) {
+export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
   await db.choice.deleteMany({where: {question: {id: where.id}}})
@@ -492,11 +489,8 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 ```js
 // app/questions/queries/getQuestion.ts
 
-export default async function getQuestion(
-  {where /* include */}: GetQuestionInput,
-  ctx: Record<any, any> = {},
-) {
-  const question = await db.question.findOne({where, include: {choices: true}})
+export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
+  const question = await db.question.findFirst({where, include: {choices: true}})
 
   return question
 }
@@ -507,7 +501,7 @@ export default async function getQuestion(
 
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,
-  ctx: Record<any, any> = {},
+  ctx: Ctx,
 ) {
   const questions = await db.question.findMany({
     where,
@@ -611,7 +605,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, { refetch }] = useQuery(getQuestion, { where: { id: questionId } })
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
 
   // highlight-start
   const handleVote = async (id, votes) => {
@@ -620,7 +614,7 @@ export const Question = () => {
         where: {id},
         data: {votes: votes + 1},
       })
-      refetch();
+      refetch()
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }

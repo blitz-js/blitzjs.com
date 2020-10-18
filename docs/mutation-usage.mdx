@@ -45,14 +45,14 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 
 ## Cache Invalidation
 
-#### `setQueryData()`
+#### `mutate()`
 
-- [`useQuery`](./use-query.mdx) returns a `setQueryData` function you can use to manually update the cache
-- Calling `setQueryData` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
+- [`useQuery`](./use-query.mdx) returns a `mutate` function you can use to manually update the cache
+- Calling `mutate` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
 
 ```tsx
 export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -61,7 +61,7 @@ export default function (props: {query: {id: number}}) {
       onSubmit={async (values) => {
         try {
           const product = await updateProjectMutation(values)
-          setQueryData(product)
+          mutate(product)
         } catch (error) {
           alert("Error saving product")
         }
@@ -142,7 +142,7 @@ Here's a simple form component with an `onSubmit` function that calls an `update
 
 ```tsx
 export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -151,7 +151,7 @@ export default function (props: {query: {id: number}}) {
       onSubmit={async (values) => {
         try {
           const product = await updateProjectMutation(values)
-          setQueryData(product)
+          mutate(product)
         } catch (error) {
           alert("Error saving product")
         }
@@ -164,11 +164,11 @@ export default function (props: {query: {id: number}}) {
 ```
 
 We can enhance this to support instant feedback to the user, immediately showing the edited product information, by mutating the local cache of the `getProducts` query with the changes we're about to send to the database.
-We pass `{refetch: false}` as a second argument to the setQueryData() function to prevent the mutation triggering a refetch of stale data while we wait for the response.
+We pass `{refetch: false}` as a second argument to the mutate() function to prevent the mutation triggering a refetch of stale data while we wait for the response.
 
 ```tsx
 export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [product, {mutate}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -177,13 +177,13 @@ export default function (props: {query: {id: number}}) {
       onSubmit={async (values) => {
         try {
           // Update local cache with form values without triggering refetch
-          setQueryData(values, {refetch: false}) // highlight-line
+          mutate(values, {refetch: false}) // highlight-line
           const product = await updateProjectMutation(values)
           // Update local cache with result, then refetch
-          setQueryData(product)
+          mutate(product)
         } catch (error) {
           // Set cache back to original result, then refetch
-          setQueryData(product) // highlight-line
+          mutate(product) // highlight-line
           alert("Error saving product")
         }
       }}

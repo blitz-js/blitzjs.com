@@ -79,23 +79,7 @@ const [
     failureCount,
     refetch,
   }
-] = useQuery(queryResolver, queryInputArguments, {
-  manual,
-  enabled,
-  retry,
-  retryDelay,
-  staleTime,
-  cacheTime,
-  refetchInterval,
-  refetchIntervalInBackground,
-  refetchOnWindowFocus,
-  onSuccess,
-  onError,
-  onSettled,
-  suspense,
-  initialData,
-  refetchOnMount,
-})
+] = useQuery(queryResolver, queryInputArguments, options)
 ```
 
 ### Arguments
@@ -110,56 +94,7 @@ const [
 
 ### Options
 
-- `manual: Boolean`
-  - Set this to `true` to disable automatic refetching when the query mounts or changes query keys.
-  - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
-- `enabled: Boolean`
-  - Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
-  - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
-- `retry: Boolean | Int | Function(failureCount, error) => Boolean`
-  - If `false`, failed queries will not retry by default.
-  - If `true`, failed queries will retry infinitely.
-  - If set to an `Int`, e.g. `3`, failed queries will retry until the failed query count meets that number.
-  - If set to a function `(failureCount, error) => boolean` failed queries will retry until the function returns false.
-- `retryDelay: Function(retryAttempt: Int) => Int`
-  - This function receives a `retryAttempt` integer and returns the delay to apply before the next attempt in milliseconds.
-  - A function like `attempt => Math.min(attempt > 1 ? 2 ** attempt * 1000 : 1000, 30 * 1000)` applies exponential backoff.
-  - A function like `attempt => attempt * 1000` applies linear backoff.
-- `staleTime: Int | Infinity`
-  - The time in milliseconds that cache data remains fresh. After a successful cache update, that cache data will become stale after this duration.
-  - If set to `Infinity`, query will never go stale
-- `cacheTime: Int | Infinity`
-  - The time in milliseconds that unused/inactive cache data remains in memory. When a query's cache becomes unused or inactive, that cache data will be garbage collected after this duration.
-  - If set to `Infinity`, will disable garbage collection
-- `refetchInterval: false | Integer`
-  - Optional
-  - If set to a number, all queries will continuously refetch at this frequency in milliseconds
-- `refetchIntervalInBackground: Boolean`
-  - Optional
-  - If set to `true`, queries that are set to continuously refetch with a `refetchInterval` will continue to refetch while their tab/window is in the background
-- `refetchOnWindowFocus: Boolean`
-  - Optional
-  - Set this to `false` to disable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `true`).
-  - Set this to `true` to enable automatic refetching on window focus (useful, when `refetchAllOnWindowFocus` is set to `false`.
-- `onSuccess: Function(data) => data`
-  - Optional
-  - This function will fire any time the query successfully fetches new data and will be passed the new data as a parameter
-- `onError: Function(error) => void`
-  - Optional
-  - This function will fire if the query encounters an error and will be passed the error.
-- `onSettled: Function(data, error) => data`
-  - Optional
-  - This function will fire any time the query is either successfully fetched or errors and be passed either the data or error
-- `initialData: any`
-  - Optional
-  - If set, this value will be used as the initial data for the query cache (as long as the query hasn't been created or cached yet)
-- `refetchOnMount: Boolean`
-  - Optional
-  - Defaults to `true`
-  - If set to `false`, will disable additional instances of a query to trigger background refetches
-- `suspense: Boolean`
-  - Optional
-  - Enabled by default. Set this to `false` to disable suspense mode.
+The options are identical to the options for the [useQuery hook](./use-query.mdx)
 
 ### Returns
 
@@ -188,3 +123,9 @@ const [
   - A function to manually refetch the query if it is stale.
   - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
   - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
+- `setQueryData()` - `Function(newData, opts) => void`
+  - A function to manually update the cache for a query.
+  - `newData` can be an object of new data or a function that receives the old data and returns the new data
+  - This is often used to instantly update the cache after submitting a form
+  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct. Disable refetch by passing an options object `{refetch: false}` as the second argument.
+  - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for example usage of `setQueryData()`

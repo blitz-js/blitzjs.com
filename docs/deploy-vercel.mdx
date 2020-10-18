@@ -28,4 +28,4 @@ Assuming you already have a [Vercel](https://vercel.com) account:
 4. Change your build script in package.json to be `NODE_ENV=production blitz db migrate && blitz build` so that the production DB will be migrated on each deploy
 5. Add your DB url as a secret environment variable [using the UI](https://vercel.com/blog/environment-variables-ui) or by running `vercel env add DATABASE_URL`
 6. Add your `SESSION_SECRET_KEY` environment variable (It needs to be 32 characters long)
-6. Run `git push` if using the [Git Integration](https://vercel.com/docs/v2/git-integrations) or `vercel` if using Vercel CLI
+7. Run `git push` if using the [Git Integration](https://vercel.com/docs/v2/git-integrations) or `vercel` if using Vercel CLI

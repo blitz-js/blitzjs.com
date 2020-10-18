@@ -66,20 +66,20 @@ services:
       - data:/var/lib/postgresql/data
     env_file: ./.env.local #Here we are using the already existing .env.local file
     ports:
-    - "5432:5432"
-
+      - "5432:5432"
 
 volumes:
   data:
 ```
 
-2. Inside your `.env.local` file add 3 new environemnt variables which are required by docker
+2. Inside your `.env.local` file add 3 new environment variables which are required by docker
 
 ```text
 POSTGRES_USER=your_user
 POSTGRES_PASSWORD=your_password
 POSTGRES_DB=your_database_name
 ```
+
 Given these values your `DATABASE_URL` should look like this `postgresql://your_user:your_password@localhost:5432/your_database_name`
 
 3. Modify your `package.json` to run the database before the start of Blitz

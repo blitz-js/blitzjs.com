@@ -76,7 +76,7 @@ const [
     refetch,
     fetchMore,
     canFetchMore,
-    mutate,
+    setQueryData,
   }
 ] = useQuery(queryResolver, getQueryInputArguments, {
   getFetchMore: (lastPage, allPages) => fetchMoreVariable
@@ -132,9 +132,9 @@ The options are identical to the options for the [useQuery hook](./use-query.mdx
   - previous option which will determine if the data you are fetching is should be prepended instead of appended to your infinite list. e.g. `fetchMore(nextPageVars, { previous: true })`
 - `canFetchMore: Boolean`
   - If using `paginated` mode, this will be `true` if there is more data to be fetched (known via the required `getFetchMore` option function).
-- `mutate()` - `Function(newData, opts) => void`
+- `setQueryData()` - `Function(newData, opts) => void`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the old data and returns the new data
   - This is often used to instantly update the cache after submitting a form
   - After updating the cache, this will automatically call `refetch()` to ensure the data is correct. Disable refetch by passing an options object `{refetch: false}` as the second argument.
-  - See the [Blitz mutation usage docs](./mutation-usage#mutate) for example usage of `mutate()`
+  - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for example usage of `setQueryData()`

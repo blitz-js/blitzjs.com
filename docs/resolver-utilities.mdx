@@ -101,3 +101,65 @@ const queryKey = getQueryKey(resolver, inputArgs?)
 
 - `results`
   - The exact results returned from the resolver
+
+## `setQueryData`
+
+Works the same as the [setQueryData returned by useQuery](./use-query#setQueryData). The difference is that it's not bound to the
+useQuery and expects the `resolver` and the `inputArgs` instead. It will also invalidate the query causing a refetch.
+Disable refetch by passing an options object `{refetch: false}` as the `opts` argument.
+
+### Example
+
+```tsx
+import {setQueryData} from "blitz"
+
+export default function (props: {query: {id: number}}) {
+  const [product] = useQuery(getProduct, {where: {id: props.query.id}})
+  const [updateProjectMutation] = useMutation(updateProject)
+
+  return (
+    <Formik
+      initialValues={product}
+      onSubmit={async (values) => {
+        try {
+          const product = await updateProjectMutation(values)
+          setQueryData(getProduct, {where: {id: props.query.id}}, product)
+        } catch (error) {
+          alert("Error saving product")
+        }
+      }}
+    >
+      {/* ... */}
+    </Formik>
+  )
+}
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const promise = setQueryData(resolver, inputArgs, newData, opts?)
+```
+
+### Arguments
+
+- `resolver:` A Blitz [query resolver](./query-resolvers).
+  - **Required**
+- `inputArgs`
+  - **Required**
+  - The arguments that will be passed to `resolver`
+  - It will set the data for the specified `resolver` and `inputArgs` combination
+- `newData`
+  - **Required**
+  - If non-function is passed, the data will be updated to this value
+  - If a function is passed, it will receive the old data value and be expected to return a new one.
+- `opts`
+  - Optional
+  - An object with additional options.
+  - Disable refetch by passing an options object `{refetch: false}`.
+
+### Returns
+
+- `results`
+  - Returns a promise that will be resolved when the new data is refetched.

@@ -159,7 +159,11 @@ Blitz provides a `connectMiddleware()` function that converts connect middleware
 ```ts
 // blitz.config.js
 const {connectMiddleware} = require("blitz")
-const cors = require("cors")
+const Cors = require("cors")
+
+const cors = Cors({
+  methods: ["GET", "POST", "HEAD", "OPTIONS"]
+});
 
 module.exports = {
   middleware: [connectMiddleware(cors)],

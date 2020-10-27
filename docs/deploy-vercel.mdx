@@ -16,6 +16,21 @@ You first need to change the defined datasource in `db/schema.prisma` from SQLit
 +}
 ```
 
+If you prefer to use SQLite locally and Postgres in Production, you could have
+
+```diff
+-datasource sqlite {
+-  provider = "sqlite"
+- url      = "file:./db.sqlite"
+-
++datasource postgresql {
++  provider = ["sqlite", "postgresql"]
++  url      = env("DATABASE_URL")
++}
+```
+
+And add the SQlite URL to your `.env.local`
+
 Assuming you already have a [Vercel](https://vercel.com) account:
 
 1. You need a production Postgres database. It's straightforward to set this up on [Digital Ocean](https://www.digitalocean.com/products/managed-databases-postgresql/?refcode=466ad3d3063d).

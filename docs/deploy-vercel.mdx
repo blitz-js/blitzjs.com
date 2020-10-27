@@ -23,7 +23,7 @@ If you prefer to use SQLite locally and Postgres in Production, you could have
 -  provider = "sqlite"
 - url      = "file:./db.sqlite"
 -
-+datasource postgresql {
++datasource db {
 +  provider = ["sqlite", "postgresql"]
 +  url      = env("DATABASE_URL")
 +}

@@ -277,10 +277,9 @@ The end result should be as such:
 ```jsx
 // app/questions/mutations/deleteQuestion.ts
 
-export default async function deleteQuestion(
-  {where}: DeleteQuestionInput,
-  ctx: Record<any, any> = {},
-) {
+export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
+  ctx.session.authorize()
+  
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
   await db.choice.deleteMany({where: {question: {id: where.id}}})
@@ -342,13 +341,13 @@ export const QuestionsList = () => {
 Next, let’s apply a similar fix to `app/questions/pages/questions/new.tsx`. In the form submission, replace
 
 ```jsx
-const question = await createQuestion({data: {name: "MyName"}})
+const question = await createQuestionMutation({data: {name: "MyName"}})
 ```
 
 with
 
 ```jsx
-const question = await createQuestion({
+const question = await createQuestionMutation({
   data: {text: "Do you love Blitz?", choices: {create: [{text: "Yes!"}]}},
 })
 ```
@@ -356,7 +355,7 @@ const question = await createQuestion({
 Finally, we need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace
 
 ```jsx
-const updated = await updateQuestion({
+const updated = await updateQuestionMutation({
   where: {id: question.id},
   data: {name: "MyNewName"},
 })
@@ -365,7 +364,7 @@ const updated = await updateQuestion({
 with
 
 ```jsx
-const updated = await updateQuestion({
+const updated = await updateQuestionMutation({
   where: {id: question.id},
   data: {text: "Do you really love Blitz?"},
 })
@@ -383,8 +382,8 @@ Delete the div that says: `<div>Put your form fields here. But for now, just cli
 <input placeholder="Name" />
 
 <input placeholder="Choice 1" />
-<input placeholder="Choice 1" />
-<input placeholder="Choice 1" />
+<input placeholder="Choice 2" />
+<input placeholder="Choice 3" />
 ```
 
 Finally, we’re going to make sure all that data is submitted. Open up `app/questions/pages/questions/new.tsx` in your editor and replace
@@ -392,7 +391,9 @@ Finally, we’re going to make sure all that data is submitted. Open up `app/que
 ```jsx
 onSubmit={async () => {
   try {
-    const question = await createQuestion({data: {name: "MyName"}});
+    const question = await createQuestionMutation({
+      data: { text: "Do you love Blitz?", choices: { create: [{ text: "Yes!" }] } },
+    })
     alert("Success!" + JSON.stringify(question));
     router.push("/questions/[questionId]", `/questions/${question.id}`);
   } catch (error) {
@@ -406,7 +407,7 @@ with
 ```jsx
 onSubmit={async (event) => {
   try {
-    const question = await createQuestion({
+    const question = await createQuestionMutation({
       data: {
         text: event.target[0].value,
         choices: {
@@ -435,6 +436,7 @@ import QuestionForm from "app/questions/components/QuestionForm"
 
 const NewQuestionPage: BlitzPage = () => {
   const router = useRouter()
+  const [createQuestionMutation] = useMutation(createQuestion)
 
   return (
     <div>
@@ -451,7 +453,7 @@ const NewQuestionPage: BlitzPage = () => {
           // highlight-start
           onSubmit={async (event) => {
             try {
-              const question = await createQuestion({
+              const question = await createQuestionMutation({
                 data: {
                   text: event.target[0].value,
                   choices: {
@@ -492,11 +494,12 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 ```js
 // app/questions/queries/getQuestion.ts
 
-export default async function getQuestion(
-  {where /* include */}: GetQuestionInput,
-  ctx: Record<any, any> = {},
-) {
-  const question = await db.question.findOne({where, include: {choices: true}})
+export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
+  ctx.session.authorize()
+  
+  const question = await db.question.findFirst({where, include: {choices: true}})
+
+  if (!question) throw new NotFoundError()
 
   return question
 }
@@ -505,10 +508,14 @@ export default async function getQuestion(
 ```js
 // app/questions/queries/getQuestions.ts
 
+type GetQuestionsInput = Pick<FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
+
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,
-  ctx: Record<any, any> = {},
+  ctx: Ctx,
 ) {
+  ctx.session.authorize()
+  
   const questions = await db.question.findMany({
     where,
     orderBy,
@@ -517,6 +524,10 @@ export default async function getQuestions(
     skip,
     include: {choices: true},
   })
+  
+  const count = await db.question.count()
+  const hasMore = typeof take === "number" ? skip + take < count : false
+  const nextPage = hasMore ? { take, skip: skip + take! } : null
 
   return questions
 }
@@ -576,6 +587,8 @@ import updateChoice from "app/choices/mutations/updateChoice"
 
 ...
 
+const [updateChoiceMutation] = useMutation(updateChoice)
+
 const handleVote = async (id, votes) => {
   try {
     const updated = await updateChoice({
@@ -611,16 +624,18 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
+  const [deleteQuestionMutation] = useMutation(deleteQuestion)
+  const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 
   // highlight-start
   const handleVote = async (id, votes) => {
     try {
-      const updated = await updateChoice({
+      const updated = await updateChoiceMutation({
         where: {id},
         data: {votes: votes + 1},
       })
-      alert("Success!" + JSON.stringify(updated))
+      refetch()
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }
@@ -645,7 +660,7 @@ export const Question = () => {
         type="button"
         onClick={async () => {
           if (window.confirm("This will be deleted")) {
-            await deleteQuestion({where: {id: question.id}})
+            await deleteQuestionMutation({where: {id: question.id}})
             router.push("/questions")
           }
         }}

@@ -3,7 +3,7 @@ title: Passport.js
 sidebar_label: Passport.js
 ---
 
-Blitz provides an adapter that lets you use an existing [Passport.js authentication strategy](http://www.passportjs.org/packages/).
+Blitz provides an adapter that lets you use an existing [Passport.js authentication strategy](http://www.passportjs.org/).
 
 Currently only passport strategies that use a `verify` callback are supported. In the Twitter example below, the second argument to `TwitterStrategy()` is the `verify` callback.
 
@@ -44,6 +44,25 @@ For example with `passport-twitter` strategy, the URLs for Twitter will be:
 2. `/api/auth/twitter/callback` - Callback URL to complete login
 
 You can determine the `strategyName` in the strategy's documentation by looking for this: `passport.authenticate('github')`. So in this case, the `strategyName` is `github`.
+
+#### SSL Proxy Configuration
+
+You may need to set `secureProxy` option to `true` in case your app is located behind SSL proxy (Nginx). Proxy should be set to manage `x-forwarded-proto` header correctly.
+
+```ts
+// app/api/auth/[...auth].ts
+import {passportAuth} from "blitz"
+import db from "db"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  secureProxy: true, // highlight-line
+  strategies: [
+    /*...*/
+  ],
+})
+```
 
 ### 2. Add a Passport Strategy
 
@@ -152,7 +171,8 @@ There are four different ways to determine the redirect URL where a user should 
 1. Add `redirectUrl` to the `verify` callback result
    - Example: `done(null, {publicData, redirectUrl: '/'})`
 2. Add a `redirectUrl` query parameter to the "initiate login" url
-   - Example: `example.com/api/auth/twitter?redirectUrl='/dashboard'`
+   - Example: `example.com/api/auth/twitter?redirectUrl=/dashboard`
+   - Example: `example.com/api/auth/twitter?redirectUrl=${router.pathname}`
 3. Via the config passed to `passportAuth`
    - If success, it will use `config.successRedirectUrl`
    - If error, it will use `config.errorRedirectUrl`
@@ -160,4 +180,62 @@ There are four different ways to determine the redirect URL where a user should 
 
 Note: If there is an error, methods #1 and #2 will override `config.errorRedirectUrl`
 
-This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on Github!
+This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on GitHub!
+
+### `authenticateOptions`
+
+Some strategies have to call an option like `scope` or `successMessage` inside the `passport.authenticate()` method. Add
+these options to the `passportAuth` object like this:
+
+```ts
+import {passportAuth} from "blitz"
+import db from "db"
+import {Strategy as Auth0Strategy} from "passport-auth0"
+
+export default passportAuth({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  // highlight-start
+  authenticateOptions: {scope: "openid email profile"},
+  // highlight-end
+  strategies: [
+    new Auth0Strategy(
+      {
+        domain: process.env.AUTH0_DOMAIN,
+        clientID: process.env.AUTH0_CLIENT_ID,
+        clientSecret: process.env.AUTH0_CLIENT_SECRET,
+        callbackURL:
+          process.env.NODE_ENV === "production"
+            ? "https://example.com/api/auth/auth0/callback"
+            : "http://localhost:3000/api/auth/auth0/callback",
+      },
+      async function (_token, _tokenSecret, extraParams, profile, done) {
+        const email = profile.emails && profile.emails[0]?.value
+
+        if (!email) {
+          // This can happen if you haven't enabled email access in your twitter app permissions
+          return done(new Error("GitHub OAuth response doesn't have email."))
+        }
+
+        const user = await db.user.upsert({
+          where: {email},
+          create: {
+            email,
+            name: profile.displayName,
+          },
+          update: {email},
+        })
+
+        const publicData = {
+          userId: user.id,
+          roles: [user.role],
+          source: "auth0",
+        }
+        done(undefined, {publicData})
+      },
+    ),
+  ],
+})
+```
+
+Note: Without the `authenticateOptions` the `profile` parameter inside the `verify` function would not contain any values.

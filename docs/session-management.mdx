@@ -163,9 +163,13 @@ interface SessionModel extends Record<any, any> {
 }
 ```
 
-## Using without Prisma
+## Customize Session Persistence & Database Acess
 
-Currently the session management has zero-config support for Prisma, but you can also use it with any other database by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types. For example you could store session in Redis if you wanted.
+By default, session persistence is zero-config with Prisma. However, you can customize this to save sessions somewhere else, like Redis. You can also customize this if you have Prisma but want to customize the attribute names on the user or session model.
+
+Customize session persistence by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types.
+
+For reference, here's [the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/server/src/supertokens.ts#L62-L85).
 
 ## How it Works
 
@@ -200,16 +204,16 @@ Authenticated sessions use opaque tokens that are stored in the database.
 - This is done by deleting the session from the database.
 - Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
 
-## Types
+## Typescript
 
 #### `SessionContext`
 
 ```ts
-export interface SessionContext {
+interface SessionContext {
   /**
    * null if anonymous
    */
-  userId: string | number | null
+  userId: unknown
   roles: string[]
   handle: string | null
   publicData: PublicData
@@ -226,9 +230,31 @@ export interface SessionContext {
 
 #### `PublicData`
 
+By default, `PublicData` is typed as
+
 ```ts
-interface PublicData extends Record<any, any> {
-  userId: string | number | null
+interface DefaultPublicData {
+  userId: any
   roles: string[]
 }
 ```
+
+but you can, and should, extend `PublicData` to match your application. You do this as shown below.
+
+```ts
+// types.ts
+import {DefaultCtx, SessionContext, DefaultPublicData} from "blitz"
+import {User} from "db"
+
+declare module "blitz" {
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+  export interface PublicData extends DefaultPublicData {
+    userId: User["id"] // strongly types userId
+    orgId: number // adds new field to PublicData
+  }
+}
+```
+
+And then `PublicData` everywhere in your application, including `ctx.session` and `useSession` will use this type that you define.

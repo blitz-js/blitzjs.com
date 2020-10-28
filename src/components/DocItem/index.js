@@ -116,7 +116,7 @@ function DocItem(props) {
                     <div className="col">
                       Idea for improving this page?
                       <a href={editUrl} target="_blank" rel="noreferrer noopener" sx={{ml: 2}}>
-                        Edit it on Github
+                        Edit it on GitHub
                       </a>
                     </div>
                     {(lastUpdatedAt || lastUpdatedBy) && (

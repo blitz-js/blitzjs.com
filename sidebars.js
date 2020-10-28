@@ -7,14 +7,14 @@
 
 module.exports = {
   someSidebar: {
-    Introduction: [
-      "getting-started",
-      "tutorial",
+    Introduction: ["getting-started", "tutorial", "what-is-nextjs", "why-blitz"],
+    Community: [
+      "how-the-community-operates",
       "manifesto",
-      "why-blitz",
-      "what-is-nextjs",
-      "code-of-conduct",
+      "community-history",
       "contributing",
+      "maintainers",
+      "code-of-conduct",
     ],
     Basics: [
       "file-structure",
@@ -43,16 +43,16 @@ module.exports = {
       "router",
       "api-routes",
     ],
-    Database: ["database-overview"],
+    Database: ["database-overview", "database-seeds"],
     Queries: [
-      "query-definition",
+      "query-resolvers",
       "query-usage",
       "use-query",
       "use-paginated-query",
       "use-infinite-query",
-      "ssr-query",
     ],
-    Mutations: ["mutation-definition", "mutation-usage"],
+    Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
+    "Queries & Mutations": ["invoke", "resolver-utilities"],
     "Deploying to Production": ["deploy-render", "deploy-vercel"],
     CLI: [
       "cli-overview",

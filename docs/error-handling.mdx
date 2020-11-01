@@ -27,12 +27,12 @@ Blitz comes with a number of useful errors you can use throughout your applicati
 To use, import from `blitz` and use like any JavaScript Error. If you're curious, you can [see the source code for these.](TODO)
 
 ```ts
-import {AuthenticationError} from "blitz"
+import {AuthenticationError, isAuthenticationError} from "blitz"
 
 try {
   throw new AuthenticationError()
 } catch (error) {
-  if (error.name === "AuthenticationError") {
+  if (isAuthenticationError(error)) {
     // Handle this error appropriately, like show a login screen
     console.log(error.statusCode)
     console.log(error.message)
@@ -50,7 +50,13 @@ It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import {AppProps, ErrorComponent} from "blitz"
+import {
+  AppProps,
+  ErrorComponent,
+  isAuthenticationError,
+  isAuthorizationError,
+  BlitzError,
+} from "blitz"
 import {ErrorBoundary} from "react-error-boundary"
 import {queryCache} from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
@@ -70,10 +76,10 @@ export default function App({Component, pageProps}: AppProps) {
   )
 }
 
-function RootErrorFallback({error, resetErrorBoundary}) {
-  if (error.name === "AuthenticationError") {
+function RootErrorFallback({error, resetErrorBoundary}: FallbackProps) {
+  if (isAuthenticationError(error)) {
     return <LoginForm onSuccess={resetErrorBoundary} />
-  } else if (error.name === "AuthorizationError") {
+  } else if (isAuthorizationError(error)) {
     return (
       <ErrorComponent
         statusCode={error.statusCode}
@@ -82,19 +88,22 @@ function RootErrorFallback({error, resetErrorBoundary}) {
     )
   } else {
     return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+      <ErrorComponent
+        statusCode={(error as BlitzError)?.statusCode || 400}
+        title={(error as BlitzError)?.message || (error as BlitzError)?.name}
+      />
     )
   }
 }
 ```
 
-That means all errors will at least be caught at the root level. However, you can also add `<ErrorBoundary>` anywhere else in your app for more localized error handiling. If an error is caught by an `<ErrorBoundary>` somewhere down inside your app tree, then it will not reach the root ErrorBoundary unless you re-throw it.
+That means all errors will at least be caught at the root level. However, you can also add `<ErrorBoundary>` anywhere else in your app for more localized error handling. If an error is caught by an `<ErrorBoundary>` somewhere down inside your app tree, then it will not reach the root ErrorBoundary unless you re-throw it.
 
 ### Handling Server Errors on the Client
 
 A really awesome feature of Blitz is that you can throw any error from a Blitz query or mutation and then use an ErrorBoundary on the frontend to catch and handle it.
 
-For example, with the above `_app.tsx`, you can throw `AuthenticationError` inside a Blitz query and then a login screen will automatically show in the client because that root ErrorBoundary is rendering `<LoginForm>` if `error.name === 'AuthenticationError'`.
+For example, with the above `_app.tsx`, you can throw `AuthenticationError` inside a Blitz query and then a login screen will automatically show in the client because that root ErrorBoundary is rendering `<LoginForm>` if `isAuthenticationError(error)` returns `true`.
 
 ### Custom Errors
 

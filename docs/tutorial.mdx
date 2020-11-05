@@ -113,11 +113,13 @@ Now that your development environment—a “project”—is set up, you’re re
 Open the file `app/pages/index.tsx` and put the following code in it:
 
 ```tsx
-export default () => (
+const Index = () => (
   <div>
     <h1>Hello, world!</h1>
   </div>
 )
+
+export default Index
 ```
 
 This is the simplest page possible in Blitz. To look at it, go back to your browser and go to http://localhost:3000. You should see your text appear! Try editing the `index.tsx` file, and make it your own! When you’re ready, move on to the next section.

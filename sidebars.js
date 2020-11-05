@@ -53,7 +53,7 @@ module.exports = {
     ],
     Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
     "Queries & Mutations": ["invoke", "resolver-utilities"],
-    "Deploying to Production": ["deploy-render", "deploy-vercel"],
+    "Deploying to Production": ["deploy-render", "deploy-vercel", "deploy-heroku"],
     CLI: [
       "cli-overview",
       "cli-new",

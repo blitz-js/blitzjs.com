@@ -142,13 +142,13 @@ Inside any query or mutation, call `ctx.session.authorize(roleOrRoles)` to autho
 
 ```ts
 import db, {FindOneUserArgs} from "db"
-import {SessionContext} from "blitz"
+import {Ctx} from "blitz"
 
 type GetUserInput = {where: FindOneUserArgs["where"]}
 
-export default async function getUser({where}: GetUserInput, ctx: {session?: SessionContext} = {}) {
+export default async function getUser({where}: GetUserInput, ctx: Ctx) {
   // highlight-start
-  ctx.session!.authorize("admin")
+  ctx.session.authorize("admin")
   // highlight-end
 
   const user = await db.user.findOne({where})

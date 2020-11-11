@@ -156,6 +156,17 @@ function DocItem(props) {
             </div>
           </div>
           {!hideTableOfContents && DocContent.rightToc && <DocTOC headings={DocContent.rightToc} />}
+          <a
+            href="https://ui.dev/bytes/?r=brandon"
+            target="_blank"
+            rel="noreferrer"
+            style={{marginTop: "2rem"}}
+          >
+            <img
+              alt="Bytes Newsletter"
+              src="https://camo.githubusercontent.com/3b1563f798ec1bd1fa2caef34a22e408b2286c799590ff751355c9a37bc8bb9e/68747470733a2f2f66696c65732d387774736b6a6f66622e76657263656c2e6170702f736d61727465722d313678312e6a7067"
+            />
+          </a>
         </div>
       </div>
     </>

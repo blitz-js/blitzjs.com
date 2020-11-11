@@ -157,7 +157,7 @@ function DocItem(props) {
           </div>
           {!hideTableOfContents && DocContent.rightToc && <DocTOC headings={DocContent.rightToc} />}
           <a
-            href="https://ui.dev/bytes/?r=brandon"
+            href="https://ui.dev/bytes/?r=blitzjs"
             target="_blank"
             rel="noreferrer"
             style={{marginTop: "2rem"}}

@@ -1,0 +1,158 @@
+---
+title: Authorization & Security
+sidebar_label: Authorization & Security
+---
+
+Authorization is the act of allowing or disallowing access to data and pages in your application.
+
+## Secure Data, Not Pages
+
+If you have built React apps before, probably you enforced authorization on pages by checking if the session exists and rendering different things based on that, like `AuthorizedLayout` vs `UnauthorizedLayout`. Or checking for a session and redirecting somewhere if it doesn't exist.
+
+But because of the nature of static pre-rendering, this method results in a very poor user experience in Blitz apps.
+
+**In Blitz apps, you want to secure data, not pages.** And then by extension, your pages will be secured too.
+
+You secure data by calling [`ctx.session.authorize()`](#ctxsessionauthorize) inside all the queries and mutations that you want secured. You can also secure [API routes](./api-routes) the same way. This call will throw `AuthenticationError` if the user is not logged in, and it will throw `AuthorizationError` if the user is logged in but doesn't have the required permissions.
+
+### Optimistic Authorization
+
+Because all your data is secured, you can build your entire UI in an optimistic fashion. You can assume that the user is logged in and has the required permissions. By doing this, you always render the content an authenticated user will see and rely on the thrown Errors to handle unauthorized users.
+
+### Handle Unauthorized Users
+
+Because you are calling `ctx.session.authorize()` in queries and mutations, the way to detect unauthorized users is to watch for `AuthenticationError` and `AuthorizationError` in your UI.
+
+In React, the way you catch errors in your UI is to use an [error boundary](https://reactjs.org/docs/error-boundaries.html).
+
+In Blitz, the recommended approach is to have a top level error boundary inside `_app.tsx` so that these errors are handled from everywhere in our app. And then if you need, you can also place more error boundaries at other places in your app.
+
+Here's how these errors are handled by default in new Blitz apps:
+
+- If `AuthenticationError` is thrown, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
+- If `AuthorizationError` is thrown, display an error stating such.
+
+And here's the default `RootErrorFallback` that's in `app/pages/_app.tsx`. You can customize it as required for your needs.
+
+```tsx
+function RootErrorFallback({ error, resetErrorBoundary }) {
+  if (error.name === "AuthenticationError") {
+    return <LoginForm onSuccess={resetErrorBoundary} />
+  } else if (error.name === "AuthorizationError") {
+    return (
+      <ErrorComponent
+        statusCode={error.statusCode}
+        title="Sorry, you are not authorized to access this"
+      />
+    )
+  } else {
+    return (
+      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+    )
+  }
+}
+```
+
+For more information on error handling in Blitz, see the [Error Handling documentation](./error-handling).
+
+## Displaying Different Content Based on User Role
+
+There's two approaches you can use to check the user role in your UI.
+
+#### `useCurrentUser()`
+
+New Blitz apps by default have a `useCurrentUser()` hook and a corresponding `getCurrentUser` query.
+
+This makes a network call to the backend, so you'll need to handle the loading state.
+
+```tsx
+import { useCurrentUser } from "app/hooks/useCurrentUser"
+
+const user = useCurrentUser()
+
+if (user?.role === "admin") {
+  return /* admin stuff */
+} else {
+  return /* normal stuff */
+}
+```
+
+#### `useSession()`
+
+Another way is to use the [`useSession()`](./session-management#session-on-the-client) hook to read the user role from the session's `publicData`.
+
+This is available on the client without making a network call to the backend, so it's available faster than the `useCurrentUser()` approach.
+
+However, due to the nature of static pre-rendering, the `session` will not exist on the very first render on the client. This causes a quick "flash" on first load. Unfortunately there's no way to get around this because React requires the first render on the client to always match the render on the server (which in this case is because of static pre-rendering and the session doesn't exist during that).
+
+If this "flash" of unauthentication is unacceptable for your use case, the alternative approach is to use [`getServerSideProps`](./get-server-side-props) which opts you into SSR. And with SSR, the entire page is rendered on the server for each page load. This allows the very first page render to correctly match the user's role.
+
+```tsx
+import { useSession } from "blitz"
+
+const session = useSession()
+
+if (!session.isLoading && session.roles.includes("admin")) {
+  return /* admin stuff */
+} else {
+  return /* normal stuff */
+}
+```
+
+## `ctx.session.authorize()`
+
+The implementation of `ctx.session.authorize()` can be customized via the `sessionMiddleware` config as shown below.
+
+This is still a work-in-progress, but for now Blitz provides `unstable_simpleRolesIsAuthorized` as an experimental authorization implementation to get you started.
+
+#### `unstable_simpleRolesIsAuthorized`
+
+To use, add it do your `sessionMiddleware` configuration (this is already set up by default in new apps).
+
+```js
+// blitz.config.js
+const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      // highlight-start
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      // highlight-end
+    }),
+  ],
+}
+```
+
+This adds the implementation for `SessionContext.authorize()`.
+
+Inside any query or mutation, call `ctx.session.authorize(roleOrRoles)` to authorize the request.
+
+- `ctx.session.authorize()`
+  - Only enforce that a user is logged in. It does not check user roles
+  - throws `AuthenticationError` if user not logged in
+- `ctx.session.authorize('admin')`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` role
+  - throws `AuthorizationError` if the user does not have `admin` role
+- `ctx.session.authorize(['admin', 'manager'])`
+  - throws `AuthenticationError` if user not logged in
+  - Allows users with `admin` or `manager` role
+  - throws `AuthorizationError` if the user does not have `admin` and does not have `manager` role
+
+```ts
+import db, { FindOneUserArgs } from "db"
+import { Ctx } from "blitz"
+
+type GetUserInput = { where: FindOneUserArgs["where"] }
+
+export default async function getUser({ where }: GetUserInput, ctx: Ctx) {
+  // highlight-start
+  ctx.session.authorize("admin")
+  // highlight-end
+
+  const user = await db.user.findOne({ where })
+
+  return user
+}
+```

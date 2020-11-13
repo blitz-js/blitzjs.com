@@ -1,0 +1,260 @@
+---
+title: Session Management
+sidebar_label: Session Management
+---
+
+Blitz has built in session management that can be used with any type of authentication or identity providers.
+
+Session management performs the following functions:
+
+1. Tracking whether a user is logged in or not
+2. Attribute multiple requests to the same user, even when they are logged out
+3. Protection against CSRF attacks
+
+## Session on the Server
+
+### In Queries & Mutations
+
+[`SessionContext`](#sessioncontext) is available off of `ctx` which is provided as the second parameter to all queries and mutations because of the `sessionMiddleware` that's in `blitz.config.js`.
+
+```ts
+// app/queries/someQuery.ts
+import { SessionContext } from "blitz"
+
+export default async function someQuery(input: any, ctx: { session?: SessionContext } = {}) {
+  // Access the SessionContext class
+  ctx.session!.userId
+  ctx.session!.roles
+  ctx.session!.create(/*...*/)
+
+  return
+}
+```
+
+### In `getServerSideProps` or API Routes
+
+You can also get the session context inside `getServerSideProps` or inside API routes with `getSessionContext` like this:
+
+```ts
+import { getSessionContext } from "@blitzjs/server"
+
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await getSessionContext(req, res)
+  console.log("User ID:", session.userId)
+
+  return { props: {} }
+}
+```
+
+## Session on the Client
+
+Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata) with `isLoading` property. This hook can be used anywhere in your application.
+
+```ts
+import { useSession } from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.userId
+  session.roles[0]
+  session.isLoading
+
+  return /*... */
+}
+```
+
+## Production Deployment Requirements
+
+In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.
+
+## Anonymous Sessions
+
+If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.setPublicData()` and `ctx.session.setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
+
+Anonymous sessions are JWT tokens that are stored on the client as an httpOnly cookie that never expires.
+
+`PublicData` for anonymous sessions is kept in the session JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.setPrivateData()`.
+
+The anonymous session will be created on the first network request, whether SSR or via an API. This will happen as long as `sessionMiddleware` is in your middleware chain for that request.
+
+One use case for this is saving shopping cart items for anonymous users. If an anonymous user later signs up or logs in, the anonymous session data can be merged into their new authenticated session.
+
+Anonymous session `PublicData` looks like this:
+
+```
+{
+  userId: null,
+  roles: []
+}
+```
+
+## Manual API Requests
+
+When making a request from the client to an API route, you need to include the anti-CSRF token in the `anti-csrf` header like this:
+
+```ts
+import { getAntiCSRFToken } from "blitz"
+
+const antiCSRFToken = getAntiCSRFToken()
+
+if (antiCSRFToken) {
+  // Set fetch request header["anti-csrf"] = antiCSRFToken
+}
+```
+
+And then you can get the sessionContext in the API route like this:
+
+```ts
+import { getSessionContext } from "@blitzjs/server"
+
+export default async function ({ req, res }) {
+  const session = await getSessionContext(req, res)
+  console.log("User ID:", session.userId)
+
+  res.json({ userId })
+}
+```
+
+## Session Configuration
+
+You can customize session management by passing an object to the `sessionMiddleware` factory function.
+
+```js
+// blitz.config.js
+const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require("@blitzjs/server")
+
+module.exports = {
+  middleware: [
+    sessionMiddleware({
+      //highlight-start
+      sessionExpiryMinutes: 1234,
+      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      //highlight-end
+    }),
+  ],
+}
+```
+
+Available options:
+
+```ts
+type SessionConfig = {
+  sessionExpiryMinutes?: number /* Default: 30 days */
+  sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
+  getSession: (handle: string) => Promise<SessionModel | null>
+  getSessions: (userId: string | number) => Promise<SessionModel[]>
+  createSession: (session: SessionModel) => Promise<SessionModel>
+  updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
+  deleteSession: (handle: string) => Promise<SessionModel>
+  unstable_isAuthorized: (userRoles: string[], input: any) => boolean
+}
+```
+
+```ts
+interface SessionModel extends Record<any, any> {
+  handle: string
+  userId?: string | number
+  expiresAt?: Date
+  hashedSessionToken?: string
+  antiCSRFToken?: string
+  publicData?: string
+  privateData?: string
+}
+```
+
+## Customize Session Persistence & Database Acess
+
+By default, session persistence is zero-config with Prisma. However, you can customize this to save sessions somewhere else, like Redis. You can also customize this if you have Prisma but want to customize the attribute names on the user or session model.
+
+Customize session persistence by overriding the database access functions defined above in `SessionConfig`. The functions can do anything, but they must conform to the defined input and outputs types.
+
+For reference, here's [the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/server/src/supertokens.ts#L62-L85).
+
+## How it Works
+
+Authenticated sessions use opaque tokens that are stored in the database.
+
+### Implementation Details
+
+#### Session Creation
+
+- At login, the server creates two opaque tokens:
+  - An access token.
+  - An anti-csrf token.
+- Both are a 32 character long `string`.
+- The access token is sent to the frontend via an `httpOnly`, `secure` cookie.
+- The anti-csrf token is sent to the frontend via a normal, `secure` cookie that can be read from Javascript.
+- The SHA256 hash of the access token will be stored in the database. This token has the following properties mapped to it:
+  - userId
+  - expiry time
+  - session data
+- The anti-csrf token is stored alongside the access token.
+- Creating a new session while another one exists results in the headers / cookies changing. However, the older session will still be alive.
+- For serious production apps, a cronjob is needed to remove all expired tokens on a regular basis.
+
+#### Session Verification
+
+- For each request that requires CSRF protection, the frontend sends the anti-csrf token in the request header.
+- An incoming access token is verified by checking that it's in the db and that it has not expired. After each verification, the expiry time of the access token is updated.
+- CSRF attacks are prevented by checking that the incoming anti-csrf token (from the header) is the one associated with the session.
+
+#### Session Revocation/Logout
+
+- This is done by deleting the session from the database.
+- Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
+
+## Typescript
+
+#### `SessionContext`
+
+```ts
+interface SessionContext {
+  /**
+   * null if anonymous
+   */
+  userId: unknown
+  roles: string[]
+  handle: string | null
+  publicData: PublicData
+  authorize: (roleOrRoles?: string | string[]) => void
+  isAuthorized: (roleOrRoles?: string | string[]) => boolean
+  create: (publicData: PublicData, privateData?: Record<any, any>) => Promise<void>
+  revoke: () => Promise<void>
+  revokeAll: () => Promise<void>
+  getPrivateData: () => Promise<Record<any, any>>
+  setPrivateData: (data: Record<any, any>) => Promise<void>
+  setPublicData: (data: Record<any, any>) => Promise<void>
+}
+```
+
+#### `PublicData`
+
+By default, `PublicData` is typed as
+
+```ts
+interface DefaultPublicData {
+  userId: any
+  roles: string[]
+}
+```
+
+but you can, and should, extend `PublicData` to match your application. You do this as shown below.
+
+```ts
+// types.ts
+import { DefaultCtx, SessionContext, DefaultPublicData } from "blitz"
+import { User } from "db"
+
+declare module "blitz" {
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+  export interface PublicData extends DefaultPublicData {
+    userId: User["id"] // strongly types userId
+    orgId: number // adds new field to PublicData
+  }
+}
+```
+
+And then `PublicData` everywhere in your application, including `ctx.session` and `useSession` will use this type that you define.

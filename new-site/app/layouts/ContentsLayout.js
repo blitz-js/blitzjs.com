@@ -6,15 +6,15 @@ import {
   useCallback,
   isValidElement,
   useContext,
-} from "react"
-import { ClassTable } from "@/components/ClassTable"
-import { useIsHome } from "@/hooks/useIsHome"
-import { usePrevNext } from "@/hooks/usePrevNext"
-import Link from "next/link"
-import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
-import { Ad } from "@/components/Ad"
-import { PageHeader } from "@/components/PageHeader"
-import clsx from "clsx"
+} from 'react'
+import { ClassTable } from 'app/components/ClassTable'
+import { useIsHome } from 'app/hooks/useIsHome'
+import { usePrevNext } from 'app/hooks/usePrevNext'
+import Link from 'next/link'
+import { SidebarLayout, SidebarContext } from 'app/layouts/SidebarLayout'
+import { Ad } from 'app/components/Ad'
+import { PageHeader } from 'app/components/PageHeader'
+import clsx from 'clsx'
 
 export const ContentsContext = createContext()
 
@@ -41,15 +41,15 @@ function TableOfContents({ tableOfContents, currentSection }) {
 
           return (
             <Fragment key={section.slug}>
-              <li className={clsx({ "mb-4 lg:mb-2": isMainNav, "mb-2": !isMainNav })}>
+              <li className={clsx({ 'mb-4 lg:mb-2': isMainNav, 'mb-2': !isMainNav })}>
                 <a
                   href={`#${section.slug}`}
                   onClick={closeNav}
                   className={clsx(
-                    "block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium",
+                    'block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium',
                     {
-                      "translate-r-2px text-gray-900": sectionIsActive,
-                      "text-gray-600": !sectionIsActive,
+                      'translate-r-2px text-gray-900': sectionIsActive,
+                      'text-gray-600': !sectionIsActive,
                     }
                   )}
                 >
@@ -62,8 +62,8 @@ function TableOfContents({ tableOfContents, currentSection }) {
                 return (
                   <li
                     className={clsx({
-                      "mb-4 ml-4 lg:mb-2 lg:ml-2": isMainNav,
-                      "mb-2 ml-2": !isMainNav,
+                      'mb-4 ml-4 lg:mb-2 lg:ml-2': isMainNav,
+                      'mb-2 ml-2': !isMainNav,
                     })}
                     key={subsection.slug}
                   >
@@ -71,10 +71,10 @@ function TableOfContents({ tableOfContents, currentSection }) {
                       href={`#${subsection.slug}`}
                       onClick={closeNav}
                       className={clsx(
-                        "block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium",
+                        'block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium',
                         {
-                          "translate-r-2px text-gray-900": subsectionIsActive,
-                          "text-gray-600": !subsectionIsActive,
+                          'translate-r-2px text-gray-900': subsectionIsActive,
+                          'text-gray-600': !subsectionIsActive,
                         }
                       )}
                     >
@@ -126,12 +126,12 @@ function useTableOfContents(tableOfContents) {
       }
       setCurrentSection(current)
     }
-    window.addEventListener("scroll", onScroll, {
+    window.addEventListener('scroll', onScroll, {
       capture: true,
       passive: true,
     })
     onScroll()
-    return () => window.removeEventListener("scroll", onScroll, true)
+    return () => window.removeEventListener('scroll', onScroll, true)
   }, [headings, tableOfContents])
 
   return { currentSection, registerHeading, unregisterHeading }
@@ -163,7 +163,7 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
 
 export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   const toc = [
-    ...(classes ? [{ title: "Class reference", slug: "class-reference", children: [] }] : []),
+    ...(classes ? [{ title: 'Class reference', slug: 'class-reference', children: [] }] : []),
     ...tableOfContents,
   ]
 
@@ -174,15 +174,15 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   return (
     <div
       id={meta.containerId}
-      className={clsx("pb-16 w-full", {
-        "pt-12": isHome,
-        "pt-24 lg:pt-28": !isHome,
+      className={clsx('pb-16 w-full', {
+        'pt-12': isHome,
+        'pt-24 lg:pt-28': !isHome,
       })}
     >
       <PageHeader
         title={meta.title}
         description={meta.description}
-        badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
+        badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
         border={!classes && meta.headerSeparator !== false}
       />
       <div className="flex">
@@ -218,10 +218,10 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
         <div className="hidden xl:text-sm xl:block xl:w-1/4 xl:px-6">
           <div
             className={clsx(
-              "flex flex-col justify-between overflow-y-auto sticky max-h-(screen-16) pt-12 pb-4 -mt-12",
+              'flex flex-col justify-between overflow-y-auto sticky max-h-(screen-16) pt-12 pb-4 -mt-12',
               {
-                "top-0": isHome,
-                "top-16": !isHome,
+                'top-0': isHome,
+                'top-16': !isHome,
               }
             )}
           >

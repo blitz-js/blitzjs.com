@@ -1,4 +1,4 @@
-import { defaultVariantsConfig } from "@/utils/defaultVariantsConfig"
+import { defaultVariantsConfig } from 'app/utils/defaultVariantsConfig'
 
 export function DefaultVariantsConfig() {
   return (

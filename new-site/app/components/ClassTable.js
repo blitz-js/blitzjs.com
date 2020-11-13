@@ -1,17 +1,17 @@
-import dlv from "dlv"
-import { memo } from "react"
-import { defaultConfig } from "@/utils/defaultConfig"
-import { isObject } from "@/utils/isObject"
-import { castArray } from "@/utils/castArray"
-import clsx from "clsx"
-import { Heading } from "@/components/Heading"
+import dlv from 'dlv'
+import { memo } from 'react'
+import { defaultConfig } from 'app/utils/defaultConfig'
+import { isObject } from 'app/utils/isObject'
+import { castArray } from 'app/utils/castArray'
+import clsx from 'clsx'
+import { Heading } from 'app/components/Heading'
 
 let normalizeProperties = function (input) {
-  if (typeof input !== "object") return input
+  if (typeof input !== 'object') return input
   if (Array.isArray(input)) return input.map(normalizeProperties)
   return Object.keys(input).reduce((newObj, key) => {
     let val = input[key]
-    let newVal = typeof val === "object" ? normalizeProperties(val) : val
+    let newVal = typeof val === 'object' ? normalizeProperties(val) : val
     newObj[key.replace(/([a-z])([A-Z])/g, (m, p1, p2) => `${p1}-${p2.toLowerCase()}`)] = newVal
     return newObj
   }, {})
@@ -30,12 +30,12 @@ function getUtilities(plugin) {
       }
     },
     config: () => ({
-      future: "all",
+      future: 'all',
     }),
     theme: (path, defaultValue) => dlv(defaultConfig.theme, path, defaultValue),
     variants: () => [],
-    e: (x) => x.replace(/([:.])/g, "\\$1"),
-    target: () => "modern",
+    e: (x) => x.replace(/([:.])/g, '\\$1'),
+    target: () => 'modern',
     corePlugins: () => true,
   })
   return utilities
@@ -52,15 +52,15 @@ function stringifyProperties(
       lines.push(
         stringifyProperties(properties[property], { filter, transformValue, indent: indent + 1 })
       )
-      lines.push("}")
+      lines.push('}')
     } else {
       castArray(properties[property]).forEach((value, i) => {
         if (!filter(property, value, properties)) return
-        lines.push(`${"  ".repeat(indent)}${property}: ${transformValue(value)};`)
+        lines.push(`${'  '.repeat(indent)}${property}: ${transformValue(value)};`)
       })
     }
   })
-  return lines.join("\n")
+  return lines.join('\n')
 }
 
 export const ClassTable = memo(
@@ -85,14 +85,14 @@ export const ClassTable = memo(
           id="class-reference"
           toc={true}
           className="relative"
-          style={{ top: "-100vh" }}
+          style={{ top: '-100vh' }}
         >
           <span className="sr-only">Class reference</span>
         </Heading>
         <div
           className={clsx(
-            "overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch",
-            { "lg:max-h-sm": Object.keys(utilities).length > 12 }
+            'overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch',
+            { 'lg:max-h-sm': Object.keys(utilities).length > 12 }
           )}
         >
           {custom || (
@@ -104,8 +104,8 @@ export const ClassTable = memo(
                   </th>
                   <th
                     className={clsx(
-                      "z-20 sticky top-0 text-sm font-semibold text-gray-700 bg-gray-100 p-0",
-                      { "hidden sm:table-cell": preview }
+                      'z-20 sticky top-0 text-sm font-semibold text-gray-700 bg-gray-100 p-0',
+                      { 'hidden sm:table-cell': preview }
                     )}
                   >
                     <div className="p-2 border-b border-gray-300">Properties</div>
@@ -128,18 +128,18 @@ export const ClassTable = memo(
                     <tr key={utility}>
                       <td
                         className={clsx(
-                          "p-2 font-mono text-xs text-purple-700 whitespace-no-wrap",
+                          'p-2 font-mono text-xs text-purple-700 whitespace-no-wrap',
                           {
-                            "border-t border-gray-200": i !== 0,
+                            'border-t border-gray-200': i !== 0,
                           }
                         )}
                       >
                         {transformSelector(selector)}
                       </td>
                       <td
-                        className={clsx("p-2 font-mono text-xs text-blue-700 whitespace-pre", {
-                          "border-t border-gray-200": i !== 0,
-                          "hidden sm:table-cell": preview,
+                        className={clsx('p-2 font-mono text-xs text-blue-700 whitespace-pre', {
+                          'border-t border-gray-200': i !== 0,
+                          'hidden sm:table-cell': preview,
                         })}
                       >
                         {stringifyProperties(transformProperties({ selector, properties }), {
@@ -149,7 +149,7 @@ export const ClassTable = memo(
                       </td>
                       {preview &&
                         preview(properties, {
-                          className: i === 0 ? "" : "border-t border-gray-200",
+                          className: i === 0 ? '' : 'border-t border-gray-200',
                         })}
                     </tr>
                   )

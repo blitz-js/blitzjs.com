@@ -187,7 +187,7 @@
       @apply relative pl-5;
       &::before {
         @apply absolute left-0 text-gray-400 inline-block mr-3;
-        content: "\2022";
+        content: '\2022';
       }
     }
   }

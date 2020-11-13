@@ -1,13 +1,13 @@
-import { useIsHome } from "@/hooks/useIsHome"
-import Link from "next/link"
-import { VersionSwitcher } from "@/components/VersionSwitcher"
-import { Search } from "@/components/Search"
-import dynamic from "next/dynamic"
-import clsx from "clsx"
-import { useRouter } from "next/router"
+import { useIsHome } from 'app/hooks/useIsHome'
+import Link from 'next/link'
+import { VersionSwitcher } from 'app/components/VersionSwitcher'
+import { Search } from 'app/components/Search'
+import dynamic from 'next/dynamic'
+import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 const WorkflowAnimation = dynamic(() =>
-  import("@/components/WorkflowAnimation").then((mod) => mod.WorkflowAnimation)
+  import('app/components/WorkflowAnimation').then((mod) => mod.WorkflowAnimation)
 )
 
 export function Header({ navIsOpen, onNavToggle }) {
@@ -28,7 +28,7 @@ export function Header({ navIsOpen, onNavToggle }) {
             <div className="xl:flex -mx-6">
               <div className="px-6 text-left md:text-center xl:text-left max-w-2xl md:max-w-3xl mx-auto">
                 <h1 className="text-3xl tracking-tight sm:text-4xl md:text-5xl xl:text-4xl font-medium leading-tight">
-                  A utility-first CSS framework for{" "}
+                  A utility-first CSS framework for{' '}
                   <span className="sm:block text-teal-500 font-medium">
                     rapidly building custom designs.
                   </span>
@@ -53,7 +53,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                 </div>
               </div>
               <div className="mt-12 xl:mt-0 px-6 flex-shrink-0 hidden md:block">
-                <div className="mx-auto" style={{ width: "40rem", height: "30rem" }}>
+                <div className="mx-auto" style={{ width: '40rem', height: '30rem' }}>
                   <div className="flex flex-col p-2">
                     <WorkflowAnimation />
                   </div>
@@ -73,9 +73,9 @@ export function Header({ navIsOpen, onNavToggle }) {
         <div
           className="bg-wave bg-center bg-repeat-x -mb-8 hidden md:block"
           style={{
-            height: "190px",
-            marginTop: "-190px",
-            backgroundSize: "1440px 190px",
+            height: '190px',
+            marginTop: '-190px',
+            backgroundSize: '1440px 190px',
           }}
         />
       </div>
@@ -108,13 +108,13 @@ function HeaderInner({ navIsOpen, onNavToggle }) {
               className="block lg:mr-4"
               onContextMenu={(e) => {
                 e.preventDefault()
-                router.push("/brand")
+                router.push('/brand')
               }}
             >
               <svg
-                className={clsx("w-auto hidden md:block", {
-                  "h-12": isHome,
-                  "h-10": !isHome,
+                className={clsx('w-auto hidden md:block', {
+                  'h-12': isHome,
+                  'h-10': !isHome,
                 })}
                 viewBox="0 0 273 64"
                 fill="none"
@@ -153,7 +153,7 @@ function HeaderInner({ navIsOpen, onNavToggle }) {
           type="button"
           id="sidebar-open"
           className={clsx(
-            "flex px-6 items-center lg:hidden text-gray-500 focus:outline-none focus:text-gray-700",
+            'flex px-6 items-center lg:hidden text-gray-500 focus:outline-none focus:text-gray-700',
             {
               hidden: navIsOpen,
             }
@@ -173,7 +173,7 @@ function HeaderInner({ navIsOpen, onNavToggle }) {
           type="button"
           id="sidebar-close"
           className={clsx(
-            "flex px-6 items-center lg:hidden text-gray-500 focus:outline-none focus:text-gray-700",
+            'flex px-6 items-center lg:hidden text-gray-500 focus:outline-none focus:text-gray-700',
             {
               hidden: !navIsOpen,
             }

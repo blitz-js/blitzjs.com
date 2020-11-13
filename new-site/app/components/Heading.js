@@ -1,7 +1,7 @@
-import { useEffect, useContext, useRef } from "react"
-import { ContentsContext } from "@/layouts/ContentsLayout"
-import { useTop } from "@/hooks/useTop"
-import clsx from "clsx"
+import { useEffect, useContext, useRef } from 'react'
+import { ContentsContext } from 'app/layouts/ContentsLayout'
+import { useTop } from 'app/hooks/useTop'
+import clsx from 'clsx'
 
 export function Heading({
   level,
@@ -9,7 +9,7 @@ export function Heading({
   children,
   number,
   badge,
-  className = "",
+  className = '',
   hidden = false,
   toc = false,
   ...props
@@ -21,7 +21,7 @@ export function Heading({
   let top = useTop(ref)
 
   useEffect(() => {
-    if (toc && typeof top !== "undefined") {
+    if (toc && typeof top !== 'undefined') {
       registerHeading(id, top)
     }
     return () => {
@@ -31,8 +31,8 @@ export function Heading({
 
   return (
     <Component
-      className={clsx("group flex whitespace-pre-wrap", className, {
-        "-mb-6": hidden,
+      className={clsx('group flex whitespace-pre-wrap', className, {
+        '-mb-6': hidden,
       })}
       id={id}
       ref={ref}
@@ -43,7 +43,7 @@ export function Heading({
         <a
           href={`#${id}`}
           className="absolute text-gray-500 no-underline after:hash opacity-0 group-hover:opacity-100"
-          style={{ marginLeft: "-1em", paddingRight: "0.5em" }}
+          style={{ marginLeft: '-1em', paddingRight: '0.5em' }}
           aria-label="Anchor"
         />
       )}
@@ -52,7 +52,7 @@ export function Heading({
           {number}
         </span>
       )}
-      <span className={hidden ? "sr-only" : undefined}>{children}</span>
+      <span className={hidden ? 'sr-only' : undefined}>{children}</span>
       {badge && (
         <span className="ml-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium leading-4 bg-green-150 text-green-900">
           {badge}

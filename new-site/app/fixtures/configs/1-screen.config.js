@@ -2,9 +2,9 @@ module.exports = {
   purge: false,
   theme: {
     screens: {
-      sm: "640px",
-    },
+      sm: '640px',
+    }
   },
   variants: {},
-  plugins: [],
+  plugins: []
 }

@@ -1,7 +1,7 @@
-import { defaultConfig } from "@/utils/defaultConfig"
-import { kebabToTitleCase } from "@/utils/kebabToTitleCase"
-import dlv from "dlv"
-import clsx from "clsx"
+import { defaultConfig } from 'app/utils/defaultConfig'
+import { kebabToTitleCase } from 'app/utils/kebabToTitleCase'
+import dlv from 'dlv'
+import clsx from 'clsx'
 
 function chunkArray(array, size) {
   let result = []
@@ -38,10 +38,10 @@ export function ColorPalette({ colors }) {
         let value = Array.isArray(color) ? color[1] : color
 
         let palette =
-          typeof value === "string"
+          typeof value === 'string'
             ? [100, 200, 300, 400, 500, 600, 700, 800, 900].map((variant) => ({
                 name: variant,
-                value: dlv(defaultConfig, ["theme", "colors", value, variant]),
+                value: dlv(defaultConfig, ['theme', 'colors', value, variant]),
               }))
             : Object.keys(value).map((name) => ({ name, value: value[name] }))
 
@@ -49,8 +49,8 @@ export function ColorPalette({ colors }) {
           return (
             <div
               key={i}
-              className={clsx("px-2 w-full relative", {
-                "mt-4": i !== 0,
+              className={clsx('px-2 w-full relative', {
+                'mt-4': i !== 0,
               })}
             >
               <h3 className="markdown no-toc mb-4 mt-8">{title}</h3>
@@ -68,8 +68,8 @@ export function ColorPalette({ colors }) {
         return (
           <div
             key={i}
-            className={clsx("w-1/2 px-2 md:w-full relative", {
-              "mt-4": i !== 0,
+            className={clsx('w-1/2 px-2 md:w-full relative', {
+              'mt-4': i !== 0,
             })}
           >
             <h3 className="markdown no-toc mb-4 mt-8">{title}</h3>

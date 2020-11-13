@@ -1,11 +1,11 @@
-import { useIsHome } from "@/hooks/useIsHome"
-import { useState, useCallback, useRef } from "react"
-import { createPortal } from "react-dom"
-import Link from "next/link"
-import Head from "next/head"
-import { useRouter } from "next/router"
-import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react"
-import clsx from "clsx"
+import { useIsHome } from 'app/hooks/useIsHome'
+import { useState, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import Link from 'next/link'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { DocSearchModal, useDocSearchKeyboardEvents } from '@docsearch/react'
+import clsx from 'clsx'
 
 function Hit({ hit, children }) {
   return (
@@ -55,10 +55,10 @@ export function Search() {
         ref={searchButtonRef}
         onClick={onOpen}
         className={clsx(
-          "transition-colors duration-100 ease-in-out text-gray-600 py-2 pr-4 pl-10 block w-full appearance-none leading-normal border border-transparent rounded-lg focus:outline-none text-left select-none truncate",
+          'transition-colors duration-100 ease-in-out text-gray-600 py-2 pr-4 pl-10 block w-full appearance-none leading-normal border border-transparent rounded-lg focus:outline-none text-left select-none truncate',
           {
-            "bg-white shadow-md": isHome,
-            "focus:bg-white focus:border-gray-300 bg-gray-200": !isHome,
+            'bg-white shadow-md': isHome,
+            'focus:bg-white focus:border-gray-300 bg-gray-200': !isHome,
           }
         )}
       >
@@ -70,7 +70,7 @@ export function Search() {
             initialQuery={initialQuery}
             initialScrollY={window.scrollY}
             searchParameters={{
-              facetFilters: "version:v1",
+              facetFilters: 'version:v1',
               distinct: 1,
             }}
             onClose={onClose}
@@ -87,7 +87,7 @@ export function Search() {
               return items.map((item) => {
                 // We transform the absolute URL into a relative URL to
                 // leverage Next's preloading.
-                const a = document.createElement("a")
+                const a = document.createElement('a')
                 a.href = item.url
 
                 return {

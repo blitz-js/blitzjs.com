@@ -1,24 +1,24 @@
-import "../css/main.css"
-import "focus-visible"
-import { useState, useEffect, Fragment } from "react"
-import { Header } from "@/components/Header"
-import { TuiBanner } from "@/components/TuiBanner"
-import { Title } from "@/components/Title"
-import Router from "next/router"
-import ProgressBar from "@badrap/bar-of-progress"
-import Head from "next/head"
-import twitterLargeCard from "@/img/twitter-large-card.png"
+import '../css/main.css'
+import 'focus-visible'
+import { useState, useEffect, Fragment } from 'react'
+import { Header } from 'app/components/Header'
+import { TuiBanner } from 'app/components/TuiBanner'
+import { Title } from 'app/components/Title'
+import Router from 'next/router'
+import ProgressBar from '@badrap/bar-of-progress'
+import Head from 'next/head'
+import twitterLargeCard from 'app/img/twitter-large-card.png'
 
 const progress = new ProgressBar({
   size: 2,
-  color: "#4fd1c5",
-  className: "bar-of-progress",
+  color: '#4fd1c5',
+  className: 'bar-of-progress',
   delay: 100,
 })
 
-Router.events.on("routeChangeStart", progress.start)
-Router.events.on("routeChangeComplete", progress.finish)
-Router.events.on("routeChangeError", progress.finish)
+Router.events.on('routeChangeStart', progress.start)
+Router.events.on('routeChangeComplete', progress.finish)
+Router.events.on('routeChangeError', progress.finish)
 
 export default function App({ Component, pageProps, router }) {
   let [navIsOpen, setNavIsOpen] = useState(false)
@@ -28,9 +28,9 @@ export default function App({ Component, pageProps, router }) {
     function handleRouteChange() {
       setNavIsOpen(false)
     }
-    Router.events.on("routeChangeComplete", handleRouteChange)
+    Router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
-      Router.events.off("routeChangeComplete", handleRouteChange)
+      Router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [navIsOpen])
 
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps, router }) {
     : {}
   const meta = Component.layoutProps?.meta || {}
   const description =
-    meta.metaDescription || meta.description || "Documentation for the Tailwind CSS framework."
+    meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
 
   return (
     <>

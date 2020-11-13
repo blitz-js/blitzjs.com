@@ -4,8 +4,8 @@
  * @author Joe Gibson (@gibsjose)
  */
 
-code[class*="language-"],
-pre[class*="language-"] {
+ code[class*="language-"],
+ pre[class*="language-"] {
   @apply font-mono text-gray-200;
   /* color: #c5c8c6; */
   /* text-shadow: 0 1px rgba(0, 0, 0, 0.3); */
@@ -43,8 +43,8 @@ pre[class*="language-"] {
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-  padding: 0.1em;
-  border-radius: 0.3em;
+  padding: .1em;
+  border-radius: .3em;
 }
 
 .token.comment,
@@ -60,23 +60,23 @@ pre[class*="language-"] {
 }
 
 .namespace {
-  opacity: 0.7;
+  opacity: .7;
 }
 
 .token.property,
 .token.keyword,
 .token.tag {
-  color: #96cbfe;
+  color: #96CBFE;
 }
 
 .token.class-name {
-  color: #ffffb6;
+  color: #FFFFB6;
   text-decoration: underline;
 }
 
 .token.boolean,
 .token.constant {
-  color: #99cc99;
+  color: #99CC99;
 }
 
 .token.symbol,
@@ -85,7 +85,7 @@ pre[class*="language-"] {
 }
 
 .token.number {
-  color: #ff73fd;
+  color: #FF73FD;
 }
 
 .token.selector,
@@ -94,42 +94,42 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #a8ff60;
+  color: #A8FF60;
 }
 
 .token.variable {
-  color: #c6c5fe;
+  color: #C6C5FE;
 }
 
 .token.operator {
-  color: #ededed;
+  color: #EDEDED;
 }
 
 .token.entity {
-  color: #ffffb6;
+  color: #FFFFB6;
   /* text-decoration: underline; */
 }
 
 .token.url {
-  color: #96cbfe;
+  color: #96CBFE;
 }
 
 .language-css .token.string,
 .style .token.string {
-  color: #87c38a;
+  color: #87C38A;
 }
 
 .token.atrule,
 .token.attr-value {
-  color: #f9ee98;
+  color: #F9EE98;
 }
 
 .token.function {
-  color: #dad085;
+  color: #DAD085;
 }
 
 .token.regex {
-  color: #e9c062;
+  color: #E9C062;
 }
 
 .token.important {
@@ -169,8 +169,7 @@ pre[class*="language-"] {
 } */
 
 /* New overrides */
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*="language-"], pre[class*="language-"] {
   @apply subpixel-antialiased !important;
   @apply text-code-white !important;
   @apply scrolling-touch !important;
@@ -240,8 +239,7 @@ pre[class*="language-"] {
   @apply text-code-purple !important;
 }
 
-code.language-js,
-pre.language-js {
+code.language-js, pre.language-js {
   .token.operator {
     @apply text-code-blue !important;
   }
@@ -259,29 +257,24 @@ pre.language-js {
   }
 }
 
-code.language-bash,
-pre.language-bash {
+code.language-bash, pre.language-bash {
   .token.function {
     @apply text-code-white !important;
   }
 }
 
-code.language-diff,
-pre.language-diff {
+code.language-diff, pre.language-diff {
   @apply text-gray-400 !important;
 }
 
-code[class^="language-diff"],
-pre[class^="language-diff"] {
+code[class^='language-diff'], pre[class^='language-diff'] {
   .token.deleted {
-    &,
-    * {
+    &, * {
       @apply text-code-red !important;
     }
   }
   .token.inserted {
-    &,
-    * {
+    &, * {
       @apply text-code-green !important;
     }
   }

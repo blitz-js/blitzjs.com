@@ -1,13 +1,13 @@
-import { tailwindVersion } from "@/utils/tailwindVersion"
-import { useRef } from "react"
+import { tailwindVersion } from 'app/utils/tailwindVersion'
+import { useRef } from 'react'
 
 export function VersionSwitcher() {
   let selectRef = useRef()
 
   function submit(e) {
     e.preventDefault()
-    if (selectRef.current.value === "v0") {
-      window.location = "https://tailwindcss-v0.netlify.app/"
+    if (selectRef.current.value === 'v0') {
+      window.location = 'https://tailwindcss-v0.netlify.app/'
     }
   }
 

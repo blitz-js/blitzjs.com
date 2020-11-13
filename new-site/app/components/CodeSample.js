@@ -1,14 +1,14 @@
-import clsx from "clsx"
+import clsx from 'clsx'
 
 export function CodeSample({ preview, snippet, previewClassName }) {
   return (
     <div className="relative overflow-hidden mb-8">
       <div
         className={clsx(
-          "rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400",
+          'rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400',
           previewClassName,
           {
-            "p-4": !previewClassName,
+            'p-4': !previewClassName,
           }
         )}
         dangerouslySetInnerHTML={{ __html: preview }}

@@ -1,17 +1,17 @@
-import { useRef, useState, useEffect } from "react"
-import clsx from "clsx"
-import logo from "@/img/tailwind-ui-logo-on-dark.svg"
-import { wait } from "@/utils/wait"
-import { loadImage } from "@/utils/loadImage"
+import { useRef, useState, useEffect } from 'react'
+import clsx from 'clsx'
+import logo from 'app/img/tailwind-ui-logo-on-dark.svg'
+import { wait } from 'app/utils/wait'
+import { loadImage } from 'app/utils/loadImage'
 
 export function TuiBanner() {
   let ref = useRef()
-  let [state, setState] = useState("waiting")
+  let [state, setState] = useState('waiting')
 
   useEffect(() => {
-    if (state === "waiting") {
+    if (state === 'waiting') {
       try {
-        if (window.localStorage.getItem("hideBanner") !== null) {
+        if (window.localStorage.getItem('hideBanner') !== null) {
           return
         }
       } catch (_) {
@@ -20,7 +20,7 @@ export function TuiBanner() {
       let current = true
       Promise.all([wait(500), loadImage(logo)]).then(() => {
         if (current) {
-          setState("visible")
+          setState('visible')
         }
       })
       return () => {
@@ -28,12 +28,12 @@ export function TuiBanner() {
       }
     }
 
-    if (state === "hidden") {
+    if (state === 'hidden') {
       let node = ref.current
-      let removeBanner = () => setState("removed")
-      node.addEventListener("transitionend", removeBanner, { once: true })
+      let removeBanner = () => setState('removed')
+      node.addEventListener('transitionend', removeBanner, { once: true })
       return () => {
-        node.removeEventListener("transitionend", removeBanner)
+        node.removeEventListener('transitionend', removeBanner)
       }
     }
   }, [state])
@@ -41,12 +41,12 @@ export function TuiBanner() {
   return (
     <div
       ref={ref}
-      className={clsx("transition transform fixed z-100 bottom-0 inset-x-0 pb-2 sm:pb-5", {
-        "opacity-0 scale-95 translate-y-2 pointer-events-none":
-          state === "waiting" || state === "hidden",
-        "opacity-100 scale-100 translate-y-0 ease-out duration-500": state === "visible",
-        "ease-in duration-300": state === "hidden",
-        hidden: state === "removed",
+      className={clsx('transition transform fixed z-100 bottom-0 inset-x-0 pb-2 sm:pb-5', {
+        'opacity-0 scale-95 translate-y-2 pointer-events-none':
+          state === 'waiting' || state === 'hidden',
+        'opacity-100 scale-100 translate-y-0 ease-out duration-500': state === 'visible',
+        'ease-in duration-300': state === 'hidden',
+        hidden: state === 'removed',
       })}
     >
       <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
@@ -83,9 +83,9 @@ export function TuiBanner() {
               <button
                 onClick={() => {
                   try {
-                    window.localStorage.setItem("hideBanner", true)
+                    window.localStorage.setItem('hideBanner', true)
                   } catch (_) {}
-                  setState("hidden")
+                  setState('hidden')
                 }}
                 type="button"
                 className="-mr-1 flex p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800"

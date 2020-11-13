@@ -1,19 +1,19 @@
-import { defaultConfig } from "@/utils/defaultConfig"
+import { defaultConfig } from 'app/utils/defaultConfig'
 
 const descriptions = {
   screens: "Your project's responsive breakpoints",
   colors: "Your project's color palette",
   spacing: "Your project's spacing scale",
-  container: "Configuration for the `container` plugin",
-  inset: "Values for the `top`, `right`, `bottom`, and `left` properties",
-  placeholderColor: "Values for the `placeholderColor` plugin",
-  placeholderOpacity: "Values for the `placeholderOpacity` plugin",
-  rotate: "Values for the `rotate` plugin",
-  scale: "Values for the `scale` plugin",
-  skew: "Values for the `skew` plugin",
-  space: "Values for the `space` plugin",
-  textOpacity: "Values for the `textOpacity` plugin",
-  translate: "Values for the `translate` plugin",
+  container: 'Configuration for the `container` plugin',
+  inset: 'Values for the `top`, `right`, `bottom`, and `left` properties',
+  placeholderColor: 'Values for the `placeholderColor` plugin',
+  placeholderOpacity: 'Values for the `placeholderOpacity` plugin',
+  rotate: 'Values for the `rotate` plugin',
+  scale: 'Values for the `scale` plugin',
+  skew: 'Values for the `skew` plugin',
+  space: 'Values for the `space` plugin',
+  textOpacity: 'Values for the `textOpacity` plugin',
+  translate: 'Values for the `translate` plugin',
 }
 
 export function ThemeReference() {
@@ -36,10 +36,10 @@ export function ThemeReference() {
                 ?.split(/`([^`]+)`/)
                 .map((segment, i) => (i % 2 === 0 ? segment : <code key={i}>{segment}</code>)) || (
                 <>
-                  Values for the{" "}
+                  Values for the{' '}
                   <code>
                     {key.replace(/([a-z])([A-Z])/g, (_m, p1, p2) => `${p1}-${p2.toLowerCase()}`)}
-                  </code>{" "}
+                  </code>{' '}
                   property
                 </>
               )}

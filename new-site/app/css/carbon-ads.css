@@ -4,7 +4,7 @@
 .carbon-img {
   @apply block mb-2;
   img {
-    @apply block;
+   @apply block;
   }
 }
 .carbon-text {

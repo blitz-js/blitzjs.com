@@ -1,10 +1,10 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { VersionSwitcher } from "@/components/VersionSwitcher"
-import { useIsHome } from "@/hooks/useIsHome"
-import { createContext, forwardRef, useRef } from "react"
-import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
-import clsx from "clsx"
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { VersionSwitcher } from 'app/components/VersionSwitcher'
+import { useIsHome } from 'app/hooks/useIsHome'
+import { createContext, forwardRef, useRef } from 'react'
+import { useIsomorphicLayoutEffect } from 'app/hooks/useIsomorphicLayoutEffect'
+import clsx from 'clsx'
 
 export const SidebarContext = createContext()
 
@@ -13,17 +13,17 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
     <li className="mb-3 lg:mb-1" ref={ref}>
       <Link href={isPublished ? href : fallbackHref}>
         <a
-          className={clsx("px-2 -mx-2 py-1 transition duration-200 ease-in-out relative block", {
-            "text-teal-600 font-medium": isActive,
-            "hover:translate-x-2px hover:text-gray-900 text-gray-600 font-medium":
+          className={clsx('px-2 -mx-2 py-1 transition duration-200 ease-in-out relative block', {
+            'text-teal-600 font-medium': isActive,
+            'hover:translate-x-2px hover:text-gray-900 text-gray-600 font-medium':
               !isActive && isPublished,
-            "hover:translate-x-2px text-gray-400 font-medium": !isActive && !isPublished,
+            'hover:translate-x-2px text-gray-400 font-medium': !isActive && !isPublished,
           })}
         >
           <span
-            className={clsx("rounded absolute inset-0 bg-teal-200", {
-              "opacity-25": isActive,
-              "opacity-0": !isActive,
+            className={clsx('rounded absolute inset-0 bg-teal-200', {
+              'opacity-25': isActive,
+              'opacity-0': !isActive,
             })}
           />
           <span className="relative">{children}</span>
@@ -52,9 +52,9 @@ function Nav({ nav, children, fallbackHref }) {
     <nav
       id="nav"
       ref={scrollRef}
-      className={clsx("px-6 pt-6 overflow-y-auto text-base lg:text-sm lg:py-12 lg:pl-6 lg:pr-8", {
-        "sticky?lg:h-screen": isHome,
-        "sticky?lg:h-(screen-16)": !isHome,
+      className={clsx('px-6 pt-6 overflow-y-auto text-base lg:text-sm lg:py-12 lg:pl-6 lg:pr-8', {
+        'sticky?lg:h-screen': isHome,
+        'sticky?lg:h-(screen-16)': !isHome,
       })}
     >
       <div className="relative -mx-2 w-24 mb-8 lg:hidden">
@@ -76,10 +76,10 @@ function Nav({ nav, children, fallbackHref }) {
               <div className="mb-8" key={category}>
                 <h5
                   className={clsx(
-                    "mb-3 lg:mb-2 uppercase tracking-wide font-bold text-sm lg:text-xs",
+                    'mb-3 lg:mb-2 uppercase tracking-wide font-bold text-sm lg:text-xs',
                     {
-                      "text-gray-500": publishedItems.length > 0,
-                      "text-gray-400": publishedItems.length === 0,
+                      'text-gray-500': publishedItems.length > 0,
+                      'text-gray-400': publishedItems.length === 0,
                     }
                   )}
                 >
@@ -114,11 +114,11 @@ const TopLevelAnchor = forwardRef(({ children, href, className, icon, isActive, 
       href={href}
       onClick={onClick}
       className={clsx(
-        "flex items-center px-2 -mx-2 py-1 hover:text-gray-900 font-medium",
+        'flex items-center px-2 -mx-2 py-1 hover:text-gray-900 font-medium',
         className,
         {
-          "text-gray-600": !isActive,
-          "text-gray-900": isActive,
+          'text-gray-600': !isActive,
+          'text-gray-900': isActive,
         }
       )}
     >
@@ -144,13 +144,13 @@ function TopLevelLink({ href, as, ...props }) {
 
 function TopLevelNav() {
   let { pathname } = useRouter()
-  let current = pathname.split("/")[1]
+  let current = pathname.split('/')[1]
 
   return (
     <div className="mb-10">
       <TopLevelLink
         href="/docs/installation"
-        isActive={current === "" || current === "docs"}
+        isActive={current === '' || current === 'docs'}
         icon={
           <>
             <path
@@ -183,7 +183,7 @@ function TopLevelNav() {
       </TopLevelLink>
       <TopLevelLink
         href="/course"
-        isActive={current === "course"}
+        isActive={current === 'course'}
         className="mt-3 lg:mt-1"
         icon={
           <>
@@ -220,7 +220,7 @@ function TopLevelNav() {
       </TopLevelLink>
       <TopLevelLink
         href="/resources"
-        isActive={current === "resources"}
+        isActive={current === 'resources'}
         className="mt-3 lg:mt-1"
         icon={
           <>
@@ -239,7 +239,7 @@ function TopLevelNav() {
       </TopLevelLink>
       <TopLevelLink
         href="/community"
-        isActive={current === "community"}
+        isActive={current === 'community'}
         className="mt-3 lg:mt-1"
         icon={
           <>
@@ -270,21 +270,21 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
           <div
             id="sidebar"
             className={clsx(
-              "fixed inset-0 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 lg:pt-0 lg:w-1/4 lg:block lg:border-0 xl:w-1/5",
+              'fixed inset-0 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 lg:pt-0 lg:w-1/4 lg:block lg:border-0 xl:w-1/5',
               {
                 hidden: !navIsOpen,
-                "pt-24": isHome,
-                "pt-16": !isHome,
+                'pt-24': isHome,
+                'pt-16': !isHome,
               }
             )}
           >
             <div
               id="navWrapper"
               className={clsx(
-                "h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden",
+                'h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden',
                 {
-                  "lg:top-0 bg-gray-100": isHome,
-                  "lg:top-16 bg-white": !isHome,
+                  'lg:top-0 bg-gray-100': isHome,
+                  'lg:top-16 bg-white': !isHome,
                 }
               )}
             >
@@ -292,7 +292,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
                 <div
                   className="hidden lg:block h-16 pointer-events-none absolute inset-x-0 z-10"
                   style={{
-                    backgroundImage: "linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0))",
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0))',
                   }}
                 />
               )}
@@ -304,9 +304,9 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
           <div
             id="content-wrapper"
             className={clsx(
-              "min-h-screen w-full lg:static lg:max-h-full lg:overflow-visible lg:w-3/4 xl:w-4/5",
+              'min-h-screen w-full lg:static lg:max-h-full lg:overflow-visible lg:w-3/4 xl:w-4/5',
               {
-                "overflow-hidden max-h-screen fixed": navIsOpen,
+                'overflow-hidden max-h-screen fixed': navIsOpen,
               }
             )}
           >

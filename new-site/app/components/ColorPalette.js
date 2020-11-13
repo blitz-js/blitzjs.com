@@ -1,5 +1,5 @@
-import { defaultConfig } from 'app/utils/defaultConfig'
-import { kebabToTitleCase } from 'app/utils/kebabToTitleCase'
+import { defaultConfig } from '@/utils/defaultConfig'
+import { kebabToTitleCase } from '@/utils/kebabToTitleCase'
 import dlv from 'dlv'
 import clsx from 'clsx'
 

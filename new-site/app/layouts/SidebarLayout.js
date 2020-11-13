@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { VersionSwitcher } from 'app/components/VersionSwitcher'
-import { useIsHome } from 'app/hooks/useIsHome'
+import { VersionSwitcher } from '@/components/VersionSwitcher'
+import { useIsHome } from '@/hooks/useIsHome'
 import { createContext, forwardRef, useRef } from 'react'
-import { useIsomorphicLayoutEffect } from 'app/hooks/useIsomorphicLayoutEffect'
+import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect'
 import clsx from 'clsx'
 
 export const SidebarContext = createContext()

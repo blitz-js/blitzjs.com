@@ -1,13 +1,13 @@
 import '../css/main.css'
 import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
-import { Header } from 'app/components/Header'
-import { TuiBanner } from 'app/components/TuiBanner'
-import { Title } from 'app/components/Title'
+import { Header } from '@/components/Header'
+import { TuiBanner } from '@/components/TuiBanner'
+import { Title } from '@/components/Title'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
-import twitterLargeCard from 'app/img/twitter-large-card.png'
+import twitterLargeCard from '@/img/twitter-large-card.png'
 
 const progress = new ProgressBar({
   size: 2,

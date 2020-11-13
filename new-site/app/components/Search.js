@@ -1,4 +1,4 @@
-import { useIsHome } from 'app/hooks/useIsHome'
+import { useIsHome } from '@/hooks/useIsHome'
 import { useState, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'

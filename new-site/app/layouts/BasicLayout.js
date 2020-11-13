@@ -1,6 +1,6 @@
-import { useIsHome } from 'app/hooks/useIsHome'
-import { Ad } from 'app/components/Ad'
-import { PageHeader } from 'app/components/PageHeader'
+import { useIsHome } from '@/hooks/useIsHome'
+import { Ad } from '@/components/Ad'
+import { PageHeader } from '@/components/PageHeader'
 import clsx from 'clsx'
 
 export function BasicLayout({ children, meta, classes, tableOfContents }) {

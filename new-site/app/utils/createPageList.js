@@ -1,4 +1,4 @@
-import { importAll } from 'app/utils/importAll'
+import { importAll } from '@/utils/importAll'
 
 export function createPageList(files, base) {
   return importAll(files).reduce((acc, cur) => {

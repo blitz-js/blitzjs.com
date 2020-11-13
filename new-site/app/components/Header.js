@@ -1,13 +1,13 @@
-import { useIsHome } from 'app/hooks/useIsHome'
+import { useIsHome } from '@/hooks/useIsHome'
 import Link from 'next/link'
-import { VersionSwitcher } from 'app/components/VersionSwitcher'
-import { Search } from 'app/components/Search'
+import { VersionSwitcher } from '@/components/VersionSwitcher'
+import { Search } from '@/components/Search'
 import dynamic from 'next/dynamic'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 
 const WorkflowAnimation = dynamic(() =>
-  import('app/components/WorkflowAnimation').then((mod) => mod.WorkflowAnimation)
+  import('@/components/WorkflowAnimation').then((mod) => mod.WorkflowAnimation)
 )
 
 export function Header({ navIsOpen, onNavToggle }) {

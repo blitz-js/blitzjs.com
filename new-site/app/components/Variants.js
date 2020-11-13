@@ -1,6 +1,6 @@
-import { defaultConfig } from 'app/utils/defaultConfig'
-import { joinWithAnd } from 'app/utils/joinWithAnd'
-import { ConfigSample } from 'app/components/ConfigSample'
+import { defaultConfig } from '@/utils/defaultConfig'
+import { joinWithAnd } from '@/utils/joinWithAnd'
+import { ConfigSample } from '@/components/ConfigSample'
 
 export function Variants({ plugin, name }) {
   const variants = defaultConfig.variants[plugin] || ['responsive']

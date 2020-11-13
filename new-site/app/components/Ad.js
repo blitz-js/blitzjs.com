@@ -6,7 +6,7 @@ export function Ad() {
         className="mt-3 block"
       >
         <img
-          src={require('app/img/tailwind-ui-sidebar.png').default}
+          src={require('@/img/tailwind-ui-sidebar.png').default}
           alt="Tailwind UI"
           width={457}
           height={336}

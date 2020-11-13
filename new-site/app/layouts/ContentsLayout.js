@@ -7,13 +7,13 @@ import {
   isValidElement,
   useContext,
 } from 'react'
-import { ClassTable } from 'app/components/ClassTable'
-import { useIsHome } from 'app/hooks/useIsHome'
-import { usePrevNext } from 'app/hooks/usePrevNext'
+import { ClassTable } from '@/components/ClassTable'
+import { useIsHome } from '@/hooks/useIsHome'
+import { usePrevNext } from '@/hooks/usePrevNext'
 import Link from 'next/link'
-import { SidebarLayout, SidebarContext } from 'app/layouts/SidebarLayout'
-import { Ad } from 'app/components/Ad'
-import { PageHeader } from 'app/components/PageHeader'
+import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
+import { Ad } from '@/components/Ad'
+import { PageHeader } from '@/components/PageHeader'
 import clsx from 'clsx'
 
 export const ContentsContext = createContext()

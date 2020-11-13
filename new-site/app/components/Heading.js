@@ -1,6 +1,6 @@
 import { useEffect, useContext, useRef } from 'react'
-import { ContentsContext } from 'app/layouts/ContentsLayout'
-import { useTop } from 'app/hooks/useTop'
+import { ContentsContext } from '@/layouts/ContentsLayout'
+import { useTop } from '@/hooks/useTop'
 import clsx from 'clsx'
 
 export function Heading({

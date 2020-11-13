@@ -884,7 +884,7 @@ export function WorkflowAnimation() {
             <img
               className="h-24 w-24 block rounded-full"
               style={{ marginRight: '1.5rem' }}
-              src={require('app/img/erin-lindford.jpg').default}
+              src={require('@/img/erin-lindford.jpg').default}
               alt=""
             />
             <div className="text-gray-800">
@@ -906,7 +906,7 @@ export function WorkflowAnimation() {
             <img
               className="h-16 w-16 block mb-4 rounded-full"
               style={{ marginLeft: 'auto', marginRight: 'auto' }}
-              src={require('app/img/erin-lindford.jpg').default}
+              src={require('@/img/erin-lindford.jpg').default}
               alt=""
             />
             <div className="text-center text-gray-800">
@@ -929,7 +929,7 @@ export function WorkflowAnimation() {
               ref={avatar}
               className="block mb-4"
               style={{ width: '4rem', height: '4rem' }}
-              src={require('app/img/erin-lindford.jpg').default}
+              src={require('@/img/erin-lindford.jpg').default}
               alt=""
             />
             <div ref={content} className="text-gray-800">

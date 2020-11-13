@@ -1,4 +1,4 @@
-import { corePluginsWithExamples } from 'app/utils/corePluginsWithExamples'
+import { corePluginsWithExamples } from '@/utils/corePluginsWithExamples'
 
 const descriptions = {
   preflight: "Tailwind's base/reset styles",

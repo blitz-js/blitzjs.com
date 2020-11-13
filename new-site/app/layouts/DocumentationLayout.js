@@ -1,9 +1,9 @@
-import { SidebarLayout } from 'app/layouts/SidebarLayout'
+import { SidebarLayout } from '@/layouts/SidebarLayout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import twitterSquare from 'app/img/twitter-square.png'
-import { Title } from 'app/components/Title'
-import { createPageList } from 'app/utils/createPageList'
+import twitterSquare from '@/img/twitter-square.png'
+import { Title } from '@/components/Title'
+import { createPageList } from '@/utils/createPageList'
 
 const pages = createPageList(
   require.context(`../pages/docs/?meta=title,shortTitle,published`, false, /\.mdx$/),

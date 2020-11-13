@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { usePrevNext } from 'app/hooks/usePrevNext'
-import { Ad } from 'app/components/Ad'
-import { PageHeader } from 'app/components/PageHeader'
+import { usePrevNext } from '@/hooks/usePrevNext'
+import { Ad } from '@/components/Ad'
+import { PageHeader } from '@/components/PageHeader'
 
 export function VideoLayout({ children, meta }) {
   let { next } = usePrevNext()

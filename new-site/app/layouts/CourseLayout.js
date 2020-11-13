@@ -1,9 +1,9 @@
-import { SidebarLayout } from 'app/layouts/SidebarLayout'
-import twitterCardScreencasts from 'app/img/twitter-card-screencasts.png'
+import { SidebarLayout } from '@/layouts/SidebarLayout'
+import twitterCardScreencasts from '@/img/twitter-card-screencasts.png'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Title } from 'app/components/Title'
-import { createPageList } from 'app/utils/createPageList'
+import { Title } from '@/components/Title'
+import { createPageList } from '@/utils/createPageList'
 
 const pages = createPageList(
   require.context('../pages/course/?meta=title,shortTitle,published', true, /\.mdx$/),

@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
 import clsx from 'clsx'
-import logo from 'app/img/tailwind-ui-logo-on-dark.svg'
-import { wait } from 'app/utils/wait'
-import { loadImage } from 'app/utils/loadImage'
+import logo from '@/img/tailwind-ui-logo-on-dark.svg'
+import { wait } from '@/utils/wait'
+import { loadImage } from '@/utils/loadImage'
 
 export function TuiBanner() {
   let ref = useRef()

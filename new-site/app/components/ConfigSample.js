@@ -1,6 +1,6 @@
 import stringify from 'stringify-object'
 import { Fragment } from 'react'
-import { castArray } from 'app/utils/castArray'
+import { castArray } from '@/utils/castArray'
 import clsx from 'clsx'
 
 function toObjectKey(str) {

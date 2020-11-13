@@ -1,10 +1,10 @@
 import dlv from 'dlv'
 import { memo } from 'react'
-import { defaultConfig } from 'app/utils/defaultConfig'
-import { isObject } from 'app/utils/isObject'
-import { castArray } from 'app/utils/castArray'
+import { defaultConfig } from '@/utils/defaultConfig'
+import { isObject } from '@/utils/isObject'
+import { castArray } from '@/utils/castArray'
 import clsx from 'clsx'
-import { Heading } from 'app/components/Heading'
+import { Heading } from '@/components/Heading'
 
 let normalizeProperties = function (input) {
   if (typeof input !== 'object') return input

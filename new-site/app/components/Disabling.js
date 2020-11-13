@@ -1,6 +1,6 @@
-import { ConfigSample } from 'app/components/ConfigSample'
-import { castArray } from 'app/utils/castArray'
-import { joinWithAnd } from 'app/utils/joinWithAnd'
+import { ConfigSample } from '@/components/ConfigSample'
+import { castArray } from '@/utils/castArray'
+import { joinWithAnd } from '@/utils/joinWithAnd'
 
 export function Disabling({ plugin, name }) {
   const plugins = castArray(plugin)

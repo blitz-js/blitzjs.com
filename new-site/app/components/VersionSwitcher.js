@@ -1,4 +1,4 @@
-import { tailwindVersion } from 'app/utils/tailwindVersion'
+import { tailwindVersion } from '@/utils/tailwindVersion'
 import { useRef } from 'react'
 
 export function VersionSwitcher() {

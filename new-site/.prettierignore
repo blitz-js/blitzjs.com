@@ -3,3 +3,4 @@
 *.ico
 *.lock
 db/migrations
+**/*.mdx

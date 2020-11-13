@@ -6,12 +6,12 @@ headerSeparator: false
 containerId: what-is-tailwind
 ---
 
-export const Layout = require("@/layouts/DocumentationLayout").DocumentationLayout
+export const Layout = require('@/layouts/DocumentationLayout').DocumentationLayout
 
-export default require("@/layouts/ContentsLayout").ContentsLayout
+export default require('@/layouts/ContentsLayout').ContentsLayout
 
-import { ResponsiveCodeSample } from "@/components/ResponsiveCodeSample"
-import { Heading } from "@/components/Heading"
+import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
+import { Heading } from '@/components/Heading'
 
 ## <Heading hidden>Utility-first</Heading>
 
@@ -25,23 +25,12 @@ Instead of opinionated predesigned components, Tailwind provides low-level utili
 <template preview class="p-8">
   <div class="md:flex">
     <div class="md:flex-shrink-0">
-      <img
-        class="rounded-lg md:w-56"
-        src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80"
-        alt="Woman paying for a purchase"
-      />
+      <img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase">
     </div>
     <div class="mt-4 md:mt-0 md:ml-6">
       <div class="uppercase tracking-wide text-sm text-indigo-600 font-bold">Marketing</div>
-      <a
-        href="#"
-        class="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline"
-        >Finding customers for your new business</a
-      >
-      <p class="mt-2 text-gray-600">
-        Getting a new business off the ground is a lot of hard work. Here are five ideas you can use
-        to find your first customers.
-      </p>
+      <a href="#" class="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">Finding customers for your new business</a>
+      <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
     </div>
   </div>
 </template>
@@ -60,13 +49,7 @@ Every Tailwind utility also comes with responsive variants, making it extremely 
 Tailwind uses an intuitive `{screen}:` prefix that makes it easy to notice responsive classes in your markup while keeping the original class name recognizable and intact.
 
 <ResponsiveCodeSample
-  classNames={[
-    "justify-start",
-    "justify-center",
-    "justify-end",
-    "justify-between",
-    "justify-around",
-  ]}
+  classNames={['justify-start', 'justify-center', 'justify-end', 'justify-between', 'justify-around']}
   preview={(className) => (
     <div className={`flex bg-gray-200 ${className}`}>
       <div className="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
@@ -82,7 +65,7 @@ Tailwind uses an intuitive `{screen}:` prefix that makes it easy to notice respo
 
 ## Component-friendly
 
-While you can do a _lot_ with just utility classes, as a project grows it can be useful to codify common patterns into higher level abstractions.
+While you can do a *lot* with just utility classes, as a project grows it can be useful to codify common patterns into higher level abstractions.
 
 Tailwind provides tools for [extracting component classes](/docs/extracting-components) from repeated utility patterns, making it easy to update multiple instances of a component from one place:
 
@@ -94,10 +77,14 @@ Tailwind provides tools for [extracting component classes](/docs/extracting-comp
 </template>
 
 <!-- Using utilities: -->
-<button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Button</button>
+<button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+  Button
+</button>
 
 <!-- Extracting component classes: -->
-<button class="btn btn-blue">Button</button>
+<button class="btn btn-blue">
+  Button
+</button>
 
 <style>
   .btn {
@@ -122,38 +109,38 @@ If it makes sense to be customizable, Tailwind lets you customize it. This inclu
 
 Tailwind is written in [PostCSS](http://postcss.org/) and configured in JavaScript, which means you have the full power of a real programming language at your fingertips.
 
-Tailwind is more than a CSS framework, _it's an engine for creating design systems._
+Tailwind is more than a CSS framework, *it's an engine for creating design systems.*
 
 ```js
 // tailwind.config.js
 module.exports = {
   theme: {
     screens: {
-      tablet: "768px",
-      desktop: "1024px",
+      tablet: '768px',
+      desktop: '1024px',
     },
     colors: {
       primary: {
-        100: "#ebf8ff",
-        300: "#90cdf4",
-        500: "#4299e1",
-        700: "#2b6cb0",
-        900: "#2a4365",
+        100: '#ebf8ff',
+        300: '#90cdf4',
+        500: '#4299e1',
+        700: '#2b6cb0',
+        900: '#2a4365',
       },
       secondary: {
-        100: "#fffff0",
-        300: "#faf089",
-        500: "#ecc94b",
-        700: "#b7791f",
-        900: "#744210",
+        100: '#fffff0',
+        300: '#faf089',
+        500: '#ecc94b',
+        700: '#b7791f',
+        900: '#744210',
       },
     },
     extend: {
       boxShadow: {
-        huge: "0 30px 60px -15px rgba(0, 0, 0, .25)",
-      },
-    },
-  },
+        huge: '0 30px 60px -15px rgba(0, 0, 0, .25)'
+      }
+    }
+  }
 }
 ```
 

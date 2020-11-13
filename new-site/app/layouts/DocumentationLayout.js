@@ -6,7 +6,8 @@ import { Title } from '@/components/Title'
 import { createPageList } from '@/utils/createPageList'
 
 const pages = createPageList(
-  require.context(`../pages/docs/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  // Have to use path of compiled blitz app
+  require.context(`pages/docs/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs'
 )
 

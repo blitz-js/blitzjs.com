@@ -99,14 +99,14 @@ export default ProjectPage
 
 ### `getServerSideProps`
 
-In `getServerSideProps`, pass a query function to [`ssrQuery`](./ssr-query) which will ensure appropriate middleware is run before/after your query function.
+In `getServerSideProps`, pass a query function to [`invokeWithMiddleware`](./invoke) which will ensure appropriate middleware is run before/after your query function.
 
 ```tsx
-import {ssrQuery} from 'blitz'
+import {invokeWithMiddleware} from 'blitz'
 import getProject from 'app/projects/queries/getProject'
 
 export const getServerSideProps = async ({params, req, res}) => {
-  const project = await ssrQuery(getProject, {where: {id: params.projectId}}, {req, res}))
+  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res}))
   return {props: {project}}
 }
 

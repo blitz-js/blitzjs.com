@@ -1,33 +1,32 @@
-const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require('@blitzjs/server')
-const path = require('path')
-const querystring = require('querystring')
-const { createLoader } = require('simple-functional-loader')
-const frontMatter = require('front-matter')
-const { withTableOfContents } = require('./remark/withTableOfContents')
-const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
-const { withProse } = require('./remark/withProse')
-const { withNextLinks } = require('./remark/withNextLinks')
-const minimatch = require('minimatch')
-const withCodeSamples = require('./remark/withCodeSamples')
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require("@blitzjs/server")
+const path = require("path")
+const querystring = require("querystring")
+const { createLoader } = require("simple-functional-loader")
+const frontMatter = require("front-matter")
+const { withTableOfContents } = require("./remark/withTableOfContents")
+const { withSyntaxHighlighting } = require("./remark/withSyntaxHighlighting")
+const { withNextLinks } = require("./remark/withNextLinks")
+const minimatch = require("minimatch")
+const withCodeSamples = require("./remark/withCodeSamples")
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 })
 
 const fallbackLayouts = {
   // Have to use path of compiled app
-  'pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
-  'pages/components/**/*': ['@/layouts/ComponentsLayout', 'ComponentsLayout'],
-  'pages/course/**/*': ['@/layouts/CourseLayout', 'CourseLayout'],
+  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "pages/components/**/*": ["@/layouts/ComponentsLayout", "ComponentsLayout"],
+  "pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
 }
 
 const fallbackDefaultExports = {
   // Have to use path of compiled app
-  'pages/{docs,components}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
-  'pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
+  "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
+  "pages/course/**/*": ["@/layouts/VideoLayout", "VideoLayout"],
 }
 
 module.exports = withBundleAnalyzer({
-  pageExtensions: ['js', 'jsx', 'mdx'],
+  pageExtensions: ["js", "jsx", "mdx"],
   experimental: {
     modern: true,
   },
@@ -41,10 +40,10 @@ module.exports = withBundleAnalyzer({
       test: /\.(png|jpe?g|gif|svg)$/i,
       use: [
         {
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
+            publicPath: "/_next",
+            name: "static/media/[name].[hash].[ext]",
           },
         },
       ],
@@ -58,7 +57,7 @@ module.exports = withBundleAnalyzer({
           return source + `\nMDXContent.layoutProps = layoutProps\n`
         }),
         {
-          loader: '@mdx-js/loader',
+          loader: "@mdx-js/loader",
           options: {
             remarkPlugins: [
               withCodeSamples,
@@ -73,7 +72,7 @@ module.exports = withBundleAnalyzer({
           let { attributes: meta, body } = frontMatter(source)
           if (fields) {
             for (let field in meta) {
-              if (!fields.split(',').includes(field)) {
+              if (!fields.split(",").includes(field)) {
                 delete meta[field]
               }
             }
@@ -87,19 +86,19 @@ module.exports = withBundleAnalyzer({
               if (minimatch(resourcePath, glob)) {
                 extra.push(
                   `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-                  'export const Layout = _Layout'
+                  "export const Layout = _Layout"
                 )
                 break
               }
             }
           }
 
-          if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ''))) {
+          if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
               if (minimatch(resourcePath, glob)) {
                 extra.push(
                   `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
-                  'export default _Default'
+                  "export default _Default"
                 )
                 break
               }
@@ -107,10 +106,10 @@ module.exports = withBundleAnalyzer({
           }
 
           return [
-            ...(typeof fields === 'undefined' ? extra : []),
-            typeof fields === 'undefined' ? body : '',
+            ...(typeof fields === "undefined" ? extra : []),
+            typeof fields === "undefined" ? body : "",
             `export const meta = ${JSON.stringify(meta)}`,
-          ].join('\n\n')
+          ].join("\n\n")
         }),
       ],
     })

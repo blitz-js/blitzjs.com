@@ -127,10 +127,10 @@ const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/
 module.exports = {
   middleware: [
     sessionMiddleware({
-      //highlight-start
+      // highlight-start
       sessionExpiryMinutes: 1234,
       unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
-      //highlight-end
+      // highlight-end
     }),
   ],
 }

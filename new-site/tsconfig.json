@@ -16,7 +16,14 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "paths": {
+      "@/components/*": ["app/components/*"],
+      "@/layouts/*": ["app/layouts/*"],
+      "@/utils/*": ["app/utils/*"],
+      "@/hooks/*": ["app/hooks/*"],
+      "@/img/*": ["app/img/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]

@@ -1,21 +1,22 @@
-import { SidebarLayout } from '@/layouts/SidebarLayout'
-import Head from 'next/head'
-import twitterSquare from '@/img/twitter-square.png'
-import { createPageList } from '@/utils/createPageList'
+import { SidebarLayout } from "@/layouts/SidebarLayout"
+import Head from "next/head"
+import twitterSquare from "@/img/twitter-square.png"
+import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
-  require.context(`../pages/components/?meta=title,shortTitle,published`, false, /\.mdx$/),
-  'components'
+  // Have to use path of compiled app
+  require.context(`pages/components/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  "components"
 )
 
 const nav = {
   Examples: [
-    pages['alerts'],
-    pages['buttons'],
-    pages['cards'],
-    pages['forms'],
-    pages['flexbox-grids'],
-    pages['navigation'],
+    pages["alerts"],
+    pages["buttons"],
+    pages["cards"],
+    pages["forms"],
+    pages["flexbox-grids"],
+    pages["navigation"],
   ],
 }
 

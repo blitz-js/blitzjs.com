@@ -1,4 +1,3 @@
-const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require("@blitzjs/server")
 const path = require("path")
 const querystring = require("querystring")
 const { createLoader } = require("simple-functional-loader")
@@ -30,11 +29,7 @@ module.exports = withBundleAnalyzer({
   experimental: {
     modern: true,
   },
-  middleware: [
-    sessionMiddleware({
-      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
-    }),
-  ],
+  middleware: [],
   webpack(config, options) {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|svg)$/i,

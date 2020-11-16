@@ -123,7 +123,8 @@ Now you can get the connection string of to the connection pool.
 doctl db pool list <database-id>
 ```
 
-Add `&pgbouncer=true` to the end of the connection string and add it to `app.yaml`.
+To enable pgBouncer, which is the connection pooler that DigitalOcean uses, add `&pgbouncer=true` to the end of the connection string.
+Next add the connection string to `app.yaml`.
 
 ```yaml
  ...

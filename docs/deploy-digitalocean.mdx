@@ -56,7 +56,7 @@ Add the configuration below to `app.yaml`. As you can see we are also adding a n
 name: <project-name>
 region: <region>
 databases:
-  - cluster_name: blitzdb
+  - cluster_name: <database-name>
     db_name: defaultdb
     db_user: doadmin
     engine: PG
@@ -159,7 +159,7 @@ doctl apps create --spec app.yaml
 
 The first time you have to use `doctl` to connect your repository with App Platform. After that a new deployment will be triggered every time you push to your git repository.
 
-Now if you add the `.do` to your git repository values like `DATABASE_URL` and `SESSION_SECRET_KEY` will be exposed.
+Now if you add the `.do` folder to your git repository values like `DATABASE_URL` and `SESSION_SECRET_KEY` will be exposed.
 It is currently not possible to add these values to your configuration with `doctl` and if you add them manually through the UI they will get deleted every time you update your App Spec.
 Luckily there is a workaround for this.
 
@@ -168,6 +168,6 @@ These values are bound to your application and can be safely stored in your git 
 
 Go to [App Platform](https://cloud.digitalocean.com/apps) and select your application. Next click on the Settings tab and view the Application Spec.
 
-![test](/img/do_app_spec.png)
+![App Spec settings](/img/do_app_spec.png)
 
 Copy the App Spec with the encrypted values and replace the content of your local `app.yaml` file with the new content. Now you can safely store your configuration in git.

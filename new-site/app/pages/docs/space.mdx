@@ -1,29 +1,19 @@
 ---
 title: "Space Between"
 description: "Utilities for controlling the space between child elements."
-featureVersion: "v1.3.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/space'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
+import { numbersFirstByPrefix } from '@/utils/sortClasses'
 
 export const classes = {
   plugin,
-  filterProperties: (prop, value, properties) => {
-    if (Object.keys(properties).length === 1) return true
-    return !prop.includes('--') && !prop.includes('bottom') && !prop.includes('right')
-  },
-  transformValue: (value) => {
-    if (value.includes('calc(')) {
-      return value.match(/calc\(([^ ]+) /)[1].replace(/^0px$/, '0')
-    }
-    return value
-  },
+  sort: numbersFirstByPrefix,
   transformSelector: (selector) => (
     <>
-      {selector.split('>').shift().trim()} <span className="ml-1 text-purple-300">> * + *</span>
+      {selector.split('>').shift().trim().replace(/^\./, '').replace(/\\/g, '')} <span className="ml-1 text-purple-300">> * + *</span>
     </>
   ),
 }
@@ -32,16 +22,18 @@ export const classes = {
 
 Control the horizontal space between elements using the `space-x-{amount}` utilities.
 
-```html
+```html fuchsia
 <template preview>
-  <div class="flex space-x-4 bg-gray-200">
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">1</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">2</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">3</div>
+  <div class="flex justify-start">
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">1</div>
+    <div class="w-4 h-16 rounded-md bg-fuchsia-300 bg-stripes bg-stripes-white"></div>
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">2</div>
+    <div class="w-4 h-16 rounded-md bg-fuchsia-300 bg-stripes bg-stripes-white"></div>
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">3</div>
   </div>
 </template>
 
-<div class="flex space-x-4">
+<div class="flex **space-x-4** ...">
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -52,16 +44,18 @@ Control the horizontal space between elements using the `space-x-{amount}` utili
 
 Control the vertical space between elements using the `space-y-{amount}` utilities.
 
-```html
+```html lightBlue
 <template preview>
-  <div class="space-y-6 bg-gray-200">
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">1</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">2</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">3</div>
+  <div>
+    <div class="h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-blue-500">1</div>
+    <div class="h-6 rounded-md bg-blue-300 bg-stripes bg-stripes-white"></div>
+    <div class="h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-blue-500">2</div>
+    <div class="h-6 rounded-md bg-blue-300 bg-stripes bg-stripes-white"></div>
+    <div class="h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-blue-500">3</div>
   </div>
 </template>
 
-<div class="space-y-6">
+<div class="flex **space-y-6** ...">
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -74,14 +68,16 @@ If your elements are in reverse order (using say `flex-row-reverse` or `flex-col
 
 ```html
 <template preview>
-  <div class="flex flex-row-reverse space-x-4 space-x-reverse bg-gray-200">
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">1</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">2</div>
-    <div class="text-gray-700 text-center bg-gray-400 px-4 py-2">3</div>
+  <div class="flex flex-row-reverse justify-start">
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">1</div>
+    <div class="w-4 h-16 rounded-md bg-fuchsia-300 bg-stripes bg-stripes-white"></div>
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">2</div>
+    <div class="w-4 h-16 rounded-md bg-fuchsia-300 bg-stripes bg-stripes-white"></div>
+    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500">3</div>
   </div>
 </template>
 
-<div class="flex flex-row-reverse space-x-4 space-x-reverse">
+<div class="flex flex-row-reverse **space-x-4 space-x-reverse** ...">
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -94,26 +90,15 @@ If your elements are in reverse order (using say `flex-row-reverse` or `flex-col
 
 To control the space between elements at a specific breakpoint, add a `{screen}:` prefix to any existing space utility. For example, adding the class `md:space-x-8` to an element would apply the `space-x-8` utility at medium screen sizes and above.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<div class="flex space-x-2 **md:space-x-8**">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</div>
+```
 
-<ResponsiveCodeSample
-  classNames={['space-x-2', 'space-x-4', 'space-x-6', 'space-x-8', 'space-x-12']}
-  snippet={(classNames) => `
-    <div class="flex ${classNames}">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-    </div>
-  `}
-  previewClassName="text-center p-4"
-  preview={(className) => (
-    <div className={`flex bg-gray-200 ${className}`}>
-      <div className="text-gray-700 text-center bg-gray-400 px-4 py-2">1</div>
-      <div className="text-gray-700 text-center bg-gray-400 px-4 py-2">2</div>
-      <div className="text-gray-700 text-center bg-gray-400 px-4 py-2">3</div>
-    </div>
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ---
 
@@ -123,7 +108,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 If you'd like to customize your values for space between, padding, margin, width, and height all at once, use the `theme.spacing` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -139,7 +124,7 @@ If you'd like to customize your values for space between, padding, margin, width
 
 To customize only the space between values, use the `theme.space` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -155,7 +140,7 @@ To customize only the space between values, use the `theme.space` section of you
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="space" />
 

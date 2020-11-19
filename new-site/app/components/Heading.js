@@ -12,6 +12,7 @@ export function Heading({
   className = '',
   hidden = false,
   toc = false,
+  style = {},
   ...props
 }) {
   let Component = `h${level}`
@@ -31,24 +32,23 @@ export function Heading({
 
   return (
     <Component
-      className={clsx('group flex whitespace-pre-wrap', className, {
-        '-mb-6': hidden,
-      })}
+      className={clsx('group flex whitespace-pre-wrap', className)}
       id={id}
       ref={ref}
+      style={{ ...(hidden ? { marginBottom: 0 } : {}), ...style }}
       {...props}
     >
       {!hidden && (
         // eslint-disable-next-line
         <a
           href={`#${id}`}
-          className="absolute text-gray-500 no-underline after:hash opacity-0 group-hover:opacity-100"
-          style={{ marginLeft: '-1em', paddingRight: '0.5em' }}
+          className="absolute after:hash opacity-0 group-hover:opacity-100"
+          style={{ marginLeft: '-1em', paddingRight: '0.5em', boxShadow: 'none', color: '#a1a1aa' }}
           aria-label="Anchor"
         />
       )}
       {number && (
-        <span className="bg-gray-200 h-6 inline-flex items-center justify-center rounded-full text-gray-700 text-lg w-6 mr-3 flex-none">
+        <span className="bg-cyan-100 w-8 h-8 inline-flex items-center justify-center rounded-full text-cyan-700 text-xl mr-3 flex-none">
           {number}
         </span>
       )}

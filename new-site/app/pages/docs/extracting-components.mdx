@@ -7,34 +7,50 @@ import { TipGood, TipBad } from '@/components/Tip'
 
 Tailwind encourages a [utility-first](/docs/utility-first) workflow, where designs are initially implemented using only utility classes to avoid premature abstraction.
 
-```html
-<template preview class="p-8">
-  <!-- A marketing page card built entirely with utility classes -->
-  <div class="md:flex">
-    <div class="md:flex-shrink-0">
-      <img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" width="448" height="299" alt="Woman paying for a purchase">
-    </div>
-    <div class="mt-4 md:mt-0 md:ml-6">
-      <div class="uppercase tracking-wide text-sm text-indigo-600 font-bold">Marketing</div>
-      <a href="#" class="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">Finding customers for your new business</a>
-      <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+```html indigo
+<template preview class="px-6 py-8">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div class="md:flex">
+      <div class="md:flex-shrink-0">
+        <img class="h-48 w-full object-cover md:w-48" src="https://images.unsplash.com/photo-1515711660811-48832a4c6f69?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" width="448" height="299" alt="Man looking at item at a store">
+      </div>
+      <div class="p-8">
+        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
+        <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
+        <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+      </div>
     </div>
   </div>
 </template>
+
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="md:flex">
+    <div class="md:flex-shrink-0">
+      <img class="h-48 w-full object-cover md:w-48" src="/img/store.jpg" alt="Man looking at item at a store">
+    </div>
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
+      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
+      <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+    </div>
+  </div>
+</div>
 ```
 
 But as a project grows, you'll inevitably find yourself repeating common utility combinations to recreate the same component in many different places. This is most apparent with small components, like buttons, form elements, badges, etc.
 
-```html
-<template preview class="text-center p-4">
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Button
-  </button>
+```html emerald
+<template preview>
+  <div class="text-center">
+    <button type="button" class="py-2 px-4 bg-emerald-500 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75">
+      Click me
+    </button>
+  </div>
 </template>
 
 <!-- Repeating these classes for every button can be painful -->
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Button
+<button class="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+  Click me
 </button>
 ```
 
@@ -42,7 +58,7 @@ Keeping a long list of utility classes in sync across many component instances c
 
 ---
 
-## Extracting HTML components
+## Extracting template components
 
 It's very rare that all of the information needed to define a UI component can live entirely in CSS — there's almost always some important corresponding HTML structure you need to use as well.
 
@@ -131,36 +147,34 @@ The above example uses [Vue](https://vuejs.org/v2/guide/components.html), but th
 
 ---
 
-## Extracting CSS components with @apply
+## Extracting component classes with @apply
 
 For small components like buttons and form elements, creating a template partial or JavaScript component can often feel too heavy compared to a simple CSS class.
 
 In these situations, you can use Tailwind's `@apply` directive to easily extract common utility patterns to CSS component classes.
 
-Here's what a `.btn-blue` class might look like using `@apply` to compose it from existing utilities:
+Here's what a `btn-indigo` class might look like using `@apply` to compose it from existing utilities:
 
-```html
-<template preview class="text-center p-4">
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Button
-  </button>
+
+```html indigo
+<template preview>
+  <div class="text-center">
+    <button type="button" class="py-2 px-4 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">
+      Click me
+    </button>
+  </div>
 </template>
 
-<button class="btn-blue">
-  Button
+<button class="**btn-indigo**">
+  Click me
 </button>
 
 <style>
-.btn-blue {
-  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-}
-.btn-blue:hover {
-  @apply bg-blue-700;
-}
+  **.btn-indigo** {
+    @apply py-2 px-4 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
+  }
 </style>
 ```
-
-Note that variants like `hover:`, `focus:`, and `{screen}:` can't be applied directly, so instead apply the plain version of the utility to the appropriate pseudo-selector or media query.
 
 To avoid unintended specificity issues, we recommend wrapping your custom component styles with the `@layer components { ... }` directive to tell Tailwind what layer those styles belong to:
 
@@ -171,127 +185,14 @@ To avoid unintended specificity issues, we recommend wrapping your custom compon
 
 @layer components {
   .btn-blue {
-    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-  }
-  .btn-blue:hover {
-    @apply bg-blue-700;
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
   }
 }
 ```
 
 Tailwind will automatically move those styles to the same place as `@tailwind components`, so you don't have to worry about getting the order right in your source files.
 
-Using the `@layer` directive will also instruct Tailwind to consider those styles for purging when purging the `components` layer. Read our [Controlling File Size](/docs/controlling-file-size) documentation for more details.
-
-### Keeping things composable
-
-Say you have these two buttons:
-
-```html
-<template preview class="text-center p-4">
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
-    Button
-  </button>
-
-  <button class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded">
-    Button
-  </button>
-</template>
-
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Button
-</button>
-
-<button class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded">
-  Button
-</button>
-```
-
-It might be tempting to implement component classes for these buttons like this:
-
-```css
-@layer components {
-  .btn-blue {
-    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-  }
-  .btn-blue:hover {
-    @apply bg-blue-700;
-  }
-
-  .btn-gray {
-    @apply bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded;
-  }
-  .btn-gray:hover {
-    @apply bg-gray-500;
-  }
-}
-```
-
-The issue with this approach is that **you still have potentially painful duplication.**
-
-If you wanted to change the padding, font weight, or border radius of all the buttons on your site, you'd need to update every button class.
-
-A better approach is to extract the parts that are the same into a separate class:
-
-```css
-@layer components {
-  .btn {
-    @apply font-bold py-2 px-4 rounded;
-  }
-
-  .btn-blue {
-    @apply bg-blue-500 text-white;
-  }
-  .btn-blue:hover {
-    @apply bg-blue-700;
-  }
-
-  .btn-gray {
-    @apply bg-gray-400 text-gray-800;
-  }
-  .btn-gray:hover {
-    @apply bg-gray-500;
-  }
-}
-```
-
-Now you'd apply two classes any time you needed to style a button:
-
-```html
-<template preview class="text-center p-4">
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
-    Button
-  </button>
-
-  <button class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded">
-    Button
-  </button>
-</template>
-
-<button class="btn btn-blue">
-  Button
-</button>
-
-<button class="btn btn-gray">
-  Button
-</button>
-```
-
-This makes it easy to change the shared styles in one place by just editing the `.btn` class.
-
-It also allows you to add new one-off button styles without being forced to create a new component class or duplicate the shared styles:
-
-```html
-<template preview class="text-center p-4">
-  <button class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded">
-    Button
-  </button>
-</template>
-
-<button class="btn bg-green-500 hover:bg-green-400 text-white">
-  Button
-</button>
-```
+Using the `@layer` directive will also instruct Tailwind to consider those styles for purging when purging the `components` layer. Read our [documentation on optimizing for production](/docs/optimizing-for-production) for more details.
 
 ### Writing a component plugin
 
@@ -303,25 +204,18 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   plugins: [
-    plugin(function({ addComponents }) {
+    plugin(function({ addComponents, theme }) {
       const buttons = {
         '.btn': {
-          padding: '.5rem 1rem',
-          borderRadius: '.25rem',
-          fontWeight: '600',
+          padding: `${theme('spacing.2')} ${theme('spacing.4')}`,
+          borderRadius: theme('borderRadius.md'),
+          fontWeight: theme('fontWeight.600'),
         },
-        '.btn-blue': {
-          backgroundColor: '#3490dc',
-          color: '#fff',
+        '.btn-indigo': {
+          backgroundColor: theme('colors.indigo.500'),
+          color: theme('colors.white'),
           '&:hover': {
-            backgroundColor: '#2779bd'
-          },
-        },
-        '.btn-red': {
-          backgroundColor: '#e3342f',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#cc1f1a'
+            backgroundColor: theme('colors.indigo.600')
           },
         },
       }

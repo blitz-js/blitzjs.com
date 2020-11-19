@@ -11,86 +11,96 @@ features:
 import plugin from 'tailwindcss/lib/plugins/fontSize'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
 import { Heading } from '@/components/Heading'
 
 export const classes = { plugin }
 
 ## Usage
 
-Control the font size of an element using the `.text-{size}` utilities.
+Control the font size of an element using the `text-{size}` utilities.
 
-```html
+```html purple
 <template preview>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-xs</p>
-    <p class="text-xs truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-sm</p>
-    <p class="text-sm truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-base</p>
-    <p class="text-base truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-lg</p>
-    <p class="text-lg truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-xl</p>
-    <p class="text-xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-2xl</p>
-    <p class="text-2xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-3xl</p>
-    <p class="text-3xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div class="mb-6">
-    <p class="text-sm text-gray-600">.text-4xl</p>
-    <p class="text-4xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div>
-    <p class="text-sm text-gray-600">.text-5xl</p>
-    <p class="text-5xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
-  <div>
-    <p class="text-sm text-gray-600">.text-6xl</p>
-    <p class="text-6xl truncate text-gray-800">The quick brown fox jumped over the lazy dog.</p>
-  </div>
+  <dl class="text-violet-600">
+    <div class="flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-3">xs</dt>
+      <dd class="text-xs font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-6 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-4">sm</dt>
+      <dd class="text-sm font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-6 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-5">base</dt>
+      <dd class="text-base font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-6 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-6">lg</dt>
+      <dd class="text-lg font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-6 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-6">xl</dt>
+      <dd class="text-xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-8 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-6">2xl</dt>
+      <dd class="text-2xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-10 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-6">3xl</dt>
+      <dd class="text-3xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-10 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-6">4xl</dt>
+      <dd class="text-4xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-12 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-7">5xl</dt>
+      <dd class="text-5xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-12 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-8">6xl</dt>
+      <dd class="text-6xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-14 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-10">7xl</dt>
+      <dd class="text-7xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-16 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-10">8xl</dt>
+      <dd class="text-8xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+    <div class="mt-20 flex items-start">
+      <dt class="w-16 flex-shrink-0 text-sm text-violet-600 text-opacity-50 font-mono leading-10">9xl</dt>
+      <dd class="text-9xl font-medium">The quick brown fox jumped over the lazy dog.</dd>
+    </div>
+  </dl> 
 </template>
 
-<p class="text-xs ...">The quick brown fox ...</p>
-<p class="text-sm ...">The quick brown fox ...</p>
-<p class="text-base ...">The quick brown fox ...</p>
-<p class="text-lg ...">The quick brown fox ...</p>
-<p class="text-xl ...">The quick brown fox ...</p>
-<p class="text-2xl ...">The quick brown fox ...</p>
-<p class="text-3xl ...">The quick brown fox ...</p>
-<p class="text-4xl ...">The quick brown fox ...</p>
-<p class="text-5xl ...">The quick brown fox ...</p>
-<p class="text-6xl ...">The quick brown fox ...</p>
+<p class="**text-xs** ...">The quick brown fox ...</p>
+<p class="**text-sm** ...">The quick brown fox ...</p>
+<p class="**text-base** ...">The quick brown fox ...</p>
+<p class="**text-lg** ...">The quick brown fox ...</p>
+<p class="**text-xl** ...">The quick brown fox ...</p>
+<p class="**text-2xl** ...">The quick brown fox ...</p>
+<p class="**text-3xl** ...">The quick brown fox ...</p>
+<p class="**text-4xl** ...">The quick brown fox ...</p>
+<p class="**text-5xl** ...">The quick brown fox ...</p>
+<p class="**text-6xl** ...">The quick brown fox ...</p>
+<p class="**text-7xl** ...">The quick brown fox ...</p>
+<p class="**text-8xl** ...">The quick brown fox ...</p>
+<p class="**text-9xl** ...">The quick brown fox ...</p>
 ```
 
 ## Responsive
 
 To control the font size of an element at a specific breakpoint, add a `{screen}:` prefix to any existing font size utility. For example, use `md:text-lg` to apply the `text-lg` utility at only medium screen sizes and above.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<p class="text-base **md:text-lg** ...">The quick brown fox jumped over the lazy dog.</p>
+```
 
-<ResponsiveCodeSample
-  classNames={['text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl']}
-  snippet={(classNames) => `
-    <p class="${classNames} ...">The quick brown fox jumped over the lazy dog.</p>
-  `}
-  preview={(className) => (
-    <p className={`text-gray-800 truncate ${className}`}>The quick brown fox jumped over the lazy dog.</p>
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ## Customizing
 
@@ -98,7 +108,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 By default Tailwind provides 10 `font-size` utilities. You change, add, or remove these by editing the `theme.fontSize` section of your Tailwind config.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -120,7 +130,7 @@ By default Tailwind provides 10 `font-size` utilities. You change, add, or remov
   }
 ```
 
-### <Heading badge="v1.3.0+">Providing a default line-height</Heading>
+### Providing a default line-height
 
 You can provide a default line-height for each of your font-sizes using a tuple of the form `[fontSize, lineHeight]` in your `tailwind.config.js` file.
 
@@ -138,9 +148,9 @@ module.exports = {
 }
 ```
 
-We don't do this out-of-the-box for backwards compatibility reasons, but it can be a very convenient customization to make in your own projects.
+We already provide default line heights for each `.text-{size}` class.
 
-### <Heading badge="v1.7.0+">Providing a default letter-spacing</Heading>
+### Providing a default letter-spacing
 
 If you also want to provide a default letter-spacing value for a font size, you can do so using a tuple of the form `[fontSize, { letterSpacing, lineHeight }]` in your `tailwind.config.js` file.
 
@@ -162,7 +172,7 @@ module.exports = {
 }
 ```
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="fontSize" name="text sizing" />
 

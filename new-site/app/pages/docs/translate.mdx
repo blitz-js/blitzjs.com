@@ -1,30 +1,40 @@
 ---
 title: "Translate"
 description: "Utilities for translating elements with transform."
-featureVersion: "v1.2.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/translate'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
+import { numbersFirstByPrefix } from '@/utils/sortClasses'
 
-export const classes = { plugin }
+export const classes = {
+  plugin,
+  sort: numbersFirstByPrefix,
+}
 
 ## Usage
 
 Translate an element by first enabling transforms with the `transform` utility, then specifying the translate direction and distance using the `translate-x-{amount}` and `translate-y-{amount}` utilities.
 
-```html
-<template preview class="bg-white lg:flex justify-around items-center text-sm p-4 py-12">
-  <img class="h-16 w-16 rounded transform translate-y-6" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
-  <img class="h-16 w-16 rounded transform -translate-y-6" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
-  <img class="h-16 w-16 rounded transform translate-y-0" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+```html purple
+<template preview>
+  <div class="flex flex-col justify-around space-y-12 md:flex-row md:space-y-0 md:space-x-12">
+    <div class="w-16 h-16 bg-purple-400 bg-stripes bg-stripes-white">
+      <img class="h-16 w-16 transform translate-y-6" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+    </div>
+    <div class="w-16 h-16 bg-purple-400 bg-stripes bg-stripes-white">
+      <img class="h-16 w-16 transform -translate-y-6" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+    </div>
+    <div class="w-16 h-16 bg-purple-400 bg-stripes bg-stripes-white">
+      <img class="h-16 w-16 transform translate-y-0" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+    </div>
+  </div>
 </template>
 
-<img class="transform translate-y-6 ...">
-<img class="transform -translate-y-6 ...">
-<img class="transform translate-y-0 ...">
+<img class="transform **translate-y-6** ...">
+<img class="transform **-translate-y-6** ...">
+<img class="transform **translate-y-0** ...">
 ```
 
 Note that because Tailwind implements transforms using [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), **the transform utilities are not supported in older browsers like IE11**. If you need transforms for your project and need to support older browsers, [add your own utilities](/docs/adding-new-utilities) or other custom CSS.
@@ -33,18 +43,11 @@ Note that because Tailwind implements transforms using [CSS custom properties](h
 
 To control the translation of an element at a specific breakpoint, add a `{screen}:` prefix to any existing translate utility. For example, use `md:translate-x-8` to apply the `translate-x-8` utility at only medium screen sizes and above.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<img class="transform translate-x-2 **md:translate-x-8** ...">
+```
 
-<ResponsiveCodeSample
-  classNames={['translate-y-6', '-translate-y-6', 'translate-y-2', '-translate-y-8', 'translate-y-0']}
-  snippet={(classNames) => `
-    <img class="transform ${classNames}...">
-  `}
-  previewClassName="flex justify-center items-center px-4 py-12"
-  preview={(className) => (
-    <img className={`h-16 w-16 rounded transform ${className}`} src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ## Customizing
 
@@ -54,7 +57,7 @@ By default Tailwind provides fixed value translate utilities that match our [spa
 
 You can customize the global spacing scale in the `theme.spacing` or `theme.extend.spacing` sections of your `tailwind.config.js` file:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -71,7 +74,7 @@ You can customize the global spacing scale in the `theme.spacing` or `theme.exte
 
 To customize the translate scale separately, use the `theme.translate` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -91,7 +94,7 @@ To customize the translate scale separately, use the `theme.translate` section o
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="translate" />
 

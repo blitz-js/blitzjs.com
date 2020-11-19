@@ -8,11 +8,9 @@ import {
   useContext,
 } from 'react'
 import { ClassTable } from '@/components/ClassTable'
-import { useIsHome } from '@/hooks/useIsHome'
 import { usePrevNext } from '@/hooks/usePrevNext'
 import Link from 'next/link'
 import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
-import { Ad } from '@/components/Ad'
 import { PageHeader } from '@/components/PageHeader'
 import clsx from 'clsx'
 
@@ -30,10 +28,10 @@ function TableOfContents({ tableOfContents, currentSection }) {
 
   return (
     <>
-      <h5 className="text-gray-500 uppercase tracking-wide font-bold text-sm lg:text-xs">
+      <h5 className="text-gray-900 uppercase tracking-wide font-semibold mb-3 text-sm lg:text-xs">
         On this page
       </h5>
-      <ul className="mt-4 overflow-x-hidden">
+      <ul className="overflow-x-hidden text-gray-500 font-medium">
         {tableOfContents.map((section) => {
           let sectionIsActive =
             currentSection === section.slug ||
@@ -41,15 +39,14 @@ function TableOfContents({ tableOfContents, currentSection }) {
 
           return (
             <Fragment key={section.slug}>
-              <li className={clsx({ 'mb-4 lg:mb-2': isMainNav, 'mb-2': !isMainNav })}>
+              <li>
                 <a
                   href={`#${section.slug}`}
                   onClick={closeNav}
                   className={clsx(
-                    'block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium',
+                    'block transform transition-colors duration-200 py-2 hover:text-gray-900',
                     {
-                      'translate-r-2px text-gray-900': sectionIsActive,
-                      'text-gray-600': !sectionIsActive,
+                      'text-gray-900': sectionIsActive,
                     }
                   )}
                 >
@@ -62,8 +59,8 @@ function TableOfContents({ tableOfContents, currentSection }) {
                 return (
                   <li
                     className={clsx({
-                      'mb-4 ml-4 lg:mb-2 lg:ml-2': isMainNav,
-                      'mb-2 ml-2': !isMainNav,
+                      'ml-4': isMainNav,
+                      'ml-2': !isMainNav,
                     })}
                     key={subsection.slug}
                   >
@@ -71,10 +68,9 @@ function TableOfContents({ tableOfContents, currentSection }) {
                       href={`#${subsection.slug}`}
                       onClick={closeNav}
                       className={clsx(
-                        'block transition-fast hover:translate-r-2px hover:text-gray-900 font-medium',
+                        'block py-2 transition-colors duration-200 hover:text-gray-900 font-medium',
                         {
-                          'translate-r-2px text-gray-900': subsectionIsActive,
-                          'text-gray-600': !subsectionIsActive,
+                          'text-gray-900': subsectionIsActive,
                         }
                       )}
                     >
@@ -163,75 +159,57 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
 
 export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   const toc = [
-    ...(classes ? [{ title: 'Class reference', slug: 'class-reference', children: [] }] : []),
+    ...(classes
+      ? [{ title: 'Default class reference', slug: 'class-reference', children: [] }]
+      : []),
     ...tableOfContents,
   ]
 
   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
-  let isHome = useIsHome()
   let { prev, next } = usePrevNext()
 
   return (
-    <div
-      id={meta.containerId}
-      className={clsx('pb-16 w-full', {
-        'pt-12': isHome,
-        'pt-24 lg:pt-28': !isHome,
-      })}
-    >
-      <PageHeader
-        title={meta.title}
-        description={meta.description}
-        badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
-        border={!classes && meta.headerSeparator !== false}
-      />
-      <div className="flex">
-        <div className="markdown px-6 xl:px-12 w-full max-w-3xl mx-auto lg:ml-0 lg:mr-auto xl:mx-0 xl:w-3/4">
-          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+    <div id={meta.containerId} className="pt-10 pb-16 w-full flex">
+      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
+        <PageHeader
+          title={meta.title}
+          description={meta.description}
+          badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
+          border={!classes && meta.headerSeparator !== false}
+        />
+        <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+          <div>
             {classes && (
               <ClassTable {...(isValidElement(classes) ? { custom: classes } : classes)} />
             )}
             {children}
-          </ContentsContext.Provider>
-          {(prev || next) && (
-            <>
-              <hr />
-              <div className="-mt-6 flex justify-between">
-                {prev && (
-                  <Link href={prev.href}>
-                    <a className="font-medium text-blue-500 underline hover:text-blue-700">
-                      ← {prev.shortTitle || prev.title}
-                    </a>
-                  </Link>
-                )}
-                {next && (
-                  <Link href={next.href}>
-                    <a className="font-medium text-blue-500 underline hover:text-blue-700">
-                      {next.shortTitle || next.title} →
-                    </a>
-                  </Link>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-        <div className="hidden xl:text-sm xl:block xl:w-1/4 xl:px-6">
-          <div
-            className={clsx(
-              'flex flex-col justify-between overflow-y-auto sticky max-h-(screen-16) pt-12 pb-4 -mt-12',
-              {
-                'top-0': isHome,
-                'top-16': !isHome,
-              }
-            )}
-          >
-            {toc.length > 0 && (
-              <div className="mb-8">
-                <TableOfContents tableOfContents={toc} currentSection={currentSection} />
-              </div>
-            )}
-            <Ad />
           </div>
+        </ContentsContext.Provider>
+        {(prev || next) && (
+          <>
+            <hr className="border-gray-200 mt-10 mb-4" />
+            <div className="flex justify-between leading-7 font-medium">
+              {prev && (
+                <Link href={prev.href}>
+                  <a>← {prev.shortTitle || prev.title}</a>
+                </Link>
+              )}
+              {next && (
+                <Link href={next.href}>
+                  <a>{next.shortTitle || next.title} →</a>
+                </Link>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+      <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
+        <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) -mt-10 pt-10 pb-4 top-18">
+          {toc.length > 0 && (
+            <div className="mb-8">
+              <TableOfContents tableOfContents={toc} currentSection={currentSection} />
+            </div>
+          )}
         </div>
       </div>
     </div>

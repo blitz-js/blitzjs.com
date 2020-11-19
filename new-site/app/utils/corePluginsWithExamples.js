@@ -9,7 +9,8 @@ const plugins = [
   'container',
   ...glob
     .sync('node_modules/tailwindcss/lib/plugins/*.js')
-    .map((filename) => path.basename(filename, '.js')),
+    .map((filename) => path.basename(filename, '.js'))
+    .filter((name) => name !== 'index'),
 ].filter((x, i, a) => a.indexOf(x) === i)
 
 module.exports.corePluginsWithExamples = plugins.map((plugin) => {
@@ -28,8 +29,8 @@ module.exports.corePluginsWithExamples = plugins.map((plugin) => {
     theme: (path, defaultValue) => dlv(defaultConfig.theme, path, defaultValue),
     variants: () => [],
     e: (x) => x.replace(/([:.])/g, '\\$1'),
-    target: () => 'modern',
     corePlugins: () => true,
+    prefix: (x) => x,
   })
   return {
     plugin,
@@ -39,6 +40,7 @@ module.exports.corePluginsWithExamples = plugins.map((plugin) => {
             [Math.floor((Object.keys(utilities).length - 1) / 2)].split(/[>:]/)[0]
             .trim()
             .substr(1)
+            .replace(/\\/g, '')
         : undefined,
   }
 })

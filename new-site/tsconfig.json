@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -22,7 +22,8 @@
       "@/layouts/*": ["app/layouts/*"],
       "@/utils/*": ["app/utils/*"],
       "@/hooks/*": ["app/hooks/*"],
-      "@/img/*": ["app/img/*"]
+      "@/img/*": ["app/img/*"],
+      "@/navs/*": ["src/navs/*"]
     }
   },
   "exclude": ["node_modules"],

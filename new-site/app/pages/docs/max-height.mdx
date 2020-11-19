@@ -11,26 +11,29 @@ features:
 import plugin from 'tailwindcss/lib/plugins/maxHeight'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
+import { numbersFirst } from '@/utils/sortClasses'
 
-export const classes = { plugin }
+export const classes = {
+  plugin,
+  sort: numbersFirst,
+}
 
 ## Usage
 
 Set the maximum height of an element using the `max-h-full` or `max-h-screen` utilities.
 
-```html
+```html lightBlue
 <template preview>
-  <div class="h-24 p-6 bg-gray-300">
-    <div class="h-48 max-h-full p-6 bg-gray-400 flex items-center justify-center">
-      <span>max-h-full</span>
+  <div class="h-24 p-6 bg-light-blue-300 rounded-md">
+    <div class="h-48 max-h-full p-6 bg-light-blue-500 flex items-center justify-center rounded font-semibold text-white">
+      <span>.max-h-full</span>
     </div>
   </div>
 </template>
 
 <div class="h-24 ...">
-  <div class="h-48 max-h-full ...">
-    max-h-full
+  <div class="h-48 **max-h-full** ...">
+    .max-h-full
   </div>
 </div>
 ```
@@ -41,25 +44,13 @@ Set the maximum height of an element using the `max-h-full` or `max-h-screen` ut
 
 To control the max-height of an element at a specific breakpoint, add a `{screen}:` prefix to any existing max-height utility.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<div class="h-48 max-h-full **md:max-h-screen** ...">
+  <span>Target</span>
+</div>
+```
 
-<ResponsiveCodeSample
-  classNames={['max-h-full', 'max-h-screen', 'max-h-full', 'max-h-screen', 'max-h-full']}
-  snippet={(classNames) => `
-    <div class="h-24 ...">
-      <div class="h-48 ${classNames} ...">
-        <span>Target</span>
-      </div>
-    </div>
-  `}
-  preview={(className) => (
-    <div className="h-24 p-6 bg-gray-300">
-      <div className={`h-48 p-6 bg-gray-400 flex items-center justify-center ${className}`}>
-        <span>Target</span>
-      </div>
-    </div>
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ---
 
@@ -69,7 +60,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 Customize Tailwind's default max-height scale in the `theme.maxHeight` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -86,7 +77,7 @@ Customize Tailwind's default max-height scale in the `theme.maxHeight` section o
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="maxHeight" name="max-height" />
 

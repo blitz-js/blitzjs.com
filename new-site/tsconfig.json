@@ -23,7 +23,7 @@
       "@/utils/*": ["app/utils/*"],
       "@/hooks/*": ["app/hooks/*"],
       "@/img/*": ["app/img/*"],
-      "@/navs/*": ["src/navs/*"]
+      "@/navs/*": ["app/navs/*"]
     }
   },
   "exclude": ["node_modules"],

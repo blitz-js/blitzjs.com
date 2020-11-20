@@ -13,14 +13,16 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const fallbackLayouts = {
-  "app/pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
-  "app/pages/components/**/*": ["@/layouts/ComponentsLayout", "ComponentsLayout"],
-  "app/pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
+  // Have to use compiled locations
+  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "pages/components/**/*": ["@/layouts/ComponentsLayout", "ComponentsLayout"],
+  "pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
 }
 
 const fallbackDefaultExports = {
-  "app/pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
-  "app/pages/course/**/*": ["@/layouts/VideoLayout", "VideoLayout"],
+  // Have to use compiled locations
+  "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
+  "pages/course/**/*": ["@/layouts/VideoLayout", "VideoLayout"],
 }
 
 module.exports = withBundleAnalyzer({

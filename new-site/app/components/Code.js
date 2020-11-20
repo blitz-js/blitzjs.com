@@ -14,7 +14,7 @@ export function Code({
   return tokensArr.map((token, i) => {
     const t = transformTokens(token, tokensArr, i)
 
-    if (typeof t === 'string') return t
+    if (typeof t === "string") return t
 
     if (t[0] === parentTypes[parentTypes.length - 1]) {
       return (

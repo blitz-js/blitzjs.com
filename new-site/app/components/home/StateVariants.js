@@ -6,39 +6,39 @@ import {
   Link,
   Widont,
   InlineCode,
-} from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/state-variants.svg'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import { addClassTokens2 } from '@/utils/addClassTokens'
-import { useEffect, useRef, useState } from 'react'
-import { usePrevious } from '@/hooks/usePrevious'
-import clsx from 'clsx'
+} from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/state-variants.svg"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import { addClassTokens2 } from "@/utils/addClassTokens"
+import { useEffect, useRef, useState } from "react"
+import { usePrevious } from "@/hooks/usePrevious"
+import clsx from "clsx"
 
 const projects = [
-  { title: 'API Integration', category: 'Engineering' },
-  { title: 'New Benefits Plan', category: 'Human Resources' },
-  { title: 'Onboarding Emails', category: 'Customer Success' },
+  { title: "API Integration", category: "Engineering" },
+  { title: "New Benefits Plan", category: "Human Resources" },
+  { title: "Onboarding Emails", category: "Customer Success" },
 ]
 
 const faces = [
-  'photo-1531123897727-8f129e1688ce',
-  'photo-1494790108377-be9c29b29330',
-  'photo-1552374196-c4e7ffc6e126',
-  'photo-1546525848-3ce03ca516f6',
-  'photo-1544005313-94ddf0286df2',
-  'photo-1517841905240-472988babdf9',
-  'photo-1506794778202-cad84cf45f1d',
-  'photo-1500648767791-00dcc994a43e',
-  'photo-1534528741775-53994a69daeb',
-  'photo-1502685104226-ee32379fefbe',
-  'photo-1546525848-3ce03ca516f6',
-  'photo-1502685104226-ee32379fefbe',
-  'photo-1494790108377-be9c29b29330',
-  'photo-1506794778202-cad84cf45f1d',
-  'photo-1534528741775-53994a69daeb',
+  "photo-1531123897727-8f129e1688ce",
+  "photo-1494790108377-be9c29b29330",
+  "photo-1552374196-c4e7ffc6e126",
+  "photo-1546525848-3ce03ca516f6",
+  "photo-1544005313-94ddf0286df2",
+  "photo-1517841905240-472988babdf9",
+  "photo-1506794778202-cad84cf45f1d",
+  "photo-1500648767791-00dcc994a43e",
+  "photo-1534528741775-53994a69daeb",
+  "photo-1502685104226-ee32379fefbe",
+  "photo-1546525848-3ce03ca516f6",
+  "photo-1502685104226-ee32379fefbe",
+  "photo-1494790108377-be9c29b29330",
+  "photo-1506794778202-cad84cf45f1d",
+  "photo-1534528741775-53994a69daeb",
 ]
 
 const {
@@ -96,10 +96,10 @@ const {
 addClassTokens2(lines)
 
 const lineRanges = {
-  'new-btn-hover': [3, 8],
-  'input-focus': [14, 14],
-  'item-hover': [18, 39],
-  'new-hover': [41, 45],
+  "new-btn-hover": [3, 8],
+  "input-focus": [14, 14],
+  "item-hover": [18, 39],
+  "new-hover": [41, 45],
 }
 
 export function StateVariants() {
@@ -121,7 +121,7 @@ export function StateVariants() {
 
     codeContainerRef.current.scrollTo({
       top: top - containerHeight / 2 + height / 2,
-      behavior: 'smooth',
+      behavior: "smooth",
     })
   }
 
@@ -147,8 +147,8 @@ export function StateVariants() {
         </BigText>
         <Paragraph className="mb-6">
           Want to style something on hover? Stick <InlineCode>hover:</InlineCode> at the beginning
-          of the class you want to add. Works for <InlineCode>focus</InlineCode>,{' '}
-          <InlineCode>active</InlineCode>, <InlineCode>disabled</InlineCode>,{' '}
+          of the class you want to add. Works for <InlineCode>focus</InlineCode>,{" "}
+          <InlineCode>active</InlineCode>, <InlineCode>disabled</InlineCode>,{" "}
           <InlineCode>focus-within</InlineCode>, <InlineCode>focus-visible</InlineCode>, and even
           fancy states we invented ourselves like <InlineCode>group-hover</InlineCode>.
         </Paragraph>
@@ -170,10 +170,10 @@ export function StateVariants() {
                 <div
                   className="hover:bg-light-blue-200 hover:text-light-blue-800 group flex items-center rounded-md bg-light-blue-100 text-light-blue-600 text-sm font-medium px-4 py-2 cursor-pointer"
                   onMouseEnter={() => {
-                    setStates((states) => [...states, 'new-btn-hover'])
+                    setStates((states) => [...states, "new-btn-hover"])
                   }}
                   onMouseLeave={() => {
-                    setStates((states) => states.filter((x) => x !== 'new-btn-hover'))
+                    setStates((states) => states.filter((x) => x !== "new-btn-hover"))
                   }}
                 >
                   <svg
@@ -206,10 +206,10 @@ export function StateVariants() {
                 </svg>
                 <input
                   onFocus={() => {
-                    setStates((states) => [...states, 'input-focus'])
+                    setStates((states) => [...states, "input-focus"])
                   }}
                   onBlur={() => {
-                    setStates((states) => states.filter((x) => x !== 'input-focus'))
+                    setStates((states) => states.filter((x) => x !== "input-focus"))
                     // resetScroll()
                   }}
                   type="text"
@@ -222,15 +222,15 @@ export function StateVariants() {
                 {projects.map((project, i, a) => (
                   <li
                     key={i}
-                    className={i === a.length - 1 ? 'hidden sm:block lg:hidden xl:block' : ''}
+                    className={i === a.length - 1 ? "hidden sm:block lg:hidden xl:block" : ""}
                   >
                     <div
                       className="group cursor-pointer rounded-lg p-4 border border-gray-200 hover:bg-light-blue-500 hover:border-transparent hover:shadow-lg"
                       onMouseEnter={() => {
-                        setStates((states) => [...states, 'item-hover'])
+                        setStates((states) => [...states, "item-hover"])
                       }}
                       onMouseLeave={() => {
-                        setStates((states) => states.filter((x) => x !== 'item-hover'))
+                        setStates((states) => states.filter((x) => x !== "item-hover"))
                       }}
                     >
                       <dl className="grid sm:block lg:grid xl:block grid-cols-2 grid-rows-2 items-center">
@@ -272,10 +272,10 @@ export function StateVariants() {
                   <div
                     className="hover:border-transparent hover:shadow-xs w-full flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 text-sm font-medium py-4 cursor-pointer"
                     onMouseEnter={() => {
-                      setStates((states) => [...states, 'new-hover'])
+                      setStates((states) => [...states, "new-hover"])
                     }}
                     onMouseLeave={() => {
-                      setStates((states) => states.filter((x) => x !== 'new-hover'))
+                      setStates((states) => states.filter((x) => x !== "new-hover"))
                     }}
                   >
                     New Project
@@ -290,44 +290,44 @@ export function StateVariants() {
             <CodeWindow.Code2 ref={codeContainerRef} lines={lines.length}>
               <div
                 ref={linesContainerRef}
-                className={clsx('mono', { 'mono-active': states.length > 0 })}
+                className={clsx("mono", { "mono-active": states.length > 0 })}
               >
                 {lines.map((tokens, lineIndex) => (
                   <div
                     key={lineIndex}
                     className={
-                      (states.includes('new-btn-hover') &&
-                        lineIndex >= lineRanges['new-btn-hover'][0] &&
-                        lineIndex <= lineRanges['new-btn-hover'][1]) ||
-                      (states.includes('input-focus') &&
-                        lineIndex >= lineRanges['input-focus'][0] &&
-                        lineIndex <= lineRanges['input-focus'][1]) ||
-                      (states.includes('item-hover') &&
-                        lineIndex >= lineRanges['item-hover'][0] &&
-                        lineIndex <= lineRanges['item-hover'][1]) ||
-                      (states.includes('new-hover') &&
-                        lineIndex >= lineRanges['new-hover'][0] &&
-                        lineIndex <= lineRanges['new-hover'][1])
-                        ? 'not-mono'
-                        : ''
+                      (states.includes("new-btn-hover") &&
+                        lineIndex >= lineRanges["new-btn-hover"][0] &&
+                        lineIndex <= lineRanges["new-btn-hover"][1]) ||
+                      (states.includes("input-focus") &&
+                        lineIndex >= lineRanges["input-focus"][0] &&
+                        lineIndex <= lineRanges["input-focus"][1]) ||
+                      (states.includes("item-hover") &&
+                        lineIndex >= lineRanges["item-hover"][0] &&
+                        lineIndex <= lineRanges["item-hover"][1]) ||
+                      (states.includes("new-hover") &&
+                        lineIndex >= lineRanges["new-hover"][0] &&
+                        lineIndex <= lineRanges["new-hover"][1])
+                        ? "not-mono"
+                        : ""
                     }
                   >
                     {tokens.map((token, tokenIndex) => {
                       if (
-                        token.types[token.types.length - 1] === 'class' &&
-                        token.content.startsWith('(')
+                        token.types[token.types.length - 1] === "class" &&
+                        token.content.startsWith("(")
                       ) {
                         const [, state] = token.content.match(/^\(([^)]+)\)/)
                         return (
                           <span
                             key={tokenIndex}
                             className={clsx(
-                              'code-highlight transition-colors duration-500',
+                              "code-highlight transition-colors duration-500",
                               getClassNameForToken(token),
-                              { 'bg-code-highlight': states.includes(state) }
+                              { "bg-code-highlight": states.includes(state) }
                             )}
                           >
-                            {token.content.substr(token.content.indexOf(')') + 1)}
+                            {token.content.substr(token.content.indexOf(")") + 1)}
                           </span>
                         )
                       }

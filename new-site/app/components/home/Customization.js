@@ -1,67 +1,67 @@
-import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { Tabs } from '@/components/Tabs'
-import { CodeWindow } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/customization.svg'
-import { useEffect, useRef, useState } from 'react'
-import tailwindColors from 'tailwindcss/colors'
-import { AnimatePresence, motion } from 'framer-motion'
-import { font as poppinsRegular } from '../../fonts/generated/Poppins-Regular.module.css'
-import { font as poppinsExtraBold } from '../../fonts/generated/Poppins-ExtraBold.module.css'
-import { font as tenorSansRegular } from '../../fonts/generated/TenorSans-Regular.module.css'
-import { font as robotoMonoRegular } from '../../fonts/generated/RobotoMono-Regular.module.css'
-import styles from './Customization.module.css'
-import tokenize from '../../macros/tokenize.macro'
-import { Token } from '../Code'
-import clsx from 'clsx'
+import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { Tabs } from "@/components/Tabs"
+import { CodeWindow } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/customization.svg"
+import { useEffect, useRef, useState } from "react"
+import tailwindColors from "tailwindcss/colors"
+import { AnimatePresence, motion } from "framer-motion"
+import { font as poppinsRegular } from "../../fonts/generated/Poppins-Regular.module.css"
+import { font as poppinsExtraBold } from "../../fonts/generated/Poppins-ExtraBold.module.css"
+import { font as tenorSansRegular } from "../../fonts/generated/TenorSans-Regular.module.css"
+import { font as robotoMonoRegular } from "../../fonts/generated/RobotoMono-Regular.module.css"
+import styles from "./Customization.module.css"
+import tokenize from "../../macros/tokenize.macro"
+import { Token } from "../Code"
+import clsx from "clsx"
 
 const themes = {
   simple: {
-    font: 'Inter',
+    font: "Inter",
     fontStacks: [
-      ['Inter', 'system-ui', 'sans-serif'],
-      ['Inter', 'system-ui', 'sans-serif'],
+      ["Inter", "system-ui", "sans-serif"],
+      ["Inter", "system-ui", "sans-serif"],
     ],
-    classNameDisplay: 'font-semibold',
-    primaryColor: 'indigo',
-    secondaryColorName: 'gray',
-    secondaryColor: 'gray',
+    classNameDisplay: "font-semibold",
+    primaryColor: "indigo",
+    secondaryColorName: "gray",
+    secondaryColor: "gray",
   },
   playful: {
-    font: 'Poppins',
+    font: "Poppins",
     fontStacks: [
-      ['Poppins', 'system-ui', 'sans-serif'],
-      ['Poppins', 'system-ui', 'sans-serif'],
+      ["Poppins", "system-ui", "sans-serif"],
+      ["Poppins", "system-ui", "sans-serif"],
     ],
     classNameDisplay: poppinsExtraBold,
     classNameBody: `${poppinsRegular} text-sm`,
-    primaryColor: 'purple',
-    secondaryColorName: 'secondary',
-    secondaryColor: 'pink',
+    primaryColor: "purple",
+    secondaryColorName: "secondary",
+    secondaryColor: "pink",
   },
   elegant: {
-    font: 'Tenor Sans',
+    font: "Tenor Sans",
     fontStacks: [
-      ['Tenor Sans', 'Georgia', 'serif'],
-      ['Inter', 'system-ui', 'sans-serif'],
+      ["Tenor Sans", "Georgia", "serif"],
+      ["Inter", "system-ui", "sans-serif"],
     ],
     classNameDisplay: tenorSansRegular,
-    primaryColor: 'gray',
-    secondaryColorName: 'accent',
-    secondaryColor: 'amber',
+    primaryColor: "gray",
+    secondaryColorName: "accent",
+    secondaryColor: "amber",
   },
   brutalist: {
-    font: 'Roboto Mono',
+    font: "Roboto Mono",
     fontStacks: [
-      ['Roboto Mono', 'Menlo', 'monospace'],
-      ['Roboto Mono', 'Menlo', 'monospace'],
+      ["Roboto Mono", "Menlo", "monospace"],
+      ["Roboto Mono", "Menlo", "monospace"],
     ],
     classNameDisplay: robotoMonoRegular,
     classNameBody: `${robotoMonoRegular} text-xs leading-5`,
-    primaryColor: 'lime',
-    secondaryColorName: 'gray',
-    secondaryColor: 'gray',
+    primaryColor: "lime",
+    secondaryColorName: "gray",
+    secondaryColor: "gray",
   },
 }
 
@@ -102,7 +102,7 @@ const { tokens } = tokenize.javascript(`module.exports = {
 `)
 
 export function Customization() {
-  const [theme, setTheme] = useState('simple')
+  const [theme, setTheme] = useState("simple")
 
   return (
     <section id="customization">
@@ -138,10 +138,10 @@ export function Customization() {
           <div className="flex overflow-auto py-0.5 -my-0.5 pl-0.5 -mx-4 sm:-mx-6 md:-mx-8 xl:-ml-4 xl:mr-0">
             <Tabs
               tabs={{
-                simple: 'Simple',
-                playful: 'Playful',
-                elegant: 'Elegant',
-                brutalist: 'Brutalist',
+                simple: "Simple",
+                playful: "Playful",
+                elegant: "Elegant",
+                brutalist: "Brutalist",
               }}
               selected={theme}
               onChange={setTheme}
@@ -167,7 +167,7 @@ export function Customization() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       className={`text-2xl leading-7 text-gray-900 ${
-                        themes[theme].classNameDisplay || ''
+                        themes[theme].classNameDisplay || ""
                       }`}
                     >
                       {themes[theme].font}
@@ -182,7 +182,7 @@ export function Customization() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className={`text-gray-600 ${themes[theme].classNameBody || 'text-sm'}`}
+                      className={`text-gray-600 ${themes[theme].classNameBody || "text-sm"}`}
                     >
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi ultrices non
                       pharetra, eros enim. Habitant suspendisse ultricies.
@@ -198,7 +198,7 @@ export function Customization() {
               <div className="relative flex-auto bg-white lg:rounded-b-xl xl:rounded-bl-none overflow-hidden">
                 <dl className="px-4 py-6 sm:p-6 space-y-6">
                   <div className="space-y-2">
-                    <dt className="font-mono text-xs">{'bg-primary-{50-900}'}</dt>
+                    <dt className="font-mono text-xs">{"bg-primary-{50-900}"}</dt>
                     <dd>
                       <ul className="flex -space-x-1">
                         {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((key, i, colors) => (
@@ -226,9 +226,9 @@ export function Customization() {
                         exit={{ opacity: 0 }}
                         className="font-mono text-xs"
                       >
-                        {'bg-'}
+                        {"bg-"}
                         {themes[theme].secondaryColorName}
-                        {'-{50-900}'}
+                        {"-{50-900}"}
                       </motion.dt>
                     </AnimatePresence>
                     <dd>
@@ -262,8 +262,8 @@ export function Customization() {
               tokenComponent={CustomizationToken}
               tokenProps={{ theme }}
               transformTokens={(token) => {
-                if (typeof token === 'string' && token.includes('__SECONDARY_COLOR__')) {
-                  return ['__SECONDARY_COLOR__', token]
+                if (typeof token === "string" && token.includes("__SECONDARY_COLOR__")) {
+                  return ["__SECONDARY_COLOR__", token]
                 }
                 return token
               }}
@@ -283,14 +283,14 @@ function CustomizationToken({ theme, ...props }) {
     initial.current = false
   }, [])
 
-  if (token[0] === 'string' && token[1].startsWith("'font-")) {
+  if (token[0] === "string" && token[1].startsWith("'font-")) {
     let [i, j] = token[1].match(/[0-9]+/g).map((x) => parseInt(x, 10))
 
     return (
       <span className="text-code-string">
         '
         <span
-          className={clsx('code-highlight', { 'animate-flash-code': !initial.current })}
+          className={clsx("code-highlight", { "animate-flash-code": !initial.current })}
           key={themes[theme].fontStacks[i][j]}
         >
           {themes[theme].fontStacks[i][j]}
@@ -300,15 +300,15 @@ function CustomizationToken({ theme, ...props }) {
     )
   }
 
-  if (token[0] === 'string' && token[1].startsWith("'color-")) {
-    const [, name, shade] = token[1].substr(1, token[1].length - 2).split('-')
+  if (token[0] === "string" && token[1].startsWith("'color-")) {
+    const [, name, shade] = token[1].substr(1, token[1].length - 2).split("-")
     const color = tailwindColors[themes[theme][`${name}Color`]][shade]
 
     return (
       <span className="text-code-string">
         '
         <span
-          className={clsx('code-highlight', { 'animate-flash-code': !initial.current })}
+          className={clsx("code-highlight", { "animate-flash-code": !initial.current })}
           key={color}
         >
           {color}
@@ -318,13 +318,13 @@ function CustomizationToken({ theme, ...props }) {
     )
   }
 
-  if (token[0] === '__SECONDARY_COLOR__') {
-    return token[1].split('__SECONDARY_COLOR__').map((part, i) =>
+  if (token[0] === "__SECONDARY_COLOR__") {
+    return token[1].split("__SECONDARY_COLOR__").map((part, i) =>
       i % 2 === 0 ? (
         part
       ) : (
         <span
-          className={clsx('code-highlight', { 'animate-flash-code': !initial.current })}
+          className={clsx("code-highlight", { "animate-flash-code": !initial.current })}
           key={themes[theme].secondaryColorName}
         >
           {themes[theme].secondaryColorName}

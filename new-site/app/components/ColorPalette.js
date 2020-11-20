@@ -1,6 +1,6 @@
-import { defaultConfig } from '@/utils/defaultConfig'
-import { kebabToTitleCase } from '@/utils/kebabToTitleCase'
-import dlv from 'dlv'
+import { defaultConfig } from "@/utils/defaultConfig"
+import { kebabToTitleCase } from "@/utils/kebabToTitleCase"
+import dlv from "dlv"
 
 export function ColorPalette({ colors }) {
   return colors.map((color, i) => {
@@ -8,10 +8,10 @@ export function ColorPalette({ colors }) {
     let value = Array.isArray(color) ? color[1] : color
 
     let palette =
-      typeof value === 'string'
+      typeof value === "string"
         ? [50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((variant) => ({
             name: variant,
-            value: dlv(defaultConfig, ['theme', 'colors', value, variant]),
+            value: dlv(defaultConfig, ["theme", "colors", value, variant]),
           }))
         : Object.keys(value).map((name) => ({ name, value: value[name] }))
 

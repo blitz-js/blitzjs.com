@@ -1,14 +1,14 @@
-import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { Tabs } from '@/components/Tabs'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients as allGradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/browser-support.svg'
-import { Fragment, useState } from 'react'
-import { AnimatePresence, motion, useInvertedScale } from 'framer-motion'
-import { usePrevious } from '@/hooks/usePrevious'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import clsx from 'clsx'
+import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { Tabs } from "@/components/Tabs"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients as allGradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/browser-support.svg"
+import { Fragment, useState } from "react"
+import { AnimatePresence, motion, useInvertedScale } from "framer-motion"
+import { usePrevious } from "@/hooks/usePrevious"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import clsx from "clsx"
 
 const gradients = [
   allGradients.purple,
@@ -20,21 +20,21 @@ const gradients = [
 ]
 
 const codeWindowClassNames = [
-  'bg-fuchsia-500',
-  'bg-blue-400',
-  'bg-light-blue-500',
-  'bg-cyan-500',
-  'bg-orange-500',
-  'bg-rose-500',
+  "bg-fuchsia-500",
+  "bg-blue-400",
+  "bg-light-blue-500",
+  "bg-cyan-500",
+  "bg-orange-500",
+  "bg-rose-500",
 ]
 
 const blocksClassNames = [
-  'text-purple-300',
-  'text-blue-300',
-  'text-light-blue-300',
-  'text-emerald-300',
-  'text-amber-300',
-  'text-rose-300',
+  "text-purple-300",
+  "text-blue-300",
+  "text-light-blue-300",
+  "text-emerald-300",
+  "text-amber-300",
+  "text-rose-300",
 ]
 
 const lines = {
@@ -84,43 +84,43 @@ const lines = {
 }
 
 export function ModernFeatures() {
-  const [feature, setFeature] = useState('grid')
+  const [feature, setFeature] = useState("grid")
   const [selectedGradient, setSelectedGradient] = useState(gradients[0])
   const prevFeature = usePrevious(feature)
 
   const augment = (style, x, y, rotate = false) => {
     let augmented = {}
     for (let k in style) {
-      if (k === 'x') augmented[k] = [style[k] + 50 * x, style[k]]
-      else if (k === 'y') augmented[k] = [style[k] + 50 * y, style[k]]
-      else if (k === 'rotate' && rotate) augmented[k] = [style[k] + 10 * x, style[k]]
+      if (k === "x") augmented[k] = [style[k] + 50 * x, style[k]]
+      else if (k === "y") augmented[k] = [style[k] + 50 * y, style[k]]
+      else if (k === "rotate" && rotate) augmented[k] = [style[k] + 10 * x, style[k]]
       else augmented[k] = [style[k], style[k]]
     }
     return augmented
   }
 
   const animate = (transforms, grid, x, y) => {
-    if (feature === 'transforms') {
+    if (feature === "transforms") {
       return {
-        animate: prevFeature === 'gradients' ? augment(transforms, x, y, true) : transforms,
+        animate: prevFeature === "gradients" ? augment(transforms, x, y, true) : transforms,
         transition:
-          prevFeature === 'gradients' ? { delay: 0.3, duration: 0.25, ease: [0, 0, 0.2, 1] } : {},
+          prevFeature === "gradients" ? { delay: 0.3, duration: 0.25, ease: [0, 0, 0.2, 1] } : {},
       }
     }
-    if (feature === 'grid') {
+    if (feature === "grid") {
       return {
-        animate: prevFeature === 'gradients' ? augment(grid, x, y) : grid,
+        animate: prevFeature === "gradients" ? augment(grid, x, y) : grid,
         transition:
-          prevFeature === 'gradients' ? { delay: 0.3, duration: 0.25, ease: [0, 0, 0.2, 1] } : {},
+          prevFeature === "gradients" ? { delay: 0.3, duration: 0.25, ease: [0, 0, 0.2, 1] } : {},
       }
     }
-    if (feature === 'gradients' && prevFeature === 'grid') {
+    if (feature === "gradients" && prevFeature === "grid") {
       return {
         animate: { ...grid, x: grid.x + 50 * x, y: grid.y + 50 * y },
         transition: { duration: 0.25, ease: [0, 0, 0.2, 1] },
       }
     }
-    if (feature === 'gradients' && prevFeature === 'transforms') {
+    if (feature === "gradients" && prevFeature === "transforms") {
       return {
         animate: {
           ...transforms,
@@ -172,7 +172,7 @@ export function ModernFeatures() {
         header={
           <div className="flex overflow-auto py-0.5 -my-0.5 pl-0.5 -mx-4 sm:-mx-6 md:-mx-8 xl:-ml-4 xl:mr-0">
             <Tabs
-              tabs={{ grid: 'CSS Grid', transforms: 'Transforms', gradients: 'Gradients' }}
+              tabs={{ grid: "CSS Grid", transforms: "Transforms", gradients: "Gradients" }}
               selected={feature}
               onChange={setFeature}
               className="mx-auto xl:mx-0 px-4 sm:px-6 md:px-8 xl:px-0"
@@ -182,20 +182,20 @@ export function ModernFeatures() {
         left={
           <div
             className={clsx(
-              'flex pl-4 pb-6 sm:pl-0 lg:pb-0 lg:mr-6 text-4xl font-black',
+              "flex pl-4 pb-6 sm:pl-0 lg:pb-0 lg:mr-6 text-4xl font-black",
               blocksClassNames[gradients.indexOf(selectedGradient)]
             )}
           >
             <motion.div
               key="blocks"
               initial={false}
-              animate={{ opacity: feature === 'grid' || feature === 'transforms' ? 1 : 0 }}
+              animate={{ opacity: feature === "grid" || feature === "transforms" ? 1 : 0 }}
               transition={{
                 duration: 0.3,
-                delay: feature === 'grid' || feature === 'transforms' ? 0.3 : 0,
+                delay: feature === "grid" || feature === "transforms" ? 0.3 : 0,
               }}
               className={`w-full flex-none grid grid-cols-3 grid-rows-2 gap-4 ${
-                feature === 'gradients' ? 'pointer-events-none' : ''
+                feature === "gradients" ? "pointer-events-none" : ""
               }`}
             >
               <motion.div
@@ -268,18 +268,18 @@ export function ModernFeatures() {
             <motion.ul
               key="gradients"
               className={`self-center bg-white shadow-lg rounded-3xl w-full flex-none -ml-full p-2 grid grid-cols-6 ${
-                feature === 'gradients' ? '' : 'pointer-events-none'
+                feature === "gradients" ? "" : "pointer-events-none"
               }`}
               initial={false}
-              animate={{ opacity: feature === 'gradients' ? 1 : 0 }}
-              transition={{ duration: 0.3, delay: feature === 'gradients' ? 0.3 : 0 }}
+              animate={{ opacity: feature === "gradients" ? 1 : 0 }}
+              transition={{ duration: 0.3, delay: feature === "gradients" ? 0.3 : 0 }}
             >
               {gradients.map((gradient, i) => (
                 <motion.li
                   key={gradient}
                   initial={false}
-                  animate={feature === 'gradients' ? { opacity: [0, 1] } : { opacity: 0 }}
-                  transition={{ delay: feature === 'gradients' ? 0.3 + 0.06 * i : 0 }}
+                  animate={feature === "gradients" ? { opacity: [0, 1] } : { opacity: 0 }}
+                  transition={{ delay: feature === "gradients" ? 0.3 + 0.06 * i : 0 }}
                 >
                   <button
                     type="button"
@@ -289,9 +289,9 @@ export function ModernFeatures() {
                     <span className="sr-only"></span>
                     <div
                       className={clsx(
-                        'absolute inset-0 rounded-full bg-gray-200 transition-transform duration-500 transform',
+                        "absolute inset-0 rounded-full bg-gray-200 transition-transform duration-500 transform",
                         {
-                          'scale-80': selectedGradient !== gradient,
+                          "scale-80": selectedGradient !== gradient,
                         }
                       )}
                     />
@@ -307,7 +307,7 @@ export function ModernFeatures() {
         right={
           <CodeWindow
             className={clsx(
-              'transition-colors duration-200',
+              "transition-colors duration-200",
               codeWindowClassNames[gradients.indexOf(selectedGradient)]
             )}
           >
@@ -321,16 +321,16 @@ export function ModernFeatures() {
               >
                 <CodeWindow.Code2
                   lines={
-                    feature === 'gradients' ? lines[feature].length + 10 : lines[feature].length
+                    feature === "gradients" ? lines[feature].length + 10 : lines[feature].length
                   }
                 >
-                  {feature === 'gradients' ? (
+                  {feature === "gradients" ? (
                     <GradientsCode lines={lines.gradients} selectedGradient={selectedGradient} />
                   ) : (
                     lines[feature].map((tokens, lineIndex) => (
                       <Fragment key={lineIndex}>
                         {tokens.map((token, tokenIndex) => {
-                          if (token.types[token.types.length - 1] === 'attr-value') {
+                          if (token.types[token.types.length - 1] === "attr-value") {
                             return (
                               <span key={tokenIndex} className={getClassNameForToken(token)}>
                                 {token.content.split(/\[([^\]]+)\]/).map((part, i) =>
@@ -351,7 +351,7 @@ export function ModernFeatures() {
                             </span>
                           )
                         })}
-                        {'\n'}
+                        {"\n"}
                       </Fragment>
                     ))
                   )}
@@ -378,22 +378,22 @@ function GradientsCode({ lines, selectedGradient }) {
             {lineIndex !== 0 && lineIndex !== lines.length - 1 && (
               <div
                 className="transition-transform duration-500"
-                style={{ transform: `translateY(${lineIndex <= activeIndex ? '-100%' : '0'})` }}
+                style={{ transform: `translateY(${lineIndex <= activeIndex ? "-100%" : "0"})` }}
               >
-                <span>{'<!--'}</span>
+                <span>{"<!--"}</span>
               </div>
             )}
             <div
-              className={clsx('transition-transform duration-500', { 'not-mono': !isComment })}
+              className={clsx("transition-transform duration-500", { "not-mono": !isComment })}
               style={{
                 transform: `translateY(${
                   lineIndex === activeIndex && lineIndex !== 0
-                    ? '100%'
+                    ? "100%"
                     : activeIndex > lineIndex && lineIndex !== 0
-                    ? '200%'
+                    ? "200%"
                     : activeIndex > lineIndex
-                    ? '100%'
-                    : '0'
+                    ? "100%"
+                    : "0"
                 })`,
               }}
             >
@@ -406,9 +406,9 @@ function GradientsCode({ lines, selectedGradient }) {
             {lineIndex !== 0 && lineIndex !== lines.length - 1 && (
               <div
                 className="transition-transform duration-500"
-                style={{ transform: `translateY(${lineIndex <= activeIndex ? '-100%' : '0'})` }}
+                style={{ transform: `translateY(${lineIndex <= activeIndex ? "-100%" : "0"})` }}
               >
-                <span>{'-->'}</span>
+                <span>{"-->"}</span>
               </div>
             )}
           </Fragment>

@@ -1,6 +1,6 @@
-import { useIsHome } from '@/hooks/useIsHome'
-import { PageHeader } from '@/components/PageHeader'
-import clsx from 'clsx'
+import { useIsHome } from "@/hooks/useIsHome"
+import { PageHeader } from "@/components/PageHeader"
+import clsx from "clsx"
 
 export function BasicLayout({ children, meta, classes, tableOfContents }) {
   let isHome = useIsHome()
@@ -8,12 +8,12 @@ export function BasicLayout({ children, meta, classes, tableOfContents }) {
   return (
     <div
       id={meta.containerId}
-      className={clsx('pb-16 w-full', { 'pt-12': isHome, 'pt-24 lg:pt-28': !isHome })}
+      className={clsx("pb-16 w-full", { "pt-12": isHome, "pt-24 lg:pt-28": !isHome })}
     >
       <PageHeader
         title={meta.title}
         description={meta.description}
-        badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
+        badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
         border={meta.headerSeparator !== false}
       />
       <div className="flex">

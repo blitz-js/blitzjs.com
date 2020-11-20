@@ -1,21 +1,21 @@
-const { createMacro } = require('babel-plugin-macros')
-const Prism = require('prismjs')
-const { parseExpression } = require('@babel/parser')
-const generate = require('@babel/generator').default
+const { createMacro } = require("babel-plugin-macros")
+const Prism = require("prismjs")
+const { parseExpression } = require("@babel/parser")
+const generate = require("@babel/generator").default
 
 module.exports = createMacro(tokenizeMacro)
 
 function simplify(token) {
-  if (typeof token === 'string') return token
+  if (typeof token === "string") return token
   return [token.type, Array.isArray(token.content) ? token.content.map(simplify) : token.content]
 }
 
 function tokenizeMacro({ references, babel: { types: t } }) {
   if (references.default) {
-    references.default.forEach(createTransform('tokens'))
+    references.default.forEach(createTransform("tokens"))
   }
   if (references.tokenizeWithLines) {
-    references.tokenizeWithLines.forEach(createTransform('lines'))
+    references.tokenizeWithLines.forEach(createTransform("lines"))
   }
 
   function createTransform(type) {
@@ -33,7 +33,7 @@ function tokenizeMacro({ references, babel: { types: t } }) {
       const argsNode = path.parentPath.parentPath.node.arguments[3]
       let args = {}
       if (argsNode) {
-        eval('args = ' + generate(argsNode).code)
+        eval("args = " + generate(argsNode).code)
       }
 
       const codeTransformerNode = path.parentPath.parentPath.node.arguments[2]
@@ -48,9 +48,9 @@ function tokenizeMacro({ references, babel: { types: t } }) {
       path.parentPath.parentPath.replaceWith(
         parseExpression(
           JSON.stringify({
-            ...(type === 'tokens' ? { tokens: tokens.map(simplify) } : {}),
-            ...(type === 'lines' ? { lines: normalizeTokens(tokens) } : {}),
-            ...(returnCode ? { code: returnCode === 'original' ? originalCode : code } : {}),
+            ...(type === "tokens" ? { tokens: tokens.map(simplify) } : {}),
+            ...(type === "lines" ? { lines: normalizeTokens(tokens) } : {}),
+            ...(returnCode ? { code: returnCode === "original" ? originalCode : code } : {}),
             ...args,
           })
         )
@@ -67,11 +67,11 @@ const newlineRe = /\r\n|\r|\n/
 function normalizeEmptyLines(line) {
   if (line.length === 0) {
     line.push({
-      types: ['plain'],
-      content: '',
+      types: ["plain"],
+      content: "",
       empty: true,
     })
-  } else if (line.length === 1 && line[0].content === '') {
+  } else if (line.length === 1 && line[0].content === "") {
     line[0].empty = true
   }
 }
@@ -112,8 +112,8 @@ function normalizeTokens(tokens) {
       const token = tokenArr[i]
 
       // Determine content and append type to types if necessary
-      if (typeof token === 'string') {
-        types = stackIndex > 0 ? types : ['plain']
+      if (typeof token === "string") {
+        types = stackIndex > 0 ? types : ["plain"]
         content = token
       } else {
         types = appendTypes(types, token.type)
@@ -125,7 +125,7 @@ function normalizeTokens(tokens) {
       }
 
       // If token.content is an array, increase the stack depth and repeat this while-loop
-      if (typeof content !== 'string') {
+      if (typeof content !== "string") {
         stackIndex++
         typeArrStack.push(types)
         tokenArrStack.push(content)

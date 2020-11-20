@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import { VersionSwitcher } from '@/components/VersionSwitcher'
-import { Search } from '@/components/Search'
-import clsx from 'clsx'
-import Router from 'next/router'
-import { Logo } from '@/components/Logo'
+import Link from "next/link"
+import { VersionSwitcher } from "@/components/VersionSwitcher"
+import { Search } from "@/components/Search"
+import clsx from "clsx"
+import Router from "next/router"
+import { Logo } from "@/components/Logo"
 
 export function Header({ navIsOpen, onNavToggle }) {
   return (
@@ -15,7 +15,7 @@ export function Header({ navIsOpen, onNavToggle }) {
               className="overflow-hidden w-10 md:w-auto"
               onContextMenu={(e) => {
                 e.preventDefault()
-                Router.push('/brand')
+                Router.push("/brand")
               }}
             >
               <span className="sr-only">Tailwind CSS home page</span>
@@ -53,9 +53,9 @@ export function Header({ navIsOpen, onNavToggle }) {
           height="24"
           fill="none"
           className={clsx(
-            'absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform',
+            "absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform",
             {
-              'opacity-0 scale-80': navIsOpen,
+              "opacity-0 scale-80": navIsOpen,
             }
           )}
         >
@@ -72,9 +72,9 @@ export function Header({ navIsOpen, onNavToggle }) {
           height="24"
           fill="none"
           className={clsx(
-            'absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform',
+            "absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform",
             {
-              'opacity-0 scale-80': !navIsOpen,
+              "opacity-0 scale-80": !navIsOpen,
             }
           )}
         >

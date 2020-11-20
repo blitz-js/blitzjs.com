@@ -1,24 +1,25 @@
-import { tailwindVersion } from '@/utils/tailwindVersion'
-import clsx from 'clsx'
-import { useRef } from 'react'
+import { tailwindVersion } from "@/utils/tailwindVersion"
+import clsx from "clsx"
+import { useRef } from "react"
 
 export function VersionSwitcher({ className }) {
   let selectRef = useRef()
 
   function submit(e) {
     e.preventDefault()
-    if (selectRef.current.value === 'v0') {
-      window.location = 'https://tailwindcss-v0.netlify.app/'
+    if (selectRef.current.value === "v0") {
+      window.location = "https://tailwindcss-v0.netlify.app/"
     }
-    if (selectRef.current.value === 'v1') {
-      window.location = 'https://v1.tailwindcss.com/'
+    if (selectRef.current.value === "v1") {
+      window.location = "https://v1.tailwindcss.com/"
     }
   }
 
   return (
-    <form onSubmit={submit} className={clsx('relative', className)}>
+    <form onSubmit={submit} className={clsx("relative", className)}>
       <label>
         <span className="sr-only">Tailwind CSS Version</span>
+        {/* eslint-disable-next-line */}
         <select
           ref={selectRef}
           className="appearance-none block bg-transparent pr-7 py-1 text-gray-500 font-medium text-sm focus:outline-none focus:text-gray-900 transition-colors duration-200"

@@ -1,8 +1,8 @@
-import clsx from 'clsx'
-import { forwardRef, Fragment, useMemo } from 'react'
-import tokenize from '../macros/tokenize.macro'
-import { Code } from './Code'
-import styles from './CodeWindow.module.css'
+import clsx from "clsx"
+import { forwardRef, Fragment, useMemo } from "react"
+import tokenize from "../macros/tokenize.macro"
+import { Code } from "./Code"
+import styles from "./CodeWindow.module.css"
 
 const { tokens: defaultTokens } = tokenize.html(`<div class="flex pa-2 bg-white rounded-lg shadow">
   <div class="w-32 rounded-md overflow-hidden">
@@ -24,7 +24,7 @@ const { tokens: defaultTokens } = tokenize.html(`<div class="flex pa-2 bg-white 
   </div>
 </div>`)
 
-export function CodeWindow({ children, lineNumbersBackground = true, className = '' }) {
+export function CodeWindow({ children, lineNumbersBackground = true, className = "" }) {
   return (
     <div
       className={`relative overflow-hidden md:rounded-xl shadow-2xl flex ${styles.root} ${className}`}
@@ -58,7 +58,7 @@ CodeWindow.Code = forwardRef(({ tokens = defaultTokens, initialLineNumber = 1, .
     let line = initialLineNumber + 1
     let str = `${initialLineNumber}\n`
     for (let i = 0; i < t.length; i++) {
-      if (typeof t[i] === 'string') {
+      if (typeof t[i] === "string") {
         const newLineChars = t[i].match(/\n/g)
         if (newLineChars !== null) {
           for (let j = 0; j < newLineChars.length; j++) {
@@ -92,10 +92,10 @@ CodeWindow.Code = forwardRef(({ tokens = defaultTokens, initialLineNumber = 1, .
 
 export function getClassNameForToken({ types, empty }) {
   const typesSize = types.length
-  if (typesSize === 1 && types[0] === 'plain') {
-    return empty ? 'inline-block' : undefined
+  if (typesSize === 1 && types[0] === "plain") {
+    return empty ? "inline-block" : undefined
   }
-  return (types[typesSize - 1] + (empty ? ' inline-block' : ' token')).trim()
+  return (types[typesSize - 1] + (empty ? " inline-block" : " token")).trim()
 }
 
 CodeWindow.Code2 = forwardRef(
@@ -103,8 +103,8 @@ CodeWindow.Code2 = forwardRef(
     return (
       <div
         ref={ref}
-        className={clsx(className, 'w-full flex-auto flex min-h-0', {
-          'overflow-auto': overflow === true || overflow === 'y',
+        className={clsx(className, "w-full flex-auto flex min-h-0", {
+          "overflow-auto": overflow === true || overflow === "y",
         })}
       >
         <div className="w-full relative flex-auto">
@@ -126,8 +126,8 @@ CodeWindow.Code2 = forwardRef(
               )}
             </div>
             <code
-              className={clsx('flex-auto relative block text-white pt-4 pb-4 px-4', {
-                'overflow-auto': overflow === true || overflow === 'x',
+              className={clsx("flex-auto relative block text-white pt-4 pb-4 px-4", {
+                "overflow-auto": overflow === true || overflow === "x",
               })}
             >
               {children}

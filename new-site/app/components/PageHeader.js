@@ -1,10 +1,10 @@
-import clsx from 'clsx'
+import clsx from "clsx"
 
 export function PageHeader({ title, description, badge = {}, border = true }) {
   if (!title && !description) return null
 
   return (
-    <div className={clsx('pb-10', { 'border-b border-gray-200 mb-10': border })}>
+    <div className={clsx("pb-10", { "border-b border-gray-200 mb-10": border })}>
       <div className="flex items-center">
         <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">{title}</h1>
         {badge.key && badge.value && (

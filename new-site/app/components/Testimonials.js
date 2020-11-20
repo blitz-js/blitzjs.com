@@ -1,113 +1,113 @@
-import { useEffect, useState } from 'react'
-import { motion, useTransform, animate, useMotionValue } from 'framer-motion'
-import { gradients } from '@/utils/gradients'
-import { useInView } from 'react-intersection-observer'
+import { useEffect, useState } from "react"
+import { motion, useTransform, animate, useMotionValue } from "framer-motion"
+import { gradients } from "@/utils/gradients"
+import { useInView } from "react-intersection-observer"
 
 const colors = {
-  lightblue: [gradients.lightblue[0], 'text-cyan-100', 'bg-cyan-100'],
-  purple: [gradients.purple[0], 'text-fuchsia-100', 'bg-fuchsia-100'],
-  orange: [gradients.orange[0], 'text-orange-100', 'bg-orange-100'],
-  teal: [gradients.teal[0], 'text-green-100', 'bg-green-100'],
-  violet: [gradients.violet[0], 'text-purple-100', 'bg-purple-100'],
-  amber: [gradients.amber[0], 'text-orange-100', 'bg-orange-100'],
-  pink: [gradients.pink[0], 'text-rose-100', 'bg-rose-100'],
-  blue: [gradients.blue[0], 'text-light-blue-100', 'bg-light-blue-100'],
+  lightblue: [gradients.lightblue[0], "text-cyan-100", "bg-cyan-100"],
+  purple: [gradients.purple[0], "text-fuchsia-100", "bg-fuchsia-100"],
+  orange: [gradients.orange[0], "text-orange-100", "bg-orange-100"],
+  teal: [gradients.teal[0], "text-green-100", "bg-green-100"],
+  violet: [gradients.violet[0], "text-purple-100", "bg-purple-100"],
+  amber: [gradients.amber[0], "text-orange-100", "bg-orange-100"],
+  pink: [gradients.pink[0], "text-rose-100", "bg-rose-100"],
+  blue: [gradients.blue[0], "text-light-blue-100", "bg-light-blue-100"],
 }
 
 const rotation = [-2, 1, -1, 2, -1, 1]
 
 const testimonials = [
   {
-    content: 'I feel like an idiot for not using Tailwind CSS until now.',
-    tweetUrl: 'https://twitter.com/ryanflorence/status/1187951799442886656',
+    content: "I feel like an idiot for not using Tailwind CSS until now.",
+    tweetUrl: "https://twitter.com/ryanflorence/status/1187951799442886656",
     author: {
-      name: 'Ryan Florence',
-      role: 'Remix & React Training',
-      avatar: require('@/img/avatars/ryan-florence.jpg').default,
+      name: "Ryan Florence",
+      role: "Remix & React Training",
+      avatar: require("@/img/avatars/ryan-florence.jpg").default,
     },
   },
   {
     content:
-      'If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS.',
-    tweetUrl: 'https://twitter.com/rauchg/status/1225611926320738304',
+      "If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS.",
+    tweetUrl: "https://twitter.com/rauchg/status/1225611926320738304",
     author: {
-      name: 'Guillermo Rauch',
-      role: 'Vercel',
-      avatar: require('@/img/avatars/guillermo-rauch.jpg').default,
+      name: "Guillermo Rauch",
+      role: "Vercel",
+      avatar: require("@/img/avatars/guillermo-rauch.jpg").default,
     },
   },
   {
     content:
       "I used Tailwind to redesign feltpresence.com the other day. It's fantastic! I only gave myself a few hours to hack it together and it made a huge difference.",
     author: {
-      name: 'Ryan Singer',
-      role: 'Basecamp',
-      avatar: require('@/img/avatars/ryan-singer.jpg').default,
+      name: "Ryan Singer",
+      role: "Basecamp",
+      avatar: require("@/img/avatars/ryan-singer.jpg").default,
     },
   },
   {
     content:
-      'There’s one thing that sucks about @tailwindcss - once you’ve used it on a handful of projects it is a real pain in the ass to write normal CSS again.',
-    tweetUrl: 'https://twitter.com/iamgraem_e/status/1322861404781748228?s=21',
+      "There’s one thing that sucks about @tailwindcss - once you’ve used it on a handful of projects it is a real pain in the ass to write normal CSS again.",
+    tweetUrl: "https://twitter.com/iamgraem_e/status/1322861404781748228?s=21",
     author: {
-      name: 'Graeme Houston',
-      role: 'JavaScript Developer',
-      avatar: require('@/img/avatars/graeme-houston.jpg').default,
+      name: "Graeme Houston",
+      role: "JavaScript Developer",
+      avatar: require("@/img/avatars/graeme-houston.jpg").default,
     },
   },
   {
-    content: 'Okay, @tailwindcss just clicked for me and now I feel like a #!@%&$% idiot.',
-    tweetUrl: 'https://twitter.com/ken_wheeler/status/1225373231139475458',
+    content: "Okay, @tailwindcss just clicked for me and now I feel like a #!@%&$% idiot.",
+    tweetUrl: "https://twitter.com/ken_wheeler/status/1225373231139475458",
     author: {
-      name: 'Ken Wheeler',
+      name: "Ken Wheeler",
       role: `React Engineer`,
-      avatar: require('@/img/avatars/ken-wheeler.jpg').default,
+      avatar: require("@/img/avatars/ken-wheeler.jpg").default,
     },
   },
   {
     content: `I've been using @tailwindcss the past few months and it's amazing. I already used some utility classes before, but going utility-first... this is the way.`,
-    tweetUrl: 'https://twitter.com/JadLimcaco/status/1327417021915561984',
+    tweetUrl: "https://twitter.com/JadLimcaco/status/1327417021915561984",
     author: {
-      name: 'Jad Limcaco',
-      role: 'Designer',
-      avatar: require('@/img/avatars/jad-limcaco.jpg').default,
+      name: "Jad Limcaco",
+      role: "Designer",
+      avatar: require("@/img/avatars/jad-limcaco.jpg").default,
     },
   },
   {
     content: `After finally getting to use @tailwindcss on a real client project in the last two weeks I never want to write CSS by hand again. I was a skeptic, but the hype is real.`,
-    tweetUrl: 'https://twitter.com/lukeredpath/status/1316543571684663298?s=21',
+    tweetUrl: "https://twitter.com/lukeredpath/status/1316543571684663298?s=21",
     author: {
-      name: 'Luke Redpath',
-      role: 'Ruby & iOS Developer',
-      avatar: require('@/img/avatars/luke-redpath.jpg').default,
+      name: "Luke Redpath",
+      role: "Ruby & iOS Developer",
+      avatar: require("@/img/avatars/luke-redpath.jpg").default,
     },
   },
   {
     content: `Okay, I’m officially *all* in on the @tailwindcss hype train. Never thought building websites could be so ridiculously fast and flexible.`,
-    tweetUrl: 'https://twitter.com/lukeredpath/status/1316543571684663298?s=21',
+    tweetUrl: "https://twitter.com/lukeredpath/status/1316543571684663298?s=21",
     author: {
-      name: 'Aaron Bushnell',
-      role: 'Programmer @ TrendyMinds',
-      avatar: require('@/img/avatars/aaron-bushnell.jpg').default,
+      name: "Aaron Bushnell",
+      role: "Programmer @ TrendyMinds",
+      avatar: require("@/img/avatars/aaron-bushnell.jpg").default,
     },
   },
   {
     content:
       "I didn't think I was going to like @tailwindcss... spent a day using it for a POC, love it! I wish this had been around when we started our company design system, seriously considering a complete rebuild",
-    tweetUrl: 'https://twitter.com/JonBloomer/status/1300923818622377984',
+    tweetUrl: "https://twitter.com/JonBloomer/status/1300923818622377984",
     author: {
-      name: 'Jon Bloomer',
-      role: 'Front-End Developer',
-      avatar: require('@/img/avatars/jon-bloomer.jpg').default,
+      name: "Jon Bloomer",
+      role: "Front-End Developer",
+      avatar: require("@/img/avatars/jon-bloomer.jpg").default,
     },
   },
   {
-    content: '@tailwindcss looked unpleasant at first, but now I’m hooked on it.',
-    tweetUrl: 'https://twitter.com/droidgilliland/status/1222733372855848961',
+    content: "@tailwindcss looked unpleasant at first, but now I’m hooked on it.",
+    tweetUrl: "https://twitter.com/droidgilliland/status/1222733372855848961",
     author: {
-      name: 'Andrew Gilliland',
-      role: 'Front-End Developer',
-      avatar: require('@/img/avatars/andrew-gilliland.jpg').default,
+      name: "Andrew Gilliland",
+      role: "Front-End Developer",
+      avatar: require("@/img/avatars/andrew-gilliland.jpg").default,
     },
   },
 ]
@@ -116,7 +116,7 @@ function Testimonial({ testimonial, base, index, total }) {
   const x = useTransform(
     base,
     [0, (100 / total) * (index + 1), (100 / total) * (index + 1), 100],
-    ['0%', `${(index + 1) * -100}%`, `${total * 100 - (index + 1) * 100}%`, '0%']
+    ["0%", `${(index + 1) * -100}%`, `${total * 100 - (index + 1) * 100}%`, "0%"]
   )
   const [straight, setStraight] = useState(false)
 
@@ -138,7 +138,7 @@ function Testimonial({ testimonial, base, index, total }) {
           <svg width="45" height="36" className={`mb-5 fill-current ${color[1]}`}>
             <path d="M13.415.001C6.07 5.185.887 13.681.887 23.041c0 7.632 4.608 12.096 9.936 12.096 5.04 0 8.784-4.032 8.784-8.784 0-4.752-3.312-8.208-7.632-8.208-.864 0-2.016.144-2.304.288.72-4.896 5.328-10.656 9.936-13.536L13.415.001zm24.768 0c-7.2 5.184-12.384 13.68-12.384 23.04 0 7.632 4.608 12.096 9.936 12.096 4.896 0 8.784-4.032 8.784-8.784 0-4.752-3.456-8.208-7.776-8.208-.864 0-1.872.144-2.16.288.72-4.896 5.184-10.656 9.792-13.536L38.183.001z" />
           </svg>
-          {typeof testimonial.content === 'string' ? (
+          {typeof testimonial.content === "string" ? (
             <p>{testimonial.content}</p>
           ) : (
             testimonial.content
@@ -185,16 +185,16 @@ function Testimonial({ testimonial, base, index, total }) {
 
 export function Testimonials() {
   const x = useMotionValue(0)
-  const { inView, ref: inViewRef } = useInView({ threshold: 0, rootMargin: '100px' })
+  const { inView, ref: inViewRef } = useInView({ threshold: 0, rootMargin: "100px" })
   const [duration, setDuration] = useState(100)
 
   useEffect(() => {
     if (!inView) return
 
     const controls = animate(x, 100, {
-      type: 'tween',
+      type: "tween",
       duration,
-      ease: 'linear',
+      ease: "linear",
       loop: Infinity,
     })
 
@@ -210,7 +210,7 @@ export function Testimonials() {
     >
       <div
         className="absolute right-0 bottom-1/2 left-0 bg-gradient-to-t from-gray-100 pointer-events-none"
-        style={{ height: 607, maxHeight: '50vh' }}
+        style={{ height: 607, maxHeight: "50vh" }}
       />
       <div className="flex overflow-hidden -my-8">
         <ul className="flex items-center w-full py-8">

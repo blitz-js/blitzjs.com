@@ -1,46 +1,46 @@
-import { Testimonials } from '@/components/Testimonials'
-import { DarkMode } from '@/components/home/DarkMode'
-import { ConstraintBased } from '@/components/home/ConstraintBased'
-import { BuildAnything } from '@/components/home/BuildAnything'
-import { Performance } from '@/components/home/Performance'
-import { MobileFirst } from '@/components/home/MobileFirst'
-import { StateVariants } from '@/components/home/StateVariants'
-import { ComponentDriven } from '@/components/home/ComponentDriven'
-import { Customization } from '@/components/home/Customization'
-import { ModernFeatures } from '@/components/home/ModernFeatures'
-import { EditorTools } from '@/components/home/EditorTools'
-import { ReadyMadeComponents } from '@/components/home/ReadyMadeComponents'
-import { Search } from '@/components/Search'
-import { Hero } from '@/components/home/Hero'
-import { BigText, InlineCode, Link, Paragraph, Widont } from '@/components/home/common'
-import { useEffect, useState } from 'react'
-import { Logo } from '@/components/Logo'
-import { Footer } from '@/components/home/Footer'
-import NextLink from 'next/link'
-import Head from 'next/head'
+import { Testimonials } from "@/components/Testimonials"
+import { DarkMode } from "@/components/home/DarkMode"
+import { ConstraintBased } from "@/components/home/ConstraintBased"
+import { BuildAnything } from "@/components/home/BuildAnything"
+import { Performance } from "@/components/home/Performance"
+import { MobileFirst } from "@/components/home/MobileFirst"
+import { StateVariants } from "@/components/home/StateVariants"
+import { ComponentDriven } from "@/components/home/ComponentDriven"
+import { Customization } from "@/components/home/Customization"
+import { ModernFeatures } from "@/components/home/ModernFeatures"
+import { EditorTools } from "@/components/home/EditorTools"
+import { ReadyMadeComponents } from "@/components/home/ReadyMadeComponents"
+import { Search } from "@/components/Search"
+import { Hero } from "@/components/home/Hero"
+import { BigText, InlineCode, Link, Paragraph, Widont } from "@/components/home/common"
+import { useEffect, useState } from "react"
+import { Logo } from "@/components/Logo"
+import { Footer } from "@/components/home/Footer"
+import NextLink from "next/link"
+import Head from "next/head"
 
 function NpmInstallButton() {
-  const [state, setState] = useState('idle')
+  const [state, setState] = useState("idle")
 
   useEffect(() => {
     let current = true
-    if (state === 'copying') {
+    if (state === "copying") {
       navigator.clipboard
-        .writeText('npm install tailwindcss')
+        .writeText("npm install tailwindcss")
         .then(() => {
           if (current) {
-            setState('copied')
+            setState("copied")
           }
         })
         .catch(() => {
           if (current) {
-            setState('error')
+            setState("error")
           }
         })
-    } else if (state === 'copied' || state === 'error') {
+    } else if (state === "copied" || state === "error") {
       window.setTimeout(() => {
         if (current) {
-          setState('idle')
+          setState("idle")
         }
       }, 2000)
     }
@@ -51,11 +51,11 @@ function NpmInstallButton() {
     <button
       type="button"
       className="w-full sm:w-auto flex-none bg-gray-50 text-gray-400 hover:text-gray-900 font-mono leading-6 py-3 sm:px-6 border border-gray-200 rounded-xl flex items-center justify-center space-x-2 sm:space-x-4 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 focus:outline-none transition-colors duration-200"
-      onClick={() => setState('copying')}
+      onClick={() => setState("copying")}
     >
       <span className="text-gray-900">
         <span className="hidden sm:inline text-gray-500" aria-hidden="true">
-          ${' '}
+          ${" "}
         </span>
         npm install tailwindcss
       </span>
@@ -113,8 +113,8 @@ export default function Home() {
             Rapidly build modern websites without ever leaving your HTML.
           </h1>
           <p className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11">
-            A utility-first CSS framework packed with classes like <InlineCode>flex</InlineCode>,{' '}
-            <InlineCode>pt-4</InlineCode>, <InlineCode>text-center</InlineCode> and{' '}
+            A utility-first CSS framework packed with classes like <InlineCode>flex</InlineCode>,{" "}
+            <InlineCode>pt-4</InlineCode>, <InlineCode>text-center</InlineCode> and{" "}
             <InlineCode>rotate-90</InlineCode> that can be composed to build any design, directly in
             your markup.
           </p>
@@ -137,17 +137,17 @@ export default function Home() {
           <figure>
             <blockquote>
               <Paragraph className="max-w-4xl mx-auto mb-6">
-                I’ve written{' '}
+                I’ve written{" "}
                 <a
                   href="https://adamwathan.me/css-utility-classes-and-separation-of-concerns/"
                   className="text-light-blue-600 font-semibold"
                   style={{
                     boxShadow:
-                      'inset 0 -0.1666666667em 0 0 #fff, inset 0 -0.3333333333em 0 0 #bae6fd',
+                      "inset 0 -0.1666666667em 0 0 #fff, inset 0 -0.3333333333em 0 0 #bae6fd",
                   }}
                 >
                   a few thousand words
-                </a>{' '}
+                </a>{" "}
                 on why traditional “semantic class names” are the reason CSS is hard to maintain,
                 but the truth is you’re never going to believe me until you actually try it. If you
                 can suppress the initial gag reflex long enough to give it a chance, I promise
@@ -157,7 +157,7 @@ export default function Home() {
             <figcaption className="sm:text-xl font-medium flex flex-col items-center">
               <div className="p-1 border-2 border-light-blue-400 rounded-full mb-3">
                 <img
-                  src={require('@/img/adam.jpg').default}
+                  src={require("@/img/adam.jpg").default}
                   alt=""
                   className="w-10 h-10 rounded-full bg-light-blue-100"
                   loading="lazy"

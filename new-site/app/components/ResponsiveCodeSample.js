@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import redent from 'redent'
-import clsx from 'clsx'
+import { useState } from "react"
+import redent from "redent"
+import clsx from "clsx"
 
-const screens = ['', 'sm:', 'md:', 'lg:', 'xl:']
+const screens = ["", "sm:", "md:", "lg:", "xl:"]
 
 function Button({ children, active, onClick }) {
   return (
     <button
       type="button"
-      className={clsx('inline-block text-center cursor-pointer select-none px-3', {
-        'text-gray-800': active,
-        'text-gray-500': !active,
+      className={clsx("inline-block text-center cursor-pointer select-none px-3", {
+        "text-gray-800": active,
+        "text-gray-500": !active,
       })}
       onClick={onClick}
     >
@@ -34,13 +34,13 @@ export function ResponsiveCodeSample({
     if (groups > 1) {
       return classNames.map((group) => {
         for (let i = index; i >= 0; i--) {
-          if (group[i]) return group[i].replace(/\(([^)]+)\)/g, '$1')
+          if (group[i]) return group[i].replace(/\(([^)]+)\)/g, "$1")
         }
         return undefined
       })
     }
     for (let i = index; i >= 0; i--) {
-      if (classNames[i]) return classNames[i].replace(/\(([^)]+)\)/g, '$1')
+      if (classNames[i]) return classNames[i].replace(/\(([^)]+)\)/g, "$1")
     }
   }
 
@@ -129,7 +129,7 @@ export function ResponsiveCodeSample({
               {redent(
                 snippet(
                   groups === 1
-                    ? '{{CLASSNAMES}}'
+                    ? "{{CLASSNAMES}}"
                     : Array.from({ length: groups }).map((_, i) => `{{CLASSNAMES[${i}]}}`)
                 )
               )
@@ -143,15 +143,15 @@ export function ResponsiveCodeSample({
                         className ? (
                           <span
                             key={`${i}-${j}`}
-                            className={active === j ? 'text-code-yellow' : ''}
+                            className={active === j ? "text-code-yellow" : ""}
                           >
-                            {j === 0 ? '' : ' '}
+                            {j === 0 ? "" : " "}
                             {className
-                              .replace(/\(([^)]+)\)/g, '')
+                              .replace(/\(([^)]+)\)/g, "")
                               .trim()
                               .split(/\s+/)
                               .map((cn) => `${screens[j]}${cn}`)
-                              .join(' ')}
+                              .join(" ")}
                           </span>
                         ) : null
                       )
@@ -164,9 +164,9 @@ export function ResponsiveCodeSample({
         </div>
         <div
           className={clsx(
-            'rounded-b-lg border-l border-r border-b border-gray-400 bg-white',
+            "rounded-b-lg border-l border-r border-b border-gray-400 bg-white",
             previewClassName,
-            { 'p-4': !previewClassName }
+            { "p-4": !previewClassName }
           )}
         >
           {preview(getActiveClassName(active))}

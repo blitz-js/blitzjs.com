@@ -1,54 +1,54 @@
-import { ReactComponent as AngularLogo } from '@/img/guides/angular.svg'
-import { ReactComponent as CreateReactAppLogo } from '@/img/guides/create-react-app.svg'
-import { ReactComponent as GatsbyLogo } from '@/img/guides/gatsby.svg'
-import { ReactComponent as LaravelLogo } from '@/img/guides/laravel.svg'
-import { ReactComponent as NextJsLogo } from '@/img/guides/nextjs.svg'
-import { ReactComponent as NuxtJsLogo } from '@/img/guides/nuxtjs.svg'
-import { ReactComponent as RailsLogo } from '@/img/guides/rails.svg'
-import { ReactComponent as SvelteLogo } from '@/img/guides/svelte.svg'
-import { ReactComponent as Vue3Logo } from '@/img/guides/vue-3.svg'
-import Link from 'next/link'
+import { ReactComponent as AngularLogo } from "@/img/guides/angular.svg"
+import { ReactComponent as CreateReactAppLogo } from "@/img/guides/create-react-app.svg"
+import { ReactComponent as GatsbyLogo } from "@/img/guides/gatsby.svg"
+import { ReactComponent as LaravelLogo } from "@/img/guides/laravel.svg"
+import { ReactComponent as NextJsLogo } from "@/img/guides/nextjs.svg"
+import { ReactComponent as NuxtJsLogo } from "@/img/guides/nuxtjs.svg"
+import { ReactComponent as RailsLogo } from "@/img/guides/rails.svg"
+import { ReactComponent as SvelteLogo } from "@/img/guides/svelte.svg"
+import { ReactComponent as Vue3Logo } from "@/img/guides/vue-3.svg"
+import Link from "next/link"
 
 const guides = [
   {
-    name: 'Next.js',
+    name: "Next.js",
     logo: NextJsLogo,
-    link: '/docs/guides/nextjs',
+    link: "/docs/guides/nextjs",
   },
   {
-    name: 'Vue',
+    name: "Vue",
     logo: Vue3Logo,
-    link: '/docs/guides/vue-3-vite',
+    link: "/docs/guides/vue-3-vite",
   },
   {
-    name: 'Laravel',
+    name: "Laravel",
     logo: LaravelLogo,
-    link: '/docs/guides/laravel',
+    link: "/docs/guides/laravel",
   },
   {
-    name: 'Nuxt.js',
+    name: "Nuxt.js",
     logo: NuxtJsLogo,
-    link: '/docs/guides/nuxtjs',
+    link: "/docs/guides/nuxtjs",
   },
   {
-    name: 'Create React App',
+    name: "Create React App",
     logo: CreateReactAppLogo,
-    link: '/docs/guides/create-react-app',
+    link: "/docs/guides/create-react-app",
   },
   {
-    name: 'Gatsby',
+    name: "Gatsby",
     logo: GatsbyLogo,
-    link: '/docs/guides/gatsby',
+    link: "/docs/guides/gatsby",
   },
   {
-    name: 'Angular',
+    name: "Angular",
     logo: AngularLogo,
-    link: '/docs/guides/angular',
+    link: "/docs/guides/angular",
   },
   {
-    name: 'Rails',
+    name: "Rails",
     logo: RailsLogo,
-    link: '/docs/guides/rails',
+    link: "/docs/guides/rails",
   },
   // {
   //   name: 'Svelte',

@@ -1,9 +1,9 @@
-import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/ready-made-components.svg'
-import { useInView } from 'react-intersection-observer'
-import { motion } from 'framer-motion'
+import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/ready-made-components.svg"
+import { useInView } from "react-intersection-observer"
+import { motion } from "framer-motion"
 
 function AnimatedImage({ initial = {}, inView, ...props }) {
   return (
@@ -64,13 +64,13 @@ export function ReadyMadeComponents() {
                 </defs>
                 <image
                   clipPath="url(#foo)"
-                  xlinkHref={require('@/img/tailwindui.jpg').default}
+                  xlinkHref={require("@/img/tailwindui.jpg").default}
                   width="3771"
                   height="1811"
                 />
               </svg>
               <AnimatedImage
-                src={require('@/img/tailwindui-table.png').default}
+                src={require("@/img/tailwindui-table.png").default}
                 alt=""
                 className="absolute shadow-2xl rounded-md"
                 style={{
@@ -78,11 +78,11 @@ export function ReadyMadeComponents() {
                   left: `${(1356 / 3771) * 100}%`,
                   width: `${(1410 / 3771) * 100}%`,
                 }}
-                initial={{ y: '-20%' }}
+                initial={{ y: "-20%" }}
                 inView={inView}
               />
               <AnimatedImage
-                src={require('@/img/tailwindui-workcation.png').default}
+                src={require("@/img/tailwindui-workcation.png").default}
                 alt=""
                 className="absolute shadow-2xl rounded-md"
                 style={{
@@ -90,11 +90,11 @@ export function ReadyMadeComponents() {
                   top: `${(377 / 1811) * 100}%`,
                   width: `${(819 / 3771) * 100}%`,
                 }}
-                initial={{ x: '10%' }}
+                initial={{ x: "10%" }}
                 inView={inView}
               />
               <AnimatedImage
-                src={require('@/img/tailwindui-form.png').default}
+                src={require("@/img/tailwindui-form.png").default}
                 alt=""
                 className="absolute shadow-2xl rounded-md"
                 style={{
@@ -102,11 +102,11 @@ export function ReadyMadeComponents() {
                   left: `${(2300 / 3771) * 100}%`,
                   width: `${(690 / 3771) * 100}%`,
                 }}
-                initial={{ y: '15%' }}
+                initial={{ y: "15%" }}
                 inView={inView}
               />
               <AnimatedImage
-                src={require('@/img/tailwindui-projects.png').default}
+                src={require("@/img/tailwindui-projects.png").default}
                 alt=""
                 className="absolute shadow-2xl rounded-md"
                 style={{
@@ -114,7 +114,7 @@ export function ReadyMadeComponents() {
                   top: `${(462 / 1811) * 100}%`,
                   width: `${(1057 / 3771) * 100}%`,
                 }}
-                initial={{ x: '-10%' }}
+                initial={{ x: "-10%" }}
                 inView={inView}
               />
             </div>

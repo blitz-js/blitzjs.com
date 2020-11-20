@@ -1,14 +1,14 @@
-const visit = require('unist-util-visit')
-const redent = require('redent')
-const { addImport, highlightCode } = require('./utils')
+const visit = require("unist-util-visit")
+const redent = require("redent")
+const { addImport, highlightCode } = require("./utils")
 
 module.exports = () => {
   return (tree) => {
     let hasCodeSample = false
-    let component = addImport(tree, '@/components/CodeSample', 'CodeSample')
+    let component = addImport(tree, "@/components/CodeSample", "CodeSample")
 
-    visit(tree, 'code', (node) => {
-      if (node.lang !== 'html') return
+    visit(tree, "code", (node) => {
+      if (node.lang !== "html") return
       let hasPreview = false
       let previewClassName
       let previewCode
@@ -19,16 +19,16 @@ module.exports = () => {
             hasPreview = true
             previewClassName = class1 || class2
             previewCode = content
-            return ''
+            return ""
           }
         )
         .trim()
       if (!hasPreview) return
       if (!snippet) snippet = previewCode
 
-      snippet = highlightCode(redent(snippet).trim(), 'html')
+      snippet = highlightCode(redent(snippet).trim(), "html")
 
-      node.type = 'jsx'
+      node.type = "jsx"
       node.value = `
         <${component}
           preview={${JSON.stringify(previewCode)}}

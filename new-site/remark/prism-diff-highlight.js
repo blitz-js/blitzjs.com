@@ -7,28 +7,28 @@ module.exports = (Prism) => {
     /(?:__|[^\r\n<])*(?:\r\n?|\n|(?:__|[^\r\n<])(?![^\r\n]))/.source.replace(/__/g, function () {
       return HTML_TAG.source
     }),
-    'gi'
+    "gi"
   )
 
   var PREFIXES = Prism.languages.diff.PREFIXES
 
-  Prism.hooks.add('before-sanity-check', function (env) {
+  Prism.hooks.add("before-sanity-check", function (env) {
     var lang = env.language
     if (LANGUAGE_REGEX.test(lang) && !env.grammar) {
-      env.grammar = Prism.languages[lang] = Prism.languages['diff']
+      env.grammar = Prism.languages[lang] = Prism.languages["diff"]
     }
   })
-  Prism.hooks.add('before-tokenize', function (env) {
+  Prism.hooks.add("before-tokenize", function (env) {
     var lang = env.language
     if (LANGUAGE_REGEX.test(lang) && !Prism.languages[lang]) {
-      Prism.languages[lang] = Prism.languages['diff']
+      Prism.languages[lang] = Prism.languages["diff"]
     }
   })
 
-  Prism.hooks.add('wrap', function (env) {
+  Prism.hooks.add("wrap", function (env) {
     var diffLanguage, diffGrammar
 
-    if (env.language !== 'diff') {
+    if (env.language !== "diff") {
       var langMatch = LANGUAGE_REGEX.exec(env.language)
       if (!langMatch) {
         return // not a language specific diff
@@ -41,13 +41,13 @@ module.exports = (Prism) => {
     // one of the diff tokens without any nested tokens
     if (env.type in PREFIXES) {
       /** @type {string} */
-      var content = env.content.replace(HTML_TAG, '') // remove all HTML tags
+      var content = env.content.replace(HTML_TAG, "") // remove all HTML tags
 
       /** @type {string} */
-      var decoded = content.replace(/&lt;/g, '<').replace(/&amp;/g, '&')
+      var decoded = content.replace(/&lt;/g, "<").replace(/&amp;/g, "&")
 
       // remove any one-character prefix
-      var code = decoded.replace(/(^|[\r\n])./g, '$1')
+      var code = decoded.replace(/(^|[\r\n])./g, "$1")
 
       // highlight, if possible
       var highlighted
@@ -58,7 +58,7 @@ module.exports = (Prism) => {
       }
 
       // get the HTML source of the prefix token
-      var prefixToken = new Prism.Token('prefix', PREFIXES[env.type], [/\w+/.exec(env.type)[0]])
+      var prefixToken = new Prism.Token("prefix", PREFIXES[env.type], [/\w+/.exec(env.type)[0]])
       var prefix = Prism.Token.stringify(prefixToken, env.language)
 
       // add prefix
@@ -72,10 +72,10 @@ module.exports = (Prism) => {
         // because both "+a\n+" and "+a\n" will map to "a\n" after the line prefixes are removed
         lines.push(prefix)
       }
-      env.content = lines.join('')
+      env.content = lines.join("")
 
       if (diffGrammar) {
-        env.classes.push('language-' + diffLanguage)
+        env.classes.push("language-" + diffLanguage)
       }
     }
   })

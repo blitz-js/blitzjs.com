@@ -1,28 +1,28 @@
-import Link from 'next/link'
-import { documentationNav } from '@/navs/documentation'
-import clsx from 'clsx'
-import styles from './Footer.module.css'
-import { Logo } from '@/components/Logo'
+import Link from "next/link"
+import { documentationNav } from "@/navs/documentation"
+import clsx from "clsx"
+import styles from "./Footer.module.css"
+import { Logo } from "@/components/Logo"
 
 const footerNav = {
-  'Getting started': {
-    className: 'row-span-2',
-    items: documentationNav['Getting started'],
+  "Getting started": {
+    className: "row-span-2",
+    items: documentationNav["Getting started"],
   },
-  'Core concepts': {
-    className: 'row-span-2',
-    items: documentationNav['Core Concepts'],
+  "Core concepts": {
+    className: "row-span-2",
+    items: documentationNav["Core Concepts"],
   },
   Customization: {
-    className: 'row-span-2',
-    items: documentationNav['Customization'],
+    className: "row-span-2",
+    items: documentationNav["Customization"],
   },
   Community: {
     items: [
-      { title: 'GitHub', href: 'https://github.com/tailwindlabs/tailwindcss' },
-      { title: 'Discord', href: '/discord' },
-      { title: 'Twitter', href: 'https://twitter.com/tailwindcss' },
-      { title: 'YouTube', href: 'https://www.youtube.com/tailwindlabs' },
+      { title: "GitHub", href: "https://github.com/tailwindlabs/tailwindcss" },
+      { title: "Discord", href: "/discord" },
+      { title: "Twitter", href: "https://twitter.com/tailwindcss" },
+      { title: "YouTube", href: "https://www.youtube.com/tailwindlabs" },
     ],
   },
 }
@@ -35,7 +35,7 @@ export function Footer() {
           className={`${styles.nav} text-sm font-medium pb-14 sm:pb-20 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10`}
         >
           {Object.keys(footerNav).map((section, i) => (
-            <li key={section} className={clsx('space-y-5', footerNav[section].className)}>
+            <li key={section} className={clsx("space-y-5", footerNav[section].className)}>
               <h2 className="text-xs font-semibold tracking-wide text-gray-900 uppercase">
                 {section}
               </h2>

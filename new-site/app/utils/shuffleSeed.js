@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import seedrandom from 'seedrandom'
+import seedrandom from "seedrandom"
 
 const shuffleSeed = {}
 
@@ -34,11 +34,11 @@ const seedify = function (seed) {
   if (isNaN(seed))
     return Number(
       String((this.strSeed = seed))
-        .split('')
+        .split("")
         .map(function (x) {
           return x.charCodeAt(0)
         })
-        .join('')
+        .join("")
     )
   return seed
 }
@@ -49,7 +49,7 @@ const seedRand = function (func, min, max) {
 
 shuffleSeed.shuffle = function (arr, seed) {
   if (!Array.isArray(arr)) return null
-  seed = seedify(seed) || 'none'
+  seed = seedify(seed) || "none"
 
   var size = arr.length
   var rng = seedrandom(seed)
@@ -68,7 +68,7 @@ shuffleSeed.shuffle = function (arr, seed) {
 
 shuffleSeed.unshuffle = function (arr, seed) {
   if (!Array.isArray(arr)) return null
-  seed = seedify(seed) || 'none'
+  seed = seedify(seed) || "none"
 
   var size = arr.length
   var rng = seedrandom(seed)

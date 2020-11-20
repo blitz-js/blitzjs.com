@@ -1,10 +1,10 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { VersionSwitcher } from '@/components/VersionSwitcher'
-import { createContext, forwardRef, useRef } from 'react'
-import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect'
-import clsx from 'clsx'
-import { gradients } from '@/utils/gradients'
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { VersionSwitcher } from "@/components/VersionSwitcher"
+import { createContext, forwardRef, useRef } from "react"
+import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
+import clsx from "clsx"
+import { gradients } from "@/utils/gradients"
 
 export const SidebarContext = createContext()
 
@@ -13,16 +13,16 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
     <li ref={ref}>
       <Link href={isPublished ? href : fallbackHref}>
         <a
-          className={clsx('px-3 py-2 transition-colors duration-200 relative block', {
-            'text-cyan-700': isActive,
-            'hover:text-gray-900 text-gray-500': !isActive && isPublished,
-            'text-gray-400': !isActive && !isPublished,
+          className={clsx("px-3 py-2 transition-colors duration-200 relative block", {
+            "text-cyan-700": isActive,
+            "hover:text-gray-900 text-gray-500": !isActive && isPublished,
+            "text-gray-400": !isActive && !isPublished,
           })}
         >
           <span
-            className={clsx('rounded-md absolute inset-0 bg-cyan-50', {
-              'opacity-50': isActive,
-              'opacity-0': !isActive,
+            className={clsx("rounded-md absolute inset-0 bg-cyan-50", {
+              "opacity-50": isActive,
+              "opacity-0": !isActive,
             })}
           />
           <span className="relative">{children}</span>
@@ -66,10 +66,10 @@ function Nav({ nav, children, fallbackHref }) {
               <div className="mb-8" key={category}>
                 <h5
                   className={clsx(
-                    'px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs',
+                    "px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs",
                     {
-                      'text-gray-900': publishedItems.length > 0,
-                      'text-gray-400': publishedItems.length === 0,
+                      "text-gray-900": publishedItems.length > 0,
+                      "text-gray-400": publishedItems.length === 0,
                     }
                   )}
                 >
@@ -105,10 +105,10 @@ const TopLevelAnchor = forwardRef(
         href={href}
         onClick={onClick}
         className={clsx(
-          'flex items-center px-3 hover:text-gray-900 transition-colors duration-200',
+          "flex items-center px-3 hover:text-gray-900 transition-colors duration-200",
           className,
           {
-            'text-gray-900': isActive,
+            "text-gray-900": isActive,
           }
         )}
       >
@@ -137,13 +137,13 @@ function TopLevelLink({ href, as, ...props }) {
 
 function TopLevelNav() {
   let { pathname } = useRouter()
-  let current = pathname.split('/')[1]
+  let current = pathname.split("/")[1]
 
   return (
     <div className="mb-10 space-y-4">
       <TopLevelLink
         href="/docs"
-        isActive={current === '' || current === 'docs'}
+        isActive={current === "" || current === "docs"}
         color="pink"
         icon={
           <>
@@ -220,7 +220,7 @@ function TopLevelNav() {
       </TopLevelLink>
       <TopLevelLink
         href="/resources"
-        isActive={current === 'resources'}
+        isActive={current === "resources"}
         color="blue"
         icon={
           <>
@@ -260,16 +260,18 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
       <div className="w-full max-w-8xl mx-auto">
         <div className="lg:flex">
+          {/* eslint-disable-next-line */}
           <div
             id="sidebar"
             onClick={() => setNavIsOpen(false)}
             className={clsx(
-              'fixed z-40 inset-0 flex-none h-full bg-black bg-opacity-25 w-full lg:bg-white lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block',
+              "fixed z-40 inset-0 flex-none h-full bg-black bg-opacity-25 w-full lg:bg-white lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block",
               {
                 hidden: !navIsOpen,
               }
             )}
           >
+            {/* eslint-disable-next-line */}
             <div
               id="navWrapper"
               onClick={(e) => e.stopPropagation()}
@@ -284,9 +286,9 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
           <div
             id="content-wrapper"
             className={clsx(
-              'min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible',
+              "min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible",
               {
-                'overflow-hidden max-h-screen fixed': navIsOpen,
+                "overflow-hidden max-h-screen fixed": navIsOpen,
               }
             )}
           >

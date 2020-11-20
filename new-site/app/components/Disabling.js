@@ -1,6 +1,6 @@
-import { ConfigSample } from '@/components/ConfigSample'
-import { castArray } from '@/utils/castArray'
-import { joinWithAnd } from '@/utils/joinWithAnd'
+import { ConfigSample } from "@/components/ConfigSample"
+import { castArray } from "@/utils/castArray"
+import { joinWithAnd } from "@/utils/joinWithAnd"
 
 export function Disabling({ plugin, name }) {
   const plugins = castArray(plugin)
@@ -10,13 +10,13 @@ export function Disabling({ plugin, name }) {
     <div className="prose">
       <p>
         If you don't plan to use the {name} utilities in your project, you can disable them entirely
-        by setting the{' '}
+        by setting the{" "}
         <span
           dangerouslySetInnerHTML={{
             __html: joinWithAnd(plugins.map((p) => `<code>${p}</code>`)),
           }}
-        />{' '}
-        {plugins.length > 1 ? 'properties' : 'property'} to <code>false</code> in the{' '}
+        />{" "}
+        {plugins.length > 1 ? "properties" : "property"} to <code>false</code> in the{" "}
         <code>corePlugins</code> section of your config file:
       </p>
 

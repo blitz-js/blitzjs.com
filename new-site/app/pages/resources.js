@@ -1,11 +1,11 @@
-import { Community } from '@/components/Community'
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
-import Link from 'next/link'
-import { ReactComponent as RefactoringUi } from '@/img/resources/refactoring-ui.svg'
-import { ReactComponent as TailwindUi } from '@/img/resources/tailwind-ui.svg'
-import { ReactComponent as HeadlessUi } from '@/img/resources/headless-ui.svg'
-import { ReactComponent as Heroicons } from '@/img/resources/heroicons.svg'
-import { ReactComponent as Heropatterns } from '@/img/resources/heropatterns.svg'
+import { Community } from "@/components/Community"
+import { DocumentationLayout } from "@/layouts/DocumentationLayout"
+import Link from "next/link"
+import { ReactComponent as RefactoringUi } from "@/img/resources/refactoring-ui.svg"
+import { ReactComponent as TailwindUi } from "@/img/resources/tailwind-ui.svg"
+import { ReactComponent as HeadlessUi } from "@/img/resources/headless-ui.svg"
+import { ReactComponent as Heroicons } from "@/img/resources/heroicons.svg"
+import { ReactComponent as Heropatterns } from "@/img/resources/heropatterns.svg"
 
 function Logo({ title, component: Component }) {
   return (
@@ -33,7 +33,7 @@ export default function Resources() {
           </p>
         </div>
         <p>
-          For Tailwind CSS brand assets and usage guidelines, please visit our{' '}
+          For Tailwind CSS brand assets and usage guidelines, please visit our{" "}
           <Link href="/brand">
             <a className="text-cyan-700 font-medium shadow-link">Brand page</a>
           </Link>
@@ -47,7 +47,7 @@ export default function Resources() {
             href="https://refactoringui.com/book"
             className="h-40 sm:h-56 xl:h-64 bg-gray-900 bg-cover rounded-3xl mb-6 flex items-center justify-center"
             style={{
-              backgroundImage: `url(${require('@/img/resources/refactoring-ui-bg.png').default})`,
+              backgroundImage: `url(${require("@/img/resources/refactoring-ui-bg.png").default})`,
             }}
           >
             <Logo title="Refactoring UI" component={RefactoringUi} />
@@ -77,7 +77,7 @@ export default function Resources() {
             <div
               className="flex-auto bg-cover -ml-12"
               style={{
-                backgroundImage: `url(${require('@/img/resources/tailwind-ui.jpg').default})`,
+                backgroundImage: `url(${require("@/img/resources/tailwind-ui.jpg").default})`,
               }}
             />
           </a>
@@ -120,7 +120,7 @@ export default function Resources() {
             <div
               className="absolute inset-0 flex items-center justify-center p-6 bg-contain"
               style={{
-                backgroundImage: `url(${require('@/img/resources/heroicons-bg.svg').default})`,
+                backgroundImage: `url(${require("@/img/resources/heroicons-bg.svg").default})`,
               }}
             >
               <Logo title="Heroicons" component={Heroicons} />
@@ -141,7 +141,7 @@ export default function Resources() {
             <div
               className="absolute inset-0 flex items-center justify-center p-6 bg-cover"
               style={{
-                backgroundImage: `url(${require('@/img/resources/heropatterns-bg.svg').default})`,
+                backgroundImage: `url(${require("@/img/resources/heropatterns-bg.svg").default})`,
               }}
             >
               <Logo title="Heropatterns" component={Heropatterns} />
@@ -165,7 +165,7 @@ export default function Resources() {
 
 Resources.layoutProps = {
   meta: {
-    title: 'Resources',
+    title: "Resources",
   },
   Layout: DocumentationLayout,
 }

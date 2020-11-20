@@ -1,96 +1,96 @@
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as ScreencastsImage } from '@/img/screencasts.svg'
-import { ReactComponent as GuidesImage } from '@/img/guides.svg'
-import { ReactComponent as PlayImage } from '@/img/play.svg'
-import { ReactComponent as TuiLogo } from '@/img/tailwind-ui-logo-on-dark.svg'
-import Link from 'next/link'
-import clsx from 'clsx'
-import tinytime from 'tinytime'
-import { Community } from '@/components/Community'
-import styles from './index.module.css'
-import { Widont } from '@/components/Widont'
+import { DocumentationLayout } from "@/layouts/DocumentationLayout"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as ScreencastsImage } from "@/img/screencasts.svg"
+import { ReactComponent as GuidesImage } from "@/img/guides.svg"
+import { ReactComponent as PlayImage } from "@/img/play.svg"
+import { ReactComponent as TuiLogo } from "@/img/tailwind-ui-logo-on-dark.svg"
+import Link from "next/link"
+import clsx from "clsx"
+import tinytime from "tinytime"
+import { Community } from "@/components/Community"
+import styles from "./index.module.css"
+import { Widont } from "@/components/Widont"
 
 const whatsNew = [
   {
-    title: 'Focus Ring Utilities',
-    version: '2.0+',
-    image: require('@/img/docs/focus-ring.svg').ReactComponent,
-    href: '/docs/ring-width',
+    title: "Focus Ring Utilities",
+    version: "2.0+",
+    image: require("@/img/docs/focus-ring.svg").ReactComponent,
+    href: "/docs/ring-width",
   },
   {
-    title: 'Dark Mode',
-    version: '2.0+',
-    image: require('@/img/docs/dark-mode.svg').ReactComponent,
-    href: '/docs/dark-mode',
+    title: "Dark Mode",
+    version: "2.0+",
+    image: require("@/img/docs/dark-mode.svg").ReactComponent,
+    href: "/docs/dark-mode",
   },
   {
-    title: 'Extended Color Palette',
-    version: '2.0+',
-    image: require('@/img/docs/color-palette.svg').ReactComponent,
-    href: '/docs/customizing-colors#color-palette-reference',
+    title: "Extended Color Palette",
+    version: "2.0+",
+    image: require("@/img/docs/color-palette.svg").ReactComponent,
+    href: "/docs/customizing-colors#color-palette-reference",
   },
   {
-    title: 'Extend Variants',
-    version: '2.0+',
-    image: require('@/img/docs/extend-variants.svg').ReactComponent,
-    href: '/docs/configuring-variants#enabling-extra-variants',
+    title: "Extend Variants",
+    version: "2.0+",
+    image: require("@/img/docs/extend-variants.svg").ReactComponent,
+    href: "/docs/configuring-variants#enabling-extra-variants",
   },
   {
-    title: 'Extra Wide Breakpoint',
-    version: '2.0+',
-    image: require('@/img/docs/breakpoint.svg').ReactComponent,
-    href: '/docs/breakpoints',
+    title: "Extra Wide Breakpoint",
+    version: "2.0+",
+    image: require("@/img/docs/breakpoint.svg").ReactComponent,
+    href: "/docs/breakpoints",
   },
   {
-    title: 'Sharable Presets',
-    image: require('@/img/docs/sharable-presets.svg').ReactComponent,
-    href: '/docs/presets',
+    title: "Sharable Presets",
+    image: require("@/img/docs/sharable-presets.svg").ReactComponent,
+    href: "/docs/presets",
   },
   {
-    title: 'Gradients',
-    image: require('@/img/docs/gradients.svg').ReactComponent,
-    href: '/docs/gradient-color-stops',
+    title: "Gradients",
+    image: require("@/img/docs/gradients.svg").ReactComponent,
+    href: "/docs/gradient-color-stops",
   },
   {
-    title: 'Animations',
-    image: require('@/img/docs/animations.svg').ReactComponent,
-    href: '/docs/animation',
+    title: "Animations",
+    image: require("@/img/docs/animations.svg").ReactComponent,
+    href: "/docs/animation",
   },
 ]
 
 const latestUpdates = [
   {
-    title: 'Tailwind CSS v2.0',
-    date: '2020-11-18T17:45:00.000Z',
-    url: 'https://blog.tailwindcss.com/tailwindcss-v2',
+    title: "Tailwind CSS v2.0",
+    date: "2020-11-18T17:45:00.000Z",
+    url: "https://blog.tailwindcss.com/tailwindcss-v2",
     description:
       "Today we're finally releasing Tailwind CSS v2.0, including an all-new color palette, dark mode support, and tons more!",
   },
   {
-    title: 'Tailwind CSS v1.9.0',
-    date: '2020-10-13T18:30:00.000Z',
-    url: 'https://blog.tailwindcss.com/tailwindcss-1-9',
+    title: "Tailwind CSS v1.9.0",
+    date: "2020-10-13T18:30:00.000Z",
+    url: "https://blog.tailwindcss.com/tailwindcss-1-9",
     description:
-      'We just released Tailwind CSS v1.9 which adds support for configuration presets, useful new CSS grid utilities, extended border radius, rotate, and skew scales, helpful accessibility improvements, and more!',
+      "We just released Tailwind CSS v1.9 which adds support for configuration presets, useful new CSS grid utilities, extended border radius, rotate, and skew scales, helpful accessibility improvements, and more!",
   },
   {
-    title: 'Introducing Tailwind Play',
-    date: '2020-10-07T13:00:00.000Z',
-    url: 'https://blog.tailwindcss.com/introducing-tailwind-play',
+    title: "Introducing Tailwind Play",
+    date: "2020-10-07T13:00:00.000Z",
+    url: "https://blog.tailwindcss.com/introducing-tailwind-play",
     description:
       "Today we're excited to release the first version of Tailwind Play, an advanced online playground for Tailwind CSS that lets you use all of Tailwind's build-time features directly in the browser.",
   },
   {
-    title: 'Headless UI: Unstyled, Accessible UI Components',
-    date: '2020-10-06T18:30:00.000Z',
-    url: 'https://blog.tailwindcss.com/headless-ui-unstyled-accessible-ui-components',
+    title: "Headless UI: Unstyled, Accessible UI Components",
+    date: "2020-10-06T18:30:00.000Z",
+    url: "https://blog.tailwindcss.com/headless-ui-unstyled-accessible-ui-components",
     description:
-      'Headless UI is a set of completely unstyled, fully accessible UI components for React, Vue, and Alpine.js that make it easy to build fully accessible custom UI components, without sacrificing the ability to style them from scratch with simple utility classes.',
+      "Headless UI is a set of completely unstyled, fully accessible UI components for React, Vue, and Alpine.js that make it easy to build fully accessible custom UI components, without sacrificing the ability to style them from scratch with simple utility classes.",
   },
 ]
 
-const formatDate = tinytime('{MM} {DD}, {YYYY}').render
+const formatDate = tinytime("{MM} {DD}, {YYYY}").render
 
 export default function DocsLandingPage() {
   return (
@@ -123,7 +123,7 @@ export default function DocsLandingPage() {
             <div
               className="absolute bottom-0 left-0 right-0 h-20 hidden sm:block"
               style={{
-                background: 'linear-gradient(to top, rgb(135, 94, 245), rgba(135, 94, 245, 0))',
+                background: "linear-gradient(to top, rgb(135, 94, 245), rgba(135, 94, 245, 0))",
               }}
             />
           </div>
@@ -235,9 +235,9 @@ export default function DocsLandingPage() {
                   >
                     <svg
                       viewBox="0 0 12 12"
-                      className={clsx('w-3 h-3 mr-6 overflow-visible', {
-                        'text-gray-300': i !== 0,
-                        'text-cyan-400': i === 0,
+                      className={clsx("w-3 h-3 mr-6 overflow-visible", {
+                        "text-gray-300": i !== 0,
+                        "text-cyan-400": i === 0,
                       })}
                     >
                       <circle cx="6" cy="6" r="6" fill="currentColor" />
@@ -293,7 +293,7 @@ export default function DocsLandingPage() {
 
 DocsLandingPage.layoutProps = {
   meta: {
-    title: 'Documentation',
+    title: "Documentation",
   },
   Layout: DocumentationLayout,
 }

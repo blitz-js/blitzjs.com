@@ -1,12 +1,12 @@
-import { gradients } from '@/utils/gradients'
-import { motion } from 'framer-motion'
-import styles from './GradientLockup.module.css'
+import { gradients } from "@/utils/gradients"
+import { motion } from "framer-motion"
+import styles from "./GradientLockup.module.css"
 
 const rotation = {
-  '-1': '-rotate-1',
-  '-2': '-rotate-1 sm:-rotate-2',
-  1: 'rotate-1',
-  2: 'rotate-1 sm:rotate-2',
+  "-1": "-rotate-1",
+  "-2": "-rotate-1 sm:-rotate-2",
+  1: "rotate-1",
+  2: "rotate-1 sm:rotate-2",
 }
 
 export function GradientLockup({
@@ -15,16 +15,16 @@ export function GradientLockup({
   right,
   color,
   rotate,
-  pin = 'left',
+  pin = "left",
   gradientProps = {},
 }) {
   return (
     <div className={`grid ${styles.root}`}>
       <div
         className={`col-start-2 col-end-3 lg:col-start-1 lg:col-end-5 ${
-          left && right ? 'row-start-2 row-end-4' : 'row-start-2 row-end-5'
+          left && right ? "row-start-2 row-end-4" : "row-start-2 row-end-5"
         } lg:row-end-5 lg:py-10 xl:py-16 flex ${
-          pin === 'left' ? '-ml-8 pr-4 sm:ml-0 sm:pr-0' : '-mr-8 pl-4 sm:mr-0 sm:pl-0'
+          pin === "left" ? "-ml-8 pr-4 sm:ml-0 sm:pr-0" : "-mr-8 pl-4 sm:mr-0 sm:pl-0"
         }`}
       >
         <div className="bg-gray-100 w-full flex-none rounded-3xl" />
@@ -42,7 +42,7 @@ export function GradientLockup({
         <>
           <div
             className={`relative col-start-2 col-end-3 lg:col-end-3 row-start-2 row-end-3 lg:row-start-3 lg:row-end-4 self-center ${
-              pin === 'left' ? 'pr-8' : 'pl-8'
+              pin === "left" ? "pr-8" : "pl-8"
             } sm:px-6 md:px-8 pt-6 md:pt-8 lg:px-0 lg:pt-0`}
           >
             {left}

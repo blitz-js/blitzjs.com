@@ -24,12 +24,12 @@
 }
 
 @supports (position: sticky) {
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme("screens.lg")) {
     .sticky\?lg\:h-screen {
       height: 100vh !important;
     }
     .sticky\?lg\:h-\(screen-18\) {
-      height: calc(100vh - theme('spacing.18'));
+      height: calc(100vh - theme("spacing.18"));
     }
   }
 }
@@ -99,7 +99,7 @@
 }
 
 .after\:hash::after {
-  content: '#';
+  content: "#";
 }
 
 .code-highlight {

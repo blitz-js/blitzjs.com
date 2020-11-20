@@ -1,10 +1,10 @@
-import groupBy from 'just-group-by'
+import groupBy from "just-group-by"
 
 export function numbersFirst(classes) {
   return [...classes].sort((a, b) => {
-    let aNum = a.replace(/\\/g, '').match(/-([0-9.]+)$/)
+    let aNum = a.replace(/\\/g, "").match(/-([0-9.]+)$/)
     aNum = aNum === null ? NaN : parseFloat(aNum[1])
-    let bNum = b.replace(/\\/g, '').match(/-([0-9.]+)$/)
+    let bNum = b.replace(/\\/g, "").match(/-([0-9.]+)$/)
     bNum = bNum === null ? NaN : parseFloat(bNum[1])
     if (isNaN(aNum) && isNaN(bNum)) return 0
     if (isNaN(aNum)) return 1

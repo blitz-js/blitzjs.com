@@ -1,60 +1,60 @@
-import { IconContainer, Caption, BigText, Paragraph, Link } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import styles from './EditorTools.module.css'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import { motion } from 'framer-motion'
-import { Fragment, useEffect, useState } from 'react'
-import { ReactComponent as Icon } from '@/img/icons/home/editor-tools.svg'
-import { useInView } from 'react-intersection-observer'
-import colors from 'tailwindcss/colors'
-import dlv from 'dlv'
+import { IconContainer, Caption, BigText, Paragraph, Link } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import styles from "./EditorTools.module.css"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import { motion } from "framer-motion"
+import { Fragment, useEffect, useState } from "react"
+import { ReactComponent as Icon } from "@/img/icons/home/editor-tools.svg"
+import { useInView } from "react-intersection-observer"
+import colors from "tailwindcss/colors"
+import dlv from "dlv"
 
 const problems = [
-  ["'flex' applies the same CSS property as 'block'.", 'cssConflict [1, 20]'],
-  ["'block' applies the same CSS property as 'flex'.", 'cssConflict [1, 54]'],
+  ["'flex' applies the same CSS property as 'block'.", "cssConflict [1, 20]"],
+  ["'block' applies the same CSS property as 'flex'.", "cssConflict [1, 54]"],
 ]
 
 const completions = [
   //
-  ['sm:', '@media (min-width: 640px)'],
-  ['md:'],
-  ['lg:'],
-  ['xl:'],
-  ['focus:'],
-  ['group-hover:'],
-  ['hover:'],
-  ['container'],
-  ['space-y-0'],
-  ['space-x-0'],
-  ['space-y-1'],
-  ['space-x-1'],
+  ["sm:", "@media (min-width: 640px)"],
+  ["md:"],
+  ["lg:"],
+  ["xl:"],
+  ["focus:"],
+  ["group-hover:"],
+  ["hover:"],
+  ["container"],
+  ["space-y-0"],
+  ["space-x-0"],
+  ["space-y-1"],
+  ["space-x-1"],
   //
-  ['bg-fixed', 'background-position: fixed;'],
-  ['bg-local'],
-  ['bg-scroll'],
-  ['bg-clip-border'],
-  ['bg-clip-padding'],
-  ['bg-clip-content'],
-  ['bg-clip-text'],
-  ['bg-transparent', 'background-color: transparent;'],
-  ['bg-current'],
-  ['bg-black', '#000'],
-  ['bg-white', '#fff'],
-  ['bg-gray-50', colors.gray[50]],
+  ["bg-fixed", "background-position: fixed;"],
+  ["bg-local"],
+  ["bg-scroll"],
+  ["bg-clip-border"],
+  ["bg-clip-padding"],
+  ["bg-clip-content"],
+  ["bg-clip-text"],
+  ["bg-transparent", "background-color: transparent;"],
+  ["bg-current"],
+  ["bg-black", "#000"],
+  ["bg-white", "#fff"],
+  ["bg-gray-50", colors.gray[50]],
   //
-  ['bg-teal-50', `background-color: ${colors.teal[50]};`, colors.teal[50]],
-  ['bg-teal-100', `background-color: ${colors.teal[100]};`, colors.teal[100]],
-  ['bg-teal-200', `background-color: ${colors.teal[200]};`, colors.teal[200]],
-  ['bg-teal-300', `background-color: ${colors.teal[300]};`, colors.teal[300]],
-  ['bg-teal-400', `background-color: ${colors.teal[400]};`, colors.teal[400]],
-  ['bg-teal-500', undefined, colors.teal[500]],
-  ['bg-teal-600', undefined, colors.teal[600]],
-  ['bg-teal-700', undefined, colors.teal[700]],
-  ['bg-teal-800', undefined, colors.teal[800]],
-  ['bg-teal-900', undefined, colors.teal[900]],
-  ['bg-top'],
+  ["bg-teal-50", `background-color: ${colors.teal[50]};`, colors.teal[50]],
+  ["bg-teal-100", `background-color: ${colors.teal[100]};`, colors.teal[100]],
+  ["bg-teal-200", `background-color: ${colors.teal[200]};`, colors.teal[200]],
+  ["bg-teal-300", `background-color: ${colors.teal[300]};`, colors.teal[300]],
+  ["bg-teal-400", `background-color: ${colors.teal[400]};`, colors.teal[400]],
+  ["bg-teal-500", undefined, colors.teal[500]],
+  ["bg-teal-600", undefined, colors.teal[600]],
+  ["bg-teal-700", undefined, colors.teal[700]],
+  ["bg-teal-800", undefined, colors.teal[800]],
+  ["bg-teal-900", undefined, colors.teal[900]],
+  ["bg-top"],
 ]
 
 const { lines } = tokenizeWithLines.html(`<div class="__CONFLICT__">
@@ -89,32 +89,32 @@ function CompletionDemo() {
       {lines.map((tokens, lineIndex) => (
         <Fragment key={lineIndex}>
           {tokens.map((token, tokenIndex) => {
-            if (token.content === '__CONFLICT__') {
+            if (token.content === "__CONFLICT__") {
               return (
                 <span key={tokenIndex} className={getClassNameForToken(token)}>
-                  w-full{' '}
-                  <span className="inline-flex bg-squiggle bg-repeat-x bg-left-bottom">flex</span>{' '}
-                  items-center justify-between{' '}
-                  <span className="inline-flex bg-squiggle bg-repeat-x bg-left-bottom">block</span>{' '}
+                  w-full{" "}
+                  <span className="inline-flex bg-squiggle bg-repeat-x bg-left-bottom">flex</span>{" "}
+                  items-center justify-between{" "}
+                  <span className="inline-flex bg-squiggle bg-repeat-x bg-left-bottom">block</span>{" "}
                   p-6 space-x-6
                 </span>
               )
             }
 
-            if (token.content === '__COMPLETION__') {
+            if (token.content === "__COMPLETION__") {
               return <Completion key={tokenIndex} inView={inView} />
             }
 
             if (
-              token.types[token.types.length - 1] === 'attr-value' &&
-              tokens[tokenIndex - 3].content === 'class'
+              token.types[token.types.length - 1] === "attr-value" &&
+              tokens[tokenIndex - 3].content === "class"
             ) {
               return (
                 <span key={tokenIndex} className={getClassNameForToken(token)}>
-                  {token.content.split(' ').map((c, i) => {
-                    const space = i === 0 ? '' : ' '
+                  {token.content.split(" ").map((c, i) => {
+                    const space = i === 0 ? "" : " "
                     if (/^(bg|text|border)-/.test(c)) {
-                      const color = dlv(colors, c.replace(/^(bg|text|border)-/, '').split('-'))
+                      const color = dlv(colors, c.replace(/^(bg|text|border)-/, "").split("-"))
                       if (color) {
                         return (
                           <Fragment key={i}>
@@ -140,7 +140,7 @@ function CompletionDemo() {
               </span>
             )
           })}
-          {'\n'}
+          {"\n"}
         </Fragment>
       ))}
     </CodeWindow.Code2>
@@ -148,7 +148,7 @@ function CompletionDemo() {
 }
 
 function Completion({ inView }) {
-  const [typed, setTyped] = useState('')
+  const [typed, setTyped] = useState("")
   const [selectedCompletionIndex, setSelectedCompletionIndex] = useState(0)
   const [stage, setStage] = useState(-1)
 
@@ -159,12 +159,12 @@ function Completion({ inView }) {
   }, [inView])
 
   useEffect(() => {
-    if (typed === ' bg-t') {
+    if (typed === " bg-t") {
       let i = 0
       let id = window.setInterval(() => {
         if (i === 5) {
           setStage(1)
-          setTyped('')
+          setTyped("")
           setSelectedCompletionIndex(0)
           return window.clearInterval(id)
         }
@@ -201,45 +201,45 @@ function Completion({ inView }) {
       text-teal-600
       {stage >= 0 &&
         stage < 2 &&
-        ' bg-t'.split('').map((char, i) => (
+        " bg-t".split("").map((char, i) => (
           <motion.span
             key={i}
-            initial={{ display: 'none' }}
-            animate={{ display: 'inline' }}
+            initial={{ display: "none" }}
+            animate={{ display: "inline" }}
             transition={{ delay: (i + 1) * 0.3 }}
             onAnimationComplete={() => setTyped(typed + char)}
           >
             {char}
           </motion.span>
         ))}
-      {stage === 1 && 'eal-400'}
+      {stage === 1 && "eal-400"}
       {(stage < 2 || stage === 6) && <span className="border -mx-px h-5" />}
       {stage >= 2 && stage <= 5 && (
         <Fragment key={stage}>
-          {stage < 5 && ' '}
+          {stage < 5 && " "}
           {stage >= 4 && <span className="relative border -mx-px h-5" />}
           {stage === 5 && (
-            <span className="inline-flex" style={{ background: 'rgba(81, 92, 126, 0.4)' }}>
+            <span className="inline-flex" style={{ background: "rgba(81, 92, 126, 0.4)" }}>
               &nbsp;
             </span>
           )}
           <span
             className="inline-flex"
-            style={{ background: stage >= 4 ? 'rgba(81, 92, 126, 0.4)' : undefined }}
+            style={{ background: stage >= 4 ? "rgba(81, 92, 126, 0.4)" : undefined }}
           >
             bg-
           </span>
           {stage === 3 && <span className="relative border -mx-px h-5" />}
           <span
             className="inline-flex"
-            style={{ background: stage >= 3 ? 'rgba(81, 92, 126, 0.4)' : undefined }}
+            style={{ background: stage >= 3 ? "rgba(81, 92, 126, 0.4)" : undefined }}
           >
             teal-
           </span>
           {stage === 2 && <span className="relative border -mx-px h-5" />}
           <span
             className="inline-flex"
-            style={{ background: stage >= 2 ? 'rgba(81, 92, 126, 0.4)' : undefined }}
+            style={{ background: stage >= 2 ? "rgba(81, 92, 126, 0.4)" : undefined }}
           >
             400
           </span>
@@ -258,7 +258,7 @@ function Completion({ inView }) {
                     <li
                       key={completion[0]}
                       className={`pl-2.5 pr-3 flex items-center space-x-1.5 ${
-                        i === selectedCompletionIndex ? 'bg-white bg-opacity-10' : ''
+                        i === selectedCompletionIndex ? "bg-white bg-opacity-10" : ""
                       }`}
                     >
                       <span className="w-4 flex-none flex justify-center">

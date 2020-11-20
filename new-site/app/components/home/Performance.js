@@ -1,15 +1,15 @@
-import { IconContainer, Caption, BigText, Paragraph, Link } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/performance.svg'
-import { Fragment, useEffect, useRef } from 'react'
-import { motion, animate, useMotionValue, useTransform } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import { addClassTokens2 } from '@/utils/addClassTokens'
-import shuffleSeed from '@/utils/shuffleSeed'
-import clsx from 'clsx'
+import { IconContainer, Caption, BigText, Paragraph, Link } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/performance.svg"
+import { Fragment, useEffect, useRef } from "react"
+import { motion, animate, useMotionValue, useTransform } from "framer-motion"
+import { useInView } from "react-intersection-observer"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import { addClassTokens2 } from "@/utils/addClassTokens"
+import shuffleSeed from "@/utils/shuffleSeed"
+import clsx from "clsx"
 
 const DURATION = 6.5
 const BASE_RANGE = [0, 5000]
@@ -67,13 +67,13 @@ const { lines } = tokenizeWithLines.html(
 
 addClassTokens2(lines)
 
-const allClasses = 'fixed flex-col rounded-sm shadow px-4 justify-content text-center flex-shrink-0 md:text-left h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto text-lg text-purple-500 md:text-left text-gray-600 text-green-400 text-blue-500 rounded-pill p-4 max-w-screen-xl mt-5 leading-7 whitespace-nowrap sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none flex-1 xl:mx-0 xl:grid-cols-4 border border-gray-200 text-4xl leading-6 leading-10 font-extrabold  leading-5 h-5 w-5 text-green-500 text-5xl leading-none font-extrabold text-white tracking-tight border-t text-sm border-indigo-600 py-4 font-medium px-5 flex items-center space-x-3 text-base leading-6 text-white absolute right-full ml-4 bottom-0 transform -translate-x-1/2 py-3 mx-4 w-full duration-150 h-full transition py-0 pl-4 pr-8 border-transparent bg-transparent text-gray-500 px-5 py-3 appearance-none underline bg-indigo-700 min-w-full divide-y divide-gray-200 items-baseline text-indigo-600 hover:text-indigo-500'.split(
-  ' '
+const allClasses = "fixed flex-col rounded-sm shadow px-4 justify-content text-center flex-shrink-0 md:text-left h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto text-lg text-purple-500 md:text-left text-gray-600 text-green-400 text-blue-500 rounded-pill p-4 max-w-screen-xl mt-5 leading-7 whitespace-nowrap sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none flex-1 xl:mx-0 xl:grid-cols-4 border border-gray-200 text-4xl leading-6 leading-10 font-extrabold  leading-5 h-5 w-5 text-green-500 text-5xl leading-none font-extrabold text-white tracking-tight border-t text-sm border-indigo-600 py-4 font-medium px-5 flex items-center space-x-3 text-base leading-6 text-white absolute right-full ml-4 bottom-0 transform -translate-x-1/2 py-3 mx-4 w-full duration-150 h-full transition py-0 pl-4 pr-8 border-transparent bg-transparent text-gray-500 px-5 py-3 appearance-none underline bg-indigo-700 min-w-full divide-y divide-gray-200 items-baseline text-indigo-600 hover:text-indigo-500".split(
+  " "
 )
 
 const usedClasses = shuffleSeed.shuffle(
-  'fixed px-4 flex-shrink-0 text-green-400 p-4 flex-1 leading-5 text-sm font-medium ml-4 transition'.split(
-    ' '
+  "fixed px-4 flex-shrink-0 text-green-400 p-4 flex-1 leading-5 text-sm font-medium ml-4 transition".split(
+    " "
   ),
   1
 )
@@ -93,7 +93,7 @@ export function Performance() {
   useEffect(() => {
     if (!inView) return
     animate(progress, BASE_RANGE[1], {
-      type: 'spring',
+      type: "spring",
       damping: 50,
     })
   }, [inView])
@@ -189,7 +189,7 @@ export function Performance() {
                         fill="#f43f5e"
                         style={{
                           fill: useTransform(progress, (p) =>
-                            p >= BASE_RANGE[1] * 0.35 ? '#f43f5e' : '#e4e4e7'
+                            p >= BASE_RANGE[1] * 0.35 ? "#f43f5e" : "#e4e4e7"
                           ),
                         }}
                       />
@@ -199,7 +199,7 @@ export function Performance() {
                         x="14"
                         style={{
                           fill: useTransform(progress, (p) =>
-                            p >= BASE_RANGE[1] * 0.75 ? '#f43f5e' : '#e4e4e7'
+                            p >= BASE_RANGE[1] * 0.75 ? "#f43f5e" : "#e4e4e7"
                           ),
                         }}
                       />
@@ -209,7 +209,7 @@ export function Performance() {
                         x="28"
                         style={{
                           fill: useTransform(progress, (p) =>
-                            p >= BASE_RANGE[1] * 0.9 ? '#f43f5e' : '#e4e4e7'
+                            p >= BASE_RANGE[1] * 0.9 ? "#f43f5e" : "#e4e4e7"
                           ),
                         }}
                       />
@@ -219,7 +219,7 @@ export function Performance() {
                         x="42"
                         style={{
                           fill: useTransform(progress, (p) =>
-                            p >= BASE_RANGE[1] * 0.99 ? '#f43f5e' : '#e4e4e7'
+                            p >= BASE_RANGE[1] * 0.99 ? "#f43f5e" : "#e4e4e7"
                           ),
                         }}
                       />
@@ -240,8 +240,8 @@ export function Performance() {
                   usedClasses.includes(c) ? (
                     <Fragment key={i}>
                       <span
-                        className={clsx('code-highlight whitespace-nowrap', {
-                          'animate-flash-code-slow': inView,
+                        className={clsx("code-highlight whitespace-nowrap", {
+                          "animate-flash-code-slow": inView,
                         })}
                         style={{
                           animationDelay: `${
@@ -250,14 +250,14 @@ export function Performance() {
                         }}
                       >
                         {c}
-                      </span>{' '}
+                      </span>{" "}
                     </Fragment>
                   ) : (
                     <Fragment key={i}>
                       <span
-                        className={clsx('transition-colors duration-500 whitespace-nowrap', {
-                          'text-teal-200': !inView,
-                          'text-teal-900': inView,
+                        className={clsx("transition-colors duration-500 whitespace-nowrap", {
+                          "text-teal-200": !inView,
+                          "text-teal-900": inView,
                         })}
                         style={{
                           transitionDelay: `${
@@ -266,7 +266,7 @@ export function Performance() {
                         }}
                       >
                         {c}
-                      </span>{' '}
+                      </span>{" "}
                     </Fragment>
                   )
                 )}
@@ -275,7 +275,7 @@ export function Performance() {
                 className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
                 style={{
                   backgroundImage:
-                    'linear-gradient(to top, rgba(4, 30, 28, 1), rgba(4, 30, 28, 0))',
+                    "linear-gradient(to top, rgba(4, 30, 28, 1), rgba(4, 30, 28, 0))",
                 }}
               />
             </div>
@@ -288,14 +288,14 @@ export function Performance() {
                 <Fragment key={lineIndex}>
                   {tokens.map((token, tokenIndex) => {
                     if (
-                      token.types[token.types.length - 1] === 'class' &&
+                      token.types[token.types.length - 1] === "class" &&
                       usedClasses.includes(token.content)
                     ) {
                       return (
                         <span
                           key={tokenIndex}
-                          className={clsx('code-highlight', getClassNameForToken(token), {
-                            'animate-flash-code-slow': inView,
+                          className={clsx("code-highlight", getClassNameForToken(token), {
+                            "animate-flash-code-slow": inView,
                           })}
                           style={{
                             animationDelay: `${
@@ -314,7 +314,7 @@ export function Performance() {
                       </span>
                     )
                   })}
-                  {'\n'}
+                  {"\n"}
                 </Fragment>
               ))}
             </CodeWindow.Code2>

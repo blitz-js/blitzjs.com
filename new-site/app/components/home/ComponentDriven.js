@@ -1,53 +1,53 @@
-import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import { Fragment, useEffect, useState } from 'react'
-import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect'
-import { ReactComponent as Icon } from '@/img/icons/home/component-driven.svg'
-import { Tabs } from '@/components/Tabs'
-import { ReactComponent as ReactLogo } from '@/img/icons/react.svg'
-import { ReactComponent as VueLogo } from '@/img/icons/vue.svg'
-import { ReactComponent as LaravelLogo } from '@/img/icons/laravel.svg'
-import { AnimatePresence, AnimateSharedLayout, motion, useIsPresent } from 'framer-motion'
-import clsx from 'clsx'
-import { useInView } from 'react-intersection-observer'
-import styles from './ComponentDriven.module.css'
+import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import { Fragment, useEffect, useState } from "react"
+import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
+import { ReactComponent as Icon } from "@/img/icons/home/component-driven.svg"
+import { Tabs } from "@/components/Tabs"
+import { ReactComponent as ReactLogo } from "@/img/icons/react.svg"
+import { ReactComponent as VueLogo } from "@/img/icons/vue.svg"
+import { ReactComponent as LaravelLogo } from "@/img/icons/laravel.svg"
+import { AnimatePresence, AnimateSharedLayout, motion, useIsPresent } from "framer-motion"
+import clsx from "clsx"
+import { useInView } from "react-intersection-observer"
+import styles from "./ComponentDriven.module.css"
 
 const recipes = [
   {
-    title: 'Hank’s Juiciest Beef Burger',
+    title: "Hank’s Juiciest Beef Burger",
     rating: 4.94,
     time: 20,
-    difficulty: 'Easy',
+    difficulty: "Easy",
     servings: 4,
-    author: 'Hank Douglas',
-    image: require('@/img/jucy-beef-burger.jpg').default,
+    author: "Hank Douglas",
+    image: require("@/img/jucy-beef-burger.jpg").default,
   },
   {
-    title: 'Southern Fried Chicken Sandwich',
+    title: "Southern Fried Chicken Sandwich",
     rating: 4.94,
     time: 30,
-    difficulty: 'Intermediate',
+    difficulty: "Intermediate",
     servings: 4,
-    author: 'Nicholas Denver',
-    image: require('@/img/chicken-sandwich.jpg').default,
+    author: "Nicholas Denver",
+    image: require("@/img/chicken-sandwich.jpg").default,
   },
   {
-    title: 'Lily’s Healthy Beef Burger',
+    title: "Lily’s Healthy Beef Burger",
     rating: 4.94,
     time: 20,
-    difficulty: 'Easy',
+    difficulty: "Easy",
     servings: 6,
-    author: 'Lily Ford',
-    image: require('@/img/healthy-beef-burger.jpg').default,
+    author: "Lily Ford",
+    image: require("@/img/healthy-beef-burger.jpg").default,
   },
 ]
 
 const tabs = {
   react: {
-    'Recipes.js': tokenizeWithLines.jsx(
+    "Recipes.js": tokenizeWithLines.jsx(
       `import Nav from './Nav.js'
 import NavItem from './NavItem.js'
 import List from './List.js'
@@ -71,7 +71,7 @@ export default function Recipes({ recipes }) {
 }
 `
     ).lines,
-    'Nav.js': tokenizeWithLines.jsx(`export default function Nav({ children }) {
+    "Nav.js": tokenizeWithLines.jsx(`export default function Nav({ children }) {
   return (
     <nav className="p-4">
       <ul className="flex space-x-2">
@@ -81,7 +81,7 @@ export default function Recipes({ recipes }) {
   )
 }
 `).lines,
-    'NavItem.js': tokenizeWithLines.jsx(`export default function NavItem({ href, isActive, children }) {
+    "NavItem.js": tokenizeWithLines.jsx(`export default function NavItem({ href, isActive, children }) {
   return (
     <li>
       <a
@@ -94,7 +94,7 @@ export default function Recipes({ recipes }) {
   )
 }
 `).lines,
-    'List.js': tokenizeWithLines.jsx(`export default function List({ children }) {
+    "List.js": tokenizeWithLines.jsx(`export default function List({ children }) {
   return (
     <ul className="divide-y divide-gray-100">
       {children}
@@ -102,7 +102,7 @@ export default function Recipes({ recipes }) {
   )
 }
 `).lines,
-    'ListItem.js': tokenizeWithLines.jsx(`export default function ListItem({ recipe }) {
+    "ListItem.js": tokenizeWithLines.jsx(`export default function ListItem({ recipe }) {
   return (
     <article className="p-4 flex space-x-4">
       <img src={recipe.image} alt="" className="flex-none w-18 h-18 rounded-lg object-cover bg-gray-100" width="144" height="144" />
@@ -146,7 +146,7 @@ export default function Recipes({ recipes }) {
 `).lines,
   },
   vue: {
-    'Recipes.vue': tokenizeWithLines.html(`<template>
+    "Recipes.vue": tokenizeWithLines.html(`<template>
   <div class="divide-y divide-gray-100">
     <Nav>
       <NavItem href="/featured" isActive>Featured</NavItem>
@@ -176,7 +176,7 @@ export default {
 }
 </script>
 `).lines,
-    'Nav.vue': tokenizeWithLines.html(`<template>
+    "Nav.vue": tokenizeWithLines.html(`<template>
   <nav class="p-4">
     <ul class="flex space-x-2">
       <slot></slot>
@@ -184,7 +184,7 @@ export default {
   </nav>
 </template>
 `).lines,
-    'NavItem.vue': tokenizeWithLines.html(`<template>
+    "NavItem.vue": tokenizeWithLines.html(`<template>
   <li>
     <a
       :href="href"
@@ -207,13 +207,13 @@ export default {
 }
 </script>
 `).lines,
-    'List.vue': tokenizeWithLines.html(`<template>
+    "List.vue": tokenizeWithLines.html(`<template>
   <ul class="divide-y divide-gray-100">
     <slot></slot>
   </ul>
 </template>
 `).lines,
-    'ListItem.vue': tokenizeWithLines.html(`<template>
+    "ListItem.vue": tokenizeWithLines.html(`<template>
   <article class="p-4 flex space-x-4">
     <img :src="recipe.image" alt="" class="flex-none w-18 h-18 rounded-lg object-cover" width="144" height="144" />
     <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
@@ -261,7 +261,7 @@ export default {
 `).lines,
   },
   blade: {
-    'recipes.blade.php': tokenizeWithLines.html(`<div class="divide-y divide-gray-100">
+    "recipes.blade.php": tokenizeWithLines.html(`<div class="divide-y divide-gray-100">
   <x-nav>
     <x-nav-item href="/featured" :isActive="true">Featured</x-nav-item>
     <x-nav-item href="/popular">Popular</x-nav-item>
@@ -274,13 +274,13 @@ export default {
   </x-list>
 </div>
 `).lines,
-    'nav.blade.php': tokenizeWithLines.html(`<nav class="p-4">
+    "nav.blade.php": tokenizeWithLines.html(`<nav class="p-4">
   <ul class="flex space-x-2">
     {{ $slot }}
   </ul>
 </nav>
 `).lines,
-    'nav-item.blade.php': tokenizeWithLines.html(`<li>
+    "nav-item.blade.php": tokenizeWithLines.html(`<li>
   <a
     href="{{ $href }}"
     class="block px-4 py-2 rounded-md {{ $isActive ? 'bg-amber-100 text-amber-700' : '' }}"
@@ -289,11 +289,11 @@ export default {
   </a>
 </li>
 `).lines,
-    'list.blade.php': tokenizeWithLines.html(`<ul class="divide-y divide-gray-100">
+    "list.blade.php": tokenizeWithLines.html(`<ul class="divide-y divide-gray-100">
   {{ $slot }}
 </ul>
 `).lines,
-    'list-item.blade.php': tokenizeWithLines.html(`<article class="p-4 flex space-x-4">
+    "list-item.blade.php": tokenizeWithLines.html(`<article class="p-4 flex space-x-4">
   <img src="{{ $recipe->image }}" alt="" class="flex-none w-18 h-18 rounded-lg object-cover" width="144" height="144" />
   <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
     <h2 class="text-lg font-semibold text-black mb-0.5">
@@ -346,11 +346,11 @@ function ComponentLink({ onClick, children }) {
         setActive(false)
       }
     }
-    window.addEventListener('keydown', onKey)
-    window.addEventListener('keyup', onKey)
+    window.addEventListener("keydown", onKey)
+    window.addEventListener("keyup", onKey)
     return () => {
-      window.removeEventListener('keydown', onKey)
-      window.removeEventListener('keyup', onKey)
+      window.removeEventListener("keydown", onKey)
+      window.removeEventListener("keyup", onKey)
     }
   }, [active])
 
@@ -367,11 +367,11 @@ function TabBar({ children }) {
   const isPresent = useIsPresent()
   return (
     <motion.ul
-      initial={{ y: '100%' }}
-      animate={{ y: '0%' }}
-      exit={{ y: '-100%' }}
-      transition={{ type: 'spring', mass: 0.4 }}
-      className={`${isPresent ? '' : 'absolute top-0 left-0 w-full'} flex text-sm text-orange-300`}
+      initial={{ y: "100%" }}
+      animate={{ y: "0%" }}
+      exit={{ y: "-100%" }}
+      transition={{ type: "spring", mass: 0.4 }}
+      className={`${isPresent ? "" : "absolute top-0 left-0 w-full"} flex text-sm text-orange-300`}
     >
       {children}
     </motion.ul>
@@ -417,7 +417,7 @@ function ComponentExample({ framework }) {
                 <button
                   type="button"
                   className={`border border-transparent py-2 px-4 font-medium focus:outline-none hover:text-orange-100 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-orange-300 ${
-                    tabIndex === activeTab ? 'text-orange-200' : ''
+                    tabIndex === activeTab ? "text-orange-200" : ""
                   }`}
                   onClick={() => setActiveTab(tabIndex)}
                 >
@@ -441,13 +441,13 @@ function ComponentExample({ framework }) {
               <Fragment key={framework + activeTab + lineIndex}>
                 {tokens.map((token, tokenIndex) => {
                   if (
-                    (token.types[token.types.length - 1] === 'class-name' ||
-                      (token.types[token.types.length - 1] === 'tag' &&
+                    (token.types[token.types.length - 1] === "class-name" ||
+                      (token.types[token.types.length - 1] === "tag" &&
                         /^([A-Z]|x-)/.test(token.content))) &&
                     tokens[tokenIndex - 1]?.types[tokens[tokenIndex - 1].types.length - 1] ===
-                      'punctuation' &&
-                    (tokens[tokenIndex - 1]?.content === '<' ||
-                      tokens[tokenIndex - 1].content === '</')
+                      "punctuation" &&
+                    (tokens[tokenIndex - 1]?.content === "<" ||
+                      tokens[tokenIndex - 1].content === "</")
                   ) {
                     return (
                       <span key={tokenIndex} className={getClassNameForToken(token)}>
@@ -455,7 +455,7 @@ function ComponentExample({ framework }) {
                           onClick={() =>
                             setActiveTab(
                               Object.keys(tabs[framework]).findIndex((x) =>
-                                x.startsWith(`${token.content.replace(/^x-/, '')}.`)
+                                x.startsWith(`${token.content.replace(/^x-/, "")}.`)
                               )
                             )
                           }
@@ -467,7 +467,7 @@ function ComponentExample({ framework }) {
                   }
 
                   if (
-                    token.types[token.types.length - 1] === 'string' &&
+                    token.types[token.types.length - 1] === "string" &&
                     /^(['"`])\.\/.*?\.(js|vue)\1$/.test(token.content)
                   ) {
                     const tab = token.content.substr(3, token.content.length - 4)
@@ -492,7 +492,7 @@ function ComponentExample({ framework }) {
                     </span>
                   )
                 })}
-                {'\n'}
+                {"\n"}
               </Fragment>
             ))}
           </CodeWindow.Code2>
@@ -541,8 +541,8 @@ function ApplyExample({ inView }) {
                 let className = getClassNameForToken(token)
                 if (className) {
                   className = className
-                    .replace(/\bclass\b/, 'selector')
-                    .replace(/\b(number|color)\b/, '')
+                    .replace(/\bclass\b/, "selector")
+                    .replace(/\b(number|color)\b/, "")
                 }
                 return (
                   <span key={tokenIndex} className={className}>
@@ -550,7 +550,7 @@ function ApplyExample({ inView }) {
                   </span>
                 )
               })}
-              {'\n'}
+              {"\n"}
             </Fragment>
           ))}
         </CodeWindow.Code2>
@@ -562,18 +562,18 @@ function ApplyExample({ inView }) {
       </div>
       <div className="overflow-hidden">
         <CodeWindow.Code2 lines={html.length} initialLineNumber={31} overflow="x" className="-mt-6">
-          <div className={clsx('mono', { 'mono-active': inView })}>
+          <div className={clsx("mono", { "mono-active": inView })}>
             {html.map((tokens, lineIndex) => (
               <div
                 key={lineIndex}
-                className={lineIndex >= 4 && lineIndex <= 5 ? 'not-mono' : undefined}
+                className={lineIndex >= 4 && lineIndex <= 5 ? "not-mono" : undefined}
               >
                 {tokens.map((token, tokenIndex) => {
                   return (
                     <span
                       key={tokenIndex}
-                      className={clsx(getClassNameForToken(token), 'delay-500')}
-                      style={{ transitionDuration: '1.5s' }}
+                      className={clsx(getClassNameForToken(token), "delay-500")}
+                      style={{ transitionDuration: "1.5s" }}
                     >
                       {token.content}
                     </span>
@@ -603,22 +603,22 @@ function AtApplySection() {
           <article className="text-gray-600 leading-6">
             <h2
               className={clsx(
-                'transition-opacity duration-1500 delay-500 text-xl sm:text-2xl font-semibold text-black px-4 py-6 sm:px-6 pb-1',
-                { 'opacity-25': inView }
+                "transition-opacity duration-1500 delay-500 text-xl sm:text-2xl font-semibold text-black px-4 py-6 sm:px-6 pb-1",
+                { "opacity-25": inView }
               )}
             >
               Weekly one-on-one
             </h2>
             <dl
               className={clsx(
-                'transition-opacity duration-1500 delay-500 flex flex-wrap divide-y divide-gray-200 border-b border-gray-200',
-                { 'opacity-25': inView }
+                "transition-opacity duration-1500 delay-500 flex flex-wrap divide-y divide-gray-200 border-b border-gray-200",
+                { "opacity-25": inView }
               )}
             >
               <div className="px-4 sm:px-6 pb-6">
                 <dt className="sr-only">Date and time</dt>
                 <dd className="text-sm sm:text-base">
-                  <time dateTime="2020-11-15T10:00:00-05:00">Thu Nov 15, 2020 10:00am</time> -{' '}
+                  <time dateTime="2020-11-15T10:00:00-05:00">Thu Nov 15, 2020 10:00am</time> -{" "}
                   <time dateTime="2020-11-15T11:00:00-05:00">
                     11:00am<span className="sr-only sm:not-sr-only"> EST</span>
                   </time>
@@ -676,7 +676,7 @@ function AtApplySection() {
 }
 
 export function ComponentDriven() {
-  const [framework, setFramework] = useState('react')
+  const [framework, setFramework] = useState("react")
 
   return (
     <section id="component-driven">
@@ -752,7 +752,7 @@ export function ComponentDriven() {
               </ul>
             </nav>
             {recipes.map(({ title, rating, time, difficulty, servings, author, image }, i) => (
-              <article key={i} className={`${i === 0 ? 'flex' : 'hidden sm:flex'} p-4 space-x-4`}>
+              <article key={i} className={`${i === 0 ? "flex" : "hidden sm:flex"} p-4 space-x-4`}>
                 <img
                   src={image}
                   loading="lazy"

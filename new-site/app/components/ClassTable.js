@@ -1,17 +1,17 @@
-import dlv from 'dlv'
-import { memo } from 'react'
-import { defaultConfig } from '@/utils/defaultConfig'
-import { isObject } from '@/utils/isObject'
-import { castArray } from '@/utils/castArray'
-import clsx from 'clsx'
-import { Heading } from '@/components/Heading'
+import dlv from "dlv"
+import { memo } from "react"
+import { defaultConfig } from "@/utils/defaultConfig"
+import { isObject } from "@/utils/isObject"
+import { castArray } from "@/utils/castArray"
+import clsx from "clsx"
+import { Heading } from "@/components/Heading"
 
 let normalizeProperties = function (input) {
-  if (typeof input !== 'object') return input
+  if (typeof input !== "object") return input
   if (Array.isArray(input)) return input.map(normalizeProperties)
   return Object.keys(input).reduce((newObj, key) => {
     let val = input[key]
-    let newVal = typeof val === 'object' ? normalizeProperties(val) : val
+    let newVal = typeof val === "object" ? normalizeProperties(val) : val
     newObj[key.replace(/([a-z])([A-Z])/g, (m, p1, p2) => `${p1}-${p2.toLowerCase()}`)] = newVal
     return newObj
   }, {})
@@ -30,11 +30,11 @@ function getUtilities(plugin) {
       }
     },
     config: () => ({
-      future: 'all',
+      future: "all",
     }),
     theme: (path, defaultValue) => dlv(defaultConfig.theme, path, defaultValue),
     variants: () => [],
-    e: (x) => x.replace(/([:.])/g, '\\$1'),
+    e: (x) => x.replace(/([:.])/g, "\\$1"),
     corePlugins: () => true,
   })
   return utilities
@@ -51,15 +51,15 @@ function stringifyProperties(
       lines.push(
         stringifyProperties(properties[property], { filter, transformValue, indent: indent + 1 })
       )
-      lines.push('}')
+      lines.push("}")
     } else {
       castArray(properties[property]).forEach((value, i) => {
         if (!filter(property, value, properties)) return
-        lines.push(`${'  '.repeat(indent)}${property}: ${transformValue(value)};`)
+        lines.push(`${"  ".repeat(indent)}${property}: ${transformValue(value)};`)
       })
     }
   })
-  return lines.join('\n')
+  return lines.join("\n")
 }
 
 export const ClassTable = memo(
@@ -68,7 +68,7 @@ export const ClassTable = memo(
     filterProperties,
     preview,
     sort = (x) => x,
-    transformSelector = (x) => (x.length === 1 ? x : x.slice(1).replace(/\\/g, '')),
+    transformSelector = (x) => (x.length === 1 ? x : x.slice(1).replace(/\\/g, "")),
     transformProperties = ({ properties }) => properties,
     transformValue,
     custom,
@@ -85,8 +85,8 @@ export const ClassTable = memo(
         </Heading>
         <div
           className={clsx(
-            'overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch',
-            { 'lg:max-h-sm': Object.keys(utilities).length > 12 }
+            "overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch",
+            { "lg:max-h-sm": Object.keys(utilities).length > 12 }
           )}
         >
           {custom || (
@@ -98,14 +98,14 @@ export const ClassTable = memo(
                   </th>
                   <th
                     className={clsx(
-                      'z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0',
+                      "z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0",
                       {
-                        'hidden sm:table-cell': preview,
+                        "hidden sm:table-cell": preview,
                       }
                     )}
                   >
                     <div
-                      className={clsx('pb-2 pl-2 border-b border-gray-200', { 'pr-2': preview })}
+                      className={clsx("pb-2 pl-2 border-b border-gray-200", { "pr-2": preview })}
                     >
                       Properties
                     </div>
@@ -128,9 +128,9 @@ export const ClassTable = memo(
                     <tr key={utility}>
                       <td
                         className={clsx(
-                          'py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap',
+                          "py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap",
                           {
-                            'border-t border-gray-200': i !== 0,
+                            "border-t border-gray-200": i !== 0,
                           }
                         )}
                       >
@@ -138,10 +138,10 @@ export const ClassTable = memo(
                       </td>
                       <td
                         className={clsx(
-                          'py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre',
+                          "py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre",
                           {
-                            'border-t border-gray-200': i !== 0,
-                            'hidden sm:table-cell sm:pr-2': preview,
+                            "border-t border-gray-200": i !== 0,
+                            "hidden sm:table-cell sm:pr-2": preview,
                           }
                         )}
                       >
@@ -152,7 +152,7 @@ export const ClassTable = memo(
                       </td>
                       {preview &&
                         preview(properties, {
-                          className: i === 0 ? '' : 'border-t border-gray-200',
+                          className: i === 0 ? "" : "border-t border-gray-200",
                         })}
                     </tr>
                   )

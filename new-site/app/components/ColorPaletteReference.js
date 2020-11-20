@@ -1,6 +1,6 @@
-import colorPalette from 'tailwindcss/colors'
-import { kebabToTitleCase } from '@/utils/kebabToTitleCase'
-import dlv from 'dlv'
+import colorPalette from "tailwindcss/colors"
+import { kebabToTitleCase } from "@/utils/kebabToTitleCase"
+import dlv from "dlv"
 
 export function ColorPaletteReference({ colors }) {
   return (
@@ -10,7 +10,7 @@ export function ColorPaletteReference({ colors }) {
         let value = Array.isArray(color) ? color[1] : color
 
         let palette =
-          typeof value === 'string'
+          typeof value === "string"
             ? [50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((variant) => ({
                 name: variant,
                 value: dlv(colorPalette, [value, variant]),
@@ -24,21 +24,21 @@ export function ColorPaletteReference({ colors }) {
                 <div className="h-10 flex flex-col justify-center">
                   <div className="text-sm font-semibold text-gray-900">
                     {title
-                      .split('')
+                      .split("")
                       .flatMap((l, i) => {
-                        return i !== 0 && l.toUpperCase() === l ? [' ', l] : [l]
+                        return i !== 0 && l.toUpperCase() === l ? [" ", l] : [l]
                       })
-                      .join('')}
+                      .join("")}
                   </div>
                   <div>
                     <code className="text-xs text-gray-500">
                       colors.
                       {value
-                        .split('')
+                        .split("")
                         .map((l, i) => {
                           return i === 0 ? l.toLowerCase() : l
                         })
-                        .join('')}
+                        .join("")}
                     </code>
                   </div>
                 </div>

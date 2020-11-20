@@ -1,15 +1,15 @@
-import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { Tabs } from '@/components/Tabs'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { gradients } from '@/utils/gradients'
-import { ReactComponent as Icon } from '@/img/icons/home/constraint-based.svg'
-import { ReactComponent as ArrowIcon } from '@/img/icons/arrow.svg'
-import { defaultConfig } from '@/utils/defaultConfig'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import styles from './ConstraintBased.module.css'
+import { IconContainer, Caption, BigText, Paragraph, Link, Widont } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { Tabs } from "@/components/Tabs"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { gradients } from "@/utils/gradients"
+import { ReactComponent as Icon } from "@/img/icons/home/constraint-based.svg"
+import { ReactComponent as ArrowIcon } from "@/img/icons/arrow.svg"
+import { defaultConfig } from "@/utils/defaultConfig"
+import { AnimatePresence, motion } from "framer-motion"
+import { useState } from "react"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import styles from "./ConstraintBased.module.css"
 
 const tokens = {
   sizing: tokenizeWithLines.html(`<ul class="space-y-4">
@@ -180,7 +180,7 @@ const tokens = {
 }
 
 export function ConstraintBased() {
-  const [tab, setTab] = useState('sizing')
+  const [tab, setTab] = useState("sizing")
 
   return (
     <section id="constraint-based">
@@ -211,10 +211,10 @@ export function ConstraintBased() {
           <div className="flex overflow-auto py-0.5 -my-0.5 -mx-4 sm:-mx-6 md:-mx-8 xl:-ml-4 xl:mr-0 pl-0.5">
             <Tabs
               tabs={{
-                sizing: 'Sizing',
-                color: 'Color',
-                typography: 'Typography',
-                shadows: 'Shadows',
+                sizing: "Sizing",
+                color: "Color",
+                typography: "Typography",
+                shadows: "Shadows",
               }}
               selected={tab}
               onChange={setTab}
@@ -236,10 +236,10 @@ export function ConstraintBased() {
                 >
                   {
                     {
-                      sizing: 'Width',
-                      color: 'Color',
-                      typography: 'Typography',
-                      shadows: 'Shadows',
+                      sizing: "Width",
+                      color: "Color",
+                      typography: "Typography",
+                      shadows: "Shadows",
                     }[tab]
                   }
                 </motion.span>
@@ -248,7 +248,7 @@ export function ConstraintBased() {
 
             <div className="relative flex-auto bg-white sm:rounded-tr-xl lg:rounded-b-xl lg:rounded-tr-none xl:rounded-bl-none xl:rounded-r-xl overflow-hidden">
               <AnimatePresence initial={false} exitBeforeEnter>
-                {tab === 'sizing' && (
+                {tab === "sizing" && (
                   <motion.ul
                     key="sizing"
                     exit={{ opacity: 0 }}
@@ -275,13 +275,13 @@ export function ConstraintBased() {
                     ))}
                   </motion.ul>
                 )}
-                {tab === 'color' && (
+                {tab === "color" && (
                   <motion.ul
                     key="color"
                     exit={{ opacity: 0 }}
                     className="w-full space-y-4 font-mono text-xs px-4 py-6 sm:p-8 lg:p-6 xl:p-8"
                   >
-                    {['red', 'yellow', 'green', 'blue', 'purple', 'pink'].map((color, i) => (
+                    {["red", "yellow", "green", "blue", "purple", "pink"].map((color, i) => (
                       <motion.li
                         key={color}
                         initial={{ opacity: 0 }}
@@ -290,7 +290,7 @@ export function ConstraintBased() {
                       >
                         <h4
                           className="grid items-center"
-                          style={{ gridTemplateColumns: '1fr auto 1fr' }}
+                          style={{ gridTemplateColumns: "1fr auto 1fr" }}
                         >
                           {`bg-${color}-50`}
                           <ArrowIcon />
@@ -312,13 +312,13 @@ export function ConstraintBased() {
                     ))}
                   </motion.ul>
                 )}
-                {tab === 'typography' && (
+                {tab === "typography" && (
                   <motion.ul
                     key="typography"
                     exit={{ opacity: 0 }}
                     className="w-full space-y-6 px-4 py-6 sm:p-8 lg:p-6 xl:p-8"
                   >
-                    {['font-sans', 'font-serif', 'font-mono'].map((style, i) => (
+                    {["font-sans", "font-serif", "font-mono"].map((style, i) => (
                       <motion.li
                         key={style}
                         initial={{ opacity: 0 }}
@@ -337,7 +337,7 @@ export function ConstraintBased() {
                     ))}
                   </motion.ul>
                 )}
-                {tab === 'shadows' && (
+                {tab === "shadows" && (
                   <motion.div
                     key="shadows"
                     exit={{ opacity: 0 }}
@@ -349,14 +349,14 @@ export function ConstraintBased() {
                       animate={{ opacity: 1 }}
                     />
                     <ul className="relative z-20 w-full flex-none grid grid-cols-2 gap-4">
-                      {['sm', 'default', 'md', 'lg', 'xl', '2xl'].map((shadow, i) => (
+                      {["sm", "default", "md", "lg", "xl", "2xl"].map((shadow, i) => (
                         <motion.li
                           key={shadow}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: [0.1, 0.1, 0.2, 0.2, 0.3, 0.3][i] }}
                         >
-                          <div>{`shadow${shadow === 'default' ? '' : `-${shadow}`}`}</div>
+                          <div>{`shadow${shadow === "default" ? "" : `-${shadow}`}`}</div>
                           <div
                             className="bg-white rounded-lg h-18 mt-1"
                             style={{ boxShadow: defaultConfig.theme.boxShadow[shadow] }}
@@ -385,7 +385,7 @@ export function ConstraintBased() {
                   {tokens[tab].map((tokens, lineIndex) => (
                     <div key={lineIndex}>
                       {tokens.map((token, tokenIndex) => {
-                        if (token.types[token.types.length - 1] === 'attr-value') {
+                        if (token.types[token.types.length - 1] === "attr-value") {
                           return (
                             <span key={tokenIndex} className={getClassNameForToken(token)}>
                               {token.content.split(/\[([^\]]+)\]/).map((part, i) =>

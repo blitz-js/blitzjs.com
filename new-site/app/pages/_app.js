@@ -1,26 +1,26 @@
-import '../css/main.css'
-import 'focus-visible'
-import { useState, useEffect, Fragment } from 'react'
-import { Header } from '@/components/Header'
-import { Title } from '@/components/Title'
-import Router from 'next/router'
-import ProgressBar from '@badrap/bar-of-progress'
-import Head from 'next/head'
-import twitterLargeCard from '@/img/twitter-large-card.jpg'
+import "../css/main.css"
+import "focus-visible"
+import { useState, useEffect, Fragment } from "react"
+import { Header } from "@/components/Header"
+import { Title } from "@/components/Title"
+import Router from "next/router"
+import ProgressBar from "@badrap/bar-of-progress"
+import Head from "next/head"
+import twitterLargeCard from "@/img/twitter-large-card.jpg"
 
 const progress = new ProgressBar({
   size: 2,
-  color: '#22D3EE',
-  className: 'bar-of-progress',
+  color: "#22D3EE",
+  className: "bar-of-progress",
   delay: 100,
 })
 
-Router.events.on('routeChangeStart', progress.start)
-Router.events.on('routeChangeComplete', () => {
+Router.events.on("routeChangeStart", progress.start)
+Router.events.on("routeChangeComplete", () => {
   progress.finish()
   window.scrollTo(0, 0)
 })
-Router.events.on('routeChangeError', progress.finish)
+Router.events.on("routeChangeError", progress.finish)
 
 export default function App({ Component, pageProps, router }) {
   let [navIsOpen, setNavIsOpen] = useState(false)
@@ -30,9 +30,9 @@ export default function App({ Component, pageProps, router }) {
     function handleRouteChange() {
       setNavIsOpen(false)
     }
-    Router.events.on('routeChangeComplete', handleRouteChange)
+    Router.events.on("routeChangeComplete", handleRouteChange)
     return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange)
+      Router.events.off("routeChangeComplete", handleRouteChange)
     }
   }, [navIsOpen])
 
@@ -42,7 +42,7 @@ export default function App({ Component, pageProps, router }) {
     : {}
   const meta = Component.layoutProps?.meta || {}
   const description =
-    meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+    meta.metaDescription || meta.description || "Documentation for the Tailwind CSS framework."
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function App({ Component, pageProps, router }) {
           content={`https://tailwindcss.com${twitterLargeCard}`}
         />
       </Head>
-      {router.pathname !== '/' && (
+      {router.pathname !== "/" && (
         <Header navIsOpen={navIsOpen} onNavToggle={(isOpen) => setNavIsOpen(isOpen)} />
       )}
       <Layout {...layoutProps}>

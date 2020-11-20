@@ -1,25 +1,25 @@
-import { IconContainer, Caption, BigText, Paragraph, Link } from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { gradients } from '@/utils/gradients'
-import { CodeWindow, getClassNameForToken } from '@/components/CodeWindow'
-import { motion, useTransform, useMotionValue } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
-import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect'
-import { ReactComponent as Icon } from '@/img/icons/home/mobile-first.svg'
-import styles from './MobileFirst.module.css'
-import { tokenizeWithLines } from '../../macros/tokenize.macro'
-import { addClassTokens2 } from '@/utils/addClassTokens'
-import clsx from 'clsx'
-import { useMedia } from '@/hooks/useMedia'
+import { IconContainer, Caption, BigText, Paragraph, Link } from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { gradients } from "@/utils/gradients"
+import { CodeWindow, getClassNameForToken } from "@/components/CodeWindow"
+import { motion, useTransform, useMotionValue } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
+import { ReactComponent as Icon } from "@/img/icons/home/mobile-first.svg"
+import styles from "./MobileFirst.module.css"
+import { tokenizeWithLines } from "../../macros/tokenize.macro"
+import { addClassTokens2 } from "@/utils/addClassTokens"
+import clsx from "clsx"
+import { useMedia } from "@/hooks/useMedia"
 
 const MIN_WIDTH = 400
 const HANDLE_RADIUS = 2.125
 
 const images = {
-  '/kevin-francis.jpg': require('@/img/kevin-francis.jpg').default,
-  '/beach-house.jpg': require('@/img/beach-house.jpg').default,
-  '/beach-house-view.jpg': require('@/img/beach-house-view.jpg').default,
-  '/beach-house-interior.jpg': require('@/img/beach-house-interior.jpg').default,
+  "/kevin-francis.jpg": require("@/img/kevin-francis.jpg").default,
+  "/beach-house.jpg": require("@/img/beach-house.jpg").default,
+  "/beach-house-view.jpg": require("@/img/beach-house-view.jpg").default,
+  "/beach-house-interior.jpg": require("@/img/beach-house-interior.jpg").default,
 }
 
 const { code: html, lines, classNames } = tokenizeWithLines.html(
@@ -64,65 +64,65 @@ const { code: html, lines, classNames } = tokenizeWithLines.html(
   </div>
 </div>
 `,
-  'original',
+  "original",
   (code, { classNames }) =>
     code.replace(/\{([^}]+)\}/g, (m, key) => {
-      const sm = classNames.sm[key].split(' ').filter(Boolean)
-      const md = classNames.md[key].split(' ').filter(Boolean)
-      const lg = classNames.lg[key].split(' ').filter(Boolean)
+      const sm = classNames.sm[key].split(" ").filter(Boolean)
+      const md = classNames.md[key].split(" ").filter(Boolean)
+      const lg = classNames.lg[key].split(" ").filter(Boolean)
 
       return [
         ...sm,
         ...md.filter((c) => !sm.includes(c)).map((c) => `sm:${c}`),
         ...lg.filter((c) => !md.includes(c)).map((c) => `md:${c}`),
-      ].join(' ')
+      ].join(" ")
     }),
   {
     classNames: {
       sm: {
-        container: 'grid grid-cols-1',
-        header: 'relative z-10 col-start-1 row-start-1 px-4 pt-40 pb-3 bg-gradient-to-t from-black',
-        preheading: 'text-sm font-medium text-white',
-        heading: 'text-xl font-semibold text-white',
-        metaContainer: 'col-start-1 row-start-2 px-4',
-        meta: 'flex items-center text-sm font-medium my-5',
-        ratingCount: '',
-        hr: 'w-16 border-gray-300 hidden',
-        footerContainer: 'col-start-1 row-start-3 space-y-3 px-4',
-        imgContainer: 'col-start-1 row-start-1 flex',
-        imgLgContainer: 'relative col-span-3 row-span-2',
-        imgLg: 'absolute inset-0 w-full h-full object-cover bg-gray-100',
-        imgSmContainer: 'relative hidden',
+        container: "grid grid-cols-1",
+        header: "relative z-10 col-start-1 row-start-1 px-4 pt-40 pb-3 bg-gradient-to-t from-black",
+        preheading: "text-sm font-medium text-white",
+        heading: "text-xl font-semibold text-white",
+        metaContainer: "col-start-1 row-start-2 px-4",
+        meta: "flex items-center text-sm font-medium my-5",
+        ratingCount: "",
+        hr: "w-16 border-gray-300 hidden",
+        footerContainer: "col-start-1 row-start-3 space-y-3 px-4",
+        imgContainer: "col-start-1 row-start-1 flex",
+        imgLgContainer: "relative col-span-3 row-span-2",
+        imgLg: "absolute inset-0 w-full h-full object-cover bg-gray-100",
+        imgSmContainer: "relative hidden",
       },
       md: {
-        container: 'grid grid-cols-2 px-8 py-12 gap-x-8',
-        header: 'relative z-10 col-start-1 row-start-1 bg-none',
-        preheading: 'text-sm font-medium mb-1 text-gray-500',
-        heading: 'text-2xl leading-7 font-semibold text-black',
-        metaContainer: 'col-start-1 row-start-2 pb-16',
-        meta: 'flex items-center text-sm font-medium mt-2 mb-4',
-        ratingCount: 'hidden',
-        hr: 'w-16 border-gray-300 block',
-        footerContainer: 'col-start-1 row-start-3 space-y-3',
-        imgContainer: 'col-start-2 row-start-1 row-span-3 flex',
-        imgLgContainer: 'relative col-span-3 row-span-2',
-        imgLg: 'absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100',
-        imgSmContainer: 'relative hidden',
+        container: "grid grid-cols-2 px-8 py-12 gap-x-8",
+        header: "relative z-10 col-start-1 row-start-1 bg-none",
+        preheading: "text-sm font-medium mb-1 text-gray-500",
+        heading: "text-2xl leading-7 font-semibold text-black",
+        metaContainer: "col-start-1 row-start-2 pb-16",
+        meta: "flex items-center text-sm font-medium mt-2 mb-4",
+        ratingCount: "hidden",
+        hr: "w-16 border-gray-300 block",
+        footerContainer: "col-start-1 row-start-3 space-y-3",
+        imgContainer: "col-start-2 row-start-1 row-span-3 flex",
+        imgLgContainer: "relative col-span-3 row-span-2",
+        imgLg: "absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100",
+        imgSmContainer: "relative hidden",
       },
       lg: {
-        container: 'grid grid-cols-2 px-8 py-16 gap-x-8',
-        header: 'relative z-10 col-start-1 row-start-1 bg-none',
-        preheading: 'text-sm font-medium mb-1 text-gray-500',
-        heading: 'text-3xl font-semibold text-black',
-        metaContainer: 'col-start-1 row-start-2 pb-16',
-        meta: 'flex items-center text-sm font-medium mt-2 mb-4',
-        ratingCount: 'inline',
-        hr: 'w-16 border-gray-300 block',
-        footerContainer: 'col-start-1 row-start-3 space-y-3',
-        imgContainer: 'col-start-2 row-start-1 row-span-3 flex',
-        imgLgContainer: 'relative col-span-2 row-span-2',
-        imgLg: 'absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100',
-        imgSmContainer: 'relative block',
+        container: "grid grid-cols-2 px-8 py-16 gap-x-8",
+        header: "relative z-10 col-start-1 row-start-1 bg-none",
+        preheading: "text-sm font-medium mb-1 text-gray-500",
+        heading: "text-3xl font-semibold text-black",
+        metaContainer: "col-start-1 row-start-2 pb-16",
+        meta: "flex items-center text-sm font-medium mt-2 mb-4",
+        ratingCount: "inline",
+        hr: "w-16 border-gray-300 block",
+        footerContainer: "col-start-1 row-start-3 space-y-3",
+        imgContainer: "col-start-2 row-start-1 row-span-3 flex",
+        imgLgContainer: "relative col-span-2 row-span-2",
+        imgLg: "absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100",
+        imgSmContainer: "relative block",
       },
     },
   }
@@ -134,7 +134,7 @@ function BrowserWindow({ size, onChange, height = 385 }) {
   const x = useMotionValue(0)
   const constraintsRef = useRef()
   const [constraintsWidth, setConstraintsWidth] = useState()
-  const md = useMedia('(min-width: 768px)')
+  const md = useMedia("(min-width: 768px)")
   const marginRight = useTransform(x, (x) => -x)
 
   useIsomorphicLayoutEffect(() => {
@@ -150,20 +150,20 @@ function BrowserWindow({ size, onChange, height = 385 }) {
 
     function updateSize(x) {
       if (!md) {
-        onChange('sm')
+        onChange("sm")
       } else if (constraintsWidth >= 500) {
         if (x < -((constraintsWidth / 3) * 2)) {
-          size !== 'sm' && onChange('sm')
+          size !== "sm" && onChange("sm")
         } else if (x < -(constraintsWidth / 3)) {
-          size !== 'md' && onChange('md')
+          size !== "md" && onChange("md")
         } else if (x >= -(constraintsWidth / 3)) {
-          size !== 'lg' && onChange('lg')
+          size !== "lg" && onChange("lg")
         }
       } else {
         if (x < -(constraintsWidth / 2)) {
-          size !== 'sm' && onChange('sm')
+          size !== "sm" && onChange("sm")
         } else {
-          size !== 'md' && onChange('md')
+          size !== "md" && onChange("md")
         }
       }
     }
@@ -177,12 +177,12 @@ function BrowserWindow({ size, onChange, height = 385 }) {
     <div className="relative">
       <motion.div
         className="shadow-lg rounded-xl"
-        style={{ marginRight: md ? marginRight : 'auto' }}
+        style={{ marginRight: md ? marginRight : "auto" }}
       >
         <div className="rounded-xl ring-1 ring-black ring-opacity-5">
           <div
             className="py-2 grid items-center gap-6 px-4 rounded-tr-xl sm:rounded-t-xl bg-gradient-to-b from-gray-50 to-gray-100"
-            style={{ gridTemplateColumns: '1fr minmax(min-content, 640px) 1fr' }}
+            style={{ gridTemplateColumns: "1fr minmax(min-content, 640px) 1fr" }}
           >
             <div className="flex space-x-1.5">
               <div className="w-3 h-3 rounded-full bg-gray-300" />
@@ -201,10 +201,10 @@ function BrowserWindow({ size, onChange, height = 385 }) {
               style={{ height }}
               dangerouslySetInnerHTML={{
                 __html: html
-                  .replace(/\{([^}]+)\}/g, (_, name) => classNames[size][name] || '')
+                  .replace(/\{([^}]+)\}/g, (_, name) => classNames[size][name] || "")
                   .replace(/src="([^"]+)"/g, (_, src) => `src="${images[src]}" loading="lazy"`)
                   .replace(/<button type="button"/g, '<div class="cursor-pointer inline-flex"><div')
-                  .replace(/<\/button>/g, '</div></div>'),
+                  .replace(/<\/button>/g, "</div></div>"),
               }}
             ></div>
           </div>
@@ -239,8 +239,8 @@ function BrowserWindow({ size, onChange, height = 385 }) {
               x.set(-width)
             }
           }}
-          onDragStart={() => document.body.classList.add('cursor-grabbing')}
-          onDragEnd={() => document.body.classList.remove('cursor-grabbing')}
+          onDragStart={() => document.body.classList.add("cursor-grabbing")}
+          onDragEnd={() => document.body.classList.remove("cursor-grabbing")}
         >
           <svg width="40" height="40" fill="none">
             <path
@@ -258,7 +258,7 @@ function BrowserWindow({ size, onChange, height = 385 }) {
 }
 
 export function MobileFirst() {
-  const [size, setSize] = useState('lg')
+  const [size, setSize] = useState("lg")
 
   return (
     <section id="mobile-first">
@@ -298,22 +298,22 @@ export function MobileFirst() {
                   <div key={lineIndex}>
                     {tokens.map((token, tokenIndex) => {
                       if (
-                        token.types[token.types.length - 1] === 'class' &&
-                        (token.content.startsWith('sm:') || token.content.startsWith('md:'))
+                        token.types[token.types.length - 1] === "class" &&
+                        (token.content.startsWith("sm:") || token.content.startsWith("md:"))
                       ) {
                         const faded =
-                          size === 'sm' || (size !== 'lg' && token.content.startsWith('md:'))
+                          size === "sm" || (size !== "lg" && token.content.startsWith("md:"))
                         const highlighted =
-                          (size === 'md' && token.content.startsWith('sm:')) ||
-                          (size === 'lg' && token.content.startsWith('md:'))
+                          (size === "md" && token.content.startsWith("sm:")) ||
+                          (size === "lg" && token.content.startsWith("md:"))
 
                         return (
                           <span
                             key={tokenIndex}
                             className={clsx(
-                              'code-highlight transition duration-500',
+                              "code-highlight transition duration-500",
                               getClassNameForToken(token),
-                              { 'opacity-50': faded, 'bg-code-highlight': highlighted }
+                              { "opacity-50": faded, "bg-code-highlight": highlighted }
                             )}
                           >
                             {token.content}

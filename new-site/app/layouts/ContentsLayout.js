@@ -6,13 +6,13 @@ import {
   useCallback,
   isValidElement,
   useContext,
-} from 'react'
-import { ClassTable } from '@/components/ClassTable'
-import { usePrevNext } from '@/hooks/usePrevNext'
-import Link from 'next/link'
-import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
-import { PageHeader } from '@/components/PageHeader'
-import clsx from 'clsx'
+} from "react"
+import { ClassTable } from "@/components/ClassTable"
+import { usePrevNext } from "@/hooks/usePrevNext"
+import Link from "next/link"
+import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
+import { PageHeader } from "@/components/PageHeader"
+import clsx from "clsx"
 
 export const ContentsContext = createContext()
 
@@ -44,9 +44,9 @@ function TableOfContents({ tableOfContents, currentSection }) {
                   href={`#${section.slug}`}
                   onClick={closeNav}
                   className={clsx(
-                    'block transform transition-colors duration-200 py-2 hover:text-gray-900',
+                    "block transform transition-colors duration-200 py-2 hover:text-gray-900",
                     {
-                      'text-gray-900': sectionIsActive,
+                      "text-gray-900": sectionIsActive,
                     }
                   )}
                 >
@@ -59,8 +59,8 @@ function TableOfContents({ tableOfContents, currentSection }) {
                 return (
                   <li
                     className={clsx({
-                      'ml-4': isMainNav,
-                      'ml-2': !isMainNav,
+                      "ml-4": isMainNav,
+                      "ml-2": !isMainNav,
                     })}
                     key={subsection.slug}
                   >
@@ -68,9 +68,9 @@ function TableOfContents({ tableOfContents, currentSection }) {
                       href={`#${subsection.slug}`}
                       onClick={closeNav}
                       className={clsx(
-                        'block py-2 transition-colors duration-200 hover:text-gray-900 font-medium',
+                        "block py-2 transition-colors duration-200 hover:text-gray-900 font-medium",
                         {
-                          'text-gray-900': subsectionIsActive,
+                          "text-gray-900": subsectionIsActive,
                         }
                       )}
                     >
@@ -122,12 +122,12 @@ function useTableOfContents(tableOfContents) {
       }
       setCurrentSection(current)
     }
-    window.addEventListener('scroll', onScroll, {
+    window.addEventListener("scroll", onScroll, {
       capture: true,
       passive: true,
     })
     onScroll()
-    return () => window.removeEventListener('scroll', onScroll, true)
+    return () => window.removeEventListener("scroll", onScroll, true)
   }, [headings, tableOfContents])
 
   return { currentSection, registerHeading, unregisterHeading }
@@ -160,7 +160,7 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
 export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   const toc = [
     ...(classes
-      ? [{ title: 'Default class reference', slug: 'class-reference', children: [] }]
+      ? [{ title: "Default class reference", slug: "class-reference", children: [] }]
       : []),
     ...tableOfContents,
   ]
@@ -174,7 +174,7 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
         <PageHeader
           title={meta.title}
           description={meta.description}
-          badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
+          badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
           border={!classes && meta.headerSeparator !== false}
         />
         <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>

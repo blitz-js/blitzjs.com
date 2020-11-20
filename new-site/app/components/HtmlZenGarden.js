@@ -1,29 +1,29 @@
-import { AnimateSharedLayout, motion } from 'framer-motion'
-import { font as poppinsRegular } from '../fonts/generated/Poppins-Regular.module.css'
-import { font as poppinsSemiBold } from '../fonts/generated/Poppins-SemiBold.module.css'
-import { font as poppinsBold } from '../fonts/generated/Poppins-Bold.module.css'
-import { font as poppinsMedium } from '../fonts/generated/Poppins-Medium.module.css'
-import { font as tenorSansRegular } from '../fonts/generated/TenorSans-Regular.module.css'
-import { font as robotoMonoRegular } from '../fonts/generated/RobotoMono-Regular.module.css'
-import { font as robotoMonoBold } from '../fonts/generated/RobotoMono-Bold.module.css'
-import { font as robotoMonoMedium } from '../fonts/generated/RobotoMono-Medium.module.css'
-import { usePrevious } from '@/hooks/usePrevious'
-import styles from './HtmlZenGarden.module.css'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import debounce from 'debounce'
-import dlv from 'dlv'
-import { fit } from '@/utils/fit'
-import clsx from 'clsx'
+import { AnimateSharedLayout, motion } from "framer-motion"
+import { font as poppinsRegular } from "../fonts/generated/Poppins-Regular.module.css"
+import { font as poppinsSemiBold } from "../fonts/generated/Poppins-SemiBold.module.css"
+import { font as poppinsBold } from "../fonts/generated/Poppins-Bold.module.css"
+import { font as poppinsMedium } from "../fonts/generated/Poppins-Medium.module.css"
+import { font as tenorSansRegular } from "../fonts/generated/TenorSans-Regular.module.css"
+import { font as robotoMonoRegular } from "../fonts/generated/RobotoMono-Regular.module.css"
+import { font as robotoMonoBold } from "../fonts/generated/RobotoMono-Bold.module.css"
+import { font as robotoMonoMedium } from "../fonts/generated/RobotoMono-Medium.module.css"
+import { usePrevious } from "@/hooks/usePrevious"
+import styles from "./HtmlZenGarden.module.css"
+import { useCallback, useEffect, useRef, useState } from "react"
+import debounce from "debounce"
+import dlv from "dlv"
+import { fit } from "@/utils/fit"
+import clsx from "clsx"
 
 const themes = {
   simple: {
     wrapper: { borderRadius: 12 },
-    container: '',
+    container: "",
     image: {
       width({ containerWidth, col }, css = false) {
         if (!containerWidth) return 192
         if (css) {
-          return col ? '100%' : '192px'
+          return col ? "100%" : "192px"
         } else {
           return col ? containerWidth : 192
         }
@@ -33,61 +33,61 @@ const themes = {
         return col ? 192 : 256
       },
       borderRadius: 0,
-      src: require('@/img/classic-utility-jacket.jpg').default,
+      src: require("@/img/classic-utility-jacket.jpg").default,
       originalWidth: 1200,
       originalHeight: 1600,
     },
-    contentContainer: ['pt-6 pb-4 px-4', 'pt-6 pb-4 px-4', 'p-6'],
-    header: ['-mt-6 py-6', '-mt-6 py-6', '-mt-6 pt-6 pb-4'],
-    heading: 'flex-auto',
-    stock: 'flex-none w-full mt-2',
+    contentContainer: ["pt-6 pb-4 px-4", "pt-6 pb-4 px-4", "p-6"],
+    header: ["-mt-6 py-6", "-mt-6 py-6", "-mt-6 pt-6 pb-4"],
+    heading: "flex-auto",
+    stock: "flex-none w-full mt-2",
     button: {
-      grid: ['1fr auto', '1fr 1fr auto', '1fr 1fr auto'],
+      grid: ["1fr auto", "1fr 1fr auto", "1fr 1fr auto"],
       height: 38,
       borderRadius: 6,
       primary: {
-        class: ['col-span-2', '', ''],
-        backgroundColor: '#000',
-        text: 'text-white font-medium',
+        class: ["col-span-2", "", ""],
+        backgroundColor: "#000",
+        text: "text-white font-medium",
       },
       secondary: {
-        backgroundColor: '#fff',
-        borderColor: '#d4d4d8',
-        text: 'text-black font-medium',
+        backgroundColor: "#fff",
+        borderColor: "#d4d4d8",
+        text: "text-black font-medium",
       },
       like: {
-        color: '#a1a1aa',
+        color: "#a1a1aa",
       },
     },
     size: {
-      container: 'mb-6',
+      container: "mb-6",
       button: {
-        font: 'font-medium',
+        font: "font-medium",
         size: 38,
         borderRadius: 8,
-        color: '#71717a',
-        activeBackgroundColor: '#f4f4f5',
-        activeColor: '#000',
+        color: "#71717a",
+        activeBackgroundColor: "#f4f4f5",
+        activeColor: "#000",
       },
       guide: {
-        container: 'ml-auto',
-        inner: 'text-sm underline',
-        color: '#71717a',
+        container: "ml-auto",
+        inner: "text-sm underline",
+        color: "#71717a",
       },
     },
     smallprint: {
-      container: 'mt-4',
-      inner: 'text-sm',
+      container: "mt-4",
+      inner: "text-sm",
     },
   },
   playful: {
     wrapper: { borderRadius: 12 },
-    container: ['p-6 pb-2.5', 'p-6', 'p-6'],
+    container: ["p-6 pb-2.5", "p-6", "p-6"],
     image: {
       width({ containerWidth, col }, css = false) {
         if (!containerWidth) return 168
         if (css) {
-          return col ? '100%' : '168px'
+          return col ? "100%" : "168px"
         } else {
           return col ? containerWidth - 48 : 168
         }
@@ -97,59 +97,59 @@ const themes = {
         return col ? 168 : 238
       },
       borderRadius: 8,
-      src: require('@/img/kids-jumper.jpg').default,
+      src: require("@/img/kids-jumper.jpg").default,
       originalWidth: 1200,
       originalHeight: 1700,
     },
-    contentContainer: ['', '', 'pl-6'],
-    header: ['pt-6 pb-5', 'pt-6 pb-5', '-mt-6 py-6'],
-    heading: 'w-full flex-none mb-2.5',
-    stock: 'ml-3',
+    contentContainer: ["", "", "pl-6"],
+    header: ["pt-6 pb-5", "pt-6 pb-5", "-mt-6 py-6"],
+    heading: "w-full flex-none mb-2.5",
+    stock: "ml-3",
     button: {
-      grid: ['1fr auto', '1fr 1fr auto', '1fr 1fr auto'],
+      grid: ["1fr auto", "1fr 1fr auto", "1fr 1fr auto"],
       height: 38,
       borderRadius: 19,
       primary: {
-        class: ['col-span-2', '', ''],
-        backgroundColor: '#7e22ce',
+        class: ["col-span-2", "", ""],
+        backgroundColor: "#7e22ce",
         text: `text-white ${poppinsSemiBold}`,
       },
       secondary: {
-        backgroundColor: '#faf5ff',
+        backgroundColor: "#faf5ff",
         text: `text-purple-700 ${poppinsSemiBold}`,
       },
       like: {
-        color: '#9333ea',
+        color: "#9333ea",
       },
     },
     size: {
-      container: ['mb-6', 'mb-6', 'mt-2 mb-8'],
+      container: ["mb-6", "mb-6", "mt-2 mb-8"],
       button: {
         font: poppinsMedium,
         size: 38,
         borderRadius: 19,
-        borderColor: '#f4f4f5',
-        color: 'rgba(0, 0, 0, 0.5)',
-        activeBackgroundColor: '#7e22ce',
-        activeBorderColor: '#7e22ce',
-        activeColor: '#fff',
+        borderColor: "#f4f4f5",
+        color: "rgba(0, 0, 0, 0.5)",
+        activeBackgroundColor: "#7e22ce",
+        activeBorderColor: "#7e22ce",
+        activeColor: "#fff",
       },
       guide: {
-        container: 'ml-3',
+        container: "ml-3",
         inner: `text-sm underline ${poppinsRegular}`,
-        color: '#71717a',
+        color: "#71717a",
       },
     },
-    smallprint: { container: ['mt-4 mb-0.5', 'mt-4', 'mt-4'], inner: `text-sm ${poppinsRegular}` },
+    smallprint: { container: ["mt-4 mb-0.5", "mt-4", "mt-4"], inner: `text-sm ${poppinsRegular}` },
   },
   elegant: {
     wrapper: { borderRadius: 0 },
-    container: 'p-1',
+    container: "p-1",
     image: {
       width({ containerWidth, col }, css = false) {
         if (!containerWidth) return 172
         if (css) {
-          return col ? '100%' : '172px'
+          return col ? "100%" : "172px"
         } else {
           return col ? containerWidth - 8 : 172
         }
@@ -159,65 +159,65 @@ const themes = {
         return col ? 188 : 305
       },
       borderRadius: 0,
-      src: require('@/img/fancy-suit-jacket.jpg').default,
+      src: require("@/img/fancy-suit-jacket.jpg").default,
       originalWidth: 1200,
       originalHeight: 2128,
     },
     contentContainer: [
-      'px-6 pt-0 pb-3 -mx-1 -mb-1',
-      'px-6 pt-0 pb-3 -mx-1 -mb-1',
-      'p-8 pt-0 -my-1',
+      "px-6 pt-0 pb-3 -mx-1 -mb-1",
+      "px-6 pt-0 pb-3 -mx-1 -mb-1",
+      "p-8 pt-0 -my-1",
     ],
-    header: ['pt-6 pb-4', 'pt-6 pb-4', 'py-8'],
-    heading: 'w-full flex-none mb-1.5',
-    stock: 'ml-3',
+    header: ["pt-6 pb-4", "pt-6 pb-4", "py-8"],
+    heading: "w-full flex-none mb-1.5",
+    stock: "ml-3",
     button: {
-      grid: ['1fr auto', '1fr 1fr auto', '1fr 1fr auto'],
+      grid: ["1fr auto", "1fr 1fr auto", "1fr 1fr auto"],
       height: [38, 38, 50],
       borderRadius: 0,
       primary: {
-        class: ['col-span-2', '', ''],
-        backgroundColor: '#000',
-        text: 'text-white font-semibold tracking-wide uppercase',
+        class: ["col-span-2", "", ""],
+        backgroundColor: "#000",
+        text: "text-white font-semibold tracking-wide uppercase",
       },
       secondary: {
-        backgroundColor: '#fff',
-        borderColor: '#e4e4e7',
-        text: 'text-black font-semibold tracking-wide uppercase',
+        backgroundColor: "#fff",
+        borderColor: "#e4e4e7",
+        text: "text-black font-semibold tracking-wide uppercase",
       },
       like: {
-        color: '#18181b',
+        color: "#18181b",
       },
     },
     size: {
-      container: 'mb-4 pt-4 border-t border-gray-100',
+      container: "mb-4 pt-4 border-t border-gray-100",
       button: {
-        font: 'font-light',
+        font: "font-light",
         size: 38,
         borderRadius: 19,
-        color: '#000',
-        activeBackgroundColor: '#000',
-        activeColor: '#fff',
+        color: "#000",
+        activeBackgroundColor: "#000",
+        activeColor: "#fff",
       },
       guide: {
-        container: 'ml-auto',
-        inner: 'text-sm font-light',
-        color: '#71717a',
+        container: "ml-auto",
+        inner: "text-sm font-light",
+        color: "#71717a",
       },
     },
     smallprint: {
-      container: ['mt-4 border-b border-transparent', 'mt-4 border-b border-transparent', 'mt-3'],
-      inner: 'text-xs leading-4',
+      container: ["mt-4 border-b border-transparent", "mt-4 border-b border-transparent", "mt-3"],
+      inner: "text-xs leading-4",
     },
   },
   brutalist: {
     wrapper: { borderRadius: 0 },
-    container: ['p-6', 'p-6', 'py-6 pl-8 pr-4'],
+    container: ["p-6", "p-6", "py-6 pl-8 pr-4"],
     image: {
       width({ containerWidth, col }, css = false) {
         if (!containerWidth) return 168
         if (css) {
-          return col ? '100%' : '168px'
+          return col ? "100%" : "168px"
         } else {
           return col ? containerWidth - 48 : 168
         }
@@ -227,57 +227,57 @@ const themes = {
         return col ? 160 : 248
       },
       borderRadius: 0,
-      src: require('@/img/retro-shoe.jpg').default,
+      src: require("@/img/retro-shoe.jpg").default,
       originalWidth: 1200,
       originalHeight: 1772,
     },
-    contentContainer: ['', '', 'pl-8'],
-    header: ['py-4', 'py-4', '-mt-6 py-6'],
-    heading: 'w-full flex-none mb-2',
-    stock: 'ml-3',
+    contentContainer: ["", "", "pl-8"],
+    header: ["py-4", "py-4", "-mt-6 py-6"],
+    heading: "w-full flex-none mb-2",
+    stock: "ml-3",
     button: {
-      grid: ['1fr auto', '1fr 1fr auto', '1fr 1fr auto'],
+      grid: ["1fr auto", "1fr 1fr auto", "1fr 1fr auto"],
       height: 38,
       borderRadius: 0,
       primary: {
-        class: ['col-span-2', '', ''],
-        backgroundColor: '#bef264',
-        borderColor: '#000',
+        class: ["col-span-2", "", ""],
+        backgroundColor: "#bef264",
+        borderColor: "#000",
         text: `text-black tracking-wide uppercase ${robotoMonoBold}`,
       },
       secondary: {
-        backgroundColor: '#fff',
-        borderColor: '#000',
+        backgroundColor: "#fff",
+        borderColor: "#000",
         text: `text-black tracking-wide uppercase ${robotoMonoBold}`,
       },
       like: {
-        className: 'justify-end -ml-2.5',
-        color: '#000',
-        borderColor: '#fff',
+        className: "justify-end -ml-2.5",
+        color: "#000",
+        borderColor: "#fff",
       },
     },
     size: {
-      container: ['my-15px', 'my-15px', 'my-23px'],
+      container: ["my-15px", "my-15px", "my-23px"],
       button: {
         font: robotoMonoRegular,
         activeFont: robotoMonoBold,
         size: 38,
         borderRadius: 19,
-        color: '#71717a',
-        activeBackgroundColor: '#fff',
-        activeColor: '#000',
+        color: "#71717a",
+        activeBackgroundColor: "#fff",
+        activeColor: "#000",
       },
       guide: {
-        container: 'ml-5',
+        container: "ml-5",
         inner: `text-xs underline ${robotoMonoRegular}`,
-        color: '#000',
+        color: "#000",
       },
     },
     smallprint: {
       container: [
-        'mt-4 border-b-2 border-transparent',
-        'mt-4 border-b-2 border-transparent',
-        'mt-4',
+        "mt-4 border-b-2 border-transparent",
+        "mt-4 border-b-2 border-transparent",
+        "mt-4",
       ],
       inner: `${robotoMonoRegular} text-xs leading-5`,
     },
@@ -304,9 +304,9 @@ export function HtmlZenGarden({ theme }) {
       const newWidth = Math.round(containerRef.current.getBoundingClientRect().width)
       const newCol =
         window.innerWidth < 640
-          ? 'sm'
+          ? "sm"
           : window.innerWidth >= 1024 && window.innerWidth < 1280
-          ? 'lg'
+          ? "lg"
           : false
       const newAbove = window.innerWidth < 1024
       if (newWidth !== containerWidth || newCol !== col || newAbove !== above) {
@@ -326,7 +326,7 @@ export function HtmlZenGarden({ theme }) {
 
   const getThemeValue = (key) => {
     const value = dlv(themes[theme], key)
-    return Array.isArray(value) ? value[col === 'sm' ? 0 : col === 'lg' ? 1 : 2] : value
+    return Array.isArray(value) ? value[col === "sm" ? 0 : col === "lg" ? 1 : 2] : value
   }
 
   return (
@@ -342,23 +342,23 @@ export function HtmlZenGarden({ theme }) {
             className="relative shadow-lg flex leading-none"
             initial={false}
             animate={{
-              borderTopLeftRadius: getThemeValue('wrapper.borderRadius'),
-              borderTopRightRadius: col === 'sm' ? 0 : getThemeValue('wrapper.borderRadius'),
-              borderBottomLeftRadius: above ? 0 : getThemeValue('wrapper.borderRadius'),
-              borderBottomRightRadius: above ? 0 : getThemeValue('wrapper.borderRadius'),
+              borderTopLeftRadius: getThemeValue("wrapper.borderRadius"),
+              borderTopRightRadius: col === "sm" ? 0 : getThemeValue("wrapper.borderRadius"),
+              borderBottomLeftRadius: above ? 0 : getThemeValue("wrapper.borderRadius"),
+              borderBottomRightRadius: above ? 0 : getThemeValue("wrapper.borderRadius"),
             }}
           >
             <motion.div
               layout
               className={`bg-white overflow-hidden flex w-full ${
-                col ? 'flex-col' : ''
-              } ${getThemeValue('container')}`}
+                col ? "flex-col" : ""
+              } ${getThemeValue("container")}`}
               initial={false}
               animate={{
-                borderTopLeftRadius: getThemeValue('wrapper.borderRadius'),
-                borderTopRightRadius: col === 'sm' ? 0 : getThemeValue('wrapper.borderRadius'),
-                borderBottomLeftRadius: above ? 0 : getThemeValue('wrapper.borderRadius'),
-                borderBottomRightRadius: above ? 0 : getThemeValue('wrapper.borderRadius'),
+                borderTopLeftRadius: getThemeValue("wrapper.borderRadius"),
+                borderTopRightRadius: col === "sm" ? 0 : getThemeValue("wrapper.borderRadius"),
+                borderBottomLeftRadius: above ? 0 : getThemeValue("wrapper.borderRadius"),
+                borderBottomRightRadius: above ? 0 : getThemeValue("wrapper.borderRadius"),
               }}
             >
               <motion.div
@@ -384,8 +384,8 @@ export function HtmlZenGarden({ theme }) {
                       themes[name].image.originalWidth,
                       themes[name].image.originalHeight
                     )}
-                    initial={i === 0 ? 'visible' : 'hidden'}
-                    animate={theme === name ? 'visible' : prevTheme === name ? 'prev' : 'hidden'}
+                    initial={i === 0 ? "visible" : "hidden"}
+                    animate={theme === name ? "visible" : prevTheme === name ? "prev" : "hidden"}
                     variants={imageAnimationVariants}
                   />
                 ))}
@@ -396,8 +396,8 @@ export function HtmlZenGarden({ theme }) {
                 style={{
                   width: themes[theme].image.width({ containerWidth, col }, true),
                   height: themes[theme].image.height({ containerWidth, col }),
-                  top: theme === 'brutalist' ? '0.1875rem' : 0,
-                  left: theme === 'brutalist' ? '0.1875rem' : 0,
+                  top: theme === "brutalist" ? "0.1875rem" : 0,
+                  left: theme === "brutalist" ? "0.1875rem" : 0,
                   ...(containerWidth
                     ? col
                       ? { marginTop: -themes[theme].image.height({ containerWidth, col }) }
@@ -410,32 +410,32 @@ export function HtmlZenGarden({ theme }) {
                     : {}),
                 }}
                 initial={false}
-                animate={{ borderRadius: Math.max(0, getThemeValue('image.borderRadius') - 1) }}
+                animate={{ borderRadius: Math.max(0, getThemeValue("image.borderRadius") - 1) }}
               />
               <div
                 className={`self-start flex-auto flex flex-wrap items-baseline ${getThemeValue(
-                  'contentContainer'
+                  "contentContainer"
                 )}`}
               >
                 <div
                   className={`w-full relative flex flex-wrap items-baseline ${
-                    getThemeValue('header') || ''
+                    getThemeValue("header") || ""
                   }`}
                 >
                   <motion.div
                     layout
                     className="absolute -top-96 bottom-0 -left-96 -right-96 bg-black"
                     initial={false}
-                    animate={{ opacity: theme === 'brutalist' ? 1 : 0 }}
+                    animate={{ opacity: theme === "brutalist" ? 1 : 0 }}
                   />
                   <div className={`relative ${themes[theme].heading}`}>
                     <motion.h2
                       layout
                       className={`inline-flex text-black text-xl font-semibold ${
-                        theme === 'simple' ? '' : 'absolute bottom-0 left-0'
+                        theme === "simple" ? "" : "absolute bottom-0 left-0"
                       }`}
                       initial={false}
-                      animate={{ opacity: theme === 'simple' ? 1 : 0 }}
+                      animate={{ opacity: theme === "simple" ? 1 : 0 }}
                     >
                       <span className="hidden sm:inline whitespace-pre">Classic </span>Utility
                       Jacket
@@ -443,32 +443,32 @@ export function HtmlZenGarden({ theme }) {
                     <motion.h2
                       layout
                       className={`inline-flex text-black text-base font-semibold ${poppinsSemiBold} ${
-                        theme === 'playful' ? '' : 'absolute bottom-0 left-0'
+                        theme === "playful" ? "" : "absolute bottom-0 left-0"
                       }`}
                       initial={false}
-                      animate={{ opacity: theme === 'playful' ? 1 : 0 }}
+                      animate={{ opacity: theme === "playful" ? 1 : 0 }}
                     >
                       Kids Jumpsuit
                     </motion.h2>
                     <motion.h2
                       layout
                       className={`inline-flex text-black ${
-                        col ? 'text-2xl' : 'text-3xl'
+                        col ? "text-2xl" : "text-3xl"
                       } ${tenorSansRegular} ${
-                        theme === 'elegant' ? '' : 'absolute bottom-0 left-0'
+                        theme === "elegant" ? "" : "absolute bottom-0 left-0"
                       }`}
                       initial={false}
-                      animate={{ opacity: theme === 'elegant' ? 1 : 0 }}
+                      animate={{ opacity: theme === "elegant" ? 1 : 0 }}
                     >
                       Fancy Suit Jacket
                     </motion.h2>
                     <motion.h2
                       layout
                       className={`inline-flex text-white text-2xl leading-7 ${robotoMonoBold} ${
-                        theme === 'brutalist' ? '' : 'absolute bottom-0 left-0'
+                        theme === "brutalist" ? "" : "absolute bottom-0 left-0"
                       }`}
                       initial={false}
-                      animate={{ opacity: theme === 'brutalist' ? 1 : 0 }}
+                      animate={{ opacity: theme === "brutalist" ? 1 : 0 }}
                     >
                       Retro Shoe
                     </motion.h2>
@@ -476,41 +476,41 @@ export function HtmlZenGarden({ theme }) {
                   <div className="relative">
                     <motion.div
                       className={`inline-flex text-xl font-semibold ${
-                        theme === 'simple' ? '' : 'absolute bottom-0 left-0'
+                        theme === "simple" ? "" : "absolute bottom-0 left-0"
                       }`}
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'simple' ? 1 : 0 }}
+                      animate={{ opacity: theme === "simple" ? 1 : 0 }}
                     >
                       $110.00
                     </motion.div>
                     <motion.div
                       className={`inline-flex text-4xl leading-7 font-bold text-purple-600 ${poppinsBold} ${
-                        theme === 'playful' ? '' : 'absolute bottom-0 left-0'
+                        theme === "playful" ? "" : "absolute bottom-0 left-0"
                       }`}
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'playful' ? 1 : 0 }}
+                      animate={{ opacity: theme === "playful" ? 1 : 0 }}
                     >
                       $39.00
                     </motion.div>
                     <motion.div
                       className={`inline-flex text-lg leading-6 text-black ${tenorSansRegular} ${
-                        theme === 'elegant' ? '' : 'absolute bottom-0 left-0'
+                        theme === "elegant" ? "" : "absolute bottom-0 left-0"
                       }`}
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'elegant' ? 1 : 0 }}
+                      animate={{ opacity: theme === "elegant" ? 1 : 0 }}
                     >
                       $600.00
                     </motion.div>
                     <motion.div
                       className={`inline-flex text-2xl leading-7 text-white ${robotoMonoBold} ${
-                        theme === 'brutalist' ? '' : 'absolute bottom-0 left-0'
+                        theme === "brutalist" ? "" : "absolute bottom-0 left-0"
                       }`}
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'brutalist' ? 1 : 0 }}
+                      animate={{ opacity: theme === "brutalist" ? 1 : 0 }}
                     >
                       $89.00
                     </motion.div>
@@ -519,9 +519,9 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'simple' ? 1 : 0 }}
+                      animate={{ opacity: theme === "simple" ? 1 : 0 }}
                       className={`inline-flex text-sm font-medium text-gray-500 ${
-                        theme === 'simple' ? '' : 'absolute bottom-0 left-0'
+                        theme === "simple" ? "" : "absolute bottom-0 left-0"
                       }`}
                     >
                       In stock
@@ -529,9 +529,9 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'playful' ? 1 : 0 }}
+                      animate={{ opacity: theme === "playful" ? 1 : 0 }}
                       className={`inline-flex text-sm font-medium text-gray-400 ${poppinsMedium} ${
-                        theme === 'playful' ? '' : 'absolute bottom-0 left-0'
+                        theme === "playful" ? "" : "absolute bottom-0 left-0"
                       }`}
                     >
                       In stock
@@ -539,9 +539,9 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'elegant' ? 1 : 0 }}
+                      animate={{ opacity: theme === "elegant" ? 1 : 0 }}
                       className={`inline-flex text-sm text-gray-500 ${tenorSansRegular} ${
-                        theme === 'elegant' ? '' : 'absolute bottom-0 left-0'
+                        theme === "elegant" ? "" : "absolute bottom-0 left-0"
                       }`}
                     >
                       In stock
@@ -549,9 +549,9 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       initial={false}
-                      animate={{ opacity: theme === 'brutalist' ? 1 : 0 }}
+                      animate={{ opacity: theme === "brutalist" ? 1 : 0 }}
                       className={`inline-flex text-sm text-lime-300 ${robotoMonoMedium} ${
-                        theme === 'brutalist' ? '' : 'absolute bottom-0 left-0'
+                        theme === "brutalist" ? "" : "absolute bottom-0 left-0"
                       }`}
                     >
                       In stock
@@ -560,18 +560,18 @@ export function HtmlZenGarden({ theme }) {
                 </div>
                 <div
                   className={`w-full flex-none flex items-center ${getThemeValue(
-                    'size.container'
+                    "size.container"
                   )}`}
                 >
                   <motion.ul layout className="flex text-sm space-x-2">
-                    {['XS', 'S', 'M', 'L', 'XL'].map((size) => (
+                    {["XS", "S", "M", "L", "XL"].map((size) => (
                       <motion.li
                         key={size}
                         className={clsx(
-                          'relative flex-none items-center justify-center border-2 cursor-pointer',
+                          "relative flex-none items-center justify-center border-2 cursor-pointer",
                           {
-                            'hidden sm:flex': size === 'S' || size === 'XL',
-                            flex: size !== 'S' && size !== 'XL',
+                            "hidden sm:flex": size === "S" || size === "XL",
+                            flex: size !== "S" && size !== "XL",
                           }
                         )}
                         style={{
@@ -582,17 +582,17 @@ export function HtmlZenGarden({ theme }) {
                         animate={{
                           borderRadius: themes[theme].size.button.borderRadius,
                           borderColor:
-                            (size === 'XS'
+                            (size === "XS"
                               ? themes[theme].size.button.activeBorderColor
                               : themes[theme].size.button.borderColor) ||
-                            (size === 'XS'
+                            (size === "XS"
                               ? themes[theme].size.button.activeBackgroundColor
-                              : '#fff'),
+                              : "#fff"),
                           color:
-                            size === 'XS'
+                            size === "XS"
                               ? themes[theme].size.button.activeColor
                               : themes[theme].size.button.color,
-                          ...(size === 'XS'
+                          ...(size === "XS"
                             ? {
                                 backgroundColor: themes[theme].size.button.activeBackgroundColor,
                               }
@@ -603,21 +603,21 @@ export function HtmlZenGarden({ theme }) {
                           <motion.span
                             key={name}
                             className={`absolute inset-0 flex items-center justify-center ${
-                              size === 'XS'
+                              size === "XS"
                                 ? themes[name].size.button.activeFont ||
                                   themes[name].size.button.font
                                 : themes[name].size.button.font
-                            } ${theme === name ? '' : 'pointer-events-none'}`}
+                            } ${theme === name ? "" : "pointer-events-none"}`}
                             initial={false}
                             animate={{ opacity: theme === name ? 1 : 0 }}
                           >
-                            {size === 'XS' && name === 'brutalist' ? (
+                            {size === "XS" && name === "brutalist" ? (
                               <>
                                 <span className="absolute w-6 h-1 bg-lime-300 left-1/2 -ml-3 bottom-2.5" />
                                 <span className="relative hidden sm:inline">XS</span>
                                 <span className="relative sm:hidden">S</span>
                               </>
-                            ) : size === 'XS' ? (
+                            ) : size === "XS" ? (
                               <>
                                 <span className="hidden sm:inline">XS</span>
                                 <span className="sm:hidden">S</span>
@@ -632,7 +632,7 @@ export function HtmlZenGarden({ theme }) {
                   </motion.ul>
                   <div
                     className={`relative whitespace-nowrap ${
-                      themes[theme].size.guide.container || ''
+                      themes[theme].size.guide.container || ""
                     }`}
                   >
                     {Object.keys(themes).map((name) => (
@@ -640,12 +640,12 @@ export function HtmlZenGarden({ theme }) {
                         layout
                         key={name}
                         className={`inline-flex leading-5 cursor-pointer ${
-                          themes[name].size.guide.inner || ''
-                        } ${theme === name ? '' : 'absolute bottom-0 left-0'}`}
+                          themes[name].size.guide.inner || ""
+                        } ${theme === name ? "" : "absolute bottom-0 left-0"}`}
                         initial={false}
                         animate={{
                           opacity: theme === name ? 1 : 0,
-                          color: themes[name].size.guide.color || '#71717a',
+                          color: themes[name].size.guide.color || "#71717a",
                         }}
                       >
                         Size Guide
@@ -655,15 +655,15 @@ export function HtmlZenGarden({ theme }) {
                 </div>
                 <div
                   className="flex-none w-full grid gap-3 text-center"
-                  style={{ gridTemplateColumns: getThemeValue('button.grid') }}
+                  style={{ gridTemplateColumns: getThemeValue("button.grid") }}
                 >
-                  <div className={`relative ${getThemeValue('button.primary.class')}`}>
+                  <div className={`relative ${getThemeValue("button.primary.class")}`}>
                     <motion.div
                       layout
                       className={`absolute bg-black ${
-                        theme === 'brutalist'
-                          ? 'top-0.5 -right-0.5 -bottom-0.5 left-0.5'
-                          : 'inset-px'
+                        theme === "brutalist"
+                          ? "top-0.5 -right-0.5 -bottom-0.5 left-0.5"
+                          : "inset-px"
                       }`}
                       initial={false}
                       animate={{
@@ -673,7 +673,7 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       className="relative text-sm border cursor-pointer"
-                      style={{ height: getThemeValue('button.height') }}
+                      style={{ height: getThemeValue("button.height") }}
                       initial={false}
                       animate={{
                         backgroundColor: themes[theme].button.primary.backgroundColor,
@@ -699,9 +699,9 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       className={`absolute bg-black ${
-                        theme === 'brutalist'
-                          ? 'top-0.5 -right-0.5 -bottom-0.5 left-0.5'
-                          : 'inset-px'
+                        theme === "brutalist"
+                          ? "top-0.5 -right-0.5 -bottom-0.5 left-0.5"
+                          : "inset-px"
                       }`}
                       initial={false}
                       animate={{
@@ -711,7 +711,7 @@ export function HtmlZenGarden({ theme }) {
                     <motion.div
                       layout
                       className="relative text-sm border cursor-pointer"
-                      style={{ height: getThemeValue('button.height') }}
+                      style={{ height: getThemeValue("button.height") }}
                       initial={false}
                       animate={{
                         backgroundColor: themes[theme].button.secondary.backgroundColor,
@@ -736,11 +736,11 @@ export function HtmlZenGarden({ theme }) {
                   <motion.div
                     layout
                     className={`flex items-center border cursor-pointer ${
-                      themes[theme].button.like.className || 'justify-center'
+                      themes[theme].button.like.className || "justify-center"
                     }`}
                     style={{
-                      width: getThemeValue('button.height'),
-                      height: getThemeValue('button.height'),
+                      width: getThemeValue("button.height"),
+                      height: getThemeValue("button.height"),
                     }}
                     initial={false}
                     animate={{
@@ -769,13 +769,13 @@ export function HtmlZenGarden({ theme }) {
                     </motion.svg>
                   </motion.div>
                 </div>
-                <div className={`relative w-full ${getThemeValue('smallprint.container') || ''}`}>
+                <div className={`relative w-full ${getThemeValue("smallprint.container") || ""}`}>
                   {Object.keys(themes).map((name) => (
                     <motion.p
                       layout
                       key={name}
-                      className={`inline-flex align-top ${themes[name].smallprint.inner || ''} ${
-                        theme === name ? '' : 'absolute bottom-0 left-0'
+                      className={`inline-flex align-top ${themes[name].smallprint.inner || ""} ${
+                        theme === name ? "" : "absolute bottom-0 left-0"
                       }`}
                       initial={false}
                       animate={{ opacity: theme === name ? 1 : 0 }}

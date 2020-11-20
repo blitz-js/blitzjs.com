@@ -1,4 +1,4 @@
-import { defaultConfig } from '@/utils/defaultConfig'
+import { defaultConfig } from "@/utils/defaultConfig"
 
 const scale = Object.keys(defaultConfig.theme.spacing)
   .map((name) => ({
@@ -6,7 +6,7 @@ const scale = Object.keys(defaultConfig.theme.spacing)
     size: defaultConfig.theme.spacing[name],
     pixels:
       parseFloat(defaultConfig.theme.spacing[name]) *
-      (String(defaultConfig.theme.spacing[name]).endsWith('rem') ? 16 : 1),
+      (String(defaultConfig.theme.spacing[name]).endsWith("rem") ? 16 : 1),
   }))
   .sort((a, b) => a.pixels - b.pixels)
 

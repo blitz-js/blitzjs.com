@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Switch } from '@headlessui/react'
-import { motion } from 'framer-motion'
-import { gradients } from '@/utils/gradients'
+import { useState } from "react"
+import { Switch } from "@headlessui/react"
+import { motion } from "framer-motion"
+import { gradients } from "@/utils/gradients"
 import {
   Paragraph,
   IconContainer,
@@ -10,14 +10,14 @@ import {
   Link,
   Widont,
   InlineCode,
-} from '@/components/home/common'
-import { GradientLockup } from '@/components/GradientLockup'
-import { CodeWindow } from '@/components/CodeWindow'
-import { ReactComponent as Icon } from '@/img/icons/home/dark-mode.svg'
-import { addClassTokens } from '@/utils/addClassTokens'
-import tokenize from '../../macros/tokenize.macro'
-import { Token } from '@/components/Code'
-import clsx from 'clsx'
+} from "@/components/home/common"
+import { GradientLockup } from "@/components/GradientLockup"
+import { CodeWindow } from "@/components/CodeWindow"
+import { ReactComponent as Icon } from "@/img/icons/home/dark-mode.svg"
+import { addClassTokens } from "@/utils/addClassTokens"
+import tokenize from "../../macros/tokenize.macro"
+import { Token } from "@/components/Code"
+import clsx from "clsx"
 
 const { code, tokens } = tokenize.html(
   `<div class="(light)bg-white dark:bg-gray-800 rounded-tl-xl sm:rounded-t-xl p-4 pb-6 sm:p-8 lg:p-4 lg:pb-6 xl:p-8 space-y-6 sm:space-y-8 lg:space-y-6 xl:space-y-8">
@@ -111,12 +111,12 @@ function DarkModeSwitch({ enabled, onChange }) {
           >
             <stop
               className="transition-all duration-200"
-              stopColor={enabled ? '#d4d4d8' : '#FACC15'}
+              stopColor={enabled ? "#d4d4d8" : "#FACC15"}
             />
             <stop
               className="transition-all duration-200"
               offset="1"
-              stopColor={enabled ? '#d4d4d8' : '#FA9D16'}
+              stopColor={enabled ? "#d4d4d8" : "#FA9D16"}
             />
           </linearGradient>
         </defs>
@@ -125,27 +125,27 @@ function DarkModeSwitch({ enabled, onChange }) {
         checked={enabled}
         onChange={onChange}
         className={clsx(
-          'inline-flex items-center px-0.5 rounded-full w-18 h-9 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-gray-500 focus:outline-none',
+          "inline-flex items-center px-0.5 rounded-full w-18 h-9 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-gray-500 focus:outline-none",
           {
-            'justify-end': enabled,
+            "justify-end": enabled,
           }
         )}
-        style={{ backgroundColor: enabled ? '#111827' : '#60D360' }}
+        style={{ backgroundColor: enabled ? "#111827" : "#60D360" }}
       >
         <span className="sr-only">Enable dark mode</span>
         <motion.span
           layout
           className="bg-white rounded-full w-8 h-8"
-          style={{ boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(0, 0, 0, 0.1)' }}
+          style={{ boxShadow: "0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(0, 0, 0, 0.1)" }}
         />
       </Switch>
       <svg
         width="24"
         height="24"
         fill="currentColor"
-        className={clsx('transition-colors duration-200', {
-          'text-gray-900': enabled,
-          'text-gray-300': !enabled,
+        className={clsx("transition-colors duration-200", {
+          "text-gray-900": enabled,
+          "text-gray-300": !enabled,
         })}
       >
         <path
@@ -195,18 +195,18 @@ export function DarkMode() {
         left={
           <div
             className={`relative z-10 rounded-tl-xl sm:rounded-t-xl lg:rounded-xl shadow-lg lg:-mr-8 ${
-              enabled ? 'dark' : ''
+              enabled ? "dark" : ""
             }`}
             dangerouslySetInnerHTML={{
               __html: code
-                .replace(/\(light\)/g, '')
-                .replace(/dark:/g, 'transition-colors duration-500 dark:')
+                .replace(/\(light\)/g, "")
+                .replace(/dark:/g, "transition-colors duration-500 dark:")
                 .replace(
                   'src="/full-stack-radio.png"',
-                  `src="${require('@/img/full-stack-radio.png').default}" loading="lazy"`
+                  `src="${require("@/img/full-stack-radio.png").default}" loading="lazy"`
                 )
                 .replace(/<button type="button" class="/g, '<div class="cursor-pointer ')
-                .replace(/<\/button>/g, '</div>'),
+                .replace(/<\/button>/g, "</div>"),
             }}
           />
         }
@@ -226,22 +226,22 @@ export function DarkMode() {
 }
 
 function DarkModeToken({ token, parentTypes, enabled, children }) {
-  if (token[0] === 'class') {
-    if (token[1].startsWith('dark:')) {
+  if (token[0] === "class") {
+    if (token[1].startsWith("dark:")) {
       return (
         <span
-          className={clsx('code-highlight transition-colors duration-500', {
-            'bg-code-highlight': enabled,
+          className={clsx("code-highlight transition-colors duration-500", {
+            "bg-code-highlight": enabled,
           })}
         >
           {children}
         </span>
       )
     }
-    if (token[1].startsWith('(light)')) {
+    if (token[1].startsWith("(light)")) {
       return (
-        <span className={clsx('transition-opacity duration-500', { 'opacity-50': enabled })}>
-          {token[1].replace(/^\(light\)/, '')}
+        <span className={clsx("transition-opacity duration-500", { "opacity-50": enabled })}>
+          {token[1].replace(/^\(light\)/, "")}
         </span>
       )
     }

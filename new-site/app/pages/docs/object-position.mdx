@@ -11,86 +11,75 @@ features:
 import plugin from 'tailwindcss/lib/plugins/objectPosition'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
 
 export const classes = { plugin }
 
 ## Usage
 
-Use the `.object-{side}` utilities to specify how a replaced element's content should be positioned within its container.
+Use the `object-{side}` utilities to specify how a replaced element's content should be positioned within its container.
 
-```html
+```html amber
 <template preview>
-  <div class="flex justify-around mb-8">
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-left-top</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-left-top object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
+  <div class="grid grid-cols-3 gap-4">
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Left Top</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-left-top object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Top</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-top object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Right Top</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-right-top object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Left</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-left object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Center</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-center object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Right</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-right object-none" src="/img/placeholder-square-amber.svg">
+    </div>
+    <div>
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Left Bottom</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-left-bottom object-none" src="/img/placeholder-square-amber.svg">
     </div>
     <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-top</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-top object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Bottom</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-bottom object-none" src="/img/placeholder-square-amber.svg">
     </div>
     <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-right-top</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-right-top object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-  </div>
-  <div class="flex justify-around mb-8">
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-left</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-left object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-center</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-center object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-right</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-right object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-  </div>
-  <div class="flex justify-around">
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-left-bottom</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-left-bottom object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-bottom</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-bottom object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
-    </div>
-    <div class="flex-1">
-      <p class="text-center text-sm text-gray-600 mb-1">.object-right-bottom</p>
-      <img class="mx-auto bg-gray-400 w-24 h-24 object-right-bottom object-none" src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=64&h=64&q=80">
+      <p class="text-center text-sm text-amber-600 font-medium mb-1">Right Bottom</p>
+      <img class="mx-auto bg-amber-300 bg-stripes bg-stripes-white w-24 h-24 rounded-md overflow-hidden object-right-bottom object-none" src="/img/placeholder-square-amber.svg">
     </div>
   </div>
 </template>
 
-<img class="object-none object-left-top bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-top bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-right-top bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-left bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-center bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-right bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-left-bottom bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-bottom bg-gray-400 w-24 h-24" src="...">
-<img class="object-none object-right-bottom bg-gray-400 w-24 h-24" src="...">
+<img class="object-none **object-left-top** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-top** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-right-top** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-left** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-center** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-right** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-left-bottom** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-bottom** bg-yellow-300 w-24 h-24 ..." src="...">
+<img class="object-none **object-right-bottom** bg-yellow-300 w-24 h-24 ..." src="...">
 ```
 
 ## Responsive
 
 To position an object only at a specific breakpoint, add a `{screen}:` prefix to any existing object position utility. For example, adding the class `md:object-top` to an element would apply the `object-top` utility at medium screen sizes and above.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<img class="object-center **md:object-top** ..." src="...">
+```
 
-<ResponsiveCodeSample
-  classNames={['object-center', 'object-top', 'object-right', 'object-bottom', 'object-left']}
-  snippet={(classNames) => `
-    <img class="${classNames} ..." src="...">
-  `}
-  preview={(className) => (
-    <img className={`mx-auto bg-gray-400 w-48 h-48 object-none ${className}`} src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=128&h=128&q=80" />
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ## Customizing
 
@@ -98,7 +87,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 By default Tailwind provides nine object position utilities. You can change, add, or remove these by editing the `theme.objectPosition` section of your Tailwind config.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -119,7 +108,7 @@ By default Tailwind provides nine object position utilities. You can change, add
   }
 ```
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="objectPosition" />
 

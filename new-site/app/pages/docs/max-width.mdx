@@ -6,23 +6,44 @@ description: "Utilities for setting the maximum width of an element"
 import plugin from 'tailwindcss/lib/plugins/maxWidth'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
+import { numbersFirst } from '@/utils/sortClasses'
 
-export const classes = { plugin }
+export const classes = {
+  plugin,
+  sort: numbersFirst,
+}
 
 ## Usage
 
 Set the maximum width of an element using the `max-w-{size}` utilities.
 
-```html
+```html emerald
 <template preview>
-  <div class="max-w-md mx-auto text-center p-6 bg-gray-300">
+  <div class="max-w-md mx-auto rounded-md bg-emerald-500 text-white text-2xl font-extrabold flex items-center justify-center py-3">
     max-w-md
   </div>
 </template>
 
-<div class="max-w-md mx-auto ...">
+<div class="**max-w-md** mx-auto ...">
   max-w-md
+</div>
+```
+
+## Prose
+
+We added a new max-width by default called `max-w-prose`. If you are familiar with the [typography plugin](https://github.com/tailwindlabs/tailwindcss-typography) you might recognize this one. The idea behind this class is that it allows you to have an optimal reading width.
+
+```html purple
+<template preview>
+  <div class="max-w-prose text-sm text-purple-700 p-6">
+    <p class="font-bold">Why do you never see elephants hiding in trees?</p>
+    <p>Because they're so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.</p>
+  </div>
+</template>
+
+<div class="**max-w-prose** ...">
+  <p class="font-bold">Why do you never see elephants hiding in trees?</p>
+  <p>Because they're so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.</p>
 </div>
 ```
 
@@ -32,21 +53,13 @@ Set the maximum width of an element using the `max-w-{size}` utilities.
 
 To control the max-width of an element at a specific breakpoint, add a `{screen}:` prefix to any existing max-width utility.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<div class="max-w-sm **md:max-w-lg** ...">
+  <!-- ... -->
+</div>
+```
 
-<ResponsiveCodeSample
-  classNames={['max-w-sm', 'max-w-md', 'max-w-lg', 'max-w-xl', 'max-w-2xl']}
-  snippet={(classNames) => `
-    <div class="${classNames} ...">
-      Target
-    </div>
-  `}
-  preview={(className) => (
-    <div className={`mx-auto text-center p-6 bg-gray-300 ${className}`}>
-      Target
-    </div>
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ---
 
@@ -56,7 +69,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 Customize Tailwind's default max-width scale in the `theme.maxWidth` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -71,7 +84,7 @@ Customize Tailwind's default max-width scale in the `theme.maxWidth` section of 
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="maxWidth" name="max-width" />
 

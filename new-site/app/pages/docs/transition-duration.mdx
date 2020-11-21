@@ -1,7 +1,6 @@
 ---
 title: "Transition Duration"
 description: "Utilities for controlling the duration of CSS transitions."
-featureVersion: "v1.2.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/transitionDuration'
@@ -14,22 +13,24 @@ export const classes = { plugin }
 
 Use the `duration-{amount}` utilities to control an element's transition-duration.
 
-```html
-<template preview class="bg-white flex justify-around items-center p-4 py-12">
-  <button class="transition duration-150 ease-in-out transform hover:scale-125 bg-blue-500 text-white font-bold py-2 px-4 rounded">
-    Hover me
-  </button>
-  <button class="transition duration-300 ease-in-out transform hover:scale-125 bg-blue-500 text-white font-bold py-2 px-4 rounded">
-    Hover me
-  </button>
-  <button class="transition duration-700 ease-in-out transform hover:scale-125 bg-blue-500 text-white font-bold py-2 px-4 rounded">
-    Hover me
-  </button>
+```html emerald
+<template preview>
+  <div class="flex justify-around items-center">
+    <button class="transition duration-150 ease-in-out transform hover:scale-125 bg-emerald-600 text-white font-semibold py-3 px-6 rounded-md">
+      Hover me
+    </button>
+    <button class="transition duration-300 ease-in-out transform hover:scale-125 bg-emerald-600 text-white font-semibold py-3 px-6 rounded-md">
+      Hover me
+    </button>
+    <button class="transition duration-700 ease-in-out transform hover:scale-125 bg-emerald-600 text-white font-semibold py-3 px-6 rounded-md">
+      Hover me
+    </button>
+  </div>
 </template>
 
-<button class="transition duration-150 ease-in-out ...">Hover me</button>
-<button class="transition duration-300 ease-in-out ...">Hover me</button>
-<button class="transition duration-700 ease-in-out ...">Hover me</button>
+<button class="transition **duration-150** ease-in-out ...">Hover me</button>
+<button class="transition **duration-300** ease-in-out ...">Hover me</button>
+<button class="transition **duration-700** ease-in-out ...">Hover me</button>
 ```
 
 ## Responsive
@@ -44,7 +45,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 By default Tailwind provides eight general purpose transition-duration utilities. You change, add, or remove these by customizing the `transitionDuration` section of your Tailwind theme config.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -60,7 +61,7 @@ By default Tailwind provides eight general purpose transition-duration utilities
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="transitionDuration" name="transition-duration" />
 

@@ -11,7 +11,6 @@ features:
 import plugin from 'tailwindcss/lib/plugins/minHeight'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
 
 export const classes = { plugin }
 
@@ -19,18 +18,18 @@ export const classes = { plugin }
 
 Set the minimum height of an element using the `min-h-0`, `min-h-full`, or `min-h-screen` utilities.
 
-```html
+```html purple
 <template preview>
-  <div class="h-48 p-6 bg-gray-300">
-    <div class="h-24 min-h-full p-6 bg-gray-400 flex items-center justify-center">
-      <span>min-h-full</span>
+  <div class="h-48 p-6 bg-purple-300 rounded-md">
+    <div class="h-24 min-h-full p-6 bg-purple-500 flex items-center justify-center rounded text-white font-semibold">
+      <span>.min-h-full</span>
     </div>
   </div>
 </template>
 
 <div class="h-48 ...">
-  <div class="h-24 min-h-full ...">
-    min-h-full
+  <div class="h-24 **min-h-full** ...">
+    .min-h-full
   </div>
 </div>
 ```
@@ -41,25 +40,15 @@ Set the minimum height of an element using the `min-h-0`, `min-h-full`, or `min-
 
 To control the min-height of an element at a specific breakpoint, add a `{screen}:` prefix to any existing min-height utility.
 
-For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
+```html
+<div class="h-48 ...">
+  <div class="h-24 min-h-0 **md:min-h-full** ...">
+    <!-- ... -->
+  </div>
+</div>
+```
 
-<ResponsiveCodeSample
-  classNames={['min-h-full', 'min-h-0', 'min-h-full', 'min-h-0', 'min-h-full']}
-  snippet={(classNames) => `
-    <div class="h-48 ...">
-      <div class="h-24 ${classNames} ...">
-        Target
-      </div>
-    </div>
-  `}
-  preview={(className) => (
-    <div className="h-48 p-6 bg-gray-300">
-      <div className={`h-24 p-6 bg-gray-400 flex items-center justify-center ${className}`}>
-        <span>Target</span>
-      </div>
-    </div>
-  )}
-/>
+For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ---
 
@@ -69,7 +58,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 Customize Tailwind's default min-height scale in the `theme.minHeight` section of your `tailwind.config.js` file.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -86,7 +75,7 @@ Customize Tailwind's default min-height scale in the `theme.minHeight` section o
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="minHeight" name="min-height" />
 

@@ -1,7 +1,6 @@
 ---
 title: "Text Opacity"
 description: "Utilities for controlling the opacity of an element's text color."
-featureVersion: "v1.4.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/textOpacity'
@@ -13,7 +12,7 @@ export const classes = { plugin }
 
 ## Usage
 
-Control the opacity of an element's text color using the `.text-opacity-{amount}` utilities.
+Control the opacity of an element's text color using the `text-opacity-{amount}` utilities.
 
 ```html
 <template preview>
@@ -26,18 +25,18 @@ Control the opacity of an element's text color using the `.text-opacity-{amount}
   </div>
 </template>
 
-<p class="text-purple-700 text-opacity-100">The quick brown fox ...</p>
-<p class="text-purple-700 text-opacity-75">The quick brown fox ...</p>
-<p class="text-purple-700 text-opacity-50">The quick brown fox ...</p>
-<p class="text-purple-700 text-opacity-25">The quick brown fox ...</p>
-<p class="text-purple-700 text-opacity-0">The quick brown fox ...</p>
+<p class="text-purple-700 **text-opacity-100** ...">The quick brown fox ...</p>
+<p class="text-purple-700 **text-opacity-75** ...">The quick brown fox ...</p>
+<p class="text-purple-700 **text-opacity-50** ...">The quick brown fox ...</p>
+<p class="text-purple-700 **text-opacity-25** ...">The quick brown fox ...</p>
+<p class="text-purple-700 **text-opacity-0** ...">The quick brown fox ...</p>
 ```
 
 Note that because these utilities are implemented using CSS custom properties, a `.text-{color}` utility must be present on the same element for them to work.
 
 <TipBad>Don't try to use text opacity utilities on an inherited text color</TipBad>
 
-```html
+```html rose
 <div class="text-black">
   <div class="text-opacity-50">...</div>
 </div>
@@ -45,7 +44,7 @@ Note that because these utilities are implemented using CSS custom properties, a
 
 <TipGood>Do make sure to add a text color utility to the same element explicitly</TipGood>
 
-```html
+```html emerald
 <div class="text-black">
   <div class="text-black text-opacity-50">...</div>
 </div>
@@ -67,7 +66,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 To customize the opacity values for all opacity-related utilities at once, use the `opacity` section of your `tailwind.config.js` theme configuration:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -84,7 +83,7 @@ To customize the opacity values for all opacity-related utilities at once, use t
 
 If you want to customize only the text opacity utilities, use the `textOpacity` section:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -101,7 +100,7 @@ If you want to customize only the text opacity utilities, use the `textOpacity` 
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="textOpacity" />
 

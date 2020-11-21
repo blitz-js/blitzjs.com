@@ -1,13 +1,11 @@
 ---
 title: "Grid Auto Rows"
 description: "Utilities for controlling the size of implicitly-created grid rows."
-featureVersion: "v1.9.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/gridAutoRows'
 import { Variants } from '@/components/Variants'
 import { Disabling } from '@/components/Disabling'
-import { ResponsiveCodeSample } from '@/components/ResponsiveCodeSample'
 
 export const classes = { plugin }
 
@@ -16,7 +14,7 @@ export const classes = { plugin }
 Use the `auto-rows-{size}` utilities to control the size implicitly-created grid rows.
 
 ```html
-<div class="grid grid-flow-row auto-rows-max">
+<div class="grid grid-flow-row **auto-rows-max**">
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -28,7 +26,7 @@ Use the `auto-rows-{size}` utilities to control the size implicitly-created grid
 To control the grid-auto-rows property at a specific breakpoint, add a `{screen}:` prefix to any existing grid-auto-rows utility. For example, use `md:auto-rows-min` to apply the `auto-rows-min` utility at only medium screen sizes and above.
 
 ```html
-<div class="grid grid-flow-row auto-rows-max md:auto-rows-min">
+<div class="grid grid-flow-row auto-rows-max **md:auto-rows-min**">
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -56,7 +54,7 @@ By default Tailwind includes four general purpose grid-auto-rows utilities. You 
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="gridAutoRows" name="grid-auto-rows" />
 

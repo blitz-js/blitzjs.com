@@ -4,6 +4,7 @@ const { createLoader } = require("simple-functional-loader")
 const frontMatter = require("front-matter")
 const { withTableOfContents } = require("./remark/withTableOfContents")
 const { withSyntaxHighlighting } = require("./remark/withSyntaxHighlighting")
+const { withProse } = require("./remark/withProse")
 const { withNextLinks } = require("./remark/withNextLinks")
 const minimatch = require("minimatch")
 const withCodeSamples = require("./remark/withCodeSamples")
@@ -12,14 +13,14 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const fallbackLayouts = {
-  // Have to use path of compiled app
+  // Have to use compiled locations
   "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
   "pages/components/**/*": ["@/layouts/ComponentsLayout", "ComponentsLayout"],
   "pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
 }
 
 const fallbackDefaultExports = {
-  // Have to use path of compiled app
+  // Have to use compiled locations
   "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
   "pages/course/**/*": ["@/layouts/VideoLayout", "VideoLayout"],
 }
@@ -29,11 +30,28 @@ module.exports = withBundleAnalyzer({
   experimental: {
     modern: true,
   },
-  middleware: [],
   webpack(config, options) {
+    if (!options.dev) {
+      options.defaultLoaders.babel.options.cache = false
+    }
+
     config.module.rules.push({
-      test: /\.(png|jpe?g|gif|svg)$/i,
+      test: /\.(png|jpe?g|gif|webp)$/i,
       use: [
+        {
+          loader: "file-loader",
+          options: {
+            publicPath: "/_next",
+            name: "static/media/[name].[hash].[ext]",
+          },
+        },
+      ],
+    })
+
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        { loader: "@svgr/webpack", options: { svgoConfig: { plugins: { removeViewBox: false } } } },
         {
           loader: "file-loader",
           options: {
@@ -49,14 +67,21 @@ module.exports = withBundleAnalyzer({
       use: [
         options.defaultLoaders.babel,
         createLoader(function (source) {
-          return source + `\nMDXContent.layoutProps = layoutProps\n`
+          if (source.includes("/*START_META*/")) {
+            const [meta] = source.match(/\/\*START_META\*\/(.*?)\/\*END_META\*\//s)
+            return "export default " + meta
+          }
+          return (
+            source.replace(/export const/gs, "const") + `\nMDXContent.layoutProps = layoutProps\n`
+          )
         }),
         {
           loader: "@mdx-js/loader",
           options: {
             remarkPlugins: [
               withCodeSamples,
-              /*withProse,*/ withTableOfContents,
+              withProse,
+              withTableOfContents,
               withSyntaxHighlighting,
               withNextLinks,
             ],
@@ -103,7 +128,9 @@ module.exports = withBundleAnalyzer({
           return [
             ...(typeof fields === "undefined" ? extra : []),
             typeof fields === "undefined" ? body : "",
-            `export const meta = ${JSON.stringify(meta)}`,
+            typeof fields === "undefined"
+              ? `export const meta = ${JSON.stringify(meta)}`
+              : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`,
           ].join("\n\n")
         }),
       ],

@@ -1,7 +1,6 @@
 const visit = require("unist-util-visit")
-const Prism = require("prismjs")
 const redent = require("redent")
-const { addImport } = require("./utils")
+const { addImport, highlightCode } = require("./utils")
 
 module.exports = () => {
   return (tree) => {
@@ -27,7 +26,7 @@ module.exports = () => {
       if (!hasPreview) return
       if (!snippet) snippet = previewCode
 
-      snippet = Prism.highlight(redent(snippet).trim(), Prism.languages.html, "html")
+      snippet = highlightCode(redent(snippet).trim(), "html")
 
       node.type = "jsx"
       node.value = `
@@ -35,6 +34,7 @@ module.exports = () => {
           preview={${JSON.stringify(previewCode)}}
           snippet={${JSON.stringify(snippet)}}
           previewClassName={${JSON.stringify(previewClassName)}}
+          color={${JSON.stringify(node.meta ? node.meta : undefined)}}
         />
       `.trim()
 

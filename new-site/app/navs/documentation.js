@@ -1,7 +1,7 @@
 import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
-  // have to use compiled location
+  // use compiled location
   require.context(`pages/docs/?meta=title,shortTitle,published`, false, /\.mdx$/),
   "docs"
 )

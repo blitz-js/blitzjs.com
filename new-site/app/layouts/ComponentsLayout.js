@@ -4,7 +4,7 @@ import twitterSquare from "@/img/twitter-square.jpg"
 import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
-  // have to use compiled location
+  // use compiled location
   require.context(`pages/components/?meta=title,shortTitle,published`, false, /\.mdx$/),
   "components"
 )

@@ -1,7 +1,6 @@
 ---
 title: "Divide Opacity"
 description: "Utilities for controlling the opacity borders between elements."
-featureVersion: "v1.4.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/divideOpacity'
@@ -11,27 +10,27 @@ import { Disabling } from '@/components/Disabling'
 export const classes = {
   plugin,
   transformSelector: (selector) => {
-    return selector.split('>')[0].trim()
+    return selector.split('>')[0].trim().replace(/^\./, '').replace(/\\/g, '')
   }
 }
 
 ## Usage
 
-Control the opacity of borders between elements using the `.divide-opacity-{amount}` utilities.
+Control the opacity of borders between elements using the `divide-opacity-{amount}` utilities.
 
-```html
-<template preview class="bg-checkered p-4">
+```html purple
+<template preview>
   <div class="divide-y-4 divide-black divide-opacity-25">
-    <div class="text-center py-2">1</div>
-    <div class="text-center py-2">2</div>
-    <div class="text-center py-2">3</div>
+    <div class="text-center font-extrabold text-2xl text-purple-600 py-3">1</div>
+    <div class="text-center font-extrabold text-2xl text-purple-600 py-3">2</div>
+    <div class="text-center font-extrabold text-2xl text-purple-600 py-3">3</div>
   </div>
 </template>
 
-<div class="divide-y-4 divide-black divide-opacity-25">
-  <div class="text-center py-2">1</div>
-  <div class="text-center py-2">2</div>
-  <div class="text-center py-2">3</div>
+<div class="divide-y-4 **divide-black divide-opacity-25**">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
 </div>
 ```
 
@@ -40,7 +39,7 @@ Control the opacity of borders between elements using the `.divide-opacity-{amou
 To control the opacity of borders between elements at a specific breakpoint, add a `{screen}:` prefix to any existing divide opacity utility. For example, use `md:divide-opacity-50` to apply the `divide-opacity-50` utility at only medium screen sizes and above.
 
 ```html
-<div class="divide-y-2 divide-blue-500 divide-opacity-75 md:divide-opacity-50">
+<div class="divide-y-2 divide-blue-500 divide-opacity-75 **md:divide-opacity-50**">
   <!-- ... -->
 </div>
 ```
@@ -51,7 +50,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 To customize the opacity values for all opacity-related utilities at once, use the `opacity` section of your `tailwind.config.js` theme configuration:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -68,7 +67,7 @@ To customize the opacity values for all opacity-related utilities at once, use t
 
 If you want to customize only the divide opacity utilities, use the `divideOpacity` section:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -85,7 +84,7 @@ If you want to customize only the divide opacity utilities, use the `divideOpaci
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="divideOpacity" />
 

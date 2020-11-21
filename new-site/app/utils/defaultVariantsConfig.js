@@ -1,7 +1,7 @@
 // @preval
-const { defaultConfig } = require('./defaultConfig')
-const Prism = require('prismjs')
-const stringify = require('stringify-object')
+const { defaultConfig } = require("./defaultConfig")
+const Prism = require("prismjs")
+const stringify = require("stringify-object")
 
 module.exports.defaultVariantsConfig = Prism.highlight(
   `// Default configuration
@@ -15,9 +15,9 @@ module.exports = {
             inlineCharacterLimit: Infinity,
           })}`
       )
-      .join(',\n    ')}
+      .join(",\n    ")}
   }
 }`,
   Prism.languages.js,
-  'js'
+  "js"
 )

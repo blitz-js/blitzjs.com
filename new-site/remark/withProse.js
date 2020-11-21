@@ -1,4 +1,12 @@
-const isJsNode = (node) => ["jsx", "import", "export"].includes(node.type)
+const proseComponents = ["Heading"]
+
+const isJsNode = (node) => {
+  return (
+    ["jsx", "import", "export"].includes(node.type) &&
+    !/^<[a-z]+(>|\s)/.test(node.value) &&
+    !new RegExp(`^<(${proseComponents.join("|")})(>|\\s)`).test(node.value)
+  )
+}
 
 module.exports.withProse = () => {
   return (tree) => {
@@ -11,7 +19,7 @@ module.exports.withProse = () => {
       if (!insideProse && !isJsNode(node)) {
         insideProse = true
         return [
-          { type: "jsx", value: '<div className="markdown">' },
+          { type: "jsx", value: '<div className="prose">' },
           node,
           ...(i === tree.children.length - 1 ? [{ type: "jsx", value: "</div>" }] : []),
         ]

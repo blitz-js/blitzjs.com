@@ -1,11 +1,12 @@
-import { useIsHome } from '@/hooks/useIsHome'
-import { useState, useCallback, useRef } from 'react'
-import { createPortal } from 'react-dom'
-import Link from 'next/link'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { DocSearchModal, useDocSearchKeyboardEvents } from '@docsearch/react'
-import clsx from 'clsx'
+import { useState, useCallback, useRef, useEffect } from "react"
+import { createPortal } from "react-dom"
+import Link from "next/link"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react"
+
+const ACTION_KEY_DEFAULT = ["Ctrl ", "Control"]
+const ACTION_KEY_APPLE = ["⌘", "Command"]
 
 function Hit({ hit, children }) {
   return (
@@ -16,11 +17,11 @@ function Hit({ hit, children }) {
 }
 
 export function Search() {
-  const isHome = useIsHome()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const searchButtonRef = useRef()
   const [initialQuery, setInitialQuery] = useState(null)
+  const [actionKey, setActionKey] = useState()
 
   const onOpen = useCallback(() => {
     setIsOpen(true)
@@ -46,23 +47,57 @@ export function Search() {
     searchButtonRef,
   })
 
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      if (/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+        setActionKey(ACTION_KEY_APPLE)
+      } else {
+        setActionKey(ACTION_KEY_DEFAULT)
+      }
+    }
+  }, [])
+
   return (
-    <div className="relative">
+    <>
       <Head>
         <link rel="preconnect" href="https://BH4D9OD16A-dsn.algolia.net" crossOrigin="true" />
       </Head>
       <button
+        type="button"
         ref={searchButtonRef}
         onClick={onOpen}
-        className={clsx(
-          'transition-colors duration-100 ease-in-out text-gray-600 py-2 pr-4 pl-10 block w-full appearance-none leading-normal border border-transparent rounded-lg focus:outline-none text-left select-none truncate',
-          {
-            'bg-white shadow-md': isHome,
-            'focus:bg-white focus:border-gray-300 bg-gray-200': !isHome,
-          }
-        )}
+        className="group leading-6 font-medium flex items-center space-x-3 sm:space-x-4 hover:text-gray-600 transition-colors duration-200"
       >
-        Search <span className="hidden sm:inline">the docs (Press "/" to focus)</span>
+        <svg
+          width="24"
+          height="24"
+          fill="none"
+          className="text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
+        >
+          <path
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span>
+          Quick search<span className="hidden sm:inline"> for anything</span>
+        </span>
+        {actionKey && (
+          <span className="hidden sm:block text-gray-400 text-sm leading-5 py-0.5 px-1.5 border border-gray-300 rounded-md">
+            <span className="sr-only">Press </span>
+            <kbd className="font-sans">
+              <abbr title={actionKey[1]} className="no-underline">
+                {actionKey[0]}
+              </abbr>
+            </kbd>
+            <span className="sr-only"> and </span>
+            <kbd className="font-sans">K</kbd>
+            <span className="sr-only"> to search</span>
+          </span>
+        )}
       </button>
       {isOpen &&
         createPortal(
@@ -70,7 +105,7 @@ export function Search() {
             initialQuery={initialQuery}
             initialScrollY={window.scrollY}
             searchParameters={{
-              facetFilters: 'version:v1',
+              facetFilters: "version:v2",
               distinct: 1,
             }}
             onClose={onClose}
@@ -79,6 +114,7 @@ export function Search() {
             appId="BH4D9OD16A"
             navigator={{
               navigate({ suggestionUrl }) {
+                setIsOpen(false)
                 router.push(suggestionUrl)
               },
             }}
@@ -87,27 +123,20 @@ export function Search() {
               return items.map((item) => {
                 // We transform the absolute URL into a relative URL to
                 // leverage Next's preloading.
-                const a = document.createElement('a')
+                const a = document.createElement("a")
                 a.href = item.url
+
+                const hash = a.hash === "#content-wrapper" ? "" : a.hash
 
                 return {
                   ...item,
-                  url: `${a.pathname}${a.hash}`,
+                  url: `${a.pathname}${hash}`,
                 }
               })
             }}
           />,
           document.body
         )}
-      <div className="pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center">
-        <svg
-          className="fill-current pointer-events-none text-gray-600 w-4 h-4"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-        >
-          <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-        </svg>
-      </div>
-    </div>
+    </>
   )
 }

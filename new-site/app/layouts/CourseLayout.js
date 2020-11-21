@@ -6,7 +6,7 @@ import { Title } from "@/components/Title"
 import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
-  // Have to use path of compiled app
+  // use compiled location
   require.context("pages/course/?meta=title,shortTitle,published", true, /\.mdx$/),
   "course"
 )

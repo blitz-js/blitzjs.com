@@ -1,7 +1,6 @@
 ---
 title: "Animation"
 description: "Utilities for animating elements with CSS animations."
-featureVersion: "v1.6.0+"
 ---
 
 import redent from 'redent'
@@ -10,31 +9,31 @@ import { Disabling } from '@/components/Disabling'
 
 export const classes = (
   <div className="overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch lg:max-h-sm">
-    <table className="w-full text-left table-collapse">
+    <table className="w-full text-left border-collapse">
       <thead>
         <tr>
-          <th className="text-sm font-semibold text-gray-700 p-2 bg-gray-100">
-            Class
+          <th className="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+            <div className="pb-2 border-b border-gray-200">Class</div>
           </th>
-          <th className="text-sm font-semibold text-gray-700 p-2 bg-gray-100">
-            Properties
+          <th className="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+            <div className="pb-2 border-b border-gray-200">Properties</div>
           </th>
         </tr>
       </thead>
       <tbody className="align-baseline">
         <tr>
-          <td className="p-2 border-t border-gray-300 font-mono text-xs text-purple-700 whitespace-no-wrap">
+          <td className="py-2 font-mono text-xs text-violet-600 whitespace-nowrap">
             .animate-none
           </td>
-          <td className="p-2 border-t border-gray-300 font-mono text-xs text-blue-700 whitespace-pre">
+          <td className="py-2 font-mono text-xs text-light-blue-600 whitespace-pre">
             animation: none;
           </td>
         </tr>
         <tr>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-purple-700 whitespace-no-wrap">
+          <td className="py-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">
             .animate-spin
           </td>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-blue-700 whitespace-pre">
+          <td className="py-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">
             {redent(`
               animation: spin 1s linear infinite;\n
               @keyframes spin {
@@ -49,10 +48,10 @@ export const classes = (
           </td>
         </tr>
         <tr>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-purple-700 whitespace-no-wrap">
+          <td className="py-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">
             .animate-ping
           </td>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-blue-700 whitespace-pre">
+          <td className="py-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">
             {redent(`
               animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;\n
               @keyframes ping {
@@ -69,10 +68,10 @@ export const classes = (
           </td>
         </tr>
         <tr>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-purple-700 whitespace-no-wrap">
+          <td className="py-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">
             .animate-pulse
           </td>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-blue-700 whitespace-pre">
+          <td className="py-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">
             {redent(`
               animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n
               @keyframes pulse {
@@ -87,10 +86,10 @@ export const classes = (
           </td>
         </tr>
         <tr>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-purple-700 whitespace-no-wrap">
+          <td className="py-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">
             .animate-bounce
           </td>
-          <td className="p-2 border-t border-gray-200 font-mono text-xs text-blue-700 whitespace-pre">
+          <td className="py-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">
             {redent(`
               animation: bounce 1s infinite;\n
               @keyframes bounce {
@@ -115,21 +114,23 @@ export const classes = (
 
 Add the `animate-spin` utility to add a linear spin animation to elements like loading indicators.
 
-```html
-<template preview class="bg-white text-center p-4 py-12">
-  <span class="inline-flex rounded-md shadow-sm">
-    <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 cursor-not-allowed" disabled>
-      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Processing
-    </button>
-  </span>
+```html rose
+<template preview>
+  <div class="flex justify-around">
+    <span class="inline-flex rounded-md shadow-sm">
+      <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-500 focus:border-rose-700 active:bg-rose-700 transition ease-in-out duration-150 cursor-not-allowed" disabled>
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Processing
+      </button>
+    </span>
+  </div>
 </template>
 
-<button type="button" class="bg-indigo-600 ..." disabled>
-  <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+<button type="button" class="bg-rose-600 ..." disabled>
+  <svg class="**animate-spin** h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
     <!-- ... -->
   </svg>
   Processing
@@ -140,22 +141,24 @@ Add the `animate-spin` utility to add a linear spin animation to elements like l
 
 Add the `animate-ping` utility to make an element scale and fade like a radar ping or ripple of water — useful for things like notification badges.
 
-```html
-<template preview class="bg-white text-center p-4 py-12">
-  <span class="relative inline-flex rounded-md shadow-sm">
-    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-400 text-base leading-6 font-medium rounded-md text-gray-800 bg-white hover:text-gray-700 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-      Transactions
-    </button>
-    <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+```html purple
+<template preview>
+  <div class="flex justify-around">
+    <span class="relative inline-flex rounded-md shadow-sm">
+      <button type="button" class="inline-flex items-center px-4 py-2 border border-purple-400 text-base leading-6 font-medium rounded-md text-purple-800 bg-white hover:text-purple-700 focus:border-purple-300 transition ease-in-out duration-150">
+        Transactions
+      </button>
+      <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+      </span>
     </span>
-  </span>
+  </div>
 </template>
 
 <span class="flex h-3 w-3">
-  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-  <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+  <span class="**animate-ping** absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+  <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
 </span>
 ```
 
@@ -163,30 +166,30 @@ Add the `animate-ping` utility to make an element scale and fade like a radar pi
 
 Add the `animate-pulse` utility to make an element gently fade in and out — useful for things like skeleton loaders.
 
-```html
-<template preview class="bg-white text-center p-4 py-12">
-  <div class="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+```html lightBlue
+<template preview>
+  <div class="border border-light-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
     <div class="flex space-x-4 animate-pulse">
-      <div class="rounded-full bg-gray-400 h-12 w-12"></div>
+      <div class="rounded-full bg-light-blue-400 h-12 w-12"></div>
       <div class="flex-1 space-y-4 py-1">
-        <div class="h-4 bg-gray-400 rounded w-3/4"></div>
+        <div class="h-4 bg-light-blue-400 rounded w-3/4"></div>
         <div class="space-y-2">
-          <div class="h-4 bg-gray-400 rounded"></div>
-          <div class="h-4 bg-gray-400 rounded w-5/6"></div>
+          <div class="h-4 bg-light-blue-400 rounded"></div>
+          <div class="h-4 bg-light-blue-400 rounded w-5/6"></div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<div class="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-  <div class="animate-pulse flex space-x-4">
-    <div class="rounded-full bg-gray-400 h-12 w-12"></div>
+<div class="border border-light-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+  <div class="**animate-pulse** flex space-x-4">
+    <div class="rounded-full bg-light-blue-400 h-12 w-12"></div>
     <div class="flex-1 space-y-4 py-1">
-      <div class="h-4 bg-gray-400 rounded w-3/4"></div>
+      <div class="h-4 bg-light-blue-400 rounded w-3/4"></div>
       <div class="space-y-2">
-        <div class="h-4 bg-gray-400 rounded"></div>
-        <div class="h-4 bg-gray-400 rounded w-5/6"></div>
+        <div class="h-4 bg-light-blue-400 rounded"></div>
+        <div class="h-4 bg-light-blue-400 rounded w-5/6"></div>
       </div>
     </div>
   </div>
@@ -197,17 +200,17 @@ Add the `animate-pulse` utility to make an element gently fade in and out — us
 
 Add the `animate-bounce` utility to make an element bounce up and down — useful for things like "scroll down" indicators.
 
-```html
-<template preview class="bg-white text-center p-4 py-8">
+```html amber
+<template preview>
   <div class="flex justify-center">
-    <svg class="animate-bounce w-6 h-6 text-gray-900" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+    <svg class="animate-bounce w-6 h-6 text-amber-900" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
       <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
   </div>
 </template>
 
-<svg class="animate-bounce w-6 h-6 text-gray-900" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-  <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+<svg class="**animate-bounce** w-6 h-6 ...">
+  <!-- ... -->
 </svg>
 ```
 
@@ -217,7 +220,7 @@ You can conditionally apply animations and transitions using the `motion-safe` a
 
 ```html
 <button type="button" class="bg-indigo-600 ..." disabled>
-  <svg class="motion-safe:animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+  <svg class="**motion-safe:animate-spin** h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
     <!-- ... -->
   </svg>
   Processing
@@ -236,14 +239,14 @@ module.exports = {
 }
 ```
 
-Learn more in the [variants documentation](/docs/pseudo-class-variants#motion-safe-v1-6-0).
+Learn more in the [state variants documentation](/docs/hover-focus-and-other-states#motion-safe-v1-6-0).
 
 ## Responsive
 
 To change or disable an animation at a specific breakpoint, add a `{screen}:` prefix to any existing animation utility. For example, use `md:animate-none` to apply the `animate-none` utility at only medium screen sizes and above.
 
 ```html
-<div class="animate-spin md:animate-none ...">
+<div class="animate-spin **md:animate-none** ...">
   <!-- ... -->
 </div>
 ```
@@ -256,7 +259,7 @@ Animations by their very nature tend to be highly project-specific. **The animat
 
 By default Tailwind provides utilities for four different example animations, as well as the `animate-none` utility. You change, add, or remove these by customizing the `animation` section of your theme configuration.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -271,7 +274,7 @@ By default Tailwind provides utilities for four different example animations, as
 
 To add new animation `@keyframes`, use the `keyframes` section of your theme configuration:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -289,7 +292,7 @@ To add new animation `@keyframes`, use the `keyframes` section of your theme con
 
 You can then reference these keyframes by name in the `animation` section of your theme configuration:
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -304,7 +307,7 @@ You can then reference these keyframes by name in the `animation` section of you
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="animation" />
 

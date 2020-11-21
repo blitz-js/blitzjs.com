@@ -1,7 +1,6 @@
 ---
 title: "Transition Property"
 description: "Utilities for controlling which CSS properties transition."
-featureVersion: "v1.2.0+"
 ---
 
 import plugin from 'tailwindcss/lib/plugins/transitionProperty'
@@ -14,14 +13,16 @@ export const classes = { plugin }
 
 Use the `transition-{properties}` utilities to specify which properties should transition when they change.
 
-```html
-<template preview class="bg-white text-center p-4 py-12">
-  <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 bg-blue-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">
-    Hover me
-  </button>
+```html lightBlue
+<template preview>
+  <div class="text-center">
+    <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 bg-blue-600 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-md">
+      Hover me
+    </button>
+  </div>
 </template>
 
-<button class="transition duration-500 ease-in-out bg-blue-500 hover:bg-red-500 transform hover:-translate-y-1 hover:scale-110 ...">
+<button class="**transition** duration-500 ease-in-out bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-110 ...">
   Hover me
 </button>
 ```
@@ -31,7 +32,7 @@ Use the `transition-{properties}` utilities to specify which properties should t
 You can conditionally apply animations and transitions using the `motion-safe` and `motion-reduce` variants:
 
 ```html
-<button class="transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none ...">
+<button class="transition transform hover:-translate-y-1 **motion-reduce:transition-none motion-reduce:transform-none** ...">
   Hover me
 </button>
 ```
@@ -48,7 +49,7 @@ module.exports = {
 }
 ```
 
-Learn more in the [variants documentation](/docs/pseudo-class-variants#motion-safe-v1-6-0).
+Learn more in the [variants documentation](/docs/hover-focus-and-other-states#motion-safe-v1-6-0).
 
 ## Responsive
 
@@ -62,7 +63,7 @@ For more information about Tailwind's responsive design features, check out the 
 
 By default Tailwind provides transition-property utilities for seven common property combinations. You change, add, or remove these by customizing the `transitionProperty` section of your Tailwind theme config.
 
-```diff
+```diff-js
   // tailwind.config.js
   module.exports = {
     theme: {
@@ -78,7 +79,7 @@ By default Tailwind provides transition-property utilities for seven common prop
 
 Learn more about customizing the default theme in the [theme customization documentation](/docs/theme#customizing-the-default-theme).
 
-### Responsive and pseudo-class variants
+### Variants
 
 <Variants plugin="transitionProperty" name="transition-property" />
 

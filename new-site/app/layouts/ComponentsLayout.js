@@ -1,10 +1,10 @@
 import { SidebarLayout } from "@/layouts/SidebarLayout"
 import Head from "next/head"
-import twitterSquare from "@/img/twitter-square.png"
+import twitterSquare from "@/img/twitter-square.jpg"
 import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
-  // Have to use path of compiled app
+  // use compiled location
   require.context(`pages/components/?meta=title,shortTitle,published`, false, /\.mdx$/),
   "components"
 )

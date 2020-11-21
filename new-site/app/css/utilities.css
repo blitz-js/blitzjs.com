@@ -1,14 +1,5 @@
 @tailwind utilities;
 
-@variants responsive, hover {
-  .translate-r-2px {
-    transform: translateX(2px) !important;
-  }
-  .transition-fast {
-    transition: all 0.2s ease !important;
-  }
-}
-
 .scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -33,12 +24,12 @@
 }
 
 @supports (position: sticky) {
-  @media (min-width: theme('screens.lg')) {
+  @media (min-width: theme("screens.lg")) {
     .sticky\?lg\:h-screen {
       height: 100vh !important;
     }
-    .sticky\?lg\:h-\(screen-16\) {
-      height: calc(100vh - 4rem) !important;
+    .sticky\?lg\:h-\(screen-18\) {
+      height: calc(100vh - theme("spacing.18"));
     }
   }
 }
@@ -90,20 +81,12 @@
   @apply bg-blue-700 !important;
 }
 
-.checked\:bg-gray-900:checked {
-  @apply bg-gray-900 !important;
+.checked\:bg-blue-600:checked {
+  @apply bg-blue-600 !important;
 }
 
 .checked\:border-transparent:checked {
   @apply border-transparent !important;
-}
-
-.table-collapse {
-  border-collapse: collapse !important;
-}
-
-[v-cloak] .v-cloak-hidden {
-  display: none !important;
 }
 
 .appearance-none::-ms-expand {
@@ -115,10 +98,34 @@
   background-size: 16px 16px;
 }
 
-.bg-wave {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 190' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1440' height='190' fill='white'/%3E%3Cpath d='M1440 95.4893C790 245.489 650 -54.5107 0 95.4893V0H1440V95.4893Z' fill='%23F7FAFC'/%3E%3Cg stroke-width='2'%3E%3Cg stroke='%23EDF2F7'%3E%3Cpath d='M0 95.4893C650 -54.5107 790 245.489 1440 95.4893'/%3E%3Cpath d='M0 95.4893C650 15.4893 790 175.489 1440 95.4893'/%3E%3Cpath d='M0 95.4893C650 -214.511 790 405.489 1440 95.4893'/%3E%3C/g%3E%3Cpath d='M0 95.4893C650 -134.511 790 325.489 1440 95.4893' stroke='%234FD1C5'/%3E%3C/g%3E%3C/svg%3E");
+.after\:hash::after {
+  content: "#";
 }
 
-.after\:hash::after {
-  content: '#';
+.code-highlight {
+  border-radius: 0.1875rem;
+  padding: 0.0625rem 0.1875rem;
+  margin: 0 -0.1875rem;
+}
+
+body.cursor-grabbing * {
+  cursor: grabbing !important;
+}
+
+.mono-active > div:not(.not-mono) > span {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.mono > div > span {
+  transition-duration: 0.5s;
+  transition-property: background-color, border-color, color, fill, stroke;
+}
+
+.form-tick:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }

@@ -135,7 +135,7 @@ Blitz provides a handy command called [`generate`](./cli-generate) for scaffoldi
 First, we'll generate everything pertaining to the `Question` model:
 
 ```sh
-blitz generate all question text hasMany:choices
+blitz generate all question text:string choices:choice[]
 ```
 
 ```
@@ -281,7 +281,7 @@ The end result should be as such:
 
 export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
   ctx.session.authorize()
-  
+
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
   await db.choice.deleteMany({where: {question: {id: where.id}}})
@@ -498,7 +498,7 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 
 export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
   ctx.session.authorize()
-  
+
   const question = await db.question.findFirst({where, include: {choices: true}})
 
   if (!question) throw new NotFoundError()
@@ -517,7 +517,7 @@ export default async function getQuestions(
   ctx: Ctx,
 ) {
   ctx.session.authorize()
-  
+
   const questions = await db.question.findMany({
     where,
     orderBy,
@@ -526,7 +526,7 @@ export default async function getQuestions(
     skip,
     include: {choices: true},
   })
-  
+
   const count = await db.question.count()
   const hasMore = typeof take === "number" ? skip + take < count : false
   const nextPage = hasMore ? { take, skip: skip + take! } : null

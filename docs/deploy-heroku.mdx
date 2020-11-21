@@ -40,7 +40,7 @@ heroku git:remote --app <APP_NAME>
 ```diff
 "scripts": {
 +   "start:production": "blitz start --production --port $PORT",
-+   "heroku-postbuild": "blitz db migrate && blitz build --production"
++   "heroku-postbuild": "blitz db migrate && blitz build"
 }
 ```
 
@@ -55,7 +55,7 @@ web: npm run start:production
 With these changes committed, to deploy your application, run:
 
 ```
-git push heroku master
+git push heroku main
 ```
 
 Once built you can open your application with the following command in your terminal

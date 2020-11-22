@@ -4,28 +4,7 @@ import clsx from "clsx"
 import styles from "./Footer.module.css"
 import { Logo } from "@/components/Logo"
 
-const footerNav = {
-  "Getting started": {
-    className: "row-span-2",
-    items: documentationNav["Getting started"],
-  },
-  "Core concepts": {
-    className: "row-span-2",
-    items: documentationNav["Core Concepts"],
-  },
-  Customization: {
-    className: "row-span-2",
-    items: documentationNav["Customization"],
-  },
-  Community: {
-    items: [
-      { title: "GitHub", href: "https://github.com/tailwindlabs/tailwindcss" },
-      { title: "Discord", href: "/discord" },
-      { title: "Twitter", href: "https://twitter.com/tailwindcss" },
-      { title: "YouTube", href: "https://www.youtube.com/tailwindlabs" },
-    ],
-  },
-}
+const footerNav = {}
 
 export function Footer() {
   return (

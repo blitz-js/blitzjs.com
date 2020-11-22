@@ -8,6 +8,7 @@ export function VersionSwitcher({ className }) {
   function submit(e) {
     e.preventDefault()
     if (selectRef.current.value === "v0") {
+      //ToDo: Update urls to reflect Blitz versions.
       window.location = "https://tailwindcss-v0.netlify.app/"
     }
     if (selectRef.current.value === "v1") {

@@ -28,10 +28,10 @@ export function Header({ navIsOpen, onNavToggle }) {
           <div className="flex items-center space-x-6">
             <VersionSwitcher className="hidden lg:block" />
             <a
-              href="https://github.com/tailwindlabs/tailwindcss"
+              href="https://github.com/blitz-js/blitz"
               className="text-gray-400 hover:text-gray-500 transition-colors duration-200"
             >
-              <span className="sr-only">Tailwind CSS on GitHub</span>
+              <span className="sr-only">Blitz Js on GitHub</span>
               <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
                 <path
                   fillRule="evenodd"

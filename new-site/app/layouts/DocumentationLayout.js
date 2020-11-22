@@ -10,7 +10,7 @@ export function DocumentationLayout(props) {
 
   return (
     <>
-      <Title suffix={router.pathname === "/" ? undefined : "Tailwind CSS"}>
+      <Title suffix={router.pathname === "/" ? undefined : "Blitz Js"}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>
@@ -18,7 +18,7 @@ export function DocumentationLayout(props) {
         <meta
           key="twitter:image"
           name="twitter:image"
-          content={`https://tailwindcss.com${twitterSquare}`}
+          content={`https://blitzjs.com${twitterSquare}`}
         />
       </Head>
       <SidebarLayout nav={documentationNav} {...props} />

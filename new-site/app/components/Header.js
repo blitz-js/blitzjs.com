@@ -18,7 +18,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                 Router.push("/brand")
               }}
             >
-              <span className="sr-only">Tailwind CSS home page</span>
+              <span className="sr-only">Blitz Js home page</span>
               <Logo className="w-auto h-6" />
             </a>
           </Link>

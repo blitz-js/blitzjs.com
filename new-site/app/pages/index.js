@@ -1,11 +1,6 @@
-import { Search } from "@/components/Search"
-import { Hero } from "@/components/home/Hero"
-import { BigText, InlineCode, Link, Paragraph, Widont } from "@/components/home/common"
-import { useEffect, useState } from "react"
-import { Logo } from "@/components/Logo"
-import { Footer } from "@/components/home/Footer"
-import NextLink from "next/link"
+import { Footer } from "@/components/Footer"
 import Head from "next/head"
+import { Header } from "../components/Header"
 
 export default function Home() {
   const title = "Blitz Js- The Full Stack React Framework."
@@ -16,6 +11,8 @@ export default function Home() {
         <meta key="og:title" property="og:title" content={title} />
         <title>{title}</title>
       </Head>
+      <Header></Header>
+      <div className="text-xl bold">We'll put home page content here.</div>
       <Footer />
     </div>
   )

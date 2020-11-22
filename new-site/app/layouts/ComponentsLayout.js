@@ -9,16 +9,9 @@ const pages = createPageList(
   "components"
 )
 
-const nav = {
-  Examples: [
-    pages["alerts"],
-    pages["buttons"],
-    pages["cards"],
-    pages["forms"],
-    pages["flexbox-grids"],
-    pages["navigation"],
-  ],
-}
+//Todo: make sure to add object for the nav used in the sidebar layout below.
+//Can use the pages const above to get specific pages on the site.
+const nav = {}
 
 export function ComponentsLayout(props) {
   return (
@@ -28,7 +21,7 @@ export function ComponentsLayout(props) {
         <meta
           key="twitter:image"
           name="twitter:image"
-          content={`https://tailwindcss.com${twitterSquare}`}
+          content={`https://blitzjs.com${twitterSquare}`}
         />
       </Head>
       <SidebarLayout nav={nav} {...props} />

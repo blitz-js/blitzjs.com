@@ -53,26 +53,6 @@ export function VideoLayout({ children, meta }) {
           </Link>
         </div>
       </div>
-      <div className="flex">
-        <div className="markdown px-6 xl:px-12 w-full max-w-3xl mx-auto lg:ml-0 lg:mr-auto xl:mx-0 xl:w-3/4">
-          <h2>Tools used</h2>
-          <ul>
-            <li>
-              <a href="https://code.visualstudio.com/">VS Code</a> as the editor
-            </li>
-            <li>
-              <a href="https://adamwathan.me/sizzy">Sizzy</a> for the browser preview on the
-              right-hand side
-            </li>
-            <li>
-              <a href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss">
-                Tailwind CSS Intellisense
-              </a>{" "}
-              for intelligent auto-completion in VS Code
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   )
 }

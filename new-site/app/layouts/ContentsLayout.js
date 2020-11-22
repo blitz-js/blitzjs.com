@@ -174,7 +174,7 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
         <PageHeader
           title={meta.title}
           description={meta.description}
-          badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
+          badge={{ key: "Blitz.js version", value: meta.featureVersion }}
           border={!classes && meta.headerSeparator !== false}
         />
         <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>

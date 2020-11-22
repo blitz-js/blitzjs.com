@@ -2,7 +2,7 @@ import { useIsHome } from "@/hooks/useIsHome"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 
-export function BasicLayout({ children, meta, classes, tableOfContents }) {
+export function BasicLayout({ children, meta }) {
   let isHome = useIsHome()
 
   return (
@@ -13,7 +13,7 @@ export function BasicLayout({ children, meta, classes, tableOfContents }) {
       <PageHeader
         title={meta.title}
         description={meta.description}
-        badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
+        badge={{ key: "Blitz.js version", value: meta.featureVersion }}
         border={meta.headerSeparator !== false}
       />
       <div className="flex">

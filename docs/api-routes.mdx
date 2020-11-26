@@ -49,13 +49,13 @@ You can use the `getSessionContext` function to get the session of the user. Her
 ```ts
 import {getSessionContext} from "@blitzjs/server"
 
-export default const customRoute = async (req, res) => {
+export default async function customRoute(req, res) {
   const session = await getSessionContext(req, res)
   console.log("User ID:", session.userId)
 
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({ userId: session.userId }))
+  res.end(JSON.stringify({userId: session.userId}))
 }
 ```
 

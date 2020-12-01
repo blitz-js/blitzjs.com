@@ -53,7 +53,6 @@ const [
     setQueryData,
   }
 ] = useQuery(queryResolver, queryInputArguments, {
-  manual,
   enabled,
   forceFetchOnMount,
   retry,
@@ -86,9 +85,6 @@ const [
 
 ### Options
 
-- `manual: Boolean`
-  - Set this to `true` to disable automatic refetching when the query mounts or input arguments change.
-  - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
 - `enabled: Boolean`
   - Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
   - To refetch the query, use the `refetch` method returned from the `useQuery` instance.
@@ -162,7 +158,6 @@ const [
 ##### `queryExtras: Object`
 
 - `isFetching: Boolean`
-  - Defaults to `true` so long as `manual` is set to `false`
   - Will be `true` if the query is currently fetching, including background fetching.
 - `failureCount: Integer`
   - The failure count for the query.

@@ -39,27 +39,27 @@
     "@docusaurus/plugin-google-gtag": "^2.0.0-alpha.55",
     "@docusaurus/plugin-sitemap": "^2.0.0-alpha.55",
     "@theme-ui/prism": "v0.4.0-rc.1",
-    "algoliasearch": "^4.5.1",
-    "algoliasearch-helper": "^3.2.2",
+    "algoliasearch": "^4.8.2",
+    "algoliasearch-helper": "^3.3.2",
     "classnames": "^2.2.6",
     "clipboard": "^2.0.6",
     "docsearch.js": "^2.6.3",
-    "eta": "^1.11.0",
+    "eta": "^1.12.1",
     "infima": "0.2.0-alpha.11",
     "parse-numeric-range": "^1.2.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-player": "^2.6.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-player": "^2.7.0",
     "react-router-dom": "^5.2.0",
     "react-toggle": "^4.1.1",
-    "theme-ui": "0.3.1",
+    "theme-ui": "0.3.4",
     "use-media": "1.4.0"
   },
   "devDependencies": {
-    "alex": "^9.0.1",
+    "alex": "^9.1.0",
     "husky": "^4.3.0",
-    "prettier": "^2.1.2",
-    "pretty-quick": "^3.0.2"
+    "prettier": "^2.2.0",
+    "pretty-quick": "^3.1.0"
   },
   "resolutions": {
     "babel-plugin-dynamic-import-node": "2.3.0"

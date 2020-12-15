@@ -20,6 +20,7 @@ module.exports = {
       "file-structure",
       "app-component",
       "css",
+      "image-optimization",
       "static-files",
       "environment-variables",
       "error-handling",

@@ -15,7 +15,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const fallbackLayouts = {
   // Have to use compiled locations
   "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
-  "pages/components/**/*": ["@/layouts/ComponentsLayout", "ComponentsLayout"],
   "pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
 }
 

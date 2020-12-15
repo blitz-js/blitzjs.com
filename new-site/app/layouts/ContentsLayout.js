@@ -1,13 +1,4 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  Fragment,
-  useCallback,
-  isValidElement,
-  useContext,
-} from "react"
-import { ClassTable } from "@/components/ClassTable"
+import { useState, useEffect, createContext, Fragment, useCallback, useContext } from "react"
 import { usePrevNext } from "@/hooks/usePrevNext"
 import Link from "next/link"
 import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
@@ -177,14 +168,6 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
           badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
           border={!classes && meta.headerSeparator !== false}
         />
-        <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-          <div>
-            {classes && (
-              <ClassTable {...(isValidElement(classes) ? { custom: classes } : classes)} />
-            )}
-            {children}
-          </div>
-        </ContentsContext.Provider>
         {(prev || next) && (
           <>
             <hr className="border-gray-200 mt-10 mb-4" />

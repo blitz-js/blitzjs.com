@@ -75,6 +75,7 @@ module.exports = {
       "middleware",
       "rpc-specification",
       "measuring-performance",
+      "i18n-routing",
     ],
   },
 }

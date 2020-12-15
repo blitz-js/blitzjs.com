@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { VersionSwitcher } from "@/components/VersionSwitcher"
 import { Search } from "@/components/Search"
 import clsx from "clsx"
 import Router from "next/router"
@@ -26,7 +25,6 @@ export function Header({ navIsOpen, onNavToggle }) {
         <div className="flex-auto border-b border-gray-200 h-18 flex items-center justify-between px-4 sm:px-6 lg:mx-6 lg:px-0 xl:mx-8">
           <Search />
           <div className="flex items-center space-x-6">
-            <VersionSwitcher className="hidden lg:block" />
             <a
               href="https://github.com/tailwindlabs/tailwindcss"
               className="text-gray-400 hover:text-gray-500 transition-colors duration-200"

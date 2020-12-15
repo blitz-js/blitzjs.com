@@ -1,15 +1,3 @@
-import { Testimonials } from "@/components/Testimonials"
-import { DarkMode } from "@/components/home/DarkMode"
-import { ConstraintBased } from "@/components/home/ConstraintBased"
-import { BuildAnything } from "@/components/home/BuildAnything"
-import { Performance } from "@/components/home/Performance"
-import { MobileFirst } from "@/components/home/MobileFirst"
-import { StateVariants } from "@/components/home/StateVariants"
-import { ComponentDriven } from "@/components/home/ComponentDriven"
-import { Customization } from "@/components/home/Customization"
-import { ModernFeatures } from "@/components/home/ModernFeatures"
-import { EditorTools } from "@/components/home/EditorTools"
-import { ReadyMadeComponents } from "@/components/home/ReadyMadeComponents"
 import { Search } from "@/components/Search"
 import { Hero } from "@/components/home/Hero"
 import { BigText, InlineCode, Link, Paragraph, Widont } from "@/components/home/common"
@@ -171,20 +159,6 @@ export default function Home() {
           </figure>
         </div>
       </section>
-      <Testimonials />
-      <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
-        <ConstraintBased />
-        <BuildAnything />
-        <Performance />
-        <MobileFirst />
-        <StateVariants />
-        <ComponentDriven />
-        <DarkMode />
-        <Customization />
-        <ModernFeatures />
-        <EditorTools />
-        <ReadyMadeComponents />
-      </div>
       <Footer />
     </div>
   )

@@ -73,6 +73,7 @@ module.exports = {
       "webpack-config",
       "postcss-config",
       "code-splitting",
+      "i18n-routing",
       "middleware",
       "rpc-specification",
       "measuring-performance",

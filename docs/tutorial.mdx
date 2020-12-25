@@ -626,7 +626,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 

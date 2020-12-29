@@ -138,6 +138,8 @@ First, we'll generate everything pertaining to the `Question` model:
 blitz generate all question text:string choices:choice[]
 ```
 
+> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
+
 ```
 ✔ Model for 'question' created successfully:
 
@@ -168,8 +170,6 @@ Then, we'll generate the `Choice` model with corresponding queries and mutations
 ```sh
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
-
-> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
 
 ```
 ✔ Model for 'choice' created successfully:

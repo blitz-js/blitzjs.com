@@ -510,7 +510,10 @@ export default async function getQuestion({where /* include */}: GetQuestionInpu
 ```js
 // app/questions/queries/getQuestions.ts
 
-type GetQuestionsInput = Pick<FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
+import { Ctx } from "blitz"
+import db, { Prisma } from "db"
+
+type GetQuestionsInput = Pick<Prisma.FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
 
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,

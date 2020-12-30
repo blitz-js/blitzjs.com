@@ -16,26 +16,57 @@ const GROUP_DELAY = 1000
 const TRANSITION = { duration: 0.5 }
 
 const { tokens, code } = tokenize.html(
-  `<figure class="md:flex bg-gray-100 rounded-xl p-8 md:p-0">
-  <img class="w-32 h-32 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" height="512">
-  <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-    <blockquote>
-      <p class="text-lg font-semibold">
-        “Tailwind CSS is the only framework that I've seen scale
-        on large teams. It’s easy to customize, adapts to any design,
-        and the build size is tiny.”
-      </p>
-    </blockquote>
-    <figcaption class="font-medium">
-      <div class="text-cyan-600">
-        Sarah Dayan
-      </div>
-      <div class="text-gray-500">
-        Staff Engineer, Algolia
-      </div>
-    </figcaption>
-  </div>
-</figure>
+  `
+  import { Head, Link, useRouter } from 'blitz'
+  import createQuestion from 'app/questions/mutations/createQuestion'
+
+  const NewQuestionPage = () => {
+    const router = useRouter()
+
+    return (
+      <div className="container">
+        <Head>
+          <title>New Question</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+
+        <main>
+          <h1>Create New Question </h1>
+
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault()
+
+              try {
+                const question = await createQuestion({
+                  data: {
+                    text: event.target[0].value,
+                    publishedAt: new Date(),
+                    choices: {
+                      create: [
+                        {text: event.target[1].value},
+                        {text: event.target[2].value},
+                        {text: event.target[3].value},
+                      ],
+                    },
+                  },
+                })
+                alert("Success!" + JSON.stringify(question))
+              } catch (error) {
+                alert("Error creating question " + JSON.stringify(error, null, 2))
+              }
+            }}
+            />
+            <p>
+              <Link href="/questions">
+                <a>Questions</a>
+              </Link>
+            </p>
+          </main>
+        </div>
+      )
+    }
+    export default NewQuestionPage
 `,
   true
 )
@@ -83,7 +114,7 @@ function Words({ children, bolder = false, layout, transition }) {
     <motion.span
       key={i}
       layout={layout}
-      className="relative inline-flex whitespace-pre text-lg"
+      className="relative inline-flex text-lg whitespace-pre"
       transition={transition}
     >
       {bolder ? (
@@ -310,7 +341,7 @@ export function Hero() {
                   animate={cursorControls}
                   transition={{ default: TRANSITION, opacity: { duration: 0.25 } }}
                 >
-                  <svg className="h-8 w-8" viewBox="0 0 100 100">
+                  <svg className="w-8 h-8" viewBox="0 0 100 100">
                     <circle
                       cx="50"
                       cy="50"
@@ -472,7 +503,7 @@ function AnimatedToken({ isActiveToken, onComplete, children }) {
   return (
     <>
       <span className={visible ? undefined : "hidden"}>{children}</span>
-      {isActiveToken && <span className="border -mx-px" style={{ height: "1.125rem" }} />}
+      {isActiveToken && <span className="-mx-px border" style={{ height: "1.125rem" }} />}
     </>
   )
 }
@@ -509,8 +540,8 @@ function Layout({ left, right, pin = "left" }) {
           pin === "left" ? "-ml-8 pr-4 sm:ml-0 sm:pr-0" : "-mr-8 pl-4 sm:mr-0 sm:pl-0"
         }`}
       >
-        <div className="bg-gray-100 w-full flex-none rounded-3xl" />
-        <div className="w-full flex-none -ml-full rounded-3xl transform shadow-lg bg-gradient-to-br from-cyan-400 to-light-blue-500 -rotate-1 sm:-rotate-2" />
+        <div className="flex-none w-full bg-gray-100 rounded-3xl" />
+        <div className="flex-none w-full transform shadow-lg -ml-full rounded-3xl bg-gradient-to-br from-cyan-400 to-light-blue-500 -rotate-1 sm:-rotate-2" />
       </div>
       <div
         className={`relative col-start-1 col-end-2 sm:col-start-2 sm:col-end-3 lg:col-start-1 lg:col-span-full xl:col-start-2 xl:col-end-3 row-start-2 row-end-3 xl:row-start-3 xl:row-end-4 self-center ${
@@ -520,10 +551,10 @@ function Layout({ left, right, pin = "left" }) {
         <div
           className={`${styles.cardContainer} max-w-xl xl:max-w-none flex items-center justify-center`}
         >
-          <div className="w-full flex-none">{left}</div>
+          <div className="flex-none w-full">{left}</div>
         </div>
       </div>
-      <div className="relative md:px-8 lg:px-0 col-start-1 col-span-full lg:col-start-1 xl:col-start-3 xl:col-end-4 row-start-1 row-end-2 xl:row-start-2 xl:row-end-5 self-center pt-8 lg:pt-0">
+      <div className="relative self-center col-start-1 row-start-1 row-end-2 pt-8 md:px-8 lg:px-0 col-span-full lg:col-start-1 xl:col-start-3 xl:col-end-4 xl:row-start-2 xl:row-end-5 lg:pt-0">
         <div className="mx-auto lg:max-w-2xl xl:max-w-none">{right}</div>
       </div>
     </div>

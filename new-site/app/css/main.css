@@ -8,3 +8,18 @@
 
 @import "tailwindcss/components";
 @import "utilities.css";
+
+html {
+  font-family: "Libre Franklin", sans-serif;
+}
+
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

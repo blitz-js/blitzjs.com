@@ -1,165 +1,161 @@
-import { Search } from "@/components/Search"
-import { Hero } from "@/components/home/Hero"
-import { BigText, InlineCode, Link, Paragraph, Widont } from "@/components/home/common"
-import { useEffect, useState } from "react"
-import { Logo } from "@/components/Logo"
+import { Head, Link } from "blitz"
+import { BigText, Paragraph, Widont } from "@/components/home/common"
 import { Footer } from "@/components/home/Footer"
-import NextLink from "next/link"
-import Head from "next/head"
+import Header from "@/components/Header"
+import { BsArrowRight } from "react-icons/bs"
+import { BiBoltCircle } from "react-icons/bi"
+import { IoLayers } from "react-icons/io5"
+import { BsGraphUp } from "react-icons/bs"
+import ButtonLink from "@/components/ButtonLink"
+import { HeroCode } from "@/components/home/HeroCode"
+import { VideoPlayer } from "@/components/home/VideoPlayer"
+import { Feature } from "@/components/home/Feature"
 
-function NpmInstallButton() {
-  const [state, setState] = useState("idle")
-
-  useEffect(() => {
-    let current = true
-    if (state === "copying") {
-      navigator.clipboard
-        .writeText("npm install tailwindcss")
-        .then(() => {
-          if (current) {
-            setState("copied")
-          }
-        })
-        .catch(() => {
-          if (current) {
-            setState("error")
-          }
-        })
-    } else if (state === "copied" || state === "error") {
-      window.setTimeout(() => {
-        if (current) {
-          setState("idle")
-        }
-      }, 2000)
-    }
-    return () => (current = false)
-  }, [state])
-
+const Home = () => {
   return (
-    <button
-      type="button"
-      className="w-full sm:w-auto flex-none bg-gray-50 text-gray-400 hover:text-gray-900 font-mono leading-6 py-3 sm:px-6 border border-gray-200 rounded-xl flex items-center justify-center space-x-2 sm:space-x-4 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 focus:outline-none transition-colors duration-200"
-      onClick={() => setState("copying")}
-    >
-      <span className="text-gray-900">
-        <span className="hidden sm:inline text-gray-500" aria-hidden="true">
-          ${" "}
-        </span>
-        npm install tailwindcss
-      </span>
-      <span className="sr-only">(click to copy to clipboard)</span>
-      <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-        <path d="M8 16c0 1.886 0 2.828.586 3.414C9.172 20 10.114 20 12 20h4c1.886 0 2.828 0 3.414-.586C20 18.828 20 17.886 20 16v-4c0-1.886 0-2.828-.586-3.414C18.828 8 17.886 8 16 8m-8 8h4c1.886 0 2.828 0 3.414-.586C16 14.828 16 13.886 16 12V8m-8 8c-1.886 0-2.828 0-3.414-.586C4 14.828 4 13.886 4 12V8c0-1.886 0-2.828.586-3.414C5.172 4 6.114 4 8 4h4c1.886 0 2.828 0 3.414.586C16 5.172 16 6.114 16 8" />
-      </svg>
-    </button>
-  )
-}
+    <div className="dark:bg-black bg-off-white">
+      <div className="overflow-hidden">
+        <Head>
+          <meta
+            key="twitter:title"
+            name="twitter:title"
+            content="Blitz - The Fullstack React Framework"
+          />
+          <meta
+            key="og:title"
+            property="og:title"
+            content="Blitz - The Fullstack React Framework"
+          />
+        </Head>
 
-export default function Home() {
-  return (
-    <div className="space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44 overflow-hidden">
-      <Head>
-        <meta
-          key="twitter:title"
-          name="twitter:title"
-          content="Tailwind CSS - Rapidly build modern websites without ever leaving your HTML."
-        />
-        <meta
-          key="og:title"
-          property="og:title"
-          content="Tailwind CSS - Rapidly build modern websites without ever leaving your HTML."
-        />
-        <title>Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.</title>
-      </Head>
-      <header className="relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto">
-        <div className="px-4 sm:px-6 md:px-8 mb-14 sm:mb-20 xl:mb-8">
-          <div className="border-b border-gray-200 py-6 flex items-center justify-between mb-16 sm:mb-20 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <Search />
-            <div className="flex space-x-6 sm:space-x-10">
-              <NextLink href="/docs">
-                <a className="text-base leading-6 font-medium hover:text-gray-600 transition-colors duration-200">
-                  <span className="sm:hidden">Docs</span>
-                  <span className="hidden sm:inline">Documentation</span>
-                </a>
-              </NextLink>
-              <a
-                href="https://github.com/tailwindlabs/tailwindcss"
-                className="text-gray-400 hover:text-gray-500 transition-colors duration-200"
-              >
-                <span className="sr-only">Tailwind CSS on GitHub</span>
-                <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                  <path
-                    fillRule="evenodd"
-                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
-                  />
-                </svg>
-              </a>
+        <div>
+          <div className="relative grid grid-cols-container gap-y-24">
+            <div className="col-start-2 text-white">
+              <Header />
             </div>
-          </div>
-          <Logo className="w-auto h-7 sm:h-8" />
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl leading-none font-extrabold tracking-tight text-gray-900 mt-10 mb-8 sm:mt-14 sm:mb-10">
-            Rapidly build modern websites without ever leaving your HTML.
-          </h1>
-          <p className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11">
-            A utility-first CSS framework packed with classes like <InlineCode>flex</InlineCode>,{" "}
-            <InlineCode>pt-4</InlineCode>, <InlineCode>text-center</InlineCode> and{" "}
-            <InlineCode>rotate-90</InlineCode> that can be composed to build any design, directly in
-            your markup.
-          </p>
-          <div className="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
-            <NextLink href="/docs">
-              <a className="w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200">
-                Get started
-              </a>
-            </NextLink>
-            <NpmInstallButton />
-          </div>
-        </div>
-        <Hero />
-      </header>
-      <section className="relative z-10 text-center max-w-screen-lg xl:max-w-screen-xl mx-auto">
-        <div className="px-4 sm:px-6 md:px-8">
-          <BigText as="h2" className="mb-8">
-            <Widont>“Best practices” don’t actually work.</Widont>
-          </BigText>
-          <figure>
-            <blockquote>
-              <Paragraph className="max-w-4xl mx-auto mb-6">
-                I’ve written{" "}
-                <a
-                  href="https://adamwathan.me/css-utility-classes-and-separation-of-concerns/"
-                  className="text-light-blue-600 font-semibold"
-                  style={{
-                    boxShadow:
-                      "inset 0 -0.1666666667em 0 0 #fff, inset 0 -0.3333333333em 0 0 #bae6fd",
-                  }}
+            <div className="absolute w-full h-full row-start-1 row-end-5 text-white -top-video -z-10 rounded-bl-3xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
+            <div className="grid grid-cols-1 col-start-2 -mt-6 text-white gap-y-10">
+              <h2 className="text-5xl font-medium font-secondary">The Fullstack React Framework</h2>
+              <p className="text-lg">
+                Blitz makes you far more productive than you ever dreamed possible! It's a
+                Javascript equivalent for Ruby on Rails that's built on Next.js and features a
+                "Zero-API" data layer.
+              </p>
+              <div className="flex space-x-4">
+                <ButtonLink className="w-2/3 rounded-tl-xl" href="/docs">
+                  Getting Started Docs <BsArrowRight size="1.5rem" className="ml-2" />
+                </ButtonLink>
+                <ButtonLink
+                  href="https://github.com/blitz-js/blitz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  className="w-1/3 rounded-r-xl"
                 >
-                  a few thousand words
-                </a>{" "}
-                <Widont>
-                  on why traditional “semantic class names” are the reason CSS is hard to maintain,
-                  but the truth is you’re never going to believe me until you actually try it. If
-                  you can suppress the urge to retch long enough to give it a chance, I really think
-                  you'll wonder how you ever worked with CSS any other way.
-                </Widont>
-              </Paragraph>
-            </blockquote>
-            <figcaption className="sm:text-xl font-medium flex flex-col items-center">
-              <div className="p-1 border-2 border-light-blue-400 rounded-full mb-3">
-                <img
-                  src={require("@/img/adam.jpg").default}
-                  alt=""
-                  className="w-10 h-10 rounded-full bg-light-blue-100"
-                  loading="lazy"
-                />
+                  Github <BsArrowRight size="1.5rem" className="ml-2" />
+                </ButtonLink>
               </div>
-              <div className="text-gray-900">Adam Wathan</div>
-              <div className="text-light-blue-600">Creator of Tailwind CSS</div>
-            </figcaption>
-          </figure>
+              <HeroCode />
+            </div>
+            <div className="grid grid-cols-1 col-start-2 text-lg text-center text-white gap-y-12">
+              <div>
+                <BiBoltCircle size="1.7rem" className="inline mb-4" />
+                <p>
+                  Brings back the simplicity and conventions of frameworks like Ruby on Rails while
+                  preserving everything we love about React
+                </p>
+              </div>
+              <div>
+                <IoLayers size="1.7rem" className="inline mb-4" />
+                <p>
+                  Doesn't force you to use technologies like GraphQL. But you are free to add
+                  advanced technologies if you want.
+                </p>
+              </div>
+              <div>
+                <BsGraphUp size="1.7rem" className="inline mb-4" />
+                <p>
+                  Maximizes your productivity both when starting an app and when scaling it to lots
+                  of code and users.
+                </p>
+              </div>
+            </div>
+            <div className="grid col-start-2 text-white gap-y-5">
+              <Link href="/news">
+                <a className="grid items-center grid-cols-3 pb-1 text-xs border-b border-opacity-50 border-blue-mid">
+                  <span className="col-span-2">The Latest News From Blitz</span>
+                  <BsArrowRight size="1.5rem" className="justify-self-end" />
+                </a>
+              </Link>
+              <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
+              <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
+            </div>
+            <div className="grid col-span-3 bg-white grid-cols-container gap-y-10">
+              <h2 className="col-start-2 text-3xl font-semibold">
+                Everything You Need For Production Apps
+              </h2>
+              <div className="grid col-span-3 overflow-x-scroll grid-cols-features features">
+                <Feature title="Fullstack & Monolithic">
+                  <p>
+                    Includes everything from the database to your frontend all inside a single app.
+                    Only one development server. Only one thing to deploy.
+                  </p>
+                  <p>Deploy to a server or serverless.</p>
+                </Feature>
+                <Feature title="API Not Required">
+                  <p>
+                    Instead of fetching data from the backend, you import your server code into your
+                    frontend and call it like a normal function. At build time, the direct function
+                    import is swapped out with an auto generated HTTP API.
+                  </p>
+                  <p>The generated API can also be used by third-parties.</p>
+                </Feature>
+                <Feature title="Loose Opinions">
+                  <p>
+                    The out-of-the-box experience guides you on a path perfect for most
+                    applications. But when you need to go off the beaten path, you are totally free
+                    to do so.
+                  </p>
+                  <p>
+                    And nearly everything is pluggable. For example, we don’t mandate which styling
+                    or form libraries you use.
+                  </p>
+                </Feature>
+                <Feature title="Convention over Configuration">
+                  <p>
+                    Blitz does all the boring set up and configuration for you. The common project
+                    structure and architectural patterns make it easy to move from one Blitz app to
+                    another and immediately feel at home.
+                  </p>
+                </Feature>
+                <Feature title="Easy to Start, Easy to Scale">
+                  <p>Easy for beginners and easy to migrate existing Next.js apps to Blitz.</p>
+                  <p>
+                    Easy to scale in all forms: lines of code, number of people working in the
+                    codebase, and code execution.
+                  </p>
+                </Feature>
+                <Feature title="Stability">
+                  <p>
+                    Once we reach version 1.0, we'll switch to a stable, predictable release cycle
+                    with multiple channels like stable, LTS, and beta.
+                  </p>
+                  <p>We are taking a lot inspiration from Ember in this regard.</p>
+                </Feature>
+              </div>
+            </div>
+            <div>Community</div>
+          </div>
         </div>
-      </section>
-      <Footer />
+      </div>
     </div>
   )
 }
+
+Home.layoutProps = {
+  meta: {
+    title: "Blitz - The Fullstack React Framework",
+  },
+}
+
+export default Home

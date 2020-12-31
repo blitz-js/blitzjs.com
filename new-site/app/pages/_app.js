@@ -6,7 +6,9 @@ import { Title } from "@/components/Title"
 import Router from "next/router"
 import ProgressBar from "@badrap/bar-of-progress"
 import Head from "next/head"
-import twitterLargeCard from "@/img/twitter-large-card.jpg"
+import twitterLargeCard from "@/img/twitter-large-card.png"
+import { ThemeProvider } from "next-themes"
+import { ThemeChanger } from "@/components/ThemeChanger"
 
 const progress = new ProgressBar({
   size: 2,
@@ -30,45 +32,26 @@ Router.events.on("routeChangeComplete", () => {
 Router.events.on("routeChangeError", progress.finish)
 
 export default function App({ Component, pageProps, router }) {
-  let [navIsOpen, setNavIsOpen] = useState(false)
-
-  useEffect(() => {
-    if (!navIsOpen) return
-    function handleRouteChange() {
-      setNavIsOpen(false)
-    }
-    Router.events.on("routeChangeComplete", handleRouteChange)
-    return () => {
-      Router.events.off("routeChangeComplete", handleRouteChange)
-    }
-  }, [navIsOpen])
-
   const Layout = Component.layoutProps?.Layout || Fragment
-  const layoutProps = Component.layoutProps?.Layout
-    ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
-    : {}
+  const layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps } : {}
   const meta = Component.layoutProps?.meta || {}
   const description =
-    meta.metaDescription || meta.description || "Documentation for the Tailwind CSS framework."
+    meta.metaDescription || meta.description || "Documentation for the Blitz framework."
 
   return (
     <>
-      <Title suffix="Tailwind CSS">{meta.metaTitle || meta.title}</Title>
+      <Title suffix="Blitz">{meta.metaTitle || meta.title}</Title>
       <Head>
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
-        <meta key="twitter:site" name="twitter:site" content="@tailwindcss" />
+        <meta key="twitter:site" name="twitter:site" content="@blitz_js" />
         <meta key="twitter:description" name="twitter:description" content={description} />
         <meta
           key="twitter:image"
           name="twitter:image"
-          content={`https://tailwindcss.com${twitterLargeCard}`}
+          content={`https://blitzjs.com${twitterLargeCard}`}
         />
-        <meta key="twitter:creator" name="twitter:creator" content="@tailwindcss" />
-        <meta
-          key="og:url"
-          property="og:url"
-          content={`https://tailwindcss.com${router.pathname}`}
-        />
+        <meta key="twitter:creator" name="twitter:creator" content="@blitz_js" />
+        <meta key="og:url" property="og:url" content={`https://blitzjs.com${router.pathname}`} />
         <meta key="og:type" property="og:type" content="article" />
         <meta key="og:description" property="og:description" content={description} />
         <meta
@@ -77,12 +60,11 @@ export default function App({ Component, pageProps, router }) {
           content={`https://tailwindcss.com${twitterLargeCard}`}
         />
       </Head>
-      {router.pathname !== "/" && (
-        <Header navIsOpen={navIsOpen} onNavToggle={(isOpen) => setNavIsOpen(isOpen)} />
-      )}
-      <Layout {...layoutProps}>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider defaultTheme="system" attribute="class">
+        <Layout {...layoutProps}>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </>
   )
 }

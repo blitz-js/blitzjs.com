@@ -12,10 +12,18 @@ module.exports = {
       current: "currentColor",
 
       black: "#000",
-      white: "#fff",
+      "off-black": "#191919",
+      "off-white": "#EEF2F7",
+      white: "#FFF",
 
       amber: colors.amber,
-      blue: colors.blue,
+      blue: {
+        ...colors.blue,
+        light: "#D5DEE9",
+        mid: "#BCC9DC",
+        primary: "#A7B6CE",
+        dark: "#7B96BC",
+      },
       cyan: colors.cyan,
       emerald: colors.emerald,
       fuchsia: colors.fuchsia,
@@ -32,7 +40,14 @@ module.exports = {
         ...colors.pink,
         1000: "#460d25",
       },
-      purple: colors.purple,
+      purple: {
+        ...colors.purple,
+        light: "#6700EB",
+        mid: "#5600C2",
+        primary: "#45009D",
+        dark: "#34017B",
+        "off-black": "#1F084E",
+      },
       red: colors.red,
       rose: colors.rose,
       teal: colors.teal,
@@ -40,6 +55,7 @@ module.exports = {
       yellow: colors.yellow,
 
       code: {
+        block: "#F9F5FE",
         punctuation: "#A1E8FF",
         tag: "#D58FFF",
         "attr-name": "#4BD0FB",
@@ -47,6 +63,24 @@ module.exports = {
         string: "#A2F679",
         highlight: "rgba(134, 239, 172, 0.25)",
       },
+
+      supplementary: {
+        yellow: "#FDEA69",
+        blue: "#69C6FD",
+        red: "#FF003D",
+      },
+    },
+    fontSize: {
+      xs: "0.8125rem", // 13px
+      sm: "0.875rem", // 14px
+      base: ["0.9375rem", "1.375rem"], // 15px
+      lg: ["1.0625rem", "1.5625rem"], // 17px
+      xl: "1.25rem", // 20px
+      "2xl": ["1.375rem", "1.875rem"], // 22px
+      "3xl": ["1.875rem", "2.4375rem"], // 30px
+      "4xl": "2.375rem", // 38px
+      "5xl": ["2.8125rem", "3.125rem"], // 45px
+      "6xl": "3.875rem", // 62px
     },
     extend: {
       typography: (theme) => ({
@@ -139,6 +173,8 @@ module.exports = {
         },
       }),
       fontFamily: {
+        secondary: ["Roboto", ...defaultTheme.fontFamily.sans],
+        primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         mono: ["Menlo", ...defaultTheme.fontFamily.mono],
         source: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
@@ -154,6 +190,7 @@ module.exports = {
       },
       width: {
         xl: "36rem",
+        "7xl": "80rem",
       },
       maxWidth: {
         "4.5xl": "60rem",
@@ -193,6 +230,39 @@ module.exports = {
       skew: {
         "-20": "-20deg",
       },
+      zIndex: {
+        "-10": "-10",
+        "-20": "-20",
+      },
+      inset: {
+        "-video": "calc((100vw - 3rem) * (-9 / 16) * 0.5)",
+      },
+      gridTemplateColumns: {
+        container: "1.5rem 1fr 1.5rem",
+        features: "repeat(6, calc(100vw - 3rem))",
+      },
+      borderRadius: {
+        "2xl": "1.56rem",
+        "3xl": "3rem",
+      },
+      gridRowStart: {
+        8: "8",
+        9: "9",
+        10: "10",
+        11: "11",
+        12: "12",
+      },
+      gridRowEnd: {
+        8: "8",
+        9: "9",
+        10: "10",
+        11: "11",
+        12: "12",
+        13: "13",
+        14: "14",
+        15: "15",
+        16: "16",
+      },
     },
   },
   variants: {
@@ -200,7 +270,6 @@ module.exports = {
       backgroundColor: ["odd", "even", "active"],
       borderWidth: ["first", "last", "hover", "focus"],
       cursor: ["active"],
-      opacity: ["disabled"],
       textColor: ["group-focus"],
       ringWidth: ["focus-visible"],
       ringOffsetWidth: ["focus-visible"],

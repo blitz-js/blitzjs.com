@@ -1,19 +1,19 @@
 import { Head, Link } from "blitz"
 import { BigText, Paragraph, Widont } from "@/components/home/common"
 import { Footer } from "@/components/home/Footer"
-import Header from "@/components/Header"
+import { Header } from "@/components/Header"
 import { BsArrowRight } from "react-icons/bs"
-import { BiBoltCircle } from "react-icons/bi"
-import { IoLayers } from "react-icons/io5"
-import { BsGraphUp } from "react-icons/bs"
-import ButtonLink from "@/components/ButtonLink"
+import { ButtonLink } from "@/components/ButtonLink"
 import { HeroCode } from "@/components/home/HeroCode"
 import { VideoPlayer } from "@/components/home/VideoPlayer"
 import { Feature } from "@/components/home/Feature"
+import { Octokit } from "@octokit/rest"
+import { FeatureIcon } from "@/components/home/FeatureIcon"
+import { Sponsor } from "@/components/home/Sponsor"
 
-const Home = () => {
+const Home = ({ randomContributors }) => {
   return (
-    <div className="dark:bg-black bg-off-white">
+    <div>
       <div className="overflow-hidden">
         <Head>
           <meta
@@ -33,7 +33,7 @@ const Home = () => {
             <div className="col-start-2 text-white">
               <Header />
             </div>
-            <div className="absolute w-full h-full row-start-1 row-end-5 text-white -top-video -z-10 rounded-bl-3xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
+            <div className="absolute w-full h-full row-start-1 row-end-5 -top-video -z-10 rounded-bl-3xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
             <div className="grid grid-cols-1 col-start-2 -mt-6 text-white gap-y-10">
               <h2 className="text-5xl font-medium font-secondary">The Fullstack React Framework</h2>
               <p className="text-lg">
@@ -43,7 +43,7 @@ const Home = () => {
               </p>
               <div className="flex space-x-4">
                 <ButtonLink className="w-2/3 rounded-tl-xl" href="/docs">
-                  Getting Started Docs <BsArrowRight size="1.5rem" className="ml-2" />
+                  Getting Started Docs
                 </ButtonLink>
                 <ButtonLink
                   href="https://github.com/blitz-js/blitz"
@@ -52,33 +52,24 @@ const Home = () => {
                   variant="outline"
                   className="w-1/3 rounded-r-xl"
                 >
-                  Github <BsArrowRight size="1.5rem" className="ml-2" />
+                  Github
                 </ButtonLink>
               </div>
               <HeroCode />
             </div>
             <div className="grid grid-cols-1 col-start-2 text-lg text-center text-white gap-y-12">
-              <div>
-                <BiBoltCircle size="1.7rem" className="inline mb-4" />
-                <p>
-                  Brings back the simplicity and conventions of frameworks like Ruby on Rails while
-                  preserving everything we love about React
-                </p>
-              </div>
-              <div>
-                <IoLayers size="1.7rem" className="inline mb-4" />
-                <p>
-                  Doesn't force you to use technologies like GraphQL. But you are free to add
-                  advanced technologies if you want.
-                </p>
-              </div>
-              <div>
-                <BsGraphUp size="1.7rem" className="inline mb-4" />
-                <p>
-                  Maximizes your productivity both when starting an app and when scaling it to lots
-                  of code and users.
-                </p>
-              </div>
+              <FeatureIcon icon="lighteningBolt">
+                Brings back the simplicity and conventions of frameworks like Ruby on Rails while
+                preserving everything we love about React
+              </FeatureIcon>
+              <FeatureIcon icon="layers">
+                Doesn't force you to use technologies like GraphQL. But you are free to add advanced
+                technologies if you want.
+              </FeatureIcon>
+              <FeatureIcon icon="graphUp">
+                Maximizes your productivity both when starting an app and when scaling it to lots of
+                code and users.
+              </FeatureIcon>
             </div>
             <div className="grid col-start-2 text-white gap-y-5">
               <Link href="/news">
@@ -94,7 +85,7 @@ const Home = () => {
               <h2 className="col-start-2 text-3xl font-semibold">
                 Everything You Need For Production Apps
               </h2>
-              <div className="grid col-span-3 overflow-x-scroll grid-cols-features features">
+              <div className="grid col-span-3 overflow-x-scroll grid-cols-features">
                 <Feature title="Fullstack & Monolithic">
                   <p>
                     Includes everything from the database to your frontend all inside a single app.
@@ -117,7 +108,7 @@ const Home = () => {
                     to do so.
                   </p>
                   <p>
-                    And nearly everything is pluggable. For example, we don’t mandate which styling
+                    And nearly everything is pluggable. For example, we don't mandate which styling
                     or form libraries you use.
                   </p>
                 </Feature>
@@ -144,12 +135,160 @@ const Home = () => {
                 </Feature>
               </div>
             </div>
-            <div>Community</div>
+            <div className="absolute w-full h-full row-start-6 text-white row-end-10 -z-10 rounded-bl-3xl rounded-tr-3xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
+            <div className="col-span-3" />
+            <div className="grid grid-cols-1 col-start-2 text-white gap-y-14">
+              <h2 className="text-5xl font-secondary">
+                The Blitz Community - Our Most Important Aspect
+              </h2>
+              <div className="grid grid-cols-5 grid-rows-6 gap-1">
+                {randomContributors.map((contributor) => (
+                  <img
+                    src={contributor.avatar_url}
+                    alt={contributor.login}
+                    title={contributor.login}
+                  />
+                ))}
+              </div>
+              <div className="grid grid-cols-1 gap-y-6">
+                <p>
+                  Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and
+                  minorities are especially welcome.
+                </p>
+                <p>
+                  Please read our{" "}
+                  <Link href="/community">
+                    <a className="underline">Code of Conduct</a>
+                  </Link>
+                  .
+                </p>
+                <ButtonLink href="/slack" className="rounded-md rounded-bl-none">
+                  Join our Slack Community
+                </ButtonLink>
+              </div>
+              <div className="grid grid-cols-1 gap-y-6">
+                <p>
+                  We are all in this together, from the youngest to the oldest. We are all more
+                  similar than we are different. We love to work together.
+                </p>
+                <p>You are invited to help us make Blitz the best framework we've ever had!</p>
+                <ButtonLink href="/contributing" className="rounded-md rounded-bl-none">
+                  Learn How to Contribute
+                </ButtonLink>
+              </div>
+            </div>
+            <div className="grid col-span-3 text-white grid-cols-container gap-y-7">
+              <h2 className="col-start-2 text-2xl">Architecture Diagram</h2>
+              <div className="grid col-span-3 overflow-x-scroll">
+                <img
+                  src="img/architecture.svg"
+                  className="px-6 w-7xl max-w-none"
+                  alt="Architecture diagram"
+                />
+              </div>
+            </div>
+            <div className="col-span-3" />
+            <div className="absolute w-full h-full row-start-8 row-end-15 -z-20 bg-purple-mid"></div>
+            <div className="grid col-start-2 text-white gap-y-12">
+              <h2 className="text-3xl">Everything End-to-End From the Database to the Frontend</h2>
+              <FeatureIcon icon="thumbsUp" title="Authentication Built In">
+                Coming Soon! · Blitz fullstack authentication is super easy and very secure. Works
+                with any identity provider, including self-hosted username and password and
+                third-parties like Auth0.
+              </FeatureIcon>
+              <FeatureIcon icon="database" title="Database Agnostic">
+                You can use any database you want. Prisma 2 is the default database client, but you
+                can remove that and use anything else like Fauna or Cosmos.
+              </FeatureIcon>
+              <FeatureIcon icon="fileCode" title="Code Installer Recipes">
+                Coming Soon! · One command to install code and/or packages into your blitz app.
+                Examples: `blitz install tailwind` or `blitz install sentry`. Uses the MDX Recipe
+                format that Gatsby created for Gatsby Recipes.
+              </FeatureIcon>
+              <FeatureIcon icon="plugin" title="Plugins">
+                Coming Soon! · Hook into many parts of a Blitz app, including the CLI. Greatly
+                improves the developer experience for integrations. The first offical plugins will
+                be database plugins.
+              </FeatureIcon>
+              <FeatureIcon icon="typescript" title="Native Typescript Support">
+                Blitz is built with Typescript and the Blitz data layer is fully end-to-end
+                typesafe. All types are fully static without needing a separate type generation
+                process!
+              </FeatureIcon>
+              <FeatureIcon icon="scaffolding" title="Code Scaffolding">
+                It’s early days, but Blitz code scaffolding is going to be extremely powerful. Great
+                for both prototyping and for building real apps. Can override any template and
+                customize for your project.
+              </FeatureIcon>
+            </div>
+            <div className="absolute w-full h-full bg-white row-start-11 row-end-13 rounded-tr-3xl -z-10" />
+            <div className="col-span-3"></div>
+            <div className="grid col-start-2 bg-white gap-y-7">
+              <h2 className="text-3xl font-semibold">Our Sponsors</h2>
+              <p className="text-lg">
+                Your financial contributions help ensure Blitz continues to be developed and
+                maintained! We have monthly sponsorship options starting at $5/month.
+              </p>
+              <p className="text-lg">
+                View options and contribute at GitHub Sponsors, PayPal, or Open Collective.
+              </p>
+              <ButtonLink
+                href="/sponsor"
+                variant="solid-dark"
+                className="rounded-bl-none rounded-xl"
+              >
+                Sponsor Us
+              </ButtonLink>
+            </div>
+            <div className="grid col-span-3 overflow-x-scroll grid-cols-features">
+              <Sponsor title="Diamond Sponsors">
+                <p>Be our first Diamond Sponsor! Start here.</p>
+              </Sponsor>
+              <Sponsor title="Gold Sponsors">
+                <p>Be our first Gold Sponsor! Start here.</p>
+              </Sponsor>
+              <Sponsor title="Silver Sponsors">
+                <p>Be our first Silver Sponsor! Start here.</p>
+              </Sponsor>
+              <Sponsor title="Bronze Sponsors">
+                <p>Be our first Bronze Sponsor! Start here.</p>
+              </Sponsor>
+            </div>
+            <div className="col-span-3"></div>
+            <div className="col-start-2">
+              <h2>Follow Our Journey on Github</h2>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+const getServerSideProps = async () => {
+  const octokit = new Octokit({
+    auth: "0fbe574402d4ff8744b9df9ac4728aaab0b34042",
+  })
+
+  let contributors = []
+
+  for await (const response of octokit.paginate.iterator(octokit.repos.listContributors, {
+    owner: "blitz-js",
+    repo: "blitz",
+    per_page: 100,
+  })) {
+    contributors.push(...response.data)
+  }
+
+  let randomIndexes = []
+  while (randomIndexes.length < 30) {
+    var r = Math.floor(Math.random() * contributors.length)
+    if (randomIndexes.indexOf(r) === -1) randomIndexes.push(r)
+  }
+
+  let randomContributors = randomIndexes.map((i) => contributors[i])
+
+  return { props: { randomContributors } }
 }
 
 Home.layoutProps = {
@@ -159,3 +298,4 @@ Home.layoutProps = {
 }
 
 export default Home
+export { getServerSideProps }

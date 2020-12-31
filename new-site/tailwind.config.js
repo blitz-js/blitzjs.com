@@ -13,12 +13,12 @@ module.exports = {
 
       black: "#000",
       "off-black": "#191919",
+      "off-white": "#EEF2F7",
       white: "#FFF",
 
       amber: colors.amber,
       blue: {
         ...colors.blue,
-        "off-white": "#EEF2F7",
         light: "#D5DEE9",
         mid: "#BCC9DC",
         primary: "#A7B6CE",
@@ -74,7 +74,7 @@ module.exports = {
       xs: "0.8125rem", // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
-      lg: "1.0625rem", // 17px
+      lg: ["1.0625rem", "1.5625rem"], // 17px
       xl: "1.25rem", // 20px
       "2xl": ["1.375rem", "1.875rem"], // 22px
       "3xl": ["1.875rem", "2.4375rem"], // 30px
@@ -190,6 +190,7 @@ module.exports = {
       },
       width: {
         xl: "36rem",
+        "7xl": "80rem",
       },
       maxWidth: {
         "4.5xl": "60rem",
@@ -239,6 +240,27 @@ module.exports = {
       gridTemplateColumns: {
         container: "1.5rem 1fr 1.5rem",
         features: "repeat(6, calc(100vw - 3rem))",
+      },
+      borderRadius: {
+        "3xl": "3rem",
+      },
+      gridRowStart: {
+        8: "8",
+        9: "9",
+        10: "10",
+        11: "11",
+        12: "12",
+      },
+      gridRowEnd: {
+        8: "8",
+        9: "9",
+        10: "10",
+        11: "11",
+        12: "12",
+        13: "13",
+        14: "14",
+        15: "15",
+        16: "16",
       },
     },
   },

@@ -49,7 +49,7 @@ const Home = ({ randomContributors }) => {
                 "Zero-API" data layer.
               </p>
               <div className="flex space-x-4">
-                <ButtonLink className="w-2/3 rounded-tl-xl" href="/docs">
+                <ButtonLink className="w-2/3 rounded-tl-xl" href="#">
                   Getting Started Docs
                 </ButtonLink>
                 <ButtonLink
@@ -79,7 +79,7 @@ const Home = ({ randomContributors }) => {
               </FeatureIcon>
             </div>
             <div className="grid col-start-2 text-white gap-y-5">
-              <Link href="/news">
+              <Link href="#">
                 <a className="grid items-center grid-cols-3 pb-1 text-xs border-b border-opacity-50 border-blue-mid">
                   <span className="col-span-2">The Latest News From Blitz</span>
                   <BsArrowRight size="1.5rem" className="justify-self-end" />
@@ -150,11 +150,15 @@ const Home = ({ randomContributors }) => {
               </h2>
               <div className="grid grid-cols-5 grid-rows-6 gap-1">
                 {randomContributors.map((contributor) => (
-                  <img
-                    src={contributor.avatar_url}
-                    alt={contributor.login}
-                    title={contributor.login}
-                  />
+                  <Link href={`https://github.com/${contributor.login}`}>
+                    <a target="_blank" rel="noopener noreferrer">
+                      <img
+                        src={contributor.avatar_url}
+                        alt={contributor.login}
+                        title={contributor.login}
+                      />
+                    </a>
+                  </Link>
                 ))}
               </div>
               <div className="grid grid-cols-1 gap-y-6">
@@ -164,12 +168,12 @@ const Home = ({ randomContributors }) => {
                 </p>
                 <p>
                   Please read our{" "}
-                  <Link href="/community">
+                  <Link href="#">
                     <a className="underline">Code of Conduct</a>
                   </Link>
                   .
                 </p>
-                <ButtonLink href="/slack" className="rounded-md rounded-bl-none">
+                <ButtonLink href="#" className="rounded-bl-none rounded-xl">
                   Join our Slack Community
                 </ButtonLink>
               </div>
@@ -179,7 +183,7 @@ const Home = ({ randomContributors }) => {
                   similar than we are different. We love to work together.
                 </p>
                 <p>You are invited to help us make Blitz the best framework we've ever had!</p>
-                <ButtonLink href="/contributing" className="rounded-md rounded-bl-none">
+                <ButtonLink href="#" className="rounded-bl-none rounded-xl">
                   Learn How to Contribute
                 </ButtonLink>
               </div>
@@ -197,7 +201,9 @@ const Home = ({ randomContributors }) => {
             <div className="col-span-3" />
             <div className="absolute w-full h-full row-start-8 row-end-17 -z-20 bg-purple-mid"></div>
             <div className="grid col-start-2 text-white gap-y-12">
-              <h2 className="text-3xl">Everything End-to-End From the Database to the Frontend</h2>
+              <h2 className="text-3xl font-semibold">
+                Everything End-to-End From the Database to the Frontend
+              </h2>
               <FeatureIcon icon="thumbsUp" title="Authentication Built In">
                 Coming Soon! · Blitz fullstack authentication is super easy and very secure. Works
                 with any identity provider, including self-hosted username and password and
@@ -239,15 +245,11 @@ const Home = ({ randomContributors }) => {
               <p className="text-lg">
                 View options and contribute at GitHub Sponsors, PayPal, or Open Collective.
               </p>
-              <ButtonLink
-                href="/sponsor"
-                variant="solid-dark"
-                className="rounded-bl-none rounded-xl"
-              >
+              <ButtonLink href="#" variant="solid-dark" className="rounded-bl-none rounded-xl">
                 Sponsor Us
               </ButtonLink>
             </div>
-            <div className="grid col-span-3 overflow-x-scroll grid-cols-features">
+            <div className="grid col-start-2 gap-y-4">
               <Sponsor title="Diamond Sponsors">
                 <p>Be our first Diamond Sponsor! Start here.</p>
               </Sponsor>
@@ -267,10 +269,10 @@ const Home = ({ randomContributors }) => {
                 Follow Our Journey on Github <FaGithub className="inline mb-2" size="1.8rem" />
               </h2>
               <div>
-                <ButtonLink href="/forum" className="mb-2 py-18 rounded-t-2xl">
+                <ButtonLink href="#" className="mb-2 py-18 rounded-t-2xl">
                   Forum
                 </ButtonLink>
-                <ButtonLink href="/releases" className="py-18 rounded-br-2xl">
+                <ButtonLink href="#" className="py-18 rounded-br-2xl">
                   Releases
                 </ButtonLink>
               </div>
@@ -334,9 +336,9 @@ const Home = ({ randomContributors }) => {
   )
 }
 
-const getServerSideProps = async () => {
+const getStaticProps = async () => {
   const octokit = new Octokit({
-    auth: "0fbe574402d4ff8744b9df9ac4728aaab0b34042",
+    auth: process.env.GITHUB_AUTH_TOKEN,
   })
 
   let contributors = []
@@ -367,4 +369,4 @@ Home.layoutProps = {
 }
 
 export default Home
-export { getServerSideProps }
+export { getStaticProps }

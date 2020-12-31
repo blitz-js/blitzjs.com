@@ -33,9 +33,7 @@ Router.events.on("routeChangeError", progress.finish)
 
 export default function App({ Component, pageProps, router }) {
   const Layout = Component.layoutProps?.Layout || Fragment
-  // const layoutProps = Component.layoutProps?.Layout
-  //   ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
-  //   : {}
+  const layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps } : {}
   const meta = Component.layoutProps?.meta || {}
   const description =
     meta.metaDescription || meta.description || "Documentation for the Blitz framework."
@@ -63,7 +61,7 @@ export default function App({ Component, pageProps, router }) {
         />
       </Head>
       <ThemeProvider defaultTheme="system" attribute="class">
-        <Layout>
+        <Layout {...layoutProps}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

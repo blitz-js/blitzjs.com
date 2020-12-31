@@ -6,7 +6,7 @@ import { FaPlug, FaCircle } from "react-icons/fa"
 import { CgDatabase } from "react-icons/cg"
 import { MdAddToQueue } from "react-icons/md"
 import { GoFileCode } from "react-icons/go"
-import { BsCollection, BsCardChecklist, BsBarChartFill } from "react-icons/bs"
+import { BsCollection, BsCardChecklist, BsBarChartFill, BsArrowUp } from "react-icons/bs"
 import { AiOutlineDatabase, AiFillDatabase } from "react-icons/ai"
 import { HiLightningBolt } from "react-icons/hi"
 import { RiFileCodeFill } from "react-icons/ri"
@@ -54,6 +54,9 @@ const Icon = ({
       break
     case "medal":
       reactIcon = <FaMedal className={iconClassName} size={iconSize} />
+      break
+    case "arrowUp":
+      reactIcon = <BsArrowUp className={iconClassName} size={iconSize} />
       break
     default:
       throw new Error("Invalid icon " + name)

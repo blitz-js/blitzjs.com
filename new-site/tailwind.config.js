@@ -242,6 +242,7 @@ module.exports = {
         features: "repeat(6, calc(100vw - 3rem))",
       },
       borderRadius: {
+        "2xl": "1.56rem",
         "3xl": "3rem",
       },
       gridRowStart: {

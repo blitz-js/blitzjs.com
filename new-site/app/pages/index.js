@@ -10,6 +10,10 @@ import { Feature } from "@/components/home/Feature"
 import { Octokit } from "@octokit/rest"
 import { FeatureIcon } from "@/components/home/FeatureIcon"
 import { Sponsor } from "@/components/home/Sponsor"
+import { LinkList } from "@/components/home/LinkList"
+import { NewsletterForm } from "@/components/home/NewsletterForm"
+import { FaGithub } from "react-icons/fa"
+import { Icon } from "../components/home/Icon"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -29,6 +33,9 @@ const Home = ({ randomContributors }) => {
         </Head>
 
         <div>
+          <a name="top" aria-hidden>
+            {null}
+          </a>
           <div className="relative grid grid-cols-container gap-y-24">
             <div className="col-start-2 text-white">
               <Header />
@@ -188,7 +195,7 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
             <div className="col-span-3" />
-            <div className="absolute w-full h-full row-start-8 row-end-15 -z-20 bg-purple-mid"></div>
+            <div className="absolute w-full h-full row-start-8 row-end-17 -z-20 bg-purple-mid"></div>
             <div className="grid col-start-2 text-white gap-y-12">
               <h2 className="text-3xl">Everything End-to-End From the Database to the Frontend</h2>
               <FeatureIcon icon="thumbsUp" title="Authentication Built In">
@@ -221,7 +228,7 @@ const Home = ({ randomContributors }) => {
                 customize for your project.
               </FeatureIcon>
             </div>
-            <div className="absolute w-full h-full bg-white row-start-11 row-end-13 rounded-tr-3xl -z-10" />
+            <div className="absolute w-full h-full bg-white row-start-11 row-end-15 rounded-tr-3xl -z-10" />
             <div className="col-span-3"></div>
             <div className="grid col-start-2 bg-white gap-y-7">
               <h2 className="text-3xl font-semibold">Our Sponsors</h2>
@@ -255,8 +262,70 @@ const Home = ({ randomContributors }) => {
               </Sponsor>
             </div>
             <div className="col-span-3"></div>
-            <div className="col-start-2">
-              <h2>Follow Our Journey on Github</h2>
+            <div className="grid col-start-2 text-white gap-y-12">
+              <h2 className="text-3xl font-semibold">
+                Follow Our Journey on Github <FaGithub className="inline mb-2" size="1.8rem" />
+              </h2>
+              <div>
+                <ButtonLink href="/forum" className="mb-2 py-18 rounded-t-2xl">
+                  Forum
+                </ButtonLink>
+                <ButtonLink href="/releases" className="py-18 rounded-br-2xl">
+                  Releases
+                </ButtonLink>
+              </div>
+            </div>
+
+            <div className="relative grid col-span-3 text-white border-t border-white border-opacity-50 grid-cols-container gap-y-7">
+              <a href="#top">
+                <Icon
+                  name="arrowUp"
+                  className="absolute right-0 mr-2 -mt-5"
+                  size="2.5rem"
+                  iconSize="1.8rem"
+                ></Icon>
+              </a>
+              <div className="col-span-3"></div>
+              <p className="col-start-2 text-lg font-semibold">
+                Want to receive the latest news and updates from the Blitz team? Sign up for our
+                newsletter!
+              </p>
+              <NewsletterForm className="col-start-2 mb-4" />
+              <LinkList title="Docs" className="col-start-2">
+                <Link href="#">
+                  <a>Getting Started</a>
+                </Link>
+                <Link href="#">
+                  <a>Contributing</a>
+                </Link>
+              </LinkList>
+
+              <LinkList title="Community" className="col-start-2">
+                <Link href="#">
+                  <a>Slack</a>
+                </Link>
+                <Link href="#">
+                  <a>Forum Discussions</a>
+                </Link>
+                <Link href="#">
+                  <a>Donate/Sponsor</a>
+                </Link>
+              </LinkList>
+
+              <LinkList title="Social" className="col-start-2">
+                <Link href="#">
+                  <a>GitHub</a>
+                </Link>
+                <Link href="#">
+                  <a>Twitter</a>
+                </Link>
+              </LinkList>
+
+              <div className="col-start-2 mb-3 text-xs font-secondary">
+                Hosted on Vercel
+                <br />
+                Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
+              </div>
             </div>
           </div>
         </div>

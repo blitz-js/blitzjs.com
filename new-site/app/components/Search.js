@@ -62,42 +62,15 @@ export function Search() {
       <Head>
         <link rel="preconnect" href="https://BH4D9OD16A-dsn.algolia.net" crossOrigin="true" />
       </Head>
-      <button
-        type="button"
-        ref={searchButtonRef}
-        onClick={onOpen}
-        className="group leading-6 font-medium flex items-center space-x-3 sm:space-x-4 hover:text-gray-600 transition-colors duration-200"
-      >
-        <svg
-          width="24"
-          height="24"
-          fill="none"
-          className="text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
-        >
+      <button type="button" ref={searchButtonRef} onClick={onOpen} className="inline-block">
+        <svg width="24" height="24" className="w-6 h-6 fill-current">
+          <path d="M12.7983 14.4062L14.4463 12.7729L19.4087 17.6909C19.8638 18.1419 19.8638 18.8731 19.4087 19.3241C18.9536 19.7751 18.2158 19.7751 17.7607 19.3241L12.7983 14.4062Z" />
           <path
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8.45555 16.5999C12.9874 16.5999 16.6611 12.9591 16.6611 8.46794C16.6611 3.97676 12.9874 0.335938 8.45555 0.335938C3.92375 0.335938 0.25 3.97676 0.25 8.46794C0.25 12.9591 3.92375 16.5999 8.45555 16.5999ZM8.47707 14.8307C12.011 14.8307 14.8759 11.9916 14.8759 8.48926C14.8759 4.98696 12.011 2.14779 8.47707 2.14779C4.94309 2.14779 2.07824 4.98696 2.07824 8.48926C2.07824 11.9916 4.94309 14.8307 8.47707 14.8307Z"
           />
         </svg>
-        <span>
-          Quick search<span className="hidden sm:inline"> for anything</span>
-        </span>
-        {actionKey && (
-          <span className="hidden sm:block text-gray-400 text-sm leading-5 py-0.5 px-1.5 border border-gray-300 rounded-md">
-            <span className="sr-only">Press </span>
-            <kbd className="font-sans">
-              <abbr title={actionKey[1]} className="no-underline">
-                {actionKey[0]}
-              </abbr>
-            </kbd>
-            <span className="sr-only"> and </span>
-            <kbd className="font-sans">K</kbd>
-            <span className="sr-only"> to search</span>
-          </span>
-        )}
       </button>
       {isOpen &&
         createPortal(

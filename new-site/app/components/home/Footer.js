@@ -2,20 +2,12 @@ import Link from "next/link"
 import { documentationNav } from "@/navs/documentation"
 import clsx from "clsx"
 import styles from "./Footer.module.css"
-import { Logo } from "@/components/Logo"
+import Logo from "@/components/Logo"
 
 const footerNav = {
   "Getting started": {
     className: "row-span-2",
     items: documentationNav["Getting started"],
-  },
-  "Core concepts": {
-    className: "row-span-2",
-    items: documentationNav["Core Concepts"],
-  },
-  Customization: {
-    className: "row-span-2",
-    items: documentationNav["Customization"],
   },
   Community: {
     items: [
@@ -29,8 +21,8 @@ const footerNav = {
 
 export function Footer() {
   return (
-    <footer className="bg-gray-50 pt-16 pb-12 sm:pt-20 md:pt-24 xl:pt-32 sm:pb-20">
-      <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto divide-y divide-gray-200 px-4 sm:px-6 md:px-8">
+    <footer className="pt-16 pb-12 bg-gray-50 sm:pt-20 md:pt-24 xl:pt-32 sm:pb-20">
+      <div className="max-w-screen-lg px-4 mx-auto divide-y divide-gray-200 xl:max-w-screen-xl sm:px-6 md:px-8">
         <ul
           className={`${styles.nav} text-sm font-medium pb-14 sm:pb-20 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10`}
         >
@@ -43,7 +35,7 @@ export function Footer() {
                 {footerNav[section].items.map((item) => (
                   <li key={item.href}>
                     <Link href={item.href}>
-                      <a className="hover:text-gray-900 transition-colors duration-200">
+                      <a className="transition-colors duration-200 hover:text-gray-900">
                         {item.title}
                       </a>
                     </Link>

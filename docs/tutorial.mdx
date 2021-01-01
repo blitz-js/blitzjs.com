@@ -138,6 +138,8 @@ First, we'll generate everything pertaining to the `Question` model:
 blitz generate all question text:string choices:choice[]
 ```
 
+> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"choices:choice[]"`.
+
 ```
 ✔ Model for 'question' created successfully:
 
@@ -168,8 +170,6 @@ Then, we'll generate the `Choice` model with corresponding queries and mutations
 ```sh
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
-
-> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
 
 ```
 ✔ Model for 'choice' created successfully:
@@ -510,7 +510,10 @@ export default async function getQuestion({where /* include */}: GetQuestionInpu
 ```js
 // app/questions/queries/getQuestions.ts
 
-type GetQuestionsInput = Pick<FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
+import { Ctx } from "blitz"
+import db, { Prisma } from "db"
+
+type GetQuestionsInput = Pick<Prisma.FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
 
 export default async function getQuestions(
   {where, orderBy, cursor, take, skip}: GetQuestionsInput,
@@ -626,7 +629,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 

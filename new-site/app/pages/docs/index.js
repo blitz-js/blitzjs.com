@@ -7,7 +7,6 @@ import { ReactComponent as TuiLogo } from "@/img/tailwind-ui-logo-on-dark.svg"
 import Link from "next/link"
 import clsx from "clsx"
 import tinytime from "tinytime"
-import { Community } from "@/components/Community"
 import styles from "./index.module.css"
 import { Widont } from "@/components/Widont"
 
@@ -18,45 +17,6 @@ const whatsNew = [
     image: require("@/img/docs/focus-ring.svg").ReactComponent,
     href: "/docs/ring-width",
   },
-  {
-    title: "Dark Mode",
-    version: "2.0+",
-    image: require("@/img/docs/dark-mode.svg").ReactComponent,
-    href: "/docs/dark-mode",
-  },
-  {
-    title: "Extended Color Palette",
-    version: "2.0+",
-    image: require("@/img/docs/color-palette.svg").ReactComponent,
-    href: "/docs/customizing-colors#color-palette-reference",
-  },
-  {
-    title: "Extend Variants",
-    version: "2.0+",
-    image: require("@/img/docs/extend-variants.svg").ReactComponent,
-    href: "/docs/configuring-variants#enabling-extra-variants",
-  },
-  {
-    title: "Extra Wide Breakpoint",
-    version: "2.0+",
-    image: require("@/img/docs/breakpoint.svg").ReactComponent,
-    href: "/docs/breakpoints",
-  },
-  {
-    title: "Sharable Presets",
-    image: require("@/img/docs/sharable-presets.svg").ReactComponent,
-    href: "/docs/presets",
-  },
-  {
-    title: "Gradients",
-    image: require("@/img/docs/gradients.svg").ReactComponent,
-    href: "/docs/gradient-color-stops",
-  },
-  {
-    title: "Animations",
-    image: require("@/img/docs/animations.svg").ReactComponent,
-    href: "/docs/animation",
-  },
 ]
 
 const latestUpdates = [
@@ -66,27 +26,6 @@ const latestUpdates = [
     url: "https://blog.tailwindcss.com/tailwindcss-v2",
     description:
       "Today we're finally releasing Tailwind CSS v2.0, including an all-new color palette, dark mode support, and tons more!",
-  },
-  {
-    title: "Tailwind CSS v1.9.0",
-    date: "2020-10-13T18:30:00.000Z",
-    url: "https://blog.tailwindcss.com/tailwindcss-1-9",
-    description:
-      "We just released Tailwind CSS v1.9 which adds support for configuration presets, useful new CSS grid utilities, extended border radius, rotate, and skew scales, helpful accessibility improvements, and more!",
-  },
-  {
-    title: "Introducing Tailwind Play",
-    date: "2020-10-07T13:00:00.000Z",
-    url: "https://blog.tailwindcss.com/introducing-tailwind-play",
-    description:
-      "Today we're excited to release the first version of Tailwind Play, an advanced online playground for Tailwind CSS that lets you use all of Tailwind's build-time features directly in the browser.",
-  },
-  {
-    title: "Headless UI: Unstyled, Accessible UI Components",
-    date: "2020-10-06T18:30:00.000Z",
-    url: "https://blog.tailwindcss.com/headless-ui-unstyled-accessible-ui-components",
-    description:
-      "Headless UI is a set of completely unstyled, fully accessible UI components for React, Vue, and Alpine.js that make it easy to build fully accessible custom UI components, without sacrificing the ability to style them from scratch with simple utility classes.",
   },
 ]
 
@@ -285,7 +224,6 @@ export default function DocsLandingPage() {
         <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 mt-16 mb-8">
           Get involved
         </h2>
-        <Community />
       </section>
     </div>
   )

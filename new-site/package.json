@@ -23,24 +23,25 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx,mdx}": [
+    "*.{js,ts,tsx}": [
       "eslint --fix"
     ]
   },
   "dependencies": {
-    "blitz": "0.25.1-canary.3",
     "@badrap/bar-of-progress": "^0.1.1",
     "@docsearch/react": "^1.0.0-alpha.27",
     "@headlessui/react": "^0.2.0",
     "@mdx-js/loader": "^1.6.21",
     "@next/bundle-analyzer": "^9.4.4",
     "@next/mdx": "^10.0.1",
+    "@octokit/rest": "18.0.12",
     "@reach/rect": "^0.10.5",
     "@sindresorhus/slugify": "^1.1.0",
     "@svgr/webpack": "^5.4.0",
     "@tailwindcss/typography": "^0.0.0-caa70b6",
     "autoprefixer": "^10.0.2",
     "babel-plugin-preval": "^5.0.0",
+    "blitz": "0.27.1",
     "brotli-size": "^4.0.0",
     "clean-css": "^4.2.3",
     "clsx": "^1.1.1",
@@ -57,12 +58,15 @@
     "gzip-size": "^5.1.1",
     "just-group-by": "^1.0.0",
     "minimatch": "^3.0.4",
+    "next-themes": "0.0.10",
     "postcss": "^8.1.7",
     "postcss-nested": "^4.2.3",
     "prismjs": "^1.20.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "0.0.0-experimental-4ead6b530",
+    "react-dom": "0.0.0-experimental-4ead6b530",
+    "react-icons": "4.1.0",
     "react-intersection-observer": "^8.29.0",
+    "react-player": "2.7.2",
     "redent": "^3.0.0",
     "seedrandom": "^3.0.5",
     "simple-functional-loader": "^1.2.1",

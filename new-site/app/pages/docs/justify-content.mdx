@@ -1,11 +1,9 @@
 ---
-title: "Justify Content"
+title: "Tailwind:Justify Content"
 description: "Utilities for controlling how flex and grid items are positioned along a container's main axis."
 ---
 
-import plugin from 'tailwindcss/lib/plugins/justifyContent'
-import { Variants } from '@/components/Variants'
-import { Disabling } from '@/components/Disabling'
+import plugin from "tailwindcss/lib/plugins/justifyContent"
 
 export const classes = { plugin }
 
@@ -16,9 +14,21 @@ Use `justify-start` to justify items against the start of the container's main a
 ```html fuchsia
 <template preview class="p-6">
   <div class="flex justify-start -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-fuchsia-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -36,9 +46,21 @@ Use `justify-center` to justify items along the center of the container's main a
 ```html indigo
 <template preview class="p-6">
   <div class="flex justify-center -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-indigo-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -56,9 +78,21 @@ Use `justify-end` to justify items against the end of the container's main axis:
 ```html lightBlue
 <template preview class="p-6">
   <div class="flex justify-end -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-light-blue-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -76,9 +110,21 @@ Use `justify-between` to justify items along the container's main axis such that
 ```html emerald
 <template preview class="p-6">
   <div class="flex justify-between -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-emerald-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -96,9 +142,21 @@ Use `justify-around` to justify items along the container's main axis such that 
 ```html purple
 <template preview class="p-6">
   <div class="flex justify-around -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-purple-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -116,9 +174,21 @@ Use `justify-evenly` to justify items along the container's main axis such that 
 ```html amber
 <template preview class="p-6">
   <div class="flex justify-evenly -m-2">
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2">1</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2">2</div>
-    <div class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2">3</div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2"
+    >
+      1
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2"
+    >
+      2
+    </div>
+    <div
+      class="w-16 h-16 text-white text-2xl font-extrabold rounded-md flex items-center justify-center bg-amber-500 m-2"
+    >
+      3
+    </div>
   </div>
 </template>
 
@@ -142,11 +212,3 @@ To justify flex items at a specific breakpoint, add a `{screen}:` prefix to any 
 For more information about Tailwind's responsive design features, check out the [Responsive Design](/docs/responsive-design) documentation.
 
 ## Customizing
-
-### Variants
-
-<Variants plugin="justifyContent" name="justify-content" />
-
-### Disabling
-
-<Disabling plugin="justifyContent" name="justify-content" />

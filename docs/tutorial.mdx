@@ -522,6 +522,7 @@ export default async function getQuestions(
     orderBy,
     take,
     skip,
+    include:{ choices:true}
   })
 
   const count = await db.question.count()
@@ -537,18 +538,7 @@ export default async function getQuestions(
 }
 ```
 
-Now hop back to our main questions page in your editor, and we can list the choices of each question.
-
-Add `include` option in `app/questions/queries/getQuestion.ts` to fetch `Question` data with its choices info:
-
-```
-const question = await db.question.findFirst({
-  where,
-  include: { choices: true }, // highlight-line
-})
-```
-
-Then add this code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
 
 ```jsx
 <ul>

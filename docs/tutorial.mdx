@@ -522,7 +522,7 @@ export default async function getQuestions(
     orderBy,
     take,
     skip,
-    include:{ choices:true}
+    include:{ choices:true }
   })
 
   const count = await db.question.count()
@@ -630,7 +630,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 
@@ -641,6 +641,7 @@ export const Question = () => {
         where: {id},
         data: {votes: votes + 1},
       })
+      refetch()
       alert("Success!" + JSON.stringify(updated))
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))

@@ -103,21 +103,19 @@ if (!session.isLoading && session.roles.includes("admin")) {
 
 The implementation of `ctx.session.authorize()` can be customized via the `sessionMiddleware` config as shown below.
 
-This is still a work-in-progress, but for now Blitz provides `unstable_simpleRolesIsAuthorized` as an experimental authorization implementation to get you started.
+#### `simpleRolesIsAuthorized`
 
-#### `unstable_simpleRolesIsAuthorized`
-
-To use, add it do your `sessionMiddleware` configuration (this is already set up by default in new apps).
+To use, add it to your `sessionMiddleware` configuration (this is already set up by default in new apps).
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+const {sessionMiddleware, simpleRolesIsAuthorized} = require("@blitzjs/server")
 
 module.exports = {
   middleware: [
     sessionMiddleware({
       // highlight-start
-      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      isAuthorized: simpleRolesIsAuthorized,
       // highlight-end
     }),
   ],

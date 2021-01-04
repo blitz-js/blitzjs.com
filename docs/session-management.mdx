@@ -153,14 +153,14 @@ You can customize session management by passing an object to the `sessionMiddlew
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+const {sessionMiddleware, simpleRolesIsAuthorized} = require("@blitzjs/server")
 
 module.exports = {
   middleware: [
     sessionMiddleware({
       // highlight-start
       sessionExpiryMinutes: 1234,
-      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      isAuthorized: simpleRolesIsAuthorized,
       // highlight-end
     }),
   ],
@@ -178,7 +178,7 @@ type SessionConfig = {
   createSession: (session: SessionModel) => Promise<SessionModel>
   updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
   deleteSession: (handle: string) => Promise<SessionModel>
-  unstable_isAuthorized: (userRoles: string[], input: any) => boolean
+  isAuthorized: (userRoles: string[], input: any) => boolean
 }
 ```
 

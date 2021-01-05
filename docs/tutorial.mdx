@@ -150,9 +150,11 @@ blitz generate all question text:string choices:choice[]
 >   text      String
 >   choices   Choice[]
 > }
+```
 
-Now run blitz db migrate to add this model to your database
+Now run `blitz db migrate` to add this model to your database. You'll see the following output:
 
+```
 CREATE    app/questions/pages/questions/index.tsx
 CREATE    app/questions/pages/questions/new.tsx
 CREATE    app/questions/pages/questions/[questionId]/edit.tsx

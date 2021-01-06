@@ -173,6 +173,7 @@ Available options:
 type SessionConfig = {
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
+  domain?: string  /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
   getSession: (handle: string) => Promise<SessionModel | null>
   getSessions: (userId: string | number) => Promise<SessionModel[]>
   createSession: (session: SessionModel) => Promise<SessionModel>

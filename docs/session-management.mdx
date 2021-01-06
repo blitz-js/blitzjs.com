@@ -172,7 +172,6 @@ Available options:
 ```ts
 type SessionConfig = {
   sessionExpiryMinutes?: number /* Default: 30 days */
-  method?: "essential" | "advanced" /* Default: essential */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
   domain?: string
   getSession: (handle: string) => Promise<SessionModel | null>

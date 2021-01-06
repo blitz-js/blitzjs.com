@@ -25,7 +25,7 @@ module.exports = {
       "environment-variables",
       "error-handling",
     ],
-    Auth: ["auth", "session-management", "authorization", "passportjs"],
+    Auth: ["auth", "session-management", "authorization", "auth-utils", "passportjs"],
     Pages: [
       "pages",
       "error-pages",

@@ -9,7 +9,8 @@ import { SiTypescript } from "react-icons/si"
 import { FaMedal } from "react-icons/fa"
 
 const Icon = ({ name, className = "", variant = "light" }) => {
-  let iconClassName = "icon inline col-start-1 row-start-1 text-purple-light"
+  let iconClassName =
+    "icon inline col-start-1 row-start-1 text-purple-light dark:text-purple-primary"
   let reactIcon
 
   switch (name) {

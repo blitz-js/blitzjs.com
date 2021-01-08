@@ -12,7 +12,7 @@ import { Sponsor } from "@/components/home/Sponsor"
 import { LinkList } from "@/components/home/LinkList"
 import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { FaGithub } from "react-icons/fa"
-import { Icon } from "../components/home/Icon"
+import { Icon } from "@/components/home/Icon"
 import { IoLogoVercel } from "react-icons/io5"
 
 const Home = ({ randomContributors }) => {
@@ -36,7 +36,7 @@ const Home = ({ randomContributors }) => {
           <a name="top" aria-hidden>
             {null}
           </a>
-          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24">
+          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-36">
             <div className="text-white col-span-full">
               <Header className="px-6 mx-auto max-w-7xl" />
             </div>
@@ -44,10 +44,10 @@ const Home = ({ randomContributors }) => {
             <div className="-mt-6 text-white col-span-full">
               <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2">
                 <div className="space-y-10 lg:w-full">
-                  <h2 className="text-5xl font-medium font-secondary xl:text-6xl xl:font-normal">
+                  <h2 className="text-5xl font-medium font-secondary xl:text-6xl xl:font-normal dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
                     The Fullstack React Framework
                   </h2>
-                  <p className="text-lg xl:text-xl xl:font-medium">
+                  <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
                     Blitz makes you far more productive than you ever dreamed possible! It's a
                     Javascript equivalent for Ruby on Rails that's built on Next.js and features a
                     "Zero-API" data layer.
@@ -87,7 +87,7 @@ const Home = ({ randomContributors }) => {
                 code and users.
               </FeatureIcon>
             </div>
-            <div className="grid w-full gap-5 px-6 mx-auto text-white max-w-7xl lg:grid-cols-2">
+            <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
               <Link href="#">
                 <a className="flex items-center justify-between pb-1 text-xs border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary">
                   <span>The Latest News From Blitz</span>
@@ -101,7 +101,7 @@ const Home = ({ randomContributors }) => {
               <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
             </div>
 
-            <div className="w-full px-6 mx-auto space-y-10 bg-white lg:space-y-12 max-w-7xl">
+            <div className="w-full px-6 mx-auto space-y-10 lg:space-y-12 max-w-7xl">
               <h2 className="text-3xl font-semibold xl:text-5xl">
                 Everything You Need For Production Apps
               </h2>
@@ -157,20 +157,22 @@ const Home = ({ randomContributors }) => {
                 </div>
               </div>
             </div>
-            <div className="absolute w-full h-full row-start-6 text-white row-end-10 -z-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
-            <div className="col-span-full">
-              <div className="hidden px-6 xl:block max-w-7xl">
-                <iframe
-                  title="Code Sandbox"
-                  src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
-                  className="w-full overflow-hidden border-0 rounded-md h-sandbox"
-                  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-                ></iframe>
-              </div>
+            <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 -z-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
+            <div>{/* spacer div */}</div>
+            <div className="flex-wrap hidden px-6 xl:flex xl:justify-center gap-y-10">
+              <h3 className="w-full pb-1 mx-auto text-xs text-white border-b border-opacity-50 border-blue-mid max-w-7xl">
+                Live Code Sandbox
+              </h3>
+              <iframe
+                title="Code Sandbox"
+                src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
+                className="block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
+                allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+                sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+              ></iframe>
             </div>
             <div className="grid grid-cols-1 px-6 mx-auto text-white lg:grid-cols-2 gap-14 max-w-7xl">
-              <h2 className="text-5xl font-secondary">
+              <h2 className="text-5xl text-transparent font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
                 The Blitz Community - Our Most Important Aspect
               </h2>
               <div className="grid grid-cols-5 gap-1 md:grid-cols-6 lg:row-start-2 lg:grid-cols-5 grid-rows-8 overflow-clip">
@@ -187,9 +189,9 @@ const Home = ({ randomContributors }) => {
                   </Link>
                 ))}
               </div>
-              <div className="grid grid-cols-1 gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1">
+              <div className="grid grid-cols-1 text-lg gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-end">
-                  <div className="flex flex-col h-full space-y-6 lg:h-auto">
+                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
                     <p>
                       Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and
                       minorities are especially welcome.
@@ -197,7 +199,7 @@ const Home = ({ randomContributors }) => {
                     <p>
                       Please read our{" "}
                       <Link href="/docs/code-of-conduct">
-                        <a className="underline">Code of Conduct</a>
+                        <a className="underline text-off-white">Code of Conduct</a>
                       </Link>
                       .
                     </p>
@@ -212,7 +214,7 @@ const Home = ({ randomContributors }) => {
                   </ButtonLink>
                 </div>
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-start">
-                  <div className="flex flex-col h-full space-y-6 lg:h-auto">
+                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
                     <p>
                       We are all in this together, from the youngest to the oldest. We are all more
                       similar than we are different. We love to work together.
@@ -229,7 +231,7 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
             <div className="w-full px-6 mx-auto text-white space-y-7 max-w-7xl">
-              <h2 className="text-2xl text-white font-secondary lg:text-3xl">
+              <h2 className="text-2xl text-white font-secondary lg:text-3xlxl">
                 Architecture Diagram
               </h2>
               <div className="w-full overflow-x-scroll">
@@ -239,12 +241,12 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
             <div className="col-span-full" />
-            <div className="absolute w-full h-full row-start-8 row-end-18 -z-20 bg-purple-mid"></div>
+            <div className="absolute w-full h-full row-start-8 row-end-18 xl:row-end-19 -z-20 bg-purple-mid dark:bg-purple-off-black"></div>
             <div className="px-6 mx-auto space-y-12 text-white max-w-7xl">
-              <h2 className="text-3xl font-semibold">
+              <h2 className="text-3xl font-semibold lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
                 Everything End-to-End From the Database to the Frontend
               </h2>
-              <div className="grid gap-12 md:grid-cols-2">
+              <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
                 <FeatureIconTitle icon="thumbsUp" title="Authentication Built In">
                   Coming Soon! · Blitz fullstack authentication is super easy and very secure. Works
                   with any identity provider, including self-hosted username and password and
@@ -276,16 +278,16 @@ const Home = ({ randomContributors }) => {
                 </FeatureIconTitle>
               </div>
             </div>
-            <div className="absolute w-full h-full bg-white row-start-11 row-end-15 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
+            <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 xl:row-start-12 row-end-15 xl:row-end-16 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
             <div className="col-span-full"></div>
             <div className="px-6 mx-auto text-center space-y-7 max-w-7xl">
-              <h2 className="text-3xl font-semibold">Our Sponsors</h2>
-              <p className="text-lg">
+              <h2 className="text-3xl font-semibold xl:text-5xl">Our Sponsors</h2>
+              <p className="text-lg xl:text-xl">
                 Your financial contributions help ensure Blitz continues to be developed and{" "}
                 <br className="hidden lg:block" />
                 maintained! We have monthly sponsorship options starting at $5/month.
               </p>
-              <p className="text-lg">
+              <p className="text-lg xl:text-xl">
                 View options and contribute at{" "}
                 <Link href="https://github.com/sponsors/blitz-js">
                   <a className="underline" target="_blank" rel="noopener noreferrer">
@@ -396,8 +398,9 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="col-span-full"></div>
             <div className="w-full px-6 mx-auto space-y-12 text-white lg:space-x-4 lg:space-y-0 lg:flex lg:items-center max-w-7xl">
-              <h2 className="pr-2 text-3xl font-semibold lg:w-full">
-                Follow Our Journey on Github <FaGithub className="inline mb-2" size="1.8rem" />
+              <h2 className="pr-2 text-3xl font-semibold lg:w-full lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
+                Follow Our Journey on Github{" "}
+                <FaGithub className="inline mb-2 text-off-white" size="1.8rem" />
               </h2>
               <div className="flex flex-col w-full space-y-4 md:flex-row md:space-y-0 md:space-x-2">
                 <ButtonLink
@@ -419,70 +422,75 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
 
-            <div className="relative grid px-6 text-white border-t border-white border-opacity-50 max-w-7xl lg:grid-rows-2 lg:grid-cols-2 col-span-full gap-y-7 gap-x-24">
-              <a href="#top">
-                <Icon name="arrowUp" className="absolute right-0 mr-2 -mt-5 icon-expanded"></Icon>
-              </a>
-              <div className="col-span-full"></div>
-              <div className="space-y-5">
-                <p className="text-lg font-semibold">
-                  Want to receive the latest news and updates from the Blitz team? Sign up for our
-                  newsletter!
-                </p>
-              </div>
-              <div className="mb-4 lg:row-end-5">
-                <NewsletterForm />
-              </div>
-              <div className="grid gap-7 md:grid-cols-3">
-                <LinkList title="Docs">
-                  <Link href="/docs/getting-started">
-                    <a>Getting Started</a>
-                  </Link>
-                  <Link href="/docs/contributing">
-                    <a>Contributing</a>
-                  </Link>
-                </LinkList>
+            <div className="text-white border-t border-white border-opacity-50">
+              <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-2 gap-y-7 gap-x-24">
+                <a href="#top">
+                  <Icon
+                    name="arrowUp"
+                    className="absolute right-0 mr-2 -mt-5 xl:mt-14 icon-expanded"
+                  ></Icon>
+                </a>
+                <div className="col-span-full"></div>
+                <div className="space-y-5">
+                  <p className="text-lg font-semibold xl:text-xl">
+                    Want to receive the latest news and updates from the Blitz team? Sign up for our
+                    newsletter!
+                  </p>
+                </div>
+                <div className="mb-4 lg:row-end-5">
+                  <NewsletterForm />
+                </div>
+                <div className="grid gap-7 md:grid-cols-3">
+                  <LinkList title="Docs">
+                    <Link href="/docs/getting-started">
+                      <a>Getting Started</a>
+                    </Link>
+                    <Link href="/docs/contributing">
+                      <a>Contributing</a>
+                    </Link>
+                  </LinkList>
 
-                <LinkList title="Community">
-                  <Link href="https://slack.blitzjs.com/">
-                    <a target="_blank" rel="noopener noreferrer">
-                      Slack
-                    </a>
-                  </Link>
-                  <Link href="https://github.com/blitz-js/blitz/discussions">
-                    <a target="_blank" rel="noopener noreferrer">
-                      Forum Discussions
-                    </a>
-                  </Link>
-                  <Link href="https://github.com/sponsors/blitz-js">
-                    <a target="_blank" rel="noopener noreferrer">
-                      Donate/Sponsor
-                    </a>
-                  </Link>
-                </LinkList>
+                  <LinkList title="Community">
+                    <Link href="https://slack.blitzjs.com/">
+                      <a target="_blank" rel="noopener noreferrer">
+                        Slack
+                      </a>
+                    </Link>
+                    <Link href="https://github.com/blitz-js/blitz/discussions">
+                      <a target="_blank" rel="noopener noreferrer">
+                        Forum Discussions
+                      </a>
+                    </Link>
+                    <Link href="https://github.com/sponsors/blitz-js">
+                      <a target="_blank" rel="noopener noreferrer">
+                        Donate/Sponsor
+                      </a>
+                    </Link>
+                  </LinkList>
 
-                <LinkList title="Social">
-                  <Link href="https://github.com/blitz-js/blitz">
-                    <a target="_blank" rel="noopener noreferrer">
-                      GitHub
-                    </a>
-                  </Link>
-                  <Link href="https://twitter.com/blitz_js">
-                    <a target="_blank" rel="noopener noreferrer">
-                      Twitter
-                    </a>
-                  </Link>
-                </LinkList>
-              </div>
+                  <LinkList title="Social">
+                    <Link href="https://github.com/blitz-js/blitz">
+                      <a target="_blank" rel="noopener noreferrer">
+                        GitHub
+                      </a>
+                    </Link>
+                    <Link href="https://twitter.com/blitz_js">
+                      <a target="_blank" rel="noopener noreferrer">
+                        Twitter
+                      </a>
+                    </Link>
+                  </LinkList>
+                </div>
 
-              <div className="self-end mb-3 text-xs font-secondary">
-                <Link href="https://vercel.com/?utm_source=blitzjs">
-                  <a target="_blank" rel="noopener noreferrer">
-                    Hosted on <IoLogoVercel className="inline" /> Vercel
-                  </a>
-                </Link>
-                <br />
-                Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
+                <div className="self-end mb-3 text-xs font-secondary text-off-white">
+                  <Link href="https://vercel.com/?utm_source=blitzjs">
+                    <a target="_blank" rel="noopener noreferrer">
+                      Hosted on <IoLogoVercel className="inline" /> Vercel
+                    </a>
+                  </Link>
+                  <br />
+                  Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
+                </div>
               </div>
             </div>
           </div>

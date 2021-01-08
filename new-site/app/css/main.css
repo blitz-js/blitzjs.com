@@ -61,13 +61,13 @@ html {
   width: 1260px;
 }
 
-@media (min-width: 640px) {
+@screen sm {
   .features-grid {
     grid-template-columns: repeat(6, 25rem);
   }
 }
 
-@media (min-width: 1024px) {
+@screen lg {
   .icon {
     width: 1rem;
     height: 1rem;
@@ -92,7 +92,7 @@ html {
   }
 }
 
-@media (min-width: 1280px) {
+@screen xl {
   .background-to-video {
     margin-top: calc((1280px - 4.25rem) * (-9 / 16) * 0.25);
   }

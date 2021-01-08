@@ -10,7 +10,7 @@ const ButtonLink = ({ className, children, href, variant = "solid", ...props }) 
       classes += " bg-white text-off-black"
       break
     case "solid-dark":
-      classes += " bg-purple-light text-white"
+      classes += " bg-purple-light dark:bg-purple-primary text-white"
       break
     case "outline":
       classes += " border border-white text-white"

@@ -23,6 +23,10 @@ module.exports = {
         mid: "#BCC9DC",
         primary: "#A7B6CE",
         dark: "#7B96BC",
+        gradient: {
+          white: "#FEFDFF",
+          "light-blue": "#CDABF8",
+        },
       },
       cyan: colors.cyan,
       emerald: colors.emerald,

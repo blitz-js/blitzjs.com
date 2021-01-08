@@ -17,7 +17,7 @@ export default class Document extends NextDocument {
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00b4b6" />
           <meta name="theme-color" content="#ffffff" />
         </Head>
-        <body className="text-black bg-white  dark:bg-black dark:text-white">
+        <body className="text-black bg-white dark:bg-black dark:text-white">
           <Main />
           <NextScript />
           <script> </script>

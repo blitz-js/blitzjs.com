@@ -89,6 +89,37 @@ Anonymous session `PublicData` looks like this:
 }
 ```
 
+## Customize Session Public Data
+
+If using Typescript, first update the `PublicData` type in `types.ts` like this:
+
+```ts
+import {DefaultPublicData} from "blitz"
+import {User} from "db"
+
+declare module "blitz" {
+  export interface PublicData extends DefaultPublicData {
+    userId: User["id"]
+    // highlight-start
+    roles: readonly ["admin" | "customer"]
+    orgId: number
+    // highlight-end
+  }
+}
+```
+
+Then change all uses of `ctx.session.create()` to pass in the new fields.
+
+```ts
+ctx.session.create({userId: 1, roles: ["admin"], orgId: 1})
+```
+
+You can also use `ctx.session.setPublicData()` to update session data for an already logged in user. This will _merge_ values with the existing public data.
+
+```ts
+ctx.session.setPublicData({orgId: 1})
+```
+
 ## Manual API Requests
 
 When making a request from the client to an API route, you need to include the anti-CSRF token in the `anti-csrf` header like this:
@@ -122,14 +153,14 @@ You can customize session management by passing an object to the `sessionMiddlew
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, unstable_simpleRolesIsAuthorized} = require("@blitzjs/server")
+const {sessionMiddleware, simpleRolesIsAuthorized} = require("@blitzjs/server")
 
 module.exports = {
   middleware: [
     sessionMiddleware({
       // highlight-start
       sessionExpiryMinutes: 1234,
-      unstable_isAuthorized: unstable_simpleRolesIsAuthorized,
+      isAuthorized: simpleRolesIsAuthorized,
       // highlight-end
     }),
   ],
@@ -147,7 +178,7 @@ type SessionConfig = {
   createSession: (session: SessionModel) => Promise<SessionModel>
   updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
   deleteSession: (handle: string) => Promise<SessionModel>
-  unstable_isAuthorized: (userRoles: string[], input: any) => boolean
+  isAuthorized: (userRoles: string[], input: any) => boolean
 }
 ```
 

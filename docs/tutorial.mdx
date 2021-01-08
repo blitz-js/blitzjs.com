@@ -4,7 +4,7 @@ sidebar_label: Tutorial
 ---
 
 :::caution
-Before getting started, you should know **this is alpha software**. Blitz is incomplete. There are rough spots and bugs. APIs may change. But you can build an app and deploy it to production. We're excited to see what you build!
+Before getting started, know **this is beta software**. You may encounter bugs or edge cases we haven't hit yet. If you do, please open an issue! We're excited to see what you build!
 :::
 
 Thanks for trying out Blitz! In this tutorial, we’ll walk you through the creation of a basic voting application.
@@ -138,6 +138,8 @@ First, we'll generate everything pertaining to the `Question` model:
 blitz generate all question text:string choices:choice[]
 ```
 
+> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"choices:choice[]"`.
+
 ```
 ✔ Model for 'question' created successfully:
 
@@ -148,9 +150,11 @@ blitz generate all question text:string choices:choice[]
 >   text      String
 >   choices   Choice[]
 > }
+```
 
-Now run blitz db migrate to add this model to your database
+Now run `blitz db migrate` to add this model to your database. You'll see the following output:
 
+```
 CREATE    app/questions/pages/questions/index.tsx
 CREATE    app/questions/pages/questions/new.tsx
 CREATE    app/questions/pages/questions/[questionId]/edit.tsx
@@ -168,8 +172,6 @@ Then, we'll generate the `Choice` model with corresponding queries and mutations
 ```sh
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
-
-> Note: in case you use zsh in your terminal, you need to wrap the field with default value in quotes (`""`) in order to be properly interpreted. Like this: `"votes:int:default[0]"`.
 
 ```
 ✔ Model for 'choice' created successfully:
@@ -330,7 +332,7 @@ export const QuestionsList = () => {
     <ul>
       {questions.map((question) => (
         <li key={question.id}>
-          <Link href="/questions/[questionId]" as={`/questions/${question.id}`}>
+          <Link href={`/questions/${question.id}`}>
             <a>{question.text}</a> // highlight-line
           </Link>
         </li>
@@ -432,7 +434,8 @@ onSubmit={async (event) => {
 In the end, your page should look something like this:
 
 ```jsx
-import {Head, Link, useRouter, BlitzPage} from "blitz"
+import Layout from "app/layouts/Layout"
+import {Link, useRouter, useMutation, BlitzPage} from "blitz"
 import createQuestion from "app/questions/mutations/createQuestion"
 import QuestionForm from "app/questions/components/QuestionForm"
 
@@ -442,49 +445,44 @@ const NewQuestionPage: BlitzPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>New Question</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <h1>Create New Question</h1>
 
-      <main>
-        <h1>Create New Question </h1>
-
-        <QuestionForm
-          initialValues={{}}
-          // highlight-start
-          onSubmit={async (event) => {
-            try {
-              const question = await createQuestionMutation({
-                data: {
-                  text: event.target[0].value,
-                  choices: {
-                    create: [
-                      {text: event.target[1].value},
-                      {text: event.target[2].value},
-                      {text: event.target[3].value},
-                    ],
-                  },
+      <QuestionForm
+        initialValues={{}}
+        // highlight-start
+        onSubmit={async (event) => {
+          try {
+            const question = await createQuestionMutation({
+              data: {
+                text: event.target[0].value,
+                choices: {
+                  create: [
+                    {text: event.target[1].value},
+                    {text: event.target[2].value},
+                    {text: event.target[3].value},
+                  ],
                 },
-              })
-              alert("Success!" + JSON.stringify(question))
-              router.push("/questions/[questionId]", `/questions/${question.id}`)
-            } catch (error) {
-              alert("Error creating question " + JSON.stringify(error, null, 2))
-            }
-          }}
-          // highlight-end
-        />
+              },
+            })
+            alert("Success!" + JSON.stringify(question))
+            router.push("/questions/[questionId]", `/questions/${question.id}`)
+          } catch (error) {
+            alert("Error creating question " + JSON.stringify(error, null, 2))
+          }
+        }}
+        // highlight-end
+      />
 
-        <p>
-          <Link href="/questions">
-            <a>Questions</a>
-          </Link>
-        </p>
-      </main>
+      <p>
+        <Link href="/questions">
+          <a>Questions</a>
+        </Link>
+      </p>
     </div>
   )
 }
+
+NewQuestionPage.getLayout = (page) => <Layout title={"Create New Question"}>{page}</Layout>
 
 export default NewQuestionPage
 ```
@@ -510,32 +508,39 @@ export default async function getQuestion({where /* include */}: GetQuestionInpu
 ```js
 // app/questions/queries/getQuestions.ts
 
-type GetQuestionsInput = Pick<FindManyQuestionArgs, "where" | "orderBy" | "cursor" | "take" | "skip">
+import { Ctx } from "blitz"
+import db, { Prisma } from "db"
+
+type GetQuestionsInput = Pick<Prisma.FindManyQuestionArgs, "where" | "orderBy" | "skip" | "take">
 
 export default async function getQuestions(
-  {where, orderBy, cursor, take, skip}: GetQuestionsInput,
-  ctx: Ctx,
+  { where, orderBy, skip = 0, take }: GetQuestionsInput,
+  ctx: Ctx
 ) {
   ctx.session.authorize()
 
   const questions = await db.question.findMany({
     where,
     orderBy,
-    cursor,
     take,
     skip,
-    include: {choices: true},
+    include:{ choices:true }
   })
 
   const count = await db.question.count()
   const hasMore = typeof take === "number" ? skip + take < count : false
   const nextPage = hasMore ? { take, skip: skip + take! } : null
 
-  return questions
+  return {
+    questions,
+    nextPage,
+    hasMore,
+    count,
+  }
 }
 ```
 
-Now hop back to our main questions page in your editor, and we can list the choices of each question. Add this code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
 
 ```jsx
 <ul>
@@ -617,8 +622,9 @@ Finally, we’ll tell our new `button` to call that function!
 To be sure, this is what all that should look like:
 
 ```jsx
-import React, {Suspense} from "react"
-import {Head, Link, useRouter, useQuery, useParam, BlitzPage} from "blitz"
+import {Suspense} from "react"
+import Layout from "app/layouts/Layout"
+import {Link, useRouter, useQuery, useParam, BlitzPage, useMutation} from "blitz"
 import getQuestion from "app/questions/queries/getQuestion"
 import deleteQuestion from "app/questions/mutations/deleteQuestion"
 import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
@@ -626,7 +632,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}})
+  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 
@@ -638,6 +644,7 @@ export const Question = () => {
         data: {votes: votes + 1},
       })
       refetch()
+      alert("Success!" + JSON.stringify(updated))
     } catch (error) {
       alert("Error creating question " + JSON.stringify(error, null, 2))
     }
@@ -655,7 +662,7 @@ export const Question = () => {
         ))}
       </ul>
       // highlight-end
-      <Link href="/questions/[questionId]/edit" as={`/questions/${question.id}/edit`}>
+      <Link href={`/questions/${question.id}/edit`}>
         <a>Edit</a>
       </Link>
       <button
@@ -676,24 +683,20 @@ export const Question = () => {
 const ShowQuestionPage: BlitzPage = () => {
   return (
     <div>
-      <Head>
-        <title>Question</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <p>
-          <Link href="/questions">
-            <a>Questions</a>
-          </Link>
-        </p>
+      <p>
+        <Link href="/questions">
+          <a>Questions</a>
+        </Link>
+      </p>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <Question />
-        </Suspense>
-      </main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Question />
+      </Suspense>
     </div>
   )
 }
+
+ShowQuestionPage.getLayout = (page) => <Layout title={"Question"}>{page}</Layout>
 
 export default ShowQuestionPage
 ```

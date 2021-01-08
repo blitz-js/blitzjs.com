@@ -23,3 +23,81 @@ html {
   top: 0;
   left: 0;
 }
+
+.background-to-video {
+  margin-top: calc((100vw - 3rem) * (-9 / 16) * 0.5);
+}
+
+.features-grid {
+  grid-template-columns: repeat(6, 70vw);
+}
+
+.icon {
+  width: 0.9375rem;
+  height: 0.9375rem;
+}
+
+.icon-large {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-background {
+  width: 1.5625rem;
+  height: 1.5625rem;
+}
+
+.icon-expanded .icon-background {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.icon-expanded .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.architecture-diagram {
+  width: 1260px;
+}
+
+@screen sm {
+  .features-grid {
+    grid-template-columns: repeat(6, 25rem);
+  }
+}
+
+@screen lg {
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .icon-background {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .icon-large {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .background-to-video {
+    margin-top: calc((100vw - 4.25rem) * (-9 / 16) * 0.25);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@screen xl {
+  .background-to-video {
+    margin-top: calc((1280px - 4.25rem) * (-9 / 16) * 0.25);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

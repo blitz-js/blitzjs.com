@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player"
 
-const VideoPlayer = ({ url, className }) => {
+const VideoPlayer = ({ url, className = "" }) => {
   return (
     <div className="player-wrapper">
       <ReactPlayer

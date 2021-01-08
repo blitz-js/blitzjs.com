@@ -68,16 +68,17 @@ module.exports = {
       "cli-routes",
     ],
     Recipes: ["using-recipes", "writing-recipes"],
-    Templates: ["templates"],
     Advanced: [
       "blitz-config",
       "webpack-config",
       "postcss-config",
       "code-splitting",
+      "custom-server",
       "i18n-routing",
       "middleware",
       "rpc-specification",
       "measuring-performance",
     ],
+    Templates: ["templates"],
   },
 }

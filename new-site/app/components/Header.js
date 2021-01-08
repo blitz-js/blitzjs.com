@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
-import Link from "next/link"
+import { Link } from "blitz"
 import { Search } from "@/components/Search"
-import clsx from "clsx"
 import Logo from "@/components/Logo"
 import Router from "next/router"
+import { FaHeart } from "react-icons/fa"
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
+import { NavLink } from "@/components/NavLink"
+import { DarkModeToggle } from "@/components/DarkModeToggle"
 
-const Header = () => {
+const Header = ({ className = "" }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -25,8 +28,8 @@ const Header = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-40 grid grid-cols-2 lg:z-50 max-w-8xl">
-        <div className="sm:pl-6 xl:pl-8 lg:border-b-0 lg:w-60 xl:w-72">
+      <div className={`flex items-center justify-between ${className}`}>
+        <div className="pr-12">
           <Link href="/">
             <a className="w-10 overflow-hidden md:w-auto">
               <span className="sr-only">Blitz home page</span>
@@ -34,95 +37,100 @@ const Header = () => {
             </a>
           </Link>
         </div>
-        <div className="flex justify-self-end sm:px-6 lg:mx-6 lg:px-0 xl:mx-8">
-          <Search />
+        <div className="flex-1 hidden pt-2 space-x-2 text-base lg:flex">
+          <NavLink href="#">Docs</NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz"
+          >
+            GitHub
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz/releases"
+          >
+            Releases
+          </NavLink>
+          <NavLink target="_blank" rel="noopener noreferrer" href="https://slack.blitzjs.com/">
+            Slack
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz/discussions"
+          >
+            Forum
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/sponsors/blitz-js"
+          >
+            <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+          </NavLink>
+        </div>
+        <div className="flex lg:text-base lg:space-x-4">
+          <Search className="lg:mt-2" />
           <button
             onClick={onToggle}
-            class="inline-block text-gray-500 hover:text-white focus:text-white focus:outline-none ml-3"
+            className="p-2 ml-3 -mr-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
           >
-            <svg
-              width="24"
-              height="18"
-              viewBox="0 0 24 18"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 fill-current"
-            >
-              <path d="M1 1H23" stroke="white" stroke-width="1.5" stroke-linecap="square" />
-              <path d="M1 9L23 9" stroke="white" stroke-width="1.5" stroke-linecap="square" />
-              <path d="M1 17H23" stroke="white" stroke-width="1.5" stroke-linecap="square" />
-            </svg>
+            {isOpen ? <AiOutlineClose size="1.375rem" /> : <AiOutlineMenu size="1.375rem" />}
           </button>
+          <DarkModeToggle className="hidden text-base lg:mt-2 lg:block" />
         </div>
-
-        {isOpen && (
-          <div className="col-span-2 px-4 py-3">
-            <a href="" className="block px-2 py-1 font-semibold rounded hover:bg-purple-light">
-              Docs
-            </a>
-            <a href="" className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-light">
-              GitHub
-            </a>
-            <a href="" className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-light">
-              Releases
-            </a>
-            <a href="" className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-light">
-              Slack
-            </a>
-            <a href="" className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-light">
-              Forum
-            </a>
-            <a href="" className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-light">
-              Donate/Sponsor
-            </a>
-          </div>
-        )}
       </div>
-
-      {/* <button
-        type="button"
-        className="fixed z-50 block w-16 h-16 text-white bg-gray-900 rounded-full bottom-4 right-4 lg:hidden"
-        onClick={() => onToggle(!isOpen)}
-      >
-        <span className="sr-only">Open site navigation</span>
-        <svg
-          width="24"
-          height="24"
-          fill="none"
-          className={clsx(
-            "absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform",
-            {
-              "opacity-0 scale-80": isOpen,
-            }
-          )}
-        >
-          <path
-            d="M4 8h16M4 16h16"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <svg
-          width="24"
-          height="24"
-          fill="none"
-          className={clsx(
-            "absolute top-1/2 left-1/2 -mt-3 -ml-3 transition duration-300 transform",
-            {
-              "opacity-0 scale-80": !isOpen,
-            }
-          )}
-        >
-          <path
-            d="M6 18L18 6M6 6l12 12"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button> */}
+      {isOpen && (
+        <div className={`mt-4 text-2xl lg:hidden ${className}`}>
+          <NavLink href="#" className="px-3 mb-1">
+            Docs
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz"
+            className="px-3 mb-1"
+          >
+            GitHub
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz/releases"
+            className="px-3 mb-1"
+          >
+            Releases
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://slack.blitzjs.com/"
+            className="px-3 mb-1"
+          >
+            Slack
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/blitz-js/blitz/discussions"
+            className="px-3 mb-1"
+          >
+            Forum
+          </NavLink>
+          <NavLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/sponsors/blitz-js"
+            className="px-3 mb-1"
+          >
+            <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+          </NavLink>
+          <div className="my-4 border-t border-off-white border-opacity-20"></div>
+          <DarkModeToggle className="text-lg" />
+        </div>
+      )}
     </>
   )
 }

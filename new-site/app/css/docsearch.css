@@ -200,7 +200,7 @@
 }
 
 .DocSearch-Hit[aria-selected="true"] .DocSearch-Hit-path {
-  color: theme("colors.cyan.200");
+  color: theme("colors.blue.light");
 }
 
 .DocSearch-Hit-title {
@@ -251,7 +251,7 @@
 }
 
 .DocSearch-Hit[aria-selected="true"] > a {
-  background: theme("colors.cyan.500");
+  background: theme("colors.purple.light");
 }
 
 .DocSearch-Hit + .DocSearch-Hit {
@@ -303,7 +303,7 @@
 
 .DocSearch-Hits mark {
   background: none;
-  color: theme("colors.cyan.500");
+  color: theme("colors.purple.light");
 }
 
 .DocSearch-Hit[aria-selected="true"] mark {
@@ -386,7 +386,7 @@
 
 .DocSearch-NoResults-Prefill-List button {
   font-weight: 500;
-  color: theme("colors.cyan.600");
+  color: theme("colors.purple.light");
 }
 
 .DocSearch-NoResults-Prefill-List + .DocSearch-Help {
@@ -397,6 +397,6 @@
 
 .DocSearch-NoResults-Prefill-List + .DocSearch-Help a {
   box-shadow: theme("boxShadow.link");
-  color: theme("colors.cyan.700");
+  color: theme("colors.purple.light");
   font-weight: 500;
 }

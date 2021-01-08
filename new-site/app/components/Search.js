@@ -4,6 +4,7 @@ import Link from "next/link"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react"
+import { BiSearch } from "react-icons/bi"
 
 const ACTION_KEY_DEFAULT = ["Ctrl ", "Control"]
 const ACTION_KEY_APPLE = ["⌘", "Command"]
@@ -16,7 +17,7 @@ function Hit({ hit, children }) {
   )
 }
 
-export function Search() {
+export function Search({ className = "" }) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const searchButtonRef = useRef()
@@ -62,28 +63,23 @@ export function Search() {
       <Head>
         <link rel="preconnect" href="https://BH4D9OD16A-dsn.algolia.net" crossOrigin="true" />
       </Head>
-      <button type="button" ref={searchButtonRef} onClick={onOpen} className="inline-block">
-        <svg width="24" height="24" className="w-6 h-6 fill-current">
-          <path d="M12.7983 14.4062L14.4463 12.7729L19.4087 17.6909C19.8638 18.1419 19.8638 18.8731 19.4087 19.3241C18.9536 19.7751 18.2158 19.7751 17.7607 19.3241L12.7983 14.4062Z" />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M8.45555 16.5999C12.9874 16.5999 16.6611 12.9591 16.6611 8.46794C16.6611 3.97676 12.9874 0.335938 8.45555 0.335938C3.92375 0.335938 0.25 3.97676 0.25 8.46794C0.25 12.9591 3.92375 16.5999 8.45555 16.5999ZM8.47707 14.8307C12.011 14.8307 14.8759 11.9916 14.8759 8.48926C14.8759 4.98696 12.011 2.14779 8.47707 2.14779C4.94309 2.14779 2.07824 4.98696 2.07824 8.48926C2.07824 11.9916 4.94309 14.8307 8.47707 14.8307Z"
-          />
-        </svg>
+      <button
+        type="button"
+        ref={searchButtonRef}
+        onClick={onOpen}
+        className={`p-2 rounded focus:outline-none focus:ring-inset focus:ring-white focus:ring-2 inline-block ${className}`}
+      >
+        <BiSearch size="1.375rem" className="inline" />{" "}
+        <span className="hidden mx-1 text-base lg:inline">Search</span>
       </button>
       {isOpen &&
         createPortal(
           <DocSearchModal
             initialQuery={initialQuery}
             initialScrollY={window.scrollY}
-            searchParameters={{
-              facetFilters: "version:v2",
-              distinct: 1,
-            }}
             onClose={onClose}
-            indexName="tailwindcss"
-            apiKey="3df93446658cd9c4e314d4c02a052188"
+            indexName="blitzjs"
+            apiKey="c4db860ae4162be48d4c867e33edcaa2"
             appId="BH4D9OD16A"
             navigator={{
               navigate({ suggestionUrl }) {

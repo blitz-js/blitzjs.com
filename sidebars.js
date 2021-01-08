@@ -61,6 +61,7 @@ module.exports = {
       "cli-start",
       "cli-build",
       "cli-db",
+      "cli-prisma",
       "cli-generate",
       "cli-console",
       "cli-install",

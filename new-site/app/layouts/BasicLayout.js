@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header"
+import { Footer } from "@/components/home/Footer"
 import React from "react"
 
 export function BasicLayout({ children, navIsOpen, setNavIsOpen }) {
@@ -15,6 +16,7 @@ export function BasicLayout({ children, navIsOpen, setNavIsOpen }) {
             </div>
             {children}
           </div>
+          <Footer />
         </div>
       </div>
     </div>

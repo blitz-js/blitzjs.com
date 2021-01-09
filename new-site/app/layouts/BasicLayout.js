@@ -15,8 +15,8 @@ export function BasicLayout({ children, navIsOpen, setNavIsOpen }) {
               <Header className="px-6 mx-auto max-w-7xl" />
             </div>
             {children}
+            <Footer />
           </div>
-          <Footer />
         </div>
       </div>
     </div>

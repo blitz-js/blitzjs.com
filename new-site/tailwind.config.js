@@ -23,6 +23,10 @@ module.exports = {
         mid: "#BCC9DC",
         primary: "#A7B6CE",
         dark: "#7B96BC",
+        gradient: {
+          white: "#FEFDFF",
+          "light-blue": "#CDABF8",
+        },
       },
       cyan: colors.cyan,
       emerald: colors.emerald,
@@ -71,16 +75,16 @@ module.exports = {
       },
     },
     fontSize: {
-      xs: "0.8125rem", // 13px
+      xs: ["0.8125rem", "1.1375rem"], // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
       lg: ["1.0625rem", "1.5625rem"], // 17px
-      xl: "1.25rem", // 20px
+      xl: ["1.25rem", "2rem"], // 20px
       "2xl": ["1.375rem", "1.875rem"], // 22px
       "3xl": ["1.875rem", "2.4375rem"], // 30px
       "4xl": "2.375rem", // 38px
       "5xl": ["2.8125rem", "3.125rem"], // 45px
-      "6xl": "3.875rem", // 62px
+      "6xl": ["3.875rem", "4.84375rem"], // 62px
     },
     extend: {
       typography: (theme) => ({
@@ -186,6 +190,7 @@ module.exports = {
         18: "4.5rem",
         "15px": "0.9375rem",
         "23px": "1.4375rem",
+        sandbox: "32rem",
         full: "100%",
       },
       width: {
@@ -234,16 +239,10 @@ module.exports = {
         "-10": "-10",
         "-20": "-20",
       },
-      inset: {
-        "-video": "calc((100vw - 3rem) * (-9 / 16) * 0.5)",
-      },
-      gridTemplateColumns: {
-        container: "1.5rem 1fr 1.5rem",
-        features: "repeat(6, calc(100vw - 3rem))",
-      },
       borderRadius: {
         "2xl": "1.56rem",
         "3xl": "3rem",
+        "4xl": "6.75rem",
       },
       gridRowStart: {
         8: "8",
@@ -262,6 +261,10 @@ module.exports = {
         14: "14",
         15: "15",
         16: "16",
+        17: "17",
+        18: "18",
+        19: "19",
+        20: "20",
       },
     },
   },

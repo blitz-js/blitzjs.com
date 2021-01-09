@@ -1,8 +1,8 @@
-const Feature = ({ title, children }) => {
+const Feature = ({ title, children, className = "" }) => {
   return (
-    <div className="px-6 text-sm font-secondary">
-      <h3 className="mb-5 text-2xl">{title}</h3>
-      {children}
+    <div className={`text-sm font-secondary ${className}`}>
+      <h3 className="mb-5 text-2xl lg:text-xl lg:font-semibold lg:font-primary">{title}</h3>
+      <div className="space-y-4 dark:text-blue-light">{children}</div>
     </div>
   )
 }

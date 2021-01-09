@@ -16,7 +16,7 @@ const NewsletterForm = ({ className }) => {
         type="email"
         required
         placeholder="Enter Your Email Address"
-        className="w-full p-2 text-base placeholder-current border border-white border-opacity-50 rounded-sm font-secondary bg-purple-mid"
+        className="w-full p-2 text-base placeholder-current bg-transparent border border-white border-opacity-50 rounded-sm font-secondary"
       />
       <button className="absolute right-0 mt-2 mr-2" type="submit">
         <BsArrowRight size="1.5rem" className="justify-self-end" />

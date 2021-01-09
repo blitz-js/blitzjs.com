@@ -10,9 +10,9 @@ export function BasicLayout({ children, navIsOpen, setNavIsOpen }) {
           <a name="top" aria-hidden>
             {null}
           </a>
-          <div className="relative grid grid-cols-container gap-y-24">
-            <div className="col-start-2 text-white">
-              <Header />
+          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-36">
+            <div className="text-white col-span-full">
+              <Header className="px-6 mx-auto max-w-7xl" />
             </div>
             {children}
           </div>

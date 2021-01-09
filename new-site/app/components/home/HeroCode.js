@@ -57,9 +57,9 @@ const { tokens, code } = tokenize.jsx(
   true
 )
 
-const HeroCode = () => {
+const HeroCode = ({ className = "" }) => {
   return (
-    <CodeWindow>
+    <CodeWindow className={className}>
       <CodeWindow.Code tokens={tokens} />
     </CodeWindow>
   )

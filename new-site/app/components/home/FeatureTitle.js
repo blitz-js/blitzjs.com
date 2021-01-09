@@ -4,9 +4,7 @@ const FeatureIcon = ({ icon, children }) => {
   return (
     <div className="space-y-4">
       <Icon name={icon} variant="dark" />
-      <p className="text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
-        {children}
-      </p>
+      <p className="text-base lg:text-lg">{children}</p>
     </div>
   )
 }

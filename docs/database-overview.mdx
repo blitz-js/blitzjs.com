@@ -38,6 +38,7 @@ model Task {
 
 By default, a Blitz app is created with a local SQLite database. If you want to use PostgreSQL instead, you need to perform the following steps:
 
+1. [Install and run Postgres locally](./postgres.mdx).
 1. Open `db/schema.prisma` and change the db provider value from `"sqlite"` to `"postgres"` as follows:
 
 ```prisma
@@ -49,45 +50,3 @@ datasource db {
 
 2. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
 3. Run `blitz db migrate`. This command will create the database (if it does not already exist) and tables based on your schema.
-
-### Run PostgreSQL database with docker-compose
-
-One way to get a PostgreSQL database on your machine is to run PostgreSQL inside a docker container.
-
-1. Create a `docker-compose.yml` file inside the root of your project with the following content
-
-```yaml
-version: "3.7"
-
-services:
-  db:
-    image: postgres:latest
-    volumes:
-      - data:/var/lib/postgresql/data
-    env_file: ./.env.local #Here we are using the already existing .env.local file
-    ports:
-      - "5432:5432"
-
-volumes:
-  data:
-```
-
-2. Inside your `.env.local` file add 3 new environment variables which are required by docker
-
-```text
-POSTGRES_USER=your_user
-POSTGRES_PASSWORD=your_password
-POSTGRES_DB=your_database_name
-```
-
-Given these values your `DATABASE_URL` should look like this `postgresql://your_user:your_password@localhost:5432/your_database_name`
-
-3. Modify your `package.json` to run the database before the start of Blitz
-
-```json
-"scripts": {
-    "start": "docker-compose up -d && blitz start",
-}
-```
-
-4. Run `blitz db migrate` to get your new database to the latest version of your migrations

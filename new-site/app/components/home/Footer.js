@@ -1,52 +1,60 @@
 import Link from "next/link"
-import { documentationNav } from "@/navs/documentation"
-import clsx from "clsx"
-import styles from "./Footer.module.css"
-import Logo from "@/components/Logo"
-
-const footerNav = {
-  "Getting started": {
-    className: "row-span-2",
-    items: documentationNav["Getting started"],
-  },
-  Community: {
-    items: [
-      { title: "GitHub", href: "https://github.com/tailwindlabs/tailwindcss" },
-      { title: "Discord", href: "/discord" },
-      { title: "Twitter", href: "https://twitter.com/tailwindcss" },
-      { title: "YouTube", href: "https://www.youtube.com/tailwindlabs" },
-    ],
-  },
-}
+import { Icon } from "@/components/home/Icon"
+import { LinkList } from "@/components/home/LinkList"
+import { NewsletterForm } from "@/components/home/NewsletterForm"
 
 export function Footer() {
   return (
-    <footer className="pt-16 pb-12 bg-gray-50 sm:pt-20 md:pt-24 xl:pt-32 sm:pb-20">
-      <div className="max-w-screen-lg px-4 mx-auto divide-y divide-gray-200 xl:max-w-screen-xl sm:px-6 md:px-8">
-        <ul
-          className={`${styles.nav} text-sm font-medium pb-14 sm:pb-20 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10`}
-        >
-          {Object.keys(footerNav).map((section, i) => (
-            <li key={section} className={clsx("space-y-5", footerNav[section].className)}>
-              <h2 className="text-xs font-semibold tracking-wide text-gray-900 uppercase">
-                {section}
-              </h2>
-              <ul className="space-y-4">
-                {footerNav[section].items.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href}>
-                      <a className="transition-colors duration-200 hover:text-gray-900">
-                        {item.title}
-                      </a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-        <div className="pt-10 sm:pt-12">
-          <Logo width="208" height="26" />
+    <footer className="bg-purple-mid">
+      <div className="relative grid col-span-3 text-white border-t border-white border-opacity-50 grid-cols-container gap-y-7">
+        <a href="#top">
+          <Icon
+            name="arrowUp"
+            className="absolute right-0 mr-2 -mt-5"
+            size="2.5rem"
+            iconSize="1.8rem"
+          ></Icon>
+        </a>
+        <div className="col-span-3"></div>
+        <p className="col-start-2 text-lg font-semibold">
+          Want to receive the latest news and updates from the Blitz team? Sign up for our
+          newsletter!
+        </p>
+        <NewsletterForm className="col-start-2 mb-4" />
+        <LinkList title="Docs" className="col-start-2">
+          <Link href="#">
+            <a>Getting Started</a>
+          </Link>
+          <Link href="#">
+            <a>Contributing</a>
+          </Link>
+        </LinkList>
+
+        <LinkList title="Community" className="col-start-2">
+          <Link href="#">
+            <a>Slack</a>
+          </Link>
+          <Link href="#">
+            <a>Forum Discussions</a>
+          </Link>
+          <Link href="#">
+            <a>Donate/Sponsor</a>
+          </Link>
+        </LinkList>
+
+        <LinkList title="Social" className="col-start-2">
+          <Link href="#">
+            <a>GitHub</a>
+          </Link>
+          <Link href="#">
+            <a>Twitter</a>
+          </Link>
+        </LinkList>
+
+        <div className="col-start-2 mb-3 text-xs font-secondary">
+          Hosted on Vercel
+          <br />
+          Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
         </div>
       </div>
     </footer>

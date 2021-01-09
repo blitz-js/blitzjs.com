@@ -124,7 +124,17 @@ export default passportAuth({
 
 Note: The above `passport-twitter` example requires your `User` prisma model to have `email String @unique` and `name String`.
 
-## Using a Strategy
+### 3. Log in with this Passport Strategy
+
+Add a link to your app with URL format of `/api/auth/[strategyName]`.
+
+For the above twitter example, the link would be like this:
+
+```tsx
+<a href="/api/auth/twitter">Log In With Twitter</a>
+```
+
+## Detailed Usage Instructions
 
 Upon successful authentication with the third-party, the user will be redirected back to the above auth API route. When that happens, the `verify` callback will be called.
 

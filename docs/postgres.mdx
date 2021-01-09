@@ -1,0 +1,77 @@
+---
+title: Run Postgres Locally
+sidebar_label: Run Postgres Locally
+---
+
+There are two basic ways to run Postgres locally:
+
+1. Natively on your computer
+2. Via Docker
+
+Most people run Postgres natively without Docker as it's simpler, runs all the time in the background, and because Docker uses extra resources.
+
+## Natively on your computer
+
+### On Mac
+
+There are two very popular options.
+
+#### Install via Homebrew
+
+1. Make sure you have [Homebrew](https://brew.sh/) installed.
+2. Run `brew install postgresql`
+3. Run `brew services start postgresql`
+
+And that's it!
+
+#### Install via Postgres.app
+
+1. Go to [Postgres.app](https://postgresapp.com/)
+2. Download and install the app
+3. Open the app and click "initalize" to create a new server
+
+And then you are good to go!
+
+### On Windows
+
+The easiest way is to download and run the installer from [the Postgres website](https://www.postgresql.org/download/windows/).
+
+## Via Docker
+
+1. Create a `docker-compose.yml` file inside the root of your project with the following content
+
+```yaml
+version: "3.7"
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - data:/var/lib/postgresql/data
+    env_file: ./.env.local #Here we are using the already existing .env.local file
+    ports:
+      - "5432:5432"
+
+volumes:
+  data:
+```
+
+2. Inside your `.env.local` file add 3 new environment variables which are required by docker
+
+```text
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_database_name
+```
+
+Given these values your `DATABASE_URL` should look like this `postgresql://your_user:your_password@localhost:5432/your_database_name`
+
+3. Modify your `package.json` to run the database before the start of Blitz
+
+```json
+"scripts": {
+    "start": "docker-compose up -d && blitz start",
+}
+```
+
+4. Run `blitz db migrate` to get your new database to the latest version of your migrations

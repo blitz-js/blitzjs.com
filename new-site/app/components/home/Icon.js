@@ -210,6 +210,9 @@ const Icon = ({ name, className = "", variant = "light" }) => {
     case "light":
       backgroundClassName += " text-off-white"
       break
+    case "light-hover":
+      backgroundClassName += " text-off-white hover:text-blue-light"
+      break
     default:
       throw new Error("Invalid variant " + variant)
   }

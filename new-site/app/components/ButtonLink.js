@@ -7,13 +7,15 @@ const ButtonLink = ({ className, children, href, variant = "solid", ...props }) 
 
   switch (variant) {
     case "solid":
-      classes += " bg-white text-off-black hover:bg-off-white"
+      classes += " bg-white text-off-black hover:bg-blue-light"
       break
     case "solid-dark":
-      classes += " bg-purple-light dark:bg-purple-primary text-white"
+      classes +=
+        " bg-purple-light dark:bg-purple-primary text-white hover:bg-purple-mid dark:hover:bg-purple-dark"
       break
     case "outline":
-      classes += " border border-white text-white"
+      classes +=
+        " border border-white text-white hover:bg-purple-primary dark:hover:bg-purple-off-black"
       break
     default:
       throw new Error("Invalid variant value: " + variant)

@@ -14,6 +14,7 @@ import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { FaGithub } from "react-icons/fa"
 import { Icon } from "@/components/home/Icon"
 import { IoLogoVercel } from "react-icons/io5"
+import { StyledLink } from "@/components/home/StyledLink"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -73,7 +74,7 @@ const Home = ({ randomContributors }) => {
                 <HeroCode className="lg:col-span-2 xl:col-span-1" />
               </div>
             </div>
-            <div className="px-6 mx-auto space-y-12 text-lg text-center text-white lg:space-y-0 lg:space-x-12 lg:flex lg:text-left max-w-7xl xl:font-medium lg:text-lg xl:text-xl">
+            <div className="px-6 mx-auto space-y-12 text-lg text-center text-white lg:space-y-0 lg:space-x-12 lg:flex lg:text-left max-w-7xl xl:font-mediumxl:text-xl">
               <FeatureIcon icon="lighteningBolt">
                 Brings back the simplicity and conventions of frameworks like Ruby on Rails while
                 preserving everything we love about React
@@ -88,15 +89,16 @@ const Home = ({ randomContributors }) => {
               </FeatureIcon>
             </div>
             <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
-              <Link href="#">
-                <a className="flex items-center justify-between pb-1 text-xs border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary">
-                  <span>The Latest News From Blitz</span>
-                  <span className="flex items-center">
-                    <span className="hidden mr-2 lg:block">View News</span>{" "}
-                    <BsArrowRight size="1.5rem" />
-                  </span>
-                </a>
-              </Link>
+              <StyledLink
+                href="#"
+                className="flex items-center justify-between pb-1 text-lg border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary xl:text-xl"
+              >
+                <span>The Latest News From Blitz</span>
+                <span className="flex items-center">
+                  <span className="hidden mr-2 lg:block">View News</span>{" "}
+                  <BsArrowRight size="1.5rem" />
+                </span>
+              </StyledLink>
               <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
               <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
             </div>
@@ -160,7 +162,7 @@ const Home = ({ randomContributors }) => {
             <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 -z-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
             <div>{/* spacer div */}</div>
             <div className="hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
-              <h3 className="pb-1 text-xs text-white border-b border-opacity-50 border-blue-mid">
+              <h3 className="pb-1 text-xl text-white border-b border-opacity-50 border-blue-mid">
                 Live Code Sandbox
               </h3>
               <div>
@@ -200,9 +202,12 @@ const Home = ({ randomContributors }) => {
                     </p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Please read our{" "}
-                      <Link href="/docs/code-of-conduct">
-                        <a className="underline text-off-white">Code of Conduct</a>
-                      </Link>
+                      <StyledLink
+                        href="/docs/code-of-conduct"
+                        className="underline text-off-white hover:text-blue-light"
+                      >
+                        Code of Conduct
+                      </StyledLink>
                       .
                     </p>
                   </div>
@@ -293,23 +298,32 @@ const Home = ({ randomContributors }) => {
               </p>
               <p className="text-lg xl:text-xl">
                 View options and contribute at{" "}
-                <Link href="https://github.com/sponsors/blitz-js">
-                  <a className="underline" target="_blank" rel="noopener noreferrer">
-                    GitHub Sponsors
-                  </a>
-                </Link>
+                <StyledLink
+                  href="https://github.com/sponsors/blitz-js"
+                  className="underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub Sponsors
+                </StyledLink>
                 ,{" "}
-                <Link href="https://paypal.me/thebayers">
-                  <a className="underline" target="_blank" rel="noopener noreferrer">
-                    PayPal
-                  </a>
-                </Link>
+                <StyledLink
+                  href="https://paypal.me/thebayers"
+                  className="underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  PayPal
+                </StyledLink>
                 , or{" "}
-                <Link href="https://opencollective.com/blitzjs">
-                  <a className="underline" target="_blank" rel="noopener noreferrer">
-                    Open Collective
-                  </a>
-                </Link>
+                <StyledLink
+                  href="https://opencollective.com/blitzjs"
+                  className="underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open Collective
+                </StyledLink>
                 .
               </p>
               <ButtonLink
@@ -326,11 +340,14 @@ const Home = ({ randomContributors }) => {
               <Sponsor iconName="diamond-sponsor" title="Diamond Sponsors">
                 <p>
                   Be our first Diamond Sponsor!{" "}
-                  <Link href="https://github.com/sponsors/blitz-js">
-                    <a className="underline" target="_blank" rel="noopener noreferrer">
-                      Start here
-                    </a>
-                  </Link>
+                  <StyledLink
+                    href="https://github.com/sponsors/blitz-js"
+                    className="underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Start here
+                  </StyledLink>
                 </p>
               </Sponsor>
               <Sponsor iconName="gold-sponsor" title="Gold Sponsors">
@@ -431,6 +448,7 @@ const Home = ({ randomContributors }) => {
                 <a href="#top">
                   <Icon
                     name="arrowUp"
+                    variant="light-hover"
                     className="absolute right-0 mr-2 -mt-5 xl:mt-14 icon-expanded"
                   ></Icon>
                 </a>
@@ -446,52 +464,60 @@ const Home = ({ randomContributors }) => {
                 </div>
                 <div className="grid gap-7 md:grid-cols-3">
                   <LinkList title="Docs">
-                    <Link href="/docs/getting-started">
-                      <a>Getting Started</a>
-                    </Link>
-                    <Link href="/docs/contributing">
-                      <a>Contributing</a>
-                    </Link>
+                    <StyledLink href="/docs/getting-started">Getting Started</StyledLink>
+                    <StyledLink href="/docs/contributing">Contributing</StyledLink>
                   </LinkList>
 
                   <LinkList title="Community">
-                    <Link href="https://slack.blitzjs.com/">
-                      <a target="_blank" rel="noopener noreferrer">
-                        Slack
-                      </a>
-                    </Link>
-                    <Link href="https://github.com/blitz-js/blitz/discussions">
-                      <a target="_blank" rel="noopener noreferrer">
-                        Forum Discussions
-                      </a>
-                    </Link>
-                    <Link href="https://github.com/sponsors/blitz-js">
-                      <a target="_blank" rel="noopener noreferrer">
-                        Donate/Sponsor
-                      </a>
-                    </Link>
+                    <StyledLink
+                      href="https://slack.blitzjs.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Slack
+                    </StyledLink>
+                    <StyledLink
+                      href="https://github.com/blitz-js/blitz/discussions"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Forum Discussions
+                    </StyledLink>
+                    <StyledLink
+                      href="https://github.com/sponsors/blitz-js"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Donate/Sponsor
+                    </StyledLink>
                   </LinkList>
 
                   <LinkList title="Social">
-                    <Link href="https://github.com/blitz-js/blitz">
-                      <a target="_blank" rel="noopener noreferrer">
-                        GitHub
-                      </a>
-                    </Link>
-                    <Link href="https://twitter.com/blitz_js">
-                      <a target="_blank" rel="noopener noreferrer">
-                        Twitter
-                      </a>
-                    </Link>
+                    <StyledLink
+                      href="https://github.com/blitz-js/blitz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </StyledLink>
+                    <StyledLink
+                      href="https://twitter.com/blitz_js"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Twitter
+                    </StyledLink>
                   </LinkList>
                 </div>
 
                 <div className="self-end mb-3 text-xs font-secondary text-off-white">
-                  <Link href="https://vercel.com/?utm_source=blitzjs">
-                    <a target="_blank" rel="noopener noreferrer">
-                      Hosted on <IoLogoVercel className="inline" /> Vercel
-                    </a>
-                  </Link>
+                  <StyledLink
+                    href="https://vercel.com/?utm_source=blitzjs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Hosted on <IoLogoVercel className="inline" /> Vercel
+                  </StyledLink>
                   <br />
                   Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
                 </div>

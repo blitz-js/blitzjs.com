@@ -42,7 +42,7 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="absolute w-full h-full row-start-1 row-end-5 background-to-video -z-10 rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
             <div className="-mt-6 text-white col-span-full">
-              <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2">
+              <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2 md:gap-6">
                 <div className="space-y-10 lg:w-full">
                   <h2 className="text-5xl font-medium font-secondary xl:text-6xl xl:font-normal dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
                     The Fullstack React Framework
@@ -159,17 +159,19 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 -z-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
             <div>{/* spacer div */}</div>
-            <div className="flex-wrap hidden px-6 xl:flex xl:justify-center gap-y-10">
-              <h3 className="w-full pb-1 mx-auto text-xs text-white border-b border-opacity-50 border-blue-mid max-w-7xl">
+            <div className="hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
+              <h3 className="pb-1 text-xs text-white border-b border-opacity-50 border-blue-mid">
                 Live Code Sandbox
               </h3>
-              <iframe
-                title="Code Sandbox"
-                src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
-                className="block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
-                allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-              ></iframe>
+              <div>
+                <iframe
+                  title="Code Sandbox"
+                  src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
+                  className="block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
+                  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+                  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                ></iframe>
+              </div>
             </div>
             <div className="grid grid-cols-1 px-6 mx-auto text-white lg:grid-cols-2 gap-14 max-w-7xl">
               <h2 className="text-5xl text-transparent font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
@@ -191,12 +193,12 @@ const Home = ({ randomContributors }) => {
               </div>
               <div className="grid grid-cols-1 text-lg gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-end">
-                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
-                    <p>
+                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white">
+                    <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and
                       minorities are especially welcome.
                     </p>
-                    <p>
+                    <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Please read our{" "}
                       <Link href="/docs/code-of-conduct">
                         <a className="underline text-off-white">Code of Conduct</a>
@@ -215,11 +217,13 @@ const Home = ({ randomContributors }) => {
                 </div>
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-start">
                   <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
-                    <p>
+                    <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       We are all in this together, from the youngest to the oldest. We are all more
                       similar than we are different. We love to work together.
                     </p>
-                    <p>You are invited to help us make Blitz the best framework we've ever had!</p>
+                    <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
+                      You are invited to help us make Blitz the best framework we've ever had!
+                    </p>
                   </div>
                   <ButtonLink
                     href="/docs/contributing"
@@ -231,7 +235,7 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
             <div className="w-full px-6 mx-auto text-white space-y-7 max-w-7xl">
-              <h2 className="text-2xl text-white font-secondary lg:text-3xlxl">
+              <h2 className="text-2xl text-white font-secondary lg:text-3xl">
                 Architecture Diagram
               </h2>
               <div className="w-full overflow-x-scroll">

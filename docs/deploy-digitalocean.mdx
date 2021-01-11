@@ -1,0 +1,174 @@
+---
+title: Deploy to a Managed Server on DigitalOcean App Platform
+sidebar_label: To DigitalOcean
+---
+
+In this guide you are going to deploy a Blitz application to App Platform with `doctl` and the App Spec.
+If you want to deploy your application with the App Platform UI make sure to use the right build and run commands
+and do not forget to add the necessary environment variables. You can find them in this guide.
+
+## Prerequisites
+
+To follow this guide you will need:
+
+- The [DigitalOcean CLI (doctl)](https://www.digitalocean.com/docs/apis-clis/doctl/), version 1.5 or higher, installed and configured on your local computer.
+- A GitHub repository for your application
+
+## Creating the database
+
+In this step you will set up a new managed PostgreSQL database with `doctl`.
+
+Create a new database.
+
+```bash
+doctl db create <name> --region <region> --engine pg --version 12
+```
+
+> **Note**: For this guide we are creating a PostgreSQL database but MySQL is also available on DigitalOcean.
+
+:::caution
+App Platform currently only supports the following regions: **nyc1**, **nyc3**, **ams3**, or **fra1**.
+:::
+
+You also have to add a connection pool to the database.
+
+> **Note**: You can read more about what a connection pool is and why it is useful at the [DigitalOcean docs](https://www.digitalocean.com/docs/databases/postgresql/how-to/manage-connection-pools/).
+
+First you need to get the `id` of the database.
+
+```bash
+doctl db list
+```
+
+Now you can create a connection pool for the database.
+
+```bash
+doctl db pool create <db-id> <pool-name> --db defaultdb --user doadmin --size 1
+```
+
+> **Note**: `defaultdb` and `doadmin` are the default database and user created by DigitalOcean. For more options you can check the [doctl databases docs](https://www.digitalocean.com/docs/apis-clis/doctl/reference/databases/).
+
+To use the newly created database with App Platform you have to add it to the App Spec. Create a folder called `.do` and add a file called `app.yaml`.
+
+Add the configuration below to `app.yaml`. As you can see we are also adding a name and region for the deployment.
+
+```yaml
+name: <project-name>
+region: <region>
+databases:
+  - cluster_name: <database-name>
+    db_name: defaultdb
+    db_user: doadmin
+    engine: PG
+    name: <database-name>
+    production: true
+    version: "12"
+```
+
+Replace `<project-name>` with the name of your App Platform project and`<region>` with one of the available regions. These are **nyc**, **ams** and **fra** (without number).
+Add the name that you used to create the database for `<database-name>`.
+
+:::caution
+Make sure to use the same region as the database region.
+:::
+
+## Deploying the application
+
+Now that you have created the database it is time to configure and deploy the application.
+
+Add the configuration below to `app.yaml`.
+
+```yaml
+services:
+  - build_command: npx blitz db migrate && npx blitz build
+    environment_slug: node-js
+    envs:
+   - key: NODE_ENV
+     value: production
+     scope: RUN_AND_BUILD_TIME
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: <repo-url>
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: <instance-size>
+    name: <app-name>
+    routes:
+      - path: /
+    run_command: npx next start
+```
+
+Replace `<repo-url>` with the URL of your git repository and `<app-name>` with the name of your application.
+
+For `<instance-size>` you can get a list of all the available instance sizes with the command below and use the `slug` value of the instance you want to use.
+
+```bash
+doctl apps tier instance-size list
+```
+
+> **Note**: To get an overview of all the available options you can check out the [App Specification docs](https://www.digitalocean.com/docs/app-platform/references/app-specification-reference/).
+
+You also have to add the `DATABASE_URL` environment variable to connect the app to the database.
+
+First you need to get the `id` of the database.
+
+```bash
+doctl db list
+```
+
+Now you can get the connection string of to the connection pool.
+
+```bash
+doctl db pool list <database-id>
+```
+
+PgBouncer is the connection pooler used by DigitalOcean. To enable this in Prisma add `&pgbouncer=true` to the end of the connection string.
+Next add the connection string to `app.yaml`.
+
+```yaml
+ ...
+ services:
+   envs:
+      - key: DATABASE_URL
+        value: <connection-string>
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+ ...
+
+```
+
+The `SESSION_SECRET_KEY` environment variable is also needed for encrypting cookies. This string has to be atleast 32 characters long.
+
+```yaml
+...
+ services:
+   envs:
+      - key: SESSION_SECRET_KEY
+        value: <session-secret-key>
+        scope: RUN_TIME
+        type: SECRET
+ ...
+
+```
+
+Now you can deploy the application.
+
+```bash
+doctl apps create --spec app.yaml
+```
+
+The first time you have to use `doctl` to connect your repository with App Platform. After that a new deployment will be triggered every time you push to your git repository.
+
+Now if you add the `.do` folder to your git repository values like `DATABASE_URL` and `SESSION_SECRET_KEY` will be exposed.
+It is currently not possible to add these values to your configuration with `doctl` and if you add them manually through the UI they will get deleted every time you update your App Spec.
+Luckily there is a workaround for this.
+
+In `app.yaml` you have added `type: SECRET` to these environment variables. This means that DigitalOcean will encrypt them.
+These values are bound to your application and can be safely stored in your git repository. Now you have to update your App Spec with these encrypted values.
+
+Go to [App Platform](https://cloud.digitalocean.com/apps) and select your application. Next click on the Settings tab and view the Application Spec.
+
+![App Spec settings](/img/do_app_spec.png)
+
+Copy the App Spec with the encrypted values and replace the content of your local `app.yaml` file with the new content. Now you can safely store your configuration in git.

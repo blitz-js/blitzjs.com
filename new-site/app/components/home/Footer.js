@@ -4,9 +4,9 @@ import { LinkList } from "@/components/home/LinkList"
 import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { IoLogoVercel } from "react-icons/io5"
 
-export function Footer() {
+export function Footer({ className }) {
   return (
-    <footer className="dark:bg-purple-off-black bg-purple-mid">
+    <footer className={className}>
       <div className="text-white border-t border-white border-opacity-50">
         <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-2 gap-y-7 gap-x-24">
           <a href="#top">

@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
+import Banner from "@/components/Banner"
 
 const Header = ({ className = "" }) => {
   let [isOpen, setIsOpen] = useState(false)
@@ -28,6 +29,7 @@ const Header = ({ className = "" }) => {
 
   return (
     <>
+      <Banner message="Blitz is now in beta!" />
       <div className={`flex items-center justify-between ${className}`}>
         <div className="pr-12">
           <Link href="/">

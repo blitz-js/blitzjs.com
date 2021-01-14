@@ -13,103 +13,94 @@ sidebar_label: File Structure
 
 ```
 ├── app/
+│   ├── core/
+│   │   ├── components/
+│   │   │   ├── Form.tsx
+│   │   │   └── LabeledTextField.tsx
+│   │   ├── hooks/
+│   │   │   └── useCurrentUser.ts
+│   │   └── layouts/
+│   │       └── Layout.tsx
+│   ├── pages/
+│   │   ├── 404.tsx
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── index.test.tsx
+│   │   ├── index.tsx
+│   │   └── projects/
+│   │       ├── [id]/
+│   │       │   └── edit.js
+│   │       ├── [id].js
+│   │       ├── index.js
+│   │       └── new.js
 │   ├── api/
 │   │   └── stripe-webhook.js
-│   ├── components/
-│   │   ├── Button.js
-│   │   ├── Image.js
-│   │   ├── Input.js
-│   │   ├── Link.js
-│   │   └── Text.js
-│   ├── layouts/
-│   │   ├── Authenticated.js
-│   │   └── Public.js
-│   ├── marketing/
+│   ├── auth/
 │   │   ├── components/
-│   │   │   ├── FeatureSection.js
-│   │   │   ├── Footer.js
-│   │   │   ├── Header.js
-│   │   │   ├── Screenshot.js
-│   │   │   └── Testimonial.js
-│   │   └── pages/
-│   │       ├── about.js
-│   │       ├── features.js
-│   │       ├── index.js
-│   │       └── pricing.js
-│   ├── pages/
-│   │   ├── dashboard.js
-│   │   ├── log-in.js
-│   │   ├── settings.js
-│   │   └── sign-up.js
-│   ├── projects/
-│   │   ├── components/
-│   │   │   ├── Project.js
-│   │   │   ├── ProjectForm.js
-│   │   │   └── Projects.js
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── SignupForm.tsx
 │   │   ├── mutations/
-│   │   │   ├── createProject.js
-│   │   │   ├── createProject.test.js
-│   │   │   ├── deleteProject.js
-│   │   │   ├── deleteProject.test.js
-│   │   │   ├── updateProject.js
-│   │   │   └── updateProject.test.js
+│   │   │   ├── login.ts
+│   │   │   ├── logout.ts
+│   │   │   └── signup.ts
 │   │   ├── pages/
-│   │   │   └── projects/
-│   │   │       ├── [id]/
-│   │   │       │   └── edit.js
-│   │   │       ├── [id].js
-│   │   │       ├── index.js
-│   │   │       └── new.js
-│   │   └── queries/
-│   │       ├── getProject.js
-│   │       └── getProjects.js
-│   ├── tasks/
-│   │   ├── components/
-│   │   │   ├── Task.js
-│   │   │   ├── TaskForm.js
-│   │   │   └── Tasks.js
-│   │   ├── mutations/
-│   │   │   ├── createTask.js
-│   │   │   ├── deleteTask.js
-│   │   │   └── updateTask.js
-│   │   ├── pages/
-│   │   │   └── projects/
-│   │   │       └── [projectId]/
-│   │   │           └── tasks/
-│   │   │               ├── [id]/
-│   │   │               │   └── edit.js
-│   │   │               ├── [id].js
-│   │   │               ├── index.js
-│   │   │               └── new.js
-│   │   └── queries/
-│   │       ├── getTask.js
-│   │       └── getTasks.js
-│   └── tests/
-│       ├── userAuthentication.js
-│       └── userOnboarding.js
+│   │   │   ├── login.tsx
+│   │   │   └── signup.tsx
+│   │   ├── auth-utils.ts
+│   │   └── validations.ts
+│   ├── users/
+│   │   └── queries/
+│   │       └── getCurrentUser.ts
+│   └── projects/
+│       ├── components/
+│       │   ├── Project.js
+│       │   ├── ProjectForm.js
+│       │   └── Projects.js
+│       ├── mutations/
+│       │   ├── createProject.js
+│       │   ├── createProject.test.js
+│       │   ├── deleteProject.js
+│       │   ├── deleteProject.test.js
+│       │   ├── updateProject.js
+│       │   └── updateProject.test.js
+│       └── queries/
+│           ├── getProject.js
+│           └── getProjects.js
 ├── db/
-│   ├── index.js
-│   ├── migrations/
-│   └── schema.prisma
+│   ├── index.ts
+│   ├── schema.prisma
+│   └── seeds.ts
 ├── integrations/
+│   └── sentry.ts
 ├── public/
-│   └── favicon.ico
-├── utils/
-└── blitz.config.js
+│   ├── favicon.ico*
+│   └── logo.png
+├── test/
+│   ├── __mocks__/
+│   │   └── fileMock.js
+│   ├── setup.ts
+│   └── utils.tsx
+├── README.md
+├── babel.config.js
+├── blitz.config.js
+├── jest.config.js
+├── package.json
+├── tsconfig.json
+├── types.ts
+└── yarn.lock
 ```
 
 #### `app`
 
 Contains all your core application code.
 
-- The file structure nested inside `app` can be anything you want, but we recommend the following:
-- Typically you will have two types of "container" directories inside `app` that can be nested or combined any way you want:
-  - **entity** directories like `projects/` and `tasks/`
-  - **context** directories like `marketing/` or `admin/`.
+- The file structure nested inside `app/` can be anything you want, but we recommend the following:
+  - First layer folders to be a "domain context", like `core/`, `projects/`, `users/`, `billing/`, etc.
+  - All other folders like `components/` and `hooks/` go inside one of the above domain context folders
 - Special Folder Names
   - Can exist at any level of the hierarchy inside `app`.
-  - `pages/` expose a React component at a URL. Follows the same semantics as the Next.js `pages/` directory.
-  - `api/` expose a Node.js request handler at URL. Same semantics as Next.js `pages/api/` directory.
+  - `pages/` expose a React component at a URL. Follows the same semantics as the Next.js `pages/` folder.
+  - `api/` expose a Node.js request handler at URL. Same semantics as Next.js `pages/api/` folder.
   - `queries/` and `mutations/` are for your Blitz queries and mutations. Each query and mutation is exposed at a URL corresponding to its file path.
 
 #### `db`
@@ -124,23 +115,19 @@ Contains third-party integration code. Ex: `auth0.js`, `twilio.js`, etc. These f
 
 The top level `pages` folder and all nested `pages` folders inside `app` are merged together at build time. The build will fail if the same route is defined in two places.
 
-- This top level pages directory is optional.
+- This top level pages folder is optional.
 - Has the same semantics as the Next.js `pages` folder. All files in here are mapped to the url corresponding to their file paths.
-- While you can place any route files here, we recommend placing route files inside `app`. But if you want, you can instead place all your route files in this top level folders instead of being spread out in various directories inside `app`
+- While you can place any route files here, we recommend placing route files inside `app`. But if you want, you can instead place all your route files in this top level folders instead of being spread out in various folders inside `app`
 
 #### `api`
 
 Same as Next.js `pages/api` folder, but not nested inside pages.
 
-And like the `pages` directory, the top level `api` folder and all nested `api` folders inside `app` are merged together at build time.
+And like the `pages` folder, the top level `api` folder and all nested `api` folders inside `app` are merged together at build time.
 
 #### `public`
 
 All files in here are served statically from your app's root URL
-
-#### `utils`
-
-Contains all those pesky little files and functions every project accumulates
 
 #### `blitz.config.js`
 

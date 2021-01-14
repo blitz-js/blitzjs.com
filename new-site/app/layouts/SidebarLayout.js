@@ -54,12 +54,12 @@ function Nav({ nav, children, fallbackHref }) {
       <ul>
         {children}
         {nav &&
-          Object.keys(nav)
+          nav
             .map((category) => {
-              let publishedItems = nav[category].filter((item) => item.published !== false)
+              let publishedItems = category.pages.filter((item) => item.published !== false)
               if (publishedItems.length === 0 && !fallbackHref) return null
               return (
-                <li key={category} className="mt-8">
+                <li key={category.title} className="mt-8">
                   <h5
                     className={clsx(
                       "px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs",
@@ -69,10 +69,10 @@ function Nav({ nav, children, fallbackHref }) {
                       }
                     )}
                   >
-                    {category}
+                    {category.title}
                   </h5>
                   <ul>
-                    {(fallbackHref ? nav[category] : publishedItems).map((item, i) => (
+                    {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
                       <NavItem
                         key={i}
                         href={item.href}

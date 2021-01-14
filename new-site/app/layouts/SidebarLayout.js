@@ -49,10 +49,9 @@ function Nav({ nav, children, fallbackHref }) {
     <nav
       id="nav"
       ref={scrollRef}
-      className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-16 sticky?lg:h-(screen-18)"
+      className="px-1 pt-6 font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-16"
     >
       <ul>
-        <TopLevelNav />
         {children}
         {nav &&
           Object.keys(nav)
@@ -135,54 +134,6 @@ function TopLevelLink({ href, as, ...props }) {
   )
 }
 
-function TopLevelNav() {
-  let { pathname } = useRouter()
-  let current = pathname.split("/")[1]
-
-  return (
-    <>
-      <TopLevelLink
-        href="/docs"
-        isActive={current === "" || current === "docs"}
-        color="pink"
-        className="mb-4"
-        icon={
-          <>
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M9 6C10.0929 6 11.1175 6.29218 12 6.80269V16.8027C11.1175 16.2922 10.0929 16 9 16C7.90714 16 6.88252 16.2922 6 16.8027V6.80269C6.88252 6.29218 7.90714 6 9 6Z"
-              fill="#FFF1F2"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M15 6C16.0929 6 17.1175 6.29218 18 6.80269V16.8027C17.1175 16.2922 16.0929 16 15 16C13.9071 16 12.8825 16.2922 12 16.8027V6.80269C12.8825 6.29218 13.9071 6 15 6Z"
-              fill="#FECDD3"
-            />
-          </>
-        }
-      >
-        Documentation
-      </TopLevelLink>
-      <TopLevelLink
-        href="https://tailwindui.com/components?utm_source=tailwindcss&utm_medium=navigation"
-        color="violet"
-        className="mb-4"
-        icon={
-          <>
-            <path d="M6 9l6-3 6 3v6l-6 3-6-3V9z" fill="#F5F3FF" />
-            <path d="M6 9l6 3v6l-6-3V9z" fill="#DDD6FE" />
-            <path d="M18 9l-6 3v6l6-3V9z" fill="#C4B5FD" />
-          </>
-        }
-      >
-        Components
-      </TopLevelLink>
-    </>
-  )
-}
-
 export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar, fallbackHref }) {
   return (
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
@@ -203,7 +154,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
             <div
               id="navWrapper"
               onClick={(e) => e.stopPropagation()}
-              className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
+              className="h-full scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
             >
               <div className="hidden lg:block h-12 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-white" />
               <Nav nav={nav} fallbackHref={fallbackHref}>

@@ -1,13 +1,14 @@
 import { Icon } from "@/components/home/Icon"
 
-const Sponsor = ({ title, number, children }) => {
+const Sponsor = ({ title, iconName, children }) => {
   return (
-    <div className="px-6 text-sm font-secondary">
-      <Icon name="medal" />
-      <h3 className="inline-block mb-3 ml-2 text-lg font-semibold align-top font-primary">
+    <div className="text-sm text-center font-secondary">
+      <Icon name={iconName} />
+      <br className="hidden lg:block" />
+      <h3 className="inline-block mb-3 ml-2 text-lg font-semibold align-top font-primary lg:ml-0 lg:mt-2 xl:text-xl">
         {title}
       </h3>
-      {children}
+      <div className="flex justify-center gap-x-2">{children}</div>
     </div>
   )
 }

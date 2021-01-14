@@ -35,7 +35,7 @@ const Home = ({ randomContributors }) => {
           </a>
           <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-36">
             <div className="text-white col-span-full">
-              <Header className="px-6 mx-auto max-w-7xl" />
+              <Header className="px-6 mx-auto max-w-7xl" bannerMsg="Blitz is now in beta!" />
             </div>
             <div className="absolute w-full h-full row-start-1 row-end-5 background-to-video -z-10 rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
             <div className="-mt-6 text-white col-span-full">

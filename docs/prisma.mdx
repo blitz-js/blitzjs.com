@@ -1,0 +1,22 @@
+---
+title: Prisma Utilities
+sidebar_label: Prisma Utilities
+---
+
+### `makeServerOnlyPrisma(PrismaClient)`
+
+`makeServerOnlyPrisma` is a convenience wrapper that ensures Prisma client is not used in your client bundle.
+
+Additionally it ensures that you only have one instance of Prisma Client in your application to reduce the number of database connections. But in serverless deployment, you will still have one instance per serverless function.
+
+#### Example Usage
+
+```ts
+import {makeServerOnlyPrisma} from "blitz"
+import {PrismaClient} from "@prisma/client"
+
+const ServerOnlyPrisma = makeServerOnlyPrisma(PrismaClient)
+
+export * from "@prisma/client"
+export default new ServerOnlyPrisma()
+```

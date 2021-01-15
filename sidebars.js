@@ -44,7 +44,7 @@ module.exports = {
       "router",
       "api-routes",
     ],
-    Database: ["database-overview", "postgres", "database-seeds", "fauna"],
+    Database: ["database-overview", "postgres", "database-seeds", "prisma", "fauna"],
     Queries: [
       "query-resolvers",
       "query-usage",

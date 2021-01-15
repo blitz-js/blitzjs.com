@@ -24,6 +24,7 @@ module.exports = {
       "static-files",
       "environment-variables",
       "error-handling",
+      "testing",
     ],
     Auth: ["auth", "session-management", "authorization", "auth-utils", "passportjs"],
     Pages: [

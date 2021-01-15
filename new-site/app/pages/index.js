@@ -89,16 +89,15 @@ const Home = ({ randomContributors }) => {
               </FeatureIcon>
             </div>
             <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
-              <StyledLink
-                href="#"
-                className="flex items-center justify-between pb-1 text-lg border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary xl:text-xl"
-              >
-                <span>The Latest News From Blitz</span>
-                <span className="flex items-center">
-                  <span className="hidden mr-2 lg:block">View News</span>{" "}
-                  <BsArrowRight size="1.5rem" />
-                </span>
-              </StyledLink>
+              <Link href="#" passHref>
+                <StyledLink className="flex items-center justify-between pb-1 text-lg border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary xl:text-xl">
+                  <span>The Latest News From Blitz</span>
+                  <span className="flex items-center">
+                    <span className="hidden mr-2 lg:block">View News</span>{" "}
+                    <BsArrowRight size="1.5rem" />
+                  </span>
+                </StyledLink>
+              </Link>
               <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
               <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
             </div>
@@ -163,14 +162,13 @@ const Home = ({ randomContributors }) => {
             <div>{/* spacer div */}</div>
             <div className="hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
               <h3 className="pb-1 text-xl text-white border-b border-opacity-50 border-blue-mid">
-                Live Code Sandbox
+                Blitz CodeSandbox Example
               </h3>
               <div>
                 <iframe
-                  title="Code Sandbox"
+                  title="CodeSandbox"
                   src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
                   className="block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
-                  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
                   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                 ></iframe>
               </div>
@@ -181,16 +179,19 @@ const Home = ({ randomContributors }) => {
               </h2>
               <div className="grid grid-cols-5 gap-1 md:grid-cols-6 lg:row-start-2 lg:grid-cols-5 grid-rows-8 overflow-clip">
                 {randomContributors.map((contributor) => (
-                  <Link href={`https://github.com/${contributor.login}`} key={contributor.id}>
-                    <a target="_blank" rel="noopener noreferrer">
-                      <img
-                        src={contributor.avatar_url}
-                        alt={contributor.login}
-                        title={contributor.login}
-                        className="w-full"
-                      />
-                    </a>
-                  </Link>
+                  <a
+                    href={`https://github.com/${contributor.login}`}
+                    key={contributor.id}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={contributor.avatar_url}
+                      alt={contributor.login}
+                      title={contributor.login}
+                      className="w-full"
+                    />
+                  </a>
                 ))}
               </div>
               <div className="grid grid-cols-1 text-lg gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
@@ -202,19 +203,18 @@ const Home = ({ randomContributors }) => {
                     </p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Please read our{" "}
-                      <StyledLink
-                        href="/docs/code-of-conduct"
-                        className="underline text-off-white hover:text-blue-light"
-                      >
-                        Code of Conduct
-                      </StyledLink>
+                      <Link href="/docs/code-of-conduct" passHref>
+                        <StyledLink className="underline text-off-white hover:text-blue-light">
+                          Code of Conduct
+                        </StyledLink>
+                      </Link>
                       .
                     </p>
                   </div>
                   <ButtonLink
+                    href="https://slack.blitzjs.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://slack.blitzjs.com/"
                     className="rounded-bl-none rounded-xl lg:w-max"
                   >
                     Join our Slack Community
@@ -230,12 +230,11 @@ const Home = ({ randomContributors }) => {
                       You are invited to help us make Blitz the best framework we've ever had!
                     </p>
                   </div>
-                  <ButtonLink
-                    href="/docs/contributing"
-                    className="rounded-bl-none rounded-xl lg:w-max"
-                  >
-                    Learn How to Contribute
-                  </ButtonLink>
+                  <Link href="/docs/contributing" passHref>
+                    <ButtonLink className="rounded-bl-none rounded-xl lg:w-max">
+                      Learn How to Contribute
+                    </ButtonLink>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -327,8 +326,8 @@ const Home = ({ randomContributors }) => {
                 .
               </p>
               <ButtonLink
-                href="https://github.com/sponsors/blitz-js"
                 variant="solid-dark"
+                href="https://github.com/sponsors/blitz-js"
                 className="mx-auto rounded-bl-none rounded-xl lg:w-max md:w-1/3 lg:m-auto lg:mt-4"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -346,7 +345,7 @@ const Home = ({ randomContributors }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Start here
+                    Start Here
                   </StyledLink>
                 </p>
               </Sponsor>
@@ -464,8 +463,12 @@ const Home = ({ randomContributors }) => {
                 </div>
                 <div className="grid gap-7 md:grid-cols-3">
                   <LinkList title="Docs">
-                    <StyledLink href="/docs/getting-started">Getting Started</StyledLink>
-                    <StyledLink href="/docs/contributing">Contributing</StyledLink>
+                    <Link href="/docs/getting-started" passHref>
+                      <StyledLink>Getting Started</StyledLink>
+                    </Link>
+                    <Link href="/docs/contributing" passHref>
+                      <StyledLink>Contributing</StyledLink>
+                    </Link>
                   </LinkList>
 
                   <LinkList title="Community">

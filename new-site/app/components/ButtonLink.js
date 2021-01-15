@@ -1,7 +1,6 @@
-import { Link } from "blitz"
 import { BsArrowRight } from "react-icons/bs"
 
-const ButtonLink = ({ className, children, href, variant = "solid", ...props }) => {
+const ButtonLink = ({ className, children, variant = "solid", ...props }) => {
   let classes =
     "flex items-center justify-center py-2 px-3 lg:px-5 font-secondary text-base font-bold"
 
@@ -22,11 +21,9 @@ const ButtonLink = ({ className, children, href, variant = "solid", ...props }) 
   }
 
   return (
-    <Link href={href}>
-      <a className={`${classes} ${className}`} {...props}>
-        {children} <BsArrowRight size="1.5rem" className="ml-2" />
-      </a>
-    </Link>
+    <a className={`${classes} ${className}`} {...props}>
+      {children} <BsArrowRight size="1.5rem" className="ml-2" />
+    </a>
   )
 }
 

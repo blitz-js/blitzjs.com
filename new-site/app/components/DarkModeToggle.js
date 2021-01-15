@@ -3,17 +3,16 @@ import { useTheme } from "next-themes"
 import { BiToggleLeft, BiToggleRight } from "react-icons/bi"
 
 const DarkModeToggle = ({ className }) => {
+  const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
-  const [isMounted, setIsMounted] = useState(false)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return null
 
   const switchTheme = () => {
-    if (isMounted) {
-      setTheme(theme === "light" ? "dark" : "light")
-    }
+    setTheme(theme === "dark" ? "light" : "dark")
   }
 
   return (

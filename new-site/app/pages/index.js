@@ -9,12 +9,8 @@ import { Feature } from "@/components/home/Feature"
 import { FeatureIcon } from "@/components/home/FeatureIcon"
 import { FeatureIconTitle } from "@/components/home/FeatureIconTitle"
 import { Sponsor } from "@/components/home/Sponsor"
-import { LinkList } from "@/components/home/LinkList"
-import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { FaGithub } from "react-icons/fa"
-import { Icon } from "@/components/home/Icon"
-import { IoLogoVercel } from "react-icons/io5"
-import { StyledLink } from "@/components/home/StyledLink"
+import { Footer } from "@/components/home/Footer"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -39,7 +35,7 @@ const Home = ({ randomContributors }) => {
           </a>
           <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-36">
             <div className="text-white col-span-full">
-              <Header className="px-6 mx-auto max-w-7xl" />
+              <Header className="px-6 mx-auto max-w-7xl" bannerMsg="Blitz is now in beta!" />
             </div>
             <div className="absolute w-full h-full row-start-1 row-end-5 background-to-video -z-10 rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
             <div className="-mt-6 text-white col-span-full">
@@ -441,91 +437,7 @@ const Home = ({ randomContributors }) => {
                 </ButtonLink>
               </div>
             </div>
-
-            <div className="text-white border-t border-white border-opacity-50">
-              <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-2 gap-y-7 gap-x-24">
-                <a href="#top">
-                  <Icon
-                    name="arrowUp"
-                    variant="light-hover"
-                    className="absolute right-0 mr-2 -mt-5 xl:mt-14 icon-expanded"
-                  ></Icon>
-                </a>
-                <div className="col-span-full"></div>
-                <div className="space-y-5">
-                  <p className="text-lg font-semibold xl:text-xl">
-                    Want to receive the latest news and updates from the Blitz team? Sign up for our
-                    newsletter!
-                  </p>
-                </div>
-                <div className="mb-4 lg:row-end-5">
-                  <NewsletterForm />
-                </div>
-                <div className="grid gap-7 md:grid-cols-3">
-                  <LinkList title="Docs">
-                    <Link href="/docs/getting-started" passHref>
-                      <StyledLink>Getting Started</StyledLink>
-                    </Link>
-                    <Link href="/docs/contributing" passHref>
-                      <StyledLink>Contributing</StyledLink>
-                    </Link>
-                  </LinkList>
-
-                  <LinkList title="Community">
-                    <StyledLink
-                      href="https://slack.blitzjs.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Slack
-                    </StyledLink>
-                    <StyledLink
-                      href="https://github.com/blitz-js/blitz/discussions"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Forum Discussions
-                    </StyledLink>
-                    <StyledLink
-                      href="https://github.com/sponsors/blitz-js"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Donate/Sponsor
-                    </StyledLink>
-                  </LinkList>
-
-                  <LinkList title="Social">
-                    <StyledLink
-                      href="https://github.com/blitz-js/blitz"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub
-                    </StyledLink>
-                    <StyledLink
-                      href="https://twitter.com/blitz_js"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Twitter
-                    </StyledLink>
-                  </LinkList>
-                </div>
-
-                <div className="self-end mb-3 text-xs font-secondary text-off-white">
-                  <StyledLink
-                    href="https://vercel.com/?utm_source=blitzjs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Hosted on <IoLogoVercel className="inline" /> Vercel
-                  </StyledLink>
-                  <br />
-                  Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
-                </div>
-              </div>
-            </div>
+            <Footer className="dark:bg-purple-off-black bg-purple-mid" />
           </div>
         </div>
       </div>

@@ -1,52 +1,81 @@
 import Link from "next/link"
-import { documentationNav } from "@/navs/documentation"
-import clsx from "clsx"
-import styles from "./Footer.module.css"
-import Logo from "@/components/Logo"
+import { Icon } from "@/components/home/Icon"
+import { LinkList } from "@/components/home/LinkList"
+import { NewsletterForm } from "@/components/home/NewsletterForm"
+import { IoLogoVercel } from "react-icons/io5"
 
-const footerNav = {
-  "Getting started": {
-    className: "row-span-2",
-    items: documentationNav["Getting started"],
-  },
-  Community: {
-    items: [
-      { title: "GitHub", href: "https://github.com/tailwindlabs/tailwindcss" },
-      { title: "Discord", href: "/discord" },
-      { title: "Twitter", href: "https://twitter.com/tailwindcss" },
-      { title: "YouTube", href: "https://www.youtube.com/tailwindlabs" },
-    ],
-  },
-}
-
-export function Footer() {
+export function Footer({ className }) {
   return (
-    <footer className="pt-16 pb-12 bg-gray-50 sm:pt-20 md:pt-24 xl:pt-32 sm:pb-20">
-      <div className="max-w-screen-lg px-4 mx-auto divide-y divide-gray-200 xl:max-w-screen-xl sm:px-6 md:px-8">
-        <ul
-          className={`${styles.nav} text-sm font-medium pb-14 sm:pb-20 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10`}
-        >
-          {Object.keys(footerNav).map((section, i) => (
-            <li key={section} className={clsx("space-y-5", footerNav[section].className)}>
-              <h2 className="text-xs font-semibold tracking-wide text-gray-900 uppercase">
-                {section}
-              </h2>
-              <ul className="space-y-4">
-                {footerNav[section].items.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href}>
-                      <a className="transition-colors duration-200 hover:text-gray-900">
-                        {item.title}
-                      </a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-        <div className="pt-10 sm:pt-12">
-          <Logo width="208" height="26" />
+    <footer className={className}>
+      <div className="text-white border-t border-white border-opacity-50">
+        <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-2 gap-y-7 gap-x-24">
+          <a href="#top">
+            <Icon
+              name="arrowUp"
+              className="absolute right-0 mr-2 -mt-5 xl:mt-14 icon-expanded"
+            ></Icon>
+          </a>
+          <div className="col-span-full"></div>
+          <div className="space-y-5">
+            <p className="text-lg font-semibold xl:text-xl">
+              Want to receive the latest news and updates from the Blitz team? Sign up for our
+              newsletter!
+            </p>
+          </div>
+          <div className="mb-4 lg:row-end-5">
+            <NewsletterForm />
+          </div>
+          <div className="grid gap-7 md:grid-cols-3">
+            <LinkList title="Docs">
+              <Link href="/docs/getting-started">
+                <a>Getting Started</a>
+              </Link>
+              <Link href="/docs/contributing">
+                <a>Contributing</a>
+              </Link>
+            </LinkList>
+
+            <LinkList title="Community">
+              <Link href="https://slack.blitzjs.com/">
+                <a target="_blank" rel="noopener noreferrer">
+                  Slack
+                </a>
+              </Link>
+              <Link href="https://github.com/blitz-js/blitz/discussions">
+                <a target="_blank" rel="noopener noreferrer">
+                  Forum Discussions
+                </a>
+              </Link>
+              <Link href="https://github.com/sponsors/blitz-js">
+                <a target="_blank" rel="noopener noreferrer">
+                  Donate/Sponsor
+                </a>
+              </Link>
+            </LinkList>
+
+            <LinkList title="Social">
+              <Link href="https://github.com/blitz-js/blitz">
+                <a target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              </Link>
+              <Link href="https://twitter.com/blitz_js">
+                <a target="_blank" rel="noopener noreferrer">
+                  Twitter
+                </a>
+              </Link>
+            </LinkList>
+          </div>
+
+          <div className="self-end mb-3 text-xs font-secondary text-off-white">
+            <Link href="https://vercel.com/?utm_source=blitzjs">
+              <a target="_blank" rel="noopener noreferrer">
+                Hosted on <IoLogoVercel className="inline" /> Vercel
+              </a>
+            </Link>
+            <br />
+            Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
+          </div>
         </div>
       </div>
     </footer>

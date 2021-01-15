@@ -151,7 +151,7 @@ blitz generate all question text:string choices:choice[]
 >   choices   Choice[]
 > }
 
-Now run blitz db migrate to add this model to your database
+Now run `blitz prisma migrate dev --preview-feature` to add this model to your database
 
 CREATE    app/questions/pages/questions/index.tsx
 CREATE    app/questions/pages/questions/new.tsx
@@ -184,7 +184,7 @@ blitz generate resource choice text votes:int:default[0] belongsTo:question
 >   questionId Int
 > }
 
-Now run blitz db migrate to add this model to your database
+Now run `blitz prisma migrate dev --preview-feature` to add this model to your database
 
 CREATE    app/choices/queries/getChoices.ts
 CREATE    app/choices/queries/getChoice.ts
@@ -198,7 +198,7 @@ CREATE    app/choices/mutations/updateChoice.ts
 Now, we need to migrate our database. This is a way of telling it that you have edited your schema in some way. Run the below command. When it asks you to enter a migration name, you can enter anything you want (perhaps "init db"):
 
 ```sh
-blitz db migrate
+blitz prisma migrate dev --preview-feature
 ```
 
 ## Playing with the API
@@ -492,10 +492,15 @@ Time for a breather. Go back to `http://localhost:3000/questions` in your browse
 ```js
 // app/questions/queries/getQuestion.ts
 
-export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
+import { Ctx, NotFoundError } from "blitz"
+import db, { Prisma } from "db"
+
+type GetQuestionInput = Pick<Prisma.FindFirstQuestionArgs, "where">
+
+export default async function getQuestion({ where /* include */ }: GetQuestionInput, ctx: Ctx) {
   ctx.session.authorize()
 
-  const question = await db.question.findFirst({where, include: {choices: true}})
+  const question = await db.question.findFirst({ where, include: { choices: true } })
 
   if (!question) throw new NotFoundError()
 
@@ -538,7 +543,7 @@ export default async function getQuestions(
 }
 ```
 
-Now hop back to our main questions page in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page (`app/questions/pages/questions/index.tsx`)in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
 
 ```jsx
 <ul>
@@ -630,7 +635,7 @@ import updateChoice from "app/choices/mutations/updateChoice" // highlight-line
 export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
-  const [question, {refetch}] = useQuery(getQuestion, {where: {id: questionId}}) // highlight-line
+  const [question] = useQuery(getQuestion, {where: {id: questionId}})
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [updateChoiceMutation] = useMutation(updateChoice) // highlight-line
 
@@ -648,8 +653,10 @@ export const Question = () => {
     }
   }
 
+  // highlight-end
   return (
     <div>
+      // highlight-start
       <h1>{question.text}</h1>
       <ul>
         {question.choices.map((choice) => (

@@ -1,4 +1,5 @@
 import { createPageList } from "@/utils/createPageList"
+import { Image } from "blitz"
 
 const pages = createPageList(
   // use compiled location
@@ -6,9 +7,31 @@ const pages = createPageList(
   "docs"
 )
 
+const Title = ({ title, iconPath, iconDarkPath }) => (
+  <div className="px-3 mb-5">
+    {iconPath && (
+      <div className={`mr-4 inline ${iconDarkPath ? "dark:hidden" : ""}`}>
+        <Image src={iconPath} width="12" height="12" alt={title} />
+      </div>
+    )}
+    {iconDarkPath && (
+      <div className="mr-4 hidden dark:inline">
+        <Image src={iconDarkPath} width="12" height="12" alt={title} />
+      </div>
+    )}
+    <div className="text-xs text-purple-off-black dark:text-white inline">{title}</div>
+  </div>
+)
+
 export const documentationNav = [
   {
-    title: "Introduction",
+    title: (
+      <Title
+        title="Introduction"
+        iconPath="/img/introduction.svg"
+        iconDarkPath="/img/introduction-white.svg"
+      />
+    ),
     pages: [
       pages["getting-started"],
       pages["tutorial"],
@@ -17,7 +40,7 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Community",
+    title: <Title title="Community" />,
     pages: [
       pages["how-the-community-operates"],
       pages["manifesto"],
@@ -28,7 +51,7 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Basics",
+    title: <Title title="Basics" iconPath="/img/basics.svg" iconDarkPath="/img/basics-white.svg" />,
     pages: [
       pages["file-structure"],
       pages["app-component"],
@@ -40,7 +63,7 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Auth",
+    title: <Title title="Auth" />,
     pages: [
       pages["auth"],
       pages["session-management"],
@@ -49,7 +72,7 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Pages",
+    title: <Title title="Pages" iconPath="/img/pages.svg" iconDarkPath="/img/pages-white.svg" />,
     pages: [
       pages["pages"],
       pages["error-pages"],
@@ -62,7 +85,9 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Routing",
+    title: (
+      <Title title="Routing" iconPath="/img/routing.svg" iconDarkPath="/img/routing-white.svg" />
+    ),
     pages: [
       pages["routing"],
       pages["routing-conventions"],
@@ -73,11 +98,15 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Database",
+    title: (
+      <Title title="Database" iconPath="/img/database.svg" iconDarkPath="/img/database-white.svg" />
+    ),
     pages: [pages["database-overview"], pages["postgres"], pages["database-seeds"], pages["fauna"]],
   },
   {
-    title: "Queries",
+    title: (
+      <Title title="Queries" iconPath="/img/queries.svg" iconDarkPath="/img/queries-white.svg" />
+    ),
     pages: [
       pages["query-resolvers"],
       pages["query-usage"],
@@ -87,19 +116,31 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Mutations",
+    title: (
+      <Title
+        title="Mutations"
+        iconPath="/img/mutations.svg"
+        iconDarkPath="/img/mutations-white.svg"
+      />
+    ),
     pages: [pages["mutation-resolvers"], pages["mutation-usage"], pages["use-mutation"]],
   },
   {
-    title: "Queries & Mutations",
+    title: <Title title="Queries &amp; Mutations" />,
     pages: [pages["invoke"], pages["resolver-utilities"]],
   },
   {
-    title: "Deploying to Production",
+    title: (
+      <Title
+        title="Deploying to Production"
+        iconPath="/img/deploying-to-production.svg"
+        iconDarkPath="/img/deploying-to-production-white.svg"
+      />
+    ),
     pages: [pages["deploy-render"], pages["deploy-vercel"], pages["deploy-heroku"]],
   },
   {
-    title: "CLI",
+    title: <Title title="CLI" />,
     pages: [
       pages["cli-overview"],
       pages["cli-new"],
@@ -114,15 +155,15 @@ export const documentationNav = [
     ],
   },
   {
-    title: "Recipes",
+    title: <Title title="Recipes" />,
     pages: [pages["using-recipes"], pages["writing-recipes"]],
   },
   {
-    title: "Templates",
+    title: <Title title="Templates" />,
     pages: [pages["templates"]],
   },
   {
-    title: "Advanced",
+    title: <Title title="Advanced" />,
     pages: [
       pages["blitz-config"],
       pages["webpack-config"],

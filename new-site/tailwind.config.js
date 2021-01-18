@@ -280,6 +280,7 @@ module.exports = {
       ringColor: ["focus-visible"],
       ringOpacity: ["focus-visible"],
       rotate: ["first", "last", "odd", "even"],
+      display: ["dark"],
     },
   },
   plugins: [

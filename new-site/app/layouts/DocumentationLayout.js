@@ -11,7 +11,7 @@ export function DocumentationLayout(props) {
   const router = useRouter()
 
   return (
-    <div className="bg-gray-200">
+    <div className="bg-gray-200 dark:bg-black bg-gradient-to-b dark:from-black dark:to-purple-off-black">
       <Title suffix={router.pathname === "/" ? undefined : "Tailwind CSS"}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
@@ -28,7 +28,7 @@ export function DocumentationLayout(props) {
         bannerMsg="Blitz is now in beta!"
       />
       <SidebarLayout nav={documentationNav} {...props} />
-      <Footer className="text-black" />
+      <Footer className="text-black dark:text-white" />
     </div>
   )
 }

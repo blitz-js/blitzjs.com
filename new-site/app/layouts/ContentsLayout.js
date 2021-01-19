@@ -5,9 +5,11 @@ import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 
+import { documentationNav } from "@/navs/documentation"
+
 export const ContentsContext = createContext()
 
-function TableOfContents({ tableOfContents, currentSection }) {
+export function TableOfContents({ tableOfContents, currentSection }) {
   let sidebarContext = useContext(SidebarContext)
   let isMainNav = Boolean(sidebarContext)
 
@@ -18,11 +20,8 @@ function TableOfContents({ tableOfContents, currentSection }) {
   }
 
   return (
-    <>
-      <h5 className="text-gray-900 uppercase tracking-wide font-semibold mb-3 text-sm lg:text-xs">
-        On this page
-      </h5>
-      <ul className="overflow-x-hidden text-gray-500 font-medium">
+    <div className="pl-8 py-2">
+      <ul className="overflow-x-hidden text-black dark:text-white font-normal text-sm">
         {tableOfContents.map((section) => {
           let sectionIsActive =
             currentSection === section.slug ||
@@ -35,7 +34,7 @@ function TableOfContents({ tableOfContents, currentSection }) {
                   href={`#${section.slug}`}
                   onClick={closeNav}
                   className={clsx(
-                    "block transform transition-colors duration-200 py-2 hover:text-gray-900",
+                    "block transform transition-colors duration-200 py-2 hover:text-gray-900 no-underline",
                     {
                       "text-gray-900": sectionIsActive,
                     }
@@ -59,7 +58,7 @@ function TableOfContents({ tableOfContents, currentSection }) {
                       href={`#${subsection.slug}`}
                       onClick={closeNav}
                       className={clsx(
-                        "block py-2 transition-colors duration-200 hover:text-gray-900 font-medium",
+                        "block py-2 transition-colors duration-200 hover:text-gray-900 no-underline",
                         {
                           "text-gray-900": subsectionIsActive,
                         }
@@ -74,7 +73,7 @@ function TableOfContents({ tableOfContents, currentSection }) {
           )
         })}
       </ul>
-    </>
+    </div>
   )
 }
 
@@ -160,41 +159,34 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   let { prev, next } = usePrevNext()
 
   return (
-    <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
-      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
-        <PageHeader
-          title={meta.title}
-          description={meta.description}
-          badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
-          border={!classes && meta.headerSeparator !== false}
-        />
-        {(prev || next) && (
-          <>
-            <hr className="border-gray-200 mt-10 mb-4" />
-            <div className="flex justify-between leading-7 font-medium">
-              {prev && (
-                <Link href={prev.href}>
-                  <a>← {prev.shortTitle || prev.title}</a>
-                </Link>
-              )}
-              {next && (
-                <Link href={next.href}>
-                  <a>{next.shortTitle || next.title} →</a>
-                </Link>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-      <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
-        <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) -mt-10 pt-10 pb-4 top-18">
-          {toc.length > 0 && (
-            <div className="mb-8">
-              <TableOfContents tableOfContents={toc} currentSection={currentSection} />
-            </div>
+    <SidebarLayout nav={documentationNav} toc={toc}>
+      <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
+        <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
+          <PageHeader
+            title={meta.title}
+            description={meta.description}
+            badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
+            border={!classes && meta.headerSeparator !== false}
+          />
+          {(prev || next) && (
+            <>
+              <hr className="border-gray-200 mt-10 mb-4" />
+              <div className="flex justify-between leading-7 font-medium">
+                {prev && (
+                  <Link href={prev.href}>
+                    <a>← {prev.shortTitle || prev.title}</a>
+                  </Link>
+                )}
+                {next && (
+                  <Link href={next.href}>
+                    <a>{next.shortTitle || next.title} →</a>
+                  </Link>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
-    </div>
+    </SidebarLayout>
   )
 }

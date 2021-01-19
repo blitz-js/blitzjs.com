@@ -87,6 +87,10 @@ module.exports = {
       "5xl": ["2.8125rem", "3.125rem"], // 45px
       "6xl": ["3.875rem", "4.84375rem"], // 62px
     },
+    borderColor: (theme) => ({
+      ...theme("colors"),
+      primary: "#bcc9dc",
+    }),
     extend: {
       typography: (theme) => ({
         DEFAULT: {

@@ -60,6 +60,11 @@ module.exports = {
           position: "left",
         },
         {
+          href: "https://store.blitzjs.com",
+          label: "Swag Store",
+          position: "left",
+        },
+        {
           href: "https://github.com/sponsors/blitz-js",
           label: "♥ Donate/Sponsor",
           position: "right",
@@ -96,6 +101,10 @@ module.exports = {
             {
               label: "Forum Discussions",
               href: "https://github.com/blitz-js/blitz/discussions",
+            },
+            {
+              href: "https://store.blitzjs.com",
+              label: "Swag Store",
             },
             {
               href: "https://github.com/sponsors/blitz-js",

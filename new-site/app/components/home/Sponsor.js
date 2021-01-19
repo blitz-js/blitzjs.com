@@ -8,7 +8,7 @@ const Sponsor = ({ title, iconName, children }) => {
       <h3 className="inline-block mb-3 ml-2 text-lg font-semibold align-top font-primary lg:ml-0 lg:mt-2 xl:text-xl">
         {title}
       </h3>
-      <div className="flex justify-center gap-x-2">{children}</div>
+      <div className="flex justify-center space-x-2">{children}</div>
     </div>
   )
 }

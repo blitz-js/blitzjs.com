@@ -10,7 +10,7 @@ import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
-const Header = ({ className = "", bannerMsg = "", useColoredLogo, stickyBgClass }) => {
+const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, stickyBgClass }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Header = ({ className = "", bannerMsg = "", useColoredLogo, stickyBgClass 
 
   return (
     <>
-      {bannerMsg && <Banner message={bannerMsg} />}
+      {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div
           className={`flex items-center justify-between ${className} ${

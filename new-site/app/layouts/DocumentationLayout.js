@@ -23,9 +23,10 @@ export function DocumentationLayout(props) {
         />
       </Head>
       <Header
-        className="flex items-center justify-between px-6 mx-auto max-w-7xl bg-gray-200 dark:bg-purple-deep"
+        className="flex items-center justify-between px-6 mx-auto max-w-7xl"
         bannerMsg="Blitz is now in beta!"
         useColoredLogo
+        stickyBgClass="bg-gray-200 dark:bg-purple-deep"
       />
       <SidebarLayout {...props} />
       <Footer className="text-black dark:text-white" />

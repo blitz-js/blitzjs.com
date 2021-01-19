@@ -42,7 +42,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
     <nav
       id="nav"
       ref={scrollRef}
-      className="px-1 pt-6 font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pt-10 lg:pb-16"
+      className="px-1 mt-6 font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) overflow-y-auto"
     >
       <ul>
         {children}

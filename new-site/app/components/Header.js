@@ -9,7 +9,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 
-const Header = ({ className = "", useColoredLogo }) => {
+const Header = ({ className = "", useColoredLogo, stickyBgClass }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -28,8 +28,12 @@ const Header = ({ className = "", useColoredLogo }) => {
   }
 
   return (
-    <>
-      <div className={`flex items-center justify-between ${className}`}>
+    <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
+      <div
+        className={`flex items-center justify-between ${className} ${
+          stickyBgClass ? stickyBgClass : ""
+        }`}
+      >
         <div className="pr-12">
           <Link href="/">
             <a className="w-10 overflow-hidden md:w-auto">
@@ -45,7 +49,7 @@ const Header = ({ className = "", useColoredLogo }) => {
             </a>
           </Link>
         </div>
-        <div className="flex-1 hidden pt-2 space-x-2 text-base lg:flex">
+        <div className="flex-1 hidden py-2 space-x-2 text-base lg:flex">
           <NavLink href="#">Docs</NavLink>
           <NavLink
             target="_blank"
@@ -80,14 +84,14 @@ const Header = ({ className = "", useColoredLogo }) => {
           </NavLink>
         </div>
         <div className="flex lg:text-base lg:space-x-4">
-          <Search className="lg:mt-2" />
+          <Search className="lg:my-2" />
           <button
             onClick={onToggle}
             className="p-2 ml-3 -mr-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
           >
             {isOpen ? <AiOutlineClose size="1.375rem" /> : <AiOutlineMenu size="1.375rem" />}
           </button>
-          <DarkModeToggle className="hidden text-base lg:mt-2 lg:block" />
+          <DarkModeToggle className="hidden text-base lg:my-2 lg:block" />
         </div>
       </div>
       {isOpen && (
@@ -139,7 +143,7 @@ const Header = ({ className = "", useColoredLogo }) => {
           <DarkModeToggle className="text-lg" />
         </div>
       )}
-    </>
+    </nav>
   )
 }
 

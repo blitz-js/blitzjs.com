@@ -147,14 +147,7 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
   )
 }
 
-export function ContentsLayout({ children, meta, classes, tableOfContents }) {
-  const toc = [
-    ...(classes
-      ? [{ title: "Default class reference", slug: "class-reference", children: [] }]
-      : []),
-    ...tableOfContents,
-  ]
-
+export function ContentsLayout({ children, meta, tableOfContents: toc }) {
   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
   let { prev, next } = usePrevNext()
 
@@ -162,12 +155,10 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
     <SidebarLayout nav={documentationNav} toc={toc}>
       <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
         <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
-          <PageHeader
-            title={meta.title}
-            description={meta.description}
-            badge={{ key: "Tailwind CSS version", value: meta.featureVersion }}
-            border={!classes && meta.headerSeparator !== false}
-          />
+          <PageHeader title={meta.title} />
+          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+            {children}
+          </ContentsContext.Provider>
           {(prev || next) && (
             <>
               <hr className="border-gray-200 mt-10 mb-4" />

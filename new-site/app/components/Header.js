@@ -2,13 +2,14 @@ import { useState, useEffect } from "react"
 import { Link } from "blitz"
 import { Search } from "@/components/Search"
 import Logo from "@/components/Logo"
+import ColoredLogo from "@/components/ColoredLogo"
 import Router from "next/router"
 import { FaHeart } from "react-icons/fa"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 
-const Header = ({ className = "" }) => {
+const Header = ({ className = "", useColoredLogo }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -33,7 +34,14 @@ const Header = ({ className = "" }) => {
           <Link href="/">
             <a className="w-10 overflow-hidden md:w-auto">
               <span className="sr-only">Blitz home page</span>
-              <Logo className="w-auto h-12 py-2 fill-current" />
+              {useColoredLogo && (
+                <ColoredLogo className="w-auto h-12 py-2 fill-current inline dark:hidden" />
+              )}
+              <Logo
+                className={`w-auto h-12 py-2 fill-current ${
+                  useColoredLogo ? "hidden dark:inline" : ""
+                }`}
+              />
             </a>
           </Link>
         </div>

@@ -51,6 +51,7 @@ module.exports = {
         primary: "#45009D",
         dark: "#34017B",
         "off-black": "#1F084E",
+        deep: "#0E001D",
       },
       red: colors.red,
       rose: colors.rose,

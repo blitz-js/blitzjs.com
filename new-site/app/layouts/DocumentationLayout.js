@@ -10,7 +10,7 @@ export function DocumentationLayout(props) {
   const router = useRouter()
 
   return (
-    <div className="bg-gray-200 dark:bg-black bg-gradient-to-b dark:from-black dark:to-purple-off-black">
+    <div className="bg-gray-200 dark:bg-purple-deep">
       <Title suffix={router.pathname === "/" ? undefined : "Tailwind CSS"}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
@@ -23,7 +23,7 @@ export function DocumentationLayout(props) {
         />
       </Head>
       <Header
-        className="flex items-center justify-between px-6 mx-auto max-w-7xl"
+        className="flex items-center justify-between px-6 mx-auto max-w-7xl bg-gray-200 dark:bg-purple-deep"
         bannerMsg="Blitz is now in beta!"
         useColoredLogo
       />

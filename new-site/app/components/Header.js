@@ -32,12 +32,7 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
     <>
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
-        <div
-          className={`flex items-center justify-between ${className} ${
-            stickyBgClass ? stickyBgClass : ""
-          }`}
-        ></div>
-        <div className={`flex items-center justify-between ${className}`}>
+        <div className={`flex items-center justify-between ${className} ${stickyBgClass}`}>
           <div className="pr-12">
             <Link href="/">
               <a className="w-10 overflow-hidden md:w-auto">

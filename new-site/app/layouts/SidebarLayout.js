@@ -1,9 +1,8 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
+import { Link, useRouter } from "blitz"
 import { createContext, forwardRef, useRef } from "react"
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
 import clsx from "clsx"
-import { gradients } from "@/utils/gradients"
+import { TableOfContents } from "@/layouts/ContentsLayout"
 
 export const SidebarContext = createContext()
 
@@ -12,18 +11,12 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
     <li ref={ref}>
       <Link href={isPublished ? href : fallbackHref}>
         <a
-          className={clsx("px-3 py-2 transition-colors duration-200 relative block", {
-            "text-cyan-700": isActive,
-            "hover:text-gray-900 text-gray-500": !isActive && isPublished,
+          className={clsx("px-3 py-2 transition-colors duration-200 relative block font-bold", {
+            underline: isActive,
+            "hover:underline": !isActive && isPublished,
             "text-gray-400": !isActive && !isPublished,
           })}
         >
-          <span
-            className={clsx("rounded-md absolute inset-0 bg-cyan-50", {
-              "opacity-50": isActive,
-              "opacity-0": !isActive,
-            })}
-          />
           <span className="relative">{children}</span>
         </a>
       </Link>
@@ -31,7 +24,7 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
   )
 })
 
-function Nav({ nav, children, fallbackHref }) {
+function Nav({ nav, children, fallbackHref, toc }) {
   const router = useRouter()
   const activeItemRef = useRef()
   const scrollRef = useRef()
@@ -49,7 +42,7 @@ function Nav({ nav, children, fallbackHref }) {
     <nav
       id="nav"
       ref={scrollRef}
-      className="px-1 pt-6 font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-16"
+      className="px-1 pt-6 font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pt-10 lg:pb-16"
     >
       <ul>
         {children}
@@ -59,30 +52,25 @@ function Nav({ nav, children, fallbackHref }) {
               let publishedItems = category.pages.filter((item) => item.published !== false)
               if (publishedItems.length === 0 && !fallbackHref) return null
               return (
-                <li key={category.title} className="mt-8">
-                  <h5
-                    className={clsx(
-                      "px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs",
-                      {
-                        "text-gray-900": publishedItems.length > 0,
-                        "text-gray-400": publishedItems.length === 0,
-                      }
-                    )}
-                  >
-                    {category.title}
-                  </h5>
+                <li key={category.title} className="my-5">
+                  {category.title}
                   <ul>
                     {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
-                      <NavItem
-                        key={i}
-                        href={item.href}
-                        isActive={item.href === router.pathname}
-                        ref={item.href === router.pathname ? activeItemRef : undefined}
-                        isPublished={item.published !== false}
-                        fallbackHref={fallbackHref}
-                      >
-                        {item.shortTitle || item.title}
-                      </NavItem>
+                      <>
+                        <NavItem
+                          key={i}
+                          href={item.href}
+                          isActive={item.href === router.pathname}
+                          ref={item.href === router.pathname ? activeItemRef : undefined}
+                          isPublished={item.published !== false}
+                          fallbackHref={fallbackHref}
+                        >
+                          {item.shortTitle || item.title}
+                        </NavItem>
+                        {item.href === router.pathname && toc && (
+                          <TableOfContents tableOfContents={toc} />
+                        )}
+                      </>
                     ))}
                   </ul>
                 </li>
@@ -94,47 +82,21 @@ function Nav({ nav, children, fallbackHref }) {
   )
 }
 
-const TopLevelAnchor = forwardRef(
-  ({ children, href, className, icon, isActive, onClick, color }, ref) => {
+export function SidebarLayout({
+  children,
+  navIsOpen,
+  setNavIsOpen,
+  nav = [],
+  sidebar,
+  fallbackHref,
+  toc,
+}) {
+  if ((!nav || nav.length === 0) && !sidebar)
     return (
-      <li>
-        <a
-          ref={ref}
-          href={href}
-          onClick={onClick}
-          className={clsx(
-            "flex items-center px-3 hover:text-gray-900 transition-colors duration-200",
-            className,
-            {
-              "text-gray-900": isActive,
-            }
-          )}
-        >
-          <div className={`mr-3 rounded-md bg-gradient-to-br ${gradients[color][0]}`}>
-            <svg className="h-6 w-6" viewBox="0 0 24 24">
-              {icon}
-            </svg>
-          </div>
-          {children}
-        </a>
-      </li>
+      <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
+        {children}
+      </SidebarContext.Provider>
     )
-  }
-)
-
-function TopLevelLink({ href, as, ...props }) {
-  if (/^https?:\/\//.test(href)) {
-    return <TopLevelAnchor href={href} {...props} />
-  }
-
-  return (
-    <Link href={href} as={as} passHref>
-      <TopLevelAnchor {...props} />
-    </Link>
-  )
-}
-
-export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar, fallbackHref }) {
   return (
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
       <div className="w-full max-w-8xl mx-auto">
@@ -144,7 +106,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
             id="sidebar"
             onClick={() => setNavIsOpen(false)}
             className={clsx(
-              "fixed z-40 inset-0 flex-none h-full bg-black bg-opacity-25 w-full lg:bg-white lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block",
+              "fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-72 xl:w-84 lg:block",
               {
                 hidden: !navIsOpen,
               }
@@ -156,8 +118,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
               onClick={(e) => e.stopPropagation()}
               className="h-full scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
             >
-              <div className="hidden lg:block h-12 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-white" />
-              <Nav nav={nav} fallbackHref={fallbackHref}>
+              <Nav nav={nav} fallbackHref={fallbackHref} toc={toc}>
                 {sidebar}
               </Nav>
             </div>

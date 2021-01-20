@@ -67,9 +67,9 @@ function Nav({ nav, children, fallbackHref, toc }) {
                         >
                           {item.shortTitle || item.title}
                         </NavItem>
-                        {item.href === router.pathname && toc && (
+                        {item.href === router.pathname && toc && toc.length ? (
                           <TableOfContents tableOfContents={toc} />
-                        )}
+                        ) : null}
                       </>
                     ))}
                   </ul>
@@ -86,17 +86,11 @@ export function SidebarLayout({
   children,
   navIsOpen,
   setNavIsOpen,
-  nav = [],
+  nav,
   sidebar,
   fallbackHref,
-  toc,
+  layoutProps,
 }) {
-  if ((!nav || nav.length === 0) && !sidebar)
-    return (
-      <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
-        {children}
-      </SidebarContext.Provider>
-    )
   return (
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
       <div className="w-full max-w-8xl mx-auto">
@@ -118,7 +112,11 @@ export function SidebarLayout({
               onClick={(e) => e.stopPropagation()}
               className="h-full scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
             >
-              <Nav nav={nav} fallbackHref={fallbackHref} toc={toc}>
+              <Nav
+                nav={nav}
+                fallbackHref={fallbackHref}
+                toc={layoutProps && layoutProps.tableOfContents}
+              >
                 {sidebar}
               </Nav>
             </div>

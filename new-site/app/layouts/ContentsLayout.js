@@ -5,8 +5,6 @@ import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 
-import { documentationNav } from "@/navs/documentation"
-
 export const ContentsContext = createContext()
 
 export function TableOfContents({ tableOfContents, currentSection }) {
@@ -152,32 +150,30 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
   let { prev, next } = usePrevNext()
 
   return (
-    <SidebarLayout nav={documentationNav} toc={toc}>
-      <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
-        <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
-          <PageHeader title={meta.title} />
-          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-            {children}
-          </ContentsContext.Provider>
-          {(prev || next) && (
-            <>
-              <hr className="border-gray-200 mt-10 mb-4" />
-              <div className="flex justify-between leading-7 font-medium">
-                {prev && (
-                  <Link href={prev.href}>
-                    <a>← {prev.shortTitle || prev.title}</a>
-                  </Link>
-                )}
-                {next && (
-                  <Link href={next.href}>
-                    <a>{next.shortTitle || next.title} →</a>
-                  </Link>
-                )}
-              </div>
-            </>
-          )}
-        </div>
+    <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
+      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
+        <PageHeader title={meta.title} />
+        <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+          {children}
+        </ContentsContext.Provider>
+        {(prev || next) && (
+          <>
+            <hr className="border-gray-200 mt-10 mb-4" />
+            <div className="flex justify-between leading-7 font-medium">
+              {prev && (
+                <Link href={prev.href}>
+                  <a>← {prev.shortTitle || prev.title}</a>
+                </Link>
+              )}
+              {next && (
+                <Link href={next.href}>
+                  <a>{next.shortTitle || next.title} →</a>
+                </Link>
+              )}
+            </div>
+          </>
+        )}
       </div>
-    </SidebarLayout>
+    </div>
   )
 }

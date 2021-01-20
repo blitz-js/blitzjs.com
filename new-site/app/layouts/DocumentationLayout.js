@@ -6,6 +6,8 @@ import { Title } from "@/components/Title"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/home/Footer"
 
+import { documentationNav } from "@/navs/documentation"
+
 export function DocumentationLayout(props) {
   const router = useRouter()
 
@@ -29,7 +31,7 @@ export function DocumentationLayout(props) {
         useColoredLogo
         stickyBgClass="bg-gray-200 dark:bg-purple-deep"
       />
-      <SidebarLayout {...props} />
+      <SidebarLayout nav={documentationNav} {...props} />
       <Footer className="text-black dark:text-white" />
     </div>
   )

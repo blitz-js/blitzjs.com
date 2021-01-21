@@ -14,7 +14,7 @@ module.exports = {
       black: "#000",
       "off-black": "#191919",
       "off-white": "#EEF2F7",
-      white: "#FFF",
+      white: "#FCFCFD",
 
       amber: colors.amber,
       blue: {
@@ -95,6 +95,7 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            "> *": theme("colors.black"),
             maxWidth: "none",
             color: theme("colors.gray.500"),
             "> :first-child": { marginTop: "-" },
@@ -120,13 +121,12 @@ module.exports = {
               top: "calc(0.875em - 0.0625em)",
               left: 0,
               borderRadius: 0,
-              backgroundColor: theme("colors.gray.300"),
+              backgroundColor: theme("colors.purple.light"),
             },
             a: {
-              color: theme("colors.cyan.700"),
+              color: theme("colors.black"),
               fontWeight: theme("fontWeight.medium"),
-              textDecoration: "none",
-              boxShadow: theme("boxShadow.link"),
+              textDecoration: "underline",
             },
             "a code": {
               color: "inherit",
@@ -142,7 +142,7 @@ module.exports = {
             },
             code: {
               fontWeight: "400",
-              color: theme("colors.violet.600"),
+              color: theme("colors.black"),
             },
             "code::before": {
               // content: 'none',
@@ -177,6 +177,17 @@ module.exports = {
             },
             "tbody code": {
               fontSize: theme("fontSize.xs")[0],
+            },
+          },
+        },
+        dark: {
+          css: {
+            "> *": theme("colors.white"),
+            a: {
+              color: theme("colors.white"),
+            },
+            code: {
+              color: theme("colors.white"),
             },
           },
         },

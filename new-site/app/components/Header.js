@@ -7,8 +7,9 @@ import { FaHeart } from "react-icons/fa"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
+import Banner from "@/components/Banner"
 
-const Header = ({ className = "" }) => {
+const Header = ({ className = "", bannerMsg = "" }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const Header = ({ className = "" }) => {
 
   return (
     <>
+      {bannerMsg && <Banner message={bannerMsg} />}
       <div className={`flex items-center justify-between ${className}`}>
         <div className="pr-12">
           <Link href="/">

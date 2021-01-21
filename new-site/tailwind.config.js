@@ -95,9 +95,8 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            "> *": theme("colors.black"),
+            color: theme("colors.black"),
             maxWidth: "none",
-            color: theme("colors.gray.500"),
             "> :first-child": { marginTop: "-" },
             "> :last-child": { marginBottom: "-" },
             "&:first-child > :first-child": {
@@ -133,7 +132,6 @@ module.exports = {
               fontWeight: "inherit",
             },
             strong: {
-              color: theme("colors.gray.900"),
               fontWeight: theme("fontWeight.medium"),
             },
             "a strong": {
@@ -143,12 +141,19 @@ module.exports = {
             code: {
               fontWeight: "400",
               color: theme("colors.black"),
+              backgroundColor: theme("colors['off-white']"),
+              padding: "3px 5px",
+              borderRadius: 2,
+            },
+            "pre code": {
+              fontWeight: "400",
+              color: theme("colors.black"),
             },
             "code::before": {
-              // content: 'none',
+              content: "none",
             },
             "code::after": {
-              // content: 'none',
+              content: "none",
             },
             pre: {
               backgroundColor: "-",
@@ -182,11 +187,15 @@ module.exports = {
         },
         dark: {
           css: {
-            "> *": theme("colors.white"),
+            color: theme("colors.white"),
             a: {
               color: theme("colors.white"),
             },
             code: {
+              color: theme("colors.white"),
+              backgroundColor: theme("colors.purple['off-black']"),
+            },
+            "pre code": {
               color: theme("colors.white"),
             },
           },
@@ -297,6 +306,7 @@ module.exports = {
       ringOpacity: ["focus-visible"],
       rotate: ["first", "last", "odd", "even"],
       display: ["dark"],
+      typography: ["dark"],
     },
   },
   plugins: [

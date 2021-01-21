@@ -10,6 +10,7 @@ const minimatch = require("minimatch")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 })
+const admonitions = require("remark-admonitions")
 
 const fallbackLayouts = {
   // Have to use compiled locations
@@ -76,7 +77,13 @@ module.exports = withBundleAnalyzer({
         {
           loader: "@mdx-js/loader",
           options: {
-            remarkPlugins: [withProse, withTableOfContents, withSyntaxHighlighting, withNextLinks],
+            remarkPlugins: [
+              withProse,
+              withTableOfContents,
+              withSyntaxHighlighting,
+              withNextLinks,
+              admonitions,
+            ],
           },
         },
         createLoader(function (source) {

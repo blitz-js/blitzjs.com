@@ -4,6 +4,7 @@ import Link from "next/link"
 import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
+import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
 
 export const ContentsContext = createContext()
 
@@ -151,7 +152,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
 
   return (
     <div id={meta.containerId} className="pt-10 pb-24 lg:pb-16 w-full flex">
-      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8">
+      <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
         <PageHeader title={meta.title} />
         <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
           {children}
@@ -162,12 +163,17 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
             <div className="flex justify-between leading-7 font-medium">
               {prev && (
                 <Link href={prev.href}>
-                  <a>← {prev.shortTitle || prev.title}</a>
+                  <a className="flex items-center">
+                    <ArrowIcon className="mr-2 fill-current" /> {prev.shortTitle || prev.title}
+                  </a>
                 </Link>
               )}
               {next && (
                 <Link href={next.href}>
-                  <a>{next.shortTitle || next.title} →</a>
+                  <a className="flex items-center">
+                    {next.shortTitle || next.title}{" "}
+                    <ArrowIcon className="ml-2 fill-current transform rotate-180" />
+                  </a>
                 </Link>
               )}
             </div>

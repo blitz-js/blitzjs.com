@@ -131,6 +131,24 @@ const sampleFile = `export default function Comp() {
 expect(addImport(j(sampleFile), newImport).toSource()).toMatchSnapshot()
 ```
 
+#### Modifying Non-JS files
+
+Not all modifications can be performed using `jscodeshift`.
+For any other transformations, you can use `transformPlain`:
+
+```ts
+builder
+  .addTransformFilesStep({
+     ...,
+     singleFileSearch: "README.md",
+     transformPlain(readme: string) {
+       return readme + "\n" + "Paul Plain was here!"
+     },
+   })
+```
+
+This step would append "Paul Plain was here!" to the user's README.md
+
 ### Publishing
 
 That's all you need to build a recipe! At this point, you can commit and push up to GitHub, and your recipe is available to the world. Users can install your recipe by passing your full repository name to `blitz install` - for example:

@@ -9,7 +9,7 @@ module.exports.withSyntaxHighlighting = () => {
       node.value = [
         `<div class="my-6 rounded-xl overflow-hidden bg-code-block dark:bg-purple-off-black">`,
         `<pre class="language-${lang}">`,
-        `<code class="language-${lang} text-black dark:text-white">`,
+        `<code class="language-${lang}">`,
         highlightCode(node.value, lang),
         "</code>",
         "</pre>",

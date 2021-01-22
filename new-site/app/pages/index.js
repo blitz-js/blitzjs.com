@@ -11,6 +11,7 @@ import { FeatureIconTitle } from "@/components/home/FeatureIconTitle"
 import { Sponsor } from "@/components/home/Sponsor"
 import { FaGithub } from "react-icons/fa"
 import { Footer } from "@/components/home/Footer"
+import { StyledLink } from "@/components/home/StyledLink"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -33,18 +34,18 @@ const Home = ({ randomContributors }) => {
           <a name="top" aria-hidden>
             {null}
           </a>
-          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-36">
+          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-44">
             <div className="text-white col-span-full">
               <Header className="px-6 mx-auto max-w-7xl" bannerMsg="Blitz is now in beta!" />
             </div>
             <div className="absolute w-full h-full row-start-1 row-end-5 background-to-video -z-10 rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
-            <div className="-mt-6 text-white col-span-full">
-              <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2 md:gap-6">
-                <div className="space-y-10 lg:w-full">
+            <div className="relative -mt-6 text-white col-span-full">
+              <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2 md:gap-6 xl:-mt-10">
+                <div className="z-10 space-y-10 lg:w-full">
                   <h2 className="text-5xl font-medium font-secondary xl:text-6xl xl:font-normal dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
                     The Fullstack React Framework
                   </h2>
-                  <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
+                  <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
                     Blitz makes you far more productive than you ever dreamed possible! It's a
                     Javascript equivalent for Ruby on Rails that's built on Next.js and features a
                     "Zero-API" data layer.
@@ -67,7 +68,34 @@ const Home = ({ randomContributors }) => {
                     </ButtonLink>
                   </div>
                 </div>
-                <HeroCode className="lg:col-span-2 xl:col-span-1" />
+                <div className="relative lg:col-span-2 xl:col-span-1">
+                  <img
+                    src="/hands/hero-rightarm.svg"
+                    alt="Hero right arm"
+                    className="absolute hidden xl:block -left-36 top-32"
+                    style={{ maxWidth: "120rem" }}
+                  />
+                  <img
+                    src="/hands/hero-righthand.svg"
+                    alt="Hero right hand"
+                    className="absolute z-20 hidden xl:block -left-4"
+                    style={{ top: "15.2rem" }}
+                  />
+
+                  <img
+                    src="/hands/hero-leftarm.svg"
+                    alt="Hero left arm"
+                    className="absolute hidden xl:block"
+                    style={{ maxWidth: "120rem", top: "30rem", right: "-4.8rem" }}
+                  />
+                  <img
+                    src="/hands/hero-lefthand.svg"
+                    alt="Hero left hand"
+                    className="absolute z-20 hidden xl:block"
+                    style={{ top: "26.6rem", right: "-2.2rem" }}
+                  />
+                  <HeroCode className="z-10" />
+                </div>
               </div>
             </div>
             <div className="px-6 mx-auto space-y-12 text-lg text-center text-white lg:space-y-0 lg:space-x-12 lg:flex lg:text-left max-w-7xl xl:font-mediumxl:text-xl">

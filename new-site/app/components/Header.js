@@ -49,7 +49,7 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
             </Link>
           </div>
           <div className="flex-1 hidden py-2 space-x-2 text-base lg:flex">
-            <NavLink href="#">Docs</NavLink>
+            <NavLink href="/docs">Docs</NavLink>
             <NavLink
               target="_blank"
               rel="noopener noreferrer"

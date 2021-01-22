@@ -57,7 +57,7 @@ export default function App({ Component, pageProps, router }) {
         <meta
           key="og:image"
           property="og:image"
-          content={`https://tailwindcss.com${twitterLargeCard}`}
+          content={`https://blitzjs.com${twitterLargeCard}`}
         />
       </Head>
       <ThemeProvider defaultTheme="system" attribute="class">

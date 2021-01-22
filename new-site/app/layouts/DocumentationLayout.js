@@ -13,7 +13,7 @@ export function DocumentationLayout(props) {
 
   return (
     <div className="bg-gray-200 dark:bg-purple-deep py-1 md:py-3">
-      <Title suffix={router.pathname === "/" ? undefined : "Tailwind CSS"}>
+      <Title suffix={router.pathname === "/" ? undefined : "Blitz.js"}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>

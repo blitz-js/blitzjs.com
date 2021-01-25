@@ -58,7 +58,17 @@ html {
 }
 
 .architecture-diagram {
-  width: 1260px;
+  width: 1230px;
+}
+
+.hand {
+  --color-stop: theme("colors.purple.light");
+  --page-bg-color: theme("colors.white");
+}
+
+.dark .hand {
+  --color-stop: theme("colors.purple.dark");
+  --page-bg-color: theme("colors.black");
 }
 
 @screen sm {

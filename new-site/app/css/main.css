@@ -61,6 +61,16 @@ html {
   width: 1260px;
 }
 
+.hand {
+  --color-stop: theme("colors.purple.light");
+  --page-bg-color: theme("colors.white");
+}
+
+.dark .hand {
+  --color-stop: theme("colors.purple.dark");
+  --page-bg-color: theme("colors.black");
+}
+
 @screen sm {
   .features-grid {
     grid-template-columns: repeat(6, 25rem);

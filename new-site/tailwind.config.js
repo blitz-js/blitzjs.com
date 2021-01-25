@@ -83,7 +83,7 @@ module.exports = {
       "2xl": ["1.375rem", "1.875rem"], // 22px
       "3xl": ["1.875rem", "2.4375rem"], // 30px
       "4xl": "2.375rem", // 38px
-      "5xl": ["2.8125rem", "3.125rem"], // 45px
+      "5xl": ["2.8125rem", "4.025rem"], // 45px
       "6xl": ["3.875rem", "4.84375rem"], // 62px
     },
     borderColor: (theme) => ({

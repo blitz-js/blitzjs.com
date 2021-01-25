@@ -12,6 +12,7 @@ import { Sponsor } from "@/components/home/Sponsor"
 import { FaGithub } from "react-icons/fa"
 import { Footer } from "@/components/home/Footer"
 import { StyledLink } from "@/components/home/StyledLink"
+import { Hand } from "@/components/home/Hand"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -69,30 +70,17 @@ const Home = ({ randomContributors }) => {
                   </div>
                 </div>
                 <div className="relative lg:col-span-2 xl:col-span-1">
-                  <img
-                    src="/hands/hero-rightarm.svg"
-                    alt="Hero right arm"
-                    className="absolute hidden xl:block -left-36 top-32"
-                    style={{ maxWidth: "120rem" }}
-                  />
-                  <img
-                    src="/hands/hero-righthand.svg"
-                    alt="Hero right hand"
-                    className="absolute z-20 hidden xl:block -left-4"
+                  <Hand variant="hero-rightarm" className=" -left-36 top-32" />
+                  <Hand
+                    variant="hero-righthand"
+                    className="z-20 -left-4"
                     style={{ top: "15.2rem" }}
                   />
-
-                  <img
-                    src="/hands/hero-leftarm.svg"
-                    alt="Hero left arm"
-                    className="absolute hidden xl:block"
-                    style={{ maxWidth: "120rem", top: "30rem", right: "-4.8rem" }}
-                  />
-                  <img
-                    src="/hands/hero-lefthand.svg"
-                    alt="Hero left hand"
-                    className="absolute z-20 hidden xl:block"
-                    style={{ top: "26.6rem", right: "-2.2rem" }}
+                  <Hand variant="hero-leftarm" style={{ top: "30rem", right: "-4.8rem" }} />
+                  <Hand
+                    variant="hero-lefthand"
+                    style={{ top: "26.6rem", right: "-2.2em" }}
+                    className="z-20"
                   />
                   <HeroCode className="z-10" />
                 </div>
@@ -126,11 +114,12 @@ const Home = ({ randomContributors }) => {
               <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
             </div>
 
-            <div className="w-full px-6 mx-auto space-y-10 lg:space-y-12 max-w-7xl">
-              <h2 className="text-3xl font-semibold xl:text-5xl">
+            <div className="relative w-full px-6 mx-auto space-y-10 lg:space-y-12 xl:space-y-36 max-w-7xl">
+              <h2 className="text-3xl font-semibold xl:text-5xl xl:w-1/2">
                 Everything You Need For Production Apps
               </h2>
               <div className="w-full overflow-x-scroll">
+                <Hand variant="concepts-right" className="-top-14" style={{ right: "-13.2rem" }} />
                 <div className="grid features-grid gap-x-6 lg:gap-y-14">
                   <Feature title="Fullstack & Monolithic">
                     <p>
@@ -184,7 +173,7 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 -z-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
             <div>{/* spacer div */}</div>
-            <div className="hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
+            <div className="relative hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
               <h3 className="pb-1 text-xl text-white border-b border-opacity-50 border-blue-mid">
                 Blitz CodeSandbox Example
               </h3>
@@ -192,13 +181,14 @@ const Home = ({ randomContributors }) => {
                 <iframe
                   title="CodeSandbox"
                   src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
-                  className="block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
+                  className="relative z-10 block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
                   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                 ></iframe>
+                <Hand variant="sandbox-right" style={{ right: "-13.2rem", bottom: "-35rem" }} />
               </div>
             </div>
             <div className="grid grid-cols-1 px-6 mx-auto text-white lg:grid-cols-2 gap-14 max-w-7xl">
-              <h2 className="text-5xl text-transparent font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
+              <h2 className="text-5xl text-transparent font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue xl:text-6xl">
                 The Blitz Community - Our Most Important Aspect
               </h2>
               <div className="grid grid-cols-5 gap-1 md:grid-cols-6 lg:row-start-2 lg:grid-cols-5 grid-rows-8 overflow-clip">
@@ -218,7 +208,7 @@ const Home = ({ randomContributors }) => {
                   </a>
                 ))}
               </div>
-              <div className="grid grid-cols-1 text-lg gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
+              <div className="z-10 grid grid-cols-1 text-lg gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-end">
                   <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white">
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
@@ -274,11 +264,13 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="col-span-full" />
             <div className="absolute w-full h-full row-start-8 row-end-18 xl:row-end-19 -z-20 bg-purple-mid dark:bg-purple-off-black"></div>
-            <div className="px-6 mx-auto space-y-12 text-white max-w-7xl">
+            <div className="relative px-6 mx-auto space-y-12 text-white max-w-7xl xl:space-y-36">
               <h2 className="text-3xl font-semibold lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
-                Everything End-to-End From the Database to the Frontend
+                Everything End-to-End From <br className="hidden xl:block" />
+                the Database to the Frontend
               </h2>
               <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
+                <Hand variant="features-right" className="-top-40" style={{ right: "-13.2rem" }} />
                 <FeatureIconTitle icon="thumbsUp" title="Authentication Built In">
                   Coming Soon! · Blitz fullstack authentication is super easy and very secure. Works
                   with any identity provider, including self-hosted username and password and
@@ -312,8 +304,11 @@ const Home = ({ randomContributors }) => {
             </div>
             <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 xl:row-start-12 row-end-15 xl:row-end-16 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
             <div className="col-span-full"></div>
-            <div className="px-6 mx-auto text-center space-y-7 max-w-7xl">
-              <h2 className="text-3xl font-semibold xl:text-5xl">Our Sponsors</h2>
+            <div className="px-6 mx-auto text-center space-y-7 max-w-7xl xl:space-y-10">
+              <h2 className="relative text-3xl font-semibold xl:text-5xl">
+                <Hand variant="sponsors-left" className="-left-80" style={{ top: "-18.05rem" }} />
+                Our Sponsors
+              </h2>
               <p className="text-lg xl:text-xl">
                 Your financial contributions help ensure Blitz continues to be developed and{" "}
                 <br className="hidden lg:block" />
@@ -349,15 +344,17 @@ const Home = ({ randomContributors }) => {
                 </StyledLink>
                 .
               </p>
-              <ButtonLink
-                variant="solid-dark"
-                href="https://github.com/sponsors/blitz-js"
-                className="mx-auto rounded-bl-none rounded-xl lg:w-max md:w-1/3 lg:m-auto lg:mt-4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Sponsor Us
-              </ButtonLink>
+              <div>
+                <ButtonLink
+                  variant="solid-dark"
+                  href="https://github.com/sponsors/blitz-js"
+                  className="mx-auto rounded-bl-none rounded-xl lg:w-max md:w-1/3 lg:m-auto lg:mt-4 xl:mt-18"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sponsor Us
+                </ButtonLink>
+              </div>
             </div>
             <div className="grid w-full gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-w-7xl">
               <Sponsor iconName="diamond-sponsor" title="Diamond Sponsors">

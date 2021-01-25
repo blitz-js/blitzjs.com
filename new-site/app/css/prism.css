@@ -92,9 +92,13 @@
 }
 
 .token.inserted:not(.prefix) {
-  @apply block bg-emerald-700 bg-opacity-50 -mx-4 px-4;
+  @apply block bg-purple-light bg-opacity-25 -mx-4 px-4;
 }
 
 .token.inserted.prefix {
-  @apply text-emerald-200 text-opacity-75 select-none;
+  @apply text-purple-primary text-opacity-75 select-none;
+}
+
+.token.inserted .token.comment {
+  @apply text-blue-dark;
 }

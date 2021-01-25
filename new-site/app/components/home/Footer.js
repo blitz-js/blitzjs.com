@@ -8,7 +8,7 @@ export function Footer({ className }) {
   return (
     <footer className={className}>
       <div className="text-white border-t border-white border-opacity-50">
-        <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-7 gap-x-24">
+        <div className="relative grid px-6 mx-auto max-w-7xl lg:grid-rows-2 lg:grid-cols-3 gap-y-7 gap-x-24">
           <a href="#top">
             <Icon
               name="arrowUp"
@@ -25,7 +25,7 @@ export function Footer({ className }) {
           <div className="mb-4 lg:row-end-5">
             <NewsletterForm />
           </div>
-          <div className="grid gap-7 md:grid-cols-3 xl:col-span-2">
+          <div className="grid gap-7 md:grid-cols-3 lg:col-span-2">
             <LinkList title="Docs">
               <Link href="/docs/getting-started">
                 <a>Getting Started</a>

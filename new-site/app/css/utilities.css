@@ -129,3 +129,31 @@ body.cursor-grabbing * {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.admonition {
+  @apply px-5 pt-5 pb-px rounded-xl text-black;
+}
+
+.admonition.admonition-caution {
+  @apply bg-supplementary-yellow;
+}
+
+.admonition.admonition-info {
+  @apply bg-supplementary-blue;
+}
+
+.admonition.admonition-note {
+  @apply bg-blue-primary;
+}
+
+.admonition .admonition-heading {
+  @apply capitalize font-bold;
+}
+
+.admonition .admonition-heading > * {
+  @apply flex items-center;
+}
+
+.admonition .admonition-icon {
+  @apply mr-2;
+}

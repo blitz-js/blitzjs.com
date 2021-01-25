@@ -255,11 +255,11 @@ function Home() {
 
           <Button
             as="a"
-            href="https://slack.blitzjs.com"
+            href="https://discord.blitzjs.com"
             variant="outline"
             style={{marginTop: "auto"}}
           >
-            Join our Slack Community
+            Join our Discord Community
           </Button>
         </Spaced>
 

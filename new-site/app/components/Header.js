@@ -55,8 +55,8 @@ const Header = ({ className = "", bannerMsg = "" }) => {
           >
             Releases
           </NavLink>
-          <NavLink target="_blank" rel="noopener noreferrer" href="https://slack.blitzjs.com/">
-            Slack
+          <NavLink target="_blank" rel="noopener noreferrer" href="https://discord.blitzjs.com/">
+            Discord
           </NavLink>
           <NavLink
             target="_blank"
@@ -108,10 +108,10 @@ const Header = ({ className = "", bannerMsg = "" }) => {
           <NavLink
             target="_blank"
             rel="noopener noreferrer"
-            href="https://slack.blitzjs.com/"
+            href="https://discord.blitzjs.com/"
             className="px-3 mb-1"
           >
-            Slack
+            Discord
           </NavLink>
           <NavLink
             target="_blank"

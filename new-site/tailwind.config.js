@@ -96,6 +96,7 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme("colors.black"),
+            fontSize: theme("fontSize.sm"),
             maxWidth: "none",
             "> :first-child": { marginTop: "-" },
             "> :last-child": { marginBottom: "-" },
@@ -163,7 +164,7 @@ module.exports = {
               marginBottom: 0,
             },
             table: {
-              fontSize: theme("fontSize.sm")[0],
+              fontSize: theme("fontSize.sm"),
               lineHeight: theme("fontSize.sm")[1].lineHeight,
             },
             thead: {

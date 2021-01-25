@@ -255,11 +255,11 @@ function Home() {
 
           <Button
             as="a"
-            href="https://slack.blitzjs.com"
+            href="https://discord.blitzjs.com"
             variant="outline"
             style={{marginTop: "auto"}}
           >
-            Join our Slack Community
+            Join our Discord Community
           </Button>
         </Spaced>
 
@@ -306,7 +306,7 @@ function Home() {
         <Feature title="Code Installer Recipes">
           <Text>
             One command to install code and/or packages into your blitz app. Examples: `blitz
-            install tailwind` or `blitz install chakra`. Multiple offical recipes, but anyone can
+            install tailwind` or `blitz install chakra-ui`. Multiple offical recipes, but anyone can
             create an publish their own.
           </Text>
         </Feature>

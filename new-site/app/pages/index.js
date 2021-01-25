@@ -208,12 +208,12 @@ const Home = ({ randomContributors }) => {
                     </p>
                   </div>
                   <ButtonLink
-                    href="https://slack.blitzjs.com/"
+                    href="https://discord.blitzjs.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-bl-none rounded-xl lg:w-max"
                   >
-                    Join our Slack Community
+                    Join our Discord Community
                   </ButtonLink>
                 </div>
                 <div className="flex flex-col justify-between h-full space-y-6 lg:justify-start">

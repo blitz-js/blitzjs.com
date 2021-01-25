@@ -36,9 +36,9 @@ export function Footer({ className }) {
             </LinkList>
 
             <LinkList title="Community">
-              <Link href="https://slack.blitzjs.com/">
+              <Link href="https://discord.blitzjs.com/">
                 <a target="_blank" rel="noopener noreferrer">
-                  Slack
+                  Discord
                 </a>
               </Link>
               <Link href="https://github.com/blitz-js/blitz/discussions">

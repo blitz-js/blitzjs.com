@@ -189,15 +189,11 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            a: {
+            "h1, h2, a, code, pre code": {
               color: theme("colors.white"),
             },
             code: {
-              color: theme("colors.white"),
               backgroundColor: theme("colors.purple['off-black']"),
-            },
-            "pre code": {
-              color: theme("colors.white"),
             },
           },
         },

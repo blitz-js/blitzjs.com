@@ -11,7 +11,7 @@ Thanks for trying out Blitz! In this tutorial, we’ll walk you through the crea
 
 We’ll assume that you have [Blitz installed](./getting-started) already. You can tell if Blitz is installed, and which version you have by running the following command in your terminal:
 
-```sh
+```shell
 blitz -v
 ```
 
@@ -23,7 +23,7 @@ If this is your first time using Blitz, you’ll have to begin with some initial
 
 From the command line, `cd` into the directory where you’d like to store your code, and then run the following command:
 
-```sh
+```shell
 blitz new mysite
 ```
 
@@ -88,7 +88,7 @@ These files are:
 
 Let’s check that your Blitz project works. Make sure you are in the `mysite` directory, if you haven’t already, and run the following command:
 
-```sh
+```shell
 blitz start
 ```
 
@@ -134,7 +134,7 @@ Blitz provides a handy command called [`generate`](./cli-generate) for scaffoldi
 
 First, we'll generate everything pertaining to the `Question` model:
 
-```sh
+```shell
 blitz generate all question text:string choices:choice[]
 ```
 
@@ -169,7 +169,7 @@ The `generate` command with a type of `all` generates a model and queries, mutat
 
 Now we'll generate the `Choice` model with corresponding queries and mutations. We'll pass a type of `resource` this time as we don't need to generate pages for the `Choice` model:
 
-```sh
+```shell
 blitz generate resource choice text votes:int:default[0] belongsTo:question
 ```
 
@@ -201,7 +201,7 @@ CREATE    app/choices/mutations/updateChoice.ts
 
 Now, we need to migrate our database. This is a way of telling it that you have edited your schema in some way. Run the below command. When it asks you to enter a migration name, you can enter anything you want (perhaps "init db"):
 
-```sh
+```shell
 blitz prisma migrate dev --preview-feature
 ```
 
@@ -209,13 +209,13 @@ blitz prisma migrate dev --preview-feature
 
 Now, let’s hop into the interactive Blitz shell and play around with the free API Blitz gives you. To invoke the Blitz console, use this command:
 
-```sh
+```shell
 blitz console
 ```
 
 Once you’re in the console, explore the Database API:
 
-```sh
+```shell
 # No questions are in the system yet.
 ⚡ > await db.question.findMany()
 []

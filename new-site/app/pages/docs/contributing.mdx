@@ -74,7 +74,7 @@ But in the docs repo, anyone can merge PRs once someone else has approved the PR
 
 **2.** Clone your forked repo
 
-```sh
+```shell
 # replace USERNAME below with your GitHub username
 git clone git@github.com:USERNAME/blitz.git
 cd blitz
@@ -82,19 +82,19 @@ cd blitz
 
 **3.** Install dependencies
 
-```sh
+```shell
 yarn
 ```
 
 **4.** Start the package server. This **must be running** for any package development or example development
 
-```sh
+```shell
 yarn dev
 ```
 
 **5.** Run tests
 
-```sh
+```shell
 yarn test
 ```
 
@@ -109,7 +109,7 @@ For using in apps outside the repo, [yalc](https://github.com/whitecolor/yalc) s
 
 #### Sync your fork
 
-```sh
+```shell
 git remote add upstream git@github.com:blitz-js/blitz.git
 ./scripts/fetchRemote.sh
 git merge upstream/canary
@@ -119,7 +119,7 @@ git merge upstream/canary
 
 The following will link the development CLI as a local binary so you can use it anywhere for testing.
 
-```sh
+```shell
 yarn link-cli
 yarn link blitz
 // `yarn unlink blitz`
@@ -130,13 +130,13 @@ yarn link blitz
 
 **1.** Change to a package directory
 
-```sh
+```shell
 cd packages/core
 ```
 
 **2.** Start the test runner
 
-```sh
+```shell
 yarn test:watch
 ```
 
@@ -144,7 +144,7 @@ yarn test:watch
 
 **1.** Change to an example directory
 
-```sh
+```shell
 cd examples/store
 ```
 
@@ -158,7 +158,7 @@ If you run into issues that should be documented here, please submit a PR! ❤�
 
 `node-pty` error when running `yarn`. Fix by installing `node-pty dependencies`
 
-```sh
+```shell
 sudo apt install -y make python build-essential
 ```
 
@@ -166,12 +166,12 @@ sudo apt install -y make python build-essential
 
 This issue is related with yarn > 1.19.1, if you get an error like this in your console:
 
-```sh
+```shell
 An unexpected error occurred: "expected workspace package to exist for \"@wessberg/rollup-plugin-ts\"
 ```
 
 Fix it with this command:
 
-```sh
+```shell
 yarn policies set-version 1.19.1
 ```

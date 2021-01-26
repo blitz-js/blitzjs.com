@@ -306,7 +306,7 @@ The end result should be as such:
 // app/questions/mutations/deleteQuestion.ts
 
 export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
 
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
@@ -526,7 +526,7 @@ import db, {Prisma} from "db"
 type GetQuestionInput = Pick<Prisma.FindFirstQuestionArgs, "where">
 
 export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
   // highlight-start
   const question = await db.question.findFirst({where, include: {choices: true}})
   // highlight-end
@@ -548,7 +548,7 @@ export default async function getQuestions(
   { where, orderBy, skip = 0, take }: GetQuestionsInput,
   ctx: Ctx
 ) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
 
   const questions = await db.question.findMany({
     where,

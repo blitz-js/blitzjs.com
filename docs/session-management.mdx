@@ -174,6 +174,34 @@ You can also use `ctx.session.setPublicData()` to update session data for an alr
 ctx.session.setPublicData({orgId: 1})
 ```
 
+To access public data on the client:
+
+```ts
+import {useSession} from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.orgId
+
+  return /*... */
+}
+```
+
+To access public data on the server:
+
+```ts
+// app/queries/someQuery.ts
+import {Ctx} from "blitz"
+
+export default async function someQuery(input: any, ctx: Ctx) {
+  // Access the SessionContext class
+  ctx.session.orgId
+
+  return
+}
+```
+
 ## Session Configuration
 
 You can customize session management by passing an object to the `sessionMiddleware` factory function.
@@ -200,7 +228,7 @@ Available options:
 type SessionConfig = {
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
-  domain?: string  /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
+  domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
   getSession: (handle: string) => Promise<SessionModel | null>
   getSessions: (userId: string | number) => Promise<SessionModel[]>
   createSession: (session: SessionModel) => Promise<SessionModel>
@@ -222,7 +250,7 @@ interface SessionModel extends Record<any, any> {
 }
 ```
 
-## Customize Session Persistence & Database Acess
+## Customize Session Persistence & Database Access
 
 By default, session persistence is zero-config with Prisma. However, you can customize this to save sessions somewhere else, like Redis. You can also customize this if you have Prisma but want to customize the attribute names on the user or session model.
 

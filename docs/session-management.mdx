@@ -145,19 +145,26 @@ Anonymous session `PublicData` looks like this:
 
 ## Customize Session Public Data in Typescript
 
-If using Typescript, first update the `PublicData` type in `types.ts` like this:
+If using Typescript, first update the `Session.PublicData` type in `types.ts` like this:
 
-```ts
-import {DefaultPublicData} from "blitz"
-import {User} from "db"
+```diff
+
+import { DefaultCtx, SessionContext } from "blitz"
+import { simpleRolesIsAuthorized } from "@blitzjs/server"
+import { User } from "db"
 
 declare module "blitz" {
-  export interface PublicData extends DefaultPublicData {
-    userId: User["id"]
-    // highlight-start
-    roles: readonly ["admin" | "customer"]
-    orgId: number
-    // highlight-end
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+  export interface Session {
+    isAuthorized: typeof simpleRolesIsAuthorized
+    PublicData: {
+      userId: User["id"]
+-      roles: string[]
++      roles: readonly ["admin" | "customer"]
++      orgId: number
+    }
   }
 }
 ```
@@ -323,7 +330,7 @@ Authenticated sessions use opaque tokens that are stored in the database.
 #### `SessionContext`
 
 ```ts
-interface SessionContext {
+interface SessionContext extends PublicData {
   /**
    * null if anonymous
    */

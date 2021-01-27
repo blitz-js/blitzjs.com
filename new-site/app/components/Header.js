@@ -49,7 +49,7 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
             </Link>
           </div>
           <div className="flex-1 hidden py-2 space-x-2 text-base lg:flex">
-            <NavLink href="/docs">Docs</NavLink>
+            <NavLink href="/docs/getting-started">Docs</NavLink>
             <NavLink
               target="_blank"
               rel="noopener noreferrer"
@@ -95,7 +95,7 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
         </div>
         {isOpen && (
           <div className={`mt-4 text-2xl lg:hidden ${className}`}>
-            <NavLink href="/docs" className="px-3 mb-1">
+            <NavLink href="/docs/getting-started" className="px-3 mb-1">
               Docs
             </NavLink>
             <NavLink

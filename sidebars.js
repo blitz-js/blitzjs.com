@@ -29,6 +29,7 @@ module.exports = {
     Auth: ["auth", "session-management", "authorization", "auth-utils", "passportjs"],
     Pages: [
       "pages",
+      "redirects",
       "error-pages",
       "head-component",
       "document-component",

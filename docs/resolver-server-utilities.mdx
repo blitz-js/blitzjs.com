@@ -29,14 +29,13 @@ export default pipe.resolver(
   pipe.zod(CreateProject),
   pipe.authorize(),
   // Set default orgId
-  (input, {session}) => ({orgId: session.orgId, ...input}),
+  (input, {session}) => ({...input, orgId: input.orgId ?? session.orgId}),
   async (input, ctx) => {
-    console.log("Creating project...", ctx.session.orgId)
+    console.log("Creating project...", input.orgId)
     const project = await db.project.create({
       data: input,
     })
     console.log("Created project")
-
     return project
   },
 )

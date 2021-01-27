@@ -93,56 +93,56 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
             <DarkModeToggle className="hidden text-base lg:my-2 lg:block" />
           </div>
         </div>
-      </div>
-      {isOpen && (
-        <div className={`mt-4 text-2xl lg:hidden ${className}`}>
-          <NavLink href="/docs" className="px-3 mb-1">
-            Docs
-          </NavLink>
-          <NavLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/blitz-js/blitz"
-            className="px-3 mb-1"
-          >
-            GitHub
-          </NavLink>
-          <NavLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/blitz-js/blitz/releases"
-            className="px-3 mb-1"
-          >
-            Releases
-          </NavLink>
-          <NavLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://discord.blitzjs.com/"
-            className="px-3 mb-1"
-          >
-            Discord
-          </NavLink>
-          <NavLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/blitz-js/blitz/discussions"
-            className="px-3 mb-1"
-          >
-            Forum
-          </NavLink>
-          <NavLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/sponsors/blitz-js"
-            className="px-3 mb-1"
-          >
-            <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
-          </NavLink>
-          <div className="my-4 border-t border-off-white border-opacity-20"></div>
-          <DarkModeToggle className="text-lg" />
-        </div>
-      )}
+        {isOpen && (
+          <div className={`mt-4 text-2xl lg:hidden ${className}`}>
+            <NavLink href="/docs" className="px-3 mb-1">
+              Docs
+            </NavLink>
+            <NavLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/blitz-js/blitz"
+              className="px-3 mb-1"
+            >
+              GitHub
+            </NavLink>
+            <NavLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/blitz-js/blitz/releases"
+              className="px-3 mb-1"
+            >
+              Releases
+            </NavLink>
+            <NavLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://discord.blitzjs.com/"
+              className="px-3 mb-1"
+            >
+              Discord
+            </NavLink>
+            <NavLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/blitz-js/blitz/discussions"
+              className="px-3 mb-1"
+            >
+              Forum
+            </NavLink>
+            <NavLink
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/sponsors/blitz-js"
+              className="px-3 mb-1"
+            >
+              <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+            </NavLink>
+            <div className="my-4 border-t border-off-white border-opacity-20"></div>
+            <DarkModeToggle className="text-lg" />
+          </div>
+        )}
+      </nav>
     </>
   )
 }

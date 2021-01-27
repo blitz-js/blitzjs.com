@@ -1,0 +1,257 @@
+---
+title: Server Utilities
+sidebar_label: Server Utilities
+---
+
+## `pipe.resolver`
+
+This is a functional utility that makes it easier and cleaner to write complex resolvers.
+
+- It reduces the need for explicit Typescript types
+- Validate input data with a zod schema with `pipe.zod()`
+- Authorize users with `pipe.authorize()`
+- Enables functional composition
+
+### Example
+
+```ts
+import {pipe} from "blitz"
+import db from "db"
+import * as z from "zod"
+
+export const CreateProject = z.object({
+  name: z.string(),
+  dueDate: z.date().optional(),
+  orgId: z.number().optional(),
+})
+
+export default pipe.resolver(
+  pipe.zod(CreateProject),
+  pipe.authorize(),
+  // Set default orgId
+  (input, {session}) => ({...input, orgId: input.orgId ?? session.orgId}),
+  async (input, ctx) => {
+    console.log("Creating project...", input.orgId)
+    const project = await db.project.create({
+      data: input,
+    })
+    console.log("Created project")
+    return project
+  },
+)
+```
+
+## API
+
+### Arguments
+
+It accepts from 1 to N functions which take input data as first argument and [middleware `ctx`](./middleware) as the second argument.
+
+The output of the first function is the first input argument of the next function. The output of the last function is the final resolver result data that will be sent to the client.
+
+The Typescript types are automatically inferred from one function to the next.
+
+<!-- prettier-ignore -->
+```js
+// 1 function
+const resolver = pipe.resolver((input: ResolverInput, ctx: Ctx) => ResolverOutput)
+// 2 functions
+const resolver = pipe.resolver(
+  (input: ResolverInput, ctx: Ctx) => A),
+  (input: A, ctx: Ctx) => ResolverOutput),
+)
+// 3 functions
+const resolver = pipe.resolver(
+  (input: ResolverInput, ctx: Ctx) => A),
+  (input: A, ctx: Ctx) => B),
+  (input: B, ctx: Ctx) => ResolverOutput),
+)
+// ... etc
+```
+
+### Returns
+
+This returns a composed function of type `(input, ctx) => Promise<result>` which is the standard resolver type.
+
+## `pipe.zod`
+
+This is a pipe adapter for [Zod](https://github.com/colinhacks/zod), an awesome input validation library. It takes a zod schema and runs `schema.parse` on the input data.
+
+### Example
+
+<!-- prettier-ignore -->
+```ts
+import {pipe} from 'blitz'
+import * as z from "zod"
+
+export const CreateProject = z.object({
+  name: z.string(),
+  dueDate: z.date().optional(),
+  orgId: z.number().optional(),
+})
+
+export default pipe.resolver(
+  pipe.zod(CreateProject), // highlight-line
+  async (input, ctx) => {
+    // stuff
+  },
+)
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const pipeFn = pipe.zod(MyZodSchema)
+```
+
+### Arguments
+
+- `ZodSchema:` a [zod](https://github.com/colinhacks/zod) schema
+  - **Required**
+
+### Returns
+
+A function to give `pipe.resolver` of type `(rawInput, ctx: Ctx) => validInput`
+
+## `pipe.authorize`
+
+### Example
+
+<!-- prettier-ignore -->
+```ts
+import {pipe} from 'blitz'
+
+export default pipe.resolver(
+// highlight-start
+  pipe.authorize(),
+  // pipe.authorize('admin'),
+// highlight-end
+  async (input, ctx) => {
+    // stuff
+  },
+)
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const pipeFn = pipe.authorize(...isAuthorizedArgs)
+```
+
+### Arguments
+
+- `...isAuthorizedArgs`: The same arguments as your [`isAuthorized` adapter](./authorization#isauthorized-adapters)
+
+### Returns
+
+A function to give `pipe.resolver` of type `(input, ctx: Ctx) => input`
+
+## `pipe.authorizeIf`
+
+This is like `pipe.authorizeIf` but the first argument is a callback function that determines whether the authorization will be enforced or not
+
+### Example
+
+<!-- prettier-ignore -->
+```ts
+import {pipe} from 'blitz'
+
+export default pipe.resolver(
+  pipe.authorize(),
+// highlight-start
+  pipe.authorizeIf((input, ctx) => input.orgId !== ctx.session.orgId, "admin"),
+// highlight-end
+  async (input, ctx) => {
+    // stuff
+  },
+)
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const pipeFn = pipe.authorizeIf((input, ctx: Ctx) => boolean, ...isAuthorizedArgs)
+```
+
+### Arguments
+
+- `(input, ctx: Ctx) => boolean`: callback function that takes the resolver input and [middleware `ctx`](./middleware) and returns a boolean. The return result determines whether the authorization will be enforced or not
+- `...isAuthorizedArgs`: The same arguments as your [`isAuthorized` adapter](./authorization#isauthorized-adapters)
+
+### Returns
+
+A function to give `pipe.resolver` of type `(input, ctx: Ctx) => input`
+
+## `invokeWithMiddleware`
+
+This is for imperatively invoking queries/mutations on the server. It ensures appropriate middleware is run before/after your resolver.
+
+### Example
+
+```tsx
+import {invokeWithMiddleware, GetServerSideProps, Link, BlitzPage, PromiseReturnType} from "blitz"
+import getProducts from "app/products/queries/getProducts"
+
+type PageProps = {
+  products: PromiseReturnType<typeof getProducts>
+}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({req, res}) => {
+  const products = await invokeWithMiddleware(getProducts, {orderBy: {id: "desc"}}, {req, res})
+
+  return {
+    props: {products},
+  }
+}
+
+const Page: BlitzPage<PageProps> = function ({products}) {
+  return (
+    <div>
+      <h1>Products</h1>
+      <div id="products">
+        {products.map((product) => (
+          <p key={product.id}>
+            <Link href="/products/[handle]" as={`/products/${product.handle}`}>
+              <a>{product.name}</a>
+            </Link>
+          </p>
+        ))}
+      </div>
+    </div>
+  )
+}
+export default Page
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const results = await invokeWithMiddleware(resolver, resolverInputArguments, {req, res}))
+```
+
+### Arguments
+
+- `resolver:` A Blitz [query resolver](./query-resolvers) or [mutation resolver](./mutation-resolvers)
+  - **Required**
+- `resolverInputArguments`
+  - **Required**
+  - The arguments that will be passed to `resolver`
+- Other
+  - `req`
+    - **Required**
+    - The BlitzApiRequest object
+  - `res`
+    - **Required**
+    - The BlitzApiResponse object
+  - `middleware`
+    - Optional
+    - Array of middleware that will be ran in addition to global middleware and any local middleware defined on the query/mutation.
+
+### Returns
+
+- `results`
+  - The exact results returned from the resolver

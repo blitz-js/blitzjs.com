@@ -1,7 +1,53 @@
 ---
-title: Resolver Utilities
-sidebar_label: Utilities
+title: Client Utilities
+sidebar_label: Client Utilities
 ---
+
+## `invoke`
+
+This is for imperatively invoking queries or mutations from your components.
+
+### Example
+
+```tsx
+import {invoke} from "blitz"
+import getProducts from "app/products/queries/getProducts"
+
+const Page = function ({products}) {
+  return (
+    <div>
+      <button
+        onClick={async () => {
+          const products = await invoke(getProducts, {where: {orgId: 1}})
+        }}
+      >
+        Get Products
+      </button>
+    </div>
+  )
+}
+export default Page
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const results = await invoke(resolver, resolverInputArguments)
+```
+
+### Arguments
+
+- `resolver:` A Blitz [query resolver](./query-resolvers) or [mutation resolver](./mutation-resolvers)
+  - **Required**
+- `resolverInputArguments`
+  - **Required**
+  - The arguments that will be passed to `resolver`
+
+### Returns
+
+- `results`
+  - The exact results returned from the resolver
 
 ## `invalidateQuery`
 

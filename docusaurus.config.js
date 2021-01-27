@@ -45,8 +45,8 @@ module.exports = {
           position: "left",
         },
         {
-          href: "https://slack.blitzjs.com",
-          label: "Slack",
+          href: "https://discord.blitzjs.com",
+          label: "Discord",
           position: "left",
         },
         {
@@ -95,8 +95,8 @@ module.exports = {
           title: "Community",
           items: [
             {
-              label: "Slack",
-              href: "https://slack.blitzjs.com",
+              label: "Discord",
+              href: "https://discord.blitzjs.com",
             },
             {
               label: "Forum Discussions",

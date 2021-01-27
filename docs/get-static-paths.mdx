@@ -38,6 +38,7 @@ Note that the value for each `params` must match the parameters used in the page
 
 - If the page name is `app/posts/pages/posts/[postId]/[commentId]`, then `params` should contain `postId` and `commentId`.
 - If the page name uses catch-all routes, for example `pages/[...slug]`, then `params` should contain `slug` which is an array. For example, if this array is `['foo', 'bar']`, then Blitz will statically generate the page at `/foo/bar`.
+- If the page uses an optional catch-all route, supply `null`, `[]`, `undefined` or `false` to render the root-most route. For example, if you supply `slug: false` for `pages/[[...slug]]`, Blitz will statically generate the page `/`.
 
 #### The `fallback` key (required)
 
@@ -100,7 +101,7 @@ If `fallback` is `true`, then the behavior of `getStaticProps` changes:
 In the “fallback” version of a page:
 
 - The page’s props will be empty.
-- Using the [router](/docs/api-reference/next/router.md), you can detect if the fallback is being rendered, `router.isFallback` will be `true`.
+- Using the [router](/docs/router), you can detect if the fallback is being rendered, `router.isFallback` will be `true`.
 
 Here’s an example that uses `isFallback`:
 
@@ -151,6 +152,21 @@ export default Post
 Instead, you may statically generate a small subset of pages and use `fallback: true` for the rest. When someone requests a page that’s not generated yet, the user will see the page with a loading indicator. Shortly after, `getStaticProps` finishes and the page will be rendered with the requested data. From now on, everyone who requests the same page will get the statically pre-rendered page.
 
 This ensures that users always have a fast experience while preserving fast builds and the benefits of Static Generation.
+
+`fallback: true` will not _update_ generated pages, for that take a look at [Incremental Static Regeneration](/docs/get-static-props#incremental-static-regeneration).
+
+#### `fallback: 'blocking'`
+
+If `fallback` is `'blocking'`, new paths not returned by `getStaticPaths` will wait for the HTML to be generated, identical to SSR (hence why _blocking_), and then be cached for future requests so it only happens once per path.
+
+`getStaticProps` will behave as follows:
+
+- The paths returned from `getStaticPaths` will be rendered to HTML at build time by `getStaticProps`.
+- The paths that have not been generated at build time will **not** result in a 404 page. Instead, Blitz will SSR on the first request and return the generated HTML.
+- When that’s done, the browser receives the HTML for the generated path. From the user’s perspective, it will transition from "the browser is requesting the page" to "the full page is loaded". There is no flash of loading/fallback state.
+- At the same time, Blitz adds this path to the list of pre-rendered pages. Subsequent requests to the same path will serve the generated page, just like other pages pre-rendered at build time.
+
+`fallback: 'blocking'` will not _update_ generated pages by default. To update generated pages, use [Incremental Static Regeneration](/docs/get-static-props#incremental-static-regeneration) in conjunction with `fallback: 'blocking'`.
 
 ### When should I use `getStaticPaths`?
 

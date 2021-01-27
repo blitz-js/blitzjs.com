@@ -33,8 +33,7 @@ The `context` parameter is an object containing the following keys:
 
   ```js
   export async function getServerSideProps(context) {
-    const res = await fetch(`https://...`)
-    const data = await res.json()
+    const data = /* ... */
 
     if (!data) {
       return {
@@ -52,8 +51,7 @@ The `context` parameter is an object containing the following keys:
 
   ```js
   export async function getServerSideProps(context) {
-    const res = await fetch(`https://.../data`)
-    const data = await res.json()
+    const data = /* ... */
 
     if (!data) {
       return {
@@ -87,9 +85,7 @@ function Page({data}) {
 
 // This gets called on every request
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://.../data`)
-  const data = await res.json()
+  const data = /* ... */
 
   // Pass data to the page via props
   return {props: {data}}
@@ -124,8 +120,7 @@ import { InferGetServerSidePropsType } from 'blitz'
 type Data = { ... }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('https://.../data')
-  const data: Data = await res.json()
+  const data: Data = /* ... */
 
   return {
     props: {

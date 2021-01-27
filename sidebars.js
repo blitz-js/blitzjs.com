@@ -35,6 +35,7 @@ module.exports = {
       "get-static-props",
       "get-static-paths",
       "get-server-side-props",
+      "incremental-static-regeneration",
     ],
     Routing: [
       "routing",

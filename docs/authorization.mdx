@@ -99,11 +99,34 @@ if (!session.isLoading && session.roles.includes("admin")) {
 }
 ```
 
-## `ctx.session.$authorize()`
+## `isAuthorized` Adapters
 
-The implementation of `ctx.session.$authorize()` can be customized via the `sessionMiddleware` config as shown below.
+The implementation of `ctx.session.$isAuthorized()` and `ctx.session.$authorize()` are defined by an adapter which you set in the `sessionMiddleware()` config.
 
-#### `simpleRolesIsAuthorized`
+##### `ctx.session.$isAuthorized()`
+
+Always returns a boolean indicating if user is authorized
+
+##### `ctx.session.$authorize()`
+
+**Throws an error** if the user is not authorized. This is what you most commonly use to secure your queries and mutations.
+
+```ts
+import {Ctx} from "blitz"
+import {GetUserInput} from "./somewhere"
+
+export default async function getUser({where}: GetUserInput, ctx: Ctx) {
+  // highlight-start
+  ctx.session.$authorize("admin")
+  // highlight-end
+
+  return await db.user.findOne({where})
+}
+```
+
+#### `simpleRolesIsAuthorized` (default in new apps)
+
+##### Setup
 
 To use, add it to your `sessionMiddleware` configuration (this is already set up by default in new apps).
 
@@ -122,35 +145,92 @@ module.exports = {
 }
 ```
 
-This adds the implementation for `SessionContext.authorize()`.
-
-Inside any query or mutation, call `ctx.session.$authorize(roleOrRoles)` to authorize the request.
-
-- `ctx.session.$authorize()`
-  - Only enforce that a user is logged in. It does not check user roles
-  - throws `AuthenticationError` if user not logged in
-- `ctx.session.$authorize('admin')`
-  - throws `AuthenticationError` if user not logged in
-  - Allows users with `admin` role
-  - throws `AuthorizationError` if the user does not have `admin` role
-- `ctx.session.$authorize(['admin', 'manager'])`
-  - throws `AuthenticationError` if user not logged in
-  - Allows users with `admin` or `manager` role
-  - throws `AuthorizationError` if the user does not have `admin` and does not have `manager` role
+And if using Typescript, set the type in `types.ts` like this:
 
 ```ts
-import db, {FindOneUserArgs} from "db"
-import {Ctx} from "blitz"
+import {simpleRolesIsAuthorized} from "@blitzjs/server"
 
-type GetUserInput = {where: FindOneUserArgs["where"]}
-
-export default async function getUser({where}: GetUserInput, ctx: Ctx) {
+declare module "blitz" {
   // highlight-start
-  ctx.session.$authorize("admin")
+  export interface Session {
+    isAuthorized: typeof simpleRolesIsAuthorized
+  }
   // highlight-end
+}
+```
 
-  const user = await db.user.findOne({where})
+##### `ctx.session.$isAuthorized(roleOrRoles?: string | string[], options?: {if?: boolean})`
 
-  return user
+Example usage:
+
+```ts
+// User not logged in
+ctx.session.$isAuthorized() // false
+
+// User logged in with 'customer' role
+ctx.session.$isAuthorized() // true
+ctx.session.$isAuthorized("customer") // false
+ctx.session.$isAuthorized("admin") // false
+```
+
+##### `ctx.session.$authorize(roleOrRoles?: string | string[], options?: {if?: boolean})`
+
+Example usage:
+
+```ts
+// User not logged in
+ctx.session.$authorize() // throws AuthenticationError
+
+// User logged in with 'customer' role
+ctx.session.$authorize() // success - no error
+ctx.session.$authorize("customer") // success - no error
+ctx.session.$authorize("admin") // throws AuthorizationError
+ctx.session.$authorize("admin", {if: inputUserId !== currentUserId}) // throws only if condition true
+ctx.session.$authorize(["admin", "customer") // success - no error
+```
+
+### Making a Custom Adapter
+
+An `isAuthorized` adapter must conform to the following function signature.
+
+```ts
+type CustomIsAuthorizedArgs = {
+  ctx: any
+  args: [/* args that you want for session.$authorize(...args) */]
+}
+export function customIsAuthorized({ctx, args}: CustomIsAuthorizedArgs) {
+  // can access ctx.session, ctx.session.userId, etc
+}
+```
+
+##### Example
+
+Here's the source code for the `simpleRolesIsAuthorized` adapter include in Blitz core as of Jan 26, 2021.
+
+```ts
+type SimpleRolesIsAuthorizedArgs = {
+  ctx: any
+  args: [roleOrRoles?: string | string[], options?: {if?: boolean}]
+}
+
+export function simpleRolesIsAuthorized({ctx, args}: SimpleRolesIsAuthorizedArgs) {
+  const [roleOrRoles, options = {}] = args
+  const condition = options.if ?? true
+
+  // No roles required, so all roles allowed
+  if (!roleOrRoles) return true
+  // Don't enforce the roles if condition is false
+  if (!condition) return true
+
+  const rolesToAuthorize = []
+  if (Array.isArray(roleOrRoles)) {
+    rolesToAuthorize.push(...roleOrRoles)
+  } else if (roleOrRoles) {
+    rolesToAuthorize.push(roleOrRoles)
+  }
+  for (const role of rolesToAuthorize) {
+    if ((ctx.session as SessionContext).$publicData.roles!.includes(role)) return true
+  }
+  return false
 }
 ```

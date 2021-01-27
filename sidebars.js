@@ -46,15 +46,20 @@ module.exports = {
       "api-routes",
     ],
     Database: ["database-overview", "postgres", "database-seeds", "prisma", "fauna"],
-    Queries: [
+    Queries: [],
+    Mutations: [],
+    "Queries & Mutations": [
       "query-resolvers",
       "query-usage",
+      "mutation-resolvers",
+      "mutation-usage",
+      "resolver-client-utilities",
+      "resolver-server-utilities",
       "use-query",
       "use-paginated-query",
       "use-infinite-query",
+      "use-mutation",
     ],
-    Mutations: ["mutation-resolvers", "mutation-usage", "use-mutation"],
-    "Queries & Mutations": ["invoke", "resolver-utilities"],
     "Deploying to Production": ["deploy-render", "deploy-vercel", "deploy-heroku"],
     CLI: [
       "cli-overview",

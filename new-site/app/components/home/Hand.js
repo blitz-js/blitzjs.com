@@ -17,7 +17,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M118 186.266C57.1274 212.236 18.5522 173.216 13.0004 127.51C4.00037 -25.3613 278.166 18.2916 278.166 18.2916C350.492 30.4269 393.243 51.884 434.035 68.0809C474.827 84.2777 543.902 117.65 594.286 127.51C644.671 137.37 674 139 736.5 107.031C799 75.0629 834.5 41 981 30.5"
             stroke="url(#hero-rightarm)"
-            stroke-width="25"
+            strokeWidth="25"
           />
           <path
             d="M123.908 170.828C122.708 169.628 112.896 174.495 108.396 176.828L109.599 178.748C112.432 185.581 118.299 199.248 119.099 199.248C120.099 199.248 133.973 194.464 134.744 189.454C135.514 184.445 125.408 172.328 123.908 170.828Z"
@@ -32,8 +32,8 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               y2="13"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="var(--color-stop)" />
-              <stop offset="1" stop-color="var(--color-stop)" stop-opacity="0" />
+              <stop stopColor="var(--color-stop)" />
+              <stop offset="1" stopColor="var(--color-stop)" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -73,7 +73,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M1527.54 20C1540.45 44.6976 1559.35 98.008 1527.54 136.79C1480.03 194.731 1380.34 219.066 1307.26 190.965C1237.79 159.126 1263.41 139.147 1064.97 52.7328C866.522 -33.6809 821.336 221.064 588.418 150.135C434.185 103.167 435.624 119.166 316.836 190.965C198.048 262.763 209.228 275.01 1 285"
             stroke="url(#hero-leftarm)"
-            stroke-width="25"
+            strokeWidth="25"
           />
           <defs>
             <linearGradient
@@ -84,8 +84,8 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               y2="20.1485"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="var(--color-stop)" stop-opacity="0" />
-              <stop offset="1" stop-color="var(--color-stop)" />
+              <stop stopColor="var(--color-stop)" stopOpacity="0" />
+              <stop offset="1" stopColor="var(--color-stop)" />
             </linearGradient>
           </defs>
         </svg>
@@ -135,8 +135,8 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               y2="43.9843"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="var(--color-stop)" />
-              <stop offset="1" stop-color="var(--color-stop)" stop-opacity="0" />
+              <stop stopColor="var(--color-stop)" />
+              <stop offset="1" stopColor="var(--color-stop)" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -155,7 +155,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M107.169 220.503C134.669 206.503 146.802 191.184 151.421 186.503C188.701 148.731 222.729 143.438 257.866 170.587C297.356 201.102 280.878 260.698 326.783 290.052C372.689 319.407 443.487 293.686 435.244 212.639C413.085 55.1971 524.833 55.0565 587.129 70.0002C657.587 86.9017 694.5 147.584 748.5 170.586"
             stroke="url(#features-right)"
-            stroke-width="25"
+            strokeWidth="25"
           />
           <path
             d="M87.7811 217.167C87.5841 215.481 101.124 209.663 104.798 207.742L113.762 231.089C111.933 231.683 98.081 237.642 93.6737 235.14C89.2665 232.637 88.0273 219.274 87.7811 217.167Z"
@@ -174,8 +174,8 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               y2="81.4962"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="var(--color-stop)" />
-              <stop offset="1" stop-color="var(--color-stop)" stop-opacity="0" />
+              <stop stopColor="var(--color-stop)" />
+              <stop offset="1" stopColor="var(--color-stop)" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -194,7 +194,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M204.705 140.991C182.134 146.765 114.159 100.534 73.8538 163.466C73.8538 163.466 7.37995 264.93 143.646 317.746C220.39 347.491 319.729 339.02 329.694 391.243C336.176 425.209 312.155 442.017 287.406 433.532C271.297 428.009 253.131 412.677 256.54 384.303C266.942 320.028 292.812 220.757 423.003 257.825C536.003 278.825 531.002 401.008 604.501 471.505C678.001 542.001 692.5 542.001 692.5 542.001"
             stroke="url(#sandbox-right)"
-            stroke-width="25"
+            strokeWidth="25"
           />
           <defs>
             <linearGradient
@@ -205,8 +205,8 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               y2="432"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="var(--color-stop)" stop-opacity="0" />
-              <stop offset="1" stop-color="var(--color-stop)" />
+              <stop stopColor="var(--color-stop)" stopOpacity="0" />
+              <stop offset="1" stopColor="var(--color-stop)" />
             </linearGradient>
           </defs>
         </svg>
@@ -248,7 +248,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M467 22.1987C440.705 22.1983 390.219 -3.92313 323.955 31.8721C301.868 45.8998 282.935 60.8963 272.418 71.0544C261.9 81.2125 242.967 107.334 242.967 107.334C242.967 107.334 221.405 136.325 186.302 159.169C151.198 182.014 116.538 191.113 82.9877 201.949C49.4368 212.785 16.2329 225.362 13.1499 259.706C8.41683 312.432 117 338.5 163.031 251.483C183.388 213 272.418 213 272.418 213"
             stroke="var(--color-stop)"
-            stroke-width="25"
+            strokeWidth="25"
           />
         </svg>
       )
@@ -283,7 +283,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M401 79.5008C373.59 93.6762 361.556 109.073 356.966 113.783C319.929 151.793 254 156.815 201.625 116.877C161.941 86.6153 167.531 54.008 121.438 24.9472C79.1766 -1.69862 12.8758 17.9975 12.8758 83.9971"
             stroke="var(--color-stop)"
-            stroke-width="25"
+            strokeWidth="25"
           />
         </svg>
       )
@@ -301,7 +301,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
           <path
             d="M302 127C293.035 98.6904 209.437 106.29 186.5 106.29C177.163 106.29 107.5 106.29 93.5 105C79.5 103.71 66.7231 98.0329 57.0321 91.654C39.058 79.823 26.6344 61.1728 21.532 40.4797C20.0226 34.358 19.7579 23.7548 15.8749 18.5775C13.1937 15.0027 10.6383 13.4256 6.99982 11"
             stroke="var(--color-stop)"
-            stroke-width="25"
+            strokeWidth="25"
           />
         </svg>
       )

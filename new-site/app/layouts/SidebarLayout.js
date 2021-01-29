@@ -69,7 +69,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
                         {item.href === router.pathname && toc && toc.length ? (
                           <TableOfContents tableOfContents={toc} />
                         ) : null}
-                      </>
+                      </Fragment>
                     ))}
                   </ul>
                 </li>

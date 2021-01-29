@@ -104,10 +104,13 @@ Here's an example of how to create a custom error. It's a JavaScript class, so y
 
 ```ts
 export class UsernameTakenError extends Error {
-  name = "UsernameTakenError"
+  public name = "UsernameTakenError"
+  public suggestedUserName: string
+
   constructor({suggestedUserName}) {
     super()
     this.suggestedUserName = suggestedUserName
+    this.message = `This username is already taken, try ${suggestedUserName}`
   }
 }
 

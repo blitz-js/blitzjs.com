@@ -52,7 +52,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
               let publishedItems = category.pages.filter((item) => item.published !== false)
               if (publishedItems.length === 0 && !fallbackHref) return null
               return (
-                <li key={category.title} className="my-5">
+                <li key={category.title.props.title} className="my-5">
                   {category.title}
                   <ul>
                     {(fallbackHref ? category.pages : publishedItems).map((item, i) => (

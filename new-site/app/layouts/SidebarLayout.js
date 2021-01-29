@@ -56,7 +56,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
                   {category.title}
                   <ul>
                     {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
-                      <>
+                      <Fragment key={i}>
                         <NavItem
                           key={i}
                           href={item.href}

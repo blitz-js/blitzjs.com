@@ -159,7 +159,7 @@ declare module "blitz" {
 }
 ```
 
-##### `ctx.session.$isAuthorized(roleOrRoles?: string | string[], options?: {if?: boolean})`
+##### `ctx.session.$isAuthorized(roleOrRoles?: string | string[])`
 
 Example usage:
 
@@ -173,7 +173,7 @@ ctx.session.$isAuthorized("customer") // false
 ctx.session.$isAuthorized("admin") // false
 ```
 
-##### `ctx.session.$authorize(roleOrRoles?: string | string[], options?: {if?: boolean})`
+##### `ctx.session.$authorize(roleOrRoles?: string | string[])`
 
 Example usage:
 
@@ -185,7 +185,6 @@ ctx.session.$authorize() // throws AuthenticationError
 ctx.session.$authorize() // success - no error
 ctx.session.$authorize("customer") // success - no error
 ctx.session.$authorize("admin") // throws AuthorizationError
-ctx.session.$authorize("admin", {if: inputUserId !== currentUserId}) // throws only if condition true
 ctx.session.$authorize(["admin", "customer") // success - no error
 ```
 

@@ -47,9 +47,9 @@ The input type of the entire composed resolver function is determined by the inp
 This means you will almost always want `resolver.zod()` to be the first in the pipe.
 :::
 
-## API
+### API
 
-### Arguments
+#### Arguments
 
 It accepts from 1 to N functions which take input data as first argument and [middleware `ctx`](./middleware) as the second argument.
 
@@ -75,7 +75,7 @@ const resolver = resolver.pipe(
 // ... etc
 ```
 
-### Returns
+#### Returns
 
 This returns a composed function of type `(input, ctx) => Promise<result>` which is the standard resolver type.
 
@@ -104,19 +104,19 @@ export default resolver.pipe(
 )
 ```
 
-## API
+### API
 
 <!-- prettier-ignore -->
 ```js
 const pipeFn = resolver.zod(MyZodSchema)
 ```
 
-### Arguments
+#### Arguments
 
 - `ZodSchema:` a [zod](https://github.com/colinhacks/zod) schema
   - **Required**
 
-### Returns
+#### Returns
 
 A function to give `resolver.pipe` of type `(rawInput, ctx: Ctx) => validInput`
 
@@ -139,55 +139,18 @@ export default resolver.pipe(
 )
 ```
 
-## API
+### API
 
 <!-- prettier-ignore -->
 ```js
 const pipeFn = resolver.authorize(...isAuthorizedArgs)
 ```
 
-### Arguments
+#### Arguments
 
 - `...isAuthorizedArgs`: The same arguments as your [`isAuthorized` adapter](./authorization#isauthorized-adapters)
 
-### Returns
-
-A function to give `resolver.pipe` of type `(input, ctx: Ctx) => input`
-
-## `resolver.authorizeIf`
-
-This is like `resolver.authorizeIf` but the first argument is a callback function that determines whether the authorization will be enforced or not
-
-### Example
-
-<!-- prettier-ignore -->
-```ts
-import {resolver} from 'blitz'
-
-export default resolver.pipe(
-  resolver.authorize(),
-// highlight-start
-  resolver.authorizeIf((input, ctx) => input.orgId !== ctx.session.orgId, "admin"),
-// highlight-end
-  async (input, ctx) => {
-    // stuff
-  },
-)
-```
-
-## API
-
-<!-- prettier-ignore -->
-```js
-const pipeFn = resolver.authorizeIf((input, ctx: Ctx) => boolean, ...isAuthorizedArgs)
-```
-
-### Arguments
-
-- `(input, ctx: Ctx) => boolean`: callback function that takes the resolver input and [middleware `ctx`](./middleware) and returns a boolean. The return result determines whether the authorization will be enforced or not
-- `...isAuthorizedArgs`: The same arguments as your [`isAuthorized` adapter](./authorization#isauthorized-adapters)
-
-### Returns
+#### Returns
 
 A function to give `resolver.pipe` of type `(input, ctx: Ctx) => input`
 
@@ -232,14 +195,14 @@ const Page: BlitzPage<PageProps> = function ({products}) {
 export default Page
 ```
 
-## API
+### API
 
 <!-- prettier-ignore -->
 ```js
 const results = await invokeWithMiddleware(resolver, resolverInputArguments, {req, res}))
 ```
 
-### Arguments
+#### Arguments
 
 - `resolver:` A Blitz [query resolver](./query-resolvers) or [mutation resolver](./mutation-resolvers)
   - **Required**
@@ -257,7 +220,7 @@ const results = await invokeWithMiddleware(resolver, resolverInputArguments, {re
     - Optional
     - Array of middleware that will be ran in addition to global middleware and any local middleware defined on the query/mutation.
 
-### Returns
+#### Returns
 
 - `results`
   - The exact results returned from the resolver

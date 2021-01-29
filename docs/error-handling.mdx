@@ -133,6 +133,28 @@ Then on the client, you can use a `FallbackComponent` like above, or you can han
 />
 ```
 
+To make this typesave and get autocomplete in editor you can use TS TypeGuard
+
+```ts
+// typeguard
+function isError<T extends new (...args: any) => any>(err: any, name: T): err is InstanceType<T> {
+  if (name == err.name) {
+    return true
+  }
+
+  return false
+}
+
+try {
+  throw new UsernameTakenError({suggestedUserName: "second_best"})
+} catch (err) {
+  if (isError(err, UsernameTakenError)) {
+    // TS can now infer that err is UsernameTakenError
+    console.log(err.suggestedUserName)
+  }
+}
+```
+
 ## Error Pages
 
 See the [Error Pages documentation](./error-pages) to learn about custom 404 and 500 error pages.

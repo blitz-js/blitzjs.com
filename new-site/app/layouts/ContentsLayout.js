@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext, Fragment, useCallback, useContext } from "react"
 import { usePrevNext } from "@/hooks/usePrevNext"
 import Link from "next/link"
-import { SidebarLayout, SidebarContext } from "@/layouts/SidebarLayout"
+import { SidebarLayout } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
@@ -9,15 +9,6 @@ import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
 export const ContentsContext = createContext()
 
 export function TableOfContents({ tableOfContents, currentSection }) {
-  let sidebarContext = useContext(SidebarContext)
-  let isMainNav = Boolean(sidebarContext)
-
-  function closeNav() {
-    if (isMainNav) {
-      sidebarContext.setNavIsOpen(false)
-    }
-  }
-
   return (
     <div className="pl-8 py-2">
       <ul className="overflow-x-hidden text-black dark:text-white font-normal text-sm">
@@ -31,7 +22,6 @@ export function TableOfContents({ tableOfContents, currentSection }) {
               <li>
                 <a
                   href={`#${section.slug}`}
-                  onClick={closeNav}
                   className={clsx(
                     "block transform transition-colors duration-200 py-2 hover:text-gray-900 no-underline",
                     {
@@ -46,16 +36,9 @@ export function TableOfContents({ tableOfContents, currentSection }) {
                 let subsectionIsActive = currentSection === subsection.slug
 
                 return (
-                  <li
-                    className={clsx({
-                      "ml-4": isMainNav,
-                      "ml-2": !isMainNav,
-                    })}
-                    key={subsection.slug}
-                  >
+                  <li className="ml-2" key={subsection.slug}>
                     <a
                       href={`#${subsection.slug}`}
-                      onClick={closeNav}
                       className={clsx(
                         "block py-2 transition-colors duration-200 hover:text-gray-900 no-underline",
                         {

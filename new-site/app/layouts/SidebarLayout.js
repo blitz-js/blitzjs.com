@@ -81,29 +81,15 @@ function Nav({ nav, children, fallbackHref, toc }) {
   )
 }
 
-export function SidebarLayout({
-  children,
-  navIsOpen,
-  setNavIsOpen,
-  nav,
-  sidebar,
-  fallbackHref,
-  layoutProps,
-}) {
+export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProps }) {
   return (
-    <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
+    <SidebarContext.Provider value={{ nav }}>
       <div className="w-full max-w-8xl mx-auto">
         <div className="lg:flex">
           {/* eslint-disable-next-line */}
           <div
             id="sidebar"
-            onClick={() => setNavIsOpen(false)}
-            className={clsx(
-              "fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-72 xl:w-84 lg:block",
-              {
-                hidden: !navIsOpen,
-              }
-            )}
+            className="fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-72 xl:w-84 lg:block"
           >
             {/* eslint-disable-next-line */}
             <div
@@ -122,12 +108,7 @@ export function SidebarLayout({
           </div>
           <div
             id="content-wrapper"
-            className={clsx(
-              "min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible",
-              {
-                "overflow-hidden max-h-screen fixed": navIsOpen,
-              }
-            )}
+            className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible"
           >
             {children}
           </div>

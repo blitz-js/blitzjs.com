@@ -24,8 +24,7 @@ services:
     env: node
     plan: starter
     buildCommand: yarn --frozen-lockfile --prod=false && blitz build
-    # If you have an out of memory error, change startCommand to "yarn next start"
-    startCommand: blitz start --production
+    startCommand: blitz start
     envVars:
       - key: NODE_ENV
         value: production
@@ -33,7 +32,7 @@ services:
         fromDatabase:
           name: blitzapp-db
           property: connectionString
-    startCommand: blitz start --production -H 0.0.0.0
+    startCommand: blitz start -H 0.0.0.0
 ```
 
 #### With Postgres database:
@@ -47,8 +46,7 @@ services:
     env: node
     plan: starter
     buildCommand: yarn --frozen-lockfile --prod=false && blitz prisma migrate deploy --preview-feature && blitz build
-    # If you have an out of memory error, change startCommand to "yarn next start"
-    startCommand: blitz start --production
+    startCommand: blitz start
     envVars:
       - key: NODE_ENV
         value: production

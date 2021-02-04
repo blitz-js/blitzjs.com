@@ -42,7 +42,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
     <nav
       id="nav"
       ref={scrollRef}
-      className="px-1 mt-6 font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) overflow-y-auto"
+      className="px-1 font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) overflow-y-auto"
     >
       <ul>
         {children}
@@ -52,7 +52,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
               let publishedItems = category.pages.filter((item) => item.published !== false)
               if (publishedItems.length === 0 && !fallbackHref) return null
               return (
-                <li key={category.title.props.title} className="my-5">
+                <li key={category.title.props.title} className="my-10">
                   {category.title}
                   <ul>
                     {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
@@ -84,12 +84,12 @@ function Nav({ nav, children, fallbackHref, toc }) {
 export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProps }) {
   return (
     <SidebarContext.Provider value={{ nav }}>
-      <div className="w-full max-w-8xl mx-auto">
+      <div className="w-full max-w-8xl mx-auto mt-16">
         <div className="lg:flex">
           {/* eslint-disable-next-line */}
           <div
             id="sidebar"
-            className="fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-72 xl:w-84 lg:block"
+            className="fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-96 xl:w-84 lg:block"
           >
             {/* eslint-disable-next-line */}
             <div
@@ -108,7 +108,7 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
           </div>
           <div
             id="content-wrapper"
-            className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible"
+            className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible lg:pr-28"
           >
             {children}
           </div>

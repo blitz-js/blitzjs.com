@@ -65,6 +65,7 @@ module.exports = {
     CLI: [
       "cli-overview",
       "cli-new",
+      "cli-dev",
       "cli-start",
       "cli-build",
       "cli-db",

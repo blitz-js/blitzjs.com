@@ -2,6 +2,7 @@
   "name": "blitz-site-v2",
   "version": "1.0.0",
   "scripts": {
+    "dev": "blitz dev",
     "start": "blitz start",
     "studio": "blitz db studio",
     "build": "blitz build",

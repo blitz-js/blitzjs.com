@@ -314,7 +314,7 @@ export const QuestionsList = () => {
     <ul>
       {questions.map((question) => (
         <li key={question.id}>
-          <Link href="/questions/[questionId]" as={`/questions/${question.id}`}>
+          <Link href={`/questions/${question.id}`}>
             <a>{question.name}</a> // highlight-line
           </Link>
         </li>
@@ -401,7 +401,7 @@ onSubmit={async () => {
       data: { text: "Do you love Blitz?", choices: { create: [{ text: "Yes!" }] } },
     })
     alert("Success!" + JSON.stringify(question));
-    router.push("/questions/[questionId]", `/questions/${question.id}`);
+    router.push(`/questions/${question.id}`);
   } catch (error) {
     alert("Error creating question " + JSON.stringify(error, null, 2));
   }
@@ -426,7 +426,7 @@ onSubmit={async (event) => {
       },
     });
     alert("Success!" + JSON.stringify(question));
-    router.push("/questions/[questionId]", `/questions/${question.id}`);
+    router.push(`/questions/${question.id}`);
   } catch (error) {
     alert("Error creating question " + JSON.stringify(error, null, 2));
   }
@@ -469,7 +469,7 @@ const NewQuestionPage: BlitzPage = () => {
               },
             })
             alert("Success!" + JSON.stringify(question))
-            router.push("/questions/[questionId]", `/questions/${question.id}`)
+            router.push(`/questions/${question.id}`)
           } catch (error) {
             alert("Error creating question " + JSON.stringify(error, null, 2))
           }

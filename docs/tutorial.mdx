@@ -401,7 +401,7 @@ onSubmit={async () => {
       data: { text: "Do you love Blitz?", choices: { create: [{ text: "Yes!" }] } },
     })
     alert("Success!" + JSON.stringify(question));
-    router.push("/questions/[questionId]", `/questions/${question.id}`);
+    router.push(`/questions/${question.id}`);
   } catch (error) {
     alert("Error creating question " + JSON.stringify(error, null, 2));
   }

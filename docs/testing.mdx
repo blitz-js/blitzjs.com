@@ -35,6 +35,15 @@ module.exports = {
 }
 ```
 
+### Client vs Server Environments
+
+The following test files will run in the Jest server environment:
+
+- `*.test.*` files inside an `api`, `queries`, or `mutations` folder
+- `*.test.server.*` files
+
+All other files will run in the Jest client environment (with jsdom).
+
 ## @testing-library
 
 [@testing-library](https://testing-library.com/docs/) is family of packages helps you test UI components in a user-centric way. It's a better alternative to Enzyme, if you've used that in the past.

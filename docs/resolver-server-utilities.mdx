@@ -154,6 +154,72 @@ const pipeFn = resolver.authorize(...isAuthorizedArgs)
 
 A function to give `resolver.pipe` of type `(input, ctx: Ctx) => input`
 
+## `paginate`
+
+This is a handy utility for query pagination
+
+### Example
+
+```ts
+import {paginate, Ctx} from "blitz"
+import db, {Prisma} from "db"
+
+interface GetProjectSInput
+  extends Pick<Prisma.ProjectFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
+
+export default async function getProjects(
+  {where, orderBy, skip = 0, take = 100}: GetProjectsInput,
+  ctx: Ctx,
+) {
+  ctx.session.$authorize()
+
+  const {items: projects, hasMore, nextPage, count} = await paginate({
+    count: () => db.project.count({where}),
+    query: (paginateArgs) => db.project.findMany({...paginateArgs, where, orderBy}),
+    skip,
+    take,
+  })
+
+  return {
+    projects,
+    nextPage,
+    hasMore,
+    count,
+  }
+}
+```
+
+### API
+
+<!-- prettier-ignore -->
+```js
+const paginationData = await paginate(paginateArguments))
+```
+
+#### Arguments
+
+- `count`: `() => Promise <number>`
+  - **Required**
+  - A function that returns a promise which resolves to a number
+- `query`: `(payload: { skip: number; take: number }) => Promise<T>`
+  - **Required**
+  - A function that receives pagination payload and returns anything (type of return will be inherited by the pagination result).
+- `skip`: `number`
+  - How many rows to skip
+- `take`: `number`
+  - How many rows to take
+- `maxTake`: `number`
+  - The maximum value allowed for `take`. It protects your DB when "take" is sent by the user.
+  - Defaults to 250.
+
+#### Returns
+
+- `paginationData`
+  - `items`: `T` (Data resolver by the `query` function)
+  - `nextPage`: `{ skip: number, take: number } | null` (Next page pagination payload)
+  - `hasMore`: `boolean` (True if there are more items to load.)
+  - `count`: `number` (Total number of items. Resolved by the `count` function)
+
 ## `invokeWithMiddleware`
 
 This is for imperatively invoking queries/mutations on the server. It ensures appropriate middleware is run before/after your resolver.

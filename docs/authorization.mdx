@@ -148,12 +148,14 @@ module.exports = {
 And if using Typescript, set the type in `types.ts` like this:
 
 ```ts
-import {simpleRolesIsAuthorized} from "@blitzjs/server"
+import {SimpleRolesIsAuthorized} from "@blitzjs/server"
+
+type Role = "ADMIN" | "USER"
 
 declare module "blitz" {
   // highlight-start
   export interface Session {
-    isAuthorized: typeof simpleRolesIsAuthorized
+    isAuthorized: SimpleRolesIsAuthorized<Role>
   }
   // highlight-end
 }

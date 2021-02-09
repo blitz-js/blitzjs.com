@@ -129,7 +129,7 @@ const Home = ({ randomContributors }) => {
                   variant="concepts-right"
                   className="hidden lg:block lg:-top-24 lg:-right-80 lg:w-8/12 xl:-right-52 xl:-top-14"
                 />
-                <Scrollbar thumbHeight="4px">
+                <Scrollbar className="lg:hidden" thumbHeight="4px">
                   <div className="grid features-grid gap-x-6 lg:gap-y-14 pb-4">
                     <Feature title="Fullstack & Monolithic">
                       <p>
@@ -269,9 +269,11 @@ const Home = ({ randomContributors }) => {
                 Architecture Diagram
               </h2>
               <div className="w-full overflow-x-scroll">
-                <div className="architecture-diagram">
-                  <img src="img/architecture.svg" alt="Architecture diagram" />
-                </div>
+                <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
+                  <div className="architecture-diagram" style={{ paddingBottom: "2px" }}>
+                    <img src="img/architecture.svg" alt="Architecture diagram" />
+                  </div>
+                </Scrollbar>
               </div>
             </div>
             <div className="relative col-span-full">

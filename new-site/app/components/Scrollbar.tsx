@@ -2,8 +2,13 @@ import { MutableRefObject, useEffect, useRef, useState } from "react"
 
 const DEFAULT_SCROLLBAR_THUMB_SIZE = 54
 
-export default function Scrollbar(props: { children: any; thumbHeight: any }) {
-  const { children, thumbHeight } = props
+export default function Scrollbar(props: {
+  children: React.ReactChildren
+  thumbHeight: number
+  className: string
+  thumbColor?: "white" | "black"
+}) {
+  const { children, thumbHeight, className, thumbColor } = props
 
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -56,16 +61,27 @@ export default function Scrollbar(props: { children: any; thumbHeight: any }) {
     handleResize()
   }, [])
 
+  const getThumbColor = (color?: "white" | "black") => {
+    if (color !== undefined) {
+      if (color === "white") {
+        return "white"
+      } else {
+        return "black"
+      }
+    }
+  }
+
   return (
     <div className="relative h-full">
       <div ref={elementRef} className="scrollbar-none relative overflow-x-auto h-full">
         {children}
       </div>
-      <div className="w-full h-2 bottom-0 left-0 absolute rounded">
+      <div className={`w-full h-2 bottom-0 left-0 absolute rounded ${className}`}>
         <hr className="text-blue-mid relative top-1/2 transform -translate-y-1/2" />
         <div
           className="bg-black dark:bg-white absolute opacity-100 rounded top-1/2 transform -translate-y-1/2"
           style={{
+            backgroundColor: getThumbColor(thumbColor),
             height: thumbHeight,
             width: scrollbarThumb,
             left: displacement,

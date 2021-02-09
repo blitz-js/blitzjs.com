@@ -118,6 +118,25 @@ function SomeComponent() {
 }
 ```
 
+If you are using [`getServerSideProps`](./get-server-side-props), then you can pass the session public data to `useSession()` with the `initialPublicData` option.
+
+```ts
+import {useSession, GetServerSideProps} from "blitz"
+
+export const getServerSideProps: GetServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+  const publicData = session?.publicData
+
+  return {props: {publicData: initialPublicData}}
+}
+
+const SomeComponent: BlitzPage = ({initialPublicData}) => {
+  const session = useSession({initialPublicData})
+
+  return /*... */
+}
+```
+
 ## Production Deployment Requirements
 
 In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.

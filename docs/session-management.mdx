@@ -118,24 +118,20 @@ function SomeComponent() {
 }
 ```
 
-If you want to avoid waiting for the session to load you can get it from [`getServerSideProps`](#in-getserversideprops-or-api-routes) and pass the public data as parameter to `useSession()`
-
+If you are using [`getServerSideProps`](./get-server-side-props), then you can pass the session public data to `useSession()` with the `initialPublicData` option.
 
 ```ts
-import {useSession} from "blitz"
+import {useSession, GetServerSideProps} from "blitz"
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-}) => {
-  const session = await getSessionContext(req, res);
-  const publicData = session?.publicData;
+export const getServerSideProps: GetServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+  const publicData = session?.publicData
 
-  return { props: { publicData } }
+  return {props: {publicData: initialPublicData}}
 }
 
-const SomeComponent: BlitzPage = ({publicData}) => {
-  const session = useSession({initialPublicData: publicData})
+const SomeComponent: BlitzPage = ({initialPublicData}) => {
+  const session = useSession({initialPublicData})
 
   return /*... */
 }

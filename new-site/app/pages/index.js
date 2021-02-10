@@ -13,6 +13,7 @@ import { FaGithub } from "react-icons/fa"
 import { Footer } from "@/components/home/Footer"
 import { StyledLink } from "@/components/home/StyledLink"
 import { Hand } from "@/components/home/Hand"
+import Scrollbar from "@/components/Scrollbar"
 
 const Home = ({ randomContributors }) => {
   return (
@@ -128,55 +129,57 @@ const Home = ({ randomContributors }) => {
                   variant="concepts-right"
                   className="hidden lg:block lg:-top-24 lg:-right-80 lg:w-8/12 xl:-right-52 xl:-top-14"
                 />
-                <div className="grid features-grid gap-x-6 lg:gap-y-14">
-                  <Feature title="Fullstack & Monolithic">
-                    <p>
-                      Includes everything from the database to your frontend all inside a single
-                      app. Only one development server. Only one thing to deploy.
-                    </p>
-                    <p>Deploy to a server or serverless.</p>
-                  </Feature>
-                  <Feature title="API Not Required">
-                    <p>
-                      Instead of fetching data from the backend, you import your server code into
-                      your frontend and call it like a normal function. At build time, the direct
-                      function import is swapped out with an auto generated HTTP API.
-                    </p>
-                    <p>The generated API can also be used by third-parties.</p>
-                  </Feature>
-                  <Feature title="Loose Opinions">
-                    <p>
-                      The out-of-the-box experience guides you on a path perfect for most
-                      applications. But when you need to go off the beaten path, you are totally
-                      free to do so.
-                    </p>
-                    <p>
-                      And nearly everything is pluggable. For example, we don't mandate which
-                      styling or form libraries you use.
-                    </p>
-                  </Feature>
-                  <Feature title="Convention over Configuration">
-                    <p>
-                      Blitz does all the boring set up and configuration for you. The common project
-                      structure and architectural patterns make it easy to move from one Blitz app
-                      to another and immediately feel at home.
-                    </p>
-                  </Feature>
-                  <Feature title="Easy to Start, Easy to Scale">
-                    <p>Easy for beginners and easy to migrate existing Next.js apps to Blitz.</p>
-                    <p>
-                      Easy to scale in all forms: lines of code, number of people working in the
-                      codebase, and code execution.
-                    </p>
-                  </Feature>
-                  <Feature title="Stability">
-                    <p>
-                      Once we reach version 1.0, we'll switch to a stable, predictable release cycle
-                      with multiple channels like stable, LTS, and beta.
-                    </p>
-                    <p>We are taking a lot inspiration from Ember in this regard.</p>
-                  </Feature>
-                </div>
+                <Scrollbar className="lg:hidden" thumbHeight="4px">
+                  <div className="grid features-grid gap-x-6 lg:gap-y-14 pb-4">
+                    <Feature title="Fullstack & Monolithic">
+                      <p>
+                        Includes everything from the database to your frontend all inside a single
+                        app. Only one development server. Only one thing to deploy.
+                      </p>
+                      <p>Deploy to a server or serverless.</p>
+                    </Feature>
+                    <Feature title="API Not Required">
+                      <p>
+                        Instead of fetching data from the backend, you import your server code into
+                        your frontend and call it like a normal function. At build time, the direct
+                        function import is swapped out with an auto generated HTTP API.
+                      </p>
+                      <p>The generated API can also be used by third-parties.</p>
+                    </Feature>
+                    <Feature title="Loose Opinions">
+                      <p>
+                        The out-of-the-box experience guides you on a path perfect for most
+                        applications. But when you need to go off the beaten path, you are totally
+                        free to do so.
+                      </p>
+                      <p>
+                        And nearly everything is pluggable. For example, we don't mandate which
+                        styling or form libraries you use.
+                      </p>
+                    </Feature>
+                    <Feature title="Convention over Configuration">
+                      <p>
+                        Blitz does all the boring set up and configuration for you. The common
+                        project structure and architectural patterns make it easy to move from one
+                        Blitz app to another and immediately feel at home.
+                      </p>
+                    </Feature>
+                    <Feature title="Easy to Start, Easy to Scale">
+                      <p>Easy for beginners and easy to migrate existing Next.js apps to Blitz.</p>
+                      <p>
+                        Easy to scale in all forms: lines of code, number of people working in the
+                        codebase, and code execution.
+                      </p>
+                    </Feature>
+                    <Feature title="Stability">
+                      <p>
+                        Once we reach version 1.0, we'll switch to a stable, predictable release
+                        cycle with multiple channels like stable, LTS, and beta.
+                      </p>
+                      <p>We are taking a lot inspiration from Ember in this regard.</p>
+                    </Feature>
+                  </div>
+                </Scrollbar>
               </div>
             </div>
             <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
@@ -266,9 +269,11 @@ const Home = ({ randomContributors }) => {
                 Architecture Diagram
               </h2>
               <div className="w-full overflow-x-scroll">
-                <div className="architecture-diagram">
-                  <img src="img/architecture.svg" alt="Architecture diagram" />
-                </div>
+                <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
+                  <div className="architecture-diagram" style={{ paddingBottom: "2px" }}>
+                    <img src="img/architecture.svg" alt="Architecture diagram" />
+                  </div>
+                </Scrollbar>
               </div>
             </div>
             <div className="relative col-span-full">

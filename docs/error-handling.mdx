@@ -103,6 +103,8 @@ For errors other than what Blitz provides, it's recommended to create custom Err
 Here's an example of how to create a custom error. It's a JavaScript class, so you can be as creative as you want.
 
 ```ts
+import SuperJson from "superjson"
+
 export class UsernameTakenError extends Error {
   name = "UsernameTakenError"
   constructor({suggestedUserName}) {
@@ -110,9 +112,14 @@ export class UsernameTakenError extends Error {
     this.suggestedUserName = suggestedUserName
   }
 }
+// Register with SuperJson serializer so it's reconstructed on the client
+SuperJson.registerClass(UsernameTakenError)
+SuperJson.allowErrorProps("suggestedUserName")
 
 throw new UsernameTakenError({suggestedUserName: "second_best"})
 ```
+
+Note that you **must register it with SuperJson** as shown above in order for `instanceof` to work on the client. And you must also tell SuperJson about any special error propertries you want to be serialized. By default custom error properties are omitted for security concerns.
 
 Then on the client, you can use a `FallbackComponent` like above, or you can handle the error in your form submit handler like this.
 
@@ -122,7 +129,7 @@ Then on the client, you can use a `FallbackComponent` like above, or you can han
     try {
       await setUsername(values.username)
     } catch (error) {
-      if (error.name === "UsernameTakenError") {
+      if (error instanceof UsernameTakenError) {
         setSuggestedUsername(error.suggestedUserName)
       }
     }

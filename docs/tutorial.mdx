@@ -336,7 +336,7 @@ export const QuestionsList = () => {
     <ul>
       {questions.map((question) => (
         <li key={question.id}>
-          <Link href="/questions/[questionId]" as={`/questions/${question.id}`}>
+          <Link href={`/questions/${question.id}`}>
             <a>{question.name}</a> // highlight-line
           </Link>
         </li>
@@ -423,7 +423,7 @@ onSubmit={async () => {
       data: { text: "Do you love Blitz?", choices: { create: [{ text: "Yes!" }] } },
     })
     alert("Success!" + JSON.stringify(question));
-    router.push("/questions/[questionId]", `/questions/${question.id}`);
+    router.push(`/questions/${question.id}`);
   } catch (error) {
     alert("Error creating question " + JSON.stringify(error, null, 2));
   }
@@ -448,7 +448,7 @@ onSubmit={async (event) => {
       },
     });
     alert("Success!" + JSON.stringify(question));
-    router.push("/questions/[questionId]", `/questions/${question.id}`);
+    router.push(`/questions/${question.id}`);
   } catch (error) {
     alert("Error creating question " + JSON.stringify(error, null, 2));
   }
@@ -491,7 +491,7 @@ const NewQuestionPage: BlitzPage = () => {
               },
             })
             alert("Success!" + JSON.stringify(question))
-            router.push("/questions/[questionId]", `/questions/${question.id}`)
+            router.push(`/questions/${question.id}`)
           } catch (error) {
             alert("Error creating question " + JSON.stringify(error, null, 2))
           }
@@ -751,4 +751,4 @@ export default ShowQuestionPage
 
 If you want to share your project with the world wide Blitz community there is no better place to do that than on Discord.
 
-Visit [discord.blitzjs.com](https://discord.blitzjs.com). Then, post the link to the **#show-and-tell** channel to share it with everyone!
+Visit [discord.blitzjs.com](https://discord.blitzjs.com). Then, post the link to the **#built-with-blitz** channel to share it with everyone!

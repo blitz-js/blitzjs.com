@@ -1,0 +1,48 @@
+---
+title: Redirects
+sidebar_label: Redirects
+---
+
+## On the Client
+
+One common use case is conditionally redirecting a user to a different page based on their session data. Here's how you can do that:
+
+```tsx
+import {router, useSession} from "blitz"
+
+const LoginPage: BlitzPage = () => {
+  const router = useRouter()
+  const session = useSession()
+
+  useEffect(() => {
+    if (session.userId) {
+      router.push("/home")
+    }
+  })
+
+  return /* stuff */
+}
+```
+
+## On the Server
+
+If you don't want want the "flash of invalid content" that you get with client side redirects, you can use [`getServerSideProps`](./get-server-side-props) to conditionally redirect from the server. Here's how you can do that:
+
+```ts
+import {getSessionContext} from "@blitzjs/server"
+
+export const getServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+
+  if (!session.userId) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    }
+  }
+
+  return {props: {}}
+}
+```

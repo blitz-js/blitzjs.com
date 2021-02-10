@@ -30,8 +30,9 @@ export function DocumentationLayout(props) {
         hasLightBg
         useColoredLogo
         stickyBgClass="bg-white dark:bg-purple-deep"
+        hasFade
       />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto font-secondary">
         <SidebarLayout nav={documentationNav} {...props} />
       </div>
       <Footer className="text-black dark:text-white" />

@@ -19,7 +19,9 @@ const Title = ({ title, iconPath, iconDarkPath }) => (
         <Image src={iconDarkPath} width="12" height="12" alt={title} />
       </div>
     )}
-    <div className="text-xs text-purple-off-black dark:text-white inline">{title}</div>
+    <div className="text-xxs text-purple-off-black dark:text-white inline font-normal font-primary">
+      {title}
+    </div>
   </div>
 )
 

@@ -10,8 +10,8 @@ export const ContentsContext = createContext()
 
 export function TableOfContents({ tableOfContents, currentSection }) {
   return (
-    <div className="pl-8 py-2">
-      <ul className="overflow-x-hidden text-black dark:text-white font-normal text-sm">
+    <div className="pl-8">
+      <ul className="overflow-x-hidden text-black dark:text-white font-normal text-xs">
         {tableOfContents.map((section) => {
           let sectionIsActive =
             currentSection === section.slug ||

@@ -5,29 +5,131 @@ sidebar_label: Authorization & Security
 
 Authorization is the act of allowing or disallowing access to data and pages in your application.
 
-## Secure Data, Not Pages
+## Secure Your Data
 
-If you have built React apps before, probably you enforced authorization on pages by checking if the session exists and rendering different things based on that, like `AuthorizedLayout` vs `UnauthorizedLayout`. Or checking for a session and redirecting somewhere if it doesn't exist.
+You secure data by calling [`ctx.session.$authorize()`](#ctxsessionauthorize) inside all the queries and mutations that you want secured. (Or if using [`resolver.pipe`](./resolver-server-utilities#resolverpipe), by using [`resolver.authorize`](./resolver-server-utilities#resolverauthorize)). You can also secure [API routes](./api-routes) the same way.
 
-But because of the nature of static pre-rendering, this method results in a very poor user experience in Blitz apps.
+Those will throw `AuthenticationError` if the user is not logged in, and it will throw `AuthorizationError` if the user is logged in but doesn't have the required permissions.
 
-**In Blitz apps, you want to secure data, not pages.** And then by extension, your pages will be secured too.
+<!-- prettier-ignore -->
+```ts
+import {resolver} from "blitz"
+import db from "db"
+import * as z from "zod"
 
-You secure data by calling [`ctx.session.$authorize()`](#ctxsessionauthorize) inside all the queries and mutations that you want secured. You can also secure [API routes](./api-routes) the same way. This call will throw `AuthenticationError` if the user is not logged in, and it will throw `AuthorizationError` if the user is logged in but doesn't have the required permissions.
+const CreateProject = z
+  .object({
+    name: z.string(),
+  }).nonstrict()
 
-### Optimistic Authorization
+export default resolver.pipe(
+  resolver.zod(CreateProject),
+  resolver.authorize(), // highlight-line
+  async (input) => {
+    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    const projects = await db.projects.create({data: input})
+    return projects
+  },
+)
+```
 
-Because all your data is secured, you can build your entire UI in an optimistic fashion. You can assume that the user is logged in and has the required permissions. By doing this, you always render the content an authenticated user will see and rely on the thrown Errors to handle unauthorized users.
+or
 
-### Handle Unauthorized Users
+<!-- prettier-ignore -->
+```ts
+import {Ctx} from "blitz"
+import db from "db"
+import * as z from "zod"
 
-Because you are calling `ctx.session.$authorize()` in queries and mutations, the way to detect unauthorized users is to watch for `AuthenticationError` and `AuthorizationError` in your UI.
+const CreateProject = z
+  .object({
+    name: z.string(),
+  }).nonstrict()
+type CreateProjectType = z.infer<typeof CreateProject>
+
+export default function createProject(input: CreateProjectType, ctx: Ctx) {
+  const data = CreateProject.parse(input)
+
+  ctx.session.$authorize(), // highlight-line
+
+  // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+  const projects = await db.projects.create({data})
+  return projects
+}
+```
+
+### Input Validation
+
+For security, it's very important to validate all input values in your mutations. We recommended using [zod](https://github.com/colinhacks/zod), which we include in all our code generation templates. Without this, users may be able to access data or perform actions that are forbidden.
+
+```ts
+import {resolver} from "blitz"
+import db from "db"
+import * as z from "zod"
+
+// highlight-start
+const CreateProject = z
+  .object({
+    name: z.string(),
+  })
+  .nonstrict()
+// highlight-end
+
+export default resolver.pipe(
+  resolver.zod(CreateProject), // highlight-line
+  resolver.authorize(),
+  async (input) => {
+    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    const projects = await db.projects.create({data: input})
+    return projects
+  },
+)
+```
+
+## Secure Your Pages
+
+Set `Page.authenticate = true` on all pages that require a user to be logged in. If a user is not logged in, an `AuthenticationError` will be thrown and caught by your top level Error Boundary.
+
+Or if instead you want to redirect the user, set `Page.authenticate = {redirectTo: '/login'}`
+
+```tsx
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+// highlight-start
+Page.authenticate = true
+// or Page.authenticate = {redirectTo: '/login'}
+// highlight-end
+
+export default Page
+```
+
+### Redirecting Logged In Users
+
+For pages that are only for logged out users, such as login and signup pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect logged in users to another page.
+
+```tsx
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+// highlight-start
+Page.redirectAuthenticatedTo = "/"
+// highlight-end
+
+export default Page
+```
+
+## UX for Unauthorized Users
+
+While you can use redirects to and from a `/login` page, we recommended to use Error Boundaries instead of redirects.
 
 In React, the way you catch errors in your UI is to use an [error boundary](https://reactjs.org/docs/error-boundaries.html).
 
-In Blitz, the recommended approach is to have a top level error boundary inside `_app.tsx` so that these errors are handled from everywhere in our app. And then if you need, you can also place more error boundaries at other places in your app.
+You should have a top level error boundary inside `_app.tsx` so that these errors are handled from everywhere in our app. And then if you need, you can also place more error boundaries at other places in your app.
 
-Here's how these errors are handled by default in new Blitz apps:
+The default error handling setup in new Blitz apps is as follows:
 
 - If `AuthenticationError` is thrown, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
 - If `AuthorizationError` is thrown, display an error stating such.
@@ -35,10 +137,12 @@ Here's how these errors are handled by default in new Blitz apps:
 And here's the default `RootErrorFallback` that's in `app/pages/_app.tsx`. You can customize it as required for your needs.
 
 ```tsx
-function RootErrorFallback({error, resetErrorBoundary}) {
-  if (error.name === "AuthenticationError") {
+import {ErrorComponent, AuthenticationError, AuthorizationError, ErrorFallbackProps} from "blitz"
+
+function RootErrorFallback({error, resetErrorBoundary}: ErrorFallbackProps) {
+  if (error instanceof AuthenticationError) {
     return <LoginForm onSuccess={resetErrorBoundary} />
-  } else if (error.name === "AuthorizationError") {
+  } else if (error instanceof AuthorizationError) {
     return (
       <ErrorComponent
         statusCode={error.statusCode}

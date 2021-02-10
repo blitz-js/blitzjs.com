@@ -97,6 +97,7 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
               onClick={(e) => e.stopPropagation()}
               className="h-full scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
             >
+              <div class="absolute bg-gradient-to-b from-white dark:from-purple-deep h-12 lg:block pointer-events-none w-full z-10"></div>
               <Nav
                 nav={nav}
                 fallbackHref={fallbackHref}

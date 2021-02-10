@@ -10,7 +10,14 @@ import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
-const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, stickyBgClass }) => {
+const Header = ({
+  className = "",
+  bannerMsg = "",
+  hasLightBg,
+  useColoredLogo,
+  stickyBgClass,
+  hasFade,
+}) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -141,6 +148,9 @@ const Header = ({ className = "", bannerMsg = "", hasLightBg, useColoredLogo, st
             <div className="my-4 border-t border-off-white border-opacity-20"></div>
             <DarkModeToggle className="text-lg" />
           </div>
+        )}
+        {hasFade && (
+          <div class="absolute bg-gradient-to-b from-white dark:from-purple-deep h-12 lg:block pointer-events-none w-full z-10"></div>
         )}
       </nav>
     </>

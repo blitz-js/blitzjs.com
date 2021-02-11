@@ -89,7 +89,7 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
           {/* eslint-disable-next-line */}
           <div
             id="sidebar"
-            className="fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-96 xl:w-84 lg:block"
+            className="hidden fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-96 xl:w-84 lg:block"
           >
             {/* eslint-disable-next-line */}
             <div

@@ -5,7 +5,7 @@ sidebar_label: Hooks & Utilities
 
 ## `useSession()`
 
-`useSession(options?) => PublicData & {isLoading: boolean}`
+`useSession(options?) => Partial<PublicData> & {isLoading: boolean}`
 
 ### Example
 
@@ -13,6 +13,31 @@ sidebar_label: Hooks & Utilities
 import {useSession} from "blitz"
 
 const session = useSession()
+```
+
+### Arguments
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns
+
+- `session: Partial<PublicData> & {isLoading: boolean}`
+
+## `useAuthenticatedSession()`
+
+`useAuthenticatedSession(options?) => PublicData & {isLoading: boolean}`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example
+
+```ts
+import {useAuthenticatedSession} from "blitz"
+
+const session = useAuthenticatedSession()
 ```
 
 ### Arguments

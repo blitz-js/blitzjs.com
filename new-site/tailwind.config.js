@@ -107,6 +107,10 @@ module.exports = {
             "&:last-child > :last-child": {
               marginBottom: "0",
             },
+            h2: {
+              fontSize: "1.625rem",
+              fontWeight: theme("fontWeight.medium"),
+            },
             "h1, h2": {
               letterSpacing: "-0.025em",
             },
@@ -190,11 +194,14 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            "h1, h2, a, code, pre code": {
+            "h1, h2, h3, h4, h5, h6, a, code, pre code": {
               color: theme("colors.white"),
             },
             code: {
               backgroundColor: theme("colors.purple['off-black']"),
+            },
+            blockquote: {
+              color: theme("colors.white"),
             },
           },
         },

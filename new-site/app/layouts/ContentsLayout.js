@@ -23,7 +23,7 @@ export function TableOfContents({ tableOfContents, currentSection }) {
                 <a
                   href={`#${section.slug}`}
                   className={clsx(
-                    "block transform transition-colors duration-200 py-2 hover:text-gray-900 no-underline",
+                    "block transform transition-colors duration-200 py-2 hover:text-gray-900 dark:hover:text-off-white no-underline",
                     {
                       "text-gray-900": sectionIsActive,
                     }

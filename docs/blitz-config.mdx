@@ -98,11 +98,23 @@ By default Blitz logs various things at runtime. You can adjust the verbosity us
 - Default: `info`
 - Options: `trace` | `debug` | `info` | `warn` | `error` | `fatal`
 
-```
+```js
 module.exports = {
   log: {
-    level: 'info'
-  }
+    level: "info",
+  },
+}
+```
+
+## CLI
+
+When you run `blitz dev`, the console gets cleared. You can disable it by setting the `cli.clearConsoleOnBlitzDev` to `false`:
+
+```js
+module.exports = {
+  cli: {
+    clearConsoleOnBlitzDev: false,
+  },
 }
 ```
 

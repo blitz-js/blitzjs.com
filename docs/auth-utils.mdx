@@ -1,7 +1,76 @@
 ---
-title: Auth Utilities
-sidebar_label: Utilities
+title: Auth Hooks & Utilities
+sidebar_label: Hooks & Utilities
 ---
+
+## `useSession()`
+
+`useSession(options?) => PublicData & {isLoading: boolean}`
+
+### Example
+
+```ts
+import {useSession} from "blitz"
+
+const session = useSession()
+```
+
+### Arguments
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns
+
+- `session: PublicData & {isLoading: boolean}`
+
+## `useAuthorize()`
+
+`useAuthorize() => void`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example
+
+```ts
+import {useAuthorize} from "blitz"
+
+useAuthorize()
+```
+
+### Arguments
+
+- None
+
+### Returns
+
+- Nothing
+
+## `useRedirectAuthenticated()`
+
+`useRedirectAuthenticated(to: string) => void`
+
+This will redirect a logged in user to the given url path. It does nothing for logged out users.
+
+### Example
+
+```ts
+import {useRedirectAuthenticated} from "blitz"
+
+useRedirectAuthenticated("/dashboard")
+```
+
+### Arguments
+
+- `to: string`
+  - **Required**
+  - The url path to redirect logged in users to
+
+### Returns
+
+- Nothing
 
 ## `generateToken()`
 

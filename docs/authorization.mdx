@@ -163,41 +163,37 @@ For more information on error handling in Blitz, see the [Error Handling documen
 
 There's two approaches you can use to check the user role in your UI.
 
-#### `useCurrentUser()`
-
-New Blitz apps by default have a `useCurrentUser()` hook and a corresponding `getCurrentUser` query.
-
-This makes a network call to the backend, so you'll need to handle the loading state.
-
-```tsx
-import {useCurrentUser} from "app/hooks/useCurrentUser"
-
-const user = useCurrentUser()
-
-if (user?.role === "admin") {
-  return /* admin stuff */
-} else {
-  return /* normal stuff */
-}
-```
-
 #### `useSession()`
 
-Another way is to use the [`useSession()`](./session-management#session-on-the-client) hook to read the user role from the session's `publicData`.
+The first way is to use the [`useSession()`](./session-management#session-on-the-client) hook to read the user role from the session's `publicData`.
 
-This is available on the client without making a network call to the backend, so it's available faster than the `useCurrentUser()` approach.
+This is available on the client without making a network call to the backend, so it's available faster than the `useCurrentUser()` approach described below.
 
-However, due to the nature of static pre-rendering, the `session` will not exist on the very first render on the client. This causes a quick "flash" on first load. Unfortunately there's no way to get around this because React requires the first render on the client to always match the render on the server (which in this case is because of static pre-rendering and the session doesn't exist during that).
-
-If this "flash" of unauthentication is unacceptable for your use case, the alternative approach is to use [`getServerSideProps`](./get-server-side-props) which opts you into SSR. And with SSR, the entire page is rendered on the server for each page load. This allows the very first page render to correctly match the user's role.
+However, due to the nature of static pre-rendering, the `session` will not exist on the very first render on the client. This causes a quick "flash" on first load. You can fix that by setting [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
 
 ```tsx
 import {useSession} from "blitz"
 
 const session = useSession()
 
-if (!session.isLoading && session.roles.includes("admin")) {
+if (session.role === "admin") {
   return /* admin stuff */
+} else {
+  return /* normal stuff */
+}
+```
+
+#### `useCurrentUser()`
+
+New Blitz apps by default have a `useCurrentUser()` hook and a corresponding `getCurrentUser` query.
+
+```tsx
+import {useCurrentUser} from "app/hooks/useCurrentUser"
+
+const user = useCurrentUser()
+
+if (user.isFunny) {
+  return /* funny stuff */
 } else {
   return /* normal stuff */
 }

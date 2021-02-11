@@ -29,7 +29,7 @@ export default async function login(input: SomeTSInputType, ctx: Ctx) {
   // 3. Fetch user data
 
   // 4. Create a new session (log in)
-  await ctx.session.$create({userId: user.id, roles: [user.role]}) // highlight-line
+  await ctx.session.$create({userId: user.id, role: user.role}) // highlight-line
 }
 ```
 
@@ -78,7 +78,7 @@ import {Ctx} from "blitz"
 export default async function someQuery(input: any, ctx: Ctx) {
   // Access the SessionContext class
   ctx.session.userId
-  ctx.session.roles
+  ctx.session.role
   ctx.session.$create(/*...*/)
 
   return
@@ -113,7 +113,7 @@ function SomeComponent() {
   const session = useSession()
 
   session.userId
-  session.roles[0]
+  session.role
 
   return /*... */
 }
@@ -158,7 +158,6 @@ Anonymous session `PublicData` looks like this:
 ```
 {
   userId: null,
-  roles: []
 }
 ```
 
@@ -182,7 +181,7 @@ declare module "blitz" {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
       userId: User["id"]
-      roles: Role[]
+      role: Role
 +     orgId: number
     }
   }
@@ -192,7 +191,7 @@ declare module "blitz" {
 Then change all uses of `ctx.session.$create()` to pass in the new fields.
 
 ```ts
-ctx.session.$create({userId: 1, roles: ["admin"], orgId: 1})
+ctx.session.$create({userId: 1, role: "admin", orgId: 1})
 ```
 
 You can also use `ctx.session.$setPublicData()` to update session data for an already logged in user. This will _merge_ values with the existing public data.
@@ -256,12 +255,13 @@ type SessionConfig = {
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
+  publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
   getSession: (handle: string) => Promise<SessionModel | null>
   getSessions: (userId: string | number) => Promise<SessionModel[]>
   createSession: (session: SessionModel) => Promise<SessionModel>
   updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
   deleteSession: (handle: string) => Promise<SessionModel>
-  isAuthorized: (userRoles: string[], input: any) => boolean
+  isAuthorized: ({ctx: any, args: [...unknown]}) => boolean
 }
 ```
 

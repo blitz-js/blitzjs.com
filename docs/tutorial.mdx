@@ -160,8 +160,6 @@ First, we'll generate everything pertaining to the `Question` model:
 blitz generate all question text:string choices:choice[]
 ```
 
-> Note: If you are using zsh (the default terminal shell on MacOS), you will need to wrap any fields with arrays with quotation marks (`""`) in order for them to be properly interpreted. Like this: `"choices:choice[]"`.
-
 ```
 ✔ Model for 'question' created successfully:
 
@@ -192,10 +190,8 @@ The `generate` command with a type of `all` generates a model and queries, mutat
 Now we'll generate the `Choice` model with corresponding queries and mutations. We'll pass a type of `resource` this time as we don't need to generate pages for the `Choice` model:
 
 ```sh
-blitz generate resource choice text votes:int:default[0] belongsTo:question
+blitz generate resource choice text votes:int:default=0 belongsTo:question
 ```
-
-> Note: Remember to wrap the array field with quotation marks if using zsh. Like this: "votes:init:default[0]"
 
 ```
 ✔ Model for 'choice' created successfully:

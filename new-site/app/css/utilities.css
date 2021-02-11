@@ -154,6 +154,10 @@ body.cursor-grabbing * {
   @apply flex items-center;
 }
 
+.dark .admonition .admonition-heading h5 {
+  @apply text-black;
+}
+
 .admonition .admonition-icon {
   @apply mr-2;
 }

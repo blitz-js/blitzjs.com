@@ -24,14 +24,16 @@ export function DocumentationLayout(props) {
           content={`https://tailwindcss.com${twitterSquare}`}
         />
       </Head>
-      <Header
-        className="flex items-center justify-between px-6 mx-auto max-w-7xl"
-        bannerMsg="Blitz is now in beta!"
-        hasLightBg
-        useColoredLogo
-        stickyBgClass="bg-white dark:bg-purple-deep"
-        hasFade
-      />
+      <div className="text-white col-span-full">
+        <Header
+          className="px-6 mx-auto max-w-7xl"
+          bannerMsg="Blitz is now in beta!"
+          hasLightBg
+          useColoredLogo
+          stickyBgClass="bg-white dark:bg-purple-deep"
+          hasFade
+        />
+      </div>
       <div className="max-w-7xl mx-auto font-secondary">
         <SidebarLayout nav={documentationNav} {...props} />
       </div>

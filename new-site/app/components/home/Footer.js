@@ -4,7 +4,7 @@ import { LinkList } from "@/components/home/LinkList"
 import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { IoLogoVercel } from "react-icons/io5"
 
-export function Footer({ className }) {
+export function Footer({ className, hasDarkMode }) {
   return (
     <footer className={className}>
       <div className="border-t border-white border-opacity-50">
@@ -26,7 +26,7 @@ export function Footer({ className }) {
             </p>
           </div>
           <div className="mb-4 lg:row-end-5">
-            <NewsletterForm />
+            <NewsletterForm hasDarkMode={hasDarkMode} />
           </div>
           <div className="grid gap-7 md:grid-cols-3 lg:col-span-2">
             <LinkList title="Docs">

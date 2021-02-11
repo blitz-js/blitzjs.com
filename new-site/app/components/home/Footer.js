@@ -13,6 +13,9 @@ export function Footer({ className }) {
             <Icon
               name="arrowUp"
               className="absolute right-0 mr-2 -mt-5 xl:mt-14 icon-expanded"
+              variant="custom"
+              customBackgroundClassName="text-purple-light dark:text-off-white"
+              customColorClassName="text-off-white dark:text-purple-off-black"
             ></Icon>
           </a>
           <div className="col-span-full"></div>

@@ -75,6 +75,7 @@ module.exports = {
       },
     },
     fontSize: {
+      xxs: ["0.625rem", "0.8244rem"],
       xs: ["0.8125rem", "1.1375rem"], // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
@@ -84,6 +85,7 @@ module.exports = {
       "3xl": ["1.875rem", "2.4375rem"], // 30px
       "4xl": "2.375rem", // 38px
       "5xl": ["2.8125rem", "4.025rem"], // 45px
+      "5xl-squashed": ["2.8125rem", "3.0938rem"],
       "6xl": ["3.875rem", "4.84375rem"], // 62px
     },
     borderColor: (theme) => ({
@@ -184,7 +186,7 @@ module.exports = {
         secondary: ["Roboto", ...defaultTheme.fontFamily.sans],
         primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-        mono: ["Menlo", ...defaultTheme.fontFamily.mono],
+        mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
         source: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
         "ubuntu-mono": ["Ubuntu Mono", ...defaultTheme.fontFamily.mono],
         system: defaultTheme.fontFamily.sans,
@@ -209,6 +211,9 @@ module.exports = {
         sm: "30rem",
         "(screen-18)": `calc(100vh - ${theme("spacing.18")})`,
       }),
+      height: {
+        codesandbox: "calc(100% - 20rem)",
+      },
       boxShadow: {
         px: "0 0 0 1px rgba(0, 0, 0, 0.5)",
         link: "inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 rgba(165, 243, 252, 0.4)",
@@ -284,6 +289,7 @@ module.exports = {
       ringColor: ["focus-visible"],
       ringOpacity: ["focus-visible"],
       rotate: ["first", "last", "odd", "even"],
+      backgroundImage: ["hover", "focus"],
     },
   },
   plugins: [

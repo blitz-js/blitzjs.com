@@ -9,7 +9,7 @@ import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
-const Header = ({ className = "", bannerMsg = "" }) => {
+const Header = ({ className = "", bannerMsg = "", onNavToggle }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -24,7 +24,9 @@ const Header = ({ className = "", bannerMsg = "" }) => {
   }, [isOpen])
 
   const onToggle = () => {
-    setIsOpen(!isOpen)
+    const newValue = !isOpen
+    setIsOpen(newValue)
+    onNavToggle(newValue)
   }
 
   return (

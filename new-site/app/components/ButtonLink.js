@@ -6,7 +6,8 @@ const ButtonLink = ({ className, children, variant = "solid", ...props }) => {
 
   switch (variant) {
     case "solid":
-      classes += " bg-white text-off-black hover:bg-blue-light"
+      classes +=
+        " bg-white text-off-black hover:bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue"
       break
     case "solid-dark":
       classes +=

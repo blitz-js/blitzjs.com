@@ -1,7 +1,8 @@
 import { CodeWindow } from "../CodeWindow"
 import tokenize from "../../macros/tokenize.macro"
+import { useState } from "react"
 
-const { tokens, code } = tokenize.jsx(
+const pageTokenized = tokenize.jsx(
   `import { Head, Link, useRouter } from 'blitz'
 import createQuestion from 'app/questions/mutations/createQuestion'
 
@@ -55,10 +56,48 @@ export default NewQuestionPage`,
   true
 )
 
+const mutationTokenized = tokenize.jsx(
+  `import { Ctx } from "blitz"
+import db, { Prisma } from "db"
+
+type CreateQuestionInput = Pick<Prisma.QuestionCreateArgs, "data">
+export default async function createQuestion({ data }: CreateQuestionInput, ctx: Ctx) {
+  ctx.session.authorize()
+
+  const question = await db.question.create({ data })
+
+  return question
+}`,
+  true
+)
+
 const HeroCode = ({ className = "" }) => {
+  const [tabs, setTabs] = useState([
+    {
+      title: "pages/questions/new.tsx",
+      tokens: pageTokenized.tokens,
+      selected: true,
+    },
+    {
+      title: "mutations/createQuestion.ts",
+      tokens: mutationTokenized.tokens,
+      selected: false,
+    },
+  ])
   return (
-    <CodeWindow className={className}>
-      <CodeWindow.Code tokens={tokens} />
+    <CodeWindow
+      className={className}
+      tabs={tabs}
+      onTabClick={(tabIndex) => {
+        setTabs(
+          tabs.map((tab, i) => ({
+            ...tab,
+            selected: i === tabIndex,
+          }))
+        )
+      }}
+    >
+      <CodeWindow.Code tokens={tabs.find((tab) => tab.selected).tokens} />
     </CodeWindow>
   )
 }

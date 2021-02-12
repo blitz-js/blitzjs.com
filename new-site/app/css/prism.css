@@ -3,6 +3,14 @@
 .token.selector,
 .token.selector .class,
 .token.function {
+  @apply text-fuchsia-600;
+}
+
+.dark .token.tag,
+.dark .token.class-name,
+.dark .token.selector,
+.dark .token.selector .class,
+.dark .token.function {
   @apply text-fuchsia-400;
 }
 
@@ -12,6 +20,15 @@
 .token.operator,
 .token.pseudo-class,
 .token.important {
+  @apply text-cyan-600;
+}
+
+.dark .token.attr-name,
+.dark .token.keyword,
+.dark .token.rule,
+.dark .token.operator,
+.dark .token.pseudo-class,
+.dark .token.important {
   @apply text-cyan-400;
 }
 
@@ -21,12 +38,27 @@
 .token.number,
 .token.unit,
 .token.color {
+  @apply text-lime-700;
+}
+
+.dark .token.attr-value,
+.dark .token.class,
+.dark .token.string,
+.dark .token.number,
+.dark .token.unit,
+.dark .token.color {
   @apply text-lime-300;
 }
 
 .token.punctuation,
 .token.module,
 .token.property {
+  @apply text-light-blue-700;
+}
+
+.dark .token.punctuation,
+.dark .token.module,
+.dark .token.property {
   @apply text-light-blue-200;
 }
 
@@ -42,17 +74,21 @@
   color: inherit;
 }
 
-.token.comment {
+.dark .token.comment {
   @apply text-gray-400;
 }
 
+.token.comment {
+  @apply text-gray-600;
+}
+
 .token.deleted:not(.prefix) {
-  @apply relative block -mx-4 px-4;
+  @apply relative block px-4 -mx-4;
 }
 
 .token.deleted:not(.prefix)::after {
   content: "";
-  @apply pointer-events-none absolute inset-0 block bg-rose-400 bg-opacity-25;
+  @apply absolute inset-0 block bg-opacity-25 pointer-events-none bg-rose-400;
 }
 
 .token.deleted.prefix {
@@ -60,9 +96,9 @@
 }
 
 .token.inserted:not(.prefix) {
-  @apply block bg-emerald-700 bg-opacity-50 -mx-4 px-4;
+  @apply block px-4 -mx-4 bg-opacity-50 bg-emerald-700;
 }
 
 .token.inserted.prefix {
-  @apply text-emerald-200 text-opacity-75 select-none;
+  @apply text-opacity-75 select-none text-emerald-200;
 }

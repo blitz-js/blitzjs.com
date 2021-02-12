@@ -136,7 +136,7 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="var(--color-stop)" />
-              <stop offset="1" stopColor="var(--color-stop)" stop-opacity="0" />
+              <stop offset="1" stopColor="var(--color-stop)" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>

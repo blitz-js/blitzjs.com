@@ -1,6 +1,7 @@
 import { BsArrowRight } from "react-icons/bs"
+import React from "react"
 
-const ButtonLink = ({ className, children, variant = "solid", ...props }) => {
+const ButtonLink = React.forwardRef(({ className, children, variant = "solid", ...props }, ref) => {
   let classes =
     "flex items-center justify-center py-2 px-3 lg:px-5 font-secondary text-base font-bold"
 
@@ -22,10 +23,10 @@ const ButtonLink = ({ className, children, variant = "solid", ...props }) => {
   }
 
   return (
-    <a className={`${classes} ${className}`} {...props}>
+    <a className={`${classes} ${className}`} {...props} ref={ref}>
       {children} <BsArrowRight size="1.5rem" className="ml-2" />
     </a>
   )
-}
+})
 
 export { ButtonLink }

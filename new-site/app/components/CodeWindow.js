@@ -22,16 +22,19 @@ export function CodeWindow({
             <div className="w-3 h-3 rounded-full bg-amber-400" />
             <div className="w-3 h-3 bg-green-400 rounded-full" />
           </div>
-          {tabs.map((tab, i) => (
-            <button
-              onClick={() => onTabClick(i)}
-              className={`pt-1 self-end px-4 ml-3 text-xxs text-black dark:text-white h-8 rounded-t-xl font-mono ${
-                tab.selected && "bg-gray-50 dark:bg-gray-900"
-              }`}
-            >
-              {tab.title}
-            </button>
-          ))}
+          <div className="flex self-end overflow-x-scroll">
+            {tabs.map((tab, i) => (
+              <button
+                key={i}
+                onClick={() => onTabClick(i)}
+                className={`pt-1 px-4 ml-3 text-xxs text-black dark:text-white h-8 rounded-t-xl font-mono ${
+                  tab.selected && "bg-gray-50 dark:bg-gray-900"
+                }`}
+              >
+                {tab.title}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="relative flex flex-col flex-auto min-h-0 border-t border-gray-200 dark:border-gray-800">
           {lineNumbersBackground && (

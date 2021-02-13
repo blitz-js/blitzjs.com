@@ -4,7 +4,7 @@ const NavLink = ({ className = "", href, children, ...props }) => {
   return (
     <Link href={href}>
       <a
-        className={`block py-2 px-3 font-secondary rounded-md hover:bg-purple-light dark:hover:bg-purple-off-black ${className}`}
+        className={`block py-2 px-3 font-secondary rounded-md hover:bg-purple-light dark:hover:bg-purple-off-black hover:text-white ${className}`}
         {...props}
       >
         {children}

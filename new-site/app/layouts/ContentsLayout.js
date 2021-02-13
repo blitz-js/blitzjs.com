@@ -5,6 +5,7 @@ import { SidebarLayout } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
+import { BiChevronLeft } from "react-icons/bi"
 
 export const ContentsContext = createContext()
 
@@ -134,35 +135,42 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
   let { prev, next } = usePrevNext()
 
   return (
-    <div id={meta.containerId} className="pt-4 pb-24 lg:pb-16 w-full flex">
-      <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
-        <PageHeader title={meta.title} />
-        <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-          {children}
-        </ContentsContext.Provider>
-        {(prev || next) && (
-          <>
-            <hr className="border-gray-200 mt-10 mb-4" />
-            <div className="flex justify-between leading-7 font-medium">
-              {prev && (
-                <Link href={prev.href}>
-                  <a className="flex items-center">
-                    <ArrowIcon className="mr-2 fill-current" /> {prev.shortTitle || prev.title}
-                  </a>
-                </Link>
-              )}
-              {next && (
-                <Link href={next.href}>
-                  <a className="flex items-center">
-                    {next.shortTitle || next.title}{" "}
-                    <ArrowIcon className="ml-2 fill-current transform rotate-180" />
-                  </a>
-                </Link>
-              )}
-            </div>
-          </>
-        )}
+    <>
+      <Link href="/docs">
+        <a className="lg:hidden mx-6 text-xxs px-2.5 py-0.5 rounded-sm bg-off-white font-primary inline-flex mb-4">
+          <BiChevronLeft size={18} /> Back to Docs
+        </a>
+      </Link>
+      <div id={meta.containerId} className="pt-4 pb-24 lg:pb-16 w-full flex">
+        <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
+          <PageHeader title={meta.title} />
+          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+            {children}
+          </ContentsContext.Provider>
+          {(prev || next) && (
+            <>
+              <hr className="border-gray-200 mt-10 mb-4" />
+              <div className="flex justify-between leading-7 font-medium">
+                {prev && (
+                  <Link href={prev.href}>
+                    <a className="flex items-center">
+                      <ArrowIcon className="mr-2 fill-current" /> {prev.shortTitle || prev.title}
+                    </a>
+                  </Link>
+                )}
+                {next && (
+                  <Link href={next.href}>
+                    <a className="flex items-center">
+                      {next.shortTitle || next.title}{" "}
+                      <ArrowIcon className="ml-2 fill-current transform rotate-180" />
+                    </a>
+                  </Link>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

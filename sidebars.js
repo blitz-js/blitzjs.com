@@ -46,7 +46,8 @@ module.exports = {
       "api-routes",
     ],
     Database: ["database-overview", "postgres", "database-seeds", "fauna"],
-    Queries: [
+    "Backend Architecture": ["background-processing-with-quirrel"],
+    "Queries & Mutations": [
       "query-resolvers",
       "query-usage",
       "use-query",

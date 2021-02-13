@@ -47,7 +47,7 @@ module.exports = {
     ],
     Database: ["database-overview", "postgres", "database-seeds", "fauna"],
     "Backend Architecture": ["background-processing-with-quirrel"],
-    "Queries & Mutations": [
+    Queries: [
       "query-resolvers",
       "query-usage",
       "use-query",

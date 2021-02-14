@@ -58,7 +58,7 @@ html {
 }
 
 .architecture-diagram {
-  width: 1230px;
+  width: 800px;
 }
 
 .hand {
@@ -74,6 +74,15 @@ html {
 @screen sm {
   .features-grid {
     grid-template-columns: repeat(6, 25rem);
+  }
+  .architecture-diagram {
+    width: 1000px;
+  }
+}
+
+@screen md {
+  .architecture-diagram {
+    width: 1230px;
   }
 }
 
@@ -99,6 +108,10 @@ html {
 
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .architecture-diagram {
+    width: 100%;
   }
 }
 

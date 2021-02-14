@@ -78,13 +78,17 @@
   @apply text-blue-dark;
 }
 
+.token.comment {
+  @apply text-gray-600;
+}
+
 .token.deleted:not(.prefix) {
-  @apply relative block -mx-4 px-4;
+  @apply relative block px-4 -mx-4;
 }
 
 .token.deleted:not(.prefix)::after {
   content: "";
-  @apply pointer-events-none absolute inset-0 block bg-rose-400 bg-opacity-25;
+  @apply absolute inset-0 block bg-opacity-25 pointer-events-none bg-rose-400;
 }
 
 .token.deleted.prefix {

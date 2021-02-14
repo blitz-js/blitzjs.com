@@ -17,6 +17,7 @@ const Header = ({
   useColoredLogo,
   stickyBgClass,
   hasFade,
+  onNavToggle,
 }) => {
   let [isOpen, setIsOpen] = useState(false)
 
@@ -32,7 +33,9 @@ const Header = ({
   }, [isOpen])
 
   const onToggle = () => {
-    setIsOpen(!isOpen)
+    const newValue = !isOpen
+    setIsOpen(newValue)
+    onNavToggle(newValue)
   }
 
   return (

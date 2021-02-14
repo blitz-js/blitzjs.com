@@ -1,0 +1,130 @@
+---
+title: usePaginatedQuery
+sidebar_label: usePaginatedQuery
+---
+
+### Example
+
+```ts
+import {Suspense} from "react"
+import {Link, BlitzPage, usePaginatedQuery, useRouterQuery, useRouter} from "blitz"
+import getProjects from "app/products/queries/getProjects"
+
+const ITEMS_PER_PAGE = 3
+
+const Projects = () => {
+  const router = useRouter()
+  const {page = 0} = useRouterQuery()
+  const [{projects, hasMore}] = usePaginatedQuery(getProjects, {
+    skip: ITEMS_PER_PAGE * Number(page),
+    take: ITEMS_PER_PAGE,
+  })
+
+  const goToPreviousPage = () => router.push({query: {page: Number(page) - 1}})
+  const goToNextPage = () => router.push({query: {page: Number(page) + 1}})
+
+  return (
+    <div>
+      {projects.map((project) => (
+        <p key={project.id}>
+          <Link href="/projects/[handle]" as={`/projects/${project.handle}`}>
+            <a>{project.name}</a>
+          </Link>
+        </p>
+      ))}
+      <button disabled={page === 0} onClick={goToPreviousPage}>
+        Previous
+      </button>
+      <button disabled={!hasMore} onClick={goToNextPage}>
+        Next
+      </button>
+    </div>
+  )
+}
+```
+
+And here's the query to work with that:
+
+```ts
+export default async function getProjects(
+  {where, orderBy, cursor, take, skip}: GetProjectsInput,
+  ctx: Record<any, any> = {},
+) {
+  const projects = await db.project.findMany({
+    where,
+    orderBy,
+    take,
+    skip,
+  })
+
+  const count = await db.project.count()
+  const hasMore = skip! + take! < count
+
+  return {
+    projects,
+    hasMore,
+  }
+}
+```
+
+## API
+
+<!-- prettier-ignore -->
+```js
+const [
+  queryResult,
+  {
+    latestData,
+    isFetching,
+    failureCount,
+    refetch,
+  }
+] = useQuery(queryResolver, queryInputArguments, options)
+```
+
+### Arguments
+
+- `queryResolver:` A [Blitz query resolver](./query-resolvers)
+  - **Required**
+- `queryInputArguments`
+  - **Required**
+  - The arguments that will be passed to `queryResolver`
+- `options`
+  - Optional
+
+### Options
+
+The options are identical to the options for the [useQuery hook](./use-query.mdx)
+
+### Returns
+
+`[queryResult, queryExtras]`
+
+##### `queryResult: Any`
+
+- Defaults to `undefined`.
+- The last successfully resolved data for the query.
+- When fetching with new input arguments, the value will resolve to the last known successful value, regardless of input arguments
+
+##### `queryExtras: Object`
+
+- `latestData: Any`
+  - Defaults to `undefined`.
+  - The actual data object for this query and its specific input arguments
+  - When fetching an uncached query, this value will be `undefined`
+- `isFetching: Boolean`
+  - Will be `true` if the query is currently fetching, including background fetching.
+- `failureCount: Integer`
+  - The failure count for the query.
+  - Incremented every time the query fails.
+  - Reset to `0` when the query succeeds.
+- `refetch: Function({ force, throwOnError }) => void`
+  - A function to manually refetch the query if it is stale.
+  - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
+  - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
+- `setQueryData()` - `Function(newData, opts) => void`
+  - A function to manually update the cache for a query.
+  - `newData` can be an object of new data or a function that receives the old data and returns the new data
+  - This is often used to instantly update the cache after submitting a form
+  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct. Disable refetch by passing an options object `{refetch: false}` as the second argument.
+  - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for example usage of `setQueryData()`

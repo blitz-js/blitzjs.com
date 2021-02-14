@@ -116,10 +116,11 @@ module.exports.highlightCode = function highlightCode(code, prismLanguage) {
   }
   let highlighted = Prism.highlight(code, grammar, prismLanguage)
 
-  return language === "html"
-    ? highlighted.replace(
-        /\*\*(.*?)\*\*/g,
-        (_, text) => `<span class="code-highlight bg-code-highlight">${text}</span>`
-      )
-    : highlighted
+  return highlighted
+    .replace(
+      /(<span(?:(?!<span)[\s\S])*(\/\/ highlight\-start))[\S\s]*?((\/\/ highlight\-end)[\S\s]*?(\>))/g,
+      (text, position) => `<span class="token inserted">${text}</span>`
+    )
+    .replace(/\/\/ highlight\-start/g, "")
+    .replace(/\/\/ highlight\-end/g, "")
 }

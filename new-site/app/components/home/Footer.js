@@ -4,13 +4,19 @@ import { LinkList } from "@/components/home/LinkList"
 import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { IoLogoVercel } from "react-icons/io5"
 
-export function Footer({ className }) {
+export function Footer({ className, hasDarkMode }) {
   return (
     <footer className={className}>
-      <div className="text-white border-t border-white border-opacity-50">
+      <div className="border-t border-white border-opacity-50">
         <div className="relative mx-auto max-w-7xl">
           <a href="#top" className="absolute right-0 mr-2 -mt-5 xl:mt-24 xl:mr-6">
-            <Icon name="arrowUp" className="icon-expanded"></Icon>
+            <Icon
+              name="arrowUp"
+              className="icon-expanded"
+              variant="custom"
+              customBackgroundClassName="text-purple-light dark:text-off-white"
+              customColorClassName="text-off-white dark:text-purple-off-black"
+            ></Icon>
           </a>
         </div>
         <div className="grid px-6 mx-auto max-w-7xl lg:grid-cols-3 gap-x-24 my-14 lg:mt-24 lg:mb-12 gap-y-7">
@@ -20,7 +26,7 @@ export function Footer({ className }) {
               newsletter!
             </p>
             <div className="pb-5 lg:pb-0">
-              <NewsletterForm />
+              <NewsletterForm hasDarkMode={hasDarkMode} />
             </div>
           </div>
           <div className="flex flex-col justify-between space-y-7 lg:col-span-2">

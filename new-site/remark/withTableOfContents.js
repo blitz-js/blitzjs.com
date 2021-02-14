@@ -12,7 +12,7 @@ module.exports.withTableOfContents = () => {
       if (node.type === "heading" && [2, 3].includes(node.depth)) {
         const level = node.depth
         const title = node.children
-          .filter((n) => n.type === "text")
+          .filter((n) => ["text", "inlineCode"].includes(n.type))
           .map((n) => n.value)
           .join("")
         let slug = slugify(title)
@@ -41,11 +41,18 @@ module.exports.withTableOfContents = () => {
               .join("")
         } else {
           node.value = `<${component} level={${level}} id="${slug}" toc={true}>${node.children
-            .map(({ value }) => value)
+            .map(({ type, value }) => {
+              const nodeValue = value
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+              if (type === "inlineCode") return `<code>${nodeValue}</code>`
+              return nodeValue
+            })
             .join("")}</${component}>`
         }
 
-        if (level === 2) {
+        if (level === 2 || !contents.length) {
           contents.push({ title, slug, children: [] })
         } else {
           contents[contents.length - 1].children.push({ title, slug })

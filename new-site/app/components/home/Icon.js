@@ -8,9 +8,16 @@ import { RiFileCodeFill } from "react-icons/ri"
 import { SiTypescript } from "react-icons/si"
 import { FaMedal } from "react-icons/fa"
 
-const Icon = ({ name, className = "", variant = "light" }) => {
-  let iconClassName =
-    "icon inline col-start-1 row-start-1 text-purple-light dark:text-purple-primary"
+const Icon = ({
+  name,
+  className = "",
+  variant = "light",
+  customBackgroundClassName = "",
+  customColorClassName = "",
+}) => {
+  let iconClassName = `icon inline col-start-1 row-start-1 ${
+    variant === "custom" ? customColorClassName : "text-purple-light dark:text-purple-primary"
+  }`
   let reactIcon
 
   switch (name) {
@@ -212,6 +219,9 @@ const Icon = ({ name, className = "", variant = "light" }) => {
       break
     case "light-hover":
       backgroundClassName += " text-off-white hover:text-blue-light"
+      break
+    case "custom":
+      backgroundClassName += " " + customBackgroundClassName
       break
     default:
       throw new Error("Invalid variant " + variant)

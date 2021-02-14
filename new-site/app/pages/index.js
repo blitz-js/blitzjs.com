@@ -511,7 +511,7 @@ const Home = ({ randomContributors }) => {
                 </ButtonLink>
               </div>
             </div>
-            <Footer className="dark:bg-purple-off-black bg-purple-mid" />
+            <Footer className="dark:bg-purple-off-black bg-purple-mid text-white" />
           </div>
         </div>
       </div>

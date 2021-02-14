@@ -1,11 +1,13 @@
-import { useState, useEffect, createContext, Fragment, useCallback, useContext } from "react"
+import { useState, useEffect, createContext, Fragment, useCallback } from "react"
 import { usePrevNext } from "@/hooks/usePrevNext"
-import Link from "next/link"
+import { Link, useRouter } from "blitz"
 import { SidebarLayout } from "@/layouts/SidebarLayout"
 import { PageHeader } from "@/components/PageHeader"
 import clsx from "clsx"
 import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
 import { BiChevronLeft } from "react-icons/bi"
+import { BsCaretUpFill, BsCaretDownFill } from "react-icons/bs"
+import Select, { components } from "react-select"
 
 export const ContentsContext = createContext()
 
@@ -130,20 +132,67 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
   )
 }
 
+const DropdownIndicator = (props) => {
+  return (
+    components.DropdownIndicator && (
+      <components.DropdownIndicator {...props}>
+        <BsCaretUpFill size="10" className="text-black dark:text-white" />
+        <BsCaretDownFill
+          size="10"
+          className="text-black dark:text-white"
+          style={{ marginTop: -2 }}
+        />
+      </components.DropdownIndicator>
+    )
+  )
+}
+
 export function ContentsLayout({ children, meta, tableOfContents: toc }) {
   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
   let { prev, next } = usePrevNext()
+  const router = useRouter()
+  const [topic, setTopic] = useState(null)
 
   return (
     <>
       <Link href="/docs">
-        <a className="lg:hidden mx-6 text-xxs px-2.5 py-0.5 rounded-sm bg-off-white font-primary inline-flex mb-4">
+        <a className="lg:hidden mx-6 text-xxs px-2.5 py-0.5 rounded-sm bg-off-white font-primary inline-flex mb-4 dark:bg-purple-off-black -mt-4">
           <BiChevronLeft size={18} /> Back to Docs
         </a>
       </Link>
       <div id={meta.containerId} className="pt-4 pb-24 lg:pb-16 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
           <PageHeader title={meta.title} />
+          <div
+            className={clsx("lg:hidden", { "mt-5 mb-12": toc.length, "h-px mt-8": !toc.length })}
+          >
+            {toc.length && (
+              <>
+                <h3 className="dark:text-white mb-2 text-sm">Topics</h3>
+                <Select
+                  value={topic}
+                  className="topic-select"
+                  classNamePrefix="topic-select"
+                  options={toc.map((option) => ({ value: option.slug, label: option.title }))}
+                  placeholder="Jump to a Topic"
+                  onChange={(e) => {
+                    if (e && e.value) {
+                      const hash = e.value
+                      setTopic(null)
+                      router.push({ hash })
+                    }
+                  }}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    option: (base, state) => ({
+                      ...base,
+                      backgroundColor: state.isSelected ? null : null,
+                    }),
+                  }}
+                />
+              </>
+            )}
+          </div>
           <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
             {children}
           </ContentsContext.Provider>

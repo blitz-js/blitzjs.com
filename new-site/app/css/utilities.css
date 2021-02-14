@@ -161,3 +161,43 @@ body.cursor-grabbing * {
 .admonition .admonition-icon {
   @apply mr-2;
 }
+
+.topic-select .topic-select__placeholder,
+.topic-select .topic-select__menu-list,
+.topic-select .topic-select__single-value {
+  @apply text-black dark:text-white font-medium;
+}
+
+.topic-select .topic-select__menu,
+.topic-select .topic-select__control {
+  @apply rounded-none border border-blue-light dark:border-purple-off-black;
+}
+
+.topic-select .topic-select__control,
+.topic-select .topic-select__menu-list {
+  @apply dark:bg-purple-off-black;
+}
+
+.topic-select .topic-select__control {
+  @apply py-1 px-2 shadow-none;
+}
+
+.topic-select .topic-select__option {
+  @apply py-3 px-4;
+}
+
+.topic-select .topic-select__menu-list {
+  @apply py-2;
+}
+
+.topic-select .topic-select__menu {
+  @apply shadow-none;
+}
+
+.topic-select .topic-select__indicator-separator {
+  @apply hidden;
+}
+
+.topic-select .topic-select__dropdown-indicator {
+  @apply flex-wrap flex w-7;
+}

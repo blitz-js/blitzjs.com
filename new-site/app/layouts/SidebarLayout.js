@@ -95,7 +95,12 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
   const isDocsIndex = useIsDocsIndex()
   return (
     <SidebarContext.Provider value={{ nav }}>
-      <div className="w-full max-w-8xl mx-auto mt-16">
+      <div
+        className={clsx("w-full max-w-8xl mx-auto lg:mt-16", {
+          "mt-12": isDocsIndex,
+          "mt-10": !isDocsIndex,
+        })}
+      >
         <div className="lg:flex">
           {/* eslint-disable-next-line */}
           <div

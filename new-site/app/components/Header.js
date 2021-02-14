@@ -101,7 +101,7 @@ const Header = ({
           </div>
         </div>
         {isOpen && (
-          <div className={`mt-4 text-2xl lg:hidden ${className}`}>
+          <div className={`pt-4 text-2xl lg:hidden bg-white dark:bg-purple-deep ${className}`}>
             <NavLink href="/docs/getting-started" className="px-3 mb-1">
               Docs
             </NavLink>

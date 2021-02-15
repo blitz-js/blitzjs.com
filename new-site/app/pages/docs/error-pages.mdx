@@ -27,7 +27,7 @@ By default Blitz provides a 500 error page that matches the default 404 page’s
 500 errors are handled both client-side and server-side by the `Error` component. If you wish to override it, define the file `app/pages/_error.js` and add the following code:
 
 ```jsx
-function Error({ statusCode }) {
+function Error({statusCode}) {
   return (
     <p>
       {statusCode ? `An error ${statusCode} occurred on server` : "An error occurred on client"}
@@ -35,9 +35,9 @@ function Error({ statusCode }) {
   )
 }
 
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = ({res, err}) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
+  return {statusCode}
 }
 
 export default Error
@@ -55,7 +55,7 @@ It accepts two props:
 - `title` - a string to display as the error message
 
 ```jsx
-import { ErrorComponent } from "blitz"
+import {ErrorComponent} from "blitz"
 
 export default function Page() {
   return <ErrorComponent statusCode={404} />
@@ -63,7 +63,7 @@ export default function Page() {
 ```
 
 ```jsx
-import { ErrorComponent } from "blitz"
+import {ErrorComponent} from "blitz"
 
 export default function Page() {
   return <ErrorComponent statusCode={401} title="Unauthorized" />

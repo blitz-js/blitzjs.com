@@ -21,7 +21,7 @@ Issues with the label [`status/ready-to-work-on`](https://github.com/blitz-js/bl
 
 If you find one that looks interesting and no one else is already working on it, comment in the issue that you are going to work on it. But only claim an issue if you can start work on it within a couple days.
 
-Please ask as many questions as you need, either directly in the issue or in Slack. We're happy to help!
+Please ask as many questions as you need, either directly in the issue or in Discord. We're happy to help!
 
 The Blitzjs.com website and documentation repo also has issues with [`ready to work on | help wanted`](https://github.com/blitz-js/blitzjs.com/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22ready+to+work+on+%7C+help+wanted%22).
 
@@ -34,13 +34,13 @@ The Blitzjs.com website and documentation repo also has issues with [`ready to w
 - Performance or security improvements
 - Educational content like blogs, videos, courses
 
-If there's some other way you'd like to contribute, ask us about it in Slack!
+If there's some other way you'd like to contribute, ask us about it in Discord!
 
 After you contribute in any way, please add yourself as a contributor via the [@all-contributors bot](https://allcontributors.org/docs/en/bot/usage)!
 
 ## Our Codebase is a Garden
 
-The Blitz codebase is like a community garden. There's a lot of beautiful plants and vegetables, but it won't take long until you find some weeds! When you find weeds, please remove them :) Minor refactoring is always encouraged. If you'd like to do some major refactoring, it's best to first either open an issue or check with us in Slack. Most likely we'll agree with you.
+The Blitz codebase is like a community garden. There's a lot of beautiful plants and vegetables, but it won't take long until you find some weeds! When you find weeds, please remove them :) Minor refactoring is always encouraged. If you'd like to do some major refactoring, it's best to first either open an issue or check with us in Discord. Most likely we'll agree with you.
 
 ## What to Expect After Submitting a PR
 
@@ -74,7 +74,7 @@ But in the docs repo, anyone can merge PRs once someone else has approved the PR
 
 **2.** Clone your forked repo
 
-```shell
+```sh
 # replace USERNAME below with your GitHub username
 git clone git@github.com:USERNAME/blitz.git
 cd blitz
@@ -82,19 +82,19 @@ cd blitz
 
 **3.** Install dependencies
 
-```shell
+```sh
 yarn
 ```
 
 **4.** Start the package server. This **must be running** for any package development or example development
 
-```shell
+```sh
 yarn dev
 ```
 
 **5.** Run tests
 
-```shell
+```sh
 yarn test
 ```
 
@@ -109,7 +109,7 @@ For using in apps outside the repo, [yalc](https://github.com/whitecolor/yalc) s
 
 #### Sync your fork
 
-```shell
+```sh
 git remote add upstream git@github.com:blitz-js/blitz.git
 ./scripts/fetchRemote.sh
 git merge upstream/canary
@@ -119,7 +119,7 @@ git merge upstream/canary
 
 The following will link the development CLI as a local binary so you can use it anywhere for testing.
 
-```shell
+```sh
 yarn link-cli
 yarn link blitz
 // `yarn unlink blitz`
@@ -130,13 +130,13 @@ yarn link blitz
 
 **1.** Change to a package directory
 
-```shell
+```sh
 cd packages/core
 ```
 
 **2.** Start the test runner
 
-```shell
+```sh
 yarn test:watch
 ```
 
@@ -144,7 +144,7 @@ yarn test:watch
 
 **1.** Change to an example directory
 
-```shell
+```sh
 cd examples/store
 ```
 
@@ -158,7 +158,7 @@ If you run into issues that should be documented here, please submit a PR! ❤�
 
 `node-pty` error when running `yarn`. Fix by installing `node-pty dependencies`
 
-```shell
+```sh
 sudo apt install -y make python build-essential
 ```
 
@@ -166,12 +166,12 @@ sudo apt install -y make python build-essential
 
 This issue is related with yarn > 1.19.1, if you get an error like this in your console:
 
-```shell
+```sh
 An unexpected error occurred: "expected workspace package to exist for \"@wessberg/rollup-plugin-ts\"
 ```
 
 Fix it with this command:
 
-```shell
+```sh
 yarn policies set-version 1.19.1
 ```

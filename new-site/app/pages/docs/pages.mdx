@@ -3,11 +3,7 @@ title: Pages
 sidebar_label: Pages
 ---
 
-:::info
-Unlike Next.js, you can have many `pages/` folders nested inside `app/`. This way pages can be organized neatly, especially for larger projects.
-:::
-
-In Blitz, a **page** is a [React Component](https://reactjs.org/docs/components-and-props.html) exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in a `pages` directory. Each page is associated with a route based on its file name.
+In Blitz, a **page** is a [React Component](https://reactjs.org/docs/components-and-props.html) exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in a `pages` directory. Each page is associated with a route based on its file path.
 
 All of the following are valid pages:
 
@@ -36,6 +32,24 @@ Blitz supports pages with dynamic routes. For example, if you create a file call
 By default, Blitz pre-renders the static HTML for every page unless you explicitly opt-in to server-side rendering.
 
 For pages with dynamic data, the page's loading state will be pre-rendered.
+
+#### First Render UX
+
+In some cases, the static optimization can cause an undesirable UX where the first render shows one thing but the second render shows another. For example this happens when using `useSession()`.
+
+In this case you can set `Page.suppressFirstRenderFlicker = true`, and Blitz will hide the first render's content. This will result in a tiny delay of first paint but will greatly improve the perceived UX.
+
+```tsx
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+// highlight-start
+Page.suppressFirstRenderFlicker = true
+// highlight-end
+
+export default Page
+```
 
 ### Static Page Generation for Unauthenticated Pages
 

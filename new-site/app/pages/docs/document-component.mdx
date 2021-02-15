@@ -8,7 +8,7 @@ The `Document` component in `app/pages/_document.tsx` can be used to augment you
 The default `_document.tsx` file looks like this:
 
 ```tsx
-import { Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/ } from "blitz"
+import {Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/} from "blitz"
 
 class MyDocument extends Document {
   // Only uncomment if you need to customize this behaviour
@@ -43,10 +43,10 @@ Custom attributes are allowed as props, like `lang`:
 
 The `ctx` parameter is an object containing the following keys:
 
-- `pathname`` - Current route. That is the path of the page in /pages
+- `pathname` - Current route. That is the path of the page in /pages
 - `req`: [The HTTP IncomingMessage object](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 - `res`: [The HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
-- `err`` - Error object if any error is encountered during the rendering
+- `err` - Error object if any error is encountered during the rendering
 - `renderPage`: `Function` - a callback that runs the actual React rendering logic (synchronously). It's useful to decorate this function in order to support server-rendering wrappers for things like styled-components
 
 ## Caveats
@@ -64,7 +64,7 @@ The `ctx` parameter is an object containing the following keys:
 It takes as argument an options object for further customization:
 
 ```jsx
-import { Document } from "blitz"
+import {Document} from "blitz"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

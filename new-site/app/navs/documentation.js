@@ -62,6 +62,7 @@ export const documentationNav = [
       pages["static-files"],
       pages["environment-variables"],
       pages["error-handling"],
+      pages["testing"],
     ],
   },
   {
@@ -70,6 +71,7 @@ export const documentationNav = [
       pages["auth"],
       pages["session-management"],
       pages["authorization"],
+      pages["auth-utils"],
       pages["passportjs"],
     ],
   },
@@ -77,6 +79,7 @@ export const documentationNav = [
     title: <Title title="Pages" iconPath="/img/pages.svg" iconDarkPath="/img/pages-white.svg" />,
     pages: [
       pages["pages"],
+      pages["redirects"],
       pages["error-pages"],
       pages["head-component"],
       pages["document-component"],
@@ -103,7 +106,13 @@ export const documentationNav = [
     title: (
       <Title title="Database" iconPath="/img/database.svg" iconDarkPath="/img/database-white.svg" />
     ),
-    pages: [pages["database-overview"], pages["postgres"], pages["database-seeds"], pages["fauna"]],
+    pages: [
+      pages["database-overview"],
+      pages["postgres"],
+      pages["database-seeds"],
+      pages["prisma"],
+      pages["fauna"],
+    ],
   },
   {
     title: (
@@ -112,24 +121,25 @@ export const documentationNav = [
     pages: [
       pages["query-resolvers"],
       pages["query-usage"],
+      pages["mutation-resolvers"],
+      pages["mutation-usage"],
+      pages["resolver-client-utilities"],
+      pages["resolver-server-utilities"],
       pages["use-query"],
       pages["use-paginated-query"],
       pages["use-infinite-query"],
+      pages["use-mutation"],
     ],
   },
   {
     title: (
       <Title
-        title="Mutations"
+        title="Backend Architecture"
         iconPath="/img/mutations.svg"
         iconDarkPath="/img/mutations-white.svg"
       />
     ),
-    pages: [pages["mutation-resolvers"], pages["mutation-usage"], pages["use-mutation"]],
-  },
-  {
-    title: <Title title="Queries &amp; Mutations" />,
-    pages: [pages["invoke"], pages["resolver-utilities"]],
+    pages: [pages["background-processing-with-quirrel"]],
   },
   {
     title: (
@@ -146,9 +156,11 @@ export const documentationNav = [
     pages: [
       pages["cli-overview"],
       pages["cli-new"],
+      pages["cli-dev"],
       pages["cli-start"],
       pages["cli-build"],
       pages["cli-db"],
+      pages["cli-prisma"],
       pages["cli-generate"],
       pages["cli-console"],
       pages["cli-install"],
@@ -161,20 +173,21 @@ export const documentationNav = [
     pages: [pages["using-recipes"], pages["writing-recipes"]],
   },
   {
-    title: <Title title="Templates" />,
-    pages: [pages["templates"]],
-  },
-  {
     title: <Title title="Advanced" />,
     pages: [
       pages["blitz-config"],
       pages["webpack-config"],
       pages["postcss-config"],
       pages["code-splitting"],
+      pages["custom-server"],
       pages["i18n-routing"],
       pages["middleware"],
       pages["rpc-specification"],
       pages["measuring-performance"],
     ],
+  },
+  {
+    title: <Title title="Templates" />,
+    pages: [pages["templates"]],
   },
 ]

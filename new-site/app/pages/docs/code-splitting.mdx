@@ -16,7 +16,7 @@ Another scenario that may benefit from dynamic imports is using a library that o
 In the following example, the module `../components/hello` will be dynamically loaded by the page:
 
 ```jsx
-import { dynamic } from "blitz"
+import {dynamic} from "blitz"
 
 const DynamicComponent = dynamic(() => import("../components/hello"))
 
@@ -48,7 +48,7 @@ export function Hello() {
 To dynamically import the `Hello` component, you can return it from the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned by [`import()`](https://github.com/tc39/proposal-dynamic-import#example), like so:
 
 ```jsx
-import { dynamic } from "blitz"
+import {dynamic} from "blitz"
 
 const DynamicComponent = dynamic(() => import("../components/hello").then((mod) => mod.Hello))
 
@@ -70,7 +70,7 @@ export default Home
 An optional `loading` component can be added to render a loading state while the dynamic component is being loaded. For example:
 
 ```jsx
-import { dynamic } from "blitz"
+import {dynamic} from "blitz"
 
 const DynamicComponentWithCustomLoading = dynamic(() => import("../components/hello"), {
   loading: () => <p>...</p>,
@@ -96,7 +96,7 @@ You may not always want to include a module on server-side. For example, when th
 Take a look at the following example:
 
 ```jsx
-import { dynamic } from "blitz"
+import {dynamic} from "blitz"
 
 const DynamicComponentWithNoSSR = dynamic(() => import("../components/hello3"), {
   ssr: false,

@@ -66,11 +66,12 @@ POSTGRES_DB=your_database_name
 
 Given these values your `DATABASE_URL` should look like this `postgresql://your_user:your_password@localhost:5432/your_database_name`
 
-3. Modify your `package.json` to run the database before the start of Blitz
+3. Modify your `package.json` to start the database before Blitz
 
 ```json
 "scripts": {
-    "start": "docker-compose up -d && blitz start",
+    "predev": "docker-compose up -d",
+    "dev": "blitz dev",
 }
 ```
 

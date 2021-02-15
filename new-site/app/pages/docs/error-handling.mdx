@@ -27,7 +27,7 @@ Blitz comes with a number of useful errors you can use throughout your applicati
 To use, import from `blitz` and use like any JavaScript Error. If you're curious, you can [see the source code for these.](TODO)
 
 ```ts
-import { AuthenticationError } from "blitz"
+import {AuthenticationError} from "blitz"
 
 try {
   throw new AuthenticationError()
@@ -50,12 +50,12 @@ It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import { AppProps, ErrorComponent } from "blitz"
-import { ErrorBoundary } from "react-error-boundary"
-import { queryCache } from "react-query"
+import {AppProps, ErrorComponent} from "blitz"
+import {ErrorBoundary} from "react-error-boundary"
+import {queryCache} from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({Component, pageProps}: AppProps) {
   return (
     <ErrorBoundary
       FallbackComponent={RootErrorFallback}
@@ -70,7 +70,7 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-function RootErrorFallback({ error, resetErrorBoundary }) {
+function RootErrorFallback({error, resetErrorBoundary}) {
   if (error.name === "AuthenticationError") {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error.name === "AuthorizationError") {
@@ -103,16 +103,23 @@ For errors other than what Blitz provides, it's recommended to create custom Err
 Here's an example of how to create a custom error. It's a JavaScript class, so you can be as creative as you want.
 
 ```ts
+import SuperJson from "superjson"
+
 export class UsernameTakenError extends Error {
   name = "UsernameTakenError"
-  constructor({ suggestedUserName }) {
+  constructor({suggestedUserName}) {
     super()
     this.suggestedUserName = suggestedUserName
   }
 }
+// Register with SuperJson serializer so it's reconstructed on the client
+SuperJson.registerClass(UsernameTakenError)
+SuperJson.allowErrorProps("suggestedUserName")
 
-throw new UsernameTakenError({ suggestedUserName: "second_best" })
+throw new UsernameTakenError({suggestedUserName: "second_best"})
 ```
+
+Note that you **must register it with SuperJson** as shown above in order for `instanceof` to work on the client. And you must also tell SuperJson about any special error propertries you want to be serialized. By default custom error properties are omitted for security concerns.
 
 Then on the client, you can use a `FallbackComponent` like above, or you can handle the error in your form submit handler like this.
 
@@ -122,7 +129,7 @@ Then on the client, you can use a `FallbackComponent` like above, or you can han
     try {
       await setUsername(values.username)
     } catch (error) {
-      if (error.name === "UsernameTakenError") {
+      if (error instanceof UsernameTakenError) {
         setSuggestedUsername(error.suggestedUserName)
       }
     }

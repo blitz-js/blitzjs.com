@@ -3,84 +3,76 @@ import tokenize from "../../macros/tokenize.macro"
 import { useState } from "react"
 
 const pageTokenized = tokenize.jsx(
-  `import { Head, Link, useRouter } from 'blitz'
-import createQuestion from 'app/questions/mutations/createQuestion'
+  `// app/pages/projects/new.tsx
+import { Link, useRouter, useMutation, BlitzPage } from "blitz"
+import Layout from "app/core/layouts/Layout"
+import createProject, {CreateProject} from "app/projects/mutations/createProject"
+import { ProjectForm, FORM_ERROR } from "app/projects/components/ProjectForm"
 
-const NewQuestionPage = () => {
+const NewProjectPage: BlitzPage = () => {
   const router = useRouter()
+  const [createProjectMutation] = useMutation(createProject)
 
   return (
-    <div className="container">
-      <Head>
-        <title>New Question</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div>
+      <h1>Create New Project</h1>
 
-      <main>
-        <h1>Create New Question </h1>
-
-        <form
-          onSubmit={async (event) => {
-            event.preventDefault()
-
-            try {
-              const question = await createQuestion({
-                data: {
-                  text: event.target[0].value,
-                  publishedAt: new Date(),
-                  choices: {
-                    create: [
-                      {text: event.target[1].value},
-                      {text: event.target[2].value},
-                      {text: event.target[3].value},
-                    ],
-                  },
-                },
-              })
-              alert("Success!" + JSON.stringify(question))
-            } catch (error) {
-              alert("Error creating question " + JSON.stringify(error, null, 2))
-            }
-          }}
-        />
-        <p>
-          <Link href="/questions">
-            <a>Questions</a>
-          </Link>
-        </p>
-      </main>
+      <ProjectForm
+        submitText="Create Project"
+        schema={CreateProject}
+        onSubmit={async (values) => {
+          try {
+            const project = await createProjectMutation(values)
+            router.push("/projects/" + project.id)
+          } catch (error) {
+            return { [FORM_ERROR]: error.toString() }
+          }
+        }}
+      />
     </div>
   )
 }
-export default NewQuestionPage`,
+
+NewProjectPage.authenticate = true
+NewProjectPage.getLayout = (page) => <Layout>{page}</Layout>
+
+export default NewProjectPage`,
   true
 )
 
 const mutationTokenized = tokenize.jsx(
-  `import { Ctx } from "blitz"
-import db, { Prisma } from "db"
+  `// app/projects/mutations/createProject.ts
+import { resolver } from "blitz"
+import db from "db"
+import * as z from "zod"
 
-type CreateQuestionInput = Pick<Prisma.QuestionCreateArgs, "data">
-export default async function createQuestion({ data }: CreateQuestionInput, ctx: Ctx) {
-  ctx.session.authorize()
+const CreateProject = z
+  .object({
+    name: z.string(),
+  })
 
-  const question = await db.question.create({ data })
+export default resolver.pipe(
+  resolver.zod(CreateProject),
+  resolver.authorize(),
+  async (input) => {
+    const project = await db.project.create({ data: input })
 
-  return question
-}`,
+    return project
+  }
+)`,
   true
 )
 
 const HeroCode = ({ className = "" }) => {
   const [tabs, setTabs] = useState([
     {
-      title: "pages/questions/new.tsx",
-      tokens: pageTokenized.tokens,
+      title: "createProject.ts",
+      tokens: mutationTokenized.tokens,
       selected: true,
     },
     {
-      title: "mutations/createQuestion.ts",
-      tokens: mutationTokenized.tokens,
+      title: "pages/projects/new.tsx",
+      tokens: pageTokenized.tokens,
       selected: false,
     },
   ])

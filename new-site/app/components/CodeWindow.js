@@ -1,5 +1,4 @@
-import clsx from "clsx"
-import { forwardRef, Fragment, useMemo } from "react"
+import { forwardRef, useMemo } from "react"
 import { Code } from "./Code"
 import styles from "./CodeWindow.module.css"
 
@@ -14,7 +13,7 @@ export function CodeWindow({
     <div
       className={`relative overflow-hidden md:rounded-xl shadow-2xl flex ${styles.root} ${className}`}
     >
-      <div className="absolute inset-0 bg-white dark:bg-black" />
+      <div className="absolute inset-0 bg-white dark:bg-gray-900" />
       <div className="relative flex flex-col w-full">
         <div className="flex items-center flex-none px-4 bg-gray-200 h-9 dark:bg-transparent">
           <div className="flex space-x-1.5">
@@ -22,18 +21,28 @@ export function CodeWindow({
             <div className="w-3 h-3 rounded-full bg-amber-400" />
             <div className="w-3 h-3 bg-green-400 rounded-full" />
           </div>
-          <div className="flex self-end overflow-x-scroll">
+          <div className="file-bar flex self-end overflow-x-scroll">
             {tabs.map((tab, i) => (
               <button
                 key={i}
                 onClick={() => onTabClick(i)}
-                className={`pt-1 px-4 ml-3 text-xxs text-black dark:text-white h-8 rounded-t-xl font-mono ${
+                className={`pt-1 px-4 ml-3 text-xs text-black dark:text-white h-8 rounded-t-xl font-mono ${
                   tab.selected && "bg-gray-50 dark:bg-gray-900"
                 }`}
               >
                 {tab.title}
               </button>
             ))}
+            <style jsx>
+              {`
+                .file-bar {
+                  scrollbar-width: "none";
+                }
+                .file-bar::-webkit-scrollbar {
+                  width: 0;
+                }
+              `}
+            </style>
           </div>
         </div>
         <div className="relative flex flex-col flex-auto min-h-0 border-t border-gray-200 dark:border-gray-800">
@@ -68,7 +77,7 @@ CodeWindow.Code = forwardRef(({ tokens, initialLineNumber = 1, ...props }, ref) 
   return (
     <div className="flex flex-auto w-full min-h-0 overflow-auto">
       <div ref={ref} className="relative flex-auto w-full">
-        <pre className="flex min-h-full text-xxs">
+        <pre className="flex min-h-full text-xs">
           <div
             aria-hidden="true"
             className="flex-none hidden py-4 pr-4 font-mono text-right text-black text-opacity-50 select-none dark:text-white md:block"
@@ -76,7 +85,7 @@ CodeWindow.Code = forwardRef(({ tokens, initialLineNumber = 1, ...props }, ref) 
           >
             {lineNumbers}
           </div>
-          <code className="relative flex-auto block px-4 pt-4 pb-4 overflow-auto font-mono text-black dark:text-white text-xxs">
+          <code className="relative flex-auto block px-4 pt-4 pb-4 overflow-auto font-mono text-black dark:text-white text-xs">
             <Code tokens={tokens} {...props} />
           </code>
         </pre>

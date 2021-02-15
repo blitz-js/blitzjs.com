@@ -8,6 +8,9 @@ module.exports.withSyntaxHighlighting = () => {
       if (lang === "sh") {
         lang = "bash"
       }
+      if (lang === "prisma") {
+        lang = "graphql"
+      }
       node.type = "html"
       node.value = [
         `<div class="my-6 rounded-xl overflow-hidden bg-code-block dark:bg-purple-off-black">`,

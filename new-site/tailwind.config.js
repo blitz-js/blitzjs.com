@@ -215,10 +215,7 @@ module.exports = {
       fontFamily: {
         secondary: ["Roboto", ...defaultTheme.fontFamily.sans],
         primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
-        source: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
-        "ubuntu-mono": ["Ubuntu Mono", ...defaultTheme.fontFamily.mono],
         system: defaultTheme.fontFamily.sans,
         flow: "Flow",
       },

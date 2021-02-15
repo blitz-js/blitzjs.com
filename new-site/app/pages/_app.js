@@ -1,14 +1,12 @@
 import "../css/main.css"
 import "focus-visible"
-import { useState, useEffect, Fragment } from "react"
-import { Header } from "@/components/Header"
+import { Fragment } from "react"
 import { Title } from "@/components/Title"
 import Router from "next/router"
 import ProgressBar from "@badrap/bar-of-progress"
 import Head from "next/head"
 import twitterLargeCard from "@/img/twitter-large-card.png"
 import { ThemeProvider } from "next-themes"
-import { ThemeChanger } from "@/components/ThemeChanger"
 
 const progress = new ProgressBar({
   size: 2,
@@ -60,7 +58,7 @@ export default function App({ Component, pageProps, router }) {
           content={`https://blitzjs.com${twitterLargeCard}`}
         />
       </Head>
-      <ThemeProvider defaultTheme="system" attribute="class">
+      <ThemeProvider defaultTheme="dark" attribute="class">
         <Layout {...layoutProps}>
           <Component {...pageProps} />
         </Layout>

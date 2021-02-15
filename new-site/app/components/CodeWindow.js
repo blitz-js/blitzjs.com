@@ -13,7 +13,7 @@ export function CodeWindow({
     <div
       className={`relative overflow-hidden md:rounded-xl shadow-2xl flex ${styles.root} ${className}`}
     >
-      <div className="absolute inset-0 bg-white dark:bg-gray-900" />
+      <div className="absolute inset-0 bg-white dark:bg-purple-off-black" />
       <div className="relative flex flex-col w-full">
         <div className="flex items-center flex-none px-4 bg-gray-200 h-9 dark:bg-transparent">
           <div className="flex space-x-1.5">
@@ -27,7 +27,7 @@ export function CodeWindow({
                 key={i}
                 onClick={() => onTabClick(i)}
                 className={`pt-1 px-4 ml-3 text-xs text-black dark:text-white h-8 rounded-t-xl font-mono ${
-                  tab.selected && "bg-gray-50 dark:bg-gray-900"
+                  tab.selected && "bg-gray-50 dark:bg-purple-mid"
                 }`}
               >
                 {tab.title}

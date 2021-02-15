@@ -51,6 +51,7 @@ module.exports = {
       },
       purple: {
         ...colors.purple,
+        extralight: "#ae53ff",
         light: "#6700EB",
         mid: "#5600C2",
         primary: "#45009D",

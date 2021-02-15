@@ -1,3 +1,6 @@
+import "typeface-libre-franklin"
+import "typeface-roboto"
+import "typeface-roboto-mono"
 import "../css/main.css"
 import "focus-visible"
 import { Fragment } from "react"

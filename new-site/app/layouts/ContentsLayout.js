@@ -156,7 +156,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
   return (
     <>
       <Link href="/docs">
-        <a className="lg:hidden mx-6 text-xxs px-2.5 py-0.5 rounded-sm bg-off-white font-primary inline-flex mb-4 dark:bg-purple-off-black -mt-4">
+        <a className="lg:hidden mx-6 text-xxs px-2.5 py-0.5 rounded-sm bg-off-white font-primary inline-flex mb-4 dark:bg-purple-off-black -mt-4 items-center">
           <BiChevronLeft size={18} /> Back to Docs
         </a>
       </Link>

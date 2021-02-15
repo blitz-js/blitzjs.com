@@ -3,6 +3,7 @@ import { Icon } from "@/components/home/Icon"
 import { LinkList } from "@/components/home/LinkList"
 import { NewsletterForm } from "@/components/home/NewsletterForm"
 import { IoLogoVercel } from "react-icons/io5"
+import clsx from "clsx"
 
 export function Footer({ className, hasDarkMode }) {
   return (
@@ -72,7 +73,12 @@ export function Footer({ className, hasDarkMode }) {
               </LinkList>
             </div>
 
-            <div className="text-xs font-secondary text-off-white">
+            <div
+              className={clsx("text-xs font-secondary", {
+                "text-off-white": !hasDarkMode,
+                "dark:text-off-white text-black": hasDarkMode,
+              })}
+            >
               <Link href="https://vercel.com/?utm_source=blitzjs">
                 <a target="_blank" rel="noopener noreferrer">
                   Hosted on <IoLogoVercel className="inline" /> Vercel

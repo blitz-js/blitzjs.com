@@ -12,7 +12,6 @@ import Banner from "@/components/Banner"
 
 const Header = ({
   className = "",
-  bannerMsg = "",
   hasLightBg,
   useColoredLogo,
   stickyBgClass,
@@ -38,6 +37,8 @@ const Header = ({
     onNavToggle(newValue)
   }
 
+  const bannerMsg = "Blitz is now in beta! 🎉"
+
   return (
     <>
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
@@ -59,7 +60,7 @@ const Header = ({
             </Link>
           </div>
           <div className="flex-1 hidden py-2 space-x-2 text-base lg:flex">
-            <NavLink href="/docs/getting-started">Docs</NavLink>
+            <NavLink href="/docs/getting-started">Documentation</NavLink>
             <NavLink
               target="_blank"
               rel="noopener noreferrer"
@@ -93,7 +94,7 @@ const Header = ({
             </NavLink>
           </div>
           <div className="flex lg:text-base lg:space-x-4">
-            <Search className="lg:mt-2" />
+            <Search className="" />
             <button
               onClick={onToggle}
               className="p-2 ml-3 -mr-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"

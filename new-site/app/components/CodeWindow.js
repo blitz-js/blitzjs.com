@@ -21,28 +21,20 @@ export function CodeWindow({
             <div className="w-3 h-3 rounded-full bg-amber-400" />
             <div className="w-3 h-3 bg-green-400 rounded-full" />
           </div>
-          <div className="file-bar flex self-end overflow-x-scroll">
+          <div className="file-bar flex self-end h-full pt-2">
             {tabs.map((tab, i) => (
               <button
                 key={i}
                 onClick={() => onTabClick(i)}
-                className={`pt-1 px-4 ml-3 text-xs text-black dark:text-white h-8 rounded-t-xl font-mono ${
-                  tab.selected && "bg-gray-50 dark:bg-purple-mid"
+                className={`px-4 ml-3 text-xs text-black dark:text-white rounded-t-lg font-mono ${
+                  tab.selected
+                    ? "bg-gray-50 dark:bg-purple-mid"
+                    : "bg-gray-300 dark:bg-purple-extradark"
                 }`}
               >
                 {tab.title}
               </button>
             ))}
-            <style jsx>
-              {`
-                .file-bar {
-                  scrollbar-width: "none";
-                }
-                .file-bar::-webkit-scrollbar {
-                  width: 0;
-                }
-              `}
-            </style>
           </div>
         </div>
         <div className="relative flex flex-col flex-auto min-h-0 border-t border-gray-200 dark:border-gray-800">

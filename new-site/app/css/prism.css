@@ -59,7 +59,7 @@
 .dark .token.punctuation,
 .dark .token.module,
 .dark .token.property {
-  @apply text-purple-mid;
+  @apply text-purple-extralight;
 }
 
 .token.atapply .token:not(.rule):not(.important) {

@@ -56,6 +56,7 @@ module.exports = {
         mid: "#5600C2",
         primary: "#45009D",
         dark: "#34017B",
+        extradark: "#10002f",
         "off-black": "#1F084E",
         deep: "#0E001D",
       },

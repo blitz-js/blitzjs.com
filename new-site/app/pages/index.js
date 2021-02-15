@@ -1,6 +1,5 @@
 import { Head, Link } from "blitz"
 import { Header } from "@/components/Header"
-import { BsArrowRight } from "react-icons/bs"
 import { ButtonLink } from "@/components/ButtonLink"
 import { HeroCode } from "@/components/home/HeroCode"
 import { VideoPlayer } from "@/components/home/VideoPlayer"
@@ -47,7 +46,6 @@ const Home = ({ randomContributors }) => {
             <div className="z-30 text-white col-span-full">
               <Header
                 className="px-6 mx-auto max-w-7xl"
-                bannerMsg="Blitz is now in beta!"
                 onNavToggle={(isOpen) => {
                   setNavIsOpen(isOpen)
                 }}
@@ -75,7 +73,7 @@ const Home = ({ randomContributors }) => {
                       className="w-2/3 lg:w-auto rounded-tl-xl"
                       href="/docs/getting-started"
                     >
-                      Getting Started Docs
+                      Read the Docs
                     </ButtonLink>
                     <ButtonLink
                       href="https://github.com/blitz-js/blitz"
@@ -127,15 +125,18 @@ const Home = ({ randomContributors }) => {
             <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
               <Link href="#" passHref>
                 <StyledLink className="flex items-center justify-between pb-1 text-lg border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary xl:text-xl">
-                  <span>The Latest News From Blitz</span>
+                  <span>Top Videos</span>
+
+                  {/*
                   <span className="flex items-center">
                     <span className="hidden mr-2 lg:block">View News</span>{" "}
                     <BsArrowRight size="1.5rem" />
                   </span>
+                    */}
                 </StyledLink>
               </Link>
-              <VideoPlayer url="https://www.youtube.com/watch?v=ZSD5ifGTlag" />
-              <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
+              <VideoPlayer url="https://www.youtube.com/watch?v=UHyx8MtCVVk" />
+              <VideoPlayer url="https://www.youtube.com/watch?v=fIexr5UZfhU" />
             </div>
 
             <div className="relative w-full mx-auto space-y-10 lg:space-y-20 xl:space-y-36 max-w-7xl">
@@ -207,10 +208,11 @@ const Home = ({ randomContributors }) => {
               </h3>
               <div>
                 <iframe
+                  src="https://codesandbox.io/embed/flamboyant-meninsky-j63yq?codemirror=1&fontsize=14&hidenavigation=1&module=%2Fapp%2Fprojects%2Fmutations%2FcreateProject.ts&theme=dark"
                   title="CodeSandbox"
-                  src="https://codesandbox.io/embed/github/blitz-js/codesandbox-template/tree/main/?fontsize=14&hidenavigation=1&theme=dark"
-                  className="relative z-10 block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
+                  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
                   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                  className="relative z-10 block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
                 ></iframe>
                 <Hand variant="sandbox-right" style={{ right: "-13.2rem", bottom: "-35rem" }} />
               </div>
@@ -311,18 +313,18 @@ const Home = ({ randomContributors }) => {
                   className="hidden xl:block xl:-top-40 xl:-right-52"
                 />
                 <FeatureIconTitle icon="thumbsUp" title="Authentication Built In">
-                  Coming Soon! · Blitz fullstack authentication is super easy and very secure. Works
-                  with any identity provider, including self-hosted username and password and
-                  third-parties like Auth0.
+                  Blitz fullstack authentication is super easy and very secure. Works with any
+                  identity provider, including self-hosted username and password and third-parties
+                  like Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
                   You can use any database you want. Prisma 2 is the default database client, but
                   you can remove that and use anything else like Fauna or Cosmos.
                 </FeatureIconTitle>
-                <FeatureIconTitle icon="fileCode" title="Code Installer Recipes">
-                  Coming Soon! · One command to install code and/or packages into your blitz app.
-                  Examples: `blitz install tailwind` or `blitz install sentry`. Uses the MDX Recipe
-                  format that Gatsby created for Gatsby Recipes.
+                <FeatureIconTitle icon="fileCode" title="Recipes">
+                  One command to install code and/or packages into your blitz app. Examples: `blitz
+                  install tailwind` or `blitz install sentry`. Uses the MDX Recipe format that
+                  Gatsby created for Gatsby Recipes.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="plugin" title="Plugins">
                   Coming Soon! · Hook into many parts of a Blitz app, including the CLI. Greatly
@@ -362,36 +364,6 @@ const Home = ({ randomContributors }) => {
                 Your financial contributions help ensure Blitz continues to be developed and{" "}
                 <br className="hidden lg:block" />
                 maintained! We have monthly sponsorship options starting at $5/month.
-              </p>
-              <p className="text-lg xl:text-xl">
-                View options and contribute at{" "}
-                <StyledLink
-                  href="https://github.com/sponsors/blitz-js"
-                  className="underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  GitHub Sponsors
-                </StyledLink>
-                ,{" "}
-                <StyledLink
-                  href="https://paypal.me/thebayers"
-                  className="underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  PayPal
-                </StyledLink>
-                , or{" "}
-                <StyledLink
-                  href="https://opencollective.com/blitzjs"
-                  className="underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open Collective
-                </StyledLink>
-                .
               </p>
               <div>
                 <ButtonLink

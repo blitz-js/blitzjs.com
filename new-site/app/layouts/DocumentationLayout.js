@@ -31,7 +31,6 @@ export function DocumentationLayout(props) {
       </Head>
       <Header
         className="px-6 mx-auto max-w-7xl"
-        bannerMsg="Blitz is now in beta!"
         hasLightBg
         useColoredLogo
         stickyBgClass="bg-white dark:bg-purple-deep"
@@ -40,7 +39,7 @@ export function DocumentationLayout(props) {
           setNavIsOpen(isOpen)
         }}
       />
-      <div className="max-w-7xl mx-auto font-secondary">
+      <div className="max-w-7xl mx-auto font-secondary dark:">
         <SidebarLayout nav={documentationNav} {...props} />
       </div>
       <Footer className="text-black dark:text-white" hasDarkMode />

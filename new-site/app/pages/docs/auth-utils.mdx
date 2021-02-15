@@ -1,0 +1,66 @@
+---
+title: Auth Utilities
+sidebar_label: Utilities
+---
+
+## `SecurePassword`
+
+`SecurePassword` is a convenience wrapper around [secure-password](https://github.com/emilbayes/secure-password) to provide a nice way to hash passwords and verify password hashes.
+
+```ts
+import { SecurePassword } from "blitz"
+
+await SecurePassword.hash(password)
+await SecurePassword.verify(passwordHash, password)
+```
+
+#### `SecurePassword.hash(password: string) => Promise<string`
+
+This is used when a user sets a new password.
+
+It takes a password string and returns a secure hash for storing in your database.
+
+#### `SecurePassword.verify(passwordHash: string, password: string) => Promise<ResultCode>`
+
+This is used when a user logs in to verify they used the correct password.
+
+It takes a password hash from your database and the given password. It will verify the given password is correct and return a result code, or if incorrect, it will throw `AuthenticationError`.
+
+##### Result Codes
+
+**`SecurePassword.VALID`**
+
+The password was verified and is valid
+
+**`SecurePassword.VALID_NEEDS_REHASH`**
+
+The password was verified and is valid, but needs to be rehashed with new
+parameters
+
+**`SecurePassword.HASH_BYTES`**
+
+Size of the `hash` Buffer returned by `hash` and `hashSync` and used by `verify`
+and `verifySync`.
+
+#### Example Usage
+
+```ts
+import { SecurePassword, AuthenticationError } from "blitz"
+import db from "db"
+
+export const authenticateUser = async (email: string, password: string) => {
+  const user = await db.user.findFirst({ where: { email } })
+  if (!user) throw new AuthenticationError()
+
+  const result = await SecurePassword.verify(user.hashedPassword, password)
+
+  if (result === SecurePassword.VALID_NEEDS_REHASH) {
+    // Upgrade hashed password with a more secure hash
+    const improvedHash = await SecurePassword.hash(password)
+    await db.user.update({ where: { id: user.id }, data: { hashedPassword: improvedHash } })
+  }
+
+  const { hashedPassword, ...rest } = user
+  return rest
+}
+```

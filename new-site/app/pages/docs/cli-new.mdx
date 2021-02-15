@@ -1,0 +1,32 @@
+---
+title: blitz new
+sidebar_label: blitz new
+---
+
+Generates a new Blitz project in the current directory. The project will include basic scaffolding for a landing page, a database, and all of the other configuration that makes Blitz's magic work.
+
+```bash
+blitz new [name]
+```
+
+| Argument | Required | Description                                                   |
+| -------- | -------- | ------------------------------------------------------------- |
+| `name`   | Yes      | The project name. Will be used in initial project scaffolding |
+
+#### Options
+
+| Argument    | Shorthand | Description                                                                                                     | Default |
+| ----------- | --------- | --------------------------------------------------------------------------------------------------------------- | ------- |
+| `--npm`     |           | Uses `npm` as the project's package manager. If omitted, the project will default to `yarn` if it is installed. | `false` |
+| `--dry-run` | `-d`      | Displays what files would be generated but does not write the files to disk.                                    | `false` |
+| `--no-git`  |           | Skips git repository creation.                                                                                  | `false` |
+
+#### Examples
+
+```bash
+blitz new task-manager
+```
+
+```bash
+blitz new task-manager --npm
+```

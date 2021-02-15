@@ -7,10 +7,10 @@ const { withSyntaxHighlighting } = require("./remark/withSyntaxHighlighting")
 const { withProse } = require("./remark/withProse")
 const { withNextLinks } = require("./remark/withNextLinks")
 const minimatch = require("minimatch")
-const withCodeSamples = require("./remark/withCodeSamples")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 })
+const admonitions = require("remark-admonitions")
 
 const fallbackLayouts = {
   // Have to use compiled locations
@@ -78,11 +78,27 @@ module.exports = withBundleAnalyzer({
           loader: "@mdx-js/loader",
           options: {
             remarkPlugins: [
-              withCodeSamples,
               withProse,
               withTableOfContents,
               withSyntaxHighlighting,
               withNextLinks,
+              [
+                admonitions,
+                {
+                  customTypes: {
+                    caution: {
+                      keyword: "caution",
+                      svg:
+                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
+                    },
+                    info: {
+                      keyword: "info",
+                      svg:
+                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
+                    },
+                  },
+                },
+              ],
             ],
           },
         },

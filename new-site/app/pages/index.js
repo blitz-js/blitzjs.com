@@ -14,8 +14,15 @@ import { Footer } from "@/components/home/Footer"
 import { StyledLink } from "@/components/home/StyledLink"
 import { Hand } from "@/components/home/Hand"
 import Scrollbar from "@/components/Scrollbar"
+import { useState, useEffect } from "react"
 
 const Home = ({ randomContributors }) => {
+  const [navIsOpen, setNavIsOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = navIsOpen ? "hidden" : "unset"
+  }, [navIsOpen])
+
   return (
     <div>
       <div className="overflow-hidden">
@@ -37,14 +44,25 @@ const Home = ({ randomContributors }) => {
             {null}
           </a>
           <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-44">
-            <div className="text-white col-span-full">
-              <Header className="px-6 mx-auto max-w-7xl" bannerMsg="Blitz is now in beta!" />
+            <div className="z-30 text-white col-span-full">
+              <Header
+                className="px-6 mx-auto max-w-7xl"
+                bannerMsg="Blitz is now in beta!"
+                onNavToggle={(isOpen) => {
+                  setNavIsOpen(isOpen)
+                }}
+              />
             </div>
-            <div className="absolute w-full h-full row-start-1 row-end-5 background-to-video -z-10 rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black"></div>
+            <div
+              className={
+                "absolute w-full h-full row-start-1 row-end-5 background-to-video rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black " +
+                (navIsOpen ? "z-20 fixed" : "-z-10")
+              }
+            ></div>
             <div className="relative -mt-6 text-white col-span-full">
               <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-3 xl:grid-cols-2 md:gap-6 xl:-mt-10">
                 <div className="z-10 space-y-10 lg:w-full">
-                  <h2 className="-mt-8 text-5xl font-medium lg:-mt-0 font-secondary xl:text-6xl xl:font-normal dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
+                  <h2 className="-mt-8 font-medium text-5xl-squashed lg:-mt-0 font-secondary xl:text-6xl xl:font-medium dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
                     The Fullstack React Framework
                   </h2>
                   <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
@@ -120,17 +138,17 @@ const Home = ({ randomContributors }) => {
               <VideoPlayer url="https://www.youtube.com/watch?v=UsJl7Mn5Y0E" />
             </div>
 
-            <div className="relative w-full px-6 mx-auto space-y-10 lg:space-y-20 xl:space-y-36 max-w-7xl">
-              <h2 className="text-3xl font-semibold xl:text-5xl xl:w-1/2">
+            <div className="relative w-full mx-auto space-y-10 lg:space-y-20 xl:space-y-36 max-w-7xl">
+              <h2 className="px-6 text-3xl font-semibold xl:text-5xl xl:w-1/2">
                 Everything You Need For Production Apps
               </h2>
               <div className="w-full overflow-x-scroll">
                 <Hand
                   variant="concepts-right"
-                  className="hidden lg:block lg:-top-24 lg:-right-80 lg:w-8/12 xl:-right-52 xl:-top-14"
+                  className="hidden lg:block lg:-top-24 lg:-right-96 lg:w-8/12 xl:-top-14"
                 />
                 <Scrollbar className="lg:hidden" thumbHeight="4px">
-                  <div className="grid features-grid gap-x-6 lg:gap-y-14 pb-4">
+                  <div className="grid pb-4 ml-6 features-grid lg:gap-y-14">
                     <Feature title="Fullstack & Monolithic">
                       <p>
                         Includes everything from the database to your frontend all inside a single
@@ -182,10 +200,9 @@ const Home = ({ randomContributors }) => {
                 </Scrollbar>
               </div>
             </div>
-            <div className="absolute w-full h-full row-start-6 text-white row-end-10 xl:row-end-11 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
-            <div>{/* spacer div */}</div>
+            <div className="absolute w-full h-full row-start-6 xl:h-codesandbox xl:mt-80 row-end-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
             <div className="relative hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
-              <h3 className="pb-1 text-xl text-white border-b border-opacity-50 border-blue-mid">
+              <h3 className="pb-1 text-xs border-b border-opacity-50 font-secondary border-blue-mid">
                 Blitz CodeSandbox Example
               </h3>
               <div>
@@ -198,31 +215,34 @@ const Home = ({ randomContributors }) => {
                 <Hand variant="sandbox-right" style={{ right: "-13.2rem", bottom: "-35rem" }} />
               </div>
             </div>
-            <div className="relative grid grid-cols-1 px-6 mx-auto text-white lg:grid-cols-2 gap-14 max-w-7xl">
-              <h2 className="z-10 text-5xl text-transparent font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue xl:text-6xl">
-                The Blitz Community - Our Most Important Aspect
-              </h2>
-              <div className="z-10 grid grid-cols-5 gap-1 md:grid-cols-6 lg:row-start-2 lg:grid-cols-5 grid-rows-8 overflow-clip">
-                {randomContributors.map((contributor) => (
-                  <a
-                    href={`https://github.com/${contributor.login}`}
-                    key={contributor.id}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={contributor.avatar_url}
-                      alt={contributor.login}
-                      title={contributor.login}
-                      className="w-full"
-                    />
-                  </a>
-                ))}
+            <div className="xl:hidden">{/*spacer div*/}</div>
+            <div className="relative flex flex-col px-6 mx-auto text-white lg:flex-row max-w-7xl space-y-14 lg:space-x-24 lg:space-y-0 xl:space-x-40">
+              <div className="space-y-14 lg:w-1/2">
+                <h2 className="z-10 font-medium text-transparent text-5xl-squashed font-secondary bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue xl:text-6xl">
+                  The Blitz Community - Our Most Important Aspect
+                </h2>
+                <div className="z-10 grid grid-cols-5 gap-1 md:grid-cols-6 lg:grid-cols-5 grid-rows-8 overflow-clip">
+                  {randomContributors.map((contributor) => (
+                    <a
+                      href={`https://github.com/${contributor.login}`}
+                      key={contributor.id}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={contributor.avatar_url}
+                        alt={contributor.login}
+                        title={contributor.login}
+                        className="w-full"
+                      />
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 text-lg lg:relative gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl">
+              <div className="grid grid-cols-1 text-lg lg:relative gap-14 md:grid-cols-2 lg:row-span-2 lg:grid-cols-1 xl:text-xl lg:w-1/2">
                 <Hand variant="community-squiggle" className="xl:hidden -right-18" />
-                <div className="z-10 flex flex-col justify-between h-full space-y-6 lg:justify-end">
-                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white">
+                <div className="z-10 flex flex-col justify-between space-y-6 lg:justify-end">
+                  <div className="flex flex-col space-y-6 lg:h-auto lg:text-transparent text-off-white">
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and
                       minorities are especially welcome.
@@ -246,8 +266,8 @@ const Home = ({ randomContributors }) => {
                     Join our Discord Community
                   </ButtonLink>
                 </div>
-                <div className="z-10 flex flex-col justify-between h-full space-y-6 lg:justify-start">
-                  <div className="flex flex-col h-full space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
+                <div className="z-10 flex flex-col justify-between space-y-6 lg:justify-start">
+                  <div className="flex flex-col space-y-6 lg:h-auto lg:text-transparent text-off-white lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue">
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       We are all in this together, from the youngest to the oldest. We are all more
                       similar than we are different. We love to work together.
@@ -264,13 +284,13 @@ const Home = ({ randomContributors }) => {
                 </div>
               </div>
             </div>
-            <div className="z-10 w-full px-6 mx-auto text-white space-y-7 max-w-7xl">
-              <h2 className="text-2xl text-white font-secondary lg:text-3xl">
+            <div className="z-10 w-full mx-auto text-white space-y-7 max-w-7xl">
+              <h2 className="px-6 text-2xl font-medium text-white font-secondary lg:text-3xl">
                 Architecture Diagram
               </h2>
               <div className="w-full overflow-x-scroll">
                 <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
-                  <div className="architecture-diagram" style={{ paddingBottom: "2px" }}>
+                  <div className="px-6 architecture-diagram" style={{ paddingBottom: "2px" }}>
                     <img src="img/architecture.svg" alt="Architecture diagram" />
                   </div>
                 </Scrollbar>
@@ -279,7 +299,7 @@ const Home = ({ randomContributors }) => {
             <div className="relative col-span-full">
               <Hand variant="features-squiggle" className="-right-6 -top-10 xl:hidden -z-10" />
             </div>
-            <div className="absolute w-full h-full row-start-8 row-end-18 xl:row-end-19 -z-20 bg-purple-mid dark:bg-purple-off-black"></div>
+            <div className="absolute w-full h-full row-start-8 row-end-19 xl:row-end-19 -z-20 bg-purple-mid dark:bg-purple-off-black"></div>
             <div className="relative px-6 mx-auto my-6 space-y-12 text-white xl:my-0 max-w-7xl xl:space-y-36">
               <h2 className="text-3xl font-semibold lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
                 Everything End-to-End From <br className="hidden xl:block" />
@@ -321,7 +341,7 @@ const Home = ({ randomContributors }) => {
                 </FeatureIconTitle>
               </div>
             </div>
-            <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 xl:row-start-12 row-end-15 xl:row-end-16 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
+            <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 row-end-15 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
             <div className="relative col-span-full">
               <Hand
                 variant="sponsors-squiggle"
@@ -450,7 +470,7 @@ const Home = ({ randomContributors }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img alt="" src="https://reactbricks.com/reactbricks_icon.svg" width="30px" />
+                  <img alt="" src="https://reactbricks.com/icons/favicon-32x32.png" width="30px" />
                 </a>
                 <a
                   aria-label="Andreas Asprou"
@@ -491,7 +511,7 @@ const Home = ({ randomContributors }) => {
                 </ButtonLink>
               </div>
             </div>
-            <Footer className="dark:bg-purple-off-black bg-purple-mid" />
+            <Footer className="dark:bg-purple-off-black bg-purple-mid text-white" />
           </div>
         </div>
       </div>

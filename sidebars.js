@@ -47,8 +47,6 @@ module.exports = {
       "api-routes",
     ],
     Database: ["database-overview", "postgres", "database-seeds", "prisma", "fauna"],
-    Queries: [],
-    Mutations: [],
     "Queries & Mutations": [
       "query-resolvers",
       "query-usage",
@@ -61,6 +59,7 @@ module.exports = {
       "use-infinite-query",
       "use-mutation",
     ],
+    "Backend Architecture": ["background-processing-with-quirrel"],
     "Deploying to Production": ["deploy-render", "deploy-vercel", "deploy-heroku"],
     CLI: [
       "cli-overview",

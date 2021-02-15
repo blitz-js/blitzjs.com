@@ -43,7 +43,13 @@ export function Heading({
         <a
           href={`#${id}`}
           className="absolute after:hash opacity-0 group-hover:opacity-100"
-          style={{ marginLeft: "-1em", paddingRight: "0.5em", boxShadow: "none", color: "#a1a1aa" }}
+          style={{
+            marginLeft: "-1em",
+            paddingRight: "0.5em",
+            boxShadow: "none",
+            color: "#6700EB",
+            textDecoration: "none",
+          }}
           aria-label="Anchor"
         />
       )}

@@ -19,7 +19,7 @@ module.exports.withProse = () => {
       if (!insideProse && !isJsNode(node)) {
         insideProse = true
         return [
-          { type: "jsx", value: '<div className="prose">' },
+          { type: "jsx", value: '<div className="prose dark:prose-dark">' },
           node,
           ...(i === tree.children.length - 1 ? [{ type: "jsx", value: "</div>" }] : []),
         ]

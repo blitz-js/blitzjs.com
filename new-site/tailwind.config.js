@@ -4,7 +4,12 @@ const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenCo
 const { toRgba } = require("tailwindcss/lib/util/withAlphaVariable")
 
 module.exports = {
-  purge: ["{app,pages}/**/*.{js,jsx,ts,tsx}"],
+  purge: {
+    content: ["{app,pages}/**/*.{js,jsx,ts,tsx}"],
+    options: {
+      safelist: ["bg-code-block"],
+    },
+  },
   darkMode: "class",
   theme: {
     colors: {
@@ -14,7 +19,7 @@ module.exports = {
       black: "#000",
       "off-black": "#191919",
       "off-white": "#EEF2F7",
-      white: "#FFF",
+      white: "#FCFCFD",
 
       amber: colors.amber,
       blue: {
@@ -51,6 +56,7 @@ module.exports = {
         primary: "#45009D",
         dark: "#34017B",
         "off-black": "#1F084E",
+        deep: "#0E001D",
       },
       red: colors.red,
       rose: colors.rose,
@@ -75,6 +81,7 @@ module.exports = {
       },
     },
     fontSize: {
+      xxs: ["0.625rem", "0.8244rem"],
       xs: ["0.8125rem", "1.1375rem"], // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
@@ -84,6 +91,7 @@ module.exports = {
       "3xl": ["1.875rem", "2.4375rem"], // 30px
       "4xl": "2.375rem", // 38px
       "5xl": ["2.8125rem", "4.025rem"], // 45px
+      "5xl-squashed": ["2.8125rem", "3.0938rem"],
       "6xl": ["3.875rem", "4.84375rem"], // 62px
     },
     borderColor: (theme) => ({
@@ -94,8 +102,9 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            color: theme("colors.black"),
+            fontSize: theme("fontSize.sm"),
             maxWidth: "none",
-            color: theme("colors.gray.500"),
             "> :first-child": { marginTop: "-" },
             "> :last-child": { marginBottom: "-" },
             "&:first-child > :first-child": {
@@ -103,6 +112,10 @@ module.exports = {
             },
             "&:last-child > :last-child": {
               marginBottom: "0",
+            },
+            h2: {
+              fontSize: "1.625rem",
+              fontWeight: theme("fontWeight.medium"),
             },
             "h1, h2": {
               letterSpacing: "-0.025em",
@@ -119,20 +132,18 @@ module.exports = {
               top: "calc(0.875em - 0.0625em)",
               left: 0,
               borderRadius: 0,
-              backgroundColor: theme("colors.gray.300"),
+              backgroundColor: theme("colors.purple.light"),
             },
             a: {
-              color: theme("colors.cyan.700"),
+              color: theme("colors.black"),
               fontWeight: theme("fontWeight.medium"),
-              textDecoration: "none",
-              boxShadow: theme("boxShadow.link"),
+              textDecoration: "underline",
             },
             "a code": {
               color: "inherit",
               fontWeight: "inherit",
             },
             strong: {
-              color: theme("colors.gray.900"),
               fontWeight: theme("fontWeight.medium"),
             },
             "a strong": {
@@ -141,13 +152,20 @@ module.exports = {
             },
             code: {
               fontWeight: "400",
-              color: theme("colors.violet.600"),
+              color: theme("colors.black"),
+              backgroundColor: theme("colors['off-white']"),
+              padding: "3px 5px",
+              borderRadius: 2,
+            },
+            "pre code": {
+              fontWeight: "400",
+              color: theme("colors.black"),
             },
             "code::before": {
-              // content: 'none',
+              content: "none",
             },
             "code::after": {
-              // content: 'none',
+              content: "none",
             },
             pre: {
               backgroundColor: "-",
@@ -157,7 +175,7 @@ module.exports = {
               marginBottom: 0,
             },
             table: {
-              fontSize: theme("fontSize.sm")[0],
+              fontSize: theme("fontSize.sm"),
               lineHeight: theme("fontSize.sm")[1].lineHeight,
             },
             thead: {
@@ -179,12 +197,26 @@ module.exports = {
             },
           },
         },
+        dark: {
+          css: {
+            color: theme("colors.white"),
+            "h1, h2, h3, h4, h5, h6, a, code, pre code": {
+              color: theme("colors.white"),
+            },
+            code: {
+              backgroundColor: theme("colors.purple['off-black']"),
+            },
+            blockquote: {
+              color: theme("colors.white"),
+            },
+          },
+        },
       }),
       fontFamily: {
         secondary: ["Roboto", ...defaultTheme.fontFamily.sans],
         primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-        mono: ["Menlo", ...defaultTheme.fontFamily.mono],
+        mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
         source: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
         "ubuntu-mono": ["Ubuntu Mono", ...defaultTheme.fontFamily.mono],
         system: defaultTheme.fontFamily.sans,
@@ -209,6 +241,9 @@ module.exports = {
         sm: "30rem",
         "(screen-18)": `calc(100vh - ${theme("spacing.18")})`,
       }),
+      height: {
+        codesandbox: "calc(100% - 20rem)",
+      },
       boxShadow: {
         px: "0 0 0 1px rgba(0, 0, 0, 0.5)",
         link: "inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 rgba(165, 243, 252, 0.4)",
@@ -284,6 +319,9 @@ module.exports = {
       ringColor: ["focus-visible"],
       ringOpacity: ["focus-visible"],
       rotate: ["first", "last", "odd", "even"],
+      display: ["dark"],
+      typography: ["dark"],
+      backgroundImage: ["hover", "focus"],
     },
   },
   plugins: [

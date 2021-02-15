@@ -166,7 +166,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
           <div
             className={clsx("lg:hidden", { "mt-5 mb-12": toc.length, "h-px mt-8": !toc.length })}
           >
-            {toc.length && (
+            {!!toc.length && (
               <>
                 <h3 className="dark:text-white mb-2 text-sm">Topics</h3>
                 <Select

@@ -44,7 +44,7 @@ const Header = ({
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between ${className} ${stickyBgClass}`}>
-          <div className="pr-12">
+          <div className="pr-12 -mt-3">
             <Link href="/">
               <a className="w-10 overflow-hidden md:w-auto">
                 <span className="sr-only">Blitz home page</span>
@@ -59,7 +59,7 @@ const Header = ({
               </a>
             </Link>
           </div>
-          <div className="flex-1 hidden py-2 space-x-2 text-base lg:flex">
+          <div className="flex-1 hidden space-x-2 text-base lg:flex">
             <NavLink href="/docs/getting-started">Documentation</NavLink>
             <NavLink
               target="_blank"
@@ -94,7 +94,7 @@ const Header = ({
             </NavLink>
           </div>
           <div className="flex lg:text-base lg:space-x-4">
-            <Search className="" />
+            <Search className="self-center" />
             <button
               onClick={onToggle}
               className="p-2 ml-3 -mr-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
@@ -154,7 +154,7 @@ const Header = ({
           </div>
         )}
         {hasFade && (
-          <div class="absolute bg-gradient-to-b from-white dark:from-purple-deep h-12 lg:block pointer-events-none w-full z-10"></div>
+          <div className="absolute bg-gradient-to-b from-white dark:from-purple-deep h-12 lg:block pointer-events-none w-full z-10"></div>
         )}
       </nav>
     </>

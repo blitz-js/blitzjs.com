@@ -6,7 +6,7 @@
 @import "bar-of-progress.css";
 /*! purgecss end ignore */
 
-@import "tailwindcss/components";
+@tailwind components;
 @import "utilities.css";
 
 html {

@@ -5,7 +5,7 @@ const { toRgba } = require("tailwindcss/lib/util/withAlphaVariable")
 
 module.exports = {
   purge: {
-    content: ["{app,pages}/**/*.{js,jsx,ts,tsx}"],
+    content: ["{app,pages,remark}/**/*.{js,jsx,ts,tsx}"],
     options: {
       safelist: ["bg-code-block"],
     },
@@ -83,7 +83,7 @@ module.exports = {
       },
     },
     fontSize: {
-      xxs: ["0.625rem", "0.8244rem"],
+      xxs: "0.75rem", // 12px
       xs: ["0.8125rem", "1.1375rem"], // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
@@ -102,7 +102,7 @@ module.exports = {
     }),
     extend: {
       typography: (theme) => ({
-        DEFAULT: {
+        default: {
           css: {
             color: theme("colors.black"),
             fontSize: theme("fontSize.sm"),
@@ -202,15 +202,18 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            "h1, h2, h3, h4, h5, h6, a, code, pre code": {
+            "h1, h2, h3, h4, h5, h6, a, p, div, code, pre code, blockquote": {
               color: theme("colors.white"),
             },
             code: {
               backgroundColor: theme("colors.purple['off-black']"),
             },
-            blockquote: {
-              color: theme("colors.white"),
-            },
+            // pre: {
+            //   color: theme("colors.white"),
+            // },
+            // thead: {
+            //   color: theme("colors.gray.600"),
+            // },
           },
         },
       }),

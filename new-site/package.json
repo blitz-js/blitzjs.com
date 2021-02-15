@@ -36,7 +36,7 @@
     "@reach/rect": "^0.10.5",
     "@sindresorhus/slugify": "^1.1.0",
     "@svgr/webpack": "^5.4.0",
-    "@tailwindcss/typography": "0.0.0-c1bbc58",
+    "@tailwindcss/typography": "0.4.0",
     "autoprefixer": "^10.0.2",
     "babel-plugin-preval": "^5.0.0",
     "blitz": "0.27.1",

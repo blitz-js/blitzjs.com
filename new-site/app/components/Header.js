@@ -10,6 +10,16 @@ import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
+const menuLinks = [
+  {
+    name: "Documentation",
+    href: "/docs/getting-started",
+  },
+  { name: "GitHub", href: "/docs/getting-started" },
+  { name: "Releases", href: "/docs/getting-started" },
+  { name: "Form", href: "/docs/getting-started" },
+]
+
 const Header = ({
   className = "",
   hasLightBg,
@@ -44,7 +54,7 @@ const Header = ({
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between ${className} ${stickyBgClass}`}>
-          <div className="pr-12 -mt-3">
+          <div className="pr-12 lg:-mt-3">
             <Link href="/">
               <a className="w-10 overflow-hidden md:w-auto">
                 <span className="sr-only">Blitz home page</span>
@@ -59,32 +69,17 @@ const Header = ({
               </a>
             </Link>
           </div>
-          <div className="flex-1 hidden space-x-2 text-base lg:flex">
-            <NavLink href="/docs/getting-started">Documentation</NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz"
-            >
-              GitHub
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz/releases"
-            >
-              Releases
-            </NavLink>
-            <NavLink target="_blank" rel="noopener noreferrer" href="https://discord.blitzjs.com/">
-              Discord
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz/discussions"
-            >
-              Forum
-            </NavLink>
+          <div className="flex-1 hidden space-x-6 text-base lg:flex">
+            {menuLinks.map((link) => {
+              const props = link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {}
+              return (
+                <NavLink href={link.href} key={link.href + link.name} {...props}>
+                  {link.name}
+                </NavLink>
+              )
+            })}
             <NavLink
               target="_blank"
               rel="noopener noreferrer"
@@ -105,52 +100,32 @@ const Header = ({
           </div>
         </div>
         {isOpen && (
-          <div className={`pt-4 text-2xl lg:hidden bg-white dark:bg-purple-deep ${className}`}>
-            <NavLink href="/docs/getting-started" className="px-3 mb-1">
-              Docs
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz"
-              className="px-3 mb-1"
-            >
-              GitHub
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz/releases"
-              className="px-3 mb-1"
-            >
-              Releases
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://discord.blitzjs.com/"
-              className="px-3 mb-1"
-            >
-              Discord
-            </NavLink>
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/blitz-js/blitz/discussions"
-              className="px-3 mb-1"
-            >
-              Forum
-            </NavLink>
+          <div
+            className={`pt-4 text-2xl lg:hidden dark:bg-purple-deep space-y-1 ${className} ${
+              useColoredLogo ? "bg-white" : ""
+            }`}
+          >
+            {menuLinks.map((link) => {
+              const props = link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {}
+              return (
+                <NavLink href={link.href} key={link.href + link.name} {...props}>
+                  {link.name}
+                </NavLink>
+              )
+            })}
             <NavLink
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/sponsors/blitz-js"
-              className="px-3 mb-1"
             >
               <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
             </NavLink>
-            <div className="my-4 border-t border-off-white border-opacity-20"></div>
-            <DarkModeToggle className="text-lg" />
+            <div className="py-2">
+              <div className="border-t border-black dark:border-off-white border-opacity-50"></div>
+            </div>
+            <DarkModeToggle className="text-lg -ml-3" />
           </div>
         )}
         {hasFade && (

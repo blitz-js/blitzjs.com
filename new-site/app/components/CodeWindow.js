@@ -11,7 +11,7 @@ export function CodeWindow({
 }) {
   return (
     <div
-      className={`relative overflow-hidden md:rounded-xl shadow-2xl flex ${styles.root} ${className}`}
+      className={`relative overflow-hidden rounded-xl shadow-2xl flex ${styles.root} ${className}`}
     >
       <div className="absolute inset-0 bg-white dark:bg-purple-off-black" />
       <div className="relative flex flex-col w-full">

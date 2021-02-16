@@ -160,7 +160,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
           <BiChevronLeft size={18} /> Back to Docs
         </a>
       </Link>
-      <div id={meta.containerId} className="pt-4 pb-24 lg:pb-16 w-full flex">
+      <div id={meta.containerId} className="pt-4 pb-8 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
           <PageHeader title={meta.title} />
           <div

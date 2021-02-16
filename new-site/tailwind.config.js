@@ -85,7 +85,7 @@ module.exports = {
     fontSize: {
       xxs: "0.75rem", // 12px
       xs: ["0.8125rem", "1.1375rem"], // 13px
-      sm: "0.875rem", // 14px
+      sm: "0.9rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
       lg: ["1.0625rem", "1.5625rem"], // 17px
       xl: ["1.25rem", "2rem"], // 20px
@@ -95,6 +95,9 @@ module.exports = {
       "5xl": ["2.8125rem", "4.025rem"], // 45px
       "5xl-squashed": ["2.8125rem", "3.0938rem"],
       "6xl": ["3.875rem", "4.84375rem"], // 62px
+      h2: ["2.6rem"],
+      h3: ["1.8rem"],
+      h4: ["1.5rem"],
     },
     borderColor: (theme) => ({
       ...theme("colors"),
@@ -116,8 +119,28 @@ module.exports = {
               marginBottom: "0",
             },
             h2: {
-              fontSize: "1.625rem",
+              fontSize: theme("fontSize.xl"),
               fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.8"),
+              marginBottom: theme("spacing.6"),
+            },
+            h3: {
+              fontSize: theme("fontSize.lg"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h4: {
+              fontSize: theme("fontSize.lg"),
+              fontWeight: theme("fontWeight.semibold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h5: {
+              fontSize: theme("fontSize.base"),
+              fontWeight: theme("fontWeight.bold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
             },
             "h1, h2": {
               letterSpacing: "-0.025em",
@@ -137,9 +160,12 @@ module.exports = {
               backgroundColor: theme("colors.purple.light"),
             },
             a: {
-              color: theme("colors.black"),
+              color: theme("colors.purple.light"),
               fontWeight: theme("fontWeight.medium"),
-              textDecoration: "underline",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
             },
             "a code": {
               color: "inherit",
@@ -154,12 +180,15 @@ module.exports = {
             },
             code: {
               fontWeight: "400",
-              color: theme("colors.black"),
-              backgroundColor: theme("colors.off-white"),
+              color: "#280088",
+              backgroundColor: "#f2f0fd",
+              borderRadius: 3,
             },
             "pre code": {
               fontWeight: "400",
               color: theme("colors.black"),
+              lineHeight: 1.4,
+              fontSize: theme("fontSize.sm"),
             },
             pre: {
               backgroundColor: "-",
@@ -191,6 +220,34 @@ module.exports = {
             },
           },
         },
+        xl: {
+          css: {
+            h2: {
+              fontSize: theme("fontSize.h2"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.8"),
+              marginBottom: theme("spacing.6"),
+            },
+            h3: {
+              fontSize: theme("fontSize.h3"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h4: {
+              fontSize: theme("fontSize.h4"),
+              fontWeight: theme("fontWeight.semibold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h5: {
+              fontSize: theme("fontSize.base"),
+              fontWeight: theme("fontWeight.bold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+          },
+        },
         dark: {
           css: {
             color: theme("colors.white"),
@@ -199,6 +256,9 @@ module.exports = {
             },
             code: {
               backgroundColor: theme("colors.purple.dark"),
+            },
+            "pre code": {
+              backgroundColor: "transparent",
             },
           },
         },
@@ -319,7 +379,7 @@ module.exports = {
         Object.keys(shadows).reduce(
           (utils, key) => ({
             ...utils,
-            [`.text-shadow${key === "DEFAULT" ? "" : `-${key}`}`]: {
+            [`.text-shadow${key === "DEFAULT" ? "," : `-${key}`}`]: {
               textShadow: shadows[key].replace(
                 /([0-9]+(px)? [0-9]+(px)? [0-9]+(px)?) [0-9]+(px)?/g,
                 "$1"

@@ -189,6 +189,7 @@ declare module "blitz" {
 ```
 
 Then change all uses of `ctx.session.$create()` to pass in the new fields.
+<<<<<<< HEAD
 
 ```ts
 ctx.session.$create({userId: 1, role: "admin", orgId: 1})
@@ -217,6 +218,36 @@ function SomeComponent() {
 To access public data on the server:
 
 ```ts
+=======
+
+```ts
+ctx.session.$create({userId: 1, role: "admin", orgId: 1})
+```
+
+You can also use `ctx.session.$setPublicData()` to update session data for an already logged in user. This will _merge_ values with the existing public data.
+
+```ts
+ctx.session.$setPublicData({orgId: 1})
+```
+
+To access public data on the client:
+
+```ts
+import {useSession} from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.orgId
+
+  return /*... */
+}
+```
+
+To access public data on the server:
+
+```ts
+>>>>>>> new
 // app/queries/someQuery.ts
 import {Ctx} from "blitz"
 

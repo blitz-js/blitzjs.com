@@ -134,6 +134,10 @@ body.cursor-grabbing * {
   @apply px-5 pt-5 pb-px rounded-xl text-black;
 }
 
+.admonition-content > *:first-child {
+  @apply mt-2;
+}
+
 .admonition.admonition-caution {
   @apply bg-supplementary-yellow;
 }
@@ -152,6 +156,11 @@ body.cursor-grabbing * {
 
 .admonition .admonition-heading > * {
   @apply flex items-center;
+  margin-top: 0;
+}
+
+.admonition .admonition-icon {
+  @apply mr-2;
 }
 
 .admonition .admonition-icon {

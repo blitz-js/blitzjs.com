@@ -21,9 +21,58 @@ The `context` parameter is an object containing the following keys:
 - `query`: The query string.
 - `preview`: `preview` is `true` if the page is in the preview mode and `false` otherwise. See the [Preview Mode documentation](./preview-mode).
 - `previewData`: The preview data set by `setPreviewData`. See the [Preview Mode documentation](./preview-mode).
+- `resolvedUrl`: A normalized version of the request URL that strips the `_next/data` prefix for client transitions and includes original query values.
+- `locale` contains the active locale (if enabled).
+- `locales` contains all supported locales (if enabled).
+- `defaultLocale` contains the configured default locale (if enabled).
+
+`getServerSideProps` should return an object with:
+
+- `props` - A **required** object with the props that will be received by the page component. It should be a [serializable object](https://en.wikipedia.org/wiki/Serialization)
+- `notFound` - An **optional** boolean value to allow the page to return a 404 status and page. Below is an example of how it works:
+
+  ```js
+  export async function getServerSideProps(context) {
+    const data = /* ... */
+
+    if (!data) {
+      return {
+        notFound: true,
+      }
+    }
+
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  ```
+
+- `redirect` - An **optional** redirect value to allow redirecting to internal and external resources. It should match the shape of `{ destination: string, permanent: boolean }`. In some rare cases, you might need to assign a custom status code for older HTTP Clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both. Below is an example of how it works:
+
+  ```js
+  export async function getServerSideProps(context) {
+    const data = /* ... */
+
+    if (!data) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      }
+    }
+
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  ```
 
 > **Note**: You can import modules in top-level scope for use in `getServerSideProps`.
-> Imports used in `getServerSideProps` will not be bundled for the client-side, as [explained below](#only-runs-on-server-side).
+> Imports used in `getServerSideProps` will not be bundled for the client-side.
+>
+> This means you can write **server-side code directly in `getServerSideProps`**.
+> This includes reading from the filesystem or a database.
 
 ### Simple example
 
@@ -36,8 +85,7 @@ function Page({data}) {
 
 // This gets called on every request
 export async function getServerSideProps() {
-  // Fetch data using a blitz query or a third-party API
-  const data = /* .. */
+  const data = /* ... */
 
   // Pass data to the page via props
   return {props: {data}}
@@ -46,12 +94,18 @@ export async function getServerSideProps() {
 export default Page
 ```
 
+### When should I use `getServerSideProps`?
+
+You should use `getServerSideProps` only if you need to pre-render a page whose data must be fetched at request time. Time to first byte (TTFB) will be slower than `getStaticProps` because the server must compute the result on every request, and the result cannot be cached by a CDN without extra configuration.
+
+If you don’t need to pre-render the data, then you should consider fetching data on the client side. [Click here to learn more](/docs/query-usage).
+
 ### TypeScript: Use `GetServerSideProps`
 
 For TypeScript, you can use the `GetServerSideProps` type from `blitz`:
 
 ```ts
-import { GetServerSideProps } from "blitz"
+import {GetServerSideProps} from "blitz"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // ...
@@ -66,8 +120,7 @@ import { InferGetServerSidePropsType } from 'blitz'
 type Data = { ... }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('https://.../data')
-  const data: Data = await res.json()
+  const data: Data = /* ... */
 
   return {
     props: {
@@ -97,3 +150,5 @@ You can use [this tool](https://next-code-elimination.now.sh/) to verify what Bl
 #### Only allowed in a page
 
 `getServerSideProps` can only be exported from a **page**. You can’t export it from non-page files.
+
+Also, you must use `export async function getServerSideProps() {}` — it will **not** work if you add `getServerSideProps` as a property of the page component.

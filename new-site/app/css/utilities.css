@@ -130,7 +130,7 @@ body.cursor-grabbing * {
   background-repeat: no-repeat;
 }
 
-.admonition {
+.admonition.admonition.admonition {
   @apply px-5 pt-5 pb-px rounded-xl text-black;
 }
 
@@ -154,12 +154,16 @@ body.cursor-grabbing * {
   @apply flex items-center;
 }
 
+.admonition .admonition-icon {
+  @apply mr-2;
+}
+
 .dark .admonition .admonition-heading h5 {
   @apply text-black;
 }
 
-.admonition .admonition-icon {
-  @apply mr-2;
+.dark .admonition .admonition-content.admonition-content {
+  @apply text-black;
 }
 
 .topic-select .topic-select__placeholder,

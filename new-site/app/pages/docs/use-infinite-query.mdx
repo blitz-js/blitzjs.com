@@ -6,16 +6,17 @@ sidebar_label: useInfiniteQuery
 ### Example
 
 ```ts
-import { useInfiniteQuery } from "blitz"
+import {useInfiniteQuery} from "blitz"
 import getProjectsInfinite from "app/projects/queries/getProjectsInfinite"
 
 function Projects(props) {
-  const [
-    groupedProjects,
-    { isFetching, isFetchingMore, fetchMore, canFetchMore },
-  ] = useInfiniteQuery(getProjectsInfinite, (page = { take: 3, skip: 0 }) => page, {
-    getFetchMore: (lastGroup) => lastGroup.nextPage,
-  })
+  const [groupedProjects, {isFetching, isFetchingMore, fetchMore, canFetchMore}] = useInfiniteQuery(
+    getProjectsInfinite,
+    (page = {take: 3, skip: 0}) => page,
+    {
+      getFetchMore: (lastGroup) => lastGroup.nextPage,
+    },
+  )
   return (
     <>
       {groupedProjects.map((group, i) => (
@@ -54,7 +55,7 @@ export default async function getProjectsInfinite({
 
   const count = await db.project.count()
   const hasMore = skip! + take! < count
-  const nextPage = hasMore ? { take, skip: skip! + take! } : null
+  const nextPage = hasMore ? {take, skip: skip! + take!} : null
 
   return {
     projects,

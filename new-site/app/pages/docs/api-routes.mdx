@@ -15,7 +15,7 @@ For example, the following API route `app/api/hello.js` handles a `json` respons
 export default (req, res) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({ name: "John Doe" }))
+  res.end(JSON.stringify({name: "John Doe"}))
 }
 ```
 
@@ -47,7 +47,7 @@ To fetch API endpoints, take a look into any of the examples at the start of thi
 You can use the `getSessionContext` function to get the session of the user. Here is an example using session in a API route `app/api/customRoute.tsx`:
 
 ```ts
-import { getSessionContext } from "@blitzjs/server"
+import {getSessionContext} from "@blitzjs/server"
 
 export default async function customRoute(req, res) {
   const session = await getSessionContext(req, res)
@@ -55,14 +55,14 @@ export default async function customRoute(req, res) {
 
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({ userId: session.userId }))
+  res.end(JSON.stringify({userId: session.userId}))
 }
 ```
 
 This is called in the frontend like this:
 
 ```ts
-import { getAntiCSRFToken } from "blitz"
+import {getAntiCSRFToken} from "blitz"
 
 const antiCSRFToken = getAntiCSRFToken()
 const response = await window.fetch("/api/customRoute", {
@@ -84,7 +84,7 @@ For example, the API route `app/api/post/[pid].js` has the following code:
 ```js
 export default (req, res) => {
   const {
-    query: { pid },
+    query: {pid},
   } = req
 
   res.end(`Post: ${pid}`)
@@ -123,13 +123,13 @@ API Routes can be extended to catch all paths by adding three dots (`...`) insid
 Matched parameters will be passed as a query parameter (`slug` in the example) to the api handler, and it will always be an array, so, the path `/api/post/a` will have the following `query` object:
 
 ```json
-{ "slug": ["a"] }
+{"slug": ["a"]}
 ```
 
 And in the case of `/api/post/a/b`, and any other matching path, new parameters will be added to the array, like so:
 
 ```json
-{ "slug": ["a", "b"] }
+{"slug": ["a", "b"]}
 ```
 
 An API route for `app/api/post/[...slug].js` could look like this:
@@ -137,7 +137,7 @@ An API route for `app/api/post/[...slug].js` could look like this:
 ```js
 export default (req, res) => {
   const {
-    query: { slug },
+    query: {slug},
   } = req
 
   res.end(`Post: ${slug.join(", ")}`)
@@ -173,7 +173,7 @@ The response (`res`) includes a set of Express.js-like methods to improve the de
 
 ```js
 export default (req, res) => {
-  res.status(200).json({ name: "Blitz.js" })
+  res.status(200).json({name: "Blitz.js"})
 }
 ```
 
@@ -282,7 +282,7 @@ async function handler(req, res) {
   await runMiddleware(req, res, cors)
 
   // Rest of the API logic
-  res.json({ message: "Hello Everyone!" })
+  res.json({message: "Hello Everyone!"})
 }
 
 export default handler

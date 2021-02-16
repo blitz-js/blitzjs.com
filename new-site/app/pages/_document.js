@@ -7,7 +7,6 @@ export default class Document extends NextDocument {
   }
 
   render() {
-    console.log(this.props.__NEXT_DATA__)
     return (
       <Html lang="en" className="antialiased">
         <Head>

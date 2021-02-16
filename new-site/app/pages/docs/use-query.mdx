@@ -8,15 +8,15 @@ sidebar_label: useQuery
 React Concurrent Mode is enabled by default for Blitz apps. So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
 
 ```tsx
-import { Suspense } from "react"
-import { useQuery, useRouter } from "blitz"
+import {Suspense} from "react"
+import {useQuery, useRouter} from "blitz"
 import getProject from "app/projects/queries/getProject"
 import ErrorBoundary from "app/components/ErrorBoundary"
 
 function Project() {
   const router = useRouter()
   const projectId = parseInt(router.query.projectId as string)
-  const [project] = useQuery(getProject, { where: { id: projectId } })
+  const [project] = useQuery(getProject, {where: {id: projectId}})
 
   return <div>{project.name}</div>
 }

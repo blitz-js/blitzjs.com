@@ -1,6 +1,6 @@
 ---
-title: Write Mutation Resolvers
-sidebar_label: Write Mutation Resolvers
+title: Mutation Resolvers
+sidebar_label: Mutation Resolvers
 ---
 
 Blitz mutations are plain, asynchronous JavaScript functions that always run on the server.
@@ -26,17 +26,17 @@ You can write any normal Node.js code here, including database access and fetchi
 
 ```ts
 // app/products/mutations/createProduct.tsx
-import { Ctx } from "blitz"
-import db, { ProjectCreateArgs } from "db"
+import {Ctx} from "blitz"
+import db, {ProjectCreateArgs} from "db"
 
 type CreateProjectInput = {
   data: ProjectCreateArgs["data"]
 }
 
-export default async function createProject({ data }: CreateProjectInput, ctx: Ctx) {
+export default async function createProject({data}: CreateProjectInput, ctx: Ctx) {
   // Can do any processing, fetching from other APIs, etc
 
-  const project = await db.project.create({ data })
+  const project = await db.project.create({data})
 
   return project
 }

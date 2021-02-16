@@ -1,6 +1,6 @@
 ---
-title: Write Query Resolvers
-sidebar_label: Write Query Resolvers
+title: Query Resolvers
+sidebar_label: Query Resolvers
 ---
 
 Blitz queries are plain, asynchronous JavaScript functions that always run on the server.
@@ -26,17 +26,17 @@ You can write any normal Node.js code here, including database access and fetchi
 
 ```ts
 // app/products/queries/getProduct.tsx
-import { Ctx } from "blitz"
-import db, { FindOneProjectArgs } from "db"
+import {Ctx} from "blitz"
+import db, {FindOneProjectArgs} from "db"
 
 type GetProjectInput = {
   where: FindOneProjectArgs["where"]
 }
 
-export default async function getProject({ where }: GetProjectInput, ctx: Ctx) {
+export default async function getProject({where}: GetProjectInput, ctx: Ctx) {
   // Can do any processing, fetching from other APIs, etc
 
-  const project = await db.project.findOne({ where })
+  const project = await db.project.findOne({where})
 
   return project
 }

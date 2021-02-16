@@ -6,22 +6,22 @@ sidebar_label: usePaginatedQuery
 ### Example
 
 ```ts
-import { Suspense } from "react"
-import { Link, BlitzPage, usePaginatedQuery, useRouterQuery, useRouter } from "blitz"
+import {Suspense} from "react"
+import {Link, BlitzPage, usePaginatedQuery, useRouterQuery, useRouter} from "blitz"
 import getProjects from "app/products/queries/getProjects"
 
 const ITEMS_PER_PAGE = 3
 
 const Projects = () => {
   const router = useRouter()
-  const { page = 0 } = useRouterQuery()
-  const [{ projects, hasMore }] = usePaginatedQuery(getProjects, {
+  const {page = 0} = useRouterQuery()
+  const [{projects, hasMore}] = usePaginatedQuery(getProjects, {
     skip: ITEMS_PER_PAGE * Number(page),
     take: ITEMS_PER_PAGE,
   })
 
-  const goToPreviousPage = () => router.push({ query: { page: Number(page) - 1 } })
-  const goToNextPage = () => router.push({ query: { page: Number(page) + 1 } })
+  const goToPreviousPage = () => router.push({query: {page: Number(page) - 1}})
+  const goToNextPage = () => router.push({query: {page: Number(page) + 1}})
 
   return (
     <div>
@@ -47,8 +47,8 @@ And here's the query to work with that:
 
 ```ts
 export default async function getProjects(
-  { where, orderBy, cursor, take, skip }: GetProjectsInput,
-  ctx: Record<any, any> = {}
+  {where, orderBy, cursor, take, skip}: GetProjectsInput,
+  ctx: Record<any, any> = {},
 ) {
   const projects = await db.project.findMany({
     where,

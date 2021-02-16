@@ -5,7 +5,7 @@ const { toRgba } = require("tailwindcss/lib/util/withAlphaVariable")
 
 module.exports = {
   purge: {
-    content: ["{app,pages}/**/*.{js,jsx,ts,tsx}"],
+    content: ["{app,pages,remark}/**/*.{js,jsx,ts,tsx}"],
     options: {
       safelist: ["bg-code-block"],
     },
@@ -51,10 +51,12 @@ module.exports = {
       },
       purple: {
         ...colors.purple,
+        extralight: "#ae53ff",
         light: "#6700EB",
         mid: "#5600C2",
         primary: "#45009D",
         dark: "#34017B",
+        extradark: "#10002f",
         "off-black": "#1F084E",
         deep: "#0E001D",
       },
@@ -81,7 +83,7 @@ module.exports = {
       },
     },
     fontSize: {
-      xxs: ["0.625rem", "0.8244rem"],
+      xxs: "0.75rem", // 12px
       xs: ["0.8125rem", "1.1375rem"], // 13px
       sm: "0.875rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
@@ -153,19 +155,11 @@ module.exports = {
             code: {
               fontWeight: "400",
               color: theme("colors.black"),
-              backgroundColor: theme("colors['off-white']"),
-              padding: "3px 5px",
-              borderRadius: 2,
+              backgroundColor: theme("colors.off-white"),
             },
             "pre code": {
               fontWeight: "400",
               color: theme("colors.black"),
-            },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
             },
             pre: {
               backgroundColor: "-",
@@ -200,14 +194,11 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            "h1, h2, h3, h4, h5, h6, a, code, pre code": {
+            "h1, h2, h3, h4, h5, h6, a, code, pre code, blockquote": {
               color: theme("colors.white"),
             },
             code: {
-              backgroundColor: theme("colors.purple['off-black']"),
-            },
-            blockquote: {
-              color: theme("colors.white"),
+              backgroundColor: theme("colors.purple.dark"),
             },
           },
         },
@@ -215,12 +206,8 @@ module.exports = {
       fontFamily: {
         secondary: ["Roboto", ...defaultTheme.fontFamily.sans],
         primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
-        source: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
-        "ubuntu-mono": ["Ubuntu Mono", ...defaultTheme.fontFamily.mono],
         system: defaultTheme.fontFamily.sans,
-        flow: "Flow",
       },
       spacing: {
         18: "4.5rem",

@@ -3,7 +3,7 @@
 .token.selector,
 .token.selector .class,
 .token.function {
-  @apply text-purple-dark;
+  @apply text-purple-light;
 }
 
 .dark .token.tag,
@@ -11,7 +11,7 @@
 .dark .token.selector,
 .dark .token.selector .class,
 .dark .token.function {
-  @apply text-purple-primary;
+  @apply text-purple-extralight;
 }
 
 .token.attr-name,
@@ -29,7 +29,7 @@
 .dark .token.operator,
 .dark .token.pseudo-class,
 .dark .token.important {
-  @apply text-purple-light;
+  @apply text-purple-extralight;
 }
 
 .token.attr-value,
@@ -59,7 +59,7 @@
 .dark .token.punctuation,
 .dark .token.module,
 .dark .token.property {
-  @apply text-purple-mid;
+  @apply text-purple-extralight;
 }
 
 .token.atapply .token:not(.rule):not(.important) {

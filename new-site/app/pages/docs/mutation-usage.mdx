@@ -51,8 +51,8 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 - Calling `setQueryData` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
 
 ```tsx
-export default function (props: { query: { id: number } }) {
-  const [product, { setQueryData }] = useQuery(getProduct, { where: { id: props.query.id } })
+export default function (props: {query: {id: number}}) {
+  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -75,11 +75,11 @@ export default function (props: { query: { id: number } }) {
 
 #### `refetch()`
 
-[`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload.
+[`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload. 
 
 ```tsx
 export default function (props) {
-  const [product, { refetch }] = useQuery(getProduct, { where: { id: props.id } })
+  const [product, {refetch}] = useQuery(getProduct, {where: {id: props.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -109,10 +109,10 @@ Another way, if you need to invalidate a query inside another component, is to u
 ##### Example
 
 ```tsx
-import { invalidateQuery } from "blitz" // highlight-line
+import {invalidateQuery} from "blitz" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
-const Page = function ({ products }) {
+const Page = function ({products}) {
   return (
     <div>
       <button
@@ -143,8 +143,8 @@ In the case of an error, we revert the local change, refetch the data, and optio
 Here's a simple form component with an `onSubmit` function that calls an `updateProduct` mutation to save edits.
 
 ```tsx
-export default function (props: { query: { id: number } }) {
-  const [product, { setQueryData }] = useQuery(getProduct, { where: { id: props.query.id } })
+export default function (props: {query: {id: number}}) {
+  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -169,8 +169,8 @@ We can enhance this to support instant feedback to the user, immediately showing
 We pass `{refetch: false}` as a second argument to the setQueryData() function to prevent the mutation triggering a refetch of stale data while we wait for the response.
 
 ```tsx
-export default function (props: { query: { id: number } }) {
-  const [product, { setQueryData }] = useQuery(getProduct, { where: { id: props.query.id } })
+export default function (props: {query: {id: number}}) {
+  const [product, {setQueryData}] = useQuery(getProduct, {where: {id: props.query.id}})
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -179,7 +179,7 @@ export default function (props: { query: { id: number } }) {
       onSubmit={async (values) => {
         try {
           // Update local cache with form values without triggering refetch
-          setQueryData(values, { refetch: false }) // highlight-line
+          setQueryData(values, {refetch: false}) // highlight-line
           const product = await updateProjectMutation(values)
           // Update local cache with result, then refetch
           setQueryData(product)

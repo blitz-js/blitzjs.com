@@ -6,7 +6,7 @@
 @import "bar-of-progress.css";
 /*! purgecss end ignore */
 
-@import "tailwindcss/components";
+@tailwind components;
 @import "utilities.css";
 
 html {
@@ -123,4 +123,14 @@ html {
   .features-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+code::before,
+code::after {
+  content: "" !important;
+}
+
+code {
+  padding: 3px 5px;
+  @apply rounded-sm;
 }

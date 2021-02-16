@@ -1,20 +1,144 @@
 ---
-title: Auth Utilities
-sidebar_label: Utilities
+title: Auth Hooks & Utilities
+sidebar_label: Hooks & Utilities
 ---
+
+## `useSession()`
+
+`useSession(options?) => Partial<PublicData> & {isLoading: boolean}`
+
+### Example
+
+```ts
+import {useSession} from "blitz"
+
+const session = useSession()
+```
+
+### Arguments
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns
+
+- `session: Partial<PublicData> & {isLoading: boolean}`
+
+## `useAuthenticatedSession()`
+
+`useAuthenticatedSession(options?) => PublicData & {isLoading: boolean}`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example
+
+```ts
+import {useAuthenticatedSession} from "blitz"
+
+const session = useAuthenticatedSession()
+```
+
+### Arguments
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns
+
+- `session: PublicData & {isLoading: boolean}`
+
+## `useAuthorize()`
+
+`useAuthorize() => void`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example
+
+```ts
+import {useAuthorize} from "blitz"
+
+useAuthorize()
+```
+
+### Arguments
+
+- None
+
+### Returns
+
+- Nothing
+
+## `useRedirectAuthenticated()`
+
+`useRedirectAuthenticated(to: string) => void`
+
+This will redirect a logged in user to the given url path. It does nothing for logged out users.
+
+### Example
+
+```ts
+import {useRedirectAuthenticated} from "blitz"
+
+useRedirectAuthenticated("/dashboard")
+```
+
+### Arguments
+
+- `to: string`
+  - **Required**
+  - The url path to redirect logged in users to
+
+### Returns
+
+- Nothing
+
+## `generateToken()`
+
+#### `generateToken(numberOfCharacters: number = 32) => string`
+
+This is a convenience wrapper around [nanoid](https://github.com/ai/nanoid) for generating tokens for things like password resets.
+
+#### Example Usage
+
+```ts
+import {generateToken} from "blitz"
+
+const token = generateToken()
+```
+
+## `hash256()`
+
+#### `hash256(value: string) => string`
+
+This is a convenience wrapper around [nanoid](https://github.com/ai/nanoid) for generating tokens for things like password resets.
+
+This takes a string and hashes it with the `sha256` algorithm. This is used for things like hashing password reset tokens before saving them in the database.
+
+#### Example Usage
+
+```ts
+import {hash256} from "blitz"
+
+const hashedToken = hash256(token)
+```
 
 ## `SecurePassword`
 
 `SecurePassword` is a convenience wrapper around [secure-password](https://github.com/emilbayes/secure-password) to provide a nice way to hash passwords and verify password hashes.
 
 ```ts
-import { SecurePassword } from "blitz"
+import {SecurePassword} from "blitz"
 
 await SecurePassword.hash(password)
 await SecurePassword.verify(passwordHash, password)
 ```
 
-#### `SecurePassword.hash(password: string) => Promise<string`
+#### `SecurePassword.hash(password: string) => Promise<string>`
 
 This is used when a user sets a new password.
 
@@ -45,11 +169,11 @@ and `verifySync`.
 #### Example Usage
 
 ```ts
-import { SecurePassword, AuthenticationError } from "blitz"
+import {SecurePassword, AuthenticationError} from "blitz"
 import db from "db"
 
 export const authenticateUser = async (email: string, password: string) => {
-  const user = await db.user.findFirst({ where: { email } })
+  const user = await db.user.findFirst({where: {email}})
   if (!user) throw new AuthenticationError()
 
   const result = await SecurePassword.verify(user.hashedPassword, password)
@@ -57,10 +181,10 @@ export const authenticateUser = async (email: string, password: string) => {
   if (result === SecurePassword.VALID_NEEDS_REHASH) {
     // Upgrade hashed password with a more secure hash
     const improvedHash = await SecurePassword.hash(password)
-    await db.user.update({ where: { id: user.id }, data: { hashedPassword: improvedHash } })
+    await db.user.update({where: {id: user.id}, data: {hashedPassword: improvedHash}})
   }
 
-  const { hashedPassword, ...rest } = user
+  const {hashedPassword, ...rest} = user
   return rest
 }
 ```

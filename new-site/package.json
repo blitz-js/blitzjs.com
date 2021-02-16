@@ -10,9 +10,6 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "browserslist": [
-    "> 1%"
-  ],
   "prettier": {
     "semi": false,
     "printWidth": 100
@@ -39,7 +36,7 @@
     "@reach/rect": "^0.10.5",
     "@sindresorhus/slugify": "^1.1.0",
     "@svgr/webpack": "^5.4.0",
-    "@tailwindcss/typography": "^0.0.0-caa70b6",
+    "@tailwindcss/typography": "0.4.0",
     "autoprefixer": "^10.0.2",
     "babel-plugin-preval": "^5.0.0",
     "blitz": "0.27.1",
@@ -74,8 +71,11 @@
     "seedrandom": "^3.0.5",
     "simple-functional-loader": "^1.2.1",
     "stringify-object": "^3.3.0",
-    "tailwindcss": "^2.0.1",
+    "tailwindcss": "2.0.3",
     "tinytime": "^0.2.6",
+    "typeface-libre-franklin": "1.1.13",
+    "typeface-roboto": "1.1.13",
+    "typeface-roboto-mono": "1.1.13",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {

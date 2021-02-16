@@ -32,7 +32,7 @@ You can extend the `Ctx` type by placing the following file in your project (thi
 
 ```ts
 // types.ts
-import { DefaultCtx, SessionContext } from "blitz"
+import {DefaultCtx, SessionContext} from "blitz"
 
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {
@@ -44,7 +44,7 @@ declare module "blitz" {
 Whatever types you add to `Ctx` add will be automatically available in your queries and mutations as shown here.
 
 ```ts
-import { Ctx } from "blitz"
+import {Ctx} from "blitz"
 
 export default async function getThing(input, ctx: Ctx) {
   // Properly typed
@@ -58,8 +58,8 @@ Local middleware only runs for a single query or mutation. It is defined by expo
 
 ```ts
 // app/products/queries/getProduct.tsx
-import { Middleware } from "blitz"
-import db, { FindOneProjectArgs } from "db"
+import {Middleware} from "blitz"
+import db, {FindOneProjectArgs} from "db"
 
 type GetProjectInput = {
   where: FindOneProjectArgs["where"]
@@ -75,12 +75,9 @@ export const middleware: Middleware[] = [
   },
 ]
 
-export default async function getProject(
-  { where }: GetProjectInput,
-  ctx: Record<any, unknown> = {}
-) {
+export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
   console.log("Referer:", ctx.referer)
-  return await db.project.findOne({ where })
+  return await db.project.findOne({where})
 }
 ```
 
@@ -89,7 +86,7 @@ export default async function getProject(
 This API is essentially the same as connect/Express middleware but with an asynchronous `next()` function like Koa. The main difference when writing connect vs Blitz middleware is you must return a promise from Blitz middleware by doing `return next()` or `await next()`. See below for the `connectMiddleware()` adapter for existing connect middleware.
 
 ```js
-import { Middleware } from "blitz"
+import {Middleware} from "blitz"
 
 const middleware: Middleware = async (req, res, next) => {
   res.blitzCtx.referer = req.headers.referer
@@ -161,12 +158,12 @@ Blitz provides a `connectMiddleware()` function that converts connect middleware
 
 ```ts
 // blitz.config.js
-const { connectMiddleware } = require("blitz")
+const {connectMiddleware} = require("blitz")
 const Cors = require("cors")
 
 const cors = Cors({
-  methods: ["GET", "POST", "HEAD", "OPTIONS"],
-})
+  methods: ["GET", "POST", "HEAD", "OPTIONS"]
+});
 
 module.exports = {
   middleware: [connectMiddleware(cors)],

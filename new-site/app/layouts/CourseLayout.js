@@ -7,7 +7,7 @@ import { createPageList } from "@/utils/createPageList"
 
 const pages = createPageList(
   // use compiled location
-  require.context("pages/course/?meta=title,shortTitle,published", true, /\.mdx$/),
+  require.context("pages/course/?meta=title,sidebar_label,shortTitle,published", true, /\.mdx$/),
   "course"
 )
 

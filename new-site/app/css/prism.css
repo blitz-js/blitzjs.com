@@ -96,7 +96,24 @@
 }
 
 .token.inserted:not(.prefix) {
+  margin-top: -1.5em;
+  margin-bottom: -1.5em;
   @apply block bg-purple-light bg-opacity-25 -mx-4 px-4;
+}
+
+.token.inserted:not(.prefix) > .comment:first-child {
+  height: 0;
+  display: block;
+  overflow: hidden;
+  margin-top: 0rem;
+  margin-bottom: -1.4em;
+}
+.token.inserted:not(.prefix) > .comment:last-child {
+  height: 0;
+  display: block;
+  overflow: hidden;
+  margin-top: -1.4em;
+  margin-bottom: 0;
 }
 
 .token.inserted.prefix {

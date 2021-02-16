@@ -1,4 +1,4 @@
-import { Head, Link } from "blitz"
+import { Link } from "blitz"
 import { Header } from "@/components/Header"
 import { ButtonLink } from "@/components/ButtonLink"
 import { HeroCode } from "@/components/home/HeroCode"
@@ -8,7 +8,6 @@ import { Feature } from "@/components/home/Feature"
 import { FeatureIcon } from "@/components/home/FeatureIcon"
 import { FeatureIconTitle } from "@/components/home/FeatureIconTitle"
 import { Sponsor } from "@/components/home/Sponsor"
-import { FaGithub } from "react-icons/fa"
 import { Footer } from "@/components/home/Footer"
 import { StyledLink } from "@/components/home/StyledLink"
 import { Hand } from "@/components/home/Hand"
@@ -447,25 +446,22 @@ const Home = ({ randomContributors }) => {
             <div className="col-span-full"></div>
             <div className="w-full px-6 mx-auto space-y-12 text-white lg:space-x-4 lg:space-y-0 lg:flex lg:items-center max-w-7xl">
               <h2 className="pr-2 text-3xl font-semibold lg:w-full lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
-                Follow Our Journey on Github{" "}
-                <FaGithub className="inline mb-2 text-off-white" size="1.8rem" />
+                So What Should I Do Now?
               </h2>
               <div className="flex flex-col w-full space-y-4 md:flex-row md:space-y-0 md:space-x-2">
                 <ButtonLink
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://github.com/blitz-js/blitz/discussions"
+                  href="/docs/get-started"
                   className="w-full text-lg py-18 rounded-t-2xl md:rounded-tr-none"
                 >
-                  Forum
+                  Try Blitz
                 </ButtonLink>
                 <ButtonLink
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/blitz-js/blitz/releases"
+                  href="https://discord.blitzjs.com"
                   className="w-full text-lg py-18 rounded-br-2xl md:rounded-tr-2xl"
                 >
-                  Releases
+                  Join Discord
                 </ButtonLink>
               </div>
             </div>

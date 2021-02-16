@@ -46,7 +46,7 @@ import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
-const CreateProject = z
+export const CreateProject = z
   .object({
     name: z.string(),
   })
@@ -66,7 +66,7 @@ export default resolver.pipe(
 const HeroCode = ({ className = "" }) => {
   const [tabs, setTabs] = useState([
     {
-      title: "createProject.ts",
+      title: "mutations/createProject.ts",
       tokens: mutationTokenized.tokens,
       selected: true,
     },

@@ -251,8 +251,22 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            "h1, h2, h3, h4, h5, h6, a, code, pre code, blockquote": {
+            "h1, h2, h3, h4, h5, h6, a, strong, code, pre code, blockquote": {
               color: theme("colors.white"),
+            },
+            th: {
+              color: theme("colors.gray.400"),
+            },
+            strong: {
+              fontWeight: theme("fontWeight.bold"),
+            },
+            a: {
+              fontWeight: theme("fontWeight.bold"),
+              textDecoration: "underline",
+              "&:hover": {
+                color: theme("colors.purple.extralight"),
+                textDecoration: "underline",
+              },
             },
             code: {
               backgroundColor: theme("colors.purple.dark"),

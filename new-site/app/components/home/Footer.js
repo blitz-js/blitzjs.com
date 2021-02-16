@@ -34,10 +34,10 @@ export function Footer({ className, hasDarkMode }) {
             <div className="grid gap-7 md:grid-cols-3">
               <LinkList title="Docs">
                 <Link href="/docs/get-started">
-                  <a>Getting Started</a>
+                  <a>Get Started</a>
                 </Link>
                 <Link href="/docs/contributing">
-                  <a>Contributing</a>
+                  <a>How To Contribute</a>
                 </Link>
               </LinkList>
 
@@ -52,22 +52,27 @@ export function Footer({ className, hasDarkMode }) {
                     Forum Discussions
                   </a>
                 </Link>
-                <Link href="https://github.com/sponsors/blitz-js">
+                <Link href="https://twitter.com/blitz_js">
                   <a target="_blank" rel="noopener noreferrer">
-                    Donate/Sponsor
+                    Twitter
                   </a>
                 </Link>
               </LinkList>
 
-              <LinkList title="Social">
+              <LinkList title="Other">
                 <Link href="https://github.com/blitz-js/blitz">
                   <a target="_blank" rel="noopener noreferrer">
                     GitHub
                   </a>
                 </Link>
-                <Link href="https://twitter.com/blitz_js">
+                <Link href="https://github.com/blitz-js/wiki">
                   <a target="_blank" rel="noopener noreferrer">
-                    Twitter
+                    Wiki
+                  </a>
+                </Link>
+                <Link href="https://store.blitzjs.com">
+                  <a target="_blank" rel="noopener noreferrer">
+                    Swag
                   </a>
                 </Link>
               </LinkList>

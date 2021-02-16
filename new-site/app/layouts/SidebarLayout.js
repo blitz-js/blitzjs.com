@@ -74,7 +74,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
                             isPublished={item.published !== false}
                             fallbackHref={fallbackHref}
                           >
-                            {item.shortTitle || item.title}
+                            {item.sidebar_label || item.title}
                           </NavItem>
                           {item.href === router.pathname && toc && toc.length ? (
                             <TableOfContents tableOfContents={toc} />

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react"
+import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa"
+import { HiExternalLink } from "react-icons/hi"
 import { Link } from "blitz"
 import { Search } from "@/components/Search"
 import Logo from "@/components/Logo"
@@ -15,10 +17,46 @@ const menuLinks = [
     name: "Documentation",
     href: "/docs/get-started",
   },
-  { name: "GitHub", href: "/docs/get-started" },
-  { name: "Releases", href: "/docs/get-started" },
-  { name: "Form", href: "/docs/get-started" },
+  { name: "Releases", href: "https://github.com/blitz-js/blitz/releases" },
+  { name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki" },
+  { name: "Swag", href: "https://store.blitzjs.com" },
 ]
+
+const SocialIcons = ({ className, variant }) => {
+  const outerClasses = variant === "bright" ? "bg-purple-light dark:bg-white" : "bg-white "
+  const innerClasses =
+    variant === "bright"
+      ? "text-white dark:text-purple-mid"
+      : "text-purple-primary dark:text-purple-dark"
+  return (
+    <div className={`flex items-center space-x-3 ${className}`}>
+      <a
+        href="https://github.com/blitz-js/blitz"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+      >
+        <FaGithub className={" " + innerClasses} size="1.25rem" />
+      </a>
+      <a
+        href="https://twitter.com/blitz_js"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+      >
+        <FaTwitter className={" " + innerClasses} size="1.25rem" />
+      </a>
+      <a
+        href="https://discord.blitzjs.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+      >
+        <FaDiscord className={" " + innerClasses} size="1.25rem" />
+      </a>
+    </div>
+  )
+}
 
 const Header = ({
   className = "",
@@ -47,7 +85,7 @@ const Header = ({
     onNavToggle(newValue)
   }
 
-  const bannerMsg = "Blitz is now in beta! 🎉"
+  const bannerMsg = "Blitz is now in beta! 🎉 1.0 expected this April"
 
   return (
     <>
@@ -71,12 +109,14 @@ const Header = ({
           </div>
           <div className="flex-1 hidden space-x-6 text-base lg:flex">
             {menuLinks.map((link) => {
-              const props = link.href.startsWith("http")
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {}
+              const external = link.href.startsWith("http")
+              const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
               return (
                 <NavLink href={link.href} key={link.href + link.name} {...props}>
                   {link.name}
+                  {external && (
+                    <HiExternalLink size="0.65rem" className="opacity-40 absolute top-2 right-0" />
+                  )}
                 </NavLink>
               )
             })}
@@ -86,6 +126,7 @@ const Header = ({
               href="https://github.com/sponsors/blitz-js"
             >
               <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+              <HiExternalLink size="0.70rem" className="opacity-50 absolute top-1 right-0" />
             </NavLink>
           </div>
           <div className="flex lg:text-base lg:space-x-4">
@@ -97,21 +138,27 @@ const Header = ({
               {isOpen ? <AiOutlineClose size="1.375rem" /> : <AiOutlineMenu size="1.375rem" />}
             </button>
             <DarkModeToggle className="hidden text-base lg:my-2 lg:block" />
+            <SocialIcons
+              className="hidden lg:flex"
+              variant={useColoredLogo ? "bright" : "normal"}
+            />
           </div>
         </div>
         {isOpen && (
           <div
-            className={`pt-4 text-2xl lg:hidden dark:bg-purple-deep space-y-1 ${className} ${
+            className={`h-screen pt-4 text-2xl lg:hidden dark:bg-purple-deep space-y-1 ${className} ${
               useColoredLogo ? "bg-white" : ""
             }`}
           >
             {menuLinks.map((link) => {
-              const props = link.href.startsWith("http")
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {}
+              const external = link.href.startsWith("http")
+              const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
               return (
                 <NavLink href={link.href} key={link.href + link.name} {...props}>
                   {link.name}
+                  {external && (
+                    <HiExternalLink size="1rem" className="opacity-70 absolute top-3 right-0" />
+                  )}
                 </NavLink>
               )
             })}
@@ -120,12 +167,16 @@ const Header = ({
               rel="noopener noreferrer"
               href="https://github.com/sponsors/blitz-js"
             >
-              <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+              <FaHeart size="1rem" className="inline mr-1 mb-1 align-text-center" /> Donate/Sponsor
+              <HiExternalLink size="1rem" className="opacity-70 absolute top-3 right-0" />
             </NavLink>
             <div className="py-2">
               <div className="border-t border-black dark:border-off-white border-opacity-50"></div>
             </div>
-            <DarkModeToggle className="text-lg -ml-3" />
+            <div className="space-y-3">
+              <DarkModeToggle className="text-lg -ml-3" />
+              <SocialIcons variant={useColoredLogo ? "bright" : "normal"} />
+            </div>
           </div>
         )}
         {hasFade && (

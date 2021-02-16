@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const DEFAULT_SCROLLBAR_THUMB_SIZE = 54
 

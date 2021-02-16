@@ -13,11 +13,12 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
     <li ref={ref}>
       <Link href={isPublished ? href : fallbackHref}>
         <a
-          className={clsx("px-3 py-2 transition-colors duration-200 relative block font-bold", {
+          className={clsx("px-3 py-2 transition-colors duration-200 relative block font-semibold", {
             underline: isActive,
             "hover:underline": !isActive && isPublished,
             "text-gray-400": !isActive && !isPublished,
           })}
+          style={{ letterSpacing: 0.3 }}
         >
           <span className="relative">{children}</span>
         </a>

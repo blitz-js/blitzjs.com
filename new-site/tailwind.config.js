@@ -85,7 +85,7 @@ module.exports = {
     fontSize: {
       xxs: "0.75rem", // 12px
       xs: ["0.8125rem", "1.1375rem"], // 13px
-      sm: "0.875rem", // 14px
+      sm: "0.9rem", // 14px
       base: ["0.9375rem", "1.375rem"], // 15px
       lg: ["1.0625rem", "1.5625rem"], // 17px
       xl: ["1.25rem", "2rem"], // 20px
@@ -137,9 +137,12 @@ module.exports = {
               backgroundColor: theme("colors.purple.light"),
             },
             a: {
-              color: theme("colors.black"),
+              color: theme("colors.purple.light"),
               fontWeight: theme("fontWeight.medium"),
-              textDecoration: "underline",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
             },
             "a code": {
               color: "inherit",
@@ -154,12 +157,15 @@ module.exports = {
             },
             code: {
               fontWeight: "400",
-              color: theme("colors.black"),
-              backgroundColor: theme("colors.off-white"),
+              color: "#280088",
+              backgroundColor: "#f2f0fd",
+              borderRadius: 3,
             },
             "pre code": {
               fontWeight: "400",
               color: theme("colors.black"),
+              lineHeight: 1.4,
+              fontSize: theme("fontSize.sm"),
             },
             pre: {
               backgroundColor: "-",
@@ -199,6 +205,9 @@ module.exports = {
             },
             code: {
               backgroundColor: theme("colors.purple.dark"),
+            },
+            "pre code": {
+              backgroundColor: "transparent",
             },
           },
         },

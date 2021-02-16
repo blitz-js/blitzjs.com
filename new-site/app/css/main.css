@@ -131,6 +131,5 @@ code::after {
 }
 
 code {
-  padding: 3px 5px;
-  @apply rounded-sm;
+  padding: 2px 5px;
 }

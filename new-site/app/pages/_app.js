@@ -28,7 +28,7 @@ import { ThemeProvider } from "next-themes"
 // Router.events.on("routeChangeStart", progress.start)
 Router.events.on("routeChangeComplete", () => {
   // progress.finish()
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
 })
 // Router.events.on("routeChangeError", progress.finish)
 

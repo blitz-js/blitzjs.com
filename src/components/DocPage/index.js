@@ -39,6 +39,7 @@ function DocPage(props) {
     <Layout
       version={version}
       description="Built on Next.js. Inspired by Ruby on Rails. New Fullstack Data Layer. Fullstack has never been this easy!"
+      image="img/social-docs.png"
     >
       <div className={styles.docPage}>
         {sidebar && (

@@ -15,13 +15,13 @@ module.exports = {
       apiKey: "c4db860ae4162be48d4c867e33edcaa2",
       indexName: "blitzjs",
     },
-    image: "img/logo-bg-purple.png",
-    announcementBar: {
-      id: "progress",
-      content:
-        "Black Lives Matter. <a target='_blank' href='https://support.eji.org/give/153413/#!/donation/checkout'> Support the Equal Justice Initiative.</a>",
-      textColor: "#ffffff",
-    },
+    image: "img/social-homepage.png",
+    // announcementBar: {
+    //   id: "progress",
+    //   content:
+    //     "Black Lives Matter. <a target='_blank' href='https://support.eji.org/give/153413/#!/donation/checkout'> Support the Equal Justice Initiative.</a>",
+    //   textColor: "#ffffff",
+    // },
     navbar: {
       title: "Blitz.js",
       logo: {

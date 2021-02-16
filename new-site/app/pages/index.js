@@ -208,7 +208,7 @@ const Home = ({ randomContributors }) => {
               </h3>
               <div>
                 <iframe
-                  src="https://codesandbox.io/embed/flamboyant-meninsky-j63yq?codemirror=1&fontsize=14&hidenavigation=1&module=%2Fapp%2Fprojects%2Fmutations%2FcreateProject.ts&theme=dark"
+                  src="https://codesandbox.io/embed/flamboyant-meninsky-j63yq?codemirror=1&fontsize=14&hidenavigation=1&module=%2Fapp%2Fprojects%2Fmutations%2FcreateProject.ts&theme=dark&view=split"
                   title="CodeSandbox"
                   allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
                   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"

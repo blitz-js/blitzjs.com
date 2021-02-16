@@ -95,6 +95,9 @@ module.exports = {
       "5xl": ["2.8125rem", "4.025rem"], // 45px
       "5xl-squashed": ["2.8125rem", "3.0938rem"],
       "6xl": ["3.875rem", "4.84375rem"], // 62px
+      h2: ["2.6rem"],
+      h3: ["1.8rem"],
+      h4: ["1.5rem"],
     },
     borderColor: (theme) => ({
       ...theme("colors"),
@@ -116,8 +119,28 @@ module.exports = {
               marginBottom: "0",
             },
             h2: {
-              fontSize: "1.625rem",
+              fontSize: theme("fontSize.xl"),
               fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.8"),
+              marginBottom: theme("spacing.6"),
+            },
+            h3: {
+              fontSize: theme("fontSize.lg"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h4: {
+              fontSize: theme("fontSize.lg"),
+              fontWeight: theme("fontWeight.semibold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h5: {
+              fontSize: theme("fontSize.base"),
+              fontWeight: theme("fontWeight.bold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
             },
             "h1, h2": {
               letterSpacing: "-0.025em",
@@ -194,6 +217,34 @@ module.exports = {
             },
             "tbody code": {
               fontSize: theme("fontSize.xs")[0],
+            },
+          },
+        },
+        xl: {
+          css: {
+            h2: {
+              fontSize: theme("fontSize.h2"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.8"),
+              marginBottom: theme("spacing.6"),
+            },
+            h3: {
+              fontSize: theme("fontSize.h3"),
+              fontWeight: theme("fontWeight.medium"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h4: {
+              fontSize: theme("fontSize.h4"),
+              fontWeight: theme("fontWeight.semibold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
+            },
+            h5: {
+              fontSize: theme("fontSize.base"),
+              fontWeight: theme("fontWeight.bold"),
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.4"),
             },
           },
         },
@@ -328,7 +379,7 @@ module.exports = {
         Object.keys(shadows).reduce(
           (utils, key) => ({
             ...utils,
-            [`.text-shadow${key === "DEFAULT" ? "" : `-${key}`}`]: {
+            [`.text-shadow${key === "DEFAULT" ? "," : `-${key}`}`]: {
               textShadow: shadows[key].replace(
                 /([0-9]+(px)? [0-9]+(px)? [0-9]+(px)?) [0-9]+(px)?/g,
                 "$1"

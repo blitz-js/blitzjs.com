@@ -156,6 +156,7 @@ body.cursor-grabbing * {
 
 .admonition .admonition-heading > * {
   @apply flex items-center;
+  margin-top: 0;
 }
 
 .admonition .admonition-icon {

@@ -21,7 +21,7 @@ export function CodeWindow({
             <div className="w-3 h-3 rounded-full bg-amber-400" />
             <div className="w-3 h-3 bg-green-400 rounded-full" />
           </div>
-          <div className="file-bar flex self-end h-full pt-2">
+          <div className="file-bar flex self-end h-full pt-2 overflow-x-scroll">
             {tabs.map((tab, i) => (
               <button
                 key={i}

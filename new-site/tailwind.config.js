@@ -102,7 +102,7 @@ module.exports = {
     }),
     extend: {
       typography: (theme) => ({
-        default: {
+        DEFAULT: {
           css: {
             color: theme("colors.black"),
             fontSize: theme("fontSize.sm"),
@@ -155,19 +155,11 @@ module.exports = {
             code: {
               fontWeight: "400",
               color: theme("colors.black"),
-              backgroundColor: theme("colors['off-white']"),
-              padding: "3px 5px",
-              borderRadius: 2,
+              backgroundColor: theme("colors.off-white"),
             },
             "pre code": {
               fontWeight: "400",
               color: theme("colors.black"),
-            },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
             },
             pre: {
               backgroundColor: "-",
@@ -202,18 +194,12 @@ module.exports = {
         dark: {
           css: {
             color: theme("colors.white"),
-            "h1, h2, h3, h4, h5, h6, a, p, div, code, pre code, blockquote": {
+            "h1, h2, h3, h4, h5, h6, a, code, pre code, blockquote": {
               color: theme("colors.white"),
             },
             code: {
-              backgroundColor: theme("colors.purple['off-black']"),
+              backgroundColor: theme("colors.purple.dark"),
             },
-            // pre: {
-            //   color: theme("colors.white"),
-            // },
-            // thead: {
-            //   color: theme("colors.gray.600"),
-            // },
           },
         },
       }),
@@ -222,7 +208,6 @@ module.exports = {
         primary: ["Libre Franklin", defaultTheme.fontFamily.sans],
         mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
         system: defaultTheme.fontFamily.sans,
-        flow: "Flow",
       },
       spacing: {
         18: "4.5rem",

@@ -124,3 +124,13 @@ html {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+code::before,
+code::after {
+  content: "" !important;
+}
+
+code {
+  padding: 3px 5px;
+  @apply rounded-sm;
+}

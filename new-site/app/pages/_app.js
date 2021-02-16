@@ -6,31 +6,31 @@ import "focus-visible"
 import { Fragment } from "react"
 import { Title } from "@/components/Title"
 import Router from "next/router"
-import ProgressBar from "@badrap/bar-of-progress"
+// import ProgressBar from "@badrap/bar-of-progress"
 import Head from "next/head"
 import twitterLargeCard from "@/img/twitter-large-card.png"
 import { ThemeProvider } from "next-themes"
 
-const progress = new ProgressBar({
-  size: 2,
-  color: "#22D3EE",
-  className: "bar-of-progress",
-  delay: 100,
-})
+// const progress = new ProgressBar({
+//   size: 2,
+//   color: "#45009D",
+//   className: "bar-of-progress",
+//   delay: 100,
+// })
 
 // this fixes safari jumping to the bottom of the page
 // when closing the search modal using the `esc` key
-if (typeof window !== "undefined") {
-  progress.start()
-  progress.finish()
-}
+// if (typeof window !== "undefined") {
+//   progress.start()
+//   progress.finish()
+// }
 
-Router.events.on("routeChangeStart", progress.start)
+// Router.events.on("routeChangeStart", progress.start)
 Router.events.on("routeChangeComplete", () => {
-  progress.finish()
+  // progress.finish()
   window.scrollTo(0, 0)
 })
-Router.events.on("routeChangeError", progress.finish)
+// Router.events.on("routeChangeError", progress.finish)
 
 export default function App({ Component, pageProps, router }) {
   const Layout = Component.layoutProps?.Layout || Fragment

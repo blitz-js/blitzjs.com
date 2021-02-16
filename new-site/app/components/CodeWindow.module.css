@@ -5,7 +5,7 @@
 
 @screen md {
   .root {
-    height: 36rem;
+    height: 34rem;
     max-height: none;
   }
 }

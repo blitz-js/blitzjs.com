@@ -14,6 +14,7 @@ import { StyledLink } from "@/components/home/StyledLink"
 import { Hand } from "@/components/home/Hand"
 import Scrollbar from "@/components/Scrollbar"
 import { useState, useEffect } from "react"
+import { SocialCards } from "../components/SocialCards"
 
 const Home = ({ randomContributors }) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
@@ -24,20 +25,8 @@ const Home = ({ randomContributors }) => {
 
   return (
     <div>
+      <SocialCards imageUrl="/social-homepage.png" />
       <div className="overflow-hidden">
-        <Head>
-          <meta
-            key="twitter:title"
-            name="twitter:title"
-            content="Blitz - The Fullstack React Framework"
-          />
-          <meta
-            key="og:title"
-            property="og:title"
-            content="Blitz - The Fullstack React Framework"
-          />
-        </Head>
-
         <div>
           <a name="top" aria-hidden>
             {null}
@@ -69,10 +58,7 @@ const Home = ({ randomContributors }) => {
                     "Zero-API" data layer.
                   </p>
                   <div className="flex space-x-4">
-                    <ButtonLink
-                      className="w-2/3 lg:w-auto rounded-tl-xl"
-                      href="/docs/getting-started"
-                    >
+                    <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
                       Read the Docs
                     </ButtonLink>
                     <ButtonLink
@@ -521,7 +507,8 @@ const getStaticProps = async () => {
 
 Home.layoutProps = {
   meta: {
-    title: "Blitz - The Fullstack React Framework",
+    title: "Blitz.js - The Fullstack React Framework",
+    description: `Blitz makes you far more productive than you ever dreamed possible! It's a Javascript equivalent for Ruby on Rails that's built on Next.js and features a "Zero-API" data layer.`,
   },
 }
 

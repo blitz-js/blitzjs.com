@@ -150,7 +150,7 @@ You can read more about it in the [File Structure](https://blitzjs.com/docs/file
 
 ## Learn more
 
-Read the [Blitz.js Documentation](https://blitzjs.com/docs/getting-started) to learn more.
+Read the [Blitz.js Documentation](https://blitzjs.com/docs/get-started) to learn more.
 
 ### The Blitz.js Manifesto
 

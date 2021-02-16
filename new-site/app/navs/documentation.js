@@ -34,12 +34,7 @@ export const documentationNav = [
         iconDarkPath="/img/introduction-white.svg"
       />
     ),
-    pages: [
-      pages["getting-started"],
-      pages["tutorial"],
-      pages["what-is-nextjs"],
-      pages["why-blitz"],
-    ],
+    pages: [pages["get-started"], pages["tutorial"], pages["what-is-nextjs"], pages["why-blitz"]],
   },
   {
     title: <Title title="Community" />,

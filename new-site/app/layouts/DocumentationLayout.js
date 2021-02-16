@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react"
-import { Head, useRouter } from "blitz"
 import { SidebarLayout } from "@/layouts/SidebarLayout"
-import twitterSquare from "@/img/twitter-square.jpg"
 import { Title } from "@/components/Title"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/home/Footer"
 
 import { documentationNav } from "@/navs/documentation"
+import { SocialCards } from "../components/SocialCards"
 
 export function DocumentationLayout(props) {
-  const router = useRouter()
   const [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {
@@ -18,17 +16,9 @@ export function DocumentationLayout(props) {
 
   return (
     <div className="bg-white dark:bg-purple-deep py-1 md:py-3">
-      <Title suffix={router.pathname === "/" ? undefined : "Blitz.js"}>
-        {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
-      </Title>
-      <Head>
-        <meta key="twitter:card" name="twitter:card" content="summary" />
-        <meta
-          key="twitter:image"
-          name="twitter:image"
-          content={`https://tailwindcss.com${twitterSquare}`}
-        />
-      </Head>
+      <Title>{props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}</Title>
+
+      <SocialCards imageUrl="/social-docs.png" />
       <Header
         className="px-6 mx-auto max-w-7xl"
         hasLightBg

@@ -1,7 +1,7 @@
 import Head from "next/head"
 
-export function Title({ suffix, children }) {
-  let title = children + (suffix ? ` - ${suffix}` : "")
+export function Title({ children }) {
+  let title = children + (!children?.match(/blitz/i) ? ` - Blitz.js` : "")
 
   return (
     <Head>

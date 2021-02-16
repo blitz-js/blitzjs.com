@@ -13,11 +13,11 @@ import Banner from "@/components/Banner"
 const menuLinks = [
   {
     name: "Documentation",
-    href: "/docs/getting-started",
+    href: "/docs/get-started",
   },
-  { name: "GitHub", href: "/docs/getting-started" },
-  { name: "Releases", href: "/docs/getting-started" },
-  { name: "Form", href: "/docs/getting-started" },
+  { name: "GitHub", href: "/docs/get-started" },
+  { name: "Releases", href: "/docs/get-started" },
+  { name: "Form", href: "/docs/get-started" },
 ]
 
 const Header = ({

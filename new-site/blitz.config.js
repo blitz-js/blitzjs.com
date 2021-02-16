@@ -29,6 +29,15 @@ module.exports = withBundleAnalyzer({
   experimental: {
     modern: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/docs/getting-started",
+        destination: "/docs/get-started",
+        permanent: false,
+      },
+    ]
+  },
   webpack(config, options) {
     if (!options.dev) {
       options.defaultLoaders.babel.options.cache = false

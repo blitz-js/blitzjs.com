@@ -93,7 +93,7 @@ export function Footer({ className, hasDarkMode }) {
                 </a>
               </Link>
               <br />
-              Copyright &copy; 2020 Brandon Bayer and Blitz.js Contributors
+              Copyright &copy; 2021 Brandon Bayer and Blitz.js Contributors
             </div>
           </div>
         </div>

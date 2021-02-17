@@ -29,7 +29,7 @@ export default async function login(input: SomeTSInputType, ctx: Ctx) {
   // 3. Fetch user data
 
   // 4. Create a new session (log in)
-  await ctx.session.create({userId: user.id, roles: [user.role]}) // highlight-line
+  await ctx.session.$create({userId: user.id, role: user.role}) // highlight-line
 }
 ```
 
@@ -45,7 +45,7 @@ import {Ctx} from "blitz"
 
 export default async function logout(_: any, ctx: Ctx) {
   // 1. Revoke the current user session, logging them out.
-  return await ctx.session.revoke() // highlight-line
+  return await ctx.session.$revoke() // highlight-line
 }
 ```
 
@@ -61,7 +61,7 @@ import {Ctx} from "blitz"
 
 export default async function someMutation(input: any, ctx: Ctx) {
   // This merges the input data with whatever is already in current publicData
-  await ctx.session.setPublicData({orgId: 1}) // highlight-line
+  await ctx.session.$setPublicData({orgId: 1}) // highlight-line
 }
 ```
 
@@ -78,8 +78,8 @@ import {Ctx} from "blitz"
 export default async function someQuery(input: any, ctx: Ctx) {
   // Access the SessionContext class
   ctx.session.userId
-  ctx.session.roles
-  ctx.session.create(/*...*/)
+  ctx.session.role
+  ctx.session.$create(/*...*/)
 
   return
 }
@@ -104,6 +104,8 @@ export const getServerSideProps = async ({req, res}) => {
 
 Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata) with `isLoading` property. This hook can be used anywhere in your application.
 
+Note: `useSession()` uses suspense by default, so you need a `<Suspense>` component above it in the tree. Or you can set `useSession({suspense: false})` to disable suspense.
+
 ```ts
 import {useSession} from "blitz"
 
@@ -111,8 +113,25 @@ function SomeComponent() {
   const session = useSession()
 
   session.userId
-  session.roles[0]
-  session.isLoading
+  session.role
+
+  return /*... */
+}
+```
+
+If you are using [`getServerSideProps`](./get-server-side-props), then you can pass the session public data to `useSession()` with the `initialPublicData` option.
+
+```ts
+import {useSession, GetServerSideProps} from "blitz"
+
+export const getServerSideProps: GetServerSideProps = async ({req, res}) => {
+  const session = await getSessionContext(req, res)
+
+  return {props: {publicData: session.$publicData}}
+}
+
+const SomePage: BlitzPage = ({initialPublicData}) => {
+  const session = useSession({initialPublicData})
 
   return /*... */
 }
@@ -124,11 +143,11 @@ In production, you must provide the `SESSION_SECRET_KEY` environment variable wi
 
 ## Anonymous Sessions
 
-If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.setPublicData()` and `ctx.session.setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
+If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.$setPublicData()` and `ctx.session.$setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
 
 Anonymous sessions are JWT tokens that are stored on the client as an httpOnly cookie that never expires.
 
-`PublicData` for anonymous sessions is kept in the session JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.setPrivateData()`.
+`PublicData` for anonymous sessions is kept in the session JWT and not stored in the database. Anonymous sessions will only be saved in your database if you call `session.$setPrivateData()`.
 
 The anonymous session will be created on the first network request, whether SSR or via an API. This will happen as long as `sessionMiddleware` is in your middleware chain for that request.
 
@@ -139,39 +158,74 @@ Anonymous session `PublicData` looks like this:
 ```
 {
   userId: null,
-  roles: []
 }
 ```
 
 ## Customize Session Public Data in Typescript
 
-If using Typescript, first update the `PublicData` type in `types.ts` like this:
+If using Typescript, first update the `Session.PublicData` type in `types.ts` like this:
 
-```ts
-import {DefaultPublicData} from "blitz"
-import {User} from "db"
+```diff
+import { DefaultCtx, SessionContext } from "blitz"
+import { SimpleRolesIsAuthorized } from "@blitzjs/server"
+import { User } from "db"
+
+// Note: You should switch to Postgres and then use a DB enum for role type
+export type Role = "ADMIN" | "USER"
 
 declare module "blitz" {
-  export interface PublicData extends DefaultPublicData {
-    userId: User["id"]
-    // highlight-start
-    roles: readonly ["admin" | "customer"]
-    orgId: number
-    // highlight-end
+  export interface Ctx extends DefaultCtx {
+    session: SessionContext
+  }
+  export interface Session {
+    isAuthorized: SimpleRolesIsAuthorized<Role>
+    PublicData: {
+      userId: User["id"]
+      role: Role
++     orgId: number
+    }
   }
 }
 ```
 
-Then change all uses of `ctx.session.create()` to pass in the new fields.
+Then change all uses of `ctx.session.$create()` to pass in the new fields.
 
 ```ts
-ctx.session.create({userId: 1, roles: ["admin"], orgId: 1})
+ctx.session.$create({userId: 1, role: "admin", orgId: 1})
 ```
 
-You can also use `ctx.session.setPublicData()` to update session data for an already logged in user. This will _merge_ values with the existing public data.
+You can also use `ctx.session.$setPublicData()` to update session data for an already logged in user. This will _merge_ values with the existing public data.
 
 ```ts
-ctx.session.setPublicData({orgId: 1})
+ctx.session.$setPublicData({orgId: 1})
+```
+
+To access public data on the client:
+
+```ts
+import {useSession} from "blitz"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.orgId
+
+  return /*... */
+}
+```
+
+To access public data on the server:
+
+```ts
+// app/queries/someQuery.ts
+import {Ctx} from "blitz"
+
+export default async function someQuery(input: any, ctx: Ctx) {
+  // Access the SessionContext class
+  ctx.session.orgId
+
+  return
+}
 ```
 
 ## Session Configuration
@@ -200,13 +254,14 @@ Available options:
 type SessionConfig = {
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
-  domain?: string  /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
+  domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
+  publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
   getSession: (handle: string) => Promise<SessionModel | null>
   getSessions: (userId: string | number) => Promise<SessionModel[]>
   createSession: (session: SessionModel) => Promise<SessionModel>
   updateSession: (handle: string, session: Partial<SessionModel>) => Promise<SessionModel>
   deleteSession: (handle: string) => Promise<SessionModel>
-  isAuthorized: (userRoles: string[], input: any) => boolean
+  isAuthorized: ({ctx: any, args: [...unknown]}) => boolean
 }
 ```
 
@@ -290,57 +345,25 @@ Authenticated sessions use opaque tokens that are stored in the database.
 - This is done by deleting the session from the database.
 - Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
 
-## Typescript
+## Types
 
 #### `SessionContext`
 
 ```ts
-interface SessionContext {
+interface SessionContext extends PublicData {
   /**
    * null if anonymous
    */
   userId: unknown
-  roles: string[]
-  handle: string | null
-  publicData: PublicData
-  authorize: (roleOrRoles?: string | string[]) => void
-  isAuthorized: (roleOrRoles?: string | string[]) => boolean
-  create: (publicData: PublicData, privateData?: Record<any, any>) => Promise<void>
-  revoke: () => Promise<void>
-  revokeAll: () => Promise<void>
-  getPrivateData: () => Promise<Record<any, any>>
-  setPrivateData: (data: Record<any, any>) => Promise<void>
-  setPublicData: (data: Record<any, any>) => Promise<void>
+  $handle: string | null
+  $publicData: PublicData
+  $authorize(...args: IsAuthorizedArgs): asserts this is AuthenticatedSessionContext
+  $isAuthorized: (...args: IsAuthorizedArgs) => this is AuthenticatedSessionContext
+  $create: (publicData: PublicData, privateData?: Record<any, any>) => Promise<void>
+  $revoke: () => Promise<void>
+  $revokeAll: () => Promise<void>
+  $getPrivateData: () => Promise<Record<any, any>>
+  $setPrivateData: (data: Record<any, any>) => Promise<void>
+  $setPublicData: (data: Partial<Omit<PublicData, "userId">>) => Promise<void>
 }
 ```
-
-#### `PublicData`
-
-By default, `PublicData` is typed as
-
-```ts
-interface DefaultPublicData {
-  userId: any
-  roles: string[]
-}
-```
-
-but you can, and should, extend `PublicData` to match your application. You do this as shown below.
-
-```ts
-// types.ts
-import {DefaultCtx, SessionContext, DefaultPublicData} from "blitz"
-import {User} from "db"
-
-declare module "blitz" {
-  export interface Ctx extends DefaultCtx {
-    session: SessionContext
-  }
-  export interface PublicData extends DefaultPublicData {
-    userId: User["id"] // strongly types userId
-    orgId: number // adds new field to PublicData
-  }
-}
-```
-
-And then `PublicData` everywhere in your application, including `ctx.session` and `useSession` will use this type that you define.

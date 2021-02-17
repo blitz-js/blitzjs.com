@@ -33,34 +33,58 @@ Let’s look at what `blitz new` created:
 
 ```
 mysite
-├── app
-│   ├── components
-│   │   └── ErrorBoundary.tsx
-│   ├── layouts
-│   └── pages
-│       ├── _app.tsx
-│       ├── _document.tsx
-│       └── index.tsx
-├── db
-│   ├── migrations
+├── app/
+│   ├── core/
+│   │   ├── components/
+│   │   │   ├── Form.tsx
+│   │   │   └── LabeledTextField.tsx
+│   │   ├── hooks/
+│   │   │   └── useCurrentUser.ts
+│   │   └── layouts/
+│   │       └── Layout.tsx
+│   ├── pages/
+│   │   ├── 404.tsx
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── index.test.tsx
+│   │   └── index.tsx
+│   ├── api/
+│   ├── auth/
+│   │   ├── components/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── SignupForm.tsx
+│   │   ├── mutations/
+│   │   │   ├── login.ts
+│   │   │   ├── logout.ts
+│   │   │   └── signup.ts
+│   │   ├── pages/
+│   │   │   ├── login.tsx
+│   │   │   └── signup.tsx
+│   │   ├── auth-utils.ts
+│   │   └── validations.ts
+│   └── users/
+│       └── queries/
+│           └── getCurrentUser.ts
+├── db/
 │   ├── index.ts
-│   └── schema.prisma
-├── integrations
-├── node_modules
-├── public
-│   ├── favicon.ico
+│   ├── schema.prisma
+│   └── seeds.ts
+├── integrations/
+├── public/
+│   ├── favicon.ico*
 │   └── logo.png
-├── utils
-├── .babelrc.js
-├── .env
-├── .eslintrc.js
-├── .gitignore
-├── .npmrc
-├── .prettierignore
+├── test/
+│   ├── __mocks__/
+│   │   └── fileMock.js
+│   ├── setup.ts
+│   └── utils.tsx
 ├── README.md
+├── babel.config.js
 ├── blitz.config.js
+├── jest.config.js
 ├── package.json
 ├── tsconfig.json
+├── types.ts
 └── yarn.lock
 ```
 
@@ -73,8 +97,6 @@ These files are:
 - `node_modules/` is where your “dependencies” are stored. This directory is updated by your package manager, so you don’t have to worry too much about it.
 
 - `public/` is a directory where you will put any static assets. If you have images, files, or videos which you want to use in your app, this is where to put them.
-
-- `utils/` is a good place to put any shared utility files which you might use across different sections of your app.
 
 - `.babelrc.js`, `.env`, etc. ("dotfiles") are configuration files for various bits of JavaScript tooling.
 
@@ -89,7 +111,7 @@ These files are:
 Let’s check that your Blitz project works. Make sure you are in the `mysite` directory, if you haven’t already, and run the following command:
 
 ```sh
-blitz start
+blitz dev
 ```
 
 You’ll see the following output on the command line:
@@ -138,8 +160,6 @@ First, we'll generate everything pertaining to the `Question` model:
 blitz generate all question text:string choices:choice[]
 ```
 
-> Note: If you are using zsh (the default terminal shell on MacOS), you will need to wrap any fields with arrays with quotation marks (`""`) in order for them to be properly interpreted. Like this: `"choices:choice[]"`.
-
 ```
 ✔ Model for 'question' created successfully:
 
@@ -153,10 +173,10 @@ blitz generate all question text:string choices:choice[]
 
 Now run `blitz prisma migrate dev --preview-feature` to add this model to your database
 
-CREATE    app/questions/pages/questions/index.tsx
-CREATE    app/questions/pages/questions/new.tsx
-CREATE    app/questions/pages/questions/[questionId]/edit.tsx
-CREATE    app/questions/pages/questions/[questionId].tsx
+CREATE    app/pages/questions/index.tsx
+CREATE    app/pages/questions/new.tsx
+CREATE    app/pages/questions/[questionId]/edit.tsx
+CREATE    app/pages/questions/[questionId].tsx
 CREATE    app/questions/components/QuestionForm.tsx
 CREATE    app/questions/queries/getQuestions.ts
 CREATE    app/questions/queries/getQuestion.ts
@@ -170,10 +190,8 @@ The `generate` command with a type of `all` generates a model and queries, mutat
 Now we'll generate the `Choice` model with corresponding queries and mutations. We'll pass a type of `resource` this time as we don't need to generate pages for the `Choice` model:
 
 ```sh
-blitz generate resource choice text votes:int:default[0] belongsTo:question
+blitz generate resource choice text votes:int:default=0 belongsTo:question
 ```
-
-> Note: Remember to wrap the array field with quotation marks if using zsh. Like this: "votes:init:default[0]"
 
 ```
 ✔ Model for 'choice' created successfully:
@@ -284,7 +302,7 @@ The end result should be as such:
 // app/questions/mutations/deleteQuestion.ts
 
 export default async function deleteQuestion({where}: DeleteQuestionInput, ctx: Ctx) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
 
   // highlight-start
   // TODO: remove once Prisma supports cascading deletes
@@ -304,7 +322,7 @@ This mutation will now delete the choices associated with the question prior to 
 
 The generated page content does not currently use the actual model attributes you defined during generation. It will soon, but in the meantime, let's fix the generated pages.
 
-Jump over to `app/questions/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
+Jump over to `app/pages/questions/index.tsx`. Notice that a `QuestionsList` component has been generated for you:
 
 ```jsx
 export const QuestionsList = () => {
@@ -344,7 +362,7 @@ export const QuestionsList = () => {
 }
 ```
 
-Next, let’s apply a similar fix to `app/questions/pages/questions/new.tsx`. In the form submission, replace
+Next, let’s apply a similar fix to `app/pages/questions/new.tsx`. In the form submission, replace
 
 ```jsx
 const question = await createQuestionMutation({data: {name: "MyName"}})
@@ -358,7 +376,7 @@ const question = await createQuestionMutation({
 })
 ```
 
-Finally, we need to fix the edit page. Open `app/questions/pages/questions/[questionId]/edit.tsx` and replace
+Finally, we need to fix the edit page. Open `app/pages/questions/[questionId]/edit.tsx` and replace
 
 ```jsx
 const updated = await updateQuestionMutation({
@@ -376,7 +394,7 @@ const updated = await updateQuestionMutation({
 })
 ```
 
-Great! Now make sure your app is running. If it isn’t, run `blitz start` in your terminal, and visit http://localhost:3000/questions. Blitz comes with [authentication and authorization](./auth) set up by default. You may need to register an account to access the `/questions` page. Once logged in, play around with your new app a bit! Try creating questions, editing, and deleting them.
+Great! Now make sure your app is running. If it isn’t, run `blitz dev` in your terminal, and visit http://localhost:3000/questions. Blitz comes with [authentication and authorization](./auth) set up by default. You may need to register an account to access the `/questions` page. Once logged in, play around with your new app a bit! Try creating questions, editing, and deleting them.
 
 ## Writing a minimal form
 
@@ -392,7 +410,7 @@ Delete the div that says: `<div>Put your form fields here. But for now, just cli
 <input placeholder="Choice 3" />
 ```
 
-Finally, we’re going to make sure all that data is submitted. Open up `app/questions/pages/questions/new.tsx` in your editor and replace
+Finally, we’re going to make sure all that data is submitted. Open up `app/pages/questions/new.tsx` in your editor and replace
 
 ```jsx
 onSubmit={async () => {
@@ -504,7 +522,7 @@ import db, {Prisma} from "db"
 type GetQuestionInput = Pick<Prisma.FindFirstQuestionArgs, "where">
 
 export default async function getQuestion({where /* include */}: GetQuestionInput, ctx: Ctx) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
   // highlight-start
   const question = await db.question.findFirst({where, include: {choices: true}})
   // highlight-end
@@ -526,7 +544,7 @@ export default async function getQuestions(
   { where, orderBy, skip = 0, take }: GetQuestionsInput,
   ctx: Ctx
 ) {
-  ctx.session.authorize()
+  ctx.session.$authorize()
 
   const questions = await db.question.findMany({
     where,
@@ -551,7 +569,7 @@ export default async function getQuestions(
 }
 ```
 
-Now hop back to our main questions page (`app/questions/pages/questions/index.tsx`)in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page (`app/pages/questions/index.tsx`)in your editor, and we can list the choices of each question. And add this code beneath the `Link` in our `QuestionsList`:
 
 ```jsx
 <ul>
@@ -565,7 +583,7 @@ Now hop back to our main questions page (`app/questions/pages/questions/index.ts
 
 Magic! Let’s do one more thing–let people vote on these questions!
 
-Open `app/questions/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
+Open `app/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
 
 1. Replace `<h1>Question {question.id}</h1>` with `<h1>{question.text}</h1>`.
 

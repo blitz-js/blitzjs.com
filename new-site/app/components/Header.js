@@ -93,7 +93,7 @@ const Header = ({
     <>
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
-        <div className={`flex items-center justify-between lg:mt-2 ${className} ${stickyBgClass}`}>
+        <div className={`flex items-center justify-between lg:mt-4 ${className} ${stickyBgClass}`}>
           <div className="pr-8 xl:pr-12 lg:-mt-3">
             <Link href="/">
               <a className="w-10 overflow-hidden md:w-auto">

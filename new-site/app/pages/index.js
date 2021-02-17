@@ -7,13 +7,13 @@ import { Octokit } from "@octokit/rest"
 import { Feature } from "@/components/home/Feature"
 import { FeatureIcon } from "@/components/home/FeatureIcon"
 import { FeatureIconTitle } from "@/components/home/FeatureIconTitle"
-import { Sponsor } from "@/components/home/Sponsor"
 import { Footer } from "@/components/home/Footer"
 import { StyledLink } from "@/components/home/StyledLink"
 import { Hand } from "@/components/home/Hand"
 import Scrollbar from "@/components/Scrollbar"
 import { useState, useEffect } from "react"
 import { SocialCards } from "../components/SocialCards"
+import { SponsorPack } from "../components/SponsorPack"
 
 const Home = ({ randomContributors }) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
@@ -328,7 +328,7 @@ const Home = ({ randomContributors }) => {
                 </FeatureIconTitle>
               </div>
             </div>
-            <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 row-end-15 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
+            <div className="absolute w-full h-full bg-white dark:bg-black row-start-11 row-end-13 rounded-tr-3xl xl:rounded-tr-4xl -z-10" />
             <div className="relative col-span-full">
               <Hand
                 variant="sponsors-squiggle"
@@ -336,114 +336,39 @@ const Home = ({ randomContributors }) => {
                 style={{ top: "-5.3rem" }}
               />
             </div>
-            <div className="px-6 mx-auto text-center space-y-7 max-w-7xl xl:space-y-10">
-              <h2 className="relative text-3xl font-semibold xl:text-5xl">
-                <Hand
-                  variant="sponsors-left"
-                  className="hidden xl:block -left-80"
-                  style={{ top: "-18.05rem" }}
-                />
-                Our Sponsors
-              </h2>
-              <p className="text-lg xl:text-xl">
-                Your financial contributions help ensure Blitz continues to be developed and{" "}
-                <br className="hidden lg:block" />
-                maintained! We have monthly sponsorship options starting at $5/month.
-              </p>
-              <div>
-                <ButtonLink
-                  variant="solid-dark"
-                  href="https://github.com/sponsors/blitz-js"
-                  className="mx-auto rounded-bl-none rounded-xl lg:w-max md:w-1/3 lg:m-auto lg:mt-4 xl:mt-18"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Sponsor Us
-                </ButtonLink>
+            <div className="px-6 mx-auto text-center max-w-7xl ">
+              <div className="space-y-7 xl:space-y-10">
+                <h2 className="relative text-3xl font-semibold xl:text-5xl">
+                  <Hand
+                    variant="sponsors-left"
+                    className="hidden xl:block -left-80"
+                    style={{ top: "-18.05rem" }}
+                  />
+                  Our Sponsors
+                </h2>
+                <p className="text-lg xl:text-xl">
+                  Your financial contributions help ensure Blitz continues to be developed and{" "}
+                  <br className="hidden lg:block" />
+                  maintained! We have monthly sponsorship options starting at $5/month.
+                </p>
+                <div>
+                  <ButtonLink
+                    variant="solid-dark"
+                    href="https://github.com/sponsors/blitz-js"
+                    className="mx-auto rounded-bl-none rounded-xl lg:w-max md:w-1/3 lg:m-auto lg:mt-4 xl:mt-18"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Sponsor Us
+                  </ButtonLink>
+                </div>
+              </div>
+
+              <div className="max-w-2xl mx-auto -mt-10">
+                <SponsorPack />
               </div>
             </div>
-            <div className="grid w-full gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-w-7xl">
-              <Sponsor iconName="diamond-sponsor" title="Diamond Sponsors">
-                <p>
-                  Be our first Diamond Sponsor!{" "}
-                  <StyledLink
-                    href="https://github.com/sponsors/blitz-js"
-                    className="underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Start Here
-                  </StyledLink>
-                </p>
-              </Sponsor>
-              <Sponsor iconName="gold-sponsor" title="Gold Sponsors">
-                <div>
-                  <a
-                    aria-label="G2i"
-                    href="http://g2i.co/sign-up?utm_source=blitz&utm_medium=referral&utm_campaign=blitz2020"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      alt=""
-                      src="https://files-5oz00y7xp.vercel.app/G2i_Logo_wwords.png"
-                      width="160px"
-                    />
-                  </a>
-                </div>
-              </Sponsor>
-              <Sponsor iconName="silver-sponsor" title="Silver Sponsors">
-                <a
-                  aria-label="Fauna"
-                  href="https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    alt=""
-                    src="https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/Fauna_Logo_Blue.png"
-                    width="200px"
-                  />
-                </a>
-              </Sponsor>
-              <Sponsor iconName="bronze-sponsor" title="Bronze Sponsors">
-                <a
-                  aria-label="Render.com"
-                  href="https://render.com?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    alt=""
-                    src="https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/render-logo-color2.png"
-                    width="110px"
-                  />
-                </a>
-              </Sponsor>
-              <Sponsor iconName="seedling-sponsor" title="Seedling Sponsors">
-                <a
-                  aria-label="React Bricks"
-                  href="https://reactbricks.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img alt="" src="https://reactbricks.com/icons/favicon-32x32.png" width="30px" />
-                </a>
-                <a
-                  aria-label="Andreas Asprou"
-                  href="https://andreas.fyi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    alt=""
-                    src="https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/andreas.jpg"
-                    width="30px"
-                  />
-                </a>
-              </Sponsor>
-            </div>
-            <div className="col-span-full"></div>
+
             <div className="w-full px-6 mx-auto space-y-12 text-white lg:space-x-4 lg:space-y-0 lg:flex lg:items-center max-w-7xl">
               <h2 className="pr-2 text-3xl font-semibold lg:w-full lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:text-5xl">
                 So What Should I Do Now?

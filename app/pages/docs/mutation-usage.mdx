@@ -47,7 +47,7 @@ Any errors thrown from your server code will be thrown on the client exactly lik
 
 #### `setQueryData()`
 
-- [`useQuery`](./use-query.mdx) returns a `setQueryData` function you can use to manually update the cache
+- [`useQuery`](./use-query) returns a `setQueryData` function you can use to manually update the cache
 - Calling `setQueryData` will automatically trigger a refetch for the initial query to ensure it has the correct data. Disable refetch by passing an options object `{refetch: false}` as the second argument.
 
 ```tsx
@@ -75,7 +75,7 @@ export default function (props: {query: {id: number}}) {
 
 #### `refetch()`
 
-[`useQuery`](./use-query.mdx) returns a `refetch` function you can use to trigger a query reload. 
+[`useQuery`](./use-query) returns a `refetch` function you can use to trigger a query reload.
 
 ```tsx
 export default function (props) {

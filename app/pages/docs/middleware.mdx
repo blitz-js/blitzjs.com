@@ -3,7 +3,7 @@ title: HTTP Middleware
 sidebar_label: HTTP Middleware
 ---
 
-HTTP Middleware is the escape hatch for [queries](./query-resolvers.mdx) and [mutations](./mutation-resolvers.mdx) to access HTTP primitives. Middleware can then pass data to queries and mutations using the middleware `res.blitzCtx` parameter.
+HTTP Middleware is the escape hatch for [queries](./query-resolvers) and [mutations](./mutation-resolvers) to access HTTP primitives. Middleware can then pass data to queries and mutations using the middleware `res.blitzCtx` parameter.
 
 Middleware should not be used for business logic, because HTTP middleware is less composable and harder to test than queries and mutations. All business logic should live in queries & mutations.
 
@@ -11,7 +11,7 @@ For example, authentication middleware can set and read cookies and pass the ses
 
 ## Global Middleware
 
-Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config.mdx) using the `middleware` key.
+Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config) using the `middleware` key.
 
 ```js
 // blitz.config.js

@@ -64,7 +64,7 @@ The following router APIs can also be used via `import {Router} from 'blitz'`
 
 ### Router.push
 
-Handles client-side transitions, this method is useful for cases where [`<Link>`](./link.mdx) is not enough.
+Handles client-side transitions, this method is useful for cases where [`<Link>`](./link) is not enough.
 
 ```jsx
 import {Router} from "blitz"
@@ -75,7 +75,7 @@ Router.push(url, as, options)
 - `url` - The URL to navigate to. This is usually the name of a `page`
 - `as` - Optional decorator for the URL that will be shown in the browser. Defaults to `url`
 - `options` - Optional object with the following configuration options:
-  - [`shallow`](#todo): Update the path of the current page without rerunning [`getStaticProps`](./get-static-props.mdx) or [`getServerSideProps`](./get-server-side-props.mdx). Defaults to `false`
+  - [`shallow`](#todo): Update the path of the current page without rerunning [`getStaticProps`](./get-static-props) or [`getServerSideProps`](./get-server-side-props). Defaults to `false`
 
 > You don't need to use `Router` for external URLs, [window.location](https://developer.mozilla.org/en-US/docs/Web/API/Window/location) is better suited for those cases.
 
@@ -103,7 +103,7 @@ function Page() {
 
 #### With URL object
 
-You can use an URL object in the same way you can use it for [`<Link>`](./link.mdx). Works for both the `url` and `as` parameters:
+You can use an URL object in the same way you can use it for [`<Link>`](./link). Works for both the `url` and `as` parameters:
 
 ```jsx
 import {Router} from "blitz"
@@ -128,7 +128,7 @@ export default ReadMore
 
 ### Router.replace
 
-Similar to the `replace` prop in [`<Link>`](./link.mdx), `Router.replace` will prevent adding a new URL entry into the `history` stack, take a look at the following example:
+Similar to the `replace` prop in [`<Link>`](./link), `Router.replace` will prevent adding a new URL entry into the `history` stack, take a look at the following example:
 
 ```jsx
 import {Router} from "blitz"
@@ -160,7 +160,7 @@ Router.reload()
 
 ### Router.prefetch
 
-Prefetch pages for faster client-side transitions. This method is only useful for navigations without [`<Link>`](./link.mdx) because it takes care of prefetching pages automatically.
+Prefetch pages for faster client-side transitions. This method is only useful for navigations without [`<Link>`](./link) because it takes care of prefetching pages automatically.
 
 > This is a production only feature. Next.js doesn't prefetch pages on development.
 

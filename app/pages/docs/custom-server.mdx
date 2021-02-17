@@ -56,7 +56,7 @@ The above `blitz` import is a function that receives an object with the followin
 - `dev`: `Boolean` - Whether or not to launch Blitz in dev mode. Defaults to `false`
 - `dir`: `String` - Location of the Blitz project. Defaults to `'.'`
 - `quiet`: `Boolean` - Hide error messages containing server information. Defaults to `false`
-- `conf`: `object` - The same object you would use in [blitz.config.js](./blitz-config.mdx). Defaults to `{}`
+- `conf`: `object` - The same object you would use in [blitz.config.js](./blitz-config). Defaults to `{}`
 
 The returned `app` can then be used to let Blitz handle requests as required.
 
@@ -74,4 +74,4 @@ module.exports = {
 
 > Note that `useFileSystemPublicRoutes` disables filename routes from SSR; client-side routing may still access those paths. When using this option, you should guard against navigation to routes you do not want programmatically.
 
-> You may also wish to configure the client-side router to disallow client-side redirects to filename routes; for that refer to [`router.beforePopState`](./router.mdx#router-object).
+> You may also wish to configure the client-side router to disallow client-side redirects to filename routes; for that refer to [`router.beforePopState`](./router#router-object).

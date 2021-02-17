@@ -10,13 +10,13 @@ const pages = createPageList(
 const Title = ({ title, iconPath, iconDarkPath }) => (
   <div className="px-3 mb-5 flex">
     {iconPath && (
-      <div className={`mr-4 mt-px ${iconDarkPath ? "dark:hidden" : ""}`}>
-        <Image src={iconPath} width="14" height="14" alt={title} />
+      <div className={`mr-4 ${iconDarkPath ? "dark:hidden" : ""}`}>
+        <Image src={iconPath} width="14" height="16" alt={title} />
       </div>
     )}
     {iconDarkPath && (
-      <div className="mr-4 hidden dark:block mt-px">
-        <Image src={iconDarkPath} width="14" height="14" alt={title} />
+      <div className="mr-4 hidden dark:block ">
+        <Image src={iconDarkPath} width="14" height="18" alt={title} />
       </div>
     )}
     <div className="text-xxs uppercase tracking-wider text-purple-off-black dark:text-white font-normal font-primary">
@@ -34,7 +34,13 @@ export const documentationNav = [
         iconDarkPath="/img/introduction-white.svg"
       />
     ),
-    pages: [pages["get-started"], pages["tutorial"], pages["what-is-nextjs"], pages["why-blitz"]],
+    pages: [
+      pages["get-started"],
+      pages["tutorial"],
+      pages["what-is-nextjs"],
+      pages["why-blitz"],
+      pages["tradeoffs"],
+    ],
   },
   {
     title: (

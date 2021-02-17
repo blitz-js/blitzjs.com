@@ -120,9 +120,7 @@ module.exports.highlightCode = function highlightCode(code, prismLanguage) {
   return highlighted
     .replace(
       /(<span(?:(?!<span)[\s\S])*(\/\/ ?highlight-start))[\S\s]*?((\/\/ ?highlight-end)[\S\s]*?(>))/g,
-      // (text, position) => `${text}`
-      (text, position) => `<div class="token inserted">${text}</div>`
-      // `<span class="token inserted-wrapper"><span class="token inserted">${text}</span></span>`
+      (text, position) => `<div class="token highlighted">${text}</div>`
     )
     .replace(/\w*\/\/ ?highlight-start\w*/g, "")
     .replace(/\w*\/\/ ?highlight-end\w*/g, "")

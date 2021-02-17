@@ -96,30 +96,38 @@
 }
 
 .token.inserted:not(.prefix) {
-  margin-top: -1.5em;
-  margin-bottom: -1.5em;
-  @apply block bg-purple-light bg-opacity-25 -mx-4 px-4;
+  @apply block bg-green-600 bg-opacity-25 -mx-4 px-4;
 }
 
-.token.inserted:not(.prefix) > .comment:first-child {
+.token.inserted.prefix {
+  @apply text-green-600 text-opacity-75 select-none;
+}
+
+.token.inserted .token.comment {
+  @apply text-blue-dark;
+}
+
+.token.highlighted:not(.prefix) {
+  @apply block bg-purple-light bg-opacity-25 -mx-4 px-4;
+}
+.token.highlighted:not(.prefix).not(:first-child) {
+  margin-top: -1.5em;
+}
+.token.highlighted:not(.prefix).not(:last-child) {
+  margin-bottom: -1.5em;
+}
+
+.token.highlighted:not(.prefix) > .comment:first-child {
   height: 0;
   display: block;
   overflow: hidden;
   margin-top: 0rem;
   margin-bottom: -1.4em;
 }
-.token.inserted:not(.prefix) > .comment:last-child {
+.token.highlighted:not(.prefix) > .comment:last-child {
   height: 0;
   display: block;
   overflow: hidden;
   margin-top: -1.4em;
   margin-bottom: 0;
-}
-
-.token.inserted.prefix {
-  @apply text-purple-primary text-opacity-75 select-none;
-}
-
-.token.inserted .token.comment {
-  @apply text-blue-dark;
 }

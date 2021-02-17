@@ -52,9 +52,9 @@ const Home = ({ randomContributors }) => {
                     The Fullstack React Framework
                   </h2>
                   <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
-                    Blitz makes you far more productive than you ever dreamed possible! It's a
-                    Javascript equivalent for Ruby on Rails that's built on Next.js and features a
-                    "Zero-API" data layer.
+                    Blitz is a batteries-included framework that's inspired by Ruby on Rails, is
+                    built on Next.js, and features a "Zero-API" data layer abstraction that
+                    eliminates the need for REST/GraphQL.
                   </p>
                   <div className="flex space-x-4">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
@@ -94,17 +94,19 @@ const Home = ({ randomContributors }) => {
               </div>
             </div>
             <div className="z-10 px-6 mx-auto space-y-12 text-lg text-center text-white lg:space-y-0 lg:space-x-12 lg:flex lg:text-left max-w-7xl xl:font-mediumxl:text-xl">
-              <FeatureIcon icon="lighteningBolt">
-                Brings back the simplicity and conventions of frameworks like Ruby on Rails while
-                preserving everything we love about React
-              </FeatureIcon>
               <FeatureIcon icon="layers">
-                Doesn't force you to use technologies like GraphQL. But you are free to add advanced
-                technologies if you want.
+                “Zero-API” data layer lets you{" "}
+                <strong>import server code directly into your components</strong> instead of having
+                to manually add API endpoints and do client-side fetching and caching.
+              </FeatureIcon>
+              <FeatureIcon icon="lighteningBolt">
+                New Blitz apps come with all the{" "}
+                <strong>boring stuff already set up for you!</strong> Like ESLint, Prettier, Jest,
+                user sign up, log in, and password reset.
               </FeatureIcon>
               <FeatureIcon icon="graphUp">
-                Maximizes your productivity both when starting an app and when scaling it to lots of
-                code and users.
+                Provides <strong>helpful defaults and conventions</strong> for things like routing,
+                file structure, and authentication while also being extremely flexible.
               </FeatureIcon>
             </div>
             <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
@@ -138,17 +140,17 @@ const Home = ({ randomContributors }) => {
                     <Feature title="Fullstack & Monolithic">
                       <p>
                         Includes everything from the database to your frontend all inside a single
-                        app. Only one development server. Only one thing to deploy.
+                        app. Only one thing to develop. Only one thing to deploy.
                       </p>
-                      <p>Deploy to a server or serverless.</p>
+                      <p>And you can deploy to a server or serverless.</p>
                     </Feature>
                     <Feature title="API Not Required">
                       <p>
-                        Instead of fetching data from the backend, you import your server code into
-                        your frontend and call it like a normal function. At build time, the direct
-                        function import is swapped out with an auto generated HTTP API.
+                        Instead of fetching data from the backend, you import your server code
+                        directly into your components. At build time, that function import is
+                        swapped out with an auto generated HTTP API.
                       </p>
-                      <p>The generated API can also be used by third-parties.</p>
+                      <p>The generated API can also be used by apps & third-parties.</p>
                     </Feature>
                     <Feature title="Loose Opinions">
                       <p>
@@ -260,7 +262,7 @@ const Home = ({ randomContributors }) => {
                       similar than we are different. We love to work together.
                     </p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
-                      You are invited to help us make Blitz the best framework we've ever had!
+                      We invite you to help make Blitz the best framework we've ever had!
                     </p>
                   </div>
                   <Link href="/docs/contributing" passHref>
@@ -297,34 +299,33 @@ const Home = ({ randomContributors }) => {
                   variant="features-right"
                   className="hidden xl:block xl:-top-40 xl:-right-52"
                 />
-                <FeatureIconTitle icon="thumbsUp" title="Authentication Built In">
-                  Blitz fullstack authentication is super easy and very secure. Works with any
-                  identity provider, including self-hosted username and password and third-parties
-                  like Auth0.
+                <FeatureIconTitle icon="thumbsUp" title="Authentication & Authorization">
+                  Built-in authentication is super easy and very secure. Works with any identity
+                  provider, including self-hosted username and password and third-parties like
+                  Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
                   You can use any database you want. Prisma 2 is the default database client, but
-                  you can remove that and use anything else like Fauna or Cosmos.
+                  you can remove that and use anything else like Fauna or DynamoDB.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="fileCode" title="Recipes">
                   One command to install code and/or packages into your blitz app. Examples: `blitz
-                  install tailwind` or `blitz install sentry`. Uses the MDX Recipe format that
-                  Gatsby created for Gatsby Recipes.
+                  install tailwind` or `blitz install chakra-ui`. Recipes can be created by anyone.
                 </FeatureIconTitle>
-                <FeatureIconTitle icon="plugin" title="Plugins">
-                  Coming Soon! · Hook into many parts of a Blitz app, including the CLI. Greatly
-                  improves the developer experience for integrations. The first offical plugins will
-                  be database plugins.
+                <FeatureIconTitle icon="plugin" title="Backend Architecture">
+                  Blitz is set up for server intensive tasks like sending emails, cron jobs,
+                  background processing, generating PDFs, etc. Currently we have minimal backend
+                  guides, but are working on developing more patterns and adding more docs.
                 </FeatureIconTitle>
-                <FeatureIconTitle icon="typescript" title="Native Typescript Support">
+                <FeatureIconTitle icon="typescript" title="First Class Typescript Support">
                   Blitz is built with Typescript and the Blitz data layer is fully end-to-end
-                  typesafe. All types are fully static without needing a separate type generation
-                  process!
+                  typesafe. All types are completely static without needing a separate type
+                  generation process!
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="scaffolding" title="Code Scaffolding">
                   It’s early days, but Blitz code scaffolding is going to be extremely powerful.
-                  Great for both prototyping and for building real apps. Can override any template
-                  and customize for your project.
+                  Great for both prototyping and for building real apps. Will be able to override
+                  any template and customize for your project.
                 </FeatureIconTitle>
               </div>
             </div>
@@ -359,7 +360,7 @@ const Home = ({ randomContributors }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Sponsor Us
+                    Sponsor or Donate
                   </ButtonLink>
                 </div>
               </div>
@@ -378,7 +379,7 @@ const Home = ({ randomContributors }) => {
                   href="/docs/get-started"
                   className="w-full text-lg py-18 rounded-t-2xl md:rounded-tr-none"
                 >
-                  Try Blitz in 3 Mins
+                  Try Blitz in Under 5 Mins
                 </ButtonLink>
                 <ButtonLink
                   target="_blank"
@@ -423,13 +424,16 @@ const getStaticProps = async () => {
 
   let randomContributors = randomIndexes.map((i) => contributors[i])
 
-  return { props: { randomContributors } }
+  return {
+    props: { randomContributors },
+    revalidate: 60 * 30, // 30 minutes
+  }
 }
 
 Home.layoutProps = {
   meta: {
     title: "Blitz.js - The Fullstack React Framework",
-    description: `Blitz makes you far more productive than you ever dreamed possible! It's a Javascript equivalent for Ruby on Rails that's built on Next.js and features a "Zero-API" data layer.`,
+    description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
   },
 }
 

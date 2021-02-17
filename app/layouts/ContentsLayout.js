@@ -163,7 +163,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
       </Link>
       <div id={meta.containerId} className="pt-4 pb-8 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
-          <PageHeader title={meta.title} />
+          <PageHeader title={meta.title} align={meta.titleAlign ?? "left"} />
           <div
             className={clsx("lg:hidden", { "mt-5 mb-12": toc.length, "h-px mt-8": !toc.length })}
           >
@@ -197,37 +197,42 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
           <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
             {children}
           </ContentsContext.Provider>
-          <hr className="border-gray-200 mt-10 mb-4" />
-          <a
-            href={"https://github.com/blitz-js/blitzjs.com/edit/main" + router.asPath + ".mdx"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center py-2 text-sm"
-          >
-            <FaGithub className="mr-3" /> Idea for improving this page? Edit it on Github.
-          </a>
-          {(prev || next) && (
+          {!meta.hideFooter && (
             <>
-              <div className="flex flex-col sm:flex-row justify-between leading-7 font-semibold mt-8 mb-6">
-                {prev && (
-                  <Link href={prev.href}>
-                    <a className="flex items-center">
-                      <ArrowIcon className="mr-2 fill-current" /> {prev.sidebar_label || prev.title}
-                    </a>
-                  </Link>
-                )}
-                <div className="spacer px-3"></div>
-                {next && (
-                  <Link href={next.href}>
-                    <a className="flex justify-end">
-                      <div className="flex items-center">
-                        {next.sidebar_label || next.title}{" "}
-                        <ArrowIcon className="ml-2 fill-current transform rotate-180" />
-                      </div>
-                    </a>
-                  </Link>
-                )}
-              </div>
+              <hr className="border-gray-200 mt-10 mb-4" />
+              <a
+                href={"https://github.com/blitz-js/blitzjs.com/edit/main" + router.asPath + ".mdx"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center py-2 text-sm"
+              >
+                <FaGithub className="mr-3" /> Idea for improving this page? Edit it on Github.
+              </a>
+              {(prev || next) && (
+                <>
+                  <div className="flex flex-col sm:flex-row justify-between leading-7 font-semibold mt-8 mb-6">
+                    {prev && (
+                      <Link href={prev.href}>
+                        <a className="flex items-center">
+                          <ArrowIcon className="mr-2 fill-current" />{" "}
+                          {prev.sidebar_label || prev.title}
+                        </a>
+                      </Link>
+                    )}
+                    <div className="spacer px-3"></div>
+                    {next && (
+                      <Link href={next.href}>
+                        <a className="flex justify-end">
+                          <div className="flex items-center">
+                            {next.sidebar_label || next.title}{" "}
+                            <ArrowIcon className="ml-2 fill-current transform rotate-180" />
+                          </div>
+                        </a>
+                      </Link>
+                    )}
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>

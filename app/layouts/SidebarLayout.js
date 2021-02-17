@@ -69,7 +69,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
                       {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
                         <Fragment key={i}>
                           <NavItem
-                            href={item.href}
+                            href={item.displayUrl ?? item.href}
                             isActive={item.href === router.pathname}
                             ref={item.href === router.pathname ? activeItemRef : undefined}
                             isPublished={item.published !== false}

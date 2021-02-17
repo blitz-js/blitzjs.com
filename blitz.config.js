@@ -38,6 +38,14 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: "/stickers",
+        destination: "/docs/stickers",
+      },
+    ]
+  },
   webpack(config, options) {
     if (!options.dev) {
       options.defaultLoaders.babel.options.cache = false

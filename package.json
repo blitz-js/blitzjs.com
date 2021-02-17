@@ -62,7 +62,7 @@
     "postcss": "^8.1.7",
     "postcss-nested": "^4.2.3",
     "prismjs": "^1.20.0",
-    "react": "0.0.0-experimental-4ead6b530",
+    "react": "0.14.0",
     "react-dom": "0.0.0-experimental-4ead6b530",
     "react-icons": "4.1.0",
     "react-intersection-observer": "^8.29.0",

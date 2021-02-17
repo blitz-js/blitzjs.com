@@ -3,12 +3,13 @@ import "typeface-roboto"
 import "typeface-roboto-mono"
 import "../css/main.css"
 import "focus-visible"
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import { Title } from "@/components/Title"
 import Router from "next/router"
 // import ProgressBar from "@badrap/bar-of-progress"
 import Head from "next/head"
 import { ThemeProvider } from "next-themes"
+import * as Fathom from "fathom-client"
 
 // const progress = new ProgressBar({
 //   size: 2,
@@ -36,6 +37,24 @@ export default function App({ Component, pageProps, router }) {
   const layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps } : {}
   const meta = Component.layoutProps?.meta || {}
   const description = meta.metaDescription || meta.description
+
+  useEffect(() => {
+    // Initialize Fathom when the app loads
+    Fathom.load("NGIOZUKS", {
+      includedDomains: ["https://blitzjs.com"],
+    })
+
+    function onRouteChangeComplete() {
+      Fathom.trackPageview()
+    }
+    // Record a pageview when route changes
+    router.events.on("routeChangeComplete", onRouteChangeComplete)
+
+    // Unassign event listener
+    return () => {
+      router.events.off("routeChangeComplete", onRouteChangeComplete)
+    }
+  }, [router.events])
 
   return (
     <>

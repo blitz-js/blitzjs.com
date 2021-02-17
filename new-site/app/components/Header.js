@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useIsDesktop } from "@/hooks/useIsDesktop"
 import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa"
 import { HiExternalLink } from "react-icons/hi"
 import { Link } from "blitz"
@@ -12,16 +13,6 @@ import { NavLink } from "@/components/NavLink"
 import { DarkModeToggle } from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
-const menuLinks = [
-  {
-    name: "Documentation",
-    href: "/docs/get-started",
-  },
-  { name: "Releases", href: "https://github.com/blitz-js/blitz/releases" },
-  { name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki" },
-  { name: "Swag", href: "https://store.blitzjs.com" },
-]
-
 const SocialIcons = ({ className, variant }) => {
   const outerClasses = variant === "bright" ? "bg-purple-light dark:bg-white" : "bg-white "
   const innerClasses =
@@ -34,25 +25,25 @@ const SocialIcons = ({ className, variant }) => {
         href="https://github.com/blitz-js/blitz"
         target="_blank"
         rel="noopener noreferrer"
-        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+        className={"rounded-full w-7 h-7 flex items-center justify-center " + outerClasses}
       >
-        <FaGithub className={" " + innerClasses} size="1.25rem" />
+        <FaGithub className={" " + innerClasses} size="1rem" />
       </a>
       <a
         href="https://twitter.com/blitz_js"
         target="_blank"
         rel="noopener noreferrer"
-        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+        className={"rounded-full w-7 h-7 flex items-center justify-center " + outerClasses}
       >
-        <FaTwitter className={" " + innerClasses} size="1.25rem" />
+        <FaTwitter className={" " + innerClasses} size="1rem" />
       </a>
       <a
         href="https://discord.blitzjs.com"
         target="_blank"
         rel="noopener noreferrer"
-        className={"rounded-full w-8 h-8 flex items-center justify-center " + outerClasses}
+        className={"rounded-full w-7 h-7 flex items-center justify-center " + outerClasses}
       >
-        <FaDiscord className={" " + innerClasses} size="1.25rem" />
+        <FaDiscord className={" " + innerClasses} size="1rem" />
       </a>
     </div>
   )
@@ -66,6 +57,7 @@ const Header = ({
   hasFade,
   onNavToggle,
 }) => {
+  const isDesktop = useIsDesktop()
   let [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -87,12 +79,22 @@ const Header = ({
 
   const bannerMsg = "Blitz is now in beta! 🎉 1.0 expected this April"
 
+  const menuLinks = [
+    {
+      name: "Documentation",
+      href: isDesktop ? "/docs/get-started" : "/docs",
+    },
+    { name: "Releases", href: "https://github.com/blitz-js/blitz/releases" },
+    { name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki" },
+    { name: "Swag", href: "https://store.blitzjs.com" },
+  ]
+
   return (
     <>
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
-        <div className={`flex items-center justify-between ${className} ${stickyBgClass}`}>
-          <div className="pr-12 lg:-mt-3">
+        <div className={`flex items-center justify-between lg:mt-2 ${className} ${stickyBgClass}`}>
+          <div className="pr-8 xl:pr-12 lg:-mt-3">
             <Link href="/">
               <a className="w-10 overflow-hidden md:w-auto">
                 <span className="sr-only">Blitz home page</span>
@@ -107,7 +109,7 @@ const Header = ({
               </a>
             </Link>
           </div>
-          <div className="flex-1 hidden space-x-6 text-base lg:flex">
+          <div className="flex-1 hidden space-x-4 xl:space-x-6 text-base lg:flex">
             {menuLinks.map((link) => {
               const external = link.href.startsWith("http")
               const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
@@ -129,11 +131,11 @@ const Header = ({
               <HiExternalLink size="0.70rem" className="opacity-50 absolute top-1 right-0" />
             </NavLink>
           </div>
-          <div className="flex lg:text-base lg:space-x-4">
+          <div className="flex lg:text-base xl:space-x-4">
             <Search className="self-center" />
             <button
               onClick={onToggle}
-              className="p-2 ml-3 -mr-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
+              className="p-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
             >
               {isOpen ? <AiOutlineClose size="1.375rem" /> : <AiOutlineMenu size="1.375rem" />}
             </button>

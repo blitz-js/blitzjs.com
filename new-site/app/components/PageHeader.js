@@ -4,7 +4,7 @@ export function PageHeader({ title }) {
   return (
     <div className="pb-5">
       <div className="flex items-center">
-        <h1 className="text-3xl lg:text-5xl font-semibold text-black dark:text-white font-primary">
+        <h1 className="text-3xl lg:text-4xl xl:text-5xl font-semibold text-black dark:text-white font-primary">
           {title}
         </h1>
       </div>

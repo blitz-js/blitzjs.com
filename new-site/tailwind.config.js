@@ -85,12 +85,12 @@ module.exports = {
     fontSize: {
       xxs: "0.75rem", // 12px
       xs: ["0.8125rem", "1.1375rem"], // 13px
-      sm: "0.9rem", // 14px
-      base: ["0.9375rem", "1.375rem"], // 15px
+      sm: ["0.9rem"], // 14px
+      base: ["0.9375rem"], //"1.375rem"], // 15px
       lg: ["1.0625rem", "1.5625rem"], // 17px
       xl: ["1.25rem", "2rem"], // 20px
-      "2xl": ["1.375rem", "1.875rem"], // 22px
-      "3xl": ["1.875rem", "2.4375rem"], // 30px
+      "2xl": ["1.5rem", "1.875rem"], // 24px
+      "3xl": ["2rem", "2.4375rem"], // 32px
       "4xl": "2.375rem", // 38px
       "5xl": ["2.8125rem", "4.025rem"], // 45px
       "5xl-squashed": ["2.8125rem", "3.0938rem"],
@@ -108,7 +108,7 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme("colors.black"),
-            fontSize: theme("fontSize.sm"),
+            fontSize: theme("fontSize.sm")[0],
             maxWidth: "none",
             "> :first-child": { marginTop: "-" },
             "> :last-child": { marginBottom: "-" },
@@ -119,25 +119,25 @@ module.exports = {
               marginBottom: "0",
             },
             h2: {
-              fontSize: theme("fontSize.xl"),
+              fontSize: theme("fontSize.2xl")[0],
               fontWeight: theme("fontWeight.medium"),
               marginTop: theme("spacing.8"),
               marginBottom: theme("spacing.6"),
             },
             h3: {
-              fontSize: theme("fontSize.lg"),
+              fontSize: theme("fontSize.xl")[0],
               fontWeight: theme("fontWeight.medium"),
               marginTop: theme("spacing.6"),
               marginBottom: theme("spacing.4"),
             },
             h4: {
-              fontSize: theme("fontSize.lg"),
+              fontSize: theme("fontSize.lg")[0],
               fontWeight: theme("fontWeight.semibold"),
               marginTop: theme("spacing.6"),
               marginBottom: theme("spacing.4"),
             },
             h5: {
-              fontSize: theme("fontSize.base"),
+              fontSize: theme("fontSize.base")[0],
               fontWeight: theme("fontWeight.bold"),
               marginTop: theme("spacing.6"),
               marginBottom: theme("spacing.4"),
@@ -153,7 +153,7 @@ module.exports = {
             },
             "ul > li::before": {
               width: "0.75em",
-              height: "0.125em",
+              height: "0.13rem",
               top: "calc(0.875em - 0.0625em)",
               left: 0,
               borderRadius: 0,
@@ -185,12 +185,13 @@ module.exports = {
               borderRadius: 3,
             },
             "pre code": {
-              fontWeight: "400",
               color: theme("colors.black"),
+              fontWeight: "400",
+              fontSize: theme("fontSize.xs")[0],
               lineHeight: 1.4,
-              fontSize: theme("fontSize.sm"),
             },
             pre: {
+              lineHeight: 1.4,
               backgroundColor: "-",
               color: theme("colors.white"),
               borderRadius: 0,
@@ -198,8 +199,8 @@ module.exports = {
               marginBottom: 0,
             },
             table: {
-              fontSize: theme("fontSize.sm"),
-              lineHeight: theme("fontSize.sm")[1].lineHeight,
+              fontSize: theme("fontSize.sm")[0],
+              // lineHeight: theme("fontSize.sm")[1].lineHeight,
             },
             thead: {
               color: theme("colors.gray.600"),
@@ -222,29 +223,74 @@ module.exports = {
         },
         xl: {
           css: {
+            fontSize: theme("fontSize.base")[0],
             h2: {
-              fontSize: theme("fontSize.h2"),
+              fontSize: theme("fontSize.3xl")[0],
               fontWeight: theme("fontWeight.medium"),
-              marginTop: theme("spacing.8"),
+              marginTop: theme("spacing.12"),
               marginBottom: theme("spacing.6"),
             },
             h3: {
-              fontSize: theme("fontSize.h3"),
+              fontSize: theme("fontSize.2xl")[0],
               fontWeight: theme("fontWeight.medium"),
-              marginTop: theme("spacing.6"),
+              marginTop: theme("spacing.10"),
               marginBottom: theme("spacing.4"),
             },
             h4: {
-              fontSize: theme("fontSize.h4"),
+              fontSize: theme("fontSize.xl")[0],
               fontWeight: theme("fontWeight.semibold"),
-              marginTop: theme("spacing.6"),
+              marginTop: theme("spacing.8"),
               marginBottom: theme("spacing.4"),
             },
             h5: {
-              fontSize: theme("fontSize.base"),
+              fontSize: theme("fontSize.lg")[0],
               fontWeight: theme("fontWeight.bold"),
               marginTop: theme("spacing.6"),
               marginBottom: theme("spacing.4"),
+            },
+            "pre code": {
+              fontSize: theme("fontSize.sm")[0],
+              lineHeight: 1.4,
+            },
+            pre: {
+              lineHeight: 1.4,
+              marginTop: 0,
+              marginBottom: 0,
+              paddingTop: "0.8571429em",
+              paddingBottom: "0.8571429em",
+              paddingLeft: "1.1428571em",
+              paddingRight: "1.1428571em",
+            },
+            "ul > li": {
+              paddingLeft: "1.5em",
+            },
+            "ul > li::before": {
+              width: "0.75em",
+              height: "0.13rem",
+              top: "calc(0.875em - 0.0625em)",
+              left: 0,
+              borderRadius: 0,
+              backgroundColor: theme("colors.purple.light"),
+            },
+            table: {
+              fontSize: theme("fontSize.sm")[0],
+              // lineHeight: theme("fontSize.sm")[1].lineHeight,
+            },
+            thead: {
+              borderBottomColor: theme("colors.gray.200"),
+            },
+            "thead th": {
+              paddingTop: 0,
+              fontWeight: theme("fontWeight.semibold"),
+            },
+            "tbody tr": {
+              borderBottomColor: theme("colors.gray.200"),
+            },
+            "tbody tr:last-child": {
+              borderBottomWidth: "1px",
+            },
+            "tbody code": {
+              fontSize: theme("fontSize.xs")[0],
             },
           },
         },
@@ -381,7 +427,7 @@ module.exports = {
       ringOpacity: ["focus-visible"],
       rotate: ["first", "last", "odd", "even"],
       display: ["dark"],
-      typography: ["dark"],
+      typography: ["dark", "responsive"],
       backgroundImage: ["hover", "focus"],
     },
   },

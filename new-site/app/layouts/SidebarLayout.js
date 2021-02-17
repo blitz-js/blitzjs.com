@@ -1,9 +1,10 @@
 import { Link, useRouter } from "blitz"
-import { createContext, forwardRef, useRef, Fragment } from "react"
+import { createContext, forwardRef, useRef, Fragment, useEffect } from "react"
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
 import clsx from "clsx"
 import { TableOfContents } from "@/layouts/ContentsLayout"
 import { useIsDocsIndex } from "@/hooks/useIsDocsIndex"
+import { useIsDesktop } from "@/hooks/useIsDesktop"
 import { PageHeader } from "@/components/PageHeader"
 
 export const SidebarContext = createContext()
@@ -93,20 +94,28 @@ function Nav({ nav, children, fallbackHref, toc }) {
 }
 
 export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProps }) {
+  const router = useRouter()
   const isDocsIndex = useIsDocsIndex()
+  const isDesktop = useIsDesktop()
+
+  useEffect(() => {
+    if (isDesktop && isDocsIndex) {
+      router.push("/docs/get-started")
+    }
+  }, [router, isDesktop, isDocsIndex])
+
   return (
     <SidebarContext.Provider value={{ nav }}>
       <div
         className={clsx("w-full max-w-8xl mx-auto lg:mt-16", {
-          "mt-12": isDocsIndex,
-          "mt-10": !isDocsIndex,
+          "mt-10": true,
         })}
       >
         <div className="lg:flex">
           {/* eslint-disable-next-line */}
           <div
             id="sidebar"
-            className="hidden fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-96 xl:w-84 lg:block"
+            className="hidden fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-80 xl:w-96 lg:block"
           >
             <Nav
               nav={nav}
@@ -118,10 +127,10 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
           </div>
           <div
             id="content-wrapper"
-            className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible lg:pr-28"
+            className="min-w-0 w-full flex-auto lg:static lg:overflow-visible max-w-3xl"
           >
-            {isDocsIndex ? (
-              <div className="px-2">
+            {isDocsIndex && !isDesktop ? (
+              <div className="">
                 <div className="px-4 lg:px-8">
                   <PageHeader title="Docs" />
                 </div>

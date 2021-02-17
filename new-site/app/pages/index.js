@@ -58,7 +58,7 @@ const Home = ({ randomContributors }) => {
                   </p>
                   <div className="flex space-x-4">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
-                      Read the Docs
+                      Try Blitz in Under 5 Mins
                     </ButtonLink>
                     <ButtonLink
                       href="https://github.com/blitz-js/blitz"
@@ -453,7 +453,7 @@ const Home = ({ randomContributors }) => {
                   href="/docs/get-started"
                   className="w-full text-lg py-18 rounded-t-2xl md:rounded-tr-none"
                 >
-                  Try Blitz
+                  Try Blitz in 3 Mins
                 </ButtonLink>
                 <ButtonLink
                   target="_blank"

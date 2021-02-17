@@ -33,6 +33,9 @@ export function Footer({ className, hasDarkMode }) {
           <div className="flex flex-col justify-between space-y-7 lg:col-span-2">
             <div className="grid gap-7 md:grid-cols-3">
               <LinkList title="Docs">
+                <Link href="/docs">
+                  <a>All Docs</a>
+                </Link>
                 <Link href="/docs/get-started">
                   <a>Get Started</a>
                 </Link>

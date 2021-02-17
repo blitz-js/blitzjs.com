@@ -1,6 +1,7 @@
 import { CodeWindow } from "../CodeWindow"
 import tokenize from "../../macros/tokenize.macro"
 import { useState } from "react"
+import { useIsDesktop } from "app/hooks/useIsDesktop"
 
 const pageTokenized = tokenize.jsx(
   `// app/pages/projects/new.tsx
@@ -64,9 +65,11 @@ export default resolver.pipe(
 )
 
 const HeroCode = ({ className = "" }) => {
+  const isDesktop = useIsDesktop()
+  console.log(isDesktop)
   const [tabs, setTabs] = useState([
     {
-      title: "mutations/createProject.ts",
+      title: isDesktop ? "mutations/createProject.ts" : "createProject.ts",
       tokens: mutationTokenized.tokens,
       selected: true,
     },

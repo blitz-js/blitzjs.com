@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useIsDesktop } from "@/hooks/useIsDesktop"
 import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa"
+import { FiArrowUpRight } from "react-icons/fi"
 import { HiExternalLink } from "react-icons/hi"
 import { Link } from "blitz"
 import { Search } from "@/components/Search"
@@ -117,7 +118,7 @@ const Header = ({
                 <NavLink href={link.href} key={link.href + link.name} {...props}>
                   {link.name}
                   {external && (
-                    <HiExternalLink size="0.65rem" className="opacity-40 absolute top-2 right-0" />
+                    <FiArrowUpRight size="0.65rem" className="opacity-40 absolute top-2 right-0" />
                   )}
                 </NavLink>
               )
@@ -128,7 +129,7 @@ const Header = ({
               href="https://github.com/sponsors/blitz-js"
             >
               <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
-              <HiExternalLink size="0.70rem" className="opacity-50 absolute top-1 right-0" />
+              <FiArrowUpRight size="0.70rem" className="opacity-50 absolute top-2 right-0" />
             </NavLink>
           </div>
           <div className="flex lg:text-base xl:space-x-4">

@@ -43,3 +43,16 @@ That said, you can add a GraphQL server to your Blitz app for other clients. Thi
 2. Next, add ability generate a JS/TS client library for easily using the generated endpoints from an app
 3. Next, add some sort of first-class react-native support where you can import blitz queries/mutations directly into your react-native code and have it magically work just like it does today with your web app. After the 1.0 release, this will be Brandon's main focus for the year.
 
+
+## Advanced Backend Architecture
+
+Currently Blitz is fairly minimal on backend architecture, especially compared so something like Nest.js or AdonisJs. However, that doesn't mean you can't use those patterns in Blitz, it just means you have to set it up yourself. In fact you can use Nest.js in your Blitz app if you need.
+
+But we are very interested in brining more advanced backend architectures to Blitz by default or via easy opt-in. We have an [ongoing discussion](https://github.com/blitz-js/blitz/discussions/1841) that we'd love you to chime in on if you have ideas.
+
+
+## Single Threaded When Not Deployed Serverless
+
+This is a tradeoff of Next.js specifically. Next.js is single threaded which means if you are doing heavy backend processing you may notice that all web requests begin to suffer. The solution to this is spawing background processing off into other processes.
+
+Running multiple background processes isn't super difficult, but we want to add docs and APIs that make this as easy as possible.

@@ -128,7 +128,7 @@ const Home = ({ randomContributors }) => {
               <h2 className="px-6 text-3xl font-semibold xl:text-5xl xl:w-1/2">
                 Everything You Need For Production Apps
               </h2>
-              <div className="w-full overflow-x-scroll">
+              <div className="w-full">
                 <Hand
                   variant="concepts-right"
                   className="hidden lg:block lg:-top-24 lg:-right-96 lg:w-8/12 xl:-top-14"
@@ -275,7 +275,7 @@ const Home = ({ randomContributors }) => {
               <h2 className="px-6 text-2xl font-medium text-white font-secondary lg:text-3xl">
                 Architecture Diagram
               </h2>
-              <div className="w-full overflow-x-scroll">
+              <div className="w-full">
                 <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
                   <div className="px-6 architecture-diagram" style={{ paddingBottom: "2px" }}>
                     <img src="img/architecture.svg" alt="Architecture diagram" />
@@ -364,7 +364,7 @@ const Home = ({ randomContributors }) => {
                 </div>
               </div>
 
-              <div className="max-w-2xl mx-auto -mt-10">
+              <div className="xl:max-w-2xl mx-auto -mt-10">
                 <SponsorPack />
               </div>
             </div>

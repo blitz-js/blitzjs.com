@@ -73,7 +73,7 @@ export default function Scrollbar(props: {
 
   return (
     <div className="relative h-full">
-      <div ref={elementRef} className="scrollbar-none relative overflow-x-auto h-full">
+      <div ref={elementRef} className="hide-scrollbar relative overflow-x-auto h-full">
         {children}
       </div>
       <div className={`w-full h-2 bottom-0 left-0 absolute rounded ${className}`}>

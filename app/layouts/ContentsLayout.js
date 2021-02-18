@@ -201,7 +201,11 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
             <>
               <hr className="border-gray-200 mt-10 mb-4" />
               <a
-                href={"https://github.com/blitz-js/blitzjs.com/edit/main" + router.asPath + ".mdx"}
+                href={
+                  "https://github.com/blitz-js/blitzjs.com/blob/main/app/pages" +
+                  router.asPath +
+                  ".mdx"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center py-2 text-sm"

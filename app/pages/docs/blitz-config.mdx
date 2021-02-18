@@ -888,3 +888,22 @@ module.exports = {
 ```
 
 With this option set, urls like `/about` will redirect to `/about/`.
+
+## Experimental
+
+These features aren't ready for production and could change at any time.
+
+### React Mode
+
+By default Blitz uses [React Concurrent Mode](https://reactjs.org/docs/concurrent-mode-intro.html). You can disable it by changing `experimental.reactMode` to `legacy`.
+
+- Default: `concurrent`
+- Options: `concurrent` | `legacy`
+
+```js
+module.exports = {
+  experimental: {
+    reactMode: "legacy",
+  },
+}
+```

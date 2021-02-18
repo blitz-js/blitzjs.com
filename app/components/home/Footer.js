@@ -68,7 +68,7 @@ export function Footer({ className, hasDarkMode }) {
                     GitHub
                   </a>
                 </Link>
-                <Link href="https://github.com/blitz-js/wiki">
+                <Link href="https://github.com/blitz-js/blitz/wiki">
                   <a target="_blank" rel="noopener noreferrer">
                     Wiki
                   </a>

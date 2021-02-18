@@ -202,7 +202,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
               <hr className="border-gray-200 mt-10 mb-4" />
               <a
                 href={
-                  "https://github.com/blitz-js/blitzjs.com/blob/main/app/pages" +
+                  "https://github.com/blitz-js/blitzjs.com/edit/main/app/pages" +
                   router.asPath +
                   ".mdx"
                 }

@@ -36,6 +36,11 @@ module.exports = withBundleAnalyzer({
         destination: "/docs/get-started",
         permanent: false,
       },
+      {
+        source: "/meetup",
+        destination: "https://us02web.zoom.us/j/85901497017?pwd=N0NBc0wxMzNmWFBSRzN3U3ZOZTNEZz09",
+        permanent: false,
+      },
     ]
   },
   async rewrites() {

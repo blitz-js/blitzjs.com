@@ -66,7 +66,6 @@ export default resolver.pipe(
 
 const HeroCode = ({ className = "" }) => {
   const isDesktop = useIsDesktop()
-  console.log(isDesktop)
   const [tabs, setTabs] = useState([
     {
       title: isDesktop ? "mutations/createProject.ts" : "createProject.ts",

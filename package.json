@@ -6,7 +6,7 @@
     "start": "blitz start",
     "studio": "blitz db studio",
     "build": "blitz build",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "lint": "alex app/pages/docs/**/*.mdx",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -16,8 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && pretty-quick --staged",
-      "pre-push": "tsc && npm run lint"
+      "pre-commit": "lint-staged && pretty-quick --staged"
     }
   },
   "lint-staged": {
@@ -90,6 +89,7 @@
     "@types/secure-password": "3.1.0",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
+    "alex": "9.1.0",
     "babel-eslint": "10.x",
     "eslint": "6.x",
     "eslint-config-react-app": "^5.2.1",

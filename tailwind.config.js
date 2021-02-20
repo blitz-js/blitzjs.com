@@ -333,7 +333,8 @@ module.exports = {
         18: "4.5rem",
         "15px": "0.9375rem",
         "23px": "1.4375rem",
-        sandbox: "32rem",
+        sandbox: "28rem",
+        "xl-sandbox": "32rem",
         full: "100%",
       },
       width: {

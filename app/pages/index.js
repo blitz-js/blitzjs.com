@@ -1,4 +1,4 @@
-import { Link } from "blitz"
+import { Link, Image } from "blitz"
 import { Header } from "@/components/Header"
 import { ButtonLink } from "@/components/ButtonLink"
 import { HeroCode } from "@/components/home/HeroCode"
@@ -188,20 +188,24 @@ const Home = ({ randomContributors }) => {
                 </Scrollbar>
               </div>
             </div>
-            <div className="absolute w-full h-full row-start-6 xl:h-codesandbox xl:mt-80 row-end-10 rounded-bl-3xl rounded-tr-3xl xl:rounded-bl-4xl xl:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
-            <div className="relative hidden w-full px-6 mx-auto space-y-10 max-w-7xl xl:block">
+            <div className="absolute w-full h-full row-start-6 lg:h-codesandbox lg:mt-80 row-end-10 rounded-bl-3xl rounded-tr-3xl lg:rounded-bl-4xl lg:rounded-tr-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-purple-off-black dark:to-black"></div>
+            <div className="relative hidden w-full px-6 mx-auto space-y-10 max-w-7xl lg:block">
               <h3 className="pb-1 text-xs border-b border-opacity-50 font-secondary border-blue-mid">
                 Blitz CodeSandbox Example
               </h3>
               <div>
-                <iframe
-                  src="https://codesandbox.io/embed/flamboyant-meninsky-j63yq?codemirror=1&fontsize=14&hidenavigation=1&module=%2Fapp%2Fprojects%2Fmutations%2FcreateProject.ts&theme=dark&view=split"
-                  title="CodeSandbox"
-                  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-                  className="relative z-10 block w-full overflow-hidden border-0 max-w-7xl h-sandbox"
-                ></iframe>
                 <Hand variant="sandbox-right" style={{ right: "-13.2rem", bottom: "-35rem" }} />
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://codesandbox.io/s/flamboyant-meninsky-j63yq?file=/app/projects/mutations/createProject.ts"
+                  className="h-sandbox xl:h-xl-sandbox block relative"
+                >
+                  <Image src="/img/sandbox-pic.png" layout="fill" className="object-cover" />
+                  <div className="absolute inset-0 bg-gray-800 opacity-0 hover:opacity-70 flex items-center justify-center text-white text-6xl font-bold">
+                    Click to Open in New Tab
+                  </div>
+                </a>
               </div>
             </div>
             <div className="xl:hidden">{/*spacer div*/}</div>

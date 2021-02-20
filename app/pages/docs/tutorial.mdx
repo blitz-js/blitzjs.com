@@ -543,12 +543,12 @@ Next open `app/pages/questions/new.tsx` and set `initialValues` to be as follows
       />
 ```
 
-Then open `app/questions/mutations/createQuestionMutation.ts` and update the zod schema so that the choice data is accepted in the mutation. And we also need to update the `db.question.create` call so that the choices will also be created.
+Then open `app/questions/mutations/createQuestion.ts` and update the zod schema so that the choice data is accepted in the mutation. And we also need to update the `db.question.create` call so that the choices will also be created.
 
 
 <!-- prettier-ignore -->
 ```diff
-//app/questions/mutations/createQuestionMutation.ts
+//app/questions/mutations/createQuestion.ts
 
 const CreateQuestion = z
   .object({

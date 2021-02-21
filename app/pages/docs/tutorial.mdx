@@ -269,6 +269,8 @@ model Question {
 }
 ```
 
+And then run `blitz prisma generate` to update prisma client for that schema change. This doesn't require a database migration because there's not an actual field being added to the `Question` model in the database.
+
 
 ## Playing with the Prisma database client
 

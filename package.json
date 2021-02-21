@@ -2,17 +2,12 @@
   "name": "blitz-site-v2",
   "version": "1.0.0",
   "scripts": {
-    "dev": "blitz dev",
-    "start": "blitz start",
-    "studio": "blitz db studio",
+    "dev": "blitz start",
+    "start": "blitz start --production",
     "build": "blitz build",
-    "lint": "alex app/pages/docs/**/*.mdx",
-    "test": "jest",
-    "test:watch": "jest --watch"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100
+    "lint": "yarn lint:code && yarn lint:docs",
+    "lint:code": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "lint:docs": "alex app/pages/docs/**/*.mdx"
   },
   "husky": {
     "hooks": {

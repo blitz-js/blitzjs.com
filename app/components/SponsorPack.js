@@ -44,20 +44,20 @@ const sponsors = [
   },
 ]
 
-export const SponsorPack = () => {
-  const pack = {
-    children: sponsors,
-    name: "root",
-    radius: 0,
-    distance: 0,
-  }
+const pack = {
+  children: sponsors,
+  name: "root",
+  radius: 0,
+  distance: 0,
+}
 
+export const SponsorPack = () => {
   const root = React.useMemo(
     () =>
       hierarchy(pack)
         .sum((d) => d?.cost * d?.cost)
         .sort((a, b) => b.data.cost - a.data.cost),
-    [pack]
+    []
   )
 
   return (

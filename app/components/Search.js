@@ -22,7 +22,7 @@ export function Search({ className = "" }) {
   const [isOpen, setIsOpen] = useState(false)
   const searchButtonRef = useRef()
   const [initialQuery, setInitialQuery] = useState(null)
-  const [actionKey, setActionKey] = useState()
+  const [, setActionKey] = useState()
 
   const onOpen = useCallback(() => {
     setIsOpen(true)

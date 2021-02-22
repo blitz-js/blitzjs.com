@@ -73,4 +73,4 @@ Example:
 ## Install Blitz {#install-blitz-2}
 ```
 
-If you aren't totally sure how the slug should look like, run `yarn slugify [title]`
+If you aren't totally sure how the slug should look like, or just want to automate the process, run `yarn english-slugify`

@@ -8,7 +8,7 @@ Blitz comes with built-in support for environment variables, which allows you to
 - [Use `.env*` files to load environment variables](#loading-environment-variables)
 - [Expose environment variables to the browser](#exposing-environment-variables-to-the-browser)
 
-## Loading Environment Variables
+## Loading Environment Variables {#loading-environment-variables}
 
 Blitz has built-in support for loading environment variables from `.env.local` into `process.env`.
 
@@ -43,13 +43,13 @@ This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PAS
 > CORRECT=pre\$A # becomes "pre$A"
 > ```
 
-## Exposing Environment Variables to the Browser
+## Exposing Environment Variables to the Browser {#exposing-environment-variables-to-the-browser}
 
 By default all environment variables loaded through `.env*` files are only available in the Node.js environment, meaning they won't be exposed to the browser.
 
 There are two ways you can expose a variable to the browser.
 
-### Option 1: `NEXT_PUBLIC_` Prefix
+### Option 1: `NEXT_PUBLIC_` Prefix {#option-1-next-public-prefix}
 
 Prefix the variable with `NEXT_PUBLIC_`. For example:
 
@@ -73,7 +73,7 @@ function HomePage() {
 export default HomePage
 ```
 
-### Option 2: `env` in `blitz.config.js`
+### Option 2: `env` in `blitz.config.js` {#option-2-env-in-blitz-config-js}
 
 Any keys defined in `env` in your Blitz config will be inlined into JavaScript sent to the browser.
 
@@ -88,7 +88,7 @@ module.exports = {
 }
 ```
 
-## Different Values per Environment
+## Different Values per Environment {#different-values-per-environment}
 
 In general only one `.env.local` file is needed. However, sometimes you might want to add some defaults for the `development` or `production` environment.
 

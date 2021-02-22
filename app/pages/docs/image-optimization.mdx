@@ -17,7 +17,7 @@ Images are lazy loaded by default. That means your page speed isn't penalized fo
 
 Images are always rendered in such a way as to avoid [Cumulative Layout Shift](https://web.dev/cls/), a [Core Web Vital](https://web.dev/vitals/) that Google is going to [use in search ranking](https://webmasters.googleblog.com/2020/05/evaluating-page-experience.html).
 
-## Image Component
+## Image Component {#image-component}
 
 To add an image to your application, import the `Image` component:
 
@@ -37,11 +37,11 @@ function Home() {
 export default Home
 ```
 
-## Configuration
+## Configuration {#configuration}
 
 In addition to using properties available to the `Image` component, you can optionally configure Image Optimization for more advanced use cases via `blitz.config.js`.
 
-### Domains
+### Domains {#domains}
 
 To enable Image Optimization for images hosted on an external website, use an absolute url for the Image `src` and specify which
 `domains` are allowed to be optimized. This is needed to ensure that external urls can't be abused.
@@ -54,7 +54,7 @@ module.exports = {
 }
 ```
 
-### Loader
+### Loader {#loader}
 
 If you want to use a cloud provider to optimize images instead of using the Blitz' built-in Image Optimization, you can configure the loader and path prefix. This allows you to use relative urls for the Image `src` and automatically generate the correct absolute url for your provider.
 
@@ -75,7 +75,7 @@ The following Image Optimization cloud providers are supported:
 - [Akamai](https://www.akamai.com): `loader: 'akamai'`
 - Default: Works automatically with `blitz dev`, or a custom server
 
-## Caching
+## Caching {#caching}
 
 The following describes the caching algorithm for the default [loader](#loader). For all other loaders, please refer to your cloud provider's documentation.
 
@@ -87,11 +87,11 @@ If `s-maxage` is found in `Cache-Control`, it is used. If no `s-maxage` is found
 
 You can configure [`deviceSizes`](#device-sizes) and [`imageSizes`](#device-sizes) to reduce the total number of possible generated images.
 
-## Advanced
+## Advanced {#advanced}
 
 The following configuration is for advanced use cases and is usually not necessary. If you choose to configure the properties below, you will override any changes to the Blitz defaults in future updates.
 
-### Device Sizes
+### Device Sizes {#device-sizes}
 
 In some cases, where you know the expected device widths from the users of your website, you can specify a list of device width breakpoints using the `deviceSizes` property. These widths are used when the `Image` component uses `layout="responsive"` or `layout="fill"` so that the correct image is served for the device visiting your website.
 
@@ -105,7 +105,7 @@ module.exports = {
 }
 ```
 
-### Image Sizes
+### Image Sizes {#image-sizes}
 
 You can specify a list of image widths using the `imageSizes` property. These widths should be different (usually smaller) than the widths defined in `deviceSizes` because the arrays will be concatenated. These widths are used when the `Image` component uses `layout="fixed"` or `layout="intrinsic"`.
 
@@ -119,11 +119,11 @@ module.exports = {
 }
 ```
 
-## Image API
+## Image API {#image-api}
 
 Image Optimization can be enabled via the `Image` component.
 
-### Usage
+### Usage {#usage}
 
 For an example, consider a project with the following files:
 
@@ -148,7 +148,7 @@ function Home() {
 export default Home
 ```
 
-### Required Props
+### Required Props {#required-props}
 
 The `Image` component requires the following properties.
 
@@ -170,7 +170,7 @@ The height of the image, in pixels. Must be an integer without a unit.
 
 Required unless [layout="fill"`](#layout).
 
-### Optional Props
+### Optional Props {#optional-props}
 
 The `<Image />` component optionally accepts the following properties.
 
@@ -194,7 +194,7 @@ Try it out:
 - [Demo the `fill` layout](https://image-component.nextjs.gallery/layout-fill)
 - [Demo background image](https://image-component.nextjs.gallery/background)
 
-### loader
+### loader {#loader-1}
 
 A custom function used to resolve URLs. Defaults to [`images` object in `blitz.config.js`](/docs/basic-features/image-optimization.md#loader).
 
@@ -244,7 +244,7 @@ When true, the image will be considered high priority and [preload](https://web.
 
 Should only be used when the image is visible above the fold. Defaults to false.
 
-### Advanced Props
+### Advanced Props {#advanced-props}
 
 In some cases, you may need more advanced usage. The `Image` component optionally accepts the following advanced properties.
 
@@ -280,7 +280,7 @@ When `eager`, load the image immediately.
 
 When true, the source image will be served as-is instead of changing quality, size, or format. Defaults to false.
 
-### Other Props
+### Other Props {#other-props}
 
 Other properties on the `Image` component will be passed to the underlying `img` element with the exception of the following:
 

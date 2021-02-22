@@ -13,7 +13,7 @@ This is documentation for using Blitz queries and mutations in a non-Blitz app. 
 :::
 
 
-## URL
+## URL {#url}
 
 All queries and mutations are exposed at a URL corresponding to it's file path.
 
@@ -25,23 +25,23 @@ File: app/products/mutations/createProduct.ts
 URL: /api/products/mutations/createProduct
 ```
 
-## Request Details
+## Request Details {#request-details}
 
 From an HTTP perspective there is no difference between a query and mutation. They are both function calls that get transformed into POST requests.
 
-## HEAD
+## HEAD {#head}
 
 Warms up the lambda. For example, when a component renders on the client that uses a mutation, it will issue a HEAD request to the mutation endpoint immediately on page load so that there's a much higher chance the actual mutation request will hit a warm lambda.
 
 Must always return HTTP `200 OK`
 
-### HEAD Responses
+### HEAD Responses {#head-responses}
 
 ```http
 HTTP/1.1 200 OK
 ```
 
-## POST
+## POST {#post}
 
 Executes the query or mutation.
 
@@ -67,7 +67,7 @@ Response body is JSON with the following keys:
 }
 ```
 
-### POST Responses
+### POST Responses {#post-responses}
 
 #### Success
 
@@ -118,7 +118,7 @@ Content-Type: application/json
 HTTP/1.1 404 Not Found
 ```
 
-## Versioning
+## Versioning {#versioning}
 
 Any time you have client-server communication, there is a very real risk of the client & server code becoming out of sync and causing an error. For example, let's say you have a mutation function whose input is a single object. You decide to change the mutation input to be a single array. You make the change and deploy it. Your server code is now updated, but all your users still have the old client code running in the browser. So it's likely you now have client code sending an object to your mutation which is going to error because it's expecting an array.
 

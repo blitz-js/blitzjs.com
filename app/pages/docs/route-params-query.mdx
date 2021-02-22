@@ -3,7 +3,7 @@ title: URL Params & Query
 sidebar_label: URL Params & Query
 ---
 
-## `useParams`
+## `useParams` {#use-params}
 
 This hook returns all the parameters for the current route as an object. The default parameter type is `undefined | string | string[]`, but you can optionally provide a type argument to narrow the parameters and types that are returned.
 
@@ -23,7 +23,7 @@ const params = useParams("array")
 // ReturnType: Record<string, string[]>
 ```
 
-### Example Usage
+### Example Usage {#example-usage}
 
 ```tsx
 // File: app/products/pages/products/[id].tsx
@@ -49,7 +49,7 @@ const params = useParams("array")
 // params = {slug: ["2020", "1"]}
 ```
 
-## `useParam`
+## `useParam` {#use-param}
 
 This hook return a single parameters for the current route. The default return type is `undefined | string | string[]`, but you can optionally provide a type argument to cast the return type.
 
@@ -69,7 +69,7 @@ const param = useParam("id", "array")
 // ReturnType: undefined | string[]
 ```
 
-### Example Usage
+### Example Usage {#example-usage-1}
 
 ```tsx
 // File: app/locations/pages/locations/[id]/[[...zipcode]].tsx
@@ -91,7 +91,7 @@ const slug = useParam("slug", "string")
 // slug = "hello-world"
 ```
 
-## `useRouterQuery`
+## `useRouterQuery` {#use-router-query}
 
 This hook returns all the query parameters from the URL as an object. Parameter type is always `string`.
 

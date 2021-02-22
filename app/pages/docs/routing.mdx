@@ -11,21 +11,21 @@ Blitz uses a file-system based router that's built on [Next.js](https://nextjs.o
   - The `app/projects/queries/getProjects.js` query is exposed at `/api/projects/queries/getProjects`
   - See the [RPC Specification](./rpc-specification) for more details
 
-### Index routes
+### Index routes {#index-routes}
 
 The router will automatically route files named `index` to the root of the directory.
 
 - `app/pages/index.js` → `/`
 - `app/pages/blog/index.js` → `/blog`
 
-### Nested routes
+### Nested routes {#nested-routes}
 
 The router supports nested files. If you create a nested folder structure files will be automatically routed in the same way still.
 
 - `app/pages/blog/first-post.js` → `/blog/first-post`
 - `app/pages/dashboard/settings/username.js` → `/dashboard/settings/username`
 
-### Dynamic route segments
+### Dynamic route segments {#dynamic-route-segments}
 
 To match a dynamic segment you can use the bracket syntax. This allows you to match named parameters.
 
@@ -73,7 +73,7 @@ Multiple dynamic route segments work the same way. The page `app/pages/post/[pid
 {"pid": "abc", "comment": "a-comment"}
 ```
 
-### Catch all routes
+### Catch all routes {#catch-all-routes}
 
 Dynamic routes can be extended to catch all paths by adding three dots (`...`) inside the brackets. For example:
 
@@ -93,7 +93,7 @@ And in the case of `/post/a/b`, and any other matching path, new parameters will
 {"slug": ["a", "b"]}
 ```
 
-### Optional catch all routes
+### Optional catch all routes {#optional-catch-all-routes}
 
 Catch all routes can be made optional by including the parameter in double brackets (`[[...slug]]`).
 
@@ -107,7 +107,7 @@ The `query` objects are as follows:
 { "slug": ["a", "b"] } // `GET /post/a/b` (multi-element array)
 ```
 
-## Caveats
+## Caveats {#caveats}
 
 - Predefined routes take precedence over dynamic routes, and dynamic routes over catch all routes. Take a look at the following examples:
   - `app/pages/post/create.js` - Will match `/post/create`

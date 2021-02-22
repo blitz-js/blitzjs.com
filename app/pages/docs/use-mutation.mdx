@@ -3,7 +3,7 @@ title: useMutation
 sidebar_label: useMutation
 ---
 
-### Example
+### Example {#example}
 
 ```tsx
 import {useMutation} from 'blitz'
@@ -31,7 +31,7 @@ function (props) {
 
 > For more examples and use cases, see the [mutation usage documentation](./mutation-usage).
 
-## API
+## API {#api}
 
 <!-- prettier-ignore -->
 ```js
@@ -64,14 +64,14 @@ const promise = invoke(inputArguments, {
 })
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `mutationResolver:` A [Blitz mutation resolver](./mutation-resolvers)
   - **Required**
 - `options`
   - Optional
 
-### Options
+### Options {#options}
 
 - `onMutate: Function(inputArguments) => Promise | snapshotValue`
   - Optional
@@ -100,7 +100,7 @@ const promise = invoke(inputArguments, {
   - Defaults to false, typically you will not use this
   - Set this to true if you want mutation errors to be thrown in the render phase and propagate to the nearest error boundary
 
-### Returns
+### Returns {#returns}
 
 `[invoke, mutationExtras]`
 

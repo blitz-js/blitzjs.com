@@ -37,7 +37,7 @@ There are two types of metrics that are tracked:
 - Web Vitals
 - Custom metrics
 
-## Web Vitals
+## Web Vitals {#web-vitals}
 
 [Web Vitals](https://web.dev/vitals/) are a set of useful metrics that aim to capture the user
 experience of a web page. The following web vitals are all included:
@@ -89,7 +89,7 @@ these metrics. Browser compatibility depends on the particular metric, so refer 
 Support](https://github.com/GoogleChrome/web-vitals#browser-support) section to find out which
 browsers are supported.
 
-## Custom metrics
+## Custom metrics {#custom-metrics}
 
 In addition to the core metrics listed above, there are some additional custom metrics that
 measure the time it takes for the page to hydrate and render:
@@ -131,7 +131,7 @@ export function reportWebVitals(metric) {
 
 These metrics work in all browsers that support the [User Timing API](https://caniuse.com/#feat=user-timing).
 
-## Sending results to analytics
+## Sending results to analytics {#sending-results-to-analytics}
 
 With the relay function, you can send any of results to an analytics endpoint to measure and track
 real user performance on your site. For example:

@@ -13,7 +13,7 @@ By default, Blitz uses Prisma 2 which is a strongly typed database client.
 
 ##### [Read the Prisma documentation here](https://www.prisma.io/docs/understand-prisma/introduction)
 
-## Add a Database Table
+## Add a Database Table {#add-a-database-table}
 
 1. Open `db/schema.prisma` and add your model(s) like as follows:
 
@@ -38,7 +38,7 @@ model Task {
 3. Now you can import `db` from `db/index.ts` and create a model like this:
    - `db.project.create({data: {name: 'Hello'}})`
 
-## Switch to PostgreSQL
+## Switch to PostgreSQL {#switch-to-postgre-sql}
 
 By default, a Blitz app is created with a local SQLite database. If you want to use PostgreSQL instead, you need to perform the following steps:
 

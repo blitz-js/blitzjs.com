@@ -3,7 +3,7 @@ title: Using Mutations
 sidebar_label: Use Mutations
 ---
 
-## In a React Component
+## In a React Component {#in-a-react-component}
 
 To use one of [your Blitz mutations](./query-resolvers), call the `useMutation` hook with your mutation resolver.
 
@@ -39,11 +39,11 @@ For complete details, see the [`useMutation` documentation](./use-mutation).
 You may be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
 :::
 
-## Error Handling
+## Error Handling {#error-handling}
 
 Any errors thrown from your server code will be thrown on the client exactly like you'd expect. So you can wrap the `invoke` in `try {} catch {}` or `.catch()`.
 
-## Cache Invalidation
+## Cache Invalidation {#cache-invalidation}
 
 #### `setQueryData()`
 
@@ -132,7 +132,7 @@ export default Page
 
 We want to somehow automatically invalidate your query cache. We're not sure how to do this yet, but we have [an open issue that you're welcome to contribute to!](https://github.com/blitz-js/blitz/issues/586)
 
-## Optimistic Updates
+## Optimistic Updates {#optimistic-updates}
 
 Optimistic UI patterns are a technique for making your apps feel more responsive to user interactions. When a user takes an action (for example liking a post) we can avoid showing activity spinners or loading animations by simply assuming the action was successful. We update our local cache and interface immediately to show a successful result.
 

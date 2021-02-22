@@ -3,7 +3,7 @@ title: Server Utilities
 sidebar_label: Server Utilities
 ---
 
-## `resolver.pipe`
+## `resolver.pipe` {#resolver-pipe}
 
 This is a functional utility that makes it easier and cleaner to write complex resolvers.
 
@@ -12,7 +12,7 @@ This is a functional utility that makes it easier and cleaner to write complex r
 - Authorize users with `resolver.authorize()`
 - Enables functional composition
 
-### Example
+### Example {#example}
 
 ```ts
 import {resolver} from "blitz"
@@ -47,7 +47,7 @@ The input type of the entire composed resolver function is determined by the inp
 This means you will almost always want `resolver.zod()` to be the first in the pipe.
 :::
 
-### API
+### API {#api}
 
 #### Arguments
 
@@ -79,11 +79,11 @@ const resolver = resolver.pipe(
 
 This returns a composed function of type `(input, ctx) => Promise<result>` which is the standard resolver type.
 
-## `resolver.zod`
+## `resolver.zod` {#resolver-zod}
 
 This is a resolver adapter for [Zod](https://github.com/colinhacks/zod), an awesome input validation library. It takes a zod schema and runs `schema.parse` on the input data.
 
-### Example
+### Example {#example-1}
 
 <!-- prettier-ignore -->
 ```ts
@@ -104,7 +104,7 @@ export default resolver.pipe(
 )
 ```
 
-### API
+### API {#api-1}
 
 <!-- prettier-ignore -->
 ```js
@@ -120,9 +120,9 @@ const pipeFn = resolver.zod(MyZodSchema)
 
 A function to give `resolver.pipe` of type `(rawInput, ctx: Ctx) => validInput`
 
-## `resolver.authorize`
+## `resolver.authorize` {#resolver-authorize}
 
-### Example
+### Example {#example-2}
 
 <!-- prettier-ignore -->
 ```ts
@@ -139,7 +139,7 @@ export default resolver.pipe(
 )
 ```
 
-### API
+### API {#api-2}
 
 <!-- prettier-ignore -->
 ```js
@@ -154,11 +154,11 @@ const pipeFn = resolver.authorize(...isAuthorizedArgs)
 
 A function to give `resolver.pipe` of type `(input, ctx: Ctx) => input`
 
-## `paginate`
+## `paginate` {#paginate}
 
 This is a handy utility for query pagination
 
-### Example
+### Example {#example-3}
 
 ```ts
 import {paginate, Ctx} from "blitz"
@@ -189,7 +189,7 @@ export default async function getProjects(
 }
 ```
 
-### API
+### API {#api-3}
 
 <!-- prettier-ignore -->
 ```js
@@ -220,11 +220,11 @@ const paginationData = await paginate(paginateArguments))
   - `hasMore`: `boolean` (True if there are more items to load.)
   - `count`: `number` (Total number of items. Resolved by the `count` function)
 
-## `invokeWithMiddleware`
+## `invokeWithMiddleware` {#invoke-with-middleware}
 
 This is for imperatively invoking queries/mutations on the server. It ensures appropriate middleware is run before/after your resolver.
 
-### Example
+### Example {#example-4}
 
 ```tsx
 import {invokeWithMiddleware, GetServerSideProps, Link, BlitzPage, PromiseReturnType} from "blitz"
@@ -261,7 +261,7 @@ const Page: BlitzPage<PageProps> = function ({products}) {
 export default Page
 ```
 
-### API
+### API {#api-4}
 
 <!-- prettier-ignore -->
 ```js

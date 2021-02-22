@@ -3,11 +3,11 @@ title: Auth Hooks & Utilities
 sidebar_label: Hooks & Utilities
 ---
 
-## `useSession()`
+## `useSession()` {#use-session}
 
 `useSession(options?) => Partial<PublicData> & {isLoading: boolean}`
 
-### Example
+### Example {#example}
 
 ```ts
 import {useSession} from "blitz"
@@ -15,24 +15,24 @@ import {useSession} from "blitz"
 const session = useSession()
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `options:`
   - Optional
   - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
   - `suspense: boolean` - Defaults to `true`
 
-### Returns
+### Returns {#returns}
 
 - `session: Partial<PublicData> & {isLoading: boolean}`
 
-## `useAuthenticatedSession()`
+## `useAuthenticatedSession()` {#use-authenticated-session}
 
 `useAuthenticatedSession(options?) => PublicData & {isLoading: boolean}`
 
 This will throw `AuthenticationError` if the user is not logged in
 
-### Example
+### Example {#example-1}
 
 ```ts
 import {useAuthenticatedSession} from "blitz"
@@ -40,24 +40,24 @@ import {useAuthenticatedSession} from "blitz"
 const session = useAuthenticatedSession()
 ```
 
-### Arguments
+### Arguments {#arguments-1}
 
 - `options:`
   - Optional
   - `initialPublicData: PublicData` - Use this with SSR to set public data from the server session
   - `suspense: boolean` - Defaults to `true`
 
-### Returns
+### Returns {#returns-1}
 
 - `session: PublicData & {isLoading: boolean}`
 
-## `useAuthorize()`
+## `useAuthorize()` {#use-authorize}
 
 `useAuthorize() => void`
 
 This will throw `AuthenticationError` if the user is not logged in
 
-### Example
+### Example {#example-2}
 
 ```ts
 import {useAuthorize} from "blitz"
@@ -65,21 +65,21 @@ import {useAuthorize} from "blitz"
 useAuthorize()
 ```
 
-### Arguments
+### Arguments {#arguments-2}
 
 - None
 
-### Returns
+### Returns {#returns-2}
 
 - Nothing
 
-## `useRedirectAuthenticated()`
+## `useRedirectAuthenticated()` {#use-redirect-authenticated}
 
 `useRedirectAuthenticated(to: string) => void`
 
 This will redirect a logged in user to the given url path. It does nothing for logged out users.
 
-### Example
+### Example {#example-3}
 
 ```ts
 import {useRedirectAuthenticated} from "blitz"
@@ -87,17 +87,17 @@ import {useRedirectAuthenticated} from "blitz"
 useRedirectAuthenticated("/dashboard")
 ```
 
-### Arguments
+### Arguments {#arguments-3}
 
 - `to: string`
   - **Required**
   - The url path to redirect logged in users to
 
-### Returns
+### Returns {#returns-3}
 
 - Nothing
 
-## `generateToken()`
+## `generateToken()` {#generate-token}
 
 #### `generateToken(numberOfCharacters: number = 32) => string`
 
@@ -111,7 +111,7 @@ import {generateToken} from "blitz"
 const token = generateToken()
 ```
 
-## `hash256()`
+## `hash256()` {#hash256}
 
 #### `hash256(value: string) => string`
 
@@ -127,7 +127,7 @@ import {hash256} from "blitz"
 const hashedToken = hash256(token)
 ```
 
-## `SecurePassword`
+## `SecurePassword` {#secure-password}
 
 `SecurePassword` is a convenience wrapper around [secure-password](https://github.com/emilbayes/secure-password) to provide a nice way to hash passwords and verify password hashes.
 

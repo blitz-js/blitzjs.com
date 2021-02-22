@@ -3,7 +3,7 @@ title: Using Queries
 sidebar_label: Use Queries
 ---
 
-## In a React Component
+## In a React Component {#in-a-react-component}
 
 To use one of [your Blitz queries](./query-resolvers), call the `useQuery` hook with:
 
@@ -30,7 +30,7 @@ For complete details, see the [`useQuery` documentation](./use-query).
 You may be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
 :::
 
-### Defaults to Keep in Mind
+### Defaults to Keep in Mind {#defaults-to-keep-in-mind}
 
 Out of the box, `useQuery` and the other query hooks are configured with **aggressive but reasonable** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.**:
 
@@ -40,11 +40,11 @@ Out of the box, `useQuery` and the other query hooks are configured with **aggre
 - Queries that fail in production because of a network error will silently and automatically be retried **3 times, with exponential backoff delay** before capturing and displaying an error to the UI. To change this, you can alter the default `retry` and `retryDelay` options for queries.
 - Query results by default are deep compared to detect if data has actually changed and if not, the data reference remains unchanged to better help with value stabilization with regards to useMemo and useCallback. The default deep compare function use here (`config.isDataEqual`) only supports comparing JSON-compatible primitives. If you are dealing with any non-json compatible values in your query responses OR are seeing performance issues with the deep compare function, you should probably disable it (`config.isDataEqual = () => false`) or customize it to better fit your needs.
 
-### Options
+### Options {#options}
 
 See [the `useQuery` documentation](./use-query) for a full list of possible options.
 
-### Dependent Queries
+### Dependent Queries {#dependent-queries}
 
 Dependent queries are queries that depend on previous ones to finish before they can execute.
 To do this, use the enabled option to tell a query when it is ready to turn on:
@@ -54,15 +54,15 @@ const [user] = useQuery(getUser, {where: {id: props.query.id}})
 const [projects] = useQuery(getProjects, () => ({where: {userId: user.id}}, {enabled: user}))
 ```
 
-### Pagination
+### Pagination {#pagination}
 
 Use the [`usePaginatedQuery`](./use-paginated-query) hook
 
-### Infinite Loading
+### Infinite Loading {#infinite-loading}
 
 Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
-### Prefetching
+### Prefetching {#prefetching}
 
 - All queries are automatically cached, so manually calling a query function will cache its data
 
@@ -76,9 +76,9 @@ const project = await getProject({where: {id: props.id}})
 <a onMouseEnter={() => getProject({where: {id: projectId}})}>View Project</a>
 ```
 
-## On the Server
+## On the Server {#on-the-server}
 
-### `getStaticProps`
+### `getStaticProps` {#get-static-props}
 
 In `getStaticProps`, a query function can be called directly without `useQuery`
 
@@ -97,7 +97,7 @@ function ProjectPage({project}) {
 export default ProjectPage
 ```
 
-### `getServerSideProps`
+### `getServerSideProps` {#get-server-side-props}
 
 In `getServerSideProps`, pass a query function to [`invokeWithMiddleware`](./invoke#invokewithmiddleware) which will ensure appropriate middleware is run before/after your query function.
 

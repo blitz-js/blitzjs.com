@@ -9,7 +9,7 @@ Middleware should not be used for business logic, because HTTP middleware is les
 
 For example, authentication middleware can set and read cookies and pass the session object to queries and mutations via the context object. Then queries and mutations will use the session object to perform authorization and whatever else they need to do.
 
-## Global Middleware
+## Global Middleware {#global-middleware}
 
 Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config) using the `middleware` key.
 
@@ -24,7 +24,7 @@ module.exports = {
   ],
 ```
 
-### Global Ctx Type
+### Global Ctx Type {#global-ctx-type}
 
 You can access the type of the `res.blitzCtx` parameter by importing `Ctx` from `blitz`. The default `Ctx` provided by Blitz is an empty object.
 
@@ -52,7 +52,7 @@ export default async function getThing(input, ctx: Ctx) {
 }
 ```
 
-## Local Middleware
+## Local Middleware {#local-middleware}
 
 Local middleware only runs for a single query or mutation. It is defined by exporting a `middleware` array from a query or mutation.
 
@@ -81,7 +81,7 @@ export default async function getProject({where}: GetProjectInput, ctx: Record<a
 }
 ```
 
-## Middleware API
+## Middleware API {#middleware-api}
 
 This API is essentially the same as connect/Express middleware but with an asynchronous `next()` function like Koa. The main difference when writing connect vs Blitz middleware is you must return a promise from Blitz middleware by doing `return next()` or `await next()`. See below for the `connectMiddleware()` adapter for existing connect middleware.
 
@@ -95,7 +95,7 @@ const middleware: Middleware = async (req, res, next) => {
 }
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `req`: `MiddlewareRequest`
   - An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage), plus the following:
@@ -113,23 +113,23 @@ const middleware: Middleware = async (req, res, next) => {
   - **Required**: Callback for continuing the middleware chain. You must call this inside your middleware
   - **Required:** Returns a promise so you must either `await` it or return it like `return next()`. The promise resolves once all subsequent middleware has completed (including the Blitz query or mutation).
 
-## Communicating Between Middleware and Query/Mutation Resolvers
+## Communicating Between Middleware and Query/Mutation Resolvers {#communicating-between-middleware-and-query-mutation-resolvers}
 
-### From Middleware to Resolvers
+### From Middleware to Resolvers {#from-middleware-to-resolvers}
 
 Middleware can pass anything, including data, objects, and functions, to Blitz queries and mutations by adding to `res.blitzCtx`. At runtime, `res.blitzCtx` is automatically passed to the query/mutation handler as the second argument.
 
 1. You must add to `res.blitzCtx` **before** calling `next()`
 2. Keep in mind other middleware can also modify `res.blitzCtx`, so be sure to program defensively because anything can happen.
 
-### From Resolvers to Middleware
+### From Resolvers to Middleware {#from-resolvers-to-middleware}
 
 There are two ways middleware can receive data, objects, and functions from resolvers:
 
 1. `res.blitzResult` will contain the exact result returned from the query/mutation resolver. But you must first `await next()` before reading this. `await next()` will resolve once all subsequent middleware is run, including the Blitz internal middleware that runs the query/mutation resolver.
 2. You can pass a callback into the resolver via `res.blitzCtx` and then the resolver can pass data back to the middleware be calling `ctx.someCallback(someData)`
 
-## Error Handling
+## Error Handling {#error-handling}
 
 #### Short Circuit the Request
 
@@ -152,7 +152,7 @@ res.blitzCtx.error = new Error()
 if (ctx.error) throw ctx.error
 ```
 
-## Connect/Express Compatibility
+## Connect/Express Compatibility {#connect-express-compatibility}
 
 Blitz provides a `connectMiddleware()` function that converts connect middleware to Blitz middleware.
 
@@ -170,10 +170,10 @@ module.exports = {
 }
 ```
 
-### Arguments
+### Arguments {#arguments-1}
 
 - `middleware` - Any connect/express middleware.
 
-## More Information
+## More Information {#more-information}
 
 If you'd like more details on the RPC API, see the [RPC API documentation](./rpc-specification)

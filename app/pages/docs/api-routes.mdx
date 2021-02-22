@@ -42,7 +42,7 @@ To fetch API endpoints, take a look into any of the examples at the start of thi
 
 > API Routes do not increase your client-side bundle size. They are server-side only bundles.
 
-## Authentication and Session Context
+## Authentication and Session Context {#authentication-and-session-context}
 
 You can use the `getSessionContext` function to get the session of the user. Here is an example using session in a API route `app/api/customRoute.tsx`:
 
@@ -75,7 +75,7 @@ const response = await window.fetch("/api/customRoute", {
 
 [Read more about Session Management](/docs/session-management)
 
-## Dynamic API Routes
+## Dynamic API Routes {#dynamic-api-routes}
 
 Dynamic API routes follow the same file naming rules used for `pages`.
 
@@ -167,7 +167,7 @@ The `query` objects are as follows:
   - `app/api/post/[pid].js` - Will match `/api/post/1`, `/api/post/abc`, etc. But not `/api/post/create`
   - `app/api/post/[...slug].js` - Will match `/api/post/1/2`, `/api/post/a/b/c`, etc. But not `/api/post/create`, `/api/post/abc`
 
-## Response Helpers
+## Response Helpers {#response-helpers}
 
 The response (`res`) includes a set of Express.js-like methods to improve the developer experience and increase the speed of creating new API endpoints, take a look at the following example:
 
@@ -183,7 +183,7 @@ The included helpers are:
 - `res.json(json)` - Sends a JSON response. `json` must be a valid JSON object
 - `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an `object` or a `Buffer`
 
-## Default Middlewares
+## Default Middlewares {#default-middlewares}
 
 API routes provide built in middlewares which parse the incoming request (`req`). Those middlewares are:
 
@@ -191,7 +191,7 @@ API routes provide built in middlewares which parse the incoming reques
 - `req.query` - An object containing the [query string](https://en.wikipedia.org/wiki/Query_string). Defaults to `{}`
 - `req.body` - An object containing the body parsed by `content-type`, or `null` if no body was sent
 
-### Custom config
+### Custom config {#custom-config}
 
 Every API route can export a `config` object to change the default configs, which are the following:
 
@@ -239,7 +239,7 @@ export const config = {
 }
 ```
 
-### Connect/Express middleware support
+### Connect/Express middleware support {#connect-express-middleware-support}
 
 You can also use [Connect](https://github.com/senchalabs/connect) compatible middleware.
 

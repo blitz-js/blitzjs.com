@@ -13,7 +13,7 @@ blitz -v
 
 If Blitz is installed, you should see the version of your installation. If it isn’t, you’ll get an error saying something like “command not found: blitz”.
 
-## Creating a new app
+## Creating a new app {#creating-a-new-app}
 
 From the command line, `cd` into the folder where you’d like to create your app, and then run the following command:
 
@@ -108,7 +108,7 @@ These files are:
 
 - `tsconfig.json` is our recommended setup for TypeScript.
 
-## The development server
+## The development server {#the-development-server}
 
 Now make sure you are in the `my-blitz-app` folder, if you haven’t already, and run the following command:
 
@@ -131,13 +131,13 @@ event - compiled successfully
 
 Now that the server’s running, visit [localhost:3000](http://localhost:3000) with your web browser. You’ll see a welcome page, with the Blitz logo. It worked!
 
-## Sign up as a user
+## Sign up as a user {#sign-up-as-a-user}
 
 Blitz apps are created with user signup and login already set up! So let's try it. Click on the **Sign Up** button. Enter any email and password and click **Create Account**. Then you'll be redirected back to the home page where you can see your user `id` and `role`.
 
 If you want, you can also try logging out and logging back in. Or click **Forgot your password?** on the login page to try that flow.
 
-## Write your first page
+## Write your first page {#write-your-first-page}
 
 Next let's create your first page.
 
@@ -163,13 +163,13 @@ const Home: BlitzPage = () => {
 
 Save the file and you should see the page update in your browser. You can add customize this as much as you want. When you’re ready, move on to the next section.
 
-## Database setup
+## Database setup {#database-setup}
 
 Good news, an SQLite database was already set up for you! You can run `blitz prisma studio` in the terminal to open a web interface where you can see the data in your database.
 
 Note that when starting your first real project, you may want to use a more scalable database like PostgreSQL, to avoid the pains of switching your database down the road. For more information, see [Database overview](database-overview). For now, we will continue with the default SQLite database.
 
-## Scaffolding code for our models
+## Scaffolding code for our models {#scaffolding-code-for-our-models}
 
 Blitz provides a handy CLI command called [`generate`](./cli-generate) for scaffolding out boilerplate code. We'll use `generate` to create two models: `Question` and `Choice`. A `Question` has the text of the question and a list of choices. A `Choice` has the text of the choice, a vote count, and an associated question. Blitz will automatically generate an id, a creation timestamp, and a last updated timestamp for both models.
 
@@ -272,7 +272,7 @@ model Question {
 And then run `blitz prisma generate` to update prisma client for that schema change. This doesn't require a database migration because there's not an actual field being added to the `Question` model in the database.
 
 
-## Playing with the Prisma database client
+## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
 
 Now, let’s hop into the interactive Blitz shell and play around with the Prisma database client that Blitz gives you. To start the Blitz console, use this command:
 
@@ -325,7 +325,7 @@ undefined
 ]
 ```
 
-## Update generated code for our model attributes
+## Update generated code for our model attributes {#update-generated-code-for-our-model-attributes}
 
 :::info
 Before running the app again, we need to customize some of the code that has been generated. Ultimately, these fixes will not be needed - but for now, we need to work around a couple outstanding issues.
@@ -334,7 +334,7 @@ Before running the app again, we need to customize some of the code that has bee
 The generated page content does not currently use the actual model attributes you defined during generation. It will soon, but in the meantime, let's fix the generated pages.
 
 
-### Question pages
+### Question pages {#question-pages}
 
 [//]: # "Remove the following section once `generate` uses actual model attributes"
 
@@ -433,7 +433,7 @@ export function QuestionForm<S extends z.ZodType<any, any>>(props: FormProps<S>)
 }
 ```
 
-### `createQuestion` mutation
+### `createQuestion` mutation {#create-question-mutation}
 
 In `app/questions/mutations/createQuestion.ts`, we need to update the `CreateQuestion` zod validation schema to use `text` instead of `name`.
 
@@ -450,7 +450,7 @@ const CreateQuestion = z
 // ...
 ```
 
-### `updateQuestion` mutation
+### `updateQuestion` mutation {#update-question-mutation}
 
 In `app/questions/mutations/updateQuestion.ts`, we need to update the `UpdateQuestion` zod validation schema to use `text` instead of `name`.
 
@@ -469,7 +469,7 @@ const UpdateQuestion = z
 ```
 
 
-### `deleteQuestion` mutation
+### `deleteQuestion` mutation {#delete-question-mutation}
 
 [//]: # "Remove this section once Prisma supports cascading deletes"
 
@@ -505,7 +505,7 @@ This mutation will now delete the choices associated with the question prior to 
 
 Great! Now make sure your app is running. If it isn’t, run `blitz dev` in your terminal, and visit `localhost:3000/questions`. Try creating questions, editing, and deleting them.
 
-## Adding choices to the question form
+## Adding choices to the question form {#adding-choices-to-the-question-form}
 
 You’re doing great so far! The next thing we’ll do is add choices to our question form. Open `app/questions/components/QuestionForm.tsx` in your editor.
 
@@ -581,7 +581,7 @@ export default resolver.pipe(
 Now you can go to `localhost:3000/questions/new` and create a new question with choices!
 
 
-## Listing choices
+## Listing choices {#listing-choices}
 
 Time for a breather. Go back to `localhost:3000/questions` in your browser and look at all the questions you‘ve created. How about we list these questions’ choices here too? First, we need to customize the question queries. In Prisma, you need to manually let the client know that you want to query for nested relations. Change your `getQuestion.ts` and `getQuestions.ts` files to look like this:
 
@@ -662,7 +662,7 @@ Now hop back to our main questions page (`app/pages/questions/index.tsx`)in your
 
 Now check `/questions` in the browser. **Magic!**
 
-## Let’s do one more thing - let people vote on these questions!
+## Let’s do one more thing - let people vote on these questions! {#let-s-do-one-more-thing-let-people-vote-on-these-questions}
 
 Open `app/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
 
@@ -834,7 +834,7 @@ export const Question = () => {
 }
 ```
 
-## Conclusion
+## Conclusion {#conclusion}
 
 🥳 Congrats! You created your very own Blitz app! Have fun playing around with it, or sharing it with your friends. Now that you’ve finished this tutorial, why not try making your voting app even better? You could try:
 

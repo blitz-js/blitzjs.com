@@ -5,12 +5,12 @@ sidebar_label: Custom Server
 
 You can use the custom server feature if you need websocket support or some other direct control over the web server itself.
 
-### How
+### How {#how}
 
 1. Add a `server.js` file in your project root. See below for an example.
 2. Now `blitz dev` and `blitz start` will automatically detect and use your custom server.
 
-### Example
+### Example {#example}
 
 Here's an example custom server:
 
@@ -60,7 +60,7 @@ The above `blitz` import is a function that receives an object with the followin
 
 The returned `app` can then be used to let Blitz handle requests as required.
 
-## Disabling file-system routing
+## Disabling file-system routing {#disabling-file-system-routing}
 
 By default, `blitz` will serve each file in the `pages` folder under a pathname matching the filename. If your project uses a custom server, this behavior may result in the same content being served from multiple paths, which can present problems with SEO and UX.
 

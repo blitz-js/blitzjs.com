@@ -91,7 +91,7 @@ The `context` parameter is an object containing the following keys:
 >
 > Fetching from an external API is fine!
 
-### Simple Example
+### Simple Example {#simple-example}
 
 **Example**: Your blog page needs to load it's data from your database or from a CMS (content management system).
 
@@ -119,7 +119,7 @@ export async function getStaticProps() {
 export default Blog
 ```
 
-### When should I use `getStaticProps`?
+### When should I use `getStaticProps`? {#when-should-i-use-get-static-props}
 
 You should use `getStaticProps` if:
 
@@ -128,7 +128,7 @@ You should use `getStaticProps` if:
 - The data can be publicly cached (not user-specific).
 - The page must be pre-rendered (for SEO) and be very fast — `getStaticProps` generates HTML and JSON files, both of which can be cached by a CDN for performance.
 
-### TypeScript: Use `GetStaticProps`
+### TypeScript: Use `GetStaticProps` {#type-script-use-get-static-props}
 
 For TypeScript, you can use the `GetStaticProps` type from `blitz`:
 
@@ -168,7 +168,7 @@ function Blog({posts}: InferGetStaticPropsType<typeof getStaticProps>) {
 export default Blog
 ```
 
-### Incremental Static Regeneration
+### Incremental Static Regeneration {#incremental-static-regeneration}
 
 With `getStaticProps` you don't have to stop relying on dynamic content, as **static content can also be dynamic**. Incremental Static Regeneration allows you to update _existing_ pages by re-rendering them in the background as traffic comes in.
 
@@ -223,7 +223,7 @@ Unlike traditional SSR, [Incremental Static Regeneration](#incremental-static-re
 - Pages never go offline. If the background page re-generation fails, the old page remains unaltered
 - Low database and backend load. Pages are re-computed at most once concurrently
 
-### Reading files: Use `process.cwd()`
+### Reading files: Use `process.cwd()` {#reading-files-use-process-cwd}
 
 Files can be read directly from the filesystem in `getStaticProps`.
 
@@ -282,7 +282,7 @@ export async function getStaticProps() {
 export default Blog
 ```
 
-### Technical details
+### Technical details {#technical-details}
 
 #### Only runs at build time
 

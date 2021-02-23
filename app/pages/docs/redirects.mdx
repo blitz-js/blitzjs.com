@@ -3,7 +3,7 @@ title: Redirects
 sidebar_label: Redirects
 ---
 
-## On the Client
+## On the Client {#on-the-client}
 
 One common use case is conditionally redirecting a user to a different page based on their session data. Here's how you can do that:
 
@@ -24,7 +24,7 @@ const LoginPage: BlitzPage = () => {
 }
 ```
 
-## On the Server
+## On the Server {#on-the-server}
 
 If you don't want the "flash of invalid content" that you get with client side redirects, you can use [`getServerSideProps`](./get-server-side-props) to conditionally redirect from the server. Here's how you can do that:
 

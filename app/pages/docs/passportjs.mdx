@@ -7,9 +7,9 @@ Blitz provides an adapter that lets you use an existing [Passport.js authenticat
 
 Currently only passport strategies that use a `verify` callback are supported. In the Twitter example below, the second argument to `TwitterStrategy()` is the `verify` callback.
 
-## Setup
+## Setup {#setup}
 
-### 1. Add the Passport.js API Route
+### 1. Add the Passport.js API Route {#1-add-the-passport-js-api-route}
 
 Add a new api route at `app/api/auth/[...auth].ts` with the following contents.
 
@@ -66,7 +66,7 @@ export default passportAuth({
 })
 ```
 
-### 2. Add a Passport Strategy
+### 2. Add a Passport Strategy {#2-add-a-passport-strategy}
 
 Add a strategy to the `strategies` array argument for `passportAuth` in the API route, and then follow the strategy's documentation for setup.
 
@@ -124,7 +124,7 @@ export default passportAuth({
 
 Note: The above `passport-twitter` example requires your `User` prisma model to have `email String @unique` and `name String`.
 
-### 3. Log in with this Passport Strategy
+### 3. Log in with this Passport Strategy {#3-log-in-with-this-passport-strategy}
 
 Add a link to your app with URL format of `/api/auth/[strategyName]`.
 
@@ -134,13 +134,13 @@ For the above twitter example, the link would be like this:
 <a href="/api/auth/twitter">Log In With Twitter</a>
 ```
 
-## Detailed Usage Instructions
+## Detailed Usage Instructions {#detailed-usage-instructions}
 
 Upon successful authentication with the third-party, the user will be redirected back to the above auth API route. When that happens, the `verify` callback will be called.
 
 When the `verify` callback is called, the user has been authenticated with the third-party, but **a session has not yet been created for your Blitz app**.
 
-### Create a Session
+### Create a Session {#create-a-session}
 
 **To create a new Blitz session**, you need to call the `done()` function from your `verify` callback.
 
@@ -160,7 +160,7 @@ export type VerifyCallbackResult = {
 
 The Blitz adapter will then call `session.create()` for you and redirect the user back to the correct place in your application.
 
-### Return an Error
+### Return an Error {#return-an-error}
 
 If instead, you want to prevent creating a session because of some error, then call `done()` with an error as the first argument. The user will then be redirected back to the correct location.
 
@@ -168,7 +168,7 @@ If instead, you want to prevent creating a session because of some error, then c
 return done(new Error("it broke"))
 ```
 
-### Showing the Error to the User
+### Showing the Error to the User {#showing-the-error-to-the-user}
 
 Any error during this process will be provided as the `authError` query parameter.
 
@@ -178,7 +178,7 @@ For example with `errorRedirectUrl = '/'` and `done(new Error("it broke"))`, the
 /?authError=it broke
 ```
 
-### Post Authentication Redirects
+### Post Authentication Redirects {#post-authentication-redirects}
 
 There are four different ways to determine the redirect URL where a user should be sent after they are authenticated. They are listed here in order of priority. A URL provided with method #1 will override all other URLs.
 
@@ -196,7 +196,7 @@ Note: If there is an error, methods #1 and #2 will override `config.errorRedirec
 
 This should give you maximum flexibility to do anything you need. If this doesn't meet your needs, please open an issue on GitHub!
 
-### `authenticateOptions`
+### `authenticateOptions` {#authenticate-options}
 
 Some strategies have to call an option like `scope` or `successMessage` inside the `passport.authenticate()` method. Add
 these options to the `passportAuth` object like this:

@@ -3,7 +3,7 @@ title: useInfiniteQuery
 sidebar_label: useInfiniteQuery
 ---
 
-### Example
+### Example {#example}
 
 ```ts
 import {useInfiniteQuery} from "blitz"
@@ -64,7 +64,7 @@ export default async function getProjectsInfinite({
 }
 ```
 
-## API
+## API {#api}
 
 <!-- prettier-ignore -->
 ```js
@@ -84,7 +84,7 @@ const [
 })
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
@@ -96,7 +96,7 @@ const [
 - `options`
   - Optional
 
-### Options
+### Options {#options}
 
 The options are identical to the options for the [useQuery hook](./use-query) with the addition of the following:
 
@@ -104,7 +104,7 @@ The options are identical to the options for the [useQuery hook](./use-query) wi
   - When new data is received for this query, this function receives both the last page of the infinite list of data and the full array of all pages.
   - It should return a **single variable** that will be passed as the argument to `getQueryInputArguments()`
 
-### Returns
+### Returns {#returns}
 
 `[groupedQueryFunctionResults, queryExtras]`
 

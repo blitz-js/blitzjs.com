@@ -168,11 +168,11 @@ If `fallback` is `'blocking'`, new paths not returned by `getStaticPaths` will w
 
 `fallback: 'blocking'` will not _update_ generated pages by default. To update generated pages, use [Incremental Static Regeneration](/docs/get-static-props#incremental-static-regeneration) in conjunction with `fallback: 'blocking'`.
 
-### When should I use `getStaticPaths`?
+### When should I use `getStaticPaths`? {#when-should-i-use-get-static-paths}
 
 You should use `getStaticPaths` if you’re statically pre-rendering pages that use dynamic routes.
 
-### TypeScript: Use `GetStaticPaths`
+### TypeScript: Use `GetStaticPaths` {#type-script-use-get-static-paths}
 
 For TypeScript, you can use the `GetStaticPaths` type from `blitz`:
 
@@ -184,7 +184,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 ```
 
-### Technical details
+### Technical details {#technical-details}
 
 #### Use together with `getStaticProps`
 

@@ -49,11 +49,11 @@ However, none of the configs are required, and it's not necessary to understand 
 
 > Avoid using new JavaScript features not available in your target Node.js version. `blitz.config.js` will not be parsed by Webpack, Babel or TypeScript.
 
-## Webpack Config
+## Webpack Config {#webpack-config}
 
 You can customize the Blitz webpack config. See [our webpack documentation](./webpack-config) for details
 
-## Build Target
+## Build Target {#build-target}
 
 Blitz supports various build targets, each changing the way your application is built and run. We'll explain each of the targets below.
 
@@ -77,7 +77,7 @@ module.exports = {
 
 > Deployments to [Vercel](https://vercel.com) will automatically enable this target. You should not opt-into it yourself.
 
-## Middleware
+## Middleware {#middleware}
 
 HTTP middleware can be added queries and mutations. [See the middleware documentation](./middleware) for full details.
 
@@ -91,7 +91,7 @@ module.exports = {
   ],
 ```
 
-## Logging
+## Logging {#logging}
 
 By default Blitz logs various things at runtime. You can adjust the verbosity using the log level setting.
 
@@ -106,7 +106,7 @@ module.exports = {
 }
 ```
 
-## CLI
+## CLI {#cli}
 
 When you run `blitz dev`, the console gets cleared. You can disable it by setting the `cli.clearConsoleOnBlitzDev` to `false`:
 
@@ -118,7 +118,7 @@ module.exports = {
 }
 ```
 
-## CDN Support with Asset Prefix
+## CDN Support with Asset Prefix {#cdn-support-with-asset-prefix}
 
 To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network), you can set up an asset prefix and configure your CDN's origin to resolve to the domain that Blitz is hosted on.
 
@@ -133,7 +133,7 @@ module.exports = {
 
 Blitz will automatically use your prefix in the scripts it loads, but this has no effect whatsoever on the [public](./static-files) folder; if you want to serve those assets over a CDN, you'll have to introduce the prefix yourself. One way of introducing a prefix that works inside your components and varies by environment is documented [in this example](https://github.com/vercel/next.js/tree/canary/examples/with-universal-configuration-build-time).
 
-## Custom Page Extensions
+## Custom Page Extensions {#custom-page-extensions}
 
 Aimed at modules like [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx), which adds support for pages ending with `.mdx`. You can configure the extensions looked for in the `pages` directory when resolving pages.
 
@@ -143,7 +143,7 @@ module.exports = {
 }
 ```
 
-## Static Optimization Indicator
+## Static Optimization Indicator {#static-optimization-indicator}
 
 When a page qualifies for [Automatic Static Optimization](./pages#automatic-static-optimization) we show an indicator to let you know.
 
@@ -159,7 +159,7 @@ module.exports = {
 }
 ```
 
-## Configuring onDemandEntries for Development
+## Configuring onDemandEntries for Development {#configuring-on-demand-entries-for-development}
 
 Blitz exposes some options that give you some control over how the server will dispose or keep in memory built pages in development.
 
@@ -174,7 +174,7 @@ module.exports = {
 }
 ```
 
-## Setting a custom build directory
+## Setting a custom build directory {#setting-a-custom-build-directory}
 
 You can specify a name to use for a custom build directory to use instead of `.next`.
 
@@ -188,7 +188,7 @@ Now if you run `blitz build` Blitz will use `build` instead of the default `.nex
 
 > `distDir` **should not** leave your project directory. For example, `../build` is an **invalid** directory.
 
-## Configuring the Build ID
+## Configuring the Build ID {#configuring-the-build-id}
 
 Blitz uses a constant id generated at build time to identify which version of your application is being served. This can cause problems in multi-server deployments when `blitz build` is ran on every server. In order to keep a static build id between builds you can provide your own build id.
 
@@ -201,7 +201,7 @@ module.exports = {
 }
 ```
 
-## Compression
+## Compression {#compression}
 
 Blitz provides [**gzip**](https://tools.ietf.org/html/rfc6713#section-3) compression to compress rendered content and static files. Compression only works with the [`server` target](#server-target). In general you will want to enable compression on a HTTP proxy like [nginx](https://www.nginx.com/), to offload load from the `Node.js` process.
 
@@ -211,7 +211,7 @@ module.exports = {
 }
 ```
 
-## Disabling ETag Generation
+## Disabling ETag Generation {#disabling-e-tag-generation}
 
 By default we generate [etags](https://en.wikipedia.org/wiki/HTTP_ETag) for every page by default. You may want to disable etag generation for HTML pages depending on your cache strategy.
 
@@ -221,7 +221,7 @@ module.exports = {
 }
 ```
 
-## Disabling x-powered-by
+## Disabling x-powered-by {#disabling-x-powered-by}
 
 By default Blitz adds the `x-powered-by` header. To opt-out of it, disable the `poweredByHeader` config:
 
@@ -231,7 +231,7 @@ module.exports = {
 }
 ```
 
-## Base Path
+## Base Path {#base-path}
 
 To deploy a Blitz application under a sub-path of a domain you can use the `basePath` config option.
 
@@ -245,7 +245,7 @@ module.exports = {
 
 Note: this value must be set at build time and can not be changed without re-building as the value is inlined in the client-side bundles.
 
-### Links
+### Links {#links}
 
 When linking to other pages using `blitz/link` and `blitz/router` the `basePath` will be automatically applied.
 
@@ -271,7 +271,7 @@ Output html:
 
 This makes sure that you don't have to change all links in your application when changing the `basePath` value.
 
-## Rewrites
+## Rewrites {#rewrites}
 
 Rewrites allow you to map an incoming request path to a different destination path.
 
@@ -299,7 +299,7 @@ module.exports = {
 - `source` is the incoming request path pattern.
 - `destination` is the path you want to route to.
 
-### Rewrite parameters
+### Rewrite parameters {#rewrite-parameters}
 
 When using parameters in a rewrite the parameters will be passed in the query by default when none of the parameters are used in the `destination`.
 
@@ -349,7 +349,7 @@ module.exports = {
 }
 ```
 
-### Path Matching
+### Path Matching {#path-matching}
 
 Path matches are allowed, for example `/blog/:slug` will match `/blog/hello-world` (no nested paths):
 
@@ -400,7 +400,7 @@ module.exports = {
 }
 ```
 
-### Rewriting to an external URL
+### Rewriting to an external URL {#rewriting-to-an-external-url}
 
 Rewrites allow you to rewrite to an external url. This is especially useful for incrementally adopting Next.js.
 
@@ -502,7 +502,7 @@ module.exports = {
 }
 ```
 
-## Redirects
+## Redirects {#redirects}
 
 Redirects allow you to redirect an incoming request path to a different destination path.
 
@@ -530,7 +530,7 @@ module.exports = {
 - `destination` is the path you want to route to.
 - `permanent` if the redirect is permanent or not.
 
-### Path Matching
+### Path Matching {#path-matching-1}
 
 Path matches are allowed, for example `/old-blog/:slug` will match `/old-blog/hello-world` (no nested paths):
 
@@ -650,7 +650,7 @@ module.exports = {
 
 In some rare cases, you might need to assign a custom status code for older HTTP Clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both. Note: to ensure IE11 compatibility a `Refresh` header is automatically added for the 308 status code.
 
-## Headers
+## Headers {#headers}
 
 Headers allow you to set custom HTTP headers for an incoming request path.
 
@@ -683,7 +683,7 @@ module.exports = {
 - `source` is the incoming request path pattern.
 - `headers` is an array of header objects with the `key` and `value` properties.
 
-### Header Overriding Behavior
+### Header Overriding Behavior {#header-overriding-behavior}
 
 If two headers match the same path and set the same header key, the last header key will override the first. Using the below headers, the path `/hello` will result in the header `x-hello` being `world` due to the last header value set being `world`.
 
@@ -714,7 +714,7 @@ module.exports = {
 }
 ```
 
-### Path Matching
+### Path Matching {#path-matching-2}
 
 Path matches are allowed, for example `/blog/:slug` will match `/blog/hello-world` (no nested paths):
 
@@ -875,7 +875,7 @@ module.exports = {
 
 Cache-Control headers set in blitz.config.js will be overwritten in production to ensure that static assets can be cached effectively. If you need to revalidate the cache of a page that has been [statically generated](/docs/get-static-props#when-should-i-use-getstaticprops), you can do so by setting `revalidate` in the page's [`getStaticProps`](/docs/get-static-props) function.
 
-## Trailing Slash
+## Trailing Slash {#trailing-slash}
 
 By default Blitz will redirect urls with trailing slashes to their counterpart without a trailing slash. For example `/about/` will redirect to `/about`. You can configure this behavior to act the opposite way, where urls without trailing slashes are redirected to their counterparts with trailing slashes.
 
@@ -889,11 +889,11 @@ module.exports = {
 
 With this option set, urls like `/about` will redirect to `/about/`.
 
-## Experimental
+## Experimental {#experimental}
 
 These features aren't ready for production and could change at any time.
 
-### Isomorphic Resolver Imports
+### Isomorphic Resolver Imports {#isomorphic-resolver-imports}
 
 This enables isomorphic code imports from resolver files (for example exporting a zod schema from a mutation and being able to import that in client code).
 
@@ -907,7 +907,7 @@ module.exports = {
 }
 ```
 
-### React Mode
+### React Mode {#react-mode}
 
 By default Blitz uses [React Concurrent Mode](https://reactjs.org/docs/concurrent-mode-intro.html). You can disable it by changing `experimental.reactMode` to `legacy`.
 

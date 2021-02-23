@@ -7,7 +7,8 @@
     "build": "blitz build",
     "lint": "yarn lint:code && yarn lint:docs",
     "lint:code": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
-    "lint:docs": "alex app/pages/docs/**/*.mdx"
+    "lint:docs": "alex app/pages/docs/**/*.mdx",
+    "english-slugify": "node remark/english-slugify.js"
   },
   "husky": {
     "hooks": {

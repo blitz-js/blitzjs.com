@@ -5,7 +5,7 @@ sidebar_label: Writing Recipes
 
 The incredible power of Blitz Recipes isn't limited to the official recipes in the Blitz repo. The API for building recipes is a public API (although one that is subject to change) exposed via the [`@blitzjs/installer`](https://npm.im/@blitzjs/installer) package, which can be installed into your own scripts to write a completely custom recipe. Combined with the power of [`jscodeshift`](https://github.com/facebook/jscodeshift) for transforming existing files, fully automated code migrations are first-class citizens in the Blitz ecosystem. In fact, in the future we hope that upgrading Blitz will actually be possible with a quick `blitz install blitz@1.0.0`.
 
-### Setup
+### Setup {#setup}
 
 To author your own recipe, you'll want to create a new package and install a couple of dependencies. You'll only need the `jscodeshift` dependencies if you're using a **transform** step to modify an existing file. If you're only creating new files or adding dependencies you'll only need `@blitzjs/installer`.
 
@@ -31,7 +31,7 @@ import {RecipeBuilder} from "@blitzjs/installer"
 export default RecipeBuilder().build()
 ```
 
-### Adding Metadata
+### Adding Metadata {#adding-metadata}
 
 In addition to the actual steps of the recipe, we require that the developer supply metadata about the recipe. This allows us to display some information to the user about what they're installing, as well as where they can look for support if they need it.
 
@@ -46,7 +46,7 @@ RecipeBuilder()
 
 This is a pretty good start, and is actually all we need to create an executable recipe that a user can run via `blitz install`. However, it's not very useful because we don't actually have any steps for the installer framework to execute. Keep reading to learn about the different actions we can execute.
 
-### Common API
+### Common API {#common-api}
 
 Each action type has a shared interface for defining a "step" in the recipe. This ensures consistency in the user experience and enables us to provide a pleasant installation experience. Each step that gets added must have a string ID that's used to internally track the progress of the installation, a display name, and an explanation for what the step is doing.
 
@@ -60,7 +60,7 @@ interface Config {
 
 Eventually we expect to provide hooks into the recipe lifecycle, making some of the metadata like `stepId` critical.
 
-### Adding Dependencies
+### Adding Dependencies {#adding-dependencies}
 
 The first action we can take is adding dependencies to the user's application. This step type will automatically detect whether the user is using `yarn` or `npm` and use the proper tool. The configuration is very straightforward — it accepts a list of packages, their versions, and whether or not they should be installed as a `devDependency`.
 
@@ -76,7 +76,7 @@ builder.addAddDependenciesStep({
 })
 ```
 
-### Adding files
+### Adding files {#adding-files}
 
 One incredibly powerful part of recipes is the ability to generate files from templates.
 
@@ -97,7 +97,7 @@ builder.addNewFilesStep({
 })
 ```
 
-### Modifying existing files
+### Modifying existing files {#modifying-existing-files}
 
 Arguably the most powerful part of Blitz recipes, using JSCodeShift you can write a transform that will modify an existing file. The transform function is passed the AST representing the selected file, an object for building new nodes, and an object to assist with typechecking and assertions on nodes. [ASTExplorer](https://astexplorer.net) is a great place to get familiar with the AST structures and to play around with transforms. For best results, use the `@babel/parser` for the parser setting, and `jscodeshift` for the transform setting.
 
@@ -149,7 +149,7 @@ builder
 
 This step would append "Paul Plain was here!" to the user's README.md
 
-### Publishing
+### Publishing {#publishing}
 
 That's all you need to build a recipe! At this point, you can commit and push up to GitHub, and your recipe is available to the world. Users can install your recipe by passing your full repository name to `blitz install` - for example:
 
@@ -157,7 +157,7 @@ That's all you need to build a recipe! At this point, you can commit and push up
 blitz install some-githubuser/my-awesome-recipe
 ```
 
-### Testing locally
+### Testing locally {#testing-locally}
 
 To test your recipe locally without publishing it you can run
 

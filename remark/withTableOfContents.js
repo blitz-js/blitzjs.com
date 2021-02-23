@@ -1,5 +1,14 @@
 const { addImport, addExport } = require("./utils")
-const slugify = require("@sindresorhus/slugify")
+
+/**
+ * Extract slug
+ * @param {*} headingText in the form of "This is my title {#this-is-my-title}"
+ * @returns {[title: string, slug: string]}
+ */
+function extractSlug(headingText) {
+  const [title, rest] = headingText.split(" {#", 2)
+  return [title, rest.substr(0, rest.length - 1)]
+}
 
 module.exports.withTableOfContents = () => {
   return (tree) => {
@@ -11,20 +20,23 @@ module.exports.withTableOfContents = () => {
 
       if (node.type === "heading" && [2, 3].includes(node.depth)) {
         const level = node.depth
-        const title = node.children
+        const headingText = node.children
           .filter((n) => ["text", "inlineCode"].includes(n.type))
           .map((n) => n.value)
           .join("")
-        let slug = slugify(title)
+
+        if (!/ {#[a-z0-9-]+}$/.test(headingText)) {
+          throw new Error(`This heading is missing a handle:\n${headingText}`)
+        }
+
+        let [title, slug] = extractSlug(headingText)
 
         let allOtherSlugs = contents.flatMap((entry) => [
           entry.slug,
           ...entry.children.map(({ slug }) => slug),
         ])
-        let i = 1
-        while (allOtherSlugs.indexOf(slug) > -1) {
-          slug = `${slugify(title)}-${i}`
-          i++
+        if (allOtherSlugs.includes(slug)) {
+          throw new Error(`The slug "${slug}" is used twice in the same document`)
         }
 
         node.type = "jsx"
@@ -34,11 +46,7 @@ module.exports.withTableOfContents = () => {
             node.children[0].value.replace(
               /^\s*<Heading([\s>])/,
               `<Heading level={${level}} id="${slug}" toc={true}$1`
-            ) +
-            node.children
-              .slice(1)
-              .map((n) => n.value)
-              .join("")
+            ) + title
         } else {
           node.value = `<${component} level={${level}} id="${slug}" toc={true}>${node.children
             .map(({ type, value }) => {
@@ -49,7 +57,8 @@ module.exports.withTableOfContents = () => {
               if (type === "inlineCode") return `<code>${nodeValue}</code>`
               return nodeValue
             })
-            .join("")}</${component}>`
+            .join("")
+            .replace(` {#${slug}}`, "")}</${component}>`
         }
 
         if (level === 2 || !contents.length) {
@@ -62,10 +71,16 @@ module.exports.withTableOfContents = () => {
         /^\s*<Heading[\s>]/.test(node.value) &&
         !/^\s*<Heading[^>]*\sid=/.test(node.value)
       ) {
-        const title = node.value
-          .replace(/<[^>]+>/g, "")
-          .replace(/\{(["'])((?:(?=(\\?))\3.)*?)\1\}/g, "$2")
-        node.value = node.value.replace(/^\s*<Heading([\s>])/, `<Heading id="${slugify(title)}"$1`)
+        throw new Error(`This Heading is missing an "id" tag:\n${node.value}`)
+      } else if (node.type === "heading" && node.depth <= 4) {
+        const headingText = node.children
+          .filter((n) => ["text", "inlineCode"].includes(n.type))
+          .map((n) => n.value)
+          .join("")
+
+        if (/ {#[a-z0-9-]+}$/.test(headingText)) {
+          throw new Error(`Headings lower than 3 can't have a handle:\n${headingText}`)
+        }
       }
     }
 

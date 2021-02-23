@@ -21,13 +21,13 @@ function About() {
 export default About
 ```
 
-### Pages with Dynamic Routes
+### Pages with Dynamic Routes {#pages-with-dynamic-routes}
 
 Blitz supports pages with dynamic routes. For example, if you create a file called `app/pages/posts/[id].js`, then it will be accessible at `posts/1`, `posts/2`, etc.
 
 > To learn more about routing, check the [Routing documentation](./routing).
 
-### Automatic Static Optimization
+### Automatic Static Optimization {#automatic-static-optimization}
 
 By default, Blitz pre-renders the static HTML for every page unless you explicitly opt-in to server-side rendering.
 
@@ -51,7 +51,7 @@ Page.suppressFirstRenderFlicker = true
 export default Page
 ```
 
-### Static Page Generation for Unauthenticated Pages
+### Static Page Generation for Unauthenticated Pages {#static-page-generation-for-unauthenticated-pages}
 
 For pages accessible by anyone without authentication, we recommend using `getStaticProps` so the page, along with it's data, is 100% statically generated during pre-rendering (like Gatsby). Then the entire static page can be cached on a CDN. This is perfect for public pages like blog posts.
 
@@ -60,7 +60,7 @@ There are two methods for use with static generation, and you'll often use both 
 1. `getStaticProps` - To load the **data** for your page. See the [`getStaticProps` documentation](./get-static-props) for more details.
 2. `getStaticPaths` - To load the possible **paths** for your page. See the [`getStaticPaths` documentation](./get-static-paths) for more details.
 
-### Server-side Rendering
+### Server-side Rendering {#server-side-rendering}
 
 > Also referred to as "SSR" or "Dynamic Rendering".
 

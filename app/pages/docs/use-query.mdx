@@ -3,7 +3,7 @@ title: useQuery
 sidebar_label: useQuery
 ---
 
-### Example
+### Example {#example}
 
 React Concurrent Mode is enabled by default for Blitz apps. So the `<Suspense>` component is used for loading states and `<ErrorBoundary>` is used to display errors. If you need, you can read the [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
 
@@ -40,7 +40,7 @@ export default WrappedProject
 
 > For more examples and use cases, see the [query usage documentation](./query-usage).
 
-## API
+## API {#api}
 
 <!-- prettier-ignore -->
 ```js
@@ -73,7 +73,7 @@ const [
 })
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
@@ -83,7 +83,7 @@ const [
 - `options`
   - Optional
 
-### Options
+### Options {#options}
 
 - `enabled: Boolean`
   - Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
@@ -146,7 +146,7 @@ const [
   - Optional
   - Enabled by default. Set this to `false` to disable suspense mode.
 
-### Returns
+### Returns {#returns}
 
 `[queryResult, queryExtras]`
 

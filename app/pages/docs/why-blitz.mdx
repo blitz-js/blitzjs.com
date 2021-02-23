@@ -3,13 +3,13 @@ title: Why use Blitz instead of Next.js?
 sidebar_label: Why Blitz instead of Next.js?
 ---
 
-### 1. Fullstack instead of Frontend
+### 1. Fullstack instead of Frontend {#1-fullstack-instead-of-frontend}
 
 Next.js is mostly a frontend framework. It's designed for building a frontend that connects to some other API. Next.js isn't set up by default for building a true fullstack application.
 
 Blitz adds all the missing features and functionality that turns Next into a true fullstack framework. These key features include direct database access, middleware, and authentication.
 
-### 2. Data Layer
+### 2. Data Layer {#2-data-layer}
 
 The new Blitz data layer is a novel technology for eliminating the API while retaining client-side rendering. In a Blitz app, you can import your server code directly into the frontend so you don't need to build an API and do data fetching from the frontend. At build time, Blitz automatically inserts an API call that runs the server code on the server. Essentially, Blitz abstracts your API into a compile step.
 
@@ -17,19 +17,19 @@ This is a game changer for React app development because it eliminates an entire
 
 That said, you can continue doing data fetching via REST or GraphQL like you've always done. Blitz doesn't restrict this in any way.
 
-### 3. Built-in Authentication
+### 3. Built-in Authentication {#3-built-in-authentication}
 
 Blitz has built-in session management that works with any identity provider, including self-hosted email/password and third party services. Authentication is something that's complicated and difficult to implement correctly. Having it built into Blitz saves you a ton of time and potential security vulnerabilities.
 
 Building an awesome UX with auth in Next.js is very tricky and tedious, but Blitz gives you best-in-class DX for free.
 
-### 4. Conventions
+### 4. Conventions {#4-conventions}
 
 Next.js does not have any conventions aside from file-system based routing. This leaves every developer to re-invent the wheel for every project.
 
 Blitz brings a number of conventions for things like how to organize your files and how to structure your routes. This means you don't waste any time figuring this out for every project. It also greatly benefits the community. Common project structure and architectural patterns allow you to move from Blitz app to Blitz app and immediately feel at home.
 
-### 5. Code Scaffolding
+### 5. Code Scaffolding {#5-code-scaffolding}
 
 There are two main ways to reduce the amount of code you have to write by hand:
 
@@ -42,7 +42,7 @@ There are two main ways to reduce the amount of code you have to write by hand:
 
 Blitz is a huge fan of code scaffolding. We have a whole slew of [`blitz generate`](./cli-generate) commands for scaffolding code into your project. It's still early days for our code scaffolding — we have a lot of powerful features that still need to be added, including the ability to add your own custom scaffold templates.
 
-### 6. Recipes
+### 6. Recipes {#6-recipes}
 
 Recipes are one-line commands for scaffolding code into your project from an MDX recipe on npm or a git repository.
 
@@ -54,13 +54,13 @@ Examples:
 
 Recipes are super powerful. They can change almost anything in your project, including adding dependencies, changing code, adding code, etc. They are written via MDX and can be composed like React components.
 
-### 7. New App Development
+### 7. New App Development {#7-new-app-development}
 
 A new Next.js app is totally bare-bones. So every time you start a Next.js project, you have to spend hours setting up all the basics like eslint, prettier, husky git hooks, etc.
 
 A new Blitz app saves you a ton of time because all that is pre-configured for you! For sure you can always customize it later, but having a working starting point is awesome.
 
-### 8. Relaxed Restrictions
+### 8. Relaxed Restrictions {#8-relaxed-restrictions}
 
 Next.js requires all your React pages go in a single `pages/` folder. Blitz relaxes this restriction by allowing you to have an infinite number of `pages/` folders.
 

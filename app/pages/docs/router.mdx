@@ -8,7 +8,7 @@ There are two ways to access `router` within components.
 1. `useRouter()` (recommended)
 2. `withRouter()`
 
-## `useRouter`
+## `useRouter` {#use-router}
 
 ```jsx
 import {useRouter} from "blitz"
@@ -30,7 +30,7 @@ export default Thing
 
 > `useRouter` is a [React Hook](https://reactjs.org/docs/hooks-intro.html), meaning it cannot be used with classes. You can either use [withRouter](#withRouter) or wrap your class in a function component.
 
-## `withRouter`
+## `withRouter` {#with-router}
 
 ```jsx
 import {withRouter} from "blitz"
@@ -42,7 +42,7 @@ function Page({router}) {
 export default withRouter(Page)
 ```
 
-## `router` object
+## `router` object {#router-object}
 
 Here's the definition of the `router` object returned by `useRouter` and `withRouter`:
 
@@ -58,11 +58,11 @@ Here's the definition of the `router` object returned by `useRouter` and `withRo
 - [`events`](#routerevents): Subscribe to various router events
 - [`beforePopState()`](#routerbeforepopstate): For advanced routing needs
 
-### Router API
+### Router API {#router-api}
 
 The following router APIs can also be used via `import {Router} from 'blitz'`
 
-### Router.push
+### Router.push {#router-push}
 
 Handles client-side transitions, this method is useful for cases where [`<Link>`](./link) is not enough.
 
@@ -126,7 +126,7 @@ function ReadMore() {
 export default ReadMore
 ```
 
-### Router.replace
+### Router.replace {#router-replace}
 
 Similar to the `replace` prop in [`<Link>`](./link), `Router.replace` will prevent adding a new URL entry into the `history` stack, take a look at the following example:
 
@@ -138,7 +138,7 @@ Router.replace("/home")
 
 The API for `Router.replace` is exactly the same as that used for [`Router.push`](#routerpush).
 
-### Router.back
+### Router.back {#router-back}
 
 Navigate back in history. Equivalent to clicking the browser’s back button. It executes `window.history.back()`.
 
@@ -148,7 +148,7 @@ import {Router} from "blitz"
 Router.back()
 ```
 
-### Router.reload
+### Router.reload {#router-reload}
 
 Reload the current URL. Equivalent to clicking the browser’s refresh button. It executes `window.location.reload()`.
 
@@ -158,7 +158,7 @@ import {Router} from "blitz"
 Router.reload()
 ```
 
-### Router.prefetch
+### Router.prefetch {#router-prefetch}
 
 Prefetch pages for faster client-side transitions. This method is only useful for navigations without [`<Link>`](./link) because it takes care of prefetching pages automatically.
 
@@ -210,7 +210,7 @@ export default function Login() {
 }
 ```
 
-### Router.events
+### Router.events {#router-events}
 
 You can listen to different events happening inside the Router. Here's a list of supported events:
 
@@ -273,7 +273,7 @@ useEffect(() => {
 }, [])
 ```
 
-### Router.beforePopState
+### Router.beforePopState {#router-before-pop-state}
 
 In some cases (for example, if using a [Custom Server](#todo)), you may wish to listen to [popstate](https://developer.mozilla.org/en-US/docs/Web/Events/popstate) and do something before the router acts on it.
 

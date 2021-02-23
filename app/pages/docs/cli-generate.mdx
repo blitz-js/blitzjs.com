@@ -51,7 +51,7 @@ app/projects/mutations/updateProject.ts
 
 For the above example, you can view the generated project index page at [localhost:3000/projects](http://localhost:3000/projects)
 
-## Options
+## Options {#options}
 
 ##### `context/model`
 
@@ -98,7 +98,7 @@ Shorthand: `-d`
 
 Displays what files would be generated but does not write the files to disk.
 
-### Basic Examples
+### Basic Examples {#basic-examples}
 
 ```bash
 blitz generate all project
@@ -116,7 +116,7 @@ blitz generate crud admin/topsecret/files
 blitz generate pages tasks --parent=projects
 ```
 
-## Model Generation
+## Model Generation {#model-generation}
 
 All of the following commands will generate a model in your prisma schema file:
 
@@ -124,7 +124,7 @@ All of the following commands will generate a model in your prisma schema file:
 - `blitz generate resource`
 - `blitz generate model`
 
-### Model Fields
+### Model Fields {#model-fields}
 
 Model fields can be added like this:
 
@@ -223,7 +223,7 @@ model Task {
 }
 ```
 
-### Updating a model
+### Updating a model {#updating-a-model}
 
 Running `blitz generate model` subsequent times will add fields to the existing model. For example, the below command will add the `subheading` field to the `Task` model.
 

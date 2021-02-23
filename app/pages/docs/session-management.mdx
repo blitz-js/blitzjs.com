@@ -11,11 +11,11 @@ Session management performs the following functions:
 2. Attribute multiple requests to the same user, even when they are logged out
 3. Protection against CSRF attacks
 
-## TLDR
+## TLDR {#tldr}
 
 You login, logout, and otherwise modify the session via the [`SessionContext`](#sessioncontext) object which is [accessible anywhere on the server](#session-on-the-server).
 
-### Login
+### Login {#login}
 
 For login you will have form component in your UI that will submit a login mutation like the one shown below.
 
@@ -33,7 +33,7 @@ export default async function login(input: SomeTSInputType, ctx: Ctx) {
 }
 ```
 
-### Logout
+### Logout {#logout}
 
 For logout you will have a button in your UI that will submit a logout mutation like the one shown below.
 
@@ -49,7 +49,7 @@ export default async function logout(_: any, ctx: Ctx) {
 }
 ```
 
-### Change Session PublicData of Current User
+### Change Session PublicData of Current User {#change-session-public-data-of-current-user}
 
 Each session has [`PublicData`](#publicdata), data which is available on the client and has the potential to be read by third-parties because it's stored in a cookie readable by any Javascript code. This is usually used to store the current user id, user role, and perhaps current organization id.
 
@@ -65,9 +65,9 @@ export default async function someMutation(input: any, ctx: Ctx) {
 }
 ```
 
-## Access Session on the Server
+## Access Session on the Server {#access-session-on-the-server}
 
-### In Queries & Mutations
+### In Queries & Mutations {#in-queries-and-mutations}
 
 [`SessionContext`](#sessioncontext) is available off of `ctx` which is provided as the second parameter to all queries and mutations because of the `sessionMiddleware` that's in `blitz.config.js`.
 
@@ -85,7 +85,7 @@ export default async function someQuery(input: any, ctx: Ctx) {
 }
 ```
 
-### In `getServerSideProps` or API Routes
+### In `getServerSideProps` or API Routes {#in-get-server-side-props-or-api-routes}
 
 You can also get the session context inside `getServerSideProps` or inside API routes with `getSessionContext` like this:
 
@@ -100,7 +100,7 @@ export const getServerSideProps = async ({req, res}) => {
 }
 ```
 
-## Access Session on the Client
+## Access Session on the Client {#access-session-on-the-client}
 
 Blitz provides a `useSession()` hook that returns [`PublicData`](#publicdata) with `isLoading` property. This hook can be used anywhere in your application.
 
@@ -137,11 +137,11 @@ const SomePage: BlitzPage = ({initialPublicData}) => {
 }
 ```
 
-## Production Deployment Requirements
+## Production Deployment Requirements {#production-deployment-requirements}
 
 In production, you must provide the `SESSION_SECRET_KEY` environment variable with at least 32 characters. This is your private key for signing JWT tokens.
 
-## Anonymous Sessions
+## Anonymous Sessions {#anonymous-sessions}
 
 If a user is not logged in, an anonymous session will automatically be created for them. You can use `ctx.session.$setPublicData()` and `ctx.session.$setPrivateData()` for anonymous sessions the same as for logged in users. Any data you set for an anonymous session will automatically be transferred to an authentication session when a user logs in.
 
@@ -161,7 +161,7 @@ Anonymous session `PublicData` looks like this:
 }
 ```
 
-## Customize Session Public Data in Typescript
+## Customize Session Public Data in Typescript {#customize-session-public-data-in-typescript}
 
 If using Typescript, first update the `Session.PublicData` type in `types.ts` like this:
 
@@ -228,7 +228,7 @@ export default async function someQuery(input: any, ctx: Ctx) {
 }
 ```
 
-## Session Configuration
+## Session Configuration {#session-configuration}
 
 You can customize session management by passing an object to the `sessionMiddleware` factory function.
 
@@ -277,7 +277,7 @@ interface SessionModel extends Record<any, any> {
 }
 ```
 
-## Customize Session Persistence & Database Access
+## Customize Session Persistence & Database Access {#customize-session-persistence-and-database-access}
 
 By default, session persistence is zero-config with Prisma. However, you can customize this to save sessions somewhere else, like Redis. You can also customize this if you have Prisma but want to customize the attribute names on the user or session model.
 
@@ -285,7 +285,7 @@ Customize session persistence by overriding the database access functions define
 
 For reference, here's [the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/server/src/supertokens.ts#L62-L85).
 
-## Manual API Requests
+## Manual API Requests {#manual-api-requests}
 
 When making a request from the client to an API route, you need to include the anti-CSRF token in the `anti-csrf` header like this:
 
@@ -312,11 +312,11 @@ export default async function ({req, res}) {
 }
 ```
 
-## Technical Details of How it Works
+## Technical Details of How it Works {#technical-details-of-how-it-works}
 
 Authenticated sessions use opaque tokens that are stored in the database.
 
-### Implementation Details
+### Implementation Details {#implementation-details}
 
 #### Session Creation
 
@@ -345,7 +345,7 @@ Authenticated sessions use opaque tokens that are stored in the database.
 - This is done by deleting the session from the database.
 - Logout additionally clears the cookies, and a header is sent signaling the frontend to remove the anti-csrf token from the localstorage
 
-## Types
+## Types {#types}
 
 #### `SessionContext`
 

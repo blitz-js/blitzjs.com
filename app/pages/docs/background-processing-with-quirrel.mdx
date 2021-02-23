@@ -18,7 +18,7 @@ It's OSS and has a hosted version, and works by calling back to your Next.js API
 
 > Quirrel is developed by [Simon Knott](https://twitter.com/skn0tt), a Blitz community member. Don't hesitate to [reach out](mailto:blitzjs@quirrel.dev?subject=A%20Question%20from%20a%20fellow%20Blitz%20user&body=Hi%20Simon%2C%0D%0A%0D%0AI%20have%20a%20question%20on%20___.%0D%0A%0D%0A%0D%0AHope%20you%20have%20a%20great%20day%2C%0D%0A%0D%0A___) to him if there are any questions!
 
-## Getting Started
+## Getting Started {#getting-started}
 
 Install Quirrel by running `blitz install quirrel`.
 
@@ -29,11 +29,11 @@ For any Quirrel questions not covered by this document, check out the [Quirrel D
 
 For deploying an application that uses Quirrel, check out this guide: [Deploying Quirrel](https://docs.quirrel.dev/deploying)
 
-## Recipes
+## Recipes {#recipes}
 
 These recipes are designed to give you a general idea of how to use Quirrel.
 
-### Reminding a user of an upcoming event
+### Reminding a user of an upcoming event {#reminding-a-user-of-an-upcoming-event}
 
 This recipe schedules a booking reminder to be sent 30 minutes before show-time.
 
@@ -112,7 +112,7 @@ export default Queue(
 )
 ```
 
-### Sending out Invoices at the beginning of the Month
+### Sending out Invoices at the beginning of the Month {#sending-out-invoices-at-the-beginning-of-the-month}
 
 For this, Quirrel's [`CronJob`](https://docs.quirrel.dev/api/cronjob) is the perfect fit.
 
@@ -136,7 +136,7 @@ export default CronJob(
 )
 ```
 
-### Removing old data
+### Removing old data {#removing-old-data}
 
 Again, [`CronJob`](https://docs.quirrel.dev/api/cronjob) is a great fit.
 
@@ -164,7 +164,7 @@ export default CronJob(
 )
 ```
 
-### Processing an Upload in the Background
+### Processing an Upload in the Background {#processing-an-upload-in-the-background}
 
 Uploaded data shouldn't be sent to Quirrel, but be stored in your own database.
 Add a new DB entity for it:

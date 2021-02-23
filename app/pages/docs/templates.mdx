@@ -5,7 +5,7 @@ sidebar_label: Blitz Templates
 
 Blitz provides a completely custom templating language for use in custom templates. The goal was for templates to always be valid syntax in whatever language you're writing, rather than getting syntax errors in your IDE and having to build the template to see if its output is correct like you do with embedded languages like EJS.
 
-### Variable Interpolation
+### Variable Interpolation {#variable-interpolation}
 
 This is the core of any templating language, and this syntax should be fairly familiar if you've used Handlebars or anything similar. To insert a variable that's been provided to the template's context argument, surround it with double underscores: `__`.
 
@@ -21,7 +21,7 @@ export default function TodosHome() {
 }
 ```
 
-### Conditional Expressions
+### Conditional Expressions {#conditional-expressions}
 
 In order to retain our first principle of valid syntax, conditional experessions currently only work in TypeScript templates. At runtime we place all of the provided template context values onto `process.env`, and when compiling the template we search for any conditional expressions against a valid template value on `process.env`. This works both for traditional `if` statements as well as ternary operations. Soon we hope to add support for conditional expressions in JSX for conditional component insertion as well.
 
@@ -58,7 +58,7 @@ export default function __ModelName__Home() {
 }
 ```
 
-### Conditional JSX Expressions
+### Conditional JSX Expressions {#conditional-jsx-expressions}
 
 In the case where you need to conditionally insert different JSX into your templates, the `process.env` solution isn't ideal. Because we only do naive replacement of the inner node, if you embed a `process.env` conditional in JSX you'll have something like this:
 

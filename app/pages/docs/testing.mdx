@@ -5,7 +5,7 @@ sidebar_label: Testing
 
 The `blitz` dependency also automatically installs and configures `jest`, `@testing-library/react`, `@testing-library/react-hooks`, and `@testing-libary/jest-dom` for you.
 
-## Jest
+## Jest {#jest}
 
 [Jest](https://jestjs.io/) is a delightful testing framework that's simple to use. To run tests in your app, you will run `jest` or `jest --watch` from the terminal.
 
@@ -22,7 +22,7 @@ it("does something", () => {
 
 > For more details on using Jest, [read the Jest documentation](https://jestjs.io/docs/en/using-matchers)
 
-### Jest Config
+### Jest Config {#jest-config}
 
 Blitz provides a Jest preset that configures lots of complex things for you, including Typescript support.
 
@@ -35,7 +35,7 @@ module.exports = {
 }
 ```
 
-### Client vs Server Environments
+### Client vs Server Environments {#client-vs-server-environments}
 
 The following test files will run in the Jest server environment:
 
@@ -44,7 +44,7 @@ The following test files will run in the Jest server environment:
 
 All other files will run in the Jest client environment (with jsdom).
 
-## @testing-library
+## @testing-library {#testing-library}
 
 [@testing-library](https://testing-library.com/docs/) is family of packages helps you test UI components in a user-centric way. It's a better alternative to Enzyme, if you've used that in the past.
 

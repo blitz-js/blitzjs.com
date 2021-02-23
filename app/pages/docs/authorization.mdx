@@ -5,7 +5,7 @@ sidebar_label: Authorization & Security
 
 Authorization is the act of allowing or disallowing access to data and pages in your application.
 
-## Secure Your Data
+## Secure Your Data {#secure-your-data}
 
 You secure data by calling [`ctx.session.$authorize()`](#ctxsessionauthorize) inside all the queries and mutations that you want secured. (Or if using [`resolver.pipe`](./resolver-server-utilities#resolverpipe), by using [`resolver.authorize`](./resolver-server-utilities#resolverauthorize)). You can also secure [API routes](./api-routes) the same way.
 
@@ -62,7 +62,7 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
 }
 ```
 
-### Input Validation
+### Input Validation {#input-validation}
 
 For security, it's very important to validate all input values in your mutations. We recommended using [zod](https://github.com/colinhacks/zod), which we include in all our code generation templates. Without this, users may be able to access data or perform actions that are forbidden.
 
@@ -92,7 +92,7 @@ export default resolver.pipe(
 )
 ```
 
-## Secure Your Pages
+## Secure Your Pages {#secure-your-pages}
 
 Set `Page.authenticate = true` on all pages that require a user to be logged in. If a user is not logged in, an `AuthenticationError` will be thrown and caught by your top level Error Boundary.
 
@@ -111,7 +111,7 @@ Page.authenticate = true
 export default Page
 ```
 
-### Redirecting Logged In Users
+### Redirecting Logged In Users {#redirecting-logged-in-users}
 
 For pages that are only for logged out users, such as login and signup pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect logged in users to another page.
 
@@ -127,7 +127,7 @@ Page.redirectAuthenticatedTo = "/"
 export default Page
 ```
 
-## UX for Unauthorized Users
+## UX for Unauthorized Users {#ux-for-unauthorized-users}
 
 While you can use redirects to and from a `/login` page, we recommended to use Error Boundaries instead of redirects.
 
@@ -165,7 +165,7 @@ function RootErrorFallback({error, resetErrorBoundary}: ErrorFallbackProps) {
 
 For more information on error handling in Blitz, see the [Error Handling documentation](./error-handling).
 
-## Displaying Different Content Based on User Role
+## Displaying Different Content Based on User Role {#displaying-different-content-based-on-user-role}
 
 There's two approaches you can use to check the user role in your UI.
 
@@ -205,7 +205,7 @@ if (user.isFunny) {
 }
 ```
 
-## `isAuthorized` Adapters
+## `isAuthorized` Adapters {#is-authorized-adapters}
 
 The implementation of `ctx.session.$isAuthorized()` and `ctx.session.$authorize()` are defined by an adapter which you set in the `sessionMiddleware()` config.
 
@@ -296,7 +296,7 @@ ctx.session.$authorize("admin") // throws AuthorizationError
 ctx.session.$authorize(["admin", "customer") // success - no error
 ```
 
-### Making a Custom Adapter
+### Making a Custom Adapter {#making-a-custom-adapter}
 
 An `isAuthorized` adapter must conform to the following function signature.
 

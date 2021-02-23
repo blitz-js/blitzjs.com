@@ -9,7 +9,7 @@ Static Generation is useful when your pages fetch data from a headless CMS. Howe
 
 Blitz has the feature called **Preview Mode** which solves this problem. Here’s an instruction on how to use it.
 
-## Step 1. Create and access a preview API route
+## Step 1. Create and access a preview API route {#step-1-create-and-access-a-preview-api-route}
 
 > Take a look at the [API Routes documentation](./api-routes) first if you’re not familiar with Blitz API Routes.
 
@@ -41,7 +41,7 @@ export default (req, res) => {
 
 If you use your browser’s developer tools, you’ll notice that the `__prerender_bypass` and `__next_preview_data` cookies will be set on this request.
 
-### Securely accessing it from your Headless CMS
+### Securely accessing it from your Headless CMS {#securely-accessing-it-from-your-headless-cms}
 
 In practice, you’d want to call this API route _securely_ from your headless CMS. The specific steps will vary depending on which headless CMS you’re using, but here are some common steps you could take.
 
@@ -97,7 +97,7 @@ export default async (req, res) => {
 
 If it succeeds, then the browser will be redirected to the path you want to preview with the preview mode cookies being set.
 
-## Step 2. Update `getStaticProps`
+## Step 2. Update `getStaticProps` {#step-2-update-get-static-props}
 
 The next step is to update `getStaticProps` to support the preview mode.
 
@@ -122,7 +122,7 @@ We used `res.setPreviewData({})` in the preview API route, so `context.previewDa
 
 If you’re also using `getStaticPaths`, then `context.params` will also be available.
 
-### Fetch preview data
+### Fetch preview data {#fetch-preview-data}
 
 You can update `getStaticProps` to fetch different data based on `context.preview` and/or `context.previewData`.
 
@@ -146,9 +146,9 @@ That’s it! If you access the preview API route (with `secret` and `slug`) from
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-## More Details
+## More Details {#more-details}
 
-### Clear the preview mode cookies
+### Clear the preview mode cookies {#clear-the-preview-mode-cookies}
 
 By default, no expiration date is set for the preview mode cookies, so the preview mode ends when the browser is closed.
 
@@ -163,7 +163,7 @@ export default (req, res) => {
 }
 ```
 
-### Specify the preview mode duration
+### Specify the preview mode duration {#specify-the-preview-mode-duration}
 
 `setPreviewData` takes an optional second parameter which should be an options object. It accepts the following keys:
 
@@ -175,14 +175,14 @@ setPreviewData(data, {
 })
 ```
 
-### `previewData` size limits
+### `previewData` size limits {#preview-data-size-limits}
 
 You can pass an object to `setPreviewData` and have it be available in `getStaticProps`. However, because the data will be stored in a cookie, there’s a size limitation. Currently, preview data is limited to 2KB.
 
-### Works with `getServerSideProps`
+### Works with `getServerSideProps` {#works-with-get-server-side-props}
 
 The preview mode works on `getServerSideProps` as well. It will also be available on the `context` object containing `preview` and `previewData`.
 
-### Unique per `blitz build`
+### Unique per `blitz build` {#unique-per-blitz-build}
 
 The bypass cookie value and private key for encrypting the `previewData` changes when a `blitz build` is ran, this ensures that the bypass cookie can’t be guessed.

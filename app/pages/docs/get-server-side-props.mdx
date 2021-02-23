@@ -74,7 +74,7 @@ The `context` parameter is an object containing the following keys:
 > This means you can write **server-side code directly in `getServerSideProps`**.
 > This includes reading from the filesystem or a database.
 
-### Simple example
+### Simple example {#simple-example}
 
 Here’s an example which uses `getServerSideProps` to fetch data at request time and pre-renders it.
 
@@ -94,13 +94,13 @@ export async function getServerSideProps() {
 export default Page
 ```
 
-### When should I use `getServerSideProps`?
+### When should I use `getServerSideProps`? {#when-should-i-use-get-server-side-props}
 
 You should use `getServerSideProps` only if you need to pre-render a page whose data must be fetched at request time. Time to first byte (TTFB) will be slower than `getStaticProps` because the server must compute the result on every request, and the result cannot be cached by a CDN without extra configuration.
 
 If you don’t need to pre-render the data, then you should consider fetching data on the client side. [Click here to learn more](/docs/query-usage).
 
-### TypeScript: Use `GetServerSideProps`
+### TypeScript: Use `GetServerSideProps` {#type-script-use-get-server-side-props}
 
 For TypeScript, you can use the `GetServerSideProps` type from `blitz`:
 
@@ -136,7 +136,7 @@ function Page({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 export default Page
 ```
 
-### Technical details
+### Technical details {#technical-details}
 
 #### Only runs on server-side
 

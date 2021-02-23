@@ -3,7 +3,7 @@ title: usePaginatedQuery
 sidebar_label: usePaginatedQuery
 ---
 
-### Example
+### Example {#example}
 
 ```ts
 import {Suspense} from "react"
@@ -67,7 +67,7 @@ export default async function getProjects(
 }
 ```
 
-## API
+## API {#api}
 
 <!-- prettier-ignore -->
 ```js
@@ -82,7 +82,7 @@ const [
 ] = useQuery(queryResolver, queryInputArguments, options)
 ```
 
-### Arguments
+### Arguments {#arguments}
 
 - `queryResolver:` A [Blitz query resolver](./query-resolvers)
   - **Required**
@@ -92,11 +92,11 @@ const [
 - `options`
   - Optional
 
-### Options
+### Options {#options}
 
 The options are identical to the options for the [useQuery hook](./use-query)
 
-### Returns
+### Returns {#returns}
 
 `[queryResult, queryExtras]`
 

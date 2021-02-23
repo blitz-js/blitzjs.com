@@ -27,7 +27,7 @@ export default resolver.pipe(
   // highlight-start
   resolver.authorize(),
   // highlight-end
-  async (input) => {
+  async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({data: input})
     return projects
@@ -84,7 +84,7 @@ export default resolver.pipe(
   resolver.zod(CreateProject),
   // highlight-end
   resolver.authorize(),
-  async (input) => {
+  async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({data: input})
     return projects

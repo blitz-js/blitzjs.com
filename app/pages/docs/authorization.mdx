@@ -24,7 +24,9 @@ const CreateProject = z
 
 export default resolver.pipe(
   resolver.zod(CreateProject),
-  resolver.authorize(), // highlight-line
+  // highlight-start
+  resolver.authorize(),
+  // highlight-end
   async (input) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({data: input})
@@ -50,8 +52,10 @@ type CreateProjectType = z.infer<typeof CreateProject>
 export default function createProject(input: CreateProjectType, ctx: Ctx) {
   const data = CreateProject.parse(input)
 
-  ctx.session.$authorize(), // highlight-line
-
+  // highlight-start
+  ctx.session.$authorize(),
+  // highlight-end
+  
   // TODO: in multi-tenant app, you must add validation to ensure correct tenant
   const projects = await db.projects.create({data})
   return projects
@@ -76,7 +80,9 @@ const CreateProject = z
 // highlight-end
 
 export default resolver.pipe(
-  resolver.zod(CreateProject), // highlight-line
+  // highlight-start
+  resolver.zod(CreateProject),
+  // highlight-end
   resolver.authorize(),
   async (input) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant

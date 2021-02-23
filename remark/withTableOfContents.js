@@ -72,6 +72,15 @@ module.exports.withTableOfContents = () => {
         !/^\s*<Heading[^>]*\sid=/.test(node.value)
       ) {
         throw new Error(`This Heading is missing an "id" tag:\n${node.value}`)
+      } else if (node.type === "heading" && node.depth <= 4) {
+        const headingText = node.children
+          .filter((n) => ["text", "inlineCode"].includes(n.type))
+          .map((n) => n.value)
+          .join("")
+
+        if (/ {#[a-z0-9-]+}$/.test(headingText)) {
+          throw new Error(`Headings lower than 3 can't have a handle:\n${headingText}`)
+        }
       }
     }
 

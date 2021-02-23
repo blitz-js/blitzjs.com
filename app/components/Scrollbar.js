@@ -1,21 +1,16 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const DEFAULT_SCROLLBAR_THUMB_SIZE = 54
 
-export default function Scrollbar(props: {
-  children: React.ReactChildren
-  thumbHeight: number
-  className: string
-  thumbColor?: "white" | "black"
-}) {
+export default function Scrollbar(props) {
   const { children, thumbHeight, className, thumbColor } = props
 
-  const elementRef = useRef<HTMLDivElement>(null)
+  const elementRef = useRef(null)
 
   const [scrollbarThumb, setScrollbarThumb] = useState(DEFAULT_SCROLLBAR_THUMB_SIZE)
   const [displacement, setDisplacement] = useState(0)
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const element = elementRef.current
 
     if (element) {
@@ -23,12 +18,13 @@ export default function Scrollbar(props: {
       let positionLeft =
         (scrollLeft * (offsetWidth - scrollbarThumb)) /
         (scrollWidth - scrollbarThumb - (offsetWidth - scrollbarThumb))
+      if (isNaN(positionLeft)) positionLeft = 0
       positionLeft = Math.min(positionLeft, offsetWidth - scrollbarThumb)
       setDisplacement(positionLeft)
     }
-  }
+  }, [elementRef, scrollbarThumb])
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const element = elementRef.current
 
     if (element) {
@@ -40,28 +36,28 @@ export default function Scrollbar(props: {
 
       setScrollbarThumb(minScrollbarWidth)
     }
-  }
+  }, [elementRef])
 
   useEffect(() => {
     const element = elementRef.current
 
-    element?.addEventListener("scroll", handleScroll)
+    if (element) element.addEventListener("scroll", handleScroll)
     window.addEventListener("resize", handleResize)
     window.addEventListener("resize", handleScroll)
 
     return () => {
-      element?.removeEventListener("scroll", handleScroll)
+      if (element) element.removeEventListener("scroll", handleScroll)
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("resize", handleScroll)
     }
-  }, [scrollbarThumb])
+  }, [elementRef, handleScroll, handleResize])
 
   useEffect(() => {
     handleScroll()
     handleResize()
-  }, [])
+  }, [handleScroll, handleResize])
 
-  const getThumbColor = (color?: "white" | "black") => {
+  const getThumbColor = (color) => {
     if (color !== undefined) {
       if (color === "white") {
         return "white"

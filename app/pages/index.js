@@ -110,7 +110,7 @@ const Home = ({ randomContributors }) => {
               </FeatureIcon>
             </div>
             <div className="grid w-full gap-5 px-6 mx-auto text-white xl:gap-10 max-w-7xl lg:grid-cols-2">
-              <Link href="#" passHref>
+              <Link href="/#" passHref>
                 <StyledLink className="flex items-center justify-between pb-1 text-lg border-b border-opacity-50 border-blue-mid lg:col-span-2 font-secondary xl:text-xl">
                   <span>Top Videos</span>
 

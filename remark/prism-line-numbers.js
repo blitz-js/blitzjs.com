@@ -82,7 +82,7 @@ module.exports = (Prism) => {
       return whiteSpace === "pre-wrap" || whiteSpace === "pre-line"
     })
 
-    if (elements.length == 0) {
+    if (elements.length === 0) {
       return
     }
 

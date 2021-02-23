@@ -1,19 +1,15 @@
 # Blitzjs.com - Website & Docs
 
-## Website
-
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
-
 ### Installation
 
-```
+```bash
 yarn
 ```
 
 ### Local Development
 
-```
-yarn start
+```bash
+yarn dev
 ```
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
@@ -24,7 +20,7 @@ The `main` branch is automatically deployed to https://blitzjs.com
 
 ## Language Translations
 
-We're setting up this repo to support language translations as soon as folks step up to do so. We plan to follow the same process as the reactjs.com translations.
+More info at [blitzjs.com-translation](https://github.com/blitz-js/blitzjs.com-translation/blob/main/README.md)!
 
 ## Code Syntax Highlights
 

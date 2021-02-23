@@ -26,9 +26,6 @@ const fallbackDefaultExports = {
 
 module.exports = withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "mdx"],
-  experimental: {
-    modern: true,
-  },
   async redirects() {
     return [
       {

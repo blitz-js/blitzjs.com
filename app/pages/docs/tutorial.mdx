@@ -562,7 +562,7 @@ const CreateQuestion = z
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
   resolver.authorize(),
-  async ({ id }) => {
+  async (input) => {
 -   const question = await db.question.create({ data: input })
 +   const question = await db.question.create({
 +      data: {

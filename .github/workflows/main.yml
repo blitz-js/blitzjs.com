@@ -1,6 +1,14 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - canary
+  pull_request:
+    branches:
+      - main
+      - canary
 
 jobs:
   lint:

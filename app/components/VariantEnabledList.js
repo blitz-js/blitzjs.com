@@ -1,5 +1,4 @@
 import { defaultConfig } from "@/utils/defaultConfig"
-import { ConfigSample } from "@/components/ConfigSample"
 
 const variantListInverted = Object.entries(defaultConfig.variants).reduce(
   (reduced, [plugin, variants]) => {

@@ -1,7 +1,7 @@
 // https://github.com/PrismJS/prism/blob/master/plugins/diff-highlight/prism-diff-highlight.js
 module.exports = (Prism) => {
   var LANGUAGE_REGEX = /diff-([\w-]+)/i
-  var HTML_TAG = /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/gi
+  var HTML_TAG = /<\/?(?!\d)[^\s>/=$<%]+(?:\s(?:\s*[^\s>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/gi
   //this will match a line plus the line break while ignoring the line breaks HTML tags may contain.
   var HTML_LINE = RegExp(
     /(?:__|[^\r\n<])*(?:\r\n?|\n|(?:__|[^\r\n<])(?![^\r\n]))/.source.replace(/__/g, function () {

@@ -293,7 +293,7 @@ ctx.session.$authorize() // throws AuthenticationError
 ctx.session.$authorize() // success - no error
 ctx.session.$authorize("customer") // success - no error
 ctx.session.$authorize("admin") // throws AuthorizationError
-ctx.session.$authorize(["admin", "customer") // success - no error
+ctx.session.$authorize(["admin", "customer"]) // success - no error
 ```
 
 ### Making a Custom Adapter {#making-a-custom-adapter}

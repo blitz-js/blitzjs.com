@@ -32,7 +32,7 @@ export function DocumentationLayout(props) {
       <div className="max-w-7xl mx-auto font-secondary dark:">
         <SidebarLayout nav={documentationNav} {...props} />
       </div>
-      <Footer className="text-black dark:text-white" hasDarkMode />
+      <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />
     </div>
   )
 }

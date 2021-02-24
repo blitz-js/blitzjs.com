@@ -26,7 +26,7 @@ export function CodeWindow({
               <button
                 key={i}
                 onClick={() => onTabClick(i)}
-                className={`px-4 ml-3 text-xs text-black dark:text-white rounded-t-lg font-mono ${
+                className={`px-4 ml-3 text-xs text-black dark:text-dark-mode-text rounded-t-lg font-mono ${
                   tab.selected
                     ? "bg-gray-50 dark:bg-purple-mid"
                     : "bg-gray-300 dark:bg-purple-extradark"
@@ -72,12 +72,12 @@ CodeWindow.Code = forwardRef(({ tokens, initialLineNumber = 1, ...props }, ref) 
         <pre className="flex min-h-full text-xs">
           <div
             aria-hidden="true"
-            className="flex-none hidden py-4 pr-4 font-mono text-right text-black text-opacity-50 select-none dark:text-white md:block"
+            className="flex-none hidden py-4 pr-4 font-mono text-right text-black text-opacity-50 select-none dark:text-dark-mode-text md:block"
             style={{ width: 50 }}
           >
             {lineNumbers}
           </div>
-          <code className="relative flex-auto block px-4 pt-4 pb-4 overflow-auto font-mono text-black dark:text-white text-xs">
+          <code className="relative flex-auto block px-4 pt-4 pb-4 overflow-auto font-mono text-black dark:text-dark-mode-text text-xs">
             <Code tokens={tokens} {...props} />
           </code>
         </pre>

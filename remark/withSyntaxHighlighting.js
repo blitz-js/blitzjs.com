@@ -13,7 +13,7 @@ module.exports.withSyntaxHighlighting = () => {
       }
       node.type = "html"
       node.value = [
-        `<div class="my-6 rounded-xl overflow-hidden bg-code-block dark:bg-purple-off-black">`,
+        `<div class="my-6 rounded-xl overflow-hidden bg-code-block dark:bg-purple-dark-code">`,
         `<pre class="language-${lang}">`,
         `<code class="language-${lang}">`,
         highlightCode(node.value, lang),

@@ -20,6 +20,7 @@ module.exports = {
       "off-black": "#191919",
       "off-white": "#EEF2F7",
       white: "#FCFCFD",
+      "dark-mode-text": "#c9d1d9",
 
       amber: colors.amber,
       blue: {
@@ -56,8 +57,10 @@ module.exports = {
         mid: "#5600C2",
         primary: "#45009D",
         dark: "#34017B",
+        middark: "#27005d",
         extradark: "#10002f",
         "off-black": "#1F084E",
+        "dark-code": "#150635",
         deep: "#0E001D",
       },
       red: colors.red,
@@ -296,9 +299,9 @@ module.exports = {
         },
         dark: {
           css: {
-            color: theme("colors.white"),
+            color: theme("colors.dark-mode-text"),
             "h1, h2, h3, h4, h5, h6, a, strong, code, pre code, blockquote": {
-              color: theme("colors.white"),
+              color: theme("colors.dark-mode-text"),
             },
             th: {
               color: theme("colors.gray.400"),
@@ -315,7 +318,7 @@ module.exports = {
               },
             },
             code: {
-              backgroundColor: theme("colors.purple.dark"),
+              backgroundColor: theme("colors.purple.middark"),
             },
             "pre code": {
               backgroundColor: "transparent",

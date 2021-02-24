@@ -346,7 +346,7 @@ const Home = ({ randomContributors }) => {
                 <h2 className="relative text-3xl font-semibold xl:text-5xl">
                   <Hand
                     variant="sponsors-left"
-                    className="hidden xl:block -left-80"
+                    className="hidden xl:block -left-80 pointer-events-none"
                     style={{ top: "-18.05rem" }}
                   />
                   Our Sponsors
@@ -364,12 +364,12 @@ const Home = ({ randomContributors }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Sponsor or Donate
+                    Support Blitz
                   </ButtonLink>
                 </div>
               </div>
 
-              <div className="xl:max-w-2xl mx-auto -mt-10">
+              <div className="xl:max-w-2xl mx-auto">
                 <SponsorPack />
               </div>
             </div>

@@ -62,6 +62,7 @@ export const documentationNav = [
       pages["contributing"],
       pages["maintainers"],
       pages["code-of-conduct"],
+      pages["translations"],
     ],
   },
   {

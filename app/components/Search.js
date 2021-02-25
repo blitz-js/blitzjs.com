@@ -67,7 +67,7 @@ export function Search({ className = "" }) {
         type="button"
         ref={searchButtonRef}
         onClick={onOpen}
-        className={`py-2 px-3 rounded-md focus:outline-none focus:ring-inset focus:ring-white focus:ring-2 inline-block hover:bg-purple-light dark:hover:bg-purple-off-black ${className}`}
+        className={`py-2 px-3 rounded-md focus:outline-none focus:ring-inset focus:ring-white focus:ring-2 inline-block hover:bg-purple-light dark:hover:bg-purple-off-black hover:text-white ${className}`}
       >
         <BiSearch size="1.375rem" className="inline" />{" "}
         <span className="hidden mx-1 text-base lg:inline">Search</span>

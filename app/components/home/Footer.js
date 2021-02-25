@@ -8,7 +8,7 @@ import clsx from "clsx"
 export function Footer({ className, hasDarkMode }) {
   return (
     <footer className={className}>
-      <div className="border-t border-white border-opacity-50">
+      <div className="border-t border-gray-300 dark:border-white border-opacity-50">
         <div className="relative mx-auto max-w-7xl">
           <a href="#top" className="absolute right-0 mr-2 -mt-5 xl:mt-24 xl:mr-6">
             <Icon

@@ -55,7 +55,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
         ref={scrollRef}
         className="px-1 bg-white dark:bg-purple-deep font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) lg:overflow-y-auto"
       >
-        <ul>
+        <ul className="space-y-16 mt-10">
           {children}
           {nav &&
             nav
@@ -63,7 +63,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
                 let publishedItems = category.pages.filter((item) => item.published !== false)
                 if (publishedItems.length === 0 && !fallbackHref) return null
                 return (
-                  <li key={category.title.props.title} className="my-10">
+                  <li key={category.title.props.title} className="">
                     {category.title}
                     <ul>
                       {(fallbackHref ? category.pages : publishedItems).map((item, i) => (

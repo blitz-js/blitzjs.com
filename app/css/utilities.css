@@ -178,7 +178,7 @@ body.cursor-grabbing * {
 .topic-select .topic-select__placeholder,
 .topic-select .topic-select__menu-list,
 .topic-select .topic-select__single-value {
-  @apply text-black dark:text-white font-medium;
+  @apply text-black dark:text-dark-mode-text font-medium;
 }
 
 .topic-select .topic-select__menu,

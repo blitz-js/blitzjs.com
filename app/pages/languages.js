@@ -12,35 +12,41 @@ const LanguagesPage = ({ languages }) => {
   }, [navIsOpen])
 
   return (
-    <div className="relative py-1 md:py-3">
+    <div className="relative py-1 md:py-3 min-h-screen bg-white dark:bg-purple-deep">
       <SocialCards imageUrl="/social-homepage.png" />
-      <div className="z-30 text-white col-span-full">
-        <Header
-          className="px-6 mx-auto max-w-7xl"
-          onNavToggle={(isOpen) => {
-            setNavIsOpen(isOpen)
-          }}
-        />
-      </div>
+      <Header
+        className="px-6 mx-auto max-w-7xl"
+        hasLightBg
+        useColoredLogo
+        stickyBgClass="bg-white dark:bg-purple-deep"
+        hasFade
+        onNavToggle={(isOpen) => {
+          setNavIsOpen(isOpen)
+        }}
+      />
       <div
         className={
           "absolute w-full h-full row-start-1 row-end-5 background-to-video rounded-bl-3xl xl:rounded-bl-4xl bg-gradient-to-b from-purple-mid to-purple-primary dark:from-black dark:to-purple-off-black " +
           (navIsOpen ? "z-20 fixed" : "-z-10")
         }
       ></div>
-      <div className="mx-auto max-w-7xl px-6 py-24 xl:py-44 text-white">
-        <h1 className="font-primary text-3xl lg:text4xl xl:text-5xl font-semibold mb-16 w-full">
-          Languages
-        </h1>
+      <main className="mx-auto max-w-7xl px-6 py-24 xl:py-44 text-black dark:text-white">
+        <div className="mb-16">
+          <h1 className="font-primary text-3xl lg:text4xl xl:text-5xl font-semibold">Languages</h1>
+          <p className="font-secondary text-sm">
+            The Blitz.js documentation isn't available in any language other than English, but we
+            are working on these languages:
+          </p>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-x-12 gap-y-6">
           {languages.map((lang) => (
             <div key={lang.code}>
               <h3 className="xl:mb-0 text-xl">{lang.name}</h3>
-              <p className="text-sm">
+              <p className="text-sm font-secondary">
                 {lang.completition}% —{" "}
                 <a
                   href={`https://github.com/blitz-js/${lang.code}.blitzjs.com/issues/1`}
-                  className="font-bold underline hover:text-purple-extralight"
+                  className="text-purple-light font-medium dark:font-bold no-underline dark:underline dark:hover:text-purple-extralight hover:underline"
                 >
                   Contribute
                 </a>
@@ -48,8 +54,8 @@ const LanguagesPage = ({ languages }) => {
             </div>
           ))}
         </div>
-      </div>
-      <Footer className="dark:bg-purple-off-black bg-purple-mid text-white" hasDarkMode />
+      </main>
+      <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />
     </div>
   )
 }

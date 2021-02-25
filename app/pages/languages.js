@@ -65,6 +65,7 @@ const getStaticProps = async () => {
     auth: process.env.GITHUB_AUTH_TOKEN,
   })
 
+  // Theorically, this will break when we reach 1000+ languages
   const { data } = await octokit.repos.getContent({
     owner: "blitz-js",
     repo: "blitzjs.com-translation",
@@ -74,6 +75,7 @@ const getStaticProps = async () => {
   const languages = await Promise.all(
     data.map(async (lang) => {
       const [{ data: langJson }, { data: langIssue }] = await Promise.all([
+        // Gets each lang.json content, because it doesn't come with the first request `data`
         octokit.repos.getContent({
           owner: "blitz-js",
           repo: "blitzjs.com-translation",
@@ -92,13 +94,16 @@ const getStaticProps = async () => {
 
       const checkedBoxes = langIssue.body.match(/\* \[x\]/gi)
       const totalBoxes = langIssue.body.match(/\* \[(x| )?\]/gi)
+
+      // Instead of returning an empty array when there aren't any matches, `match` returns `undefined`,
+      // so this checks for empty arrays (and prevents dividing by 0)
       const completition = !totalBoxes
         ? 100
         : !checkedBoxes
         ? 0
         : Math.round((checkedBoxes.length / totalBoxes.length) * 100)
 
-      return { ...langMeta, completition, completed: false }
+      return { ...langMeta, completition }
     })
   )
 

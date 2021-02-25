@@ -30,12 +30,11 @@ const LanguagesPage = ({ languages }) => {
           (navIsOpen ? "z-20 fixed" : "-z-10")
         }
       ></div>
-      <main className="mx-auto max-w-7xl px-6 py-24 xl:py-44 text-black dark:text-white">
-        <div className="mb-16">
+      <main className="mx-auto max-w-7xl px-6 py-24 xl:py-44 text-black dark:text-dark-mode-text space-y-16 lg:space-y-20">
+        <div className="space-y-6">
           <h1 className="font-primary text-3xl lg:text4xl xl:text-5xl font-semibold">Languages</h1>
-          <p className="font-secondary text-sm">
-            The Blitz.js documentation isn't available in any language other than English, but we
-            are working on these languages:
+          <p className="font-secondary text-lg text-gray-600 dark:text-gray-300">
+            The Blitz documentation is currently being translated into the following languages:
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-x-12 gap-y-6">
@@ -46,9 +45,9 @@ const LanguagesPage = ({ languages }) => {
                 {lang.completition}% —{" "}
                 <a
                   href={`https://github.com/blitz-js/${lang.code}.blitzjs.com/issues/1`}
-                  className="text-purple-light font-medium dark:font-bold no-underline dark:underline dark:hover:text-purple-extralight hover:underline"
+                  className="text-purple-light dark:text-purple-extralight font-medium dark:font-bold no-underline dark:underline hover:underline"
                 >
-                  Contribute
+                  Help Translate
                 </a>
               </p>
             </div>

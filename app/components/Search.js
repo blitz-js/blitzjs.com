@@ -97,8 +97,16 @@ export function Search({ className = "" }) {
 
                 const hash = a.hash === "#content-wrapper" ? "" : a.hash
 
+                // The titles are parset to plain text, so these HTML tags needs to be converted.
+                const hierarchy = { ...item.hierarchy }
+                hierarchy.lvl0 = hierarchy.lvl0
+                  .replace(/&amp;/g, "&")
+                  .replace(/&lt;/g, "<")
+                  .replace(/&gt;/g, ">")
+
                 return {
                   ...item,
+                  hierarchy,
                   url: `${a.pathname}${hash}`,
                 }
               })

@@ -662,7 +662,7 @@ Now hop back to our main questions page (`app/pages/questions/index.tsx`)in your
 
 Now check `/questions` in the browser. **Magic!**
 
-## Let’s do one more thing - let people vote on these questions! {#let-s-do-one-more-thing-let-people-vote-on-these-questions}
+## Let’s let people vote on these questions! {#let-people-vote-on-questions}
 
 Open `app/pages/questions/[questionId].tsx` in your editor. First, we’re going to improve this page somewhat.
 
@@ -726,12 +726,9 @@ In our `li`, add a `button` like so:
 
 Then, import the `updateChoice` mutation we updated and create a `handleVote` function in our page:
 
-```tsx
+```diff
 // app/pages/questions/[questionId].tsx
-
-// highlight-start
-import updateChoice from "app/choices/mutations/updateChoice"
-// highlight-end
++import updateChoice from "app/choices/mutations/updateChoice"
 
 //...
 
@@ -740,19 +737,16 @@ export const Question = () => {
   const questionId = useParam("questionId", "number")
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [question] = useQuery(getQuestion, { id: questionId })
-  // highlight-start
-  const [updateChoiceMutation] = useMutation(updateChoice)
-
-  const handleVote = async (id: number) => {
-    try {
-      const updated = await updateChoiceMutation({ id })
-      refetch()
-      alert("Success!")
-    } catch (error) {
-      alert("Error updating choice " + JSON.stringify(error, null, 2))
-    }
-  }
-  // highlight-end
++  const [updateChoiceMutation] = useMutation(updateChoice)
++
++  const handleVote = async (id: number) => {
++    try {
++      const updated = await updateChoiceMutation({ id })
++      refetch()
++    } catch (error) {
++      alert("Error updating choice " + JSON.stringify(error, null, 2))
++    }
++  }
 
   return (
 ```
@@ -789,7 +783,6 @@ export const Question = () => {
     try {
       await updateChoiceMutation({ id })
       refetch()
-      alert("Success!")
     } catch (error) {
       alert("Error updating choice " + JSON.stringify(error, null, 2))
     }
@@ -833,6 +826,53 @@ export const Question = () => {
   )
 }
 ```
+
+## Lastly, let's allow editing choices for an existing question {#edit-choices-for-question}
+
+If you click the **Edit** button on one of your existing questions, you'll see it uses the same form as creating questions. So that part is already done! We just need to update our mutation.
+
+Open `app/questions/mutations/updateQuestion.ts` and make the following changes:
+
+```diff
+//app/questions/mutations/updateQuestion.ts
+import { resolver } from "blitz"
+import db from "db"
+import * as z from "zod"
+
+const UpdateQuestion = z
+  .object({
+    id: z.number(),
+    text: z.string(),
++   choices: z.array(z.object({ id: z.number().optional(), text: z.string() }).nonstrict()),
+  })
+  .nonstrict()
+
+export default resolver.pipe(
+  resolver.zod(UpdateQuestion),
+  resolver.authorize(),
+  async ({ id, ...data }) => {
+-   const question = await db.question.update({ where: { id }, data })
++   const question = await db.question.update({
++     where: { id },
++     data: {
++       ...data,
++       choices: {
++         upsert: data.choices.map((choice) => ({
++           // Appears to be a prisma bug because `|| 0` shouldn't be needed
++           where: { id: choice.id || 0 },
++           create: { text: choice.text },
++           update: { text: choice.text },
++         })),
++       },
++     },
++   })
+
+    return question
+  }
+)
+```
+
+[`upsert`](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#upsert) is a special operation that means, "If this item exists, update it. Else create it". This is perfect for this case because we didn't require the user to add three choices when creating the question. So if later the user adds another choice by editing the question, then it'll be created here.
 
 ## Conclusion {#conclusion}
 

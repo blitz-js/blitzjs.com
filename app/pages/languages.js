@@ -30,7 +30,7 @@ const LanguagesPage = ({ languages }) => {
           (navIsOpen ? "z-20 fixed" : "-z-10")
         }
       ></div>
-      <main className="mx-auto max-w-7xl px-6 py-24 xl:py-44 text-black dark:text-dark-mode-text space-y-16 lg:space-y-20">
+      <main className="mx-auto max-w-7xl px-6 py-24 xl:py-36 text-black dark:text-dark-mode-text space-y-16 lg:space-y-20">
         <div className="space-y-6">
           <h1 className="font-primary text-3xl lg:text4xl xl:text-5xl font-semibold">Languages</h1>
           <p className="font-secondary text-lg text-gray-600 dark:text-gray-300">
@@ -52,6 +52,17 @@ const LanguagesPage = ({ languages }) => {
               </p>
             </div>
           ))}
+        </div>
+        <div className="font-secondary text-base text-gray-600 dark:text-gray-300">
+          Don't see your language?{" "}
+          <a
+            href="https://github.com/blitz-js/blitzjs.com-translation#starting-a-new-translation"
+            target="_blank"
+            rel="noreferrer"
+            className="text-purple-light dark:text-purple-extralight font-medium dark:font-bold no-underline dark:underline hover:underline"
+          >
+            Read how to start a new translation
+          </a>
         </div>
       </main>
       <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />

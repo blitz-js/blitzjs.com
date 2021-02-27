@@ -741,7 +741,7 @@ export const Question = () => {
 +
 +  const handleVote = async (id: number) => {
 +    try {
-+      const updated = await updateChoiceMutation({ id })
++      await updateChoiceMutation({ id })
 +      refetch()
 +    } catch (error) {
 +      alert("Error updating choice " + JSON.stringify(error, null, 2))

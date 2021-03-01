@@ -12,7 +12,7 @@ Any file inside an `api/` folder are accessible at a URL corresponding to its pa
 For example, the following API route `app/api/hello.js` handles a `json` response:
 
 ```js
-export default (req, res) => {
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
   res.end(JSON.stringify({name: "John Doe"}))
@@ -27,7 +27,7 @@ For an API route to work, you need to export as default a function (a.k.a **requ
 To handle different HTTP methods in an API route, you can use `req.method` in your request handler, like so:
 
 ```js
-export default (req, res) => {
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   if (req.method === "POST") {
     // Process a POST request
   } else {
@@ -49,7 +49,7 @@ You can use the `getSessionContext` function to get the session of the user. Her
 ```ts
 import {getSessionContext} from "@blitzjs/server"
 
-export default async function customRoute(req, res) {
+export default async function customRoute(req: BlitzApiRequest, res: BlitzApiResponse) {
   const session = await getSessionContext(req, res)
   console.log("User ID:", session.userId)
 
@@ -82,7 +82,7 @@ Dynamic API routes follow the same file naming rules used for `pages`.
 For example, the API route `app/api/post/[pid].js` has the following code:
 
 ```js
-export default (req, res) => {
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {pid},
   } = req
@@ -135,7 +135,7 @@ And in the case of `/api/post/a/b`, and any other matching path, new parameters 
 An API route for `app/api/post/[...slug].js` could look like this:
 
 ```js
-export default (req, res) => {
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {slug},
   } = req
@@ -172,7 +172,7 @@ The `query` objects are as follows:
 The response (`res`) includes a set of Express.js-like methods to improve the developer experience and increase the speed of creating new API endpoints, take a look at the following example:
 
 ```js
-export default (req, res) => {
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.status(200).json({name: "Blitz.js"})
 }
 ```
@@ -277,7 +277,7 @@ function runMiddleware(req, res, fn) {
   })
 }
 
-async function handler(req, res) {
+async function handler(req: BlitzApiRequest, res: BlitzApiResponse) {
   // Run the middleware
   await runMiddleware(req, res, cors)
 

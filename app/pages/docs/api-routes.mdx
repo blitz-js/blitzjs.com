@@ -11,8 +11,8 @@ Any file inside an `api/` folder are accessible at a URL corresponding to its pa
 
 For example, the following API route `app/api/hello.js` handles a `json` response:
 
-```js
-export default (req, res) => {
+```ts
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
   res.end(JSON.stringify({name: "John Doe"}))
@@ -21,13 +21,13 @@ export default (req, res) => {
 
 For an API route to work, you need to export as default a function (a.k.a **request handler**), which then receives the following parameters:
 
-- `req`: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage), plus some pre-built middlewares you can see [here](#default-middlewares)
-- `res`: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse), plus some helper functions you can see [here](#response-helpers)
+- `req: BlitzApiRequest`: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage), plus some pre-built middlewares you can see [here](#default-middlewares)
+- `res: BlitzApiResponse`: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse), plus some helper functions you can see [here](#response-helpers)
 
 To handle different HTTP methods in an API route, you can use `req.method` in your request handler, like so:
 
-```js
-export default (req, res) => {
+```ts
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   if (req.method === "POST") {
     // Process a POST request
   } else {
@@ -49,7 +49,7 @@ You can use the `getSessionContext` function to get the session of the user. Her
 ```ts
 import {getSessionContext} from "@blitzjs/server"
 
-export default async function customRoute(req, res) {
+export default async function customRoute(req: BlitzApiRequest, res: BlitzApiResponse) {
   const session = await getSessionContext(req, res)
   console.log("User ID:", session.userId)
 
@@ -81,8 +81,8 @@ Dynamic API routes follow the same file naming rules used for `pages`.
 
 For example, the API route `app/api/post/[pid].js` has the following code:
 
-```js
-export default (req, res) => {
+```ts
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {pid},
   } = req
@@ -134,8 +134,8 @@ And in the case of `/api/post/a/b`, and any other matching path, new parameters 
 
 An API route for `app/api/post/[...slug].js` could look like this:
 
-```js
-export default (req, res) => {
+```ts
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {slug},
   } = req
@@ -171,8 +171,8 @@ The `query` objects are as follows:
 
 The response (`res`) includes a set of Express.js-like methods to improve the developer experience and increase the speed of creating new API endpoints, take a look at the following example:
 
-```js
-export default (req, res) => {
+```ts
+export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.status(200).json({name: "Blitz.js"})
 }
 ```
@@ -195,7 +195,7 @@ API routes provide built in middlewares which parse the incoming reques
 
 Every API route can export a `config` object to change the default configs, which are the following:
 
-```js
+```ts
 export const config = {
   api: {
     bodyParser: {
@@ -209,7 +209,7 @@ The `api` object includes all configs available for API routes.
 
 `bodyParser` enables body parsing, you can disable it if you want to consume it as a `Stream`:
 
-```js
+```ts
 export const config = {
   api: {
     bodyParser: false,
@@ -219,7 +219,7 @@ export const config = {
 
 `bodyParser.sizeLimit` is the maximum size allowed for the parsed body, in any format supported by [bytes](https://github.com/visionmedia/bytes.js), like so:
 
-```js
+```ts
 export const config = {
   api: {
     bodyParser: {
@@ -231,7 +231,7 @@ export const config = {
 
 `externalResolver` is an explicit flag that tells the server that this route is being handled by an external resolver like _express_ or _connect_. Enabling this option disables warnings for unresolved requests.
 
-```js
+```ts
 export const config = {
   api: {
     externalResolver: true,
@@ -255,7 +255,7 @@ yarn add cors
 
 Now, let's add `cors` to the API route:
 
-```js
+```ts
 import Cors from "cors"
 
 // Initializing the cors middleware
@@ -277,7 +277,7 @@ function runMiddleware(req, res, fn) {
   })
 }
 
-async function handler(req, res) {
+async function handler(req: BlitzApiRequest, res: BlitzApiResponse) {
   // Run the middleware
   await runMiddleware(req, res, cors)
 

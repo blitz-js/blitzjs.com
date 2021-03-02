@@ -3,6 +3,5 @@
 *.ico
 *.lock
 db/migrations
-**/*.mdx
 .next
 .blitz

@@ -3,13 +3,16 @@ title: API Routes
 sidebar_label: API Routes
 ---
 
-:::info
-Unlike Next.js, your `api/` folder should be a sibling of `pages/` instead of being nested inside. But `pages/api` is still supported for compatibility with Next.js.
-:::
+:::info Unlike Next.js, your `api/` folder should be a sibling of `pages/`
+instead of being nested inside. But `pages/api` is still supported for
+compatibility with Next.js. :::
 
-Any file inside an `api/` folder are accessible at a URL corresponding to its path inside `api/`. So `app/projects/api/webhook.ts` will be at `localhost:3000/api/webhook`.
+Any file inside an `api/` folder are accessible at a URL corresponding to
+its path inside `api/`. So `app/projects/api/webhook.ts` will be at
+`localhost:3000/api/webhook`.
 
-For example, the following API route `app/api/hello.js` handles a `json` response:
+For example, the following API route `app/api/hello.js` handles a `json`
+response:
 
 ```ts
 export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
@@ -19,12 +22,18 @@ export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
 }
 ```
 
-For an API route to work, you need to export as default a function (a.k.a **request handler**), which then receives the following parameters:
+For an API route to work, you need to export as default a function (a.k.a
+**request handler**), which then receives the following parameters:
 
-- `req: BlitzApiRequest`: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage), plus some pre-built middlewares you can see [here](#default-middlewares)
-- `res: BlitzApiResponse`: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse), plus some helper functions you can see [here](#response-helpers)
+- `req: BlitzApiRequest`: An instance of
+  [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage),
+  plus some pre-built middlewares you can see [here](#default-middlewares)
+- `res: BlitzApiResponse`: An instance of
+  [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse),
+  plus some helper functions you can see [here](#response-helpers)
 
-To handle different HTTP methods in an API route, you can use `req.method` in your request handler, like so:
+To handle different HTTP methods in an API route, you can use `req.method`
+in your request handler, like so:
 
 ```ts
 export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
@@ -36,20 +45,31 @@ export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
 }
 ```
 
-To fetch API endpoints, take a look into any of the examples at the start of this section.
+To fetch API endpoints, take a look into any of the examples at the start
+of this section.
 
-> API Routes [do not specify CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), meaning they are **same-origin only** by default. You can customize such behavior by wrapping the request handler with the [cors middleware](/docs/api-routes#connectexpress-middleware-support).
+> API Routes
+> [do not specify CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS),
+> meaning they are **same-origin only** by default. You can customize such
+> behavior by wrapping the request handler with the
+> [cors middleware](/docs/api-routes#connectexpress-middleware-support).
 
-> API Routes do not increase your client-side bundle size. They are server-side only bundles.
+> API Routes do not increase your client-side bundle size. They are
+> server-side only bundles.
 
 ## Authentication and Session Context {#authentication-and-session-context}
 
-You can use the `getSessionContext` function to get the session of the user. Here is an example using session in a API route `app/api/customRoute.tsx`:
+You can use the `getSessionContext` function to get the session of the
+user. Here is an example using session in a API route
+`app/api/customRoute.tsx`:
 
 ```ts
 import {getSessionContext} from "@blitzjs/server"
 
-export default async function customRoute(req: BlitzApiRequest, res: BlitzApiResponse) {
+export default async function customRoute(
+  req: BlitzApiRequest,
+  res: BlitzApiResponse,
+) {
   const session = await getSessionContext(req, res)
   console.log("User ID:", session.userId)
 
@@ -114,19 +134,24 @@ Both are equivalent.
 
 #### Catch all API routes
 
-API Routes can be extended to catch all paths by adding three dots (`...`) inside the brackets. For example:
+API Routes can be extended to catch all paths by adding three dots (`...`)
+inside the brackets. For example:
 
-- `app/api/post/[...slug].js` matches `/api/post/a`, but also `/api/post/a/b`, `/api/post/a/b/c` and so on.
+- `app/api/post/[...slug].js` matches `/api/post/a`, but also
+  `/api/post/a/b`, `/api/post/a/b/c` and so on.
 
 > **Note**: You can use names other than `slug`, such as: `[...param]`
 
-Matched parameters will be passed as a query parameter (`slug` in the example) to the api handler, and it will always be an array, so, the path `/api/post/a` will have the following `query` object:
+Matched parameters will be passed as a query parameter (`slug` in the
+example) to the api handler, and it will always be an array, so, the path
+`/api/post/a` will have the following `query` object:
 
 ```json
 {"slug": ["a"]}
 ```
 
-And in the case of `/api/post/a/b`, and any other matching path, new parameters will be added to the array, like so:
+And in the case of `/api/post/a/b`, and any other matching path, new
+parameters will be added to the array, like so:
 
 ```json
 {"slug": ["a", "b"]}
@@ -144,13 +169,16 @@ export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
 }
 ```
 
-Now, a request to `/api/post/a/b/c` will respond with the text: `Post: a, b, c`.
+Now, a request to `/api/post/a/b/c` will respond with the text:
+`Post: a, b, c`.
 
 #### Optional catch all API routes
 
-Catch all routes can be made optional by including the parameter in double brackets (`[[...slug]]`).
+Catch all routes can be made optional by including the parameter in double
+brackets (`[[...slug]]`).
 
-For example, `app/api/post/[[...slug]].js` will match `/api/post`, `/api/post/a`, `/api/post/a/b`, and so on.
+For example, `app/api/post/[[...slug]].js` will match `/api/post`,
+`/api/post/a`, `/api/post/a/b`, and so on.
 
 The `query` objects are as follows:
 
@@ -162,14 +190,20 @@ The `query` objects are as follows:
 
 #### Caveats
 
-- Predefined API routes take precedence over dynamic API routes, and dynamic API routes over catch all API routes. Take a look at the following examples:
+- Predefined API routes take precedence over dynamic API routes, and
+  dynamic API routes over catch all API routes. Take a look at the
+  following examples:
   - `app/api/post/create.js` - Will match `/api/post/create`
-  - `app/api/post/[pid].js` - Will match `/api/post/1`, `/api/post/abc`, etc. But not `/api/post/create`
-  - `app/api/post/[...slug].js` - Will match `/api/post/1/2`, `/api/post/a/b/c`, etc. But not `/api/post/create`, `/api/post/abc`
+  - `app/api/post/[pid].js` - Will match `/api/post/1`, `/api/post/abc`,
+    etc. But not `/api/post/create`
+  - `app/api/post/[...slug].js` - Will match `/api/post/1/2`,
+    `/api/post/a/b/c`, etc. But not `/api/post/create`, `/api/post/abc`
 
 ## Response Helpers {#response-helpers}
 
-The response (`res`) includes a set of Express.js-like methods to improve the developer experience and increase the speed of creating new API endpoints, take a look at the following example:
+The response (`res`) includes a set of Express.js-like methods to improve
+the developer experience and increase the speed of creating new API
+endpoints, take a look at the following example:
 
 ```ts
 export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
@@ -179,21 +213,31 @@ export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
 
 The included helpers are:
 
-- `res.status(code)` - A function to set the status code. `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
-- `res.json(json)` - Sends a JSON response. `json` must be a valid JSON object
-- `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an `object` or a `Buffer`
+- `res.status(code)` - A function to set the status code. `code` must be a
+  valid
+  [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
+- `res.json(json)` - Sends a JSON response. `json` must be a valid JSON
+  object
+- `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an
+  `object` or a `Buffer`
 
 ## Default Middlewares {#default-middlewares}
 
-API routes provide built in middlewares which parse the incoming request (`req`). Those middlewares are:
+API routes provide built in middlewares which parse the incoming request
+(`req`). Those middlewares are:
 
-- `req.cookies` - An object containing the cookies sent by the request. Defaults to `{}`
-- `req.query` - An object containing the [query string](https://en.wikipedia.org/wiki/Query_string). Defaults to `{}`
-- `req.body` - An object containing the body parsed by `content-type`, or `null` if no body was sent
+- `req.cookies` - An object containing the cookies sent by the request.
+  Defaults to `{}`
+- `req.query` - An object containing the
+  [query string](https://en.wikipedia.org/wiki/Query_string). Defaults to
+  `{}`
+- `req.body` - An object containing the body parsed by `content-type`, or
+  `null` if no body was sent
 
 ### Custom config {#custom-config}
 
-Every API route can export a `config` object to change the default configs, which are the following:
+Every API route can export a `config` object to change the default
+configs, which are the following:
 
 ```ts
 export const config = {
@@ -207,7 +251,8 @@ export const config = {
 
 The `api` object includes all configs available for API routes.
 
-`bodyParser` enables body parsing, you can disable it if you want to consume it as a `Stream`:
+`bodyParser` enables body parsing, you can disable it if you want to
+consume it as a `Stream`:
 
 ```ts
 export const config = {
@@ -217,7 +262,9 @@ export const config = {
 }
 ```
 
-`bodyParser.sizeLimit` is the maximum size allowed for the parsed body, in any format supported by [bytes](https://github.com/visionmedia/bytes.js), like so:
+`bodyParser.sizeLimit` is the maximum size allowed for the parsed body, in
+any format supported by [bytes](https://github.com/visionmedia/bytes.js),
+like so:
 
 ```ts
 export const config = {
@@ -229,7 +276,9 @@ export const config = {
 }
 ```
 
-`externalResolver` is an explicit flag that tells the server that this route is being handled by an external resolver like _express_ or _connect_. Enabling this option disables warnings for unresolved requests.
+`externalResolver` is an explicit flag that tells the server that this
+route is being handled by an external resolver like _express_ or
+_connect_. Enabling this option disables warnings for unresolved requests.
 
 ```ts
 export const config = {
@@ -241,9 +290,13 @@ export const config = {
 
 ### Connect/Express middleware support {#connect-express-middleware-support}
 
-You can also use [Connect](https://github.com/senchalabs/connect) compatible middleware.
+You can also use [Connect](https://github.com/senchalabs/connect)
+compatible middleware.
 
-For example, [configuring CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) for your API endpoint can be done leveraging the [cors](https://www.npmjs.com/package/cors) package.
+For example,
+[configuring CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+for your API endpoint can be done leveraging the
+[cors](https://www.npmjs.com/package/cors) package.
 
 First, install `cors`:
 

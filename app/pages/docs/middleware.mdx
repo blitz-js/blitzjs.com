@@ -3,15 +3,24 @@ title: HTTP Middleware
 sidebar_label: HTTP Middleware
 ---
 
-HTTP Middleware is the escape hatch for [queries](./query-resolvers) and [mutations](./mutation-resolvers) to access HTTP primitives. Middleware can then pass data to queries and mutations using the middleware `res.blitzCtx` parameter.
+HTTP Middleware is the escape hatch for [queries](./query-resolvers) and
+[mutations](./mutation-resolvers) to access HTTP primitives. Middleware
+can then pass data to queries and mutations using the middleware
+`res.blitzCtx` parameter.
 
-Middleware should not be used for business logic, because HTTP middleware is less composable and harder to test than queries and mutations. All business logic should live in queries & mutations.
+Middleware should not be used for business logic, because HTTP middleware
+is less composable and harder to test than queries and mutations. All
+business logic should live in queries & mutations.
 
-For example, authentication middleware can set and read cookies and pass the session object to queries and mutations via the context object. Then queries and mutations will use the session object to perform authorization and whatever else they need to do.
+For example, authentication middleware can set and read cookies and pass
+the session object to queries and mutations via the context object. Then
+queries and mutations will use the session object to perform authorization
+and whatever else they need to do.
 
 ## Global Middleware {#global-middleware}
 
-Global middleware runs for every Blitz query and mutation. It is defined in [`blitz.config.js`](./blitz-config) using the `middleware` key.
+Global middleware runs for every Blitz query and mutation. It is defined
+in [`blitz.config.js`](./blitz-config) using the `middleware` key.
 
 ```js
 // blitz.config.js
@@ -26,9 +35,11 @@ module.exports = {
 
 ### Global Ctx Type {#global-ctx-type}
 
-You can access the type of the `res.blitzCtx` parameter by importing `Ctx` from `blitz`. The default `Ctx` provided by Blitz is an empty object.
+You can access the type of the `res.blitzCtx` parameter by importing `Ctx`
+from `blitz`. The default `Ctx` provided by Blitz is an empty object.
 
-You can extend the `Ctx` type by placing the following file in your project (this is included in new apps by default).
+You can extend the `Ctx` type by placing the following file in your
+project (this is included in new apps by default).
 
 ```ts
 // types.ts
@@ -41,7 +52,8 @@ declare module "blitz" {
 }
 ```
 
-Whatever types you add to `Ctx` add will be automatically available in your queries and mutations as shown here.
+Whatever types you add to `Ctx` add will be automatically available in
+your queries and mutations as shown here.
 
 ```ts
 import {Ctx} from "blitz"
@@ -54,7 +66,8 @@ export default async function getThing(input, ctx: Ctx) {
 
 ## Local Middleware {#local-middleware}
 
-Local middleware only runs for a single query or mutation. It is defined by exporting a `middleware` array from a query or mutation.
+Local middleware only runs for a single query or mutation. It is defined
+by exporting a `middleware` array from a query or mutation.
 
 ```ts
 // app/products/queries/getProduct.tsx
@@ -75,7 +88,10 @@ export const middleware: Middleware[] = [
   },
 ]
 
-export default async function getProject({where}: GetProjectInput, ctx: Record<any, unknown> = {}) {
+export default async function getProject(
+  {where}: GetProjectInput,
+  ctx: Record<any, unknown> = {},
+) {
   console.log("Referer:", ctx.referer)
   return await db.project.findOne({where})
 }
@@ -83,7 +99,11 @@ export default async function getProject({where}: GetProjectInput, ctx: Record<a
 
 ## Middleware API {#middleware-api}
 
-This API is essentially the same as connect/Express middleware but with an asynchronous `next()` function like Koa. The main difference when writing connect vs Blitz middleware is you must return a promise from Blitz middleware by doing `return next()` or `await next()`. See below for the `connectMiddleware()` adapter for existing connect middleware.
+This API is essentially the same as connect/Express middleware but with an
+asynchronous `next()` function like Koa. The main difference when writing
+connect vs Blitz middleware is you must return a promise from Blitz
+middleware by doing `return next()` or `await next()`. See below for the
+`connectMiddleware()` adapter for existing connect middleware.
 
 ```js
 import {Middleware} from "blitz"
@@ -98,42 +118,75 @@ const middleware: Middleware = async (req, res, next) => {
 ### Arguments {#arguments}
 
 - `req`: `MiddlewareRequest`
-  - An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage), plus the following:
-  - `req.cookies` - An object containing the cookies sent by the request. Defaults to `{}`
-  - `req.query` - An object containing the [query string](https://en.wikipedia.org/wiki/Query_string). Defaults to `{}`
-  - `req.body` - An object containing the body parsed by `content-type`, or `null` if no body was sent
+  - An instance of
+    [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage),
+    plus the following:
+  - `req.cookies` - An object containing the cookies sent by the request.
+    Defaults to `{}`
+  - `req.query` - An object containing the
+    [query string](https://en.wikipedia.org/wiki/Query_string). Defaults
+    to `{}`
+  - `req.body` - An object containing the body parsed by `content-type`,
+    or `null` if no body was sent
 - `res`: `MiddlewareResponse`
-  - An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse), plus the following:
-  - `res.blitzCtx` - An object that is passed as the second argument to queries and mutations. This is how middleware communicates with the rest of your app
-  - `res.blitzResult` - The returned result from a query or mutation. To read from this, you must first `await next()`
-  - `res.status(code)` - A function to set the status code. `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
-  - `res.json(json)` - Sends a JSON response. `json` must be a valid JSON object
-  - `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an `object` or a `Buffer`
+  - An instance of
+    [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse),
+    plus the following:
+  - `res.blitzCtx` - An object that is passed as the second argument to
+    queries and mutations. This is how middleware communicates with the
+    rest of your app
+  - `res.blitzResult` - The returned result from a query or mutation. To
+    read from this, you must first `await next()`
+  - `res.status(code)` - A function to set the status code. `code` must be
+    a valid
+    [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
+  - `res.json(json)` - Sends a JSON response. `json` must be a valid JSON
+    object
+  - `res.send(body)` - Sends the HTTP response. `body` can be a `string`,
+    an `object` or a `Buffer`
 - `next()`: `MiddlewareNext`
-  - **Required**: Callback for continuing the middleware chain. You must call this inside your middleware
-  - **Required:** Returns a promise so you must either `await` it or return it like `return next()`. The promise resolves once all subsequent middleware has completed (including the Blitz query or mutation).
+  - **Required**: Callback for continuing the middleware chain. You must
+    call this inside your middleware
+  - **Required:** Returns a promise so you must either `await` it or
+    return it like `return next()`. The promise resolves once all
+    subsequent middleware has completed (including the Blitz query or
+    mutation).
 
 ## Communicating Between Middleware and Query/Mutation Resolvers {#communicating-between-middleware-and-query-mutation-resolvers}
 
 ### From Middleware to Resolvers {#from-middleware-to-resolvers}
 
-Middleware can pass anything, including data, objects, and functions, to Blitz queries and mutations by adding to `res.blitzCtx`. At runtime, `res.blitzCtx` is automatically passed to the query/mutation handler as the second argument.
+Middleware can pass anything, including data, objects, and functions, to
+Blitz queries and mutations by adding to `res.blitzCtx`. At runtime,
+`res.blitzCtx` is automatically passed to the query/mutation handler as
+the second argument.
 
 1. You must add to `res.blitzCtx` **before** calling `next()`
-2. Keep in mind other middleware can also modify `res.blitzCtx`, so be sure to program defensively because anything can happen.
+2. Keep in mind other middleware can also modify `res.blitzCtx`, so be
+   sure to program defensively because anything can happen.
 
 ### From Resolvers to Middleware {#from-resolvers-to-middleware}
 
-There are two ways middleware can receive data, objects, and functions from resolvers:
+There are two ways middleware can receive data, objects, and functions
+from resolvers:
 
-1. `res.blitzResult` will contain the exact result returned from the query/mutation resolver. But you must first `await next()` before reading this. `await next()` will resolve once all subsequent middleware is run, including the Blitz internal middleware that runs the query/mutation resolver.
-2. You can pass a callback into the resolver via `res.blitzCtx` and then the resolver can pass data back to the middleware be calling `ctx.someCallback(someData)`
+1. `res.blitzResult` will contain the exact result returned from the
+   query/mutation resolver. But you must first `await next()` before
+   reading this. `await next()` will resolve once all subsequent
+   middleware is run, including the Blitz internal middleware that runs
+   the query/mutation resolver.
+2. You can pass a callback into the resolver via `res.blitzCtx` and then
+   the resolver can pass data back to the middleware be calling
+   `ctx.someCallback(someData)`
 
 ## Error Handling {#error-handling}
 
 #### Short Circuit the Request
 
-Normally this is the type of error you expect from middleware. Because middleware should not have business logic, so you won't be throwing authorization errors for example. Usually, an error in middleware means something is really wrong with the incoming request.
+Normally this is the type of error you expect from middleware. Because
+middleware should not have business logic, so you won't be throwing
+authorization errors for example. Usually, an error in middleware means
+something is really wrong with the incoming request.
 
 There are two ways to short circuit the request:
 
@@ -142,7 +195,8 @@ There are two ways to short circuit the request:
 
 #### Handle via Normal Query/Mutation Flow
 
-Another uncommon way to handle a middleware error is to pass it to the query/mutation and then throw the error from there.
+Another uncommon way to handle a middleware error is to pass it to the
+query/mutation and then throw the error from there.
 
 ```ts
 // In middleware
@@ -154,7 +208,8 @@ if (ctx.error) throw ctx.error
 
 ## Connect/Express Compatibility {#connect-express-compatibility}
 
-Blitz provides a `connectMiddleware()` function that converts connect middleware to Blitz middleware.
+Blitz provides a `connectMiddleware()` function that converts connect
+middleware to Blitz middleware.
 
 ```ts
 // blitz.config.js
@@ -162,8 +217,8 @@ const {connectMiddleware} = require("blitz")
 const Cors = require("cors")
 
 const cors = Cors({
-  methods: ["GET", "POST", "HEAD", "OPTIONS"]
-});
+  methods: ["GET", "POST", "HEAD", "OPTIONS"],
+})
 
 module.exports = {
   middleware: [connectMiddleware(cors)],
@@ -176,4 +231,5 @@ module.exports = {
 
 ## More Information {#more-information}
 
-If you'd like more details on the RPC API, see the [RPC API documentation](./rpc-specification)
+If you'd like more details on the RPC API, see the
+[RPC API documentation](./rpc-specification)

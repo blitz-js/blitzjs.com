@@ -7,13 +7,15 @@ Blitz allows you to import CSS files directly into any JavaScript file.
 
 ## Adding a Global Stylesheet {#adding-a-global-stylesheet}
 
-To add a stylesheet to your application, import the CSS file within `app/pages/_app.js`.
+To add a stylesheet to your application, import the CSS file within
+`app/pages/_app.js`.
 
 For example, consider the following stylesheet named `styles.css`:
 
 ```css
 body {
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue",
+    "Helvetica", "Arial", sans-serif;
   padding: 20px 20px 60px;
   max-width: 680px;
   margin: 0 auto;
@@ -30,26 +32,34 @@ export default function App({Component, pageProps}) {
 }
 ```
 
-These styles (`styles.css`) will apply to all pages and components in your application.
-Due to the global nature of stylesheets, and to avoid conflicts, you may **only import them inside [`_app.js`](./app-component)**.
+These styles (`styles.css`) will apply to all pages and components in your
+application. Due to the global nature of stylesheets, and to avoid
+conflicts, you may **only import them inside
+[`_app.js`](./app-component)**.
 
-In development, expressing stylesheets this way allows your styles to be hot reloaded as you edit them—meaning you can keep application state.
+In development, expressing stylesheets this way allows your styles to be
+hot reloaded as you edit them—meaning you can keep application state.
 
-In production, all CSS files will be automatically concatenated into a single minified `.css` file.
+In production, all CSS files will be automatically concatenated into a
+single minified `.css` file.
 
 ## Adding Component-Level CSS {#adding-component-level-css}
 
-Blitz supports [CSS Modules](https://github.com/css-modules/css-modules) using the `[name].module.css` file naming convention.
+Blitz supports [CSS Modules](https://github.com/css-modules/css-modules)
+using the `[name].module.css` file naming convention.
 
-CSS Modules locally scope CSS by automatically creating a unique class name.
-This allows you to use the same CSS class name in different files without worrying about collisions.
+CSS Modules locally scope CSS by automatically creating a unique class
+name. This allows you to use the same CSS class name in different files
+without worrying about collisions.
 
-This behavior makes CSS Modules the ideal way to include component-level CSS.
-CSS Module files **can be imported anywhere in your application**.
+This behavior makes CSS Modules the ideal way to include component-level
+CSS. CSS Module files **can be imported anywhere in your application**.
 
-For example, consider a reusable `Button` component in the `components/` folder:
+For example, consider a reusable `Button` component in the `components/`
+folder:
 
-First, create `app/components/Button.module.css` with the following content:
+First, create `app/components/Button.module.css` with the following
+content:
 
 ```css
 /*
@@ -62,7 +72,8 @@ You do not need to worry about .error {} colliding with any other `.css` or
 }
 ```
 
-Then, create `app/components/Button.js`, importing and using the above CSS file:
+Then, create `app/components/Button.js`, importing and using the above CSS
+file:
 
 ```jsx
 import styles from "./Button.module.css"
@@ -81,28 +92,35 @@ export function Button() {
 }
 ```
 
-CSS Modules are an _optional feature_ and are **only enabled for files with the `.module.css` extension**.
-Regular `<link>` stylesheets and global CSS files are still supported.
+CSS Modules are an _optional feature_ and are **only enabled for files
+with the `.module.css` extension**. Regular `<link>` stylesheets and
+global CSS files are still supported.
 
-In production, all CSS Module files will be automatically concatenated into **many minified and code-split** `.css` files.
-These `.css` files represent hot execution paths in your application, ensuring the minimal amount of CSS is loaded for your application to paint.
+In production, all CSS Module files will be automatically concatenated
+into **many minified and code-split** `.css` files. These `.css` files
+represent hot execution paths in your application, ensuring the minimal
+amount of CSS is loaded for your application to paint.
 
 ## Sass Support {#sass-support}
 
-Blitz allows you to import Sass using both the `.scss` and `.sass` extensions.
-You can use component-level Sass via CSS Modules and the `.module.scss` or `.module.sass` extension.
+Blitz allows you to import Sass using both the `.scss` and `.sass`
+extensions. You can use component-level Sass via CSS Modules and the
+`.module.scss` or `.module.sass` extension.
 
-Before you can use Blitz' built-in Sass support, be sure to install [`sass`](https://github.com/sass/sass):
+Before you can use Blitz' built-in Sass support, be sure to install
+[`sass`](https://github.com/sass/sass):
 
 ```bash
 npm install sass
 ```
 
-Sass support has the same benefits and restrictions as the built-in CSS support detailed above.
+Sass support has the same benefits and restrictions as the built-in CSS
+support detailed above.
 
 ### Customizing Sass Options {#customizing-sass-options}
 
-If you want to configure the Sass compiler you can do so by using `sassOptions` in `blitz.config.js`.
+If you want to configure the Sass compiler you can do so by using
+`sassOptions` in `blitz.config.js`.
 
 For example to add `includePaths`:
 
@@ -118,12 +136,14 @@ module.exports = {
 
 ## Less and Stylus Support {#less-and-stylus-support}
 
-To support importing `.less` or `.styl` files you can use the following plugins:
+To support importing `.less` or `.styl` files you can use the following
+plugins:
 
 - [@vercel/next-less](https://github.com/vercel/next-plugins/tree/master/packages/next-less)
 - [@vercel/next-stylus](https://github.com/vercel/next-plugins/tree/master/packages/next-stylus)
 
-If using the less plugin, don't forget to add a dependency on less as well, otherwise you'll see an error like:
+If using the less plugin, don't forget to add a dependency on less as
+well, otherwise you'll see an error like:
 
 ```bash
 Error: Cannot find module 'less'

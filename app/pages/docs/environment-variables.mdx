@@ -3,14 +3,16 @@ title: Environment Variables
 sidebar_label: Environment Variables
 ---
 
-Blitz comes with built-in support for environment variables, which allows you to do the following:
+Blitz comes with built-in support for environment variables, which allows
+you to do the following:
 
 - [Use `.env*` files to load environment variables](#loading-environment-variables)
 - [Expose environment variables to the browser](#exposing-environment-variables-to-the-browser)
 
 ## Loading Environment Variables {#loading-environment-variables}
 
-Blitz has built-in support for loading environment variables from `.env.local` into `process.env`.
+Blitz has built-in support for loading environment variables from
+`.env.local` into `process.env`.
 
 An example `.env.local`:
 
@@ -20,10 +22,12 @@ DB_USER=myuser
 DB_PASS=mypassword
 ```
 
-This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PASS` into the Node.js environment automatically allowing you to use them on the server.
+This loads `process.env.DB_HOST`, `process.env.DB_USER`, and
+`process.env.DB_PASS` into the Node.js environment automatically allowing
+you to use them on the server.
 
-> **Note**: Blitz will automatically expand variables inside of your `.env*` files.
-> This allows you to reference other secrets, like so:
+> **Note**: Blitz will automatically expand variables inside of your
+> `.env*` files. This allows you to reference other secrets, like so:
 >
 > ```bash
 > # .env
@@ -32,7 +36,8 @@ This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PAS
 > HOST=http://$HOSTNAME:$PORT
 > ```
 >
-> If you are trying to use a variable with a `$` in the actual value, it needs to be escaped like so: `\$`.
+> If you are trying to use a variable with a `$` in the actual value, it
+> needs to be escaped like so: `\$`.
 >
 > For example:
 >
@@ -45,7 +50,9 @@ This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PAS
 
 ## Exposing Environment Variables to the Browser {#exposing-environment-variables-to-the-browser}
 
-By default all environment variables loaded through `.env*` files are only available in the Node.js environment, meaning they won't be exposed to the browser.
+By default all environment variables loaded through `.env*` files are only
+available in the Node.js environment, meaning they won't be exposed to the
+browser.
 
 There are two ways you can expose a variable to the browser.
 
@@ -57,7 +64,8 @@ Prefix the variable with `NEXT_PUBLIC_`. For example:
 NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 ```
 
-The value will be inlined into JavaScript sent to the browser because of the `NEXT_PUBLIC_` prefix.
+The value will be inlined into JavaScript sent to the browser because of
+the `NEXT_PUBLIC_` prefix.
 
 ```js
 // pages/index.js
@@ -75,7 +83,8 @@ export default HomePage
 
 ### Option 2: `env` in `blitz.config.js` {#option-2-env-in-blitz-config-js}
 
-Any keys defined in `env` in your Blitz config will be inlined into JavaScript sent to the browser.
+Any keys defined in `env` in your Blitz config will be inlined into
+JavaScript sent to the browser.
 
 ```js
 // blitz.config.js
@@ -90,8 +99,14 @@ module.exports = {
 
 ## Different Values per Environment {#different-values-per-environment}
 
-In general only one `.env.local` file is needed. However, sometimes you might want to add some defaults for the `development` or `production` environment.
+In general only one `.env.local` file is needed. However, sometimes you
+might want to add some defaults for the `development` or `production`
+environment.
 
-Blitz allows you to set defaults in `.env` (all environments), `.env.development` (development environment), `.env.production` (production environment), and `.env.test` (test environment). These files with defaults should be checked into git.
+Blitz allows you to set defaults in `.env` (all environments),
+`.env.development` (development environment), `.env.production`
+(production environment), and `.env.test` (test environment). These files
+with defaults should be checked into git.
 
-Appending `.local` will override the defaults. Examples: `.env.local`, `.env.test.local`. These files should **not** be checked into git.
+Appending `.local` will override the defaults. Examples: `.env.local`,
+`.env.test.local`. These files should **not** be checked into git.

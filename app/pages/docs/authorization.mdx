@@ -3,13 +3,21 @@ title: Authorization & Security
 sidebar_label: Authorization & Security
 ---
 
-Authorization is the act of allowing or disallowing access to data and pages in your application.
+Authorization is the act of allowing or disallowing access to data and
+pages in your application.
 
 ## Secure Your Data {#secure-your-data}
 
-You secure data by calling [`ctx.session.$authorize()`](#ctxsessionauthorize) inside all the queries and mutations that you want secured. (Or if using [`resolver.pipe`](./resolver-server-utilities#resolverpipe), by using [`resolver.authorize`](./resolver-server-utilities#resolverauthorize)). You can also secure [API routes](./api-routes) the same way.
+You secure data by calling
+[`ctx.session.$authorize()`](#ctxsessionauthorize) inside all the queries
+and mutations that you want secured. (Or if using
+[`resolver.pipe`](./resolver-server-utilities#resolverpipe), by using
+[`resolver.authorize`](./resolver-server-utilities#resolverauthorize)).
+You can also secure [API routes](./api-routes) the same way.
 
-Those will throw `AuthenticationError` if the user is not logged in, and it will throw `AuthorizationError` if the user is logged in but doesn't have the required permissions.
+Those will throw `AuthenticationError` if the user is not logged in, and
+it will throw `AuthorizationError` if the user is logged in but doesn't
+have the required permissions.
 
 <!-- prettier-ignore -->
 ```ts
@@ -64,7 +72,10 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
 
 ### Input Validation {#input-validation}
 
-For security, it's very important to validate all input values in your mutations. We recommended using [zod](https://github.com/colinhacks/zod), which we include in all our code generation templates. Without this, users may be able to access data or perform actions that are forbidden.
+For security, it's very important to validate all input values in your
+mutations. We recommended using [zod](https://github.com/colinhacks/zod),
+which we include in all our code generation templates. Without this, users
+may be able to access data or perform actions that are forbidden.
 
 ```ts
 import {resolver} from "blitz"
@@ -94,9 +105,12 @@ export default resolver.pipe(
 
 ## Secure Your Pages {#secure-your-pages}
 
-Set `Page.authenticate = true` on all pages that require a user to be logged in. If a user is not logged in, an `AuthenticationError` will be thrown and caught by your top level Error Boundary.
+Set `Page.authenticate = true` on all pages that require a user to be
+logged in. If a user is not logged in, an `AuthenticationError` will be
+thrown and caught by your top level Error Boundary.
 
-Or if instead you want to redirect the user, set `Page.authenticate = {redirectTo: '/login'}`
+Or if instead you want to redirect the user, set
+`Page.authenticate = {redirectTo: '/login'}`
 
 ```tsx
 const Page: BlitzPage = () => {
@@ -113,7 +127,9 @@ export default Page
 
 ### Redirecting Logged In Users {#redirecting-logged-in-users}
 
-For pages that are only for logged out users, such as login and signup pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect logged in users to another page.
+For pages that are only for logged out users, such as login and signup
+pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect
+logged in users to another page.
 
 ```tsx
 const Page: BlitzPage = () => {
@@ -129,23 +145,39 @@ export default Page
 
 ## UX for Unauthorized Users {#ux-for-unauthorized-users}
 
-While you can use redirects to and from a `/login` page, we recommended to use Error Boundaries instead of redirects.
+While you can use redirects to and from a `/login` page, we recommended to
+use Error Boundaries instead of redirects.
 
-In React, the way you catch errors in your UI is to use an [error boundary](https://reactjs.org/docs/error-boundaries.html).
+In React, the way you catch errors in your UI is to use an
+[error boundary](https://reactjs.org/docs/error-boundaries.html).
 
-You should have a top level error boundary inside `_app.tsx` so that these errors are handled from everywhere in our app. And then if you need, you can also place more error boundaries at other places in your app.
+You should have a top level error boundary inside `_app.tsx` so that these
+errors are handled from everywhere in our app. And then if you need, you
+can also place more error boundaries at other places in your app.
 
 The default error handling setup in new Blitz apps is as follows:
 
-- If `AuthenticationError` is thrown, directly show the user a login form instead of redirecting to a separate route. This prevents the need to manage redirect URLs. Once the user logs in, the error boundary will reset and the user can access the original page they wanted to access.
+- If `AuthenticationError` is thrown, directly show the user a login form
+  instead of redirecting to a separate route. This prevents the need to
+  manage redirect URLs. Once the user logs in, the error boundary will
+  reset and the user can access the original page they wanted to access.
 - If `AuthorizationError` is thrown, display an error stating such.
 
-And here's the default `RootErrorFallback` that's in `app/pages/_app.tsx`. You can customize it as required for your needs.
+And here's the default `RootErrorFallback` that's in `app/pages/_app.tsx`.
+You can customize it as required for your needs.
 
 ```tsx
-import {ErrorComponent, AuthenticationError, AuthorizationError, ErrorFallbackProps} from "blitz"
+import {
+  ErrorComponent,
+  AuthenticationError,
+  AuthorizationError,
+  ErrorFallbackProps,
+} from "blitz"
 
-function RootErrorFallback({error, resetErrorBoundary}: ErrorFallbackProps) {
+function RootErrorFallback({
+  error,
+  resetErrorBoundary,
+}: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error instanceof AuthorizationError) {
@@ -157,13 +189,17 @@ function RootErrorFallback({error, resetErrorBoundary}: ErrorFallbackProps) {
     )
   } else {
     return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+      <ErrorComponent
+        statusCode={error.statusCode || 400}
+        title={error.message || error.name}
+      />
     )
   }
 }
 ```
 
-For more information on error handling in Blitz, see the [Error Handling documentation](./error-handling).
+For more information on error handling in Blitz, see the
+[Error Handling documentation](./error-handling).
 
 ## Displaying Different Content Based on User Role {#displaying-different-content-based-on-user-role}
 
@@ -171,11 +207,18 @@ There's two approaches you can use to check the user role in your UI.
 
 #### `useSession()`
 
-The first way is to use the [`useSession()`](./session-management#session-on-the-client) hook to read the user role from the session's `publicData`.
+The first way is to use the
+[`useSession()`](./session-management#session-on-the-client) hook to read
+the user role from the session's `publicData`.
 
-This is available on the client without making a network call to the backend, so it's available faster than the `useCurrentUser()` approach described below.
+This is available on the client without making a network call to the
+backend, so it's available faster than the `useCurrentUser()` approach
+described below.
 
-However, due to the nature of static pre-rendering, the `session` will not exist on the very first render on the client. This causes a quick "flash" on first load. You can fix that by setting [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
+However, due to the nature of static pre-rendering, the `session` will not
+exist on the very first render on the client. This causes a quick "flash"
+on first load. You can fix that by setting
+[`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
 
 ```tsx
 import {useSession} from "blitz"
@@ -191,7 +234,8 @@ if (session.role === "admin") {
 
 #### `useCurrentUser()`
 
-New Blitz apps by default have a `useCurrentUser()` hook and a corresponding `getCurrentUser` query.
+New Blitz apps by default have a `useCurrentUser()` hook and a
+corresponding `getCurrentUser` query.
 
 ```tsx
 import {useCurrentUser} from "app/hooks/useCurrentUser"
@@ -207,7 +251,9 @@ if (user.isFunny) {
 
 ## `isAuthorized` Adapters {#is-authorized-adapters}
 
-The implementation of `ctx.session.$isAuthorized()` and `ctx.session.$authorize()` are defined by an adapter which you set in the `sessionMiddleware()` config.
+The implementation of `ctx.session.$isAuthorized()` and
+`ctx.session.$authorize()` are defined by an adapter which you set in the
+`sessionMiddleware()` config.
 
 ##### `ctx.session.$isAuthorized()`
 
@@ -215,7 +261,8 @@ Always returns a boolean indicating if user is authorized
 
 ##### `ctx.session.$authorize()`
 
-**Throws an error** if the user is not authorized. This is what you most commonly use to secure your queries and mutations.
+**Throws an error** if the user is not authorized. This is what you most
+commonly use to secure your queries and mutations.
 
 ```ts
 import {Ctx} from "blitz"
@@ -234,11 +281,15 @@ export default async function getUser({where}: GetUserInput, ctx: Ctx) {
 
 ##### Setup
 
-To use, add it to your `sessionMiddleware` configuration (this is already set up by default in new apps).
+To use, add it to your `sessionMiddleware` configuration (this is already
+set up by default in new apps).
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, simpleRolesIsAuthorized} = require("@blitzjs/server")
+const {
+  sessionMiddleware,
+  simpleRolesIsAuthorized,
+} = require("@blitzjs/server")
 
 module.exports = {
   middleware: [
@@ -298,7 +349,8 @@ ctx.session.$authorize(["admin", "customer"]) // success - no error
 
 ### Making a Custom Adapter {#making-a-custom-adapter}
 
-An `isAuthorized` adapter must conform to the following function signature.
+An `isAuthorized` adapter must conform to the following function
+signature.
 
 ```ts
 type CustomIsAuthorizedArgs = {
@@ -312,7 +364,8 @@ export function customIsAuthorized({ctx, args}: CustomIsAuthorizedArgs) {
 
 ##### Example
 
-Here's the source code for the `simpleRolesIsAuthorized` adapter include in Blitz core as of Jan 26, 2021.
+Here's the source code for the `simpleRolesIsAuthorized` adapter include
+in Blitz core as of Jan 26, 2021.
 
 ```ts
 type SimpleRolesIsAuthorizedArgs = {
@@ -320,7 +373,10 @@ type SimpleRolesIsAuthorizedArgs = {
   args: [roleOrRoles?: string | string[]]
 }
 
-export function simpleRolesIsAuthorized({ctx, args}: SimpleRolesIsAuthorizedArgs) {
+export function simpleRolesIsAuthorized({
+  ctx,
+  args,
+}: SimpleRolesIsAuthorizedArgs) {
   const [roleOrRoles, options = {}] = args
   const condition = options.if ?? true
 
@@ -336,7 +392,8 @@ export function simpleRolesIsAuthorized({ctx, args}: SimpleRolesIsAuthorizedArgs
     rolesToAuthorize.push(roleOrRoles)
   }
   for (const role of rolesToAuthorize) {
-    if ((ctx.session as SessionContext).$publicData.roles!.includes(role)) return true
+    if ((ctx.session as SessionContext).$publicData.roles!.includes(role))
+      return true
   }
   return false
 }

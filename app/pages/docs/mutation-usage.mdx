@@ -40,10 +40,14 @@ function (props) {
 For complete details, see the
 [`useMutation` documentation](./use-mutation).
 
-:::info 🤔 You may be wondering how that can work since it's importing
+<!-- prettier-ignore-start -->
+:::info 🤔
+You may be wondering how that can work since it's importing
 server code into your component: At build time, the direct function import
 is swapped out with a network call. So the query function code is never
-included in your client code. :::
+included in your client code.
+:::
+<!-- prettier-ignore-end -->
 
 ## Error Handling {#error-handling}
 

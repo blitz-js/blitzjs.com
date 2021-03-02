@@ -42,11 +42,15 @@ export default resolver.pipe(
 )
 ```
 
-:::info The input type of the entire composed resolver function is
+<!-- prettier-ignore-start -->
+:::info
+The input type of the entire composed resolver function is
 determined by the input type of the **first** argument to pipe.
 
 This means you will almost always want `resolver.zod()` to be the first in
-the pipe. :::
+the pipe.
+:::
+<!-- prettier-ignore-end -->
 
 ### API {#api}
 

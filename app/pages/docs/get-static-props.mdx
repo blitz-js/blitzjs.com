@@ -3,14 +3,18 @@ title: getStaticProps API
 sidebar_label: getStaticProps API
 ---
 
-:::info `getStaticProps` should only be used for pages that do not require
+<!-- prettier-ignore-start -->
+:::info
+`getStaticProps` should only be used for pages that do not require
 authentication. The statically generated pages will be publicly available
 via your server and via a CDN if you have one. Therefore they cannot
 contain any personal or sensitive data.
 
 Also, this is why there is no `req` and `res` objects for
 `getStaticProps`, because the pages are generated at build time, not at
-runtime. And at build time, there is no user http request to handle. :::
+runtime. And at build time, there is no user http request to handle.
+:::
+<!-- prettier-ignore-end -->
 
 If you export an `async` function called `getStaticProps` from a page,
 Blitz will pre-render this page at build time using the props returned by

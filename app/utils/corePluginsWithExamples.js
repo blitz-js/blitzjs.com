@@ -2,7 +2,7 @@
 const glob = require("glob")
 const path = require("path")
 const dlv = require("dlv")
-const { defaultConfig } = require("./defaultConfig")
+const {defaultConfig} = require("./defaultConfig")
 
 const plugins = [
   "preflight",
@@ -25,7 +25,7 @@ module.exports.corePluginsWithExamples = plugins.map((plugin) => {
     },
     addComponents: () => {},
     addBase: () => {},
-    config: () => ({ future: "all" }),
+    config: () => ({future: "all"}),
     theme: (path, defaultValue) => dlv(defaultConfig.theme, path, defaultValue),
     variants: () => [],
     e: (x) => x.replace(/([:.])/g, "\\$1"),

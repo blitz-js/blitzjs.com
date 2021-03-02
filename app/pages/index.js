@@ -1,21 +1,21 @@
-import { Link, Image } from "blitz"
-import { Header } from "@/components/Header"
-import { ButtonLink } from "@/components/ButtonLink"
-import { HeroCode } from "@/components/home/HeroCode"
-import { VideoPlayer } from "@/components/home/VideoPlayer"
-import { Octokit } from "@octokit/rest"
-import { Feature } from "@/components/home/Feature"
-import { FeatureIcon } from "@/components/home/FeatureIcon"
-import { FeatureIconTitle } from "@/components/home/FeatureIconTitle"
-import { Footer } from "@/components/home/Footer"
-import { StyledLink } from "@/components/home/StyledLink"
-import { Hand } from "@/components/home/Hand"
+import {Link, Image} from "blitz"
+import {Header} from "@/components/Header"
+import {ButtonLink} from "@/components/ButtonLink"
+import {HeroCode} from "@/components/home/HeroCode"
+import {VideoPlayer} from "@/components/home/VideoPlayer"
+import {Octokit} from "@octokit/rest"
+import {Feature} from "@/components/home/Feature"
+import {FeatureIcon} from "@/components/home/FeatureIcon"
+import {FeatureIconTitle} from "@/components/home/FeatureIconTitle"
+import {Footer} from "@/components/home/Footer"
+import {StyledLink} from "@/components/home/StyledLink"
+import {Hand} from "@/components/home/Hand"
 import Scrollbar from "@/components/Scrollbar"
-import { useState, useEffect } from "react"
-import { SocialCards } from "../components/SocialCards"
-import { SponsorPack } from "../components/SponsorPack"
+import {useState, useEffect} from "react"
+import {SocialCards} from "../components/SocialCards"
+import {SponsorPack} from "../components/SponsorPack"
 
-const Home = ({ randomContributors }) => {
+const Home = ({randomContributors}) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {
@@ -77,16 +77,16 @@ const Home = ({ randomContributors }) => {
                   <Hand
                     variant="hero-righthand"
                     className="z-20 hidden lg:block -left-4"
-                    style={{ top: "15.2rem" }}
+                    style={{top: "15.2rem"}}
                   />
                   <Hand
                     variant="hero-leftarm"
                     className="hidden lg:block"
-                    style={{ top: "30rem", right: "-4.8rem" }}
+                    style={{top: "30rem", right: "-4.8rem"}}
                   />
                   <Hand
                     variant="hero-lefthand"
-                    style={{ top: "26.6rem", right: "-2.2em" }}
+                    style={{top: "26.6rem", right: "-2.2em"}}
                     className="z-20 hidden lg:block"
                   />
                   <HeroCode className="z-10" />
@@ -194,7 +194,7 @@ const Home = ({ randomContributors }) => {
                 Blitz CodeSandbox Example
               </h3>
               <div>
-                <Hand variant="sandbox-right" style={{ right: "-13.2rem", bottom: "-35rem" }} />
+                <Hand variant="sandbox-right" style={{right: "-13.2rem", bottom: "-35rem"}} />
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -283,7 +283,7 @@ const Home = ({ randomContributors }) => {
               </h2>
               <div className="w-full">
                 <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
-                  <div className="px-6 architecture-diagram" style={{ paddingBottom: "2px" }}>
+                  <div className="px-6 architecture-diagram" style={{paddingBottom: "2px"}}>
                     <img src="img/architecture.svg" alt="Architecture diagram" />
                   </div>
                 </Scrollbar>
@@ -338,7 +338,7 @@ const Home = ({ randomContributors }) => {
               <Hand
                 variant="sponsors-squiggle"
                 className="-right-24 xl:hidden"
-                style={{ top: "-5.3rem" }}
+                style={{top: "-5.3rem"}}
               />
             </div>
             <div className="px-6 mx-auto text-center max-w-7xl ">
@@ -347,7 +347,7 @@ const Home = ({ randomContributors }) => {
                   <Hand
                     variant="sponsors-left"
                     className="hidden xl:block -left-80 pointer-events-none"
-                    style={{ top: "-18.05rem" }}
+                    style={{top: "-18.05rem"}}
                   />
                   Our Sponsors
                 </h2>
@@ -429,7 +429,7 @@ const getStaticProps = async () => {
   let randomContributors = randomIndexes.map((i) => contributors[i])
 
   return {
-    props: { randomContributors },
+    props: {randomContributors},
     revalidate: 60 * 30, // 30 minutes
   }
 }
@@ -442,4 +442,4 @@ Home.layoutProps = {
 }
 
 export default Home
-export { getStaticProps }
+export {getStaticProps}

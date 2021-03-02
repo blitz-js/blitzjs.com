@@ -1,4 +1,4 @@
-const { addDefaultImport } = require("./utils")
+const {addDefaultImport} = require("./utils")
 
 module.exports.withNextLinks = () => {
   return (tree) => {
@@ -12,9 +12,9 @@ module.exports.withNextLinks = () => {
         if (node.type === "link" && node.url.startsWith("/")) {
           root.children = [
             ...root.children.slice(0, i),
-            { type: "jsx", value: `<${component} href="${node.url}" passHref><a>` },
+            {type: "jsx", value: `<${component} href="${node.url}" passHref><a>`},
             ...node.children,
-            { type: "jsx", value: `</a></${component}>` },
+            {type: "jsx", value: `</a></${component}>`},
             ...root.children.slice(i + 1),
           ]
           i += node.children.length + 2

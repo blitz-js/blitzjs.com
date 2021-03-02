@@ -1,11 +1,11 @@
 import Link from "next/link"
-import { Icon } from "@/components/home/Icon"
-import { LinkList } from "@/components/home/LinkList"
-import { NewsletterForm } from "@/components/home/NewsletterForm"
-import { IoLogoVercel } from "react-icons/io5"
+import {Icon} from "@/components/home/Icon"
+import {LinkList} from "@/components/home/LinkList"
+import {NewsletterForm} from "@/components/home/NewsletterForm"
+import {IoLogoVercel} from "react-icons/io5"
 import clsx from "clsx"
 
-export function Footer({ className, hasDarkMode }) {
+export function Footer({className, hasDarkMode}) {
   return (
     <footer className={className}>
       <div className="border-t border-gray-300 dark:border-white border-opacity-50">

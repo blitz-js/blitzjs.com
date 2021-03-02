@@ -1,7 +1,7 @@
-import { CodeWindow } from "../CodeWindow"
+import {CodeWindow} from "../CodeWindow"
 import tokenize from "../../macros/tokenize.macro"
-import { useState } from "react"
-import { useIsDesktop } from "app/hooks/useIsDesktop"
+import {useState} from "react"
+import {useIsDesktop} from "app/hooks/useIsDesktop"
 
 const pageTokenized = tokenize.jsx(
   `// app/pages/projects/new.tsx
@@ -40,7 +40,7 @@ NewProjectPage.authenticate = true
 NewProjectPage.getLayout = (page) => <Layout>{page}</Layout>
 
 export default NewProjectPage`,
-  true
+  true,
 )
 
 const mutationTokenized = tokenize.jsx(
@@ -67,10 +67,10 @@ export default resolver.pipe(
     return project
   }
 )`,
-  true
+  true,
 )
 
-const HeroCode = ({ className = "" }) => {
+const HeroCode = ({className = ""}) => {
   const isDesktop = useIsDesktop()
   const [tabs, setTabs] = useState([
     {
@@ -93,7 +93,7 @@ const HeroCode = ({ className = "" }) => {
           tabs.map((tab, i) => ({
             ...tab,
             selected: i === tabIndex,
-          }))
+          })),
         )
       }}
     >
@@ -102,4 +102,4 @@ const HeroCode = ({ className = "" }) => {
   )
 }
 
-export { HeroCode }
+export {HeroCode}

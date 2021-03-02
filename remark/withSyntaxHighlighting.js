@@ -1,5 +1,5 @@
 const visit = require("unist-util-visit")
-const { highlightCode } = require("./utils")
+const {highlightCode} = require("./utils")
 
 module.exports.withSyntaxHighlighting = () => {
   return (tree) => {

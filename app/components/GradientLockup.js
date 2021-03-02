@@ -1,5 +1,5 @@
-import { gradients } from "@/utils/gradients"
-import { motion } from "framer-motion"
+import {gradients} from "@/utils/gradients"
+import {motion} from "framer-motion"
 import styles from "./GradientLockup.module.css"
 
 const rotation = {

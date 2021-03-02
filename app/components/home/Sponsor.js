@@ -1,6 +1,6 @@
-import { Icon } from "@/components/home/Icon"
+import {Icon} from "@/components/home/Icon"
 
-const Sponsor = ({ title, iconName, children }) => {
+const Sponsor = ({title, iconName, children}) => {
   return (
     <div className="text-sm font-secondary">
       <Icon name={iconName} />
@@ -13,4 +13,4 @@ const Sponsor = ({ title, iconName, children }) => {
   )
 }
 
-export { Sponsor }
+export {Sponsor}

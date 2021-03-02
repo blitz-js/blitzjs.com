@@ -1,5 +1,5 @@
-const Hand = ({ className = "", style = "", variant = "" }) => {
-  style = { ...style, maxWidth: "120rem" }
+const Hand = ({className = "", style = "", variant = ""}) => {
+  style = {...style, maxWidth: "120rem"}
   className += " absolute hand"
 
   switch (variant) {
@@ -311,4 +311,4 @@ const Hand = ({ className = "", style = "", variant = "" }) => {
   }
 }
 
-export { Hand }
+export {Hand}

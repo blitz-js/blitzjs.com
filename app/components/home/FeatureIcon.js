@@ -1,6 +1,6 @@
-import { Icon } from "@/components/home/Icon"
+import {Icon} from "@/components/home/Icon"
 
-const FeatureIcon = ({ icon, children }) => {
+const FeatureIcon = ({icon, children}) => {
   return (
     <div className="space-y-4">
       <Icon name={icon} variant="dark" />
@@ -11,4 +11,4 @@ const FeatureIcon = ({ icon, children }) => {
   )
 }
 
-export { FeatureIcon }
+export {FeatureIcon}

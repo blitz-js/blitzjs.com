@@ -38,7 +38,7 @@ const seedify = function (seed) {
         .map(function (x) {
           return x.charCodeAt(0)
         })
-        .join("")
+        .join(""),
     )
   return seed
 }

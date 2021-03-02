@@ -1,5 +1,5 @@
-import { Fragment } from "react"
-import { castArray } from "@/utils/castArray"
+import {Fragment} from "react"
+import {castArray} from "@/utils/castArray"
 import clsx from "clsx"
 
 function toObjectKey(str) {
@@ -9,7 +9,7 @@ function toObjectKey(str) {
   return `'${str}'`
 }
 
-function Value({ value }) {
+function Value({value}) {
   if (typeof value === "string") {
     return <span className="token string">'{value}'</span>
   }
@@ -33,7 +33,7 @@ function Value({ value }) {
   return value.toString()
 }
 
-function Edits({ edits, indent = "", type = "inserted" }) {
+function Edits({edits, indent = "", type = "inserted"}) {
   return (
     <span
       className={clsx("token", {
@@ -62,7 +62,7 @@ function Edits({ edits, indent = "", type = "inserted" }) {
   )
 }
 
-export function ConfigSample({ path, add, remove, before, after }) {
+export function ConfigSample({path, add, remove, before, after}) {
   path = typeof path === "string" ? path.split(".") : path
 
   return (

@@ -1,6 +1,6 @@
 import React from "react"
-import { Pack, hierarchy } from "@visx/hierarchy"
-import { ParentSize } from "@visx/responsive"
+import {Pack, hierarchy} from "@visx/hierarchy"
+import {ParentSize} from "@visx/responsive"
 
 const sponsors = [
   {
@@ -57,12 +57,12 @@ export const SponsorPack = () => {
       hierarchy(pack)
         .sum((d) => d?.cost * d?.cost)
         .sort((a, b) => b.data.cost - a.data.cost),
-    []
+    [],
   )
 
   return (
     <ParentSize>
-      {({ width }) => {
+      {({width}) => {
         return width < 10 ? null : (
           <div
             style={{

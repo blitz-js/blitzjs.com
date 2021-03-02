@@ -1,6 +1,6 @@
-import { Link } from "blitz"
+import {Link} from "blitz"
 
-const NavLink = ({ className = "", href, children, ...props }) => {
+const NavLink = ({className = "", href, children, ...props}) => {
   return (
     <Link href={href}>
       <a
@@ -13,4 +13,4 @@ const NavLink = ({ className = "", href, children, ...props }) => {
   )
 }
 
-export { NavLink }
+export {NavLink}

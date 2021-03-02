@@ -14,18 +14,18 @@ module.exports.withProse = () => {
     tree.children = tree.children.flatMap((node, i) => {
       if (insideProse && isJsNode(node)) {
         insideProse = false
-        return [{ type: "jsx", value: "</div>" }, node]
+        return [{type: "jsx", value: "</div>"}, node]
       }
       if (!insideProse && !isJsNode(node)) {
         insideProse = true
         return [
-          { type: "jsx", value: '<div className="prose xl:prose-xl dark:prose-dark">' },
+          {type: "jsx", value: '<div className="prose xl:prose-xl dark:prose-dark">'},
           node,
-          ...(i === tree.children.length - 1 ? [{ type: "jsx", value: "</div>" }] : []),
+          ...(i === tree.children.length - 1 ? [{type: "jsx", value: "</div>"}] : []),
         ]
       }
       if (i === tree.children.length - 1 && insideProse) {
-        return [node, { type: "jsx", value: "</div>" }]
+        return [node, {type: "jsx", value: "</div>"}]
       }
       return [node]
     })

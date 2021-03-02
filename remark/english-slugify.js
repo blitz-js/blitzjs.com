@@ -9,7 +9,7 @@ async function main() {
 
   await Promise.all(
     files.map(async (file) => {
-      const content = await fs.readFile(file, { encoding: "utf-8" })
+      const content = await fs.readFile(file, {encoding: "utf-8"})
 
       let slugs = []
       const lines = content.split("\n").map((line) => {
@@ -40,7 +40,7 @@ async function main() {
       })
 
       await fs.writeFile(file, lines.join("\n"))
-    })
+    }),
   )
 }
 

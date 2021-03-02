@@ -21,7 +21,7 @@ const previewBackground = {
   rose: "bg-gradient-to-r from-rose-50 to-rose-100",
 }
 
-export function CodeSample({ preview, snippet, previewClassName, color = "gray" }) {
+export function CodeSample({preview, snippet, previewClassName, color = "gray"}) {
   return (
     <div className="relative overflow-hidden mb-8">
       <div
@@ -31,9 +31,9 @@ export function CodeSample({ preview, snippet, previewClassName, color = "gray" 
           previewClassName,
           {
             "p-10": !previewClassName,
-          }
+          },
         )}
-        dangerouslySetInnerHTML={{ __html: preview }}
+        dangerouslySetInnerHTML={{__html: preview}}
       />
       <div
         className={clsx("overflow-hidden rounded-b-xl", codeBackground[color], {
@@ -45,10 +45,10 @@ export function CodeSample({ preview, snippet, previewClassName, color = "gray" 
             "scrollbar-none overflow-x-auto p-6 text-sm leading-snug language-html text-white",
             {
               "bg-black bg-opacity-75": codeBackground[color],
-            }
+            },
           )}
         >
-          <code className="language-html" dangerouslySetInnerHTML={{ __html: snippet }} />
+          <code className="language-html" dangerouslySetInnerHTML={{__html: snippet}} />
         </pre>
       </div>
     </div>

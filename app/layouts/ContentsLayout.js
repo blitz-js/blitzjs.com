@@ -1,25 +1,25 @@
-import { useState, useEffect, createContext, Fragment, useCallback } from "react"
-import { usePrevNext } from "@/hooks/usePrevNext"
-import { Link, useRouter } from "blitz"
-import { SidebarLayout } from "@/layouts/SidebarLayout"
-import { PageHeader } from "@/components/PageHeader"
+import {useState, useEffect, createContext, Fragment, useCallback} from "react"
+import {usePrevNext} from "@/hooks/usePrevNext"
+import {Link, useRouter} from "blitz"
+import {SidebarLayout} from "@/layouts/SidebarLayout"
+import {PageHeader} from "@/components/PageHeader"
 import clsx from "clsx"
-import { ReactComponent as ArrowIcon } from "@/img/icons/nav-arrow.svg"
-import { BiChevronLeft } from "react-icons/bi"
-import { BsCaretUpFill, BsCaretDownFill } from "react-icons/bs"
-import Select, { components } from "react-select"
-import { FaGithub } from "react-icons/fa"
+import {ReactComponent as ArrowIcon} from "@/img/icons/nav-arrow.svg"
+import {BiChevronLeft} from "react-icons/bi"
+import {BsCaretUpFill, BsCaretDownFill} from "react-icons/bs"
+import Select, {components} from "react-select"
+import {FaGithub} from "react-icons/fa"
 
 export const ContentsContext = createContext()
 
-export function TableOfContents({ tableOfContents, currentSection }) {
+export function TableOfContents({tableOfContents, currentSection}) {
   return (
     <div className="pl-8">
       <ul className="overflow-x-hidden text-black dark:text-dark-mode-text font-normal text-xs">
         {tableOfContents.map((section) => {
           let sectionIsActive =
             currentSection === section.slug ||
-            section.children.findIndex(({ slug }) => slug === currentSection) > -1
+            section.children.findIndex(({slug}) => slug === currentSection) > -1
 
           return (
             <Fragment key={section.slug}>
@@ -30,7 +30,7 @@ export function TableOfContents({ tableOfContents, currentSection }) {
                     "block transform transition-colors duration-200 py-2 hover:text-gray-600 dark:hover:text-gray-300 no-underline",
                     {
                       "font-bold": sectionIsActive,
-                    }
+                    },
                   )}
                 >
                   {section.title}
@@ -47,7 +47,7 @@ export function TableOfContents({ tableOfContents, currentSection }) {
                         "block py-2 transition-colors duration-200 hover:text-gray-700 dark:hover:text-gray-300 no-underline",
                         {
                           "font-bold": subsectionIsActive,
-                        }
+                        },
                       )}
                     >
                       {subsection.title}
@@ -68,7 +68,7 @@ function useTableOfContents(tableOfContents) {
   let [headings, setHeadings] = useState([])
 
   const registerHeading = useCallback((id, top) => {
-    setHeadings((headings) => [...headings.filter((h) => id !== h.id), { id, top }])
+    setHeadings((headings) => [...headings.filter((h) => id !== h.id), {id, top}])
   }, [])
 
   const unregisterHeading = useCallback((id) => {
@@ -106,12 +106,12 @@ function useTableOfContents(tableOfContents) {
     return () => window.removeEventListener("scroll", onScroll, true)
   }, [headings, tableOfContents])
 
-  return { currentSection, registerHeading, unregisterHeading }
+  return {currentSection, registerHeading, unregisterHeading}
 }
 
-export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
-  const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(
-    layoutProps.tableOfContents
+export function ContentsLayoutOuter({children, layoutProps, ...props}) {
+  const {currentSection, registerHeading, unregisterHeading} = useTableOfContents(
+    layoutProps.tableOfContents,
   )
 
   return (
@@ -126,7 +126,7 @@ export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
       }
       {...props}
     >
-      <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+      <ContentsContext.Provider value={{registerHeading, unregisterHeading}}>
         {children}
       </ContentsContext.Provider>
     </SidebarLayout>
@@ -141,16 +141,16 @@ const DropdownIndicator = (props) => {
         <BsCaretDownFill
           size="10"
           className="text-black dark:text-dark-mode-text"
-          style={{ marginTop: -2 }}
+          style={{marginTop: -2}}
         />
       </components.DropdownIndicator>
     )
   )
 }
 
-export function ContentsLayout({ children, meta, tableOfContents: toc }) {
-  const { registerHeading, unregisterHeading } = useTableOfContents(toc)
-  let { prev, next } = usePrevNext()
+export function ContentsLayout({children, meta, tableOfContents: toc}) {
+  const {registerHeading, unregisterHeading} = useTableOfContents(toc)
+  let {prev, next} = usePrevNext()
   const router = useRouter()
   const [topic, setTopic] = useState(null)
 
@@ -164,9 +164,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
       <div id={meta.containerId} className="pt-4 pb-8 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
           <PageHeader title={meta.title} align={meta.titleAlign ?? "left"} />
-          <div
-            className={clsx("lg:hidden", { "mt-5 mb-12": toc.length, "h-px mt-8": !toc.length })}
-          >
+          <div className={clsx("lg:hidden", {"mt-5 mb-12": toc.length, "h-px mt-8": !toc.length})}>
             {!!toc.length && (
               <>
                 <h3 className="dark:text-dark-mode-text mb-2 text-sm">Topics</h3>
@@ -174,16 +172,16 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
                   value={topic}
                   className="topic-select"
                   classNamePrefix="topic-select"
-                  options={toc.map((option) => ({ value: option.slug, label: option.title }))}
+                  options={toc.map((option) => ({value: option.slug, label: option.title}))}
                   placeholder="Jump to a Topic"
                   onChange={(e) => {
                     if (e && e.value) {
                       const hash = e.value
                       setTopic(null)
-                      router.push({ hash })
+                      router.push({hash})
                     }
                   }}
-                  components={{ DropdownIndicator }}
+                  components={{DropdownIndicator}}
                   styles={{
                     option: (base, state) => ({
                       ...base,
@@ -194,7 +192,7 @@ export function ContentsLayout({ children, meta, tableOfContents: toc }) {
               </>
             )}
           </div>
-          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+          <ContentsContext.Provider value={{registerHeading, unregisterHeading}}>
             {children}
           </ContentsContext.Provider>
           {!meta.hideFooter && (

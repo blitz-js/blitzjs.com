@@ -1,7 +1,7 @@
-import { BsArrowRight } from "react-icons/bs"
+import {BsArrowRight} from "react-icons/bs"
 import React from "react"
 
-const ButtonLink = React.forwardRef(({ className, children, variant = "solid", ...props }, ref) => {
+const ButtonLink = React.forwardRef(({className, children, variant = "solid", ...props}, ref) => {
   let classes =
     "flex items-center justify-center py-2 px-3 lg:px-5 font-secondary text-base font-bold"
 
@@ -29,4 +29,4 @@ const ButtonLink = React.forwardRef(({ className, children, variant = "solid", .
   )
 })
 
-export { ButtonLink }
+export {ButtonLink}

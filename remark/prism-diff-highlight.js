@@ -7,7 +7,7 @@ module.exports = (Prism) => {
     /(?:__|[^\r\n<])*(?:\r\n?|\n|(?:__|[^\r\n<])(?![^\r\n]))/.source.replace(/__/g, function () {
       return HTML_TAG.source
     }),
-    "gi"
+    "gi",
   )
 
   var PREFIXES = Prism.languages.diff.PREFIXES

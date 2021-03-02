@@ -1,8 +1,8 @@
 import colorPalette from "tailwindcss/colors"
-import { kebabToTitleCase } from "@/utils/kebabToTitleCase"
+import {kebabToTitleCase} from "@/utils/kebabToTitleCase"
 import dlv from "dlv"
 
-export function ColorPaletteReference({ colors }) {
+export function ColorPaletteReference({colors}) {
   return (
     <div className="grid grid-cols-1 gap-8">
       {colors.map((color, i) => {
@@ -15,7 +15,7 @@ export function ColorPaletteReference({ colors }) {
                 name: variant,
                 value: dlv(colorPalette, [value, variant]),
               }))
-            : Object.keys(value).map((name) => ({ name, value: value[name] }))
+            : Object.keys(value).map((name) => ({name, value: value[name]}))
 
         return (
           <div key={i}>
@@ -44,12 +44,12 @@ export function ColorPaletteReference({ colors }) {
                 </div>
               </div>
               <div className="min-w-0 flex-1 grid grid-cols-5 2xl:grid-cols-10 gap-x-4 gap-y-3 2xl:gap-x-2">
-                {palette.map(({ name, value }, j) => {
+                {palette.map(({name, value}, j) => {
                   return (
                     <div key={j} className="space-y-1.5">
                       <div
                         className="h-10 w-full rounded ring-1 ring-inset ring-black ring-opacity-0"
-                        style={{ backgroundColor: value }}
+                        style={{backgroundColor: value}}
                       />
                       <div className="px-0.5 md:flex md:justify-between md:space-x-2 2xl:space-x-0 2xl:block">
                         <div className="w-6 font-medium text-gray-900">{name}</div>

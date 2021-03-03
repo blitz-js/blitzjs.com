@@ -117,6 +117,7 @@ export const documentationNav = [
       pages["authorization"],
       pages["auth-utils"],
       pages["passportjs"],
+      pages["impersonation"],
     ],
   },
   {

@@ -36,7 +36,6 @@ Create the following two mutations which will give you the ability to start the 
 import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
-import assert from "utils/assert"
 
 export const ImpersonateUserInput = z.object({
   userId: z.number()
@@ -47,7 +46,7 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ userId }, ctx) => {
     const user = await db.user.findFirst({ where: { id: userId } })
-    assert(user, "Could not find user id " + userId)
+    if (!user) throw new Error("Could not find user id " + userId)
 
     await ctx.session.$create({
       userId: user.id,
@@ -65,22 +64,20 @@ export default resolver.pipe(
 // app/auth/mutations/stopImpersonating.ts
 import { resolver } from "blitz"
 import db from "db"
-import assert from "utils/assert"
-import logger from "utils/logger"
 
 export default resolver.pipe(
   resolver.authorize(),
   async ({}, ctx) => {
     const userId = ctx.session.publicData.impersonatingFromUserId
     if (!userId) {
-      logger.debug("Already not impersonating anyone")
+      console.log("Already not impersonating anyone")
       return
     }
 
     const user = await db.user.findFirst({
       where: { id: userId },
     })
-    assert(user, "Could not find user id " + userId)
+    if (!user) throw new Error("Could not find user id " + userId)
 
     await ctx.session.$create({
       userId: user.id,

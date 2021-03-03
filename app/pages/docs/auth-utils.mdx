@@ -115,9 +115,7 @@ const token = generateToken()
 
 #### `hash256(value: string) => string`
 
-This is a convenience wrapper around [nanoid](https://github.com/ai/nanoid) for generating tokens for things like password resets.
-
-This takes a string and hashes it with the `sha256` algorithm. This is used for things like hashing password reset tokens before saving them in the database.
+This is a convenience wrapper that uses the node [crypto](https://nodejs.org/api/crypto.html) module to hash a string with the `sha256` algorithm. It is used for things like hashing password reset tokens before saving them in the database.
 
 #### Example Usage
 

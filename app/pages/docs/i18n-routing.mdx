@@ -3,17 +3,26 @@ title: Internationalized Routing
 sidebar_label: Internationalized Routing
 ---
 
-Blitz has built-in support for internationalized ([i18n](https://en.wikipedia.org/wiki/Internationalization_and_localization#Naming)) routing. You can provide a list of locales, the default locale, and domain-specific locales and Blitz will automatically handle the routing.
+Blitz has built-in support for internationalized
+([i18n](https://en.wikipedia.org/wiki/Internationalization_and_localization#Naming))
+routing. You can provide a list of locales, the default locale, and
+domain-specific locales and Blitz will automatically handle the routing.
 
-The i18n routing support is currently meant to complement existing i18n library solutions like `react-intl`, `react-i18next`, `lingui`, `rosetta`, and others by streamlining the routes and locale parsing.
+The i18n routing support is currently meant to complement existing i18n
+library solutions like `react-intl`, `react-i18next`, `lingui`, `rosetta`,
+and others by streamlining the routes and locale parsing.
 
 ## Getting started {#getting-started}
 
 To get started, add the `i18n` config to your `blitz.config.js` file.
 
-Locales are [UTS Locale Identifiers](https://www.unicode.org/reports/tr35/tr35-59/tr35.html#Identifiers), a standardized format for defining locales.
+Locales are
+[UTS Locale Identifiers](https://www.unicode.org/reports/tr35/tr35-59/tr35.html#Identifiers),
+a standardized format for defining locales.
 
-Generally a Locale Identifier is made up of a language, region, and script separated by a dash: `language-region-script`. The region and script are optional. An example:
+Generally a Locale Identifier is made up of a language, region, and script
+separated by a dash: `language-region-script`. The region and script are
+optional. An example:
 
 - `en-US` - English as spoken in the United States
 - `nl-NL` - Dutch as spoken in the Netherlands
@@ -51,7 +60,8 @@ module.exports = {
 
 ## Locale Strategies {#locale-strategies}
 
-There are two locale handling strategies: Sub-path Routing and Domain Routing.
+There are two locale handling strategies: Sub-path Routing and Domain
+Routing.
 
 ### Sub-path Routing {#sub-path-routing}
 
@@ -67,7 +77,9 @@ module.exports = {
 }
 ```
 
-With the above configuration `en-US`, `fr`, and `nl-NL` will be available to be routed to, and `en-US` is the default locale. If you have a `pages/blog.js` the following urls would be available:
+With the above configuration `en-US`, `fr`, and `nl-NL` will be available
+to be routed to, and `en-US` is the default locale. If you have a
+`pages/blog.js` the following urls would be available:
 
 - `/blog`
 - `/fr/blog`
@@ -77,7 +89,8 @@ The default locale does not have a prefix.
 
 ### Domain Routing {#domain-routing}
 
-By using domain routing you can configure locales to be served from different domains:
+By using domain routing you can configure locales to be served from
+different domains:
 
 ```js
 // blitz.config.js
@@ -107,7 +120,8 @@ module.exports = {
 }
 ```
 
-For example if you have `pages/blog.js` the following urls will be available:
+For example if you have `pages/blog.js` the following urls will be
+available:
 
 - `example.com/blog`
 - `example.fr/blog`
@@ -116,14 +130,21 @@ For example if you have `pages/blog.js` the following urls will be available:
 
 ## Automatic Locale Detection {#automatic-locale-detection}
 
-When a user visits the application root (generally `/`), Blitz will try to automatically detect which locale the user prefers based on the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) header and the current domain.
+When a user visits the application root (generally `/`), Blitz will try to
+automatically detect which locale the user prefers based on the
+[`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
+header and the current domain.
 
-If a locale other than the default locale is detected, the user will be redirected to either:
+If a locale other than the default locale is detected, the user will be
+redirected to either:
 
 - **When using Sub-path Routing:** The locale prefixed path
-- **When using Domain Routing:** The domain with that locale specified as the default
+- **When using Domain Routing:** The domain with that locale specified as
+  the default
 
-When using Domain Routing, if a user with the `Accept-Language` header `fr;q=0.9` visits `example.com`, they will be redirected to `example.fr` since that domain handles the `fr` locale by default.
+When using Domain Routing, if a user with the `Accept-Language` header
+`fr;q=0.9` visits `example.com`, they will be redirected to `example.fr`
+since that domain handles the `fr` locale by default.
 
 When using Sub-path Routing, the user would be redirected to `/fr`.
 
@@ -140,25 +161,37 @@ module.exports = {
 }
 ```
 
-When `localeDetection` is set to `false` Blitz will no longer automatically redirect based on the user's preferred locale and will only provide locale information detected from either the locale based domain or locale path as described above.
+When `localeDetection` is set to `false` Blitz will no longer
+automatically redirect based on the user's preferred locale and will only
+provide locale information detected from either the locale based domain or
+locale path as described above.
 
 ## Accessing the locale information {#accessing-the-locale-information}
 
-You can access the locale information via the Blitz router. For example, using the [`useRouter()`](/docs/router/#userouter) hook the following properties are available:
+You can access the locale information via the Blitz router. For example,
+using the [`useRouter()`](/docs/router/#userouter) hook the following
+properties are available:
 
 - `locale` contains the currently active locale.
 - `locales` contains all configured locales.
 - `defaultLocale` contains the configured default locale.
 
-When [pre-rendering](/docs/pages#automatic-static-optimization) pages with `getStaticProps` or `getServerSideProps`, the locale information is provided in [the context](/docs/get-static-props) provided to the function.
+When [pre-rendering](/docs/pages#automatic-static-optimization) pages with
+`getStaticProps` or `getServerSideProps`, the locale information is
+provided in [the context](/docs/get-static-props) provided to the
+function.
 
-When leveraging `getStaticPaths`, the configured locales are provided in the context parameter of the function under `locales` and the configured defaultLocale under `defaultLocale`.
+When leveraging `getStaticPaths`, the configured locales are provided in
+the context parameter of the function under `locales` and the configured
+defaultLocale under `defaultLocale`.
 
 ## Transition between locales {#transition-between-locales}
 
 You can use `Link` or `Router` to transition between locales.
 
-For `Link`, a `locale` prop can be provided to transition to a different locale from the currently active one. If no `locale` prop is provided, the currently active `locale` is used during client-transitions. For example:
+For `Link`, a `locale` prop can be provided to transition to a different
+locale from the currently active one. If no `locale` prop is provided, the
+currently active `locale` is used during client-transitions. For example:
 
 ```jsx
 import {Link} from "blitz"
@@ -172,7 +205,8 @@ export default function IndexPage(props) {
 }
 ```
 
-When using the `Router` methods directly, you can specify the `locale` that should be used via the transition options. For example:
+When using the `Router` methods directly, you can specify the `locale`
+that should be used via the transition options. For example:
 
 ```jsx
 import {useRouter} from "blitz"
@@ -192,7 +226,8 @@ export default function IndexPage(props) {
 }
 ```
 
-If you have a `href` that already includes the locale you can opt-out of automatically handling the locale prefixing:
+If you have a `href` that already includes the locale you can opt-out of
+automatically handling the locale prefixing:
 
 ```jsx
 import {Link} from "blitz"
@@ -208,25 +243,40 @@ export default function IndexPage(props) {
 
 ## Leveraging the NEXT_LOCALE cookie {#leveraging-the-next-locale-cookie}
 
-Blitz supports overriding the accept-language header with a `NEXT_LOCALE=the-locale` cookie. This cookie can be set using a language switcher and then when a user comes back to the site it will leverage the locale specified in the cookie.
+Blitz supports overriding the accept-language header with a
+`NEXT_LOCALE=the-locale` cookie. This cookie can be set using a language
+switcher and then when a user comes back to the site it will leverage the
+locale specified in the cookie.
 
-For example, if a user prefers the locale `fr` but a `NEXT_LOCALE=en` cookie is set the `en` locale will be used instead until the cookie is removed or expired.
+For example, if a user prefers the locale `fr` but a `NEXT_LOCALE=en`
+cookie is set the `en` locale will be used instead until the cookie is
+removed or expired.
 
 ## Search Engine Optimization {#search-engine-optimization}
 
-Since Blitz knows what language the user is visiting it will automatically add the `lang` attribute to the `<html>` tag.
+Since Blitz knows what language the user is visiting it will automatically
+add the `lang` attribute to the `<html>` tag.
 
-Blitz doesn't know about variants of a page so it's up to you to add the `hreflang` meta tags using [`Head`](/docs/head-component). You can learn more about `hreflang` in the [Google Webmasters documentation](https://support.google.com/webmasters/answer/189077).
+Blitz doesn't know about variants of a page so it's up to you to add the
+`hreflang` meta tags using [`Head`](/docs/head-component). You can learn
+more about `hreflang` in the
+[Google Webmasters documentation](https://support.google.com/webmasters/answer/189077).
 
 ## How does this work with Static Generation? {#how-does-this-work-with-static-generation}
 
 ### Automatically Statically Optimized Pages {#automatically-statically-optimized-pages}
 
-For pages that are [automatically statically optimized](/docs/pages#automatic-static-optimization), a version of the page will be generated for each locale.
+For pages that are
+[automatically statically optimized](/docs/pages#automatic-static-optimization),
+a version of the page will be generated for each locale.
 
 ### Non-dynamic getStaticProps Pages {#non-dynamic-get-static-props-pages}
 
-For non-dynamic `getStaticProps` pages, a version is generated for each locale like above. `getStaticProps` is called with each `locale` that is being rendered. If you would like to opt-out of a certain locale from being pre-rendered, you can return `notFound: true` from `getStaticProps` and this variant of the page will not be generated.
+For non-dynamic `getStaticProps` pages, a version is generated for each
+locale like above. `getStaticProps` is called with each `locale` that is
+being rendered. If you would like to opt-out of a certain locale from
+being pre-rendered, you can return `notFound: true` from `getStaticProps`
+and this variant of the page will not be generated.
 
 ```js
 export async function getStaticProps({locale}) {
@@ -253,7 +303,11 @@ export async function getStaticProps({locale}) {
 
 ### Dynamic getStaticProps Pages {#dynamic-get-static-props-pages}
 
-For dynamic `getStaticProps` pages, any locale variants of the page that is desired to be prerendered needs to be returned from [`getStaticPaths`](/docs/get-static-paths). Along with the `params` object that can be returned for the `paths`, you can also return a `locale` field specifying which locale you want to render. For example:
+For dynamic `getStaticProps` pages, any locale variants of the page that
+is desired to be prerendered needs to be returned from
+[`getStaticPaths`](/docs/get-static-paths). Along with the `params` object
+that can be returned for the `paths`, you can also return a `locale` field
+specifying which locale you want to render. For example:
 
 ```js
 // pages/blog/[slug].js

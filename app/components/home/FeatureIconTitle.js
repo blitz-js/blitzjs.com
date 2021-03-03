@@ -1,6 +1,6 @@
-import { Icon } from "@/components/home/Icon"
+import {Icon} from "@/components/home/Icon"
 
-const FeatureIconTitle = ({ icon, children, title }) => {
+const FeatureIconTitle = ({icon, children, title}) => {
   return (
     <div className="xl:flex xl:flex-col xl:items-start xl:space-y-5">
       <Icon name={icon} variant="dark" />
@@ -14,4 +14,4 @@ const FeatureIconTitle = ({ icon, children, title }) => {
   )
 }
 
-export { FeatureIconTitle }
+export {FeatureIconTitle}

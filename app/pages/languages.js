@@ -1,10 +1,10 @@
-import { Header } from "@/components/Header"
-import { Octokit } from "@octokit/rest"
-import { Footer } from "@/components/home/Footer"
-import { useState, useEffect } from "react"
-import { SocialCards } from "../components/SocialCards"
+import {Header} from "@/components/Header"
+import {Octokit} from "@octokit/rest"
+import {Footer} from "@/components/home/Footer"
+import {useState, useEffect} from "react"
+import {SocialCards} from "../components/SocialCards"
 
-const LanguagesPage = ({ languages }) => {
+const LanguagesPage = ({languages}) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const getStaticProps = async () => {
   })
 
   // Theorically, this will break when we reach 1000+ languages
-  const { data } = await octokit.repos.getContent({
+  const {data} = await octokit.repos.getContent({
     owner: "blitz-js",
     repo: "blitzjs.com-translation",
     path: "langs",
@@ -84,7 +84,7 @@ const getStaticProps = async () => {
 
   const languages = await Promise.all(
     data.map(async (lang) => {
-      const [{ data: langJson }, { data: langIssue }] = await Promise.all([
+      const [{data: langJson}, {data: langIssue}] = await Promise.all([
         // Gets each lang.json content, because it doesn't come with the first request `data`
         octokit.repos.getContent({
           owner: "blitz-js",
@@ -99,7 +99,7 @@ const getStaticProps = async () => {
       ])
 
       const langMeta = JSON.parse(
-        Buffer.from(langJson.content, langJson.encoding).toString("utf-8")
+        Buffer.from(langJson.content, langJson.encoding).toString("utf-8"),
       )
 
       const checkedBoxes = langIssue.body.match(/\* \[x\]/gi)
@@ -113,8 +113,8 @@ const getStaticProps = async () => {
         ? 0
         : Math.round((checkedBoxes.length / totalBoxes.length) * 100)
 
-      return { ...langMeta, completition }
-    })
+      return {...langMeta, completition}
+    }),
   )
 
   return {
@@ -122,7 +122,7 @@ const getStaticProps = async () => {
       languages: languages.sort((a, b) =>
         a.completition === b.completition
           ? a.name.localeCompare(b.name)
-          : a.completition > b.completition
+          : a.completition > b.completition,
       ),
     },
     revalidate: 3 * 60 * 60, // 3 hours
@@ -137,4 +137,4 @@ LanguagesPage.layoutProps = {
 }
 
 export default LanguagesPage
-export { getStaticProps }
+export {getStaticProps}

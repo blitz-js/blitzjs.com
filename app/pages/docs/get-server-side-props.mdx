@@ -3,7 +3,9 @@ title: getServerSideProps API
 sidebar_label: getServerSideProps API
 ---
 
-If you export an `async` function called `getServerSideProps` from a page, Blitz will pre-render this page on each request using the data returned by `getServerSideProps`.
+If you export an `async` function called `getServerSideProps` from a page,
+Blitz will pre-render this page on each request using the data returned by
+`getServerSideProps`.
 
 ```js
 export async function getServerSideProps(context) {
@@ -15,21 +17,33 @@ export async function getServerSideProps(context) {
 
 The `context` parameter is an object containing the following keys:
 
-- `params`: If this page uses a dynamic route, `params` contains the route parameters. If the page name is `[id].js` , then `params` will look like `{ id: ... }`. To learn more, take a look at the [Dynamic Routing documentation](/docs/routing#dynamic-route-segments).
-- `req`: [The HTTP IncomingMessage object](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
-- `res`: [The HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
+- `params`: If this page uses a dynamic route, `params` contains the route
+  parameters. If the page name is `[id].js` , then `params` will look like
+  `{ id: ... }`. To learn more, take a look at the
+  [Dynamic Routing documentation](/docs/routing#dynamic-route-segments).
+- `req`:
+  [The HTTP IncomingMessage object](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
+- `res`:
+  [The HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
 - `query`: The query string.
-- `preview`: `preview` is `true` if the page is in the preview mode and `false` otherwise. See the [Preview Mode documentation](./preview-mode).
-- `previewData`: The preview data set by `setPreviewData`. See the [Preview Mode documentation](./preview-mode).
-- `resolvedUrl`: A normalized version of the request URL that strips the `_next/data` prefix for client transitions and includes original query values.
+- `preview`: `preview` is `true` if the page is in the preview mode and
+  `false` otherwise. See the [Preview Mode documentation](./preview-mode).
+- `previewData`: The preview data set by `setPreviewData`. See the
+  [Preview Mode documentation](./preview-mode).
+- `resolvedUrl`: A normalized version of the request URL that strips the
+  `_next/data` prefix for client transitions and includes original query
+  values.
 - `locale` contains the active locale (if enabled).
 - `locales` contains all supported locales (if enabled).
 - `defaultLocale` contains the configured default locale (if enabled).
 
 `getServerSideProps` should return an object with:
 
-- `props` - A **required** object with the props that will be received by the page component. It should be a [serializable object](https://en.wikipedia.org/wiki/Serialization)
-- `notFound` - An **optional** boolean value to allow the page to return a 404 status and page. Below is an example of how it works:
+- `props` - A **required** object with the props that will be received by
+  the page component. It should be a
+  [serializable object](https://en.wikipedia.org/wiki/Serialization)
+- `notFound` - An **optional** boolean value to allow the page to return a
+  404 status and page. Below is an example of how it works:
 
   ```js
   export async function getServerSideProps(context) {
@@ -47,7 +61,13 @@ The `context` parameter is an object containing the following keys:
   }
   ```
 
-- `redirect` - An **optional** redirect value to allow redirecting to internal and external resources. It should match the shape of `{ destination: string, permanent: boolean }`. In some rare cases, you might need to assign a custom status code for older HTTP Clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both. Below is an example of how it works:
+- `redirect` - An **optional** redirect value to allow redirecting to
+  internal and external resources. It should match the shape of
+  `{ destination: string, permanent: boolean }`. In some rare cases, you
+  might need to assign a custom status code for older HTTP Clients to
+  properly redirect. In these cases, you can use the `statusCode` property
+  instead of the `permanent` property, but not both. Below is an example
+  of how it works:
 
   ```js
   export async function getServerSideProps(context) {
@@ -68,15 +88,18 @@ The `context` parameter is an object containing the following keys:
   }
   ```
 
-> **Note**: You can import modules in top-level scope for use in `getServerSideProps`.
-> Imports used in `getServerSideProps` will not be bundled for the client-side.
+> **Note**: You can import modules in top-level scope for use in
+> `getServerSideProps`. Imports used in `getServerSideProps` will not be
+> bundled for the client-side.
 >
-> This means you can write **server-side code directly in `getServerSideProps`**.
-> This includes reading from the filesystem or a database.
+> This means you can write **server-side code directly in
+> `getServerSideProps`**. This includes reading from the filesystem or a
+> database.
 
 ### Simple example {#simple-example}
 
-Here’s an example which uses `getServerSideProps` to fetch data at request time and pre-renders it.
+Here’s an example which uses `getServerSideProps` to fetch data at request
+time and pre-renders it.
 
 ```jsx
 function Page({data}) {
@@ -96,9 +119,15 @@ export default Page
 
 ### When should I use `getServerSideProps`? {#when-should-i-use-get-server-side-props}
 
-You should use `getServerSideProps` only if you need to pre-render a page whose data must be fetched at request time. Time to first byte (TTFB) will be slower than `getStaticProps` because the server must compute the result on every request, and the result cannot be cached by a CDN without extra configuration.
+You should use `getServerSideProps` only if you need to pre-render a page
+whose data must be fetched at request time. Time to first byte (TTFB) will
+be slower than `getStaticProps` because the server must compute the result
+on every request, and the result cannot be cached by a CDN without extra
+configuration.
 
-If you don’t need to pre-render the data, then you should consider fetching data on the client side. [Click here to learn more](/docs/query-usage).
+If you don’t need to pre-render the data, then you should consider
+fetching data on the client side.
+[Click here to learn more](/docs/query-usage).
 
 ### TypeScript: Use `GetServerSideProps` {#type-script-use-get-server-side-props}
 
@@ -112,7 +141,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 ```
 
-If you want to get inferred typings for your props, you can use `InferGetServerSidePropsType<typeof getServerSideProps>`, like this:
+If you want to get inferred typings for your props, you can use
+`InferGetServerSidePropsType<typeof getServerSideProps>`, like this:
 
 ```tsx
 import { InferGetServerSidePropsType } from 'blitz'
@@ -140,15 +170,28 @@ export default Page
 
 #### Only runs on server-side
 
-`getServerSideProps` only runs on server-side and never runs on the browser. If a page uses `getServerSideProps` , then:
+`getServerSideProps` only runs on server-side and never runs on the
+browser. If a page uses `getServerSideProps` , then:
 
-- When you request this page directly, `getServerSideProps` runs at the request time, and this page will be pre-rendered with the returned props.
-- When you request this page on client-side page transitions through `<Link>` or `router` ([documentation](/docs/router)), Blitz sends an API request to the server, which runs `getServerSideProps`. It’ll return JSON that contains the result of running `getServerSideProps`, and the JSON will be used to render the page. All this work will be handled automatically by Blitz, so you don’t need to do anything extra as long as you have `getServerSideProps` defined.
+- When you request this page directly, `getServerSideProps` runs at the
+  request time, and this page will be pre-rendered with the returned
+  props.
+- When you request this page on client-side page transitions through
+  `<Link>` or `router` ([documentation](/docs/router)), Blitz sends an API
+  request to the server, which runs `getServerSideProps`. It’ll return
+  JSON that contains the result of running `getServerSideProps`, and the
+  JSON will be used to render the page. All this work will be handled
+  automatically by Blitz, so you don’t need to do anything extra as long
+  as you have `getServerSideProps` defined.
 
-You can use [this tool](https://next-code-elimination.now.sh/) to verify what Blitz eliminates from the client-side bundle.
+You can use [this tool](https://next-code-elimination.now.sh/) to verify
+what Blitz eliminates from the client-side bundle.
 
 #### Only allowed in a page
 
-`getServerSideProps` can only be exported from a **page**. You can’t export it from non-page files.
+`getServerSideProps` can only be exported from a **page**. You can’t
+export it from non-page files.
 
-Also, you must use `export async function getServerSideProps() {}` — it will **not** work if you add `getServerSideProps` as a property of the page component.
+Also, you must use `export async function getServerSideProps() {}` — it
+will **not** work if you add `getServerSideProps` as a property of the
+page component.

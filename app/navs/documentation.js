@@ -1,17 +1,17 @@
-import { createPageList } from "@/utils/createPageList"
-import { Image } from "blitz"
+import {createPageList} from "@/utils/createPageList"
+import {Image} from "blitz"
 
 const pages = createPageList(
   // use compiled location
   require.context(
     `pages/docs/?meta=title,sidebar_label,shortTitle,published,displayUrl`,
     false,
-    /\.mdx$/
+    /\.mdx$/,
   ),
-  "docs"
+  "docs",
 )
 
-const Title = ({ title, iconPath, iconDarkPath }) => (
+const Title = ({title, iconPath, iconDarkPath}) => (
   <div className="px-3 mb-5 flex">
     {iconPath && (
       <div className={`mr-4 ${iconDarkPath ? "dark:hidden" : ""}`}>

@@ -3,7 +3,8 @@ title: <Head> Component
 sidebar_label: <Head>
 ---
 
-We expose a built-in component for appending elements to the `head` of the page:
+We expose a built-in component for appending elements to the `head` of the
+page:
 
 ```jsx
 import {Head} from "blitz"
@@ -13,7 +14,10 @@ function IndexPage() {
     <div>
       <Head>
         <title>My page title</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
+        />
       </Head>
       <p>Hello world!</p>
     </div>
@@ -23,7 +27,9 @@ function IndexPage() {
 export default IndexPage
 ```
 
-To avoid duplicate tags in your `head` you can use the `key` property, which will make sure the tag is only rendered once, as in the following example:
+To avoid duplicate tags in your `head` you can use the `key` property,
+which will make sure the tag is only rendered once, as in the following
+example:
 
 ```jsx
 import {Head} from "blitz"
@@ -46,9 +52,14 @@ function IndexPage() {
 export default IndexPage
 ```
 
-In this case only the second `<meta property="og:title" />` is rendered. `meta` tags with duplicate `name` attributes are automatically handled.
+In this case only the second `<meta property="og:title" />` is rendered.
+`meta` tags with duplicate `name` attributes are automatically handled.
 
-> The contents of `head` get cleared upon unmounting the component, so make sure each page completely defines what it needs in `head`, without making assumptions about what other pages added.
+> The contents of `head` get cleared upon unmounting the component, so make sure each page completely defines what it needs in `head`, without making assumptions about what
+> other pages added.
 
-`title`, `meta` or any other elements (e.g. `script`) need to be contained as **direct** children of the `Head` element,
-or wrapped into maximum one level of `<React.Fragment>` or arrays—otherwise the tags won't be correctly picked up on client-side navigations.
+`title`, `meta` or any other elements (e.g.
+`script`) need to be contained as **direct** children of the `Head` element,
+or wrapped into maximum one level of `<React.Fragment>` or
+arrays—otherwise the
+tags won't be correctly picked up on client-side navigations.

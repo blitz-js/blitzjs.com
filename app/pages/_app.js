@@ -3,12 +3,12 @@ import "typeface-roboto"
 import "typeface-roboto-mono"
 import "../css/main.css"
 import "focus-visible"
-import { Fragment, useEffect } from "react"
-import { Title } from "@/components/Title"
+import {Fragment, useEffect} from "react"
+import {Title} from "@/components/Title"
 import Router from "next/router"
 // import ProgressBar from "@badrap/bar-of-progress"
 import Head from "next/head"
-import { ThemeProvider } from "next-themes"
+import {ThemeProvider} from "next-themes"
 import * as Fathom from "fathom-client"
 
 // const progress = new ProgressBar({
@@ -32,9 +32,9 @@ Router.events.on("routeChangeComplete", () => {
 })
 // Router.events.on("routeChangeError", progress.finish)
 
-export default function App({ Component, pageProps, router }) {
+export default function App({Component, pageProps, router}) {
   const Layout = Component.layoutProps?.Layout || Fragment
-  const layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps } : {}
+  const layoutProps = Component.layoutProps?.Layout ? {layoutProps: Component.layoutProps} : {}
   const meta = Component.layoutProps?.meta || {}
   const description = meta.metaDescription || meta.description
 

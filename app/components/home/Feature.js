@@ -1,4 +1,4 @@
-const Feature = ({ title, children, className = "" }) => {
+const Feature = ({title, children, className = ""}) => {
   return (
     <div className={`text-sm font-secondary ${className}`}>
       <h3 className="mb-5 text-2xl lg:text-xl lg:font-semibold lg:font-primary">{title}</h3>
@@ -7,4 +7,4 @@ const Feature = ({ title, children, className = "" }) => {
   )
 }
 
-export { Feature }
+export {Feature}

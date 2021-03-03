@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import {useCallback, useEffect, useRef, useState} from "react"
 
 const DEFAULT_SCROLLBAR_THUMB_SIZE = 54
 
 export default function Scrollbar(props) {
-  const { children, thumbHeight, className, thumbColor } = props
+  const {children, thumbHeight, className, thumbColor} = props
 
   const elementRef = useRef(null)
 
@@ -14,7 +14,7 @@ export default function Scrollbar(props) {
     const element = elementRef.current
 
     if (element) {
-      const { offsetWidth, scrollWidth, scrollLeft } = element
+      const {offsetWidth, scrollWidth, scrollLeft} = element
       let positionLeft =
         (scrollLeft * (offsetWidth - scrollbarThumb)) /
         (scrollWidth - scrollbarThumb - (offsetWidth - scrollbarThumb))
@@ -28,10 +28,10 @@ export default function Scrollbar(props) {
     const element = elementRef.current
 
     if (element) {
-      const { offsetWidth, scrollWidth } = element
+      const {offsetWidth, scrollWidth} = element
       const minScrollbarWidth = Math.min(
         (offsetWidth / scrollWidth) * offsetWidth,
-        DEFAULT_SCROLLBAR_THUMB_SIZE
+        DEFAULT_SCROLLBAR_THUMB_SIZE,
       )
 
       setScrollbarThumb(minScrollbarWidth)

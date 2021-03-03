@@ -31,10 +31,10 @@ export function addClassTokens2(lines) {
           1,
           ...lines[i][j].content.split(/(\s+)/).map((part, partIndex) => {
             if (partIndex % 2 === 0) {
-              return { content: part, types: [...lines[i][j].types, "class"] }
+              return {content: part, types: [...lines[i][j].types, "class"]}
             }
-            return { content: part, types: ["plain"] }
-          })
+            return {content: part, types: ["plain"]}
+          }),
         )
       }
     }

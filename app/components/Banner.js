@@ -1,4 +1,4 @@
-const Banner = ({ message, hasLightBg }) => (
+const Banner = ({message, hasLightBg}) => (
   <div
     className={`border-b border-opacity-50 border-primary ${
       hasLightBg ? "text-black dark:text-dark-mode-text" : "text-white"

@@ -1,4 +1,4 @@
-export function TipGood({ children }) {
+export function TipGood({children}) {
   return (
     <p className="flex items-start mt-8 mb-4 space-x-2">
       <svg className="w-6 h-6 flex-none mt-0.5" fill="none">
@@ -10,7 +10,7 @@ export function TipGood({ children }) {
   )
 }
 
-export function TipBad({ children }) {
+export function TipBad({children}) {
   return (
     <p className="flex items-start mt-8 mb-4 space-x-2">
       <svg className="w-6 h-6 flex-none mt-0.5" fill="none">
@@ -22,7 +22,7 @@ export function TipBad({ children }) {
   )
 }
 
-export function TipCompat({ children }) {
+export function TipCompat({children}) {
   return (
     <div className="text-sm bg-light-blue-100 text-light-blue-800 font-medium px-4 py-3 mb-4 rounded-xl">
       <div className="flex items-start space-x-3">

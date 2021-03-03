@@ -3,7 +3,10 @@ title: Pages
 sidebar_label: Pages
 ---
 
-In Blitz, a **page** is a [React Component](https://reactjs.org/docs/components-and-props.html) exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in a `pages` directory. Each page is associated with a route based on its file path.
+In Blitz, a **page** is a
+[React Component](https://reactjs.org/docs/components-and-props.html)
+exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in a `pages`
+directory. Each page is associated with a route based on its file path.
 
 All of the following are valid pages:
 
@@ -11,7 +14,8 @@ All of the following are valid pages:
 - `app/projects/pages/projects/index.tsx`
 - `app/tasks/pages/projects/[projectId]/tasks/[taskId].tsx`
 
-**Example**: If you create `app/pages/about.js` that exports a React component like below, it will be accessible at `/about`.
+**Example**: If you create `app/pages/about.js` that exports a React
+component like below, it will be accessible at `/about`.
 
 ```jsx
 function About() {
@@ -23,21 +27,30 @@ export default About
 
 ### Pages with Dynamic Routes {#pages-with-dynamic-routes}
 
-Blitz supports pages with dynamic routes. For example, if you create a file called `app/pages/posts/[id].js`, then it will be accessible at `posts/1`, `posts/2`, etc.
+Blitz supports pages with dynamic routes. For example, if you create a
+file called `app/pages/posts/[id].js`, then it will be accessible at
+`posts/1`, `posts/2`, etc.
 
-> To learn more about routing, check the [Routing documentation](./routing).
+> To learn more about routing, check the
+> [Routing documentation](./routing).
 
 ### Automatic Static Optimization {#automatic-static-optimization}
 
-By default, Blitz pre-renders the static HTML for every page unless you explicitly opt-in to server-side rendering.
+By default, Blitz pre-renders the static HTML for every page unless you
+explicitly opt-in to server-side rendering.
 
-For pages with dynamic data, the page's loading state will be pre-rendered.
+For pages with dynamic data, the page's loading state will be
+pre-rendered.
 
 #### First Render UX
 
-In some cases, the static optimization can cause an undesirable UX where the first render shows one thing but the second render shows another. For example this happens when using `useSession()`.
+In some cases, the static optimization can cause an undesirable UX where
+the first render shows one thing but the second render shows another. For
+example this happens when using `useSession()`.
 
-In this case you can set `Page.suppressFirstRenderFlicker = true`, and Blitz will hide the first render's content. This will result in a tiny delay of first paint but will greatly improve the perceived UX.
+In this case you can set `Page.suppressFirstRenderFlicker = true`, and
+Blitz will hide the first render's content. This will result in a tiny
+delay of first paint but will greatly improve the perceived UX.
 
 ```tsx
 const Page: BlitzPage = () => {
@@ -53,19 +66,30 @@ export default Page
 
 ### Static Page Generation for Unauthenticated Pages {#static-page-generation-for-unauthenticated-pages}
 
-For pages accessible by anyone without authentication, we recommend using `getStaticProps` so the page, along with it's data, is 100% statically generated during pre-rendering (like Gatsby). Then the entire static page can be cached on a CDN. This is perfect for public pages like blog posts.
+For pages accessible by anyone without authentication, we recommend using
+`getStaticProps` so the page, along with it's data, is 100% statically
+generated during pre-rendering (like Gatsby). Then the entire static page
+can be cached on a CDN. This is perfect for public pages like blog posts.
 
-There are two methods for use with static generation, and you'll often use both together.
+There are two methods for use with static generation, and you'll often use
+both together.
 
-1. `getStaticProps` - To load the **data** for your page. See the [`getStaticProps` documentation](./get-static-props) for more details.
-2. `getStaticPaths` - To load the possible **paths** for your page. See the [`getStaticPaths` documentation](./get-static-paths) for more details.
+1. `getStaticProps` - To load the **data** for your page. See the
+   [`getStaticProps` documentation](./get-static-props) for more details.
+2. `getStaticPaths` - To load the possible **paths** for your page. See
+   the [`getStaticPaths` documentation](./get-static-paths) for more
+   details.
 
 ### Server-side Rendering {#server-side-rendering}
 
 > Also referred to as "SSR" or "Dynamic Rendering".
 
-If a page uses **Server-side Rendering**, the page HTML is generated on **each request**.
+If a page uses **Server-side Rendering**, the page HTML is generated on
+**each request**.
 
-To use Server-side Rendering for a page, you need to `export` an `async` function called `getServerSideProps`. This function will be called by the server on every request.
+To use Server-side Rendering for a page, you need to `export` an `async`
+function called `getServerSideProps`. This function will be called by the
+server on every request.
 
-See the [`getServerSideProps` documentation](./get-server-side-props) for more details.
+See the [`getServerSideProps` documentation](./get-server-side-props) for
+more details.

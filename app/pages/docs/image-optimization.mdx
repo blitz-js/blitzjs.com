@@ -5,17 +5,34 @@ sidebar_label: Image Optimization
 
 Blitz has a built-in Image Component and Automatic Image Optimization.
 
-The Blitz Image Component, `Image`, is an extension of the HTML `<img>` element, evolved for the modern web.
+The Blitz Image Component, `Image`, is an extension of the HTML `<img>`
+element, evolved for the modern web.
 
-The Automatic Image Optimization allows for resizing, optimizing, and serving images in modern formats like [WebP](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types) when the browser supports it. This avoids shipping large images to devices with a smaller viewport. It also allows Blitz to automatically adopt future image formats and serve them to browsers that support those formats.
+The Automatic Image Optimization allows for resizing, optimizing, and
+serving images in modern formats like
+[WebP](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+when the browser supports it. This avoids shipping large images to devices
+with a smaller viewport. It also allows Blitz to automatically adopt
+future image formats and serve them to browsers that support those
+formats.
 
-Automatic Image Optimization works with any image source. Even if the image is hosted by an external data source, like a CMS, it can still be optimized.
+Automatic Image Optimization works with any image source. Even if the
+image is hosted by an external data source, like a CMS, it can still be
+optimized.
 
-Instead of optimizing images at build time, Blitz optimizes images on-demand, as users request them. Unlike static site generators and static-only solutions, your build times aren't increased, whether shipping 10 images or 10 million images.
+Instead of optimizing images at build time, Blitz optimizes images
+on-demand, as users request them. Unlike static site generators and
+static-only solutions, your build times aren't increased, whether shipping
+10 images or 10 million images.
 
-Images are lazy loaded by default. That means your page speed isn't penalized for images outside the viewport. Images load as they are scrolled into viewport.
+Images are lazy loaded by default. That means your page speed isn't
+penalized for images outside the viewport. Images load as they are
+scrolled into viewport.
 
-Images are always rendered in such a way as to avoid [Cumulative Layout Shift](https://web.dev/cls/), a [Core Web Vital](https://web.dev/vitals/) that Google is going to [use in search ranking](https://webmasters.googleblog.com/2020/05/evaluating-page-experience.html).
+Images are always rendered in such a way as to avoid
+[Cumulative Layout Shift](https://web.dev/cls/), a
+[Core Web Vital](https://web.dev/vitals/) that Google is going to
+[use in search ranking](https://webmasters.googleblog.com/2020/05/evaluating-page-experience.html).
 
 ## Image Component {#image-component}
 
@@ -28,7 +45,12 @@ function Home() {
   return (
     <>
       <h1>My Homepage</h1>
-      <Image src="/me.png" alt="Picture of the author" width={500} height={500} />
+      <Image
+        src="/me.png"
+        alt="Picture of the author"
+        width={500}
+        height={500}
+      />
       <p>Welcome to my homepage!</p>
     </>
   )
@@ -39,12 +61,16 @@ export default Home
 
 ## Configuration {#configuration}
 
-In addition to using properties available to the `Image` component, you can optionally configure Image Optimization for more advanced use cases via `blitz.config.js`.
+In addition to using properties available to the `Image` component, you
+can optionally configure Image Optimization for more advanced use cases
+via `blitz.config.js`.
 
 ### Domains {#domains}
 
-To enable Image Optimization for images hosted on an external website, use an absolute url for the Image `src` and specify which
-`domains` are allowed to be optimized. This is needed to ensure that external urls can't be abused.
+To enable Image Optimization for images hosted on an external website, use
+an absolute url for the Image `src` and specify which `domains` are
+allowed to be optimized. This is needed to ensure that external urls can't
+be abused.
 
 ```js
 module.exports = {
@@ -56,7 +82,10 @@ module.exports = {
 
 ### Loader {#loader}
 
-If you want to use a cloud provider to optimize images instead of using the Blitz' built-in Image Optimization, you can configure the loader and path prefix. This allows you to use relative urls for the Image `src` and automatically generate the correct absolute url for your provider.
+If you want to use a cloud provider to optimize images instead of using
+the Blitz' built-in Image Optimization, you can configure the loader and
+path prefix. This allows you to use relative urls for the Image `src` and
+automatically generate the correct absolute url for your provider.
 
 ```js
 module.exports = {
@@ -69,7 +98,9 @@ module.exports = {
 
 The following Image Optimization cloud providers are supported:
 
-- [Vercel](https://vercel.com): Works automatically when you deploy on Vercel, no configuration necessary. [Learn more](https://vercel.com/docs/next.js/image-optimization)
+- [Vercel](https://vercel.com): Works automatically when you deploy on
+  Vercel, no configuration necessary.
+  [Learn more](https://vercel.com/docs/next.js/image-optimization)
 - [Imgix](https://www.imgix.com): `loader: 'imgix'`
 - [Cloudinary](https://cloudinary.com): `loader: 'cloudinary'`
 - [Akamai](https://www.akamai.com): `loader: 'akamai'`
@@ -77,23 +108,40 @@ The following Image Optimization cloud providers are supported:
 
 ## Caching {#caching}
 
-The following describes the caching algorithm for the default [loader](#loader). For all other loaders, please refer to your cloud provider's documentation.
+The following describes the caching algorithm for the default
+[loader](#loader). For all other loaders, please refer to your cloud
+provider's documentation.
 
-Images are optimized dynamically upon request and stored in the `<distDir>/cache/images` directory. The optimized image file will be served for subsequent requests until the expiration is reached. When a request is made that matches a cached but expired file, the cached file is deleted before generating a new optimized image and caching the new file.
+Images are optimized dynamically upon request and stored in the
+`<distDir>/cache/images` directory. The optimized image file will be
+served for subsequent requests until the expiration is reached. When a
+request is made that matches a cached but expired file, the cached file is
+deleted before generating a new optimized image and caching the new file.
 
-The expiration (or rather Max Age) is defined by the upstream server's `Cache-Control` header.
+The expiration (or rather Max Age) is defined by the upstream server's
+`Cache-Control` header.
 
-If `s-maxage` is found in `Cache-Control`, it is used. If no `s-maxage` is found, then `max-age` is used. If no `max-age` is found, then 60 seconds is used.
+If `s-maxage` is found in `Cache-Control`, it is used. If no `s-maxage` is
+found, then `max-age` is used. If no `max-age` is found, then 60 seconds
+is used.
 
-You can configure [`deviceSizes`](#device-sizes) and [`imageSizes`](#device-sizes) to reduce the total number of possible generated images.
+You can configure [`deviceSizes`](#device-sizes) and
+[`imageSizes`](#device-sizes) to reduce the total number of possible
+generated images.
 
 ## Advanced {#advanced}
 
-The following configuration is for advanced use cases and is usually not necessary. If you choose to configure the properties below, you will override any changes to the Blitz defaults in future updates.
+The following configuration is for advanced use cases and is usually not
+necessary. If you choose to configure the properties below, you will
+override any changes to the Blitz defaults in future updates.
 
 ### Device Sizes {#device-sizes}
 
-In some cases, where you know the expected device widths from the users of your website, you can specify a list of device width breakpoints using the `deviceSizes` property. These widths are used when the `Image` component uses `layout="responsive"` or `layout="fill"` so that the correct image is served for the device visiting your website.
+In some cases, where you know the expected device widths from the users of
+your website, you can specify a list of device width breakpoints using the
+`deviceSizes` property. These widths are used when the `Image` component
+uses `layout="responsive"` or `layout="fill"` so that the correct image is
+served for the device visiting your website.
 
 If no configuration is provided, the default below is used.
 
@@ -107,7 +155,11 @@ module.exports = {
 
 ### Image Sizes {#image-sizes}
 
-You can specify a list of image widths using the `imageSizes` property. These widths should be different (usually smaller) than the widths defined in `deviceSizes` because the arrays will be concatenated. These widths are used when the `Image` component uses `layout="fixed"` or `layout="intrinsic"`.
+You can specify a list of image widths using the `imageSizes` property.
+These widths should be different (usually smaller) than the widths defined
+in `deviceSizes` because the arrays will be concatenated. These widths are
+used when the `Image` component uses `layout="fixed"` or
+`layout="intrinsic"`.
 
 If no configuration is provided, the default below is used.
 
@@ -139,7 +191,12 @@ function Home() {
   return (
     <>
       <h1>My Homepage</h1>
-      <Image src="/me.png" alt="Picture of the author" width={500} height={500} />
+      <Image
+        src="/me.png"
+        alt="Picture of the author"
+        width={500}
+        height={500}
+      />
       <p>Welcome to my homepage!</p>
     </>
   )
@@ -156,7 +213,8 @@ The `Image` component requires the following properties.
 
 The path or URL to the source image. This is required.
 
-When using an external URL, you must add it to [domains](#domains) in `blitz.config.js`.
+When using an external URL, you must add it to [domains](#domains) in
+`blitz.config.js`.
 
 #### width
 
@@ -176,15 +234,21 @@ The `<Image />` component optionally accepts the following properties.
 
 #### layout
 
-The layout behavior of the image as the viewport changes size. Defaults to `intrinsic`.
+The layout behavior of the image as the viewport changes size. Defaults to
+`intrinsic`.
 
-When `fixed`, the image dimensions will not change as the viewport changes (no responsiveness) similar to the native `img` element.
+When `fixed`, the image dimensions will not change as the viewport changes
+(no responsiveness) similar to the native `img` element.
 
-When `intrinsic`, the image will scale the dimensions down for smaller viewports but maintain the original dimensions for larger viewports.
+When `intrinsic`, the image will scale the dimensions down for smaller
+viewports but maintain the original dimensions for larger viewports.
 
-When `responsive`, the image will scale the dimensions down for smaller viewports and scale up for larger viewports.
+When `responsive`, the image will scale the dimensions down for smaller
+viewports and scale up for larger viewports.
 
-When `fill`, the image will stretch both width and height to the dimensions of the parent element, usually paired with [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit).
+When `fill`, the image will stretch both width and height to the
+dimensions of the parent element, usually paired with
+[object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit).
 
 Try it out:
 
@@ -196,7 +260,8 @@ Try it out:
 
 ### loader {#loader-1}
 
-A custom function used to resolve URLs. Defaults to [`images` object in `blitz.config.js`](/docs/basic-features/image-optimization.md#loader).
+A custom function used to resolve URLs. Defaults to
+[`images` object in `blitz.config.js`](/docs/basic-features/image-optimization.md#loader).
 
 `loader` is a function returning a string, given the following parameters:
 
@@ -204,11 +269,10 @@ A custom function used to resolve URLs. Defaults to [`images` object in `blitz.c
 - [`width`](#width)
 - [`quality`](#quality)
 
-<!-- prettier-ignore-start -->
 ```js
-import {Image} from 'blitz'
+import {Image} from "blitz"
 
-const myLoader = ({ src, width, quality }) => {
+const myLoader = ({src, width, quality}) => {
   return `https://example.com/${src}?w=${width}&q=${quality || 75}`
 }
 
@@ -224,29 +288,33 @@ const MyImage = (props) => {
   )
 }
 ```
-<!-- prettier-ignore-end -->
 
 #### sizes
 
 A string mapping media queries to device sizes. Defaults to `100vw`.
 
-We recommend setting `sizes` when `layout="responsive"` and your image will not be the same width as the viewport.
+We recommend setting `sizes` when `layout="responsive"` and your image
+will not be the same width as the viewport.
 
 [Learn more](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes).
 
 #### quality
 
-The quality of the optimized image, an integer between 1 and 100 where 100 is the best quality. Defaults to 75.
+The quality of the optimized image, an integer between 1 and 100 where 100
+is the best quality. Defaults to 75.
 
 #### priority
 
-When true, the image will be considered high priority and [preload](https://web.dev/preload-responsive-images/).
+When true, the image will be considered high priority and
+[preload](https://web.dev/preload-responsive-images/).
 
-Should only be used when the image is visible above the fold. Defaults to false.
+Should only be used when the image is visible above the fold. Defaults to
+false.
 
 ### Advanced Props {#advanced-props}
 
-In some cases, you may need more advanced usage. The `Image` component optionally accepts the following advanced properties.
+In some cases, you may need more advanced usage. The `Image` component
+optionally accepts the following advanced properties.
 
 #### objectFit
 
@@ -262,15 +330,16 @@ The image position when using `layout="fill"`.
 
 #### loading
 
-> **Attention**: This property is only meant for advanced usage. Switching an
-> image to load with `eager` will normally **hurt performance**.
+> **Attention**: This property is only meant for advanced usage. Switching
+> an image to load with `eager` will normally **hurt performance**.
 >
 > We recommend using the [`priority`](#priority) property instead, which
 > properly loads the image eagerly for nearly all use cases.
 
 The loading behavior of the image. Defaults to `lazy`.
 
-When `lazy`, defer loading the image until it reaches a calculated distance from the viewport.
+When `lazy`, defer loading the image until it reaches a calculated
+distance from the viewport.
 
 When `eager`, load the image immediately.
 
@@ -278,11 +347,13 @@ When `eager`, load the image immediately.
 
 #### unoptimized
 
-When true, the source image will be served as-is instead of changing quality, size, or format. Defaults to false.
+When true, the source image will be served as-is instead of changing
+quality, size, or format. Defaults to false.
 
 ### Other Props {#other-props}
 
-Other properties on the `Image` component will be passed to the underlying `img` element with the exception of the following:
+Other properties on the `Image` component will be passed to the underlying
+`img` element with the exception of the following:
 
 - `style`. Use `className` instead.
 - `srcSet`. Use [Device Sizes](#device-sizes) instead.

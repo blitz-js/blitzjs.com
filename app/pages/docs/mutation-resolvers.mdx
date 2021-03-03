@@ -3,9 +3,11 @@ title: Mutation Resolvers
 sidebar_label: Mutation Resolvers
 ---
 
-Blitz mutations are plain, asynchronous JavaScript functions that always run on the server.
+Blitz mutations are plain, asynchronous JavaScript functions that always
+run on the server.
 
-**1. Mutations must be inside a `mutations` folder. All of the following are valid:**
+**1. Mutations must be inside a `mutations` folder. All of the following
+are valid:**
 
 - `app/mutations/createProject.ts`
 - `app/projects/mutations/createProject.ts`
@@ -13,14 +15,20 @@ Blitz mutations are plain, asynchronous JavaScript functions that always run on 
 
 **2. Mutations must export a function as the default export**
 
-You can write any normal Node.js code here, including database access and fetching from third-party APIs.
+You can write any normal Node.js code here, including database access and
+fetching from third-party APIs.
 
 #### Arguments
 
 - `input: any`
-  - The first argument is anything you need for your mutation. There are no special requirements.
+  - The first argument is anything you need for your mutation. There are
+    no special requirements.
 - `ctx: Ctx`
-  - This context object is automatically provided by Blitz at run time. This is used by [HTTP Middleware](./middleware) to provide data or functions to your mutation. For example, authentication middleware can provide `ctx.session` with all the data about the current user session.
+  - This context object is automatically provided by Blitz at run time.
+    This is used by [HTTP Middleware](./middleware) to provide data or
+    functions to your mutation. For example, authentication middleware can
+    provide `ctx.session` with all the data about the current user
+    session.
 
 #### Example Mutation
 
@@ -33,7 +41,10 @@ type CreateProjectInput = {
   data: ProjectCreateArgs["data"]
 }
 
-export default async function createProject({data}: CreateProjectInput, ctx: Ctx) {
+export default async function createProject(
+  {data}: CreateProjectInput,
+  ctx: Ctx,
+) {
   // Can do any processing, fetching from other APIs, etc
 
   const project = await db.project.create({data})
@@ -42,6 +53,8 @@ export default async function createProject({data}: CreateProjectInput, ctx: Ctx
 }
 ```
 
-_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_
+_We automatically alias the root of your project, so `import db from 'db'`
+is importing `<project_root>/db/index.ts`_
 
-Next, [read these docs](./mutation-usage) to see how to use these mutations in your components.
+Next, [read these docs](./mutation-usage) to see how to use these
+mutations in your components.

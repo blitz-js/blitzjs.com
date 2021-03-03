@@ -1,15 +1,15 @@
-import { Link, useRouter } from "blitz"
-import { createContext, forwardRef, useRef, Fragment, useEffect } from "react"
-import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect"
+import {Link, useRouter} from "blitz"
+import {createContext, forwardRef, useRef, Fragment, useEffect} from "react"
+import {useIsomorphicLayoutEffect} from "@/hooks/useIsomorphicLayoutEffect"
 import clsx from "clsx"
-import { TableOfContents } from "@/layouts/ContentsLayout"
-import { useIsDocsIndex } from "@/hooks/useIsDocsIndex"
-import { useIsDesktop } from "@/hooks/useIsDesktop"
-import { PageHeader } from "@/components/PageHeader"
+import {TableOfContents} from "@/layouts/ContentsLayout"
+import {useIsDocsIndex} from "@/hooks/useIsDocsIndex"
+import {useIsDesktop} from "@/hooks/useIsDesktop"
+import {PageHeader} from "@/components/PageHeader"
 
 export const SidebarContext = createContext()
 
-const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHref }, ref) => {
+const NavItem = forwardRef(({href, children, isActive, isPublished, fallbackHref}, ref) => {
   return (
     <li ref={ref}>
       <Link href={isPublished ? href : fallbackHref}>
@@ -19,7 +19,7 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
             "hover:underline": !isActive && isPublished,
             "text-gray-400": !isActive && !isPublished,
           })}
-          style={{ letterSpacing: 0.3 }}
+          style={{letterSpacing: 0.3}}
         >
           <span className="relative">{children}</span>
         </a>
@@ -28,7 +28,7 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
   )
 })
 
-function Nav({ nav, children, fallbackHref, toc }) {
+function Nav({nav, children, fallbackHref, toc}) {
   const router = useRouter()
   const activeItemRef = useRef()
   const scrollRef = useRef()
@@ -93,7 +93,7 @@ function Nav({ nav, children, fallbackHref, toc }) {
   )
 }
 
-export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProps }) {
+export function SidebarLayout({children, nav, sidebar, fallbackHref, layoutProps}) {
   const router = useRouter()
   const isDocsIndex = useIsDocsIndex()
   const isDesktop = useIsDesktop()
@@ -105,7 +105,7 @@ export function SidebarLayout({ children, nav, sidebar, fallbackHref, layoutProp
   }, [router, isDesktop, isDocsIndex])
 
   return (
-    <SidebarContext.Provider value={{ nav }}>
+    <SidebarContext.Provider value={{nav}}>
       <div
         className={clsx("w-full max-w-8xl mx-auto lg:mt-16", {
           "mt-10": true,

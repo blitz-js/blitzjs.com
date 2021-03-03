@@ -3,7 +3,8 @@ title: Background Processing with Quirrel
 sidebar_label: Background Processing with Quirrel
 ---
 
-Most web applications need some kind of background processing at some point:
+Most web applications need some kind of background processing at some
+point:
 
 - [reminding a user of an upcoming event](#reminding-a-user-of-an-upcoming-event)
 - [sending out invoices at the beginning of the month](#sending-out-invoices-at-the-beginning-of-the-month)
@@ -11,33 +12,47 @@ Most web applications need some kind of background processing at some point:
 - [processing an upload in the background](#processing-an-upload-in-the-background)
 - ...
 
-In other frameworks, you'd reach for solutions like [Sidekiq](https://github.com/mperham/sidekiq) or [Celery](https://github.com/celery/celery).
+In other frameworks, you'd reach for solutions like
+[Sidekiq](https://github.com/mperham/sidekiq) or
+[Celery](https://github.com/celery/celery).
 
-For Blitz.js, [Quirrel](https://quirrel.dev) is a good choice.
-It's OSS and has a hosted version, and works by calling back to your Next.js API routes.
+For Blitz.js, [Quirrel](https://quirrel.dev) is a good choice. It's OSS
+and has a hosted version, and works by calling back to your Next.js API
+routes.
 
-> Quirrel is developed by [Simon Knott](https://twitter.com/skn0tt), a Blitz community member. Don't hesitate to [reach out](mailto:blitzjs@quirrel.dev?subject=A%20Question%20from%20a%20fellow%20Blitz%20user&body=Hi%20Simon%2C%0D%0A%0D%0AI%20have%20a%20question%20on%20___.%0D%0A%0D%0A%0D%0AHope%20you%20have%20a%20great%20day%2C%0D%0A%0D%0A___) to him if there are any questions!
+> Quirrel is developed by [Simon Knott](https://twitter.com/skn0tt), a
+> Blitz community member. Don't hesitate to
+> [reach out](mailto:blitzjs@quirrel.dev?subject=A%20Question%20from%20a%20fellow%20Blitz%20user&body=Hi%20Simon%2C%0D%0A%0D%0AI%20have%20a%20question%20on%20___.%0D%0A%0D%0A%0D%0AHope%20you%20have%20a%20great%20day%2C%0D%0A%0D%0A___)
+> to him if there are any questions!
 
 ## Getting Started {#getting-started}
 
 Install Quirrel by running `blitz install quirrel`.
 
-To speed up development, Quirrel allows you to monitor pending jobs in the Development UI. In there, you can also manually invoke jobs, so you don't have to wait everytime you test something.
-To use it, simply run `quirrel ui` or open [ui.quirrel.dev](https://ui.quirrel.dev) in your browser.
+To speed up development, Quirrel allows you to monitor pending jobs in the
+Development UI. In there, you can also manually invoke jobs, so you don't
+have to wait everytime you test something. To use it, simply run
+`quirrel ui` or open [ui.quirrel.dev](https://ui.quirrel.dev) in your
+browser.
 
-For any Quirrel questions not covered by this document, check out the [Quirrel Docs](https://docs.quirrel.dev/).
+For any Quirrel questions not covered by this document, check out the
+[Quirrel Docs](https://docs.quirrel.dev/).
 
-For deploying an application that uses Quirrel, check out this guide: [Deploying Quirrel](https://docs.quirrel.dev/deploying)
+For deploying an application that uses Quirrel, check out this guide:
+[Deploying Quirrel](https://docs.quirrel.dev/deploying)
 
 ## Recipes {#recipes}
 
-These recipes are designed to give you a general idea of how to use Quirrel.
+These recipes are designed to give you a general idea of how to use
+Quirrel.
 
 ### Reminding a user of an upcoming event {#reminding-a-user-of-an-upcoming-event}
 
-This recipe schedules a booking reminder to be sent 30 minutes before show-time.
+This recipe schedules a booking reminder to be sent 30 minutes before
+show-time.
 
-First, you define your [`Queue`](https://docs.quirrel.dev/api/queue#queue):
+First, you define your
+[`Queue`](https://docs.quirrel.dev/api/queue#queue):
 
 ```ts
 // app/api/booking-reminder
@@ -62,7 +77,8 @@ export default Queue(
 )
 ```
 
-Import the above file somewhere else and call `.enqueue` to schedule a new job:
+Import the above file somewhere else and call `.enqueue` to schedule a new
+job:
 
 ```ts
 // app/mutations/createBooking
@@ -81,7 +97,8 @@ export default async function createBooking(eventId, ctx) {
 }
 ```
 
-That's all we need! Your customers will now be reminded 30 minutes before their booking begins.
+That's all we need! Your customers will now be reminded 30 minutes before
+their booking begins.
 
 If a booking is canceled, we can also delete the reminder job:
 
@@ -114,7 +131,8 @@ export default Queue(
 
 ### Sending out Invoices at the beginning of the Month {#sending-out-invoices-at-the-beginning-of-the-month}
 
-For this, Quirrel's [`CronJob`](https://docs.quirrel.dev/api/cronjob) is the perfect fit.
+For this, Quirrel's [`CronJob`](https://docs.quirrel.dev/api/cronjob) is
+the perfect fit.
 
 ```ts
 // app/api/monthly-invoice
@@ -166,8 +184,8 @@ export default CronJob(
 
 ### Processing an Upload in the Background {#processing-an-upload-in-the-background}
 
-Uploaded data shouldn't be sent to Quirrel, but be stored in your own database.
-Add a new DB entity for it:
+Uploaded data shouldn't be sent to Quirrel, but be stored in your own
+database. Add a new DB entity for it:
 
 ```prisma
 model UploadedCSV {
@@ -176,7 +194,8 @@ model UploadedCSV {
 }
 ```
 
-Then when a user uploads something, you insert it into the database and enqueue the resulting record's ID into Quirrel.
+Then when a user uploads something, you insert it into the database and
+enqueue the resulting record's ID into Quirrel.
 
 ```ts
 // app/mutations/uploadCsvForProcessing
@@ -194,8 +213,10 @@ export default async function uploadCsvForProcessing(data: string) {
 }
 ```
 
-Our Quirrel Queue then fetches the corresponding data from the database and does the required processing.
-After that's done, it deletes the database record (alternative: add a flag called "finishedProcessing" and set it to true).
+Our Quirrel Queue then fetches the corresponding data from the database
+and does the required processing. After that's done, it deletes the
+database record (alternative: add a flag called "finishedProcessing" and
+set it to true).
 
 ```ts
 // app/api/process-csv
@@ -213,7 +234,8 @@ export default Queue("api/process-csv", async (uploadId: number) => {
 })
 ```
 
-Now when you want to know wether an upload has already been processed, you can look it up in your own database:
+Now when you want to know wether an upload has already been processed, you
+can look it up in your own database:
 
 ```ts
 // app/queries/hasFinishedProcessing

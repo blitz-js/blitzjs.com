@@ -1,4 +1,4 @@
-const { addImport, addExport } = require("./utils")
+const {addImport, addExport} = require("./utils")
 
 /**
  * Extract slug
@@ -33,7 +33,7 @@ module.exports.withTableOfContents = () => {
 
         let allOtherSlugs = contents.flatMap((entry) => [
           entry.slug,
-          ...entry.children.map(({ slug }) => slug),
+          ...entry.children.map(({slug}) => slug),
         ])
         if (allOtherSlugs.includes(slug)) {
           throw new Error(`The slug "${slug}" is used twice in the same document`)
@@ -45,11 +45,11 @@ module.exports.withTableOfContents = () => {
           node.value =
             node.children[0].value.replace(
               /^\s*<Heading([\s>])/,
-              `<Heading level={${level}} id="${slug}" toc={true}$1`
+              `<Heading level={${level}} id="${slug}" toc={true}$1`,
             ) + title
         } else {
           node.value = `<${component} level={${level}} id="${slug}" toc={true}>${node.children
-            .map(({ type, value }) => {
+            .map(({type, value}) => {
               const nodeValue = value
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
@@ -62,9 +62,9 @@ module.exports.withTableOfContents = () => {
         }
 
         if (level === 2 || !contents.length) {
-          contents.push({ title, slug, children: [] })
+          contents.push({title, slug, children: []})
         } else {
-          contents[contents.length - 1].children.push({ title, slug })
+          contents[contents.length - 1].children.push({title, slug})
         }
       } else if (
         node.type === "jsx" &&

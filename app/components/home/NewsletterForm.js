@@ -1,9 +1,9 @@
 import React from "react"
-import { BsArrowRight } from "react-icons/bs"
+import {BsArrowRight} from "react-icons/bs"
 
 // Video player component we can pass a url to using the react-player library.
 // control prop determinse whether video player controls will be displayed.
-const NewsletterForm = ({ className, hasDarkMode }) => {
+const NewsletterForm = ({className, hasDarkMode}) => {
   return (
     <form
       action="https://design.us4.list-manage.com/subscribe/post?u=aeb422edfecb0e2dcaf70d12d&amp;id=1a028d02ce"
@@ -27,4 +27,4 @@ const NewsletterForm = ({ className, hasDarkMode }) => {
   )
 }
 
-export { NewsletterForm }
+export {NewsletterForm}

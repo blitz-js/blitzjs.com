@@ -10,7 +10,10 @@ import {useInfiniteQuery} from "blitz"
 import getProjectsInfinite from "app/projects/queries/getProjectsInfinite"
 
 function Projects(props) {
-  const [groupedProjects, {isFetching, isFetchingMore, fetchMore, canFetchMore}] = useInfiniteQuery(
+  const [
+    groupedProjects,
+    {isFetching, isFetchingMore, fetchMore, canFetchMore},
+  ] = useInfiniteQuery(
     getProjectsInfinite,
     (page = {take: 3, skip: 0}) => page,
     {
@@ -27,8 +30,15 @@ function Projects(props) {
         </React.Fragment>
       ))}
       <div>
-        <button onClick={() => fetchMore()} disabled={!canFetchMore || !!isFetchingMore}>
-          {isFetchingMore ? "Loading more..." : canFetchMore ? "Load More" : "Nothing more to load"}
+        <button
+          onClick={() => fetchMore()}
+          disabled={!canFetchMore || !!isFetchingMore}
+        >
+          {isFetchingMore
+            ? "Loading more..."
+            : canFetchMore
+            ? "Load More"
+            : "Nothing more to load"}
         </button>
       </div>
       <div>{isFetching && !isFetchingMore ? "Fetching..." : null}</div>
@@ -90,19 +100,25 @@ const [
   - **Required**
 - `getQueryInputArguments: (fetchMoreVariable) => queryInputArguments`
   - **Required**
-  - A function that accepts the current page options and returns the `queryInputArguments`
+  - A function that accepts the current page options and returns the
+    `queryInputArguments`
   - On the first page load, `fetchMoreVariable` is `undefined`.
-  - For subsequent pages, `fetchMoreVariable` is whatever is returned from `getFetchMore()`
+  - For subsequent pages, `fetchMoreVariable` is whatever is returned from
+    `getFetchMore()`
 - `options`
   - Optional
 
 ### Options {#options}
 
-The options are identical to the options for the [useQuery hook](./use-query) with the addition of the following:
+The options are identical to the options for the
+[useQuery hook](./use-query) with the addition of the following:
 
 - `getFetchMore: Function(lastPage, allPages) => fetchMoreVariable | Boolean`
-  - When new data is received for this query, this function receives both the last page of the infinite list of data and the full array of all pages.
-  - It should return a **single variable** that will be passed as the argument to `getQueryInputArguments()`
+  - When new data is received for this query, this function receives both
+    the last page of the infinite list of data and the full array of all
+    pages.
+  - It should return a **single variable** that will be passed as the
+    argument to `getQueryInputArguments()`
 
 ### Returns {#returns}
 
@@ -116,24 +132,38 @@ The options are identical to the options for the [useQuery hook](./use-query) wi
 ##### `queryExtras: Object`
 
 - `isFetching: Boolean`
-  - Will be `true` if the query is currently fetching, including background fetching.
+  - Will be `true` if the query is currently fetching, including
+    background fetching.
 - `failureCount: Integer`
   - The failure count for the query.
   - Incremented every time the query fails.
   - Reset to `0` when the query succeeds.
 - `refetch()` - `Function({ force, throwOnError }) => void`
   - A function to manually refetch the query if it is stale.
-  - To bypass the stale check, you can pass the `force: true` option and refetch it regardless of it's freshness
-  - If the query errors, the error will only be logged. If you want an error to be thrown, pass the `throwOnError: true` option
-- `fetchMore()` - `Function(fetchMoreVariableOverride, { previous }) => Promise`
+  - To bypass the stale check, you can pass the `force: true` option and
+    refetch it regardless of it's freshness
+  - If the query errors, the error will only be logged. If you want an
+    error to be thrown, pass the `throwOnError: true` option
+- `fetchMore()` -
+  `Function(fetchMoreVariableOverride, { previous }) => Promise`
   - This function allows you to fetch the next "page" of results.
-  - fetchMoreVariableOverride allows you to optionally override the fetch more variable returned from your getCanFetchMore option to your query function to retrieve the next page of results.
-  - previous option which will determine if the data you are fetching is should be prepended instead of appended to your infinite list. e.g. `fetchMore(nextPageVars, { previous: true })`
+  - fetchMoreVariableOverride allows you to optionally override the fetch
+    more variable returned from your getCanFetchMore option to your query
+    function to retrieve the next page of results.
+  - previous option which will determine if the data you are fetching is
+    should be prepended instead of appended to your infinite list. e.g.
+    `fetchMore(nextPageVars, { previous: true })`
 - `canFetchMore: Boolean`
-  - If using `paginated` mode, this will be `true` if there is more data to be fetched (known via the required `getFetchMore` option function).
+  - If using `paginated` mode, this will be `true` if there is more data
+    to be fetched (known via the required `getFetchMore` option function).
 - `setQueryData()` - `Function(newData, opts) => void`
   - A function to manually update the cache for a query.
-  - `newData` can be an object of new data or a function that receives the old data and returns the new data
-  - This is often used to instantly update the cache after submitting a form
-  - After updating the cache, this will automatically call `refetch()` to ensure the data is correct. Disable refetch by passing an options object `{refetch: false}` as the second argument.
-  - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for example usage of `setQueryData()`
+  - `newData` can be an object of new data or a function that receives the
+    old data and returns the new data
+  - This is often used to instantly update the cache after submitting a
+    form
+  - After updating the cache, this will automatically call `refetch()` to
+    ensure the data is correct. Disable refetch by passing an options
+    object `{refetch: false}` as the second argument.
+  - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for
+    example usage of `setQueryData()`

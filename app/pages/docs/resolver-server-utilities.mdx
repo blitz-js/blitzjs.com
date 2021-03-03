@@ -5,7 +5,8 @@ sidebar_label: Server Utilities
 
 ## `resolver.pipe` {#resolver-pipe}
 
-This is a functional utility that makes it easier and cleaner to write complex resolvers.
+This is a functional utility that makes it easier and cleaner to write
+complex resolvers.
 
 - It reduces the need for explicit Typescript types
 - Validate input data with a zod schema with `resolver.zod()`
@@ -41,21 +42,29 @@ export default resolver.pipe(
 )
 ```
 
+<!-- prettier-ignore-start -->
 :::info
-The input type of the entire composed resolver function is determined by the input type of the **first** argument to pipe.
+The input type of the entire composed resolver function is
+determined by the input type of the **first** argument to pipe.
 
-This means you will almost always want `resolver.zod()` to be the first in the pipe.
+This means you will almost always want `resolver.zod()` to be the first in
+the pipe.
 :::
+<!-- prettier-ignore-end -->
 
 ### API {#api}
 
 #### Arguments
 
-It accepts from 1 to N functions which take input data as first argument and [middleware `ctx`](./middleware) as the second argument.
+It accepts from 1 to N functions which take input data as first argument
+and [middleware `ctx`](./middleware) as the second argument.
 
-The output of the first function is the first input argument of the next function. The output of the last function is the final resolver result data that will be sent to the client.
+The output of the first function is the first input argument of the next
+function. The output of the last function is the final resolver result
+data that will be sent to the client.
 
-The Typescript types are automatically inferred from one function to the next.
+The Typescript types are automatically inferred from one function to the
+next.
 
 <!-- prettier-ignore -->
 ```js
@@ -77,11 +86,14 @@ const resolver = resolver.pipe(
 
 #### Returns
 
-This returns a composed function of type `(input, ctx) => Promise<result>` which is the standard resolver type.
+This returns a composed function of type `(input, ctx) => Promise<result>`
+which is the standard resolver type.
 
 ## `resolver.zod` {#resolver-zod}
 
-This is a resolver adapter for [Zod](https://github.com/colinhacks/zod), an awesome input validation library. It takes a zod schema and runs `schema.parse` on the input data.
+This is a resolver adapter for [Zod](https://github.com/colinhacks/zod),
+an awesome input validation library. It takes a zod schema and runs
+`schema.parse` on the input data.
 
 ### Example {#example-1}
 
@@ -118,7 +130,8 @@ const pipeFn = resolver.zod(MyZodSchema)
 
 #### Returns
 
-A function to give `resolver.pipe` of type `(rawInput, ctx: Ctx) => validInput`
+A function to give `resolver.pipe` of type
+`(rawInput, ctx: Ctx) => validInput`
 
 ## `resolver.authorize` {#resolver-authorize}
 
@@ -148,7 +161,8 @@ const pipeFn = resolver.authorize(...isAuthorizedArgs)
 
 #### Arguments
 
-- `...isAuthorizedArgs`: The same arguments as your [`isAuthorized` adapter](./authorization#isauthorized-adapters)
+- `...isAuthorizedArgs`: The same arguments as your
+  [`isAuthorized` adapter](./authorization#isauthorized-adapters)
 
 #### Returns
 
@@ -165,7 +179,10 @@ import {paginate, Ctx} from "blitz"
 import db, {Prisma} from "db"
 
 interface GetProjectSInput
-  extends Pick<Prisma.ProjectFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
+  extends Pick<
+    Prisma.ProjectFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"
+  > {}
 
 export default async function getProjects(
   {where, orderBy, skip = 0, take = 100}: GetProjectsInput,
@@ -175,7 +192,8 @@ export default async function getProjects(
 
   const {items: projects, hasMore, nextPage, count} = await paginate({
     count: () => db.project.count({where}),
-    query: (paginateArgs) => db.project.findMany({...paginateArgs, where, orderBy}),
+    query: (paginateArgs) =>
+      db.project.findMany({...paginateArgs, where, orderBy}),
     skip,
     take,
   })
@@ -203,39 +221,57 @@ const paginationData = await paginate(paginateArguments))
   - A function that returns a promise which resolves to a number
 - `query`: `(payload: { skip: number; take: number }) => Promise<T>`
   - **Required**
-  - A function that receives pagination payload and returns anything (type of return will be inherited by the pagination result).
+  - A function that receives pagination payload and returns anything (type
+    of return will be inherited by the pagination result).
 - `skip`: `number`
   - How many rows to skip
 - `take`: `number`
   - How many rows to take
 - `maxTake`: `number`
-  - The maximum value allowed for `take`. It protects your DB when "take" is sent by the user.
+  - The maximum value allowed for `take`. It protects your DB when "take"
+    is sent by the user.
   - Defaults to 250.
 
 #### Returns
 
 - `paginationData`
   - `items`: `T` (Data resolver by the `query` function)
-  - `nextPage`: `{ skip: number, take: number } | null` (Next page pagination payload)
+  - `nextPage`: `{ skip: number, take: number } | null` (Next page
+    pagination payload)
   - `hasMore`: `boolean` (True if there are more items to load.)
-  - `count`: `number` (Total number of items. Resolved by the `count` function)
+  - `count`: `number` (Total number of items. Resolved by the `count`
+    function)
 
 ## `invokeWithMiddleware` {#invoke-with-middleware}
 
-This is for imperatively invoking queries/mutations on the server. It ensures appropriate middleware is run before/after your resolver.
+This is for imperatively invoking queries/mutations on the server. It
+ensures appropriate middleware is run before/after your resolver.
 
 ### Example {#example-4}
 
 ```tsx
-import {invokeWithMiddleware, GetServerSideProps, Link, BlitzPage, PromiseReturnType} from "blitz"
+import {
+  invokeWithMiddleware,
+  GetServerSideProps,
+  Link,
+  BlitzPage,
+  PromiseReturnType,
+} from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
 type PageProps = {
   products: PromiseReturnType<typeof getProducts>
 }
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async ({req, res}) => {
-  const products = await invokeWithMiddleware(getProducts, {orderBy: {id: "desc"}}, {req, res})
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({
+  req,
+  res,
+}) => {
+  const products = await invokeWithMiddleware(
+    getProducts,
+    {orderBy: {id: "desc"}},
+    {req, res},
+  )
 
   return {
     props: {products},
@@ -249,7 +285,10 @@ const Page: BlitzPage<PageProps> = function ({products}) {
       <div id="products">
         {products.map((product) => (
           <p key={product.id}>
-            <Link href="/products/[handle]" as={`/products/${product.handle}`}>
+            <Link
+              href="/products/[handle]"
+              as={`/products/${product.handle}`}
+            >
               <a>{product.name}</a>
             </Link>
           </p>
@@ -270,7 +309,8 @@ const results = await invokeWithMiddleware(resolver, resolverInputArguments, {re
 
 #### Arguments
 
-- `resolver:` A Blitz [query resolver](./query-resolvers) or [mutation resolver](./mutation-resolvers)
+- `resolver:` A Blitz [query resolver](./query-resolvers) or
+  [mutation resolver](./mutation-resolvers)
   - **Required**
 - `resolverInputArguments`
   - **Required**
@@ -284,7 +324,8 @@ const results = await invokeWithMiddleware(resolver, resolverInputArguments, {re
     - The BlitzApiResponse object
   - `middleware`
     - Optional
-    - Array of middleware that will be ran in addition to global middleware and any local middleware defined on the query/mutation.
+    - Array of middleware that will be ran in addition to global
+      middleware and any local middleware defined on the query/mutation.
 
 #### Returns
 

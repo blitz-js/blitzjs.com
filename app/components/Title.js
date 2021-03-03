@@ -1,6 +1,6 @@
 import Head from "next/head"
 
-export function Title({ children }) {
+export function Title({children}) {
   let title = children + (!children?.match(/blitz/i) ? ` - Blitz.js` : "")
 
   return (

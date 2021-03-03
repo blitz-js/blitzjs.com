@@ -1,8 +1,8 @@
-export function List({ children }) {
+export function List({children}) {
   return <ul className="list-none pl-0 space-y-3 my-5">{children}</ul>
 }
 
-export function ListItemGood({ children }) {
+export function ListItemGood({children}) {
   return (
     <li className="flex items-start space-x-2">
       <svg className="w-6 h-6 flex-none mt-0.5" fill="none">
@@ -14,7 +14,7 @@ export function ListItemGood({ children }) {
   )
 }
 
-export function ListItemBad({ children }) {
+export function ListItemBad({children}) {
   return (
     <li className="flex items-start space-x-2">
       <svg className="w-6 h-6 flex-none mt-0.5" fill="none">

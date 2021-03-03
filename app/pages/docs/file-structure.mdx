@@ -92,36 +92,54 @@ sidebar_label: File Structure
 
 Contains all your core application code.
 
-- The file structure nested inside `app/` can be anything you want, but we recommend the following:
-  - First layer folders to be a "domain context", like `core/`, `projects/`, `users/`, `billing/`, etc.
-  - All other folders like `components/` and `hooks/` go inside one of the above domain context folders
+- The file structure nested inside `app/` can be anything you want, but we
+  recommend the following:
+  - First layer folders to be a "domain context", like `core/`,
+    `projects/`, `users/`, `billing/`, etc.
+  - All other folders like `components/` and `hooks/` go inside one of the
+    above domain context folders
 - Special Folder Names
   - Can exist at any level of the hierarchy inside `app`.
-  - `pages/` expose a React component at a URL. Follows the same semantics as the Next.js `pages/` folder.
-  - `api/` expose a Node.js request handler at URL. Same semantics as Next.js `pages/api/` folder.
-  - `queries/` and `mutations/` are for your Blitz queries and mutations. Each query and mutation is exposed at a URL corresponding to its file path.
+  - `pages/` expose a React component at a URL. Follows the same semantics
+    as the Next.js `pages/` folder.
+  - `api/` expose a Node.js request handler at URL. Same semantics as
+    Next.js `pages/api/` folder.
+  - `queries/` and `mutations/` are for your Blitz queries and mutations.
+    Each query and mutation is exposed at a URL corresponding to its file
+    path.
 
 #### `db`
 
-Contains database configuration, schema, and migration files. `db/index.js` exports your initialized database client so you can use it anywhere in your app.
+Contains database configuration, schema, and migration files.
+`db/index.js` exports your initialized database client so you can use it
+anywhere in your app.
 
 #### `integrations`
 
-Contains third-party integration code. Ex: `auth0.js`, `twilio.js`, etc. These files are a good place to instantiate a client with shared configuration.
+Contains third-party integration code. Ex: `auth0.js`, `twilio.js`, etc.
+These files are a good place to instantiate a client with shared
+configuration.
 
 #### `pages`
 
-The top level `pages` folder and all nested `pages` folders inside `app` are merged together at build time. The build will fail if the same route is defined in two places.
+The top level `pages` folder and all nested `pages` folders inside `app`
+are merged together at build time. The build will fail if the same route
+is defined in two places.
 
 - This top level pages folder is optional.
-- Has the same semantics as the Next.js `pages` folder. All files in here are mapped to the url corresponding to their file paths.
-- While you can place any route files here, we recommend placing route files inside `app`. But if you want, you can instead place all your route files in this top level folders instead of being spread out in various folders inside `app`
+- Has the same semantics as the Next.js `pages` folder. All files in here
+  are mapped to the url corresponding to their file paths.
+- While you can place any route files here, we recommend placing route
+  files inside `app`. But if you want, you can instead place all your
+  route files in this top level folders instead of being spread out in
+  various folders inside `app`
 
 #### `api`
 
 Same as Next.js `pages/api` folder, but not nested inside pages.
 
-And like the `pages` folder, the top level `api` folder and all nested `api` folders inside `app` are merged together at build time.
+And like the `pages` folder, the top level `api` folder and all nested
+`api` folders inside `app` are merged together at build time.
 
 #### `public`
 
@@ -133,4 +151,5 @@ A configuration file with the same format as `next.config.js`
 
 ### Other Notes {#other-notes}
 
-- All top level folders are automatically aliased. So for example you can import from `app/projects/queries/getProject` from anywhere in our app.
+- All top level folders are automatically aliased. So for example you can
+  import from `app/projects/queries/getProject` from anywhere in our app.

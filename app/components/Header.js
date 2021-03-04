@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react"
-import { useIsDesktop } from "@/hooks/useIsDesktop"
-import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa"
-import { FiArrowUpRight } from "react-icons/fi"
-import { HiExternalLink } from "react-icons/hi"
-import { Link } from "blitz"
-import { Search } from "@/components/Search"
+import {useState, useEffect} from "react"
+import {useIsDesktop} from "@/hooks/useIsDesktop"
+import {FaDiscord, FaGithub, FaTwitter} from "react-icons/fa"
+import {FiArrowUpRight} from "react-icons/fi"
+import {HiExternalLink} from "react-icons/hi"
+import {Link} from "blitz"
+import {Search} from "@/components/Search"
 import Logo from "@/components/Logo"
 import ColoredLogo from "@/components/ColoredLogo"
 import Router from "next/router"
-import { FaHeart } from "react-icons/fa"
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
-import { NavLink } from "@/components/NavLink"
-import { DarkModeToggle } from "@/components/DarkModeToggle"
+import {FaHeart} from "react-icons/fa"
+import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
+import {NavLink} from "@/components/NavLink"
+import {DarkModeToggle} from "@/components/DarkModeToggle"
 import Banner from "@/components/Banner"
 
-const SocialIcons = ({ className, variant }) => {
+const SocialIcons = ({className, variant}) => {
   const outerClasses = variant === "bright" ? "bg-purple-light dark:bg-white" : "bg-white "
   const innerClasses =
     variant === "bright"
@@ -85,9 +85,9 @@ const Header = ({
       name: "Documentation",
       href: isDesktop ? "/docs/get-started" : "/docs",
     },
-    { name: "Releases", href: "https://github.com/blitz-js/blitz/releases" },
-    { name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki" },
-    { name: "Swag", href: "https://store.blitzjs.com" },
+    {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
+    {name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki"},
+    {name: "Swag", href: "https://store.blitzjs.com"},
   ]
 
   return (
@@ -113,7 +113,7 @@ const Header = ({
           <div className="flex-1 hidden space-x-4 xl:space-x-6 text-base lg:flex">
             {menuLinks.map((link) => {
               const external = link.href.startsWith("http")
-              const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
+              const props = external ? {target: "_blank", rel: "noopener noreferrer"} : {}
               return (
                 <NavLink href={link.href} key={link.href + link.name} {...props}>
                   {link.name}
@@ -155,7 +155,7 @@ const Header = ({
           >
             {menuLinks.map((link) => {
               const external = link.href.startsWith("http")
-              const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
+              const props = external ? {target: "_blank", rel: "noopener noreferrer"} : {}
               return (
                 <NavLink href={link.href} key={link.href + link.name} {...props}>
                   {link.name}
@@ -190,4 +190,4 @@ const Header = ({
   )
 }
 
-export { Header }
+export {Header}

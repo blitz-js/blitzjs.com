@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export function Button({ children, ...props }) {
+export function Button({children, ...props}) {
   return (
     <Link {...props}>
       <a className="inline-flex items-center bg-gray-800 hover:bg-gray-700 focus:outline-none focus:bg-gray-700 px-6 py-3 rounded-lg text-white font-medium shadow text-lg no-underline">

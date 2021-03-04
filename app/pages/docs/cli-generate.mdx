@@ -7,7 +7,9 @@ sidebar_label: blitz generate
 
 Use this command to scaffold all the boring code into your project.
 
-Can generate pages, queries, mutations, and Prisma models. Support for custom templates based on the built-in templates is coming soon, so you can customize the generator to your app's needs.
+Can generate pages, queries, mutations, and Prisma models. Support for
+custom templates based on the built-in templates is coming soon, so you
+can customize the generator to your app's needs.
 
 ```bash
 blitz generate [type] [model]
@@ -49,13 +51,15 @@ app/projects/mutations/deleteProject.ts
 app/projects/mutations/updateProject.ts
 ```
 
-For the above example, you can view the generated project index page at [localhost:3000/projects](http://localhost:3000/projects)
+For the above example, you can view the generated project index page at
+[localhost:3000/projects](http://localhost:3000/projects)
 
 ## Options {#options}
 
 ##### `context/model`
 
-For organization of files within your project, you can specify a nested folder path in which to generate the files.
+For organization of files within your project, you can specify a nested
+folder path in which to generate the files.
 
 ```bash
 blitz generate all admin/products
@@ -63,15 +67,18 @@ blitz generate all admin/products
 // Will generate files in `app/admin/products` instead of `app/products`
 ```
 
-Alternatively, you can provide the folder path via the `--context` or `-c` options
+Alternatively, you can provide the folder path via the `--context` or `-c`
+options
 
 ##### `--parent`
 
 Shorthand: `-p`
 
-Used to specify that you want to generate files for a model which is a child of a parent model.
+Used to specify that you want to generate files for a model which is a
+child of a parent model.
 
-For example, say you have `Project` and `Task` models. A `Task` belongs to a `Project` and `Project` has many `Tasks`. You would run this command:
+For example, say you have `Project` and `Task` models. A `Task` belongs to
+a `Project` and `Project` has many `Tasks`. You would run this command:
 
 ```bash
 blitz generate all task --parent project
@@ -96,7 +103,8 @@ app/tasks/mutations/updateTask.ts
 
 Shorthand: `-d`
 
-Displays what files would be generated but does not write the files to disk.
+Displays what files would be generated but does not write the files to
+disk.
 
 ### Basic Examples {#basic-examples}
 
@@ -118,7 +126,8 @@ blitz generate pages tasks --parent=projects
 
 ## Model Generation {#model-generation}
 
-All of the following commands will generate a model in your prisma schema file:
+All of the following commands will generate a model in your prisma schema
+file:
 
 - `blitz generate all`
 - `blitz generate resource`
@@ -136,15 +145,21 @@ blitz generate model [fieldName]:[type]:[attribute]
   - Use `belongsTo` to add a model relationship, ex: `belongsTo:user`
 - `type`
   - **Optional** - defaults to `string` if not specified
-  - **Values:** `string`, `boolean`, `int`, `float`, `dateTime`, `json`, or a model name
+  - **Values:** `string`, `boolean`, `int`, `float`, `dateTime`, `json`,
+    or a model name
   - Add `?` to make the type optional like this: `string?`
   - Add `[]` to make the type a list like: `task[]`
-- `attribute` is for adding a [prisma field attribute](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model#attributes)
+- `attribute` is for adding a
+  [prisma field attribute](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model#attributes)
   - **Optional**
   - Supported: `default`, `unique`
-  - If the attribute takes an argument, you can include it with `=` like: `default=false` That will set the default value to `false`
+  - If the attribute takes an argument, you can include it with `=` like:
+    `default=false` That will set the default value to `false`
 
-For more details, see the [docs on Prisma scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types) or the [docs on Prisma relations](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/relations).
+For more details, see the
+[docs on Prisma scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types)
+or the
+[docs on Prisma relations](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/relations).
 
 ##### Scalar Fields
 
@@ -225,7 +240,9 @@ model Task {
 
 ### Updating a model {#updating-a-model}
 
-Running `blitz generate model` subsequent times will add fields to the existing model. For example, the below command will add the `subheading` field to the `Task` model.
+Running `blitz generate model` subsequent times will add fields to the
+existing model. For example, the below command will add the `subheading`
+field to the `Task` model.
 
 ```bash
 blitz generate model task subheading:string

@@ -1,17 +1,17 @@
 import Link from "next/link"
-import { usePrevNext } from "@/hooks/usePrevNext"
-import { PageHeader } from "@/components/PageHeader"
+import {usePrevNext} from "@/hooks/usePrevNext"
+import {PageHeader} from "@/components/PageHeader"
 
-export function VideoLayout({ children, meta }) {
-  let { next } = usePrevNext()
+export function VideoLayout({children, meta}) {
+  let {next} = usePrevNext()
 
   return (
     <div className="pt-24 pb-16 lg:pt-28 w-full">
       <PageHeader title={meta.title} description={meta.description} />
       <div className="mb-8 px-6 xl:px-12 relative z-10">
-        <div className="relative bg-gray-900" style={{ paddingBottom: "56.25%" }}>
+        <div className="relative bg-gray-900" style={{paddingBottom: "56.25%"}}>
           <div className="absolute inset-0" data-vimeo-initialized="true">
-            <div className="relative" style={{ paddingTop: "56.25%" }}>
+            <div className="relative" style={{paddingTop: "56.25%"}}>
               <iframe
                 title={meta.title}
                 src={`https://player.vimeo.com/video/${meta.vimeoId}?title=0&byline=0&portrait=0&speed=1&app_id=122963`}

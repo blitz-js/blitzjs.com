@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { motion, AnimateSharedLayout } from "framer-motion"
+import {motion, AnimateSharedLayout} from "framer-motion"
 
 export function Tabs({
   tabs,
@@ -43,13 +43,13 @@ export function Tabs({
   )
 }
 
-function Item({ tab, isSelected, onClick }) {
+function Item({tab, isSelected, onClick}) {
   return (
     <li className="relative">
       {isSelected && (
         <motion.div
           layoutId="highlight"
-          style={{ borderRadius: typeof tab === "string" ? 18 : 12 }}
+          style={{borderRadius: typeof tab === "string" ? 18 : 12}}
           className="absolute inset-0 bg-gray-100"
         />
       )}
@@ -59,7 +59,7 @@ function Item({ tab, isSelected, onClick }) {
         className={clsx(
           "block w-full relative z-10 px-4 py-1 leading-6 sm:text-xl font-semibold focus:outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-white focus-visible:ring-gray-300 hover:text-gray-900",
           typeof tab === "string" ? "rounded-full" : "rounded-xl",
-          { "text-gray-900": isSelected, "text-gray-400": !isSelected }
+          {"text-gray-900": isSelected, "text-gray-400": !isSelected},
         )}
       >
         {tab}

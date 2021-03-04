@@ -1,4 +1,4 @@
-export function PageHeader({ title, align }) {
+export function PageHeader({title, align}) {
   if (!title) return null
 
   return (

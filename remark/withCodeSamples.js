@@ -1,6 +1,6 @@
 const visit = require("unist-util-visit")
 const redent = require("redent")
-const { addImport, highlightCode } = require("./utils")
+const {addImport, highlightCode} = require("./utils")
 
 module.exports = () => {
   return (tree) => {
@@ -20,7 +20,7 @@ module.exports = () => {
             previewClassName = class1 || class2
             previewCode = content
             return ""
-          }
+          },
         )
         .trim()
       if (!hasPreview) return

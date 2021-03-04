@@ -5,15 +5,20 @@ sidebar_label: Use Queries
 
 ## In a React Component {#in-a-react-component}
 
-To use one of [your Blitz queries](./query-resolvers), call the `useQuery` hook with:
+To use one of [your Blitz queries](./query-resolvers), call the `useQuery`
+hook with:
 
 1. Your query resolver
 2. The input arguments for your query function
 3. Optionally, a configuration object.
 
-It returns this tuple array,`[queryResult, queryExtras]`, where `queryResult` is exactly what's returned from your query function.
+It returns this tuple array,`[queryResult, queryExtras]`, where
+`queryResult` is exactly what's returned from your query function.
 
-`useQuery` is built on [`react-query`](https://github.com/tannerlinsley/react-query), so it automatically provides awesome features such as automatic caching and revalidation.
+`useQuery` is built on
+[`react-query`](https://github.com/tannerlinsley/react-query), so it
+automatically provides awesome features such as automatic caching and
+revalidation.
 
 ```ts
 import {useQuery} from "blitz"
@@ -26,32 +31,68 @@ function App() {
 
 For complete details, see the [`useQuery` documentation](./use-query).
 
+<!-- prettier-ignore-start -->
 :::info 🤔
-You may be wondering how that can work since it's importing server code into your component: At build time, the direct function import is swapped out with a network call. So the query function code is never included in your client code.
+You may be wondering how that can work since it's importing
+server code into your component: At build time, the direct function import
+is swapped out with a network call. So the query function code is never
+included in your client code.
 :::
+<!-- prettier-ignore-end -->
 
 ### Defaults to Keep in Mind {#defaults-to-keep-in-mind}
 
-Out of the box, `useQuery` and the other query hooks are configured with **aggressive but reasonable** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.**:
+Out of the box, `useQuery` and the other query hooks are configured with
+**aggressive but reasonable** defaults. **Sometimes these defaults can
+catch new users off guard or make learning/debugging difficult if they are
+unknown by the user.**:
 
-- Query results that are _currently rendered on the screen_ will become "stale" immediately after they are resolved and will be refetched automatically in the background when they are rendered or used again. To change this, you can alter the default `staleTime` for queries to something other than `0` milliseconds.
-- Query results that become unused (all instances of the query are unmounted) will still be cached in case they are used again for a default of 5 minutes before they are garbage collected. To change this, you can alter the default `cacheTime` for queries to something other than `1000 * 60 * 5` milliseconds.
-- Stale queries will automatically be refetched in the background **when the browser window is refocused by the user or when the browser reconnects**. You can disable this using the `refetchOnWindowFocus` and `refetchOnReconnect` options in queries.
-- Queries that fail in production because of a network error will silently and automatically be retried **3 times, with exponential backoff delay** before capturing and displaying an error to the UI. To change this, you can alter the default `retry` and `retryDelay` options for queries.
-- Query results by default are deep compared to detect if data has actually changed and if not, the data reference remains unchanged to better help with value stabilization with regards to useMemo and useCallback. The default deep compare function use here (`config.isDataEqual`) only supports comparing JSON-compatible primitives. If you are dealing with any non-json compatible values in your query responses OR are seeing performance issues with the deep compare function, you should probably disable it (`config.isDataEqual = () => false`) or customize it to better fit your needs.
+- Query results that are _currently rendered on the screen_ will become
+  "stale" immediately after they are resolved and will be refetched
+  automatically in the background when they are rendered or used again. To
+  change this, you can alter the default `staleTime` for queries to
+  something other than `0` milliseconds.
+- Query results that become unused (all instances of the query are
+  unmounted) will still be cached in case they are used again for a
+  default of 5 minutes before they are garbage collected. To change this,
+  you can alter the default `cacheTime` for queries to something other
+  than `1000 * 60 * 5` milliseconds.
+- Stale queries will automatically be refetched in the background **when
+  the browser window is refocused by the user or when the browser
+  reconnects**. You can disable this using the `refetchOnWindowFocus` and
+  `refetchOnReconnect` options in queries.
+- Queries that fail in production because of a network error will silently
+  and automatically be retried **3 times, with exponential backoff delay**
+  before capturing and displaying an error to the UI. To change this, you
+  can alter the default `retry` and `retryDelay` options for queries.
+- Query results by default are deep compared to detect if data has
+  actually changed and if not, the data reference remains unchanged to
+  better help with value stabilization with regards to useMemo and
+  useCallback. The default deep compare function use here
+  (`config.isDataEqual`) only supports comparing JSON-compatible
+  primitives. If you are dealing with any non-json compatible values in
+  your query responses OR are seeing performance issues with the deep
+  compare function, you should probably disable it
+  (`config.isDataEqual = () => false`) or customize it to better fit your
+  needs.
 
 ### Options {#options}
 
-See [the `useQuery` documentation](./use-query) for a full list of possible options.
+See [the `useQuery` documentation](./use-query) for a full list of
+possible options.
 
 ### Dependent Queries {#dependent-queries}
 
-Dependent queries are queries that depend on previous ones to finish before they can execute.
-To do this, use the enabled option to tell a query when it is ready to turn on:
+Dependent queries are queries that depend on previous ones to finish
+before they can execute. To do this, use the enabled option to tell a
+query when it is ready to turn on:
 
 ```tsx
 const [user] = useQuery(getUser, {where: {id: props.query.id}})
-const [projects] = useQuery(getProjects, () => ({where: {userId: user.id}}, {enabled: user}))
+const [projects] = useQuery(
+  getProjects,
+  () => ({where: {userId: user.id}}, {enabled: user}),
+)
 ```
 
 ### Pagination {#pagination}
@@ -64,7 +105,8 @@ Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
 ### Prefetching {#prefetching}
 
-- All queries are automatically cached, so manually calling a query function will cache its data
+- All queries are automatically cached, so manually calling a query
+  function will cache its data
 
 Both of the following will cache the `getProject` query.
 
@@ -73,20 +115,25 @@ const project = await getProject({where: {id: props.id}})
 ```
 
 ```tsx
-<a onMouseEnter={() => getProject({where: {id: projectId}})}>View Project</a>
+<a onMouseEnter={() => getProject({where: {id: projectId}})}>
+  View Project
+</a>
 ```
 
 ## On the Server {#on-the-server}
 
 ### `getStaticProps` {#get-static-props}
 
-In `getStaticProps`, a query function can be called directly without `useQuery`
+In `getStaticProps`, a query function can be called directly without
+`useQuery`
 
 ```tsx
 import getProject from "app/projects/queries/getProject"
 
 export const getStaticProps = async (context) => {
-  const project = await getProject({where: {id: context.params?.projectId}})
+  const project = await getProject({
+    where: {id: context.params?.projectId},
+  })
   return {props: {project}}
 }
 
@@ -99,7 +146,10 @@ export default ProjectPage
 
 ### `getServerSideProps` {#get-server-side-props}
 
-In `getServerSideProps`, pass a query function to [`invokeWithMiddleware`](./resolver-server-utilities#invoke-with-middleware) which will ensure appropriate middleware is run before/after your query function.
+In `getServerSideProps`, pass a query function to
+[`invokeWithMiddleware`](./resolver-server-utilities#invoke-with-middleware)
+which will ensure appropriate middleware is run before/after your query
+function.
 
 ```tsx
 import {invokeWithMiddleware} from 'blitz'

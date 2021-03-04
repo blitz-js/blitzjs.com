@@ -3,11 +3,15 @@ title: Custom Webpack Config
 sidebar_label: Webpack Config
 ---
 
-In order to extend our usage of `webpack`, you can define a function that extends its config inside `blitz.config.js`, like so:
+In order to extend our usage of `webpack`, you can define a function that
+extends its config inside `blitz.config.js`, like so:
 
 ```js
 module.exports = {
-  webpack: (config, {buildId, dev, isServer, defaultLoaders, webpack}) => {
+  webpack: (
+    config,
+    {buildId, dev, isServer, defaultLoaders, webpack},
+  ) => {
     // Note: we provide webpack above so you should not `require` it
     // Perform customizations to webpack config
     // Important: return the modified config
@@ -28,13 +32,19 @@ Some commonly asked for features are available as plugins:
 - [@next/bundle-analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
 - [@zeit/next-preact](https://github.com/zeit/next-plugins/tree/master/packages/next-preact)
 
-> The `webpack` function is executed twice, once for the server and once for the client. This allows you to distinguish between client and server configuration using the `isServer` property.
+> The `webpack` function is executed twice, once for the server and once
+> for the client. This allows you to distinguish between client and server
+> configuration using the `isServer` property.
 
-The second argument to the `webpack` function is an object with the following properties:
+The second argument to the `webpack` function is an object with the
+following properties:
 
-- `buildId`: `String` - The build id, used as a unique identifier between builds
-- `dev`: `Boolean` - Indicates if the compilation will be done in development
-- `isServer`: `Boolean` - It's `true` for server-side compilation, and `false` for client-side compilation
+- `buildId`: `String` - The build id, used as a unique identifier between
+  builds
+- `dev`: `Boolean` - Indicates if the compilation will be done in
+  development
+- `isServer`: `Boolean` - It's `true` for server-side compilation, and
+  `false` for client-side compilation
 - `defaultLoaders`: `Object` - Default loaders used internally by Next.js:
   - `babel`: `Object` - Default `babel-loader` configuration
 

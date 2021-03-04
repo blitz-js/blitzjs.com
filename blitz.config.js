@@ -1,11 +1,11 @@
 const path = require("path")
 const querystring = require("querystring")
-const { createLoader } = require("simple-functional-loader")
+const {createLoader} = require("simple-functional-loader")
 const frontMatter = require("front-matter")
-const { withTableOfContents } = require("./remark/withTableOfContents")
-const { withSyntaxHighlighting } = require("./remark/withSyntaxHighlighting")
-const { withProse } = require("./remark/withProse")
-const { withNextLinks } = require("./remark/withNextLinks")
+const {withTableOfContents} = require("./remark/withTableOfContents")
+const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
+const {withProse} = require("./remark/withProse")
+const {withNextLinks} = require("./remark/withNextLinks")
 const minimatch = require("minimatch")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
@@ -69,7 +69,7 @@ module.exports = withBundleAnalyzer({
     config.module.rules.push({
       test: /\.svg$/,
       use: [
-        { loader: "@svgr/webpack", options: { svgoConfig: { plugins: { removeViewBox: false } } } },
+        {loader: "@svgr/webpack", options: {svgoConfig: {plugins: {removeViewBox: false}}}},
         {
           loader: "file-loader",
           options: {
@@ -122,8 +122,8 @@ module.exports = withBundleAnalyzer({
           },
         },
         createLoader(function (source) {
-          let { meta: fields } = querystring.parse(this.resourceQuery.substr(1))
-          let { attributes: meta, body } = frontMatter(source)
+          let {meta: fields} = querystring.parse(this.resourceQuery.substr(1))
+          let {attributes: meta, body} = frontMatter(source)
           if (fields) {
             for (let field in meta) {
               if (!fields.split(",").includes(field)) {
@@ -140,7 +140,7 @@ module.exports = withBundleAnalyzer({
               if (minimatch(resourcePath, glob)) {
                 extra.push(
                   `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-                  "export const Layout = _Layout"
+                  "export const Layout = _Layout",
                 )
                 break
               }
@@ -152,7 +152,7 @@ module.exports = withBundleAnalyzer({
               if (minimatch(resourcePath, glob)) {
                 extra.push(
                   `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
-                  "export default _Default"
+                  "export default _Default",
                 )
                 break
               }

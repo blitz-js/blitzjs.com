@@ -5,7 +5,8 @@ sidebar_label: Error Handling
 
 ## Built-In Errors {#built-in-errors}
 
-Blitz comes with a number of useful errors you can use throughout your application.
+Blitz comes with a number of useful errors you can use throughout your
+application.
 
 - `AuthenticationError`
   - `name`: "AuthenticationError"
@@ -24,7 +25,8 @@ Blitz comes with a number of useful errors you can use throughout your applicati
   - `statusCode`: 404
   - Default `message`: "This could not be found"
 
-To use, import from `blitz` and use like any JavaScript Error. If you're curious, you can [see the source code for these.](TODO)
+To use, import from `blitz` and use like any JavaScript Error. If you're
+curious, you can [see the source code for these.](TODO)
 
 ```ts
 import {AuthenticationError} from "blitz"
@@ -40,11 +42,15 @@ try {
 }
 ```
 
-You can throw these or any other errors from anywhere in your app, whether on the server or on the client.
+You can throw these or any other errors from anywhere in your app, whether
+on the server or on the client.
 
 ## Catching and Handling Errors on the Client {#catching-and-handling-errors-on-the-client}
 
-By default, new Blitz applications come with [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary) installed with a top-level `ErrorBoundary` and `FallbackComponent` in `app/pages/_app.tsx`.
+By default, new Blitz applications come with
+[`react-error-boundary`](https://github.com/bvaughn/react-error-boundary)
+installed with a top-level `ErrorBoundary` and `FallbackComponent` in
+`app/pages/_app.tsx`.
 
 It looks something like this:
 
@@ -82,25 +88,40 @@ function RootErrorFallback({error, resetErrorBoundary}) {
     )
   } else {
     return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+      <ErrorComponent
+        statusCode={error.statusCode || 400}
+        title={error.message || error.name}
+      />
     )
   }
 }
 ```
 
-That means all errors will at least be caught at the root level. However, you can also add `<ErrorBoundary>` anywhere else in your app for more localized error handiling. If an error is caught by an `<ErrorBoundary>` somewhere down inside your app tree, then it will not reach the root ErrorBoundary unless you re-throw it.
+That means all errors will at least be caught at the root level. However,
+you can also add `<ErrorBoundary>` anywhere else in your app for more
+localized error handiling. If an error is caught by an `<ErrorBoundary>`
+somewhere down inside your app tree, then it will not reach the root
+ErrorBoundary unless you re-throw it.
 
 ### Handling Server Errors on the Client {#handling-server-errors-on-the-client}
 
-A really awesome feature of Blitz is that you can throw any error from a Blitz query or mutation and then use an ErrorBoundary on the frontend to catch and handle it.
+A really awesome feature of Blitz is that you can throw any error from a
+Blitz query or mutation and then use an ErrorBoundary on the frontend to
+catch and handle it.
 
-For example, with the above `_app.tsx`, you can throw `AuthenticationError` inside a Blitz query and then a login screen will automatically show in the client because that root ErrorBoundary is rendering `<LoginForm>` if `error.name === 'AuthenticationError'`.
+For example, with the above `_app.tsx`, you can throw
+`AuthenticationError` inside a Blitz query and then a login screen will
+automatically show in the client because that root ErrorBoundary is
+rendering `<LoginForm>` if `error.name === 'AuthenticationError'`.
 
 ### Custom Errors {#custom-errors}
 
-For errors other than what Blitz provides, it's recommended to create custom Error classes. You can then add custom data attributes that help you handle the error.
+For errors other than what Blitz provides, it's recommended to create
+custom Error classes. You can then add custom data attributes that help
+you handle the error.
 
-Here's an example of how to create a custom error. It's a JavaScript class, so you can be as creative as you want.
+Here's an example of how to create a custom error. It's a JavaScript
+class, so you can be as creative as you want.
 
 ```ts
 import SuperJson from "superjson"
@@ -119,9 +140,13 @@ SuperJson.allowErrorProps("suggestedUserName")
 throw new UsernameTakenError({suggestedUserName: "second_best"})
 ```
 
-Note that you **must register it with SuperJson** as shown above in order for `instanceof` to work on the client. And you must also tell SuperJson about any special error propertries you want to be serialized. By default custom error properties are omitted for security concerns.
+Note that you **must register it with SuperJson** as shown above in order
+for `instanceof` to work on the client. And you must also tell SuperJson
+about any special error propertries you want to be serialized. By default
+custom error properties are omitted for security concerns.
 
-Then on the client, you can use a `FallbackComponent` like above, or you can handle the error in your form submit handler like this.
+Then on the client, you can use a `FallbackComponent` like above, or you
+can handle the error in your form submit handler like this.
 
 ```tsx
 <Form
@@ -139,4 +164,5 @@ Then on the client, you can use a `FallbackComponent` like above, or you can han
 
 ## Error Pages {#error-pages}
 
-See the [Error Pages documentation](./error-pages) to learn about custom 404 and 500 error pages.
+See the [Error Pages documentation](./error-pages) to learn about custom
+404 and 500 error pages.

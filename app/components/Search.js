@@ -1,15 +1,15 @@
-import { useState, useCallback, useRef, useEffect } from "react"
-import { createPortal } from "react-dom"
+import {useState, useCallback, useRef, useEffect} from "react"
+import {createPortal} from "react-dom"
 import Link from "next/link"
 import Head from "next/head"
-import { useRouter } from "next/router"
-import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react"
-import { BiSearch } from "react-icons/bi"
+import {useRouter} from "next/router"
+import {DocSearchModal, useDocSearchKeyboardEvents} from "@docsearch/react"
+import {BiSearch} from "react-icons/bi"
 
 const ACTION_KEY_DEFAULT = ["Ctrl ", "Control"]
 const ACTION_KEY_APPLE = ["⌘", "Command"]
 
-function Hit({ hit, children }) {
+function Hit({hit, children}) {
   return (
     <Link href={hit.url}>
       <a>{children}</a>
@@ -17,7 +17,7 @@ function Hit({ hit, children }) {
   )
 }
 
-export function Search({ className = "" }) {
+export function Search({className = ""}) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const searchButtonRef = useRef()
@@ -37,7 +37,7 @@ export function Search({ className = "" }) {
       setIsOpen(true)
       setInitialQuery(e.key)
     },
-    [setIsOpen, setInitialQuery]
+    [setIsOpen, setInitialQuery],
   )
 
   useDocSearchKeyboardEvents({
@@ -82,7 +82,7 @@ export function Search({ className = "" }) {
             apiKey="c4db860ae4162be48d4c867e33edcaa2"
             appId="BH4D9OD16A"
             navigator={{
-              navigate({ suggestionUrl }) {
+              navigate({suggestionUrl}) {
                 setIsOpen(false)
                 router.push(suggestionUrl)
               },
@@ -98,7 +98,7 @@ export function Search({ className = "" }) {
                 const hash = a.hash === "#content-wrapper" ? "" : a.hash
 
                 // The titles are parset to plain text, so these HTML tags needs to be converted.
-                const hierarchy = { ...item.hierarchy }
+                const hierarchy = {...item.hierarchy}
                 hierarchy.lvl0 = hierarchy.lvl0
                   .replace(/&amp;/g, "&")
                   .replace(/&lt;/g, "<")
@@ -112,7 +112,7 @@ export function Search({ className = "" }) {
               })
             }}
           />,
-          document.body
+          document.body,
         )}
     </>
   )

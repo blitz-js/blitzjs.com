@@ -5,7 +5,9 @@ sidebar_label: blitz.config.js
 
 You can customize advanced behavior of Blitz with `blitz.config.js`.
 
-`blitz.config.js` is a regular Node.js module, not a JSON file. It gets used by the Blitz server and build phases, and it's not included in the browser build.
+`blitz.config.js` is a regular Node.js module, not a JSON file. It gets
+used by the Blitz server and build phases, and it's not included in the
+browser build.
 
 Take a look at the following `blitz.config.js` example:
 
@@ -25,7 +27,10 @@ module.exports = (phase, {defaultConfig}) => {
 }
 ```
 
-`phase` is the current context in which the configuration is loaded. You can see the available phases [here](https://github.com/vercel/next.js/blob/canary/packages/next/next-server/lib/constants.ts#L1-L4). Phases can be imported from `next/constants`:
+`phase` is the current context in which the configuration is loaded. You
+can see the available phases
+[here](https://github.com/vercel/next.js/blob/canary/packages/next/next-server/lib/constants.ts#L1-L4).
+Phases can be imported from `next/constants`:
 
 ```js
 const {PHASE_DEVELOPMENT_SERVER} = require("next/constants")
@@ -43,31 +48,44 @@ module.exports = (phase, {defaultConfig}) => {
 }
 ```
 
-The commented lines are the place where you can put the configs allowed by `blitz.config.js`, which are defined [here](https://github.com/vercel/next.js/blob/canary/packages/next/next-server/server/config.ts#L12-L63).
+The commented lines are the place where you can put the configs allowed by
+`blitz.config.js`, which are defined
+[here](https://github.com/vercel/next.js/blob/canary/packages/next/next-server/server/config.ts#L12-L63).
 
-However, none of the configs are required, and it's not necessary to understand what each config does, instead, search for the features you need to enable or modify in this section and they will show you what to do.
+However, none of the configs are required, and it's not necessary to
+understand what each config does, instead, search for the features you
+need to enable or modify in this section and they will show you what to
+do.
 
-> Avoid using new JavaScript features not available in your target Node.js version. `blitz.config.js` will not be parsed by Webpack, Babel or TypeScript.
+> Avoid using new JavaScript features not available in your target Node.js
+> version. `blitz.config.js` will not be parsed by Webpack, Babel or
+> TypeScript.
 
 ## Webpack Config {#webpack-config}
 
-You can customize the Blitz webpack config. See [our webpack documentation](./webpack-config) for details
+You can customize the Blitz webpack config. See
+[our webpack documentation](./webpack-config) for details
 
 ## Build Target {#build-target}
 
-Blitz supports various build targets, each changing the way your application is built and run. We'll explain each of the targets below.
+Blitz supports various build targets, each changing the way your
+application is built and run. We'll explain each of the targets below.
 
 #### `server` target
 
-Your application will be built and deployed as a monolith. This is the default target and no action is required on your part to opt-in.
+Your application will be built and deployed as a monolith. This is the
+default target and no action is required on your part to opt-in.
 
 #### `serverless` target
 
-This target will output independent pages that don't require a monolithic server.
+This target will output independent pages that don't require a monolithic
+server.
 
-It's only compatible with Serverless deployment platforms (like [Vercel](https://vercel.com)) — you cannot use the custom server API.
+It's only compatible with Serverless deployment platforms (like
+[Vercel](https://vercel.com)) — you cannot use the custom server API.
 
-To opt-into this target, set the following configuration in your `blitz.config.js`:
+To opt-into this target, set the following configuration in your
+`blitz.config.js`:
 
 ```js
 module.exports = {
@@ -75,11 +93,13 @@ module.exports = {
 }
 ```
 
-> Deployments to [Vercel](https://vercel.com) will automatically enable this target. You should not opt-into it yourself.
+> Deployments to [Vercel](https://vercel.com) will automatically enable
+> this target. You should not opt-into it yourself.
 
 ## Middleware {#middleware}
 
-HTTP middleware can be added queries and mutations. [See the middleware documentation](./middleware) for full details.
+HTTP middleware can be added queries and mutations.
+[See the middleware documentation](./middleware) for full details.
 
 ```js
 module.exports = {
@@ -93,7 +113,8 @@ module.exports = {
 
 ## Logging {#logging}
 
-By default Blitz logs various things at runtime. You can adjust the verbosity using the log level setting.
+By default Blitz logs various things at runtime. You can adjust the
+verbosity using the log level setting.
 
 - Default: `info`
 - Options: `trace` | `debug` | `info` | `warn` | `error` | `fatal`
@@ -108,7 +129,8 @@ module.exports = {
 
 ## CLI {#cli}
 
-When you run `blitz dev`, the console gets cleared. You can disable it by setting the `cli.clearConsoleOnBlitzDev` to `false`:
+When you run `blitz dev`, the console gets cleared. You can disable it by
+setting the `cli.clearConsoleOnBlitzDev` to `false`:
 
 ```js
 module.exports = {
@@ -120,7 +142,9 @@ module.exports = {
 
 ## CDN Support with Asset Prefix {#cdn-support-with-asset-prefix}
 
-To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network), you can set up an asset prefix and configure your CDN's origin to resolve to the domain that Blitz is hosted on.
+To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network),
+you can set up an asset prefix and configure your CDN's origin to resolve
+to the domain that Blitz is hosted on.
 
 ```js
 const isProd = process.env.NODE_ENV === "production"
@@ -131,11 +155,19 @@ module.exports = {
 }
 ```
 
-Blitz will automatically use your prefix in the scripts it loads, but this has no effect whatsoever on the [public](./static-files) folder; if you want to serve those assets over a CDN, you'll have to introduce the prefix yourself. One way of introducing a prefix that works inside your components and varies by environment is documented [in this example](https://github.com/vercel/next.js/tree/canary/examples/with-universal-configuration-build-time).
+Blitz will automatically use your prefix in the scripts it loads, but this
+has no effect whatsoever on the [public](./static-files) folder; if you
+want to serve those assets over a CDN, you'll have to introduce the prefix
+yourself. One way of introducing a prefix that works inside your
+components and varies by environment is documented
+[in this example](https://github.com/vercel/next.js/tree/canary/examples/with-universal-configuration-build-time).
 
 ## Custom Page Extensions {#custom-page-extensions}
 
-Aimed at modules like [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx), which adds support for pages ending with `.mdx`. You can configure the extensions looked for in the `pages` directory when resolving pages.
+Aimed at modules like
+[@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx),
+which adds support for pages ending with `.mdx`. You can configure the
+extensions looked for in the `pages` directory when resolving pages.
 
 ```js
 module.exports = {
@@ -145,11 +177,16 @@ module.exports = {
 
 ## Static Optimization Indicator {#static-optimization-indicator}
 
-When a page qualifies for [Automatic Static Optimization](./pages#automatic-static-optimization) we show an indicator to let you know.
+When a page qualifies for
+[Automatic Static Optimization](./pages#automatic-static-optimization) we
+show an indicator to let you know.
 
-This is helpful since automatic static optimization can be very beneficial and knowing immediately in development if the page qualifies can be useful.
+This is helpful since automatic static optimization can be very beneficial
+and knowing immediately in development if the page qualifies can be
+useful.
 
-In some cases this indicator might not be useful, like when working on electron applications.
+In some cases this indicator might not be useful, like when working on
+electron applications.
 
 ```js
 module.exports = {
@@ -161,7 +198,8 @@ module.exports = {
 
 ## Configuring onDemandEntries for Development {#configuring-on-demand-entries-for-development}
 
-Blitz exposes some options that give you some control over how the server will dispose or keep in memory built pages in development.
+Blitz exposes some options that give you some control over how the server
+will dispose or keep in memory built pages in development.
 
 ```js
 module.exports = {
@@ -176,7 +214,8 @@ module.exports = {
 
 ## Setting a custom build directory {#setting-a-custom-build-directory}
 
-You can specify a name to use for a custom build directory to use instead of `.next`.
+You can specify a name to use for a custom build directory to use instead
+of `.next`.
 
 ```js
 module.exports = {
@@ -184,13 +223,19 @@ module.exports = {
 }
 ```
 
-Now if you run `blitz build` Blitz will use `build` instead of the default `.next` folder.
+Now if you run `blitz build` Blitz will use `build` instead of the default
+`.next` folder.
 
-> `distDir` **should not** leave your project directory. For example, `../build` is an **invalid** directory.
+> `distDir` **should not** leave your project directory. For example,
+> `../build` is an **invalid** directory.
 
 ## Configuring the Build ID {#configuring-the-build-id}
 
-Blitz uses a constant id generated at build time to identify which version of your application is being served. This can cause problems in multi-server deployments when `blitz build` is ran on every server. In order to keep a static build id between builds you can provide your own build id.
+Blitz uses a constant id generated at build time to identify which version
+of your application is being served. This can cause problems in
+multi-server deployments when `blitz build` is ran on every server. In
+order to keep a static build id between builds you can provide your own
+build id.
 
 ```js
 module.exports = {
@@ -203,7 +248,12 @@ module.exports = {
 
 ## Compression {#compression}
 
-Blitz provides [**gzip**](https://tools.ietf.org/html/rfc6713#section-3) compression to compress rendered content and static files. Compression only works with the [`server` target](#server-target). In general you will want to enable compression on a HTTP proxy like [nginx](https://www.nginx.com/), to offload load from the `Node.js` process.
+Blitz provides [**gzip**](https://tools.ietf.org/html/rfc6713#section-3)
+compression to compress rendered content and static files. Compression
+only works with the [`server` target](#server-target). In general you will
+want to enable compression on a HTTP proxy like
+[nginx](https://www.nginx.com/), to offload load from the `Node.js`
+process.
 
 ```js
 module.exports = {
@@ -213,7 +263,9 @@ module.exports = {
 
 ## Disabling ETag Generation {#disabling-e-tag-generation}
 
-By default we generate [etags](https://en.wikipedia.org/wiki/HTTP_ETag) for every page by default. You may want to disable etag generation for HTML pages depending on your cache strategy.
+By default we generate [etags](https://en.wikipedia.org/wiki/HTTP_ETag)
+for every page by default. You may want to disable etag generation for
+HTML pages depending on your cache strategy.
 
 ```js
 module.exports = {
@@ -223,7 +275,8 @@ module.exports = {
 
 ## Disabling x-powered-by {#disabling-x-powered-by}
 
-By default Blitz adds the `x-powered-by` header. To opt-out of it, disable the `poweredByHeader` config:
+By default Blitz adds the `x-powered-by` header. To opt-out of it, disable
+the `poweredByHeader` config:
 
 ```js
 module.exports = {
@@ -233,9 +286,12 @@ module.exports = {
 
 ## Base Path {#base-path}
 
-To deploy a Blitz application under a sub-path of a domain you can use the `basePath` config option.
+To deploy a Blitz application under a sub-path of a domain you can use the
+`basePath` config option.
 
-`basePath` allows you to set a path prefix for the application. For example, to use `/docs` instead of `/` (the default), open `blitz.config.js` and add the `basePath` config:
+`basePath` allows you to set a path prefix for the application. For
+example, to use `/docs` instead of `/` (the default), open
+`blitz.config.js` and add the `basePath` config:
 
 ```js
 module.exports = {
@@ -243,13 +299,16 @@ module.exports = {
 }
 ```
 
-Note: this value must be set at build time and can not be changed without re-building as the value is inlined in the client-side bundles.
+Note: this value must be set at build time and can not be changed without
+re-building as the value is inlined in the client-side bundles.
 
 ### Links {#links}
 
-When linking to other pages using `blitz/link` and `blitz/router` the `basePath` will be automatically applied.
+When linking to other pages using `blitz/link` and `blitz/router` the
+`basePath` will be automatically applied.
 
-For example using `/about` will automatically become `/docs/about` when `basePath` is set to `/docs`.
+For example using `/about` will automatically become `/docs/about` when
+`basePath` is set to `/docs`.
 
 ```js
 export default function HomePage() {
@@ -269,15 +328,21 @@ Output html:
 <a href="/docs/about">About Page</a>
 ```
 
-This makes sure that you don't have to change all links in your application when changing the `basePath` value.
+This makes sure that you don't have to change all links in your
+application when changing the `basePath` value.
 
 ## Rewrites {#rewrites}
 
-Rewrites allow you to map an incoming request path to a different destination path.
+Rewrites allow you to map an incoming request path to a different
+destination path.
 
-Rewrites are only available on the Node.js environment and do not affect client-side routing.
+Rewrites are only available on the Node.js environment and do not affect
+client-side routing.
 
-Rewrites are not able to override public files or routes in the pages directory as these have higher priority than rewrites. For example, if you have `pages/index.js` you are not able to rewrite `/` to another location unless you rename the `pages/index.js` file.
+Rewrites are not able to override public files or routes in the pages
+directory as these have higher priority than rewrites. For example, if you
+have `pages/index.js` you are not able to rewrite `/` to another location
+unless you rename the `pages/index.js` file.
 
 To use rewrites you can use the `rewrites` key in `blitz.config.js`:
 
@@ -294,14 +359,17 @@ module.exports = {
 }
 ```
 
-`rewrites` is an async function that expects an array to be returned holding objects with `source` and `destination` properties:
+`rewrites` is an async function that expects an array to be returned
+holding objects with `source` and `destination` properties:
 
 - `source` is the incoming request path pattern.
 - `destination` is the path you want to route to.
 
 ### Rewrite parameters {#rewrite-parameters}
 
-When using parameters in a rewrite the parameters will be passed in the query by default when none of the parameters are used in the `destination`.
+When using parameters in a rewrite the parameters will be passed in the
+query by default when none of the parameters are used in the
+`destination`.
 
 ```js
 module.exports = {
@@ -316,7 +384,8 @@ module.exports = {
 }
 ```
 
-If a parameter is used in the destination none of the parameters will be automatically passed in the query.
+If a parameter is used in the destination none of the parameters will be
+automatically passed in the query.
 
 ```js
 module.exports = {
@@ -331,7 +400,8 @@ module.exports = {
 }
 ```
 
-You can still pass the parameters manually in the query if one is already used in the destination by specifying the query in the `destination`.
+You can still pass the parameters manually in the query if one is already
+used in the destination by specifying the query in the `destination`.
 
 ```js
 module.exports = {
@@ -351,7 +421,8 @@ module.exports = {
 
 ### Path Matching {#path-matching}
 
-Path matches are allowed, for example `/blog/:slug` will match `/blog/hello-world` (no nested paths):
+Path matches are allowed, for example `/blog/:slug` will match
+`/blog/hello-world` (no nested paths):
 
 ```js
 module.exports = {
@@ -368,7 +439,8 @@ module.exports = {
 
 #### Wildcard Path Matching
 
-To match a wildcard path you can use `*` after a parameter, for example `/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
+To match a wildcard path you can use `*` after a parameter, for example
+`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
 
 ```js
 module.exports = {
@@ -385,7 +457,9 @@ module.exports = {
 
 #### Regex Path Matching
 
-To match a regex path you can wrap the regex in parenthesis after a parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but not `/blog/abc`:
+To match a regex path you can wrap the regex in parenthesis after a
+parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but
+not `/blog/abc`:
 
 ```js
 module.exports = {
@@ -402,7 +476,8 @@ module.exports = {
 
 ### Rewriting to an external URL {#rewriting-to-an-external-url}
 
-Rewrites allow you to rewrite to an external url. This is especially useful for incrementally adopting Next.js.
+Rewrites allow you to rewrite to an external url. This is especially
+useful for incrementally adopting Next.js.
 
 ```js
 module.exports = {
@@ -419,9 +494,11 @@ module.exports = {
 
 #### Incremental adoption of Blitz
 
-You can also make Blitz check the application routes before falling back to proxying to the previous website.
+You can also make Blitz check the application routes before falling back
+to proxying to the previous website.
 
-This way you don't have to change the rewrites configuration when migrating more pages to Blitz
+This way you don't have to change the rewrites configuration when
+migrating more pages to Blitz
 
 ```js
 module.exports = {
@@ -444,7 +521,9 @@ module.exports = {
 
 #### Rewrites with basePath support
 
-When leveraging [`basePath` support](#base-path) with rewrites each `source` and `destination` is automatically prefixed with the `basePath` unless you add `basePath: false` to the rewrite:
+When leveraging [`basePath` support](#base-path) with rewrites each
+`source` and `destination` is automatically prefixed with the `basePath`
+unless you add `basePath: false` to the rewrite:
 
 ```js
 module.exports = {
@@ -470,7 +549,11 @@ module.exports = {
 
 #### Rewrites with i18n support
 
-When leveraging [`i18n` support](/docs/i18n-routing) with rewrites each `source` and `destination` is automatically prefixed to handle the configured `locales` unless you add `locale: false` to the rewrite. If `locale: false` is used you must prefix the `source` and `destination` with a locale for it to be matched correctly.
+When leveraging [`i18n` support](/docs/i18n-routing) with rewrites each
+`source` and `destination` is automatically prefixed to handle the
+configured `locales` unless you add `locale: false` to the rewrite. If
+`locale: false` is used you must prefix the `source` and `destination`
+with a locale for it to be matched correctly.
 
 ```js
 module.exports = {
@@ -504,9 +587,11 @@ module.exports = {
 
 ## Redirects {#redirects}
 
-Redirects allow you to redirect an incoming request path to a different destination path.
+Redirects allow you to redirect an incoming request path to a different
+destination path.
 
-Redirects are only available on the Node.js environment and do not affect client-side routing.
+Redirects are only available on the Node.js environment and do not affect
+client-side routing.
 
 To use Redirects you can use the `redirects` key in `blitz.config.js`:
 
@@ -524,7 +609,8 @@ module.exports = {
 }
 ```
 
-`redirects` is an async function that expects an array to be returned holding objects with `source`, `destination`, and `permanent` properties:
+`redirects` is an async function that expects an array to be returned
+holding objects with `source`, `destination`, and `permanent` properties:
 
 - `source` is the incoming request path pattern.
 - `destination` is the path you want to route to.
@@ -532,7 +618,8 @@ module.exports = {
 
 ### Path Matching {#path-matching-1}
 
-Path matches are allowed, for example `/old-blog/:slug` will match `/old-blog/hello-world` (no nested paths):
+Path matches are allowed, for example `/old-blog/:slug` will match
+`/old-blog/hello-world` (no nested paths):
 
 ```js
 module.exports = {
@@ -550,7 +637,8 @@ module.exports = {
 
 #### Wildcard Path Matching
 
-To match a wildcard path you can use `*` after a parameter, for example `/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
+To match a wildcard path you can use `*` after a parameter, for example
+`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
 
 ```js
 module.exports = {
@@ -568,7 +656,9 @@ module.exports = {
 
 #### Regex Path Matching
 
-To match a regex path you can wrap the regex in parenthesis after a parameter, for example `/post/:slug(\\d{1,})` will match `/post/123` but not `/post/abc`:
+To match a regex path you can wrap the regex in parenthesis after a
+parameter, for example `/post/:slug(\\d{1,})` will match `/post/123` but
+not `/post/abc`:
 
 ```js
 module.exports = {
@@ -586,7 +676,9 @@ module.exports = {
 
 #### Redirects with basePath support
 
-When leveraging [`basePath` support](#base-path) with redirects each `source` and `destination` is automatically prefixed with the `basePath` unless you add `basePath: false` to the redirect:
+When leveraging [`basePath` support](#base-path) with redirects each
+`source` and `destination` is automatically prefixed with the `basePath`
+unless you add `basePath: false` to the redirect:
 
 ```js
 module.exports = {
@@ -613,7 +705,11 @@ module.exports = {
 
 #### Redirects with i18n support
 
-When leveraging [`i18n` support](/docs/i18n-routing) with redirects each `source` and `destination` is automatically prefixed to handle the configured `locales` unless you add `locale: false` to the redirect. If `locale: false` is used you must prefix the `source` and `destination` with a locale for it to be matched correctly.
+When leveraging [`i18n` support](/docs/i18n-routing) with redirects each
+`source` and `destination` is automatically prefixed to handle the
+configured `locales` unless you add `locale: false` to the redirect. If
+`locale: false` is used you must prefix the `source` and `destination`
+with a locale for it to be matched correctly.
 
 ```js
 module.exports = {
@@ -648,13 +744,18 @@ module.exports = {
 }
 ```
 
-In some rare cases, you might need to assign a custom status code for older HTTP Clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both. Note: to ensure IE11 compatibility a `Refresh` header is automatically added for the 308 status code.
+In some rare cases, you might need to assign a custom status code for
+older HTTP Clients to properly redirect. In these cases, you can use the
+`statusCode` property instead of the `permanent` property, but not both.
+Note: to ensure IE11 compatibility a `Refresh` header is automatically
+added for the 308 status code.
 
 ## Headers {#headers}
 
 Headers allow you to set custom HTTP headers for an incoming request path.
 
-To set custom HTTP headers you can use the `headers` key in `blitz.config.js`:
+To set custom HTTP headers you can use the `headers` key in
+`blitz.config.js`:
 
 ```js
 module.exports = {
@@ -678,14 +779,19 @@ module.exports = {
 }
 ```
 
-`headers` is an async function that expects an array to be returned holding objects with `source` and `headers` properties:
+`headers` is an async function that expects an array to be returned
+holding objects with `source` and `headers` properties:
 
 - `source` is the incoming request path pattern.
-- `headers` is an array of header objects with the `key` and `value` properties.
+- `headers` is an array of header objects with the `key` and `value`
+  properties.
 
 ### Header Overriding Behavior {#header-overriding-behavior}
 
-If two headers match the same path and set the same header key, the last header key will override the first. Using the below headers, the path `/hello` will result in the header `x-hello` being `world` due to the last header value set being `world`.
+If two headers match the same path and set the same header key, the last
+header key will override the first. Using the below headers, the path
+`/hello` will result in the header `x-hello` being `world` due to the last
+header value set being `world`.
 
 ```js
 module.exports = {
@@ -716,7 +822,8 @@ module.exports = {
 
 ### Path Matching {#path-matching-2}
 
-Path matches are allowed, for example `/blog/:slug` will match `/blog/hello-world` (no nested paths):
+Path matches are allowed, for example `/blog/:slug` will match
+`/blog/hello-world` (no nested paths):
 
 ```js
 module.exports = {
@@ -742,7 +849,8 @@ module.exports = {
 
 #### Wildcard Path Matching
 
-To match a wildcard path you can use `*` after a parameter, for example `/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
+To match a wildcard path you can use `*` after a parameter, for example
+`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
 
 ```js
 module.exports = {
@@ -768,7 +876,9 @@ module.exports = {
 
 #### Regex Path Matching
 
-To match a regex path you can wrap the regex in parenthesis after a parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but not `/blog/abc`:
+To match a regex path you can wrap the regex in parenthesis after a
+parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but
+not `/blog/abc`:
 
 ```js
 module.exports = {
@@ -790,7 +900,9 @@ module.exports = {
 
 #### Headers with basePath support
 
-When leveraging [`basePath` support](#base-path) with headers each `source` is automatically prefixed with the `basePath` unless you add `basePath: false` to the header:
+When leveraging [`basePath` support](#base-path) with headers each
+`source` is automatically prefixed with the `basePath` unless you add
+`basePath: false` to the header:
 
 ```js
 module.exports = {
@@ -824,7 +936,10 @@ module.exports = {
 
 #### Headers with i18n support
 
-When leveraging [`i18n` support](/docs/i18n-routing) with headers each `source` is automatically prefixed to handle the configured `locales` unless you add `locale: false` to the header. If `locale: false` is used you must prefix the `source` with a locale for it to be matched correctly.
+When leveraging [`i18n` support](/docs/i18n-routing) with headers each
+`source` is automatically prefixed to handle the configured `locales`
+unless you add `locale: false` to the header. If `locale: false` is used
+you must prefix the `source` with a locale for it to be matched correctly.
 
 ```js
 module.exports = {
@@ -873,11 +988,20 @@ module.exports = {
 
 #### Cache-Control
 
-Cache-Control headers set in blitz.config.js will be overwritten in production to ensure that static assets can be cached effectively. If you need to revalidate the cache of a page that has been [statically generated](/docs/get-static-props#when-should-i-use-getstaticprops), you can do so by setting `revalidate` in the page's [`getStaticProps`](/docs/get-static-props) function.
+Cache-Control headers set in blitz.config.js will be overwritten in
+production to ensure that static assets can be cached effectively. If you
+need to revalidate the cache of a page that has been
+[statically generated](/docs/get-static-props#when-should-i-use-getstaticprops),
+you can do so by setting `revalidate` in the page's
+[`getStaticProps`](/docs/get-static-props) function.
 
 ## Trailing Slash {#trailing-slash}
 
-By default Blitz will redirect urls with trailing slashes to their counterpart without a trailing slash. For example `/about/` will redirect to `/about`. You can configure this behavior to act the opposite way, where urls without trailing slashes are redirected to their counterparts with trailing slashes.
+By default Blitz will redirect urls with trailing slashes to their
+counterpart without a trailing slash. For example `/about/` will redirect
+to `/about`. You can configure this behavior to act the opposite way,
+where urls without trailing slashes are redirected to their counterparts
+with trailing slashes.
 
 Open `blitz.config.js` and add the `trailingSlash` config:
 
@@ -895,7 +1019,9 @@ These features aren't ready for production and could change at any time.
 
 ### Isomorphic Resolver Imports {#isomorphic-resolver-imports}
 
-This enables isomorphic code imports from resolver files (for example exporting a zod schema from a mutation and being able to import that in client code).
+This enables isomorphic code imports from resolver files (for example
+exporting a zod schema from a mutation and being able to import that in
+client code).
 
 - Default: `false`
 
@@ -909,7 +1035,9 @@ module.exports = {
 
 ### React Mode {#react-mode}
 
-By default Blitz uses [React Concurrent Mode](https://reactjs.org/docs/concurrent-mode-intro.html). You can disable it by changing `experimental.reactMode` to `legacy`.
+By default Blitz uses
+[React Concurrent Mode](https://reactjs.org/docs/concurrent-mode-intro.html).
+You can disable it by changing `experimental.reactMode` to `legacy`.
 
 - Default: `concurrent`
 - Options: `concurrent` | `legacy`

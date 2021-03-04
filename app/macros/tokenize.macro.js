@@ -1,6 +1,6 @@
-const { createMacro } = require("babel-plugin-macros")
+const {createMacro} = require("babel-plugin-macros")
 const Prism = require("prismjs")
-const { parseExpression } = require("@babel/parser")
+const {parseExpression} = require("@babel/parser")
 const generate = require("@babel/generator").default
 
 module.exports = createMacro(tokenizeMacro)
@@ -10,7 +10,7 @@ function simplify(token) {
   return [token.type, Array.isArray(token.content) ? token.content.map(simplify) : token.content]
 }
 
-function tokenizeMacro({ references, babel: { types: t } }) {
+function tokenizeMacro({references, babel: {types: t}}) {
   if (references.default) {
     references.default.forEach(createTransform("tokens"))
   }
@@ -48,12 +48,12 @@ function tokenizeMacro({ references, babel: { types: t } }) {
       path.parentPath.parentPath.replaceWith(
         parseExpression(
           JSON.stringify({
-            ...(type === "tokens" ? { tokens: tokens.map(simplify) } : {}),
-            ...(type === "lines" ? { lines: normalizeTokens(tokens) } : {}),
-            ...(returnCode ? { code: returnCode === "original" ? originalCode : code } : {}),
+            ...(type === "tokens" ? {tokens: tokens.map(simplify)} : {}),
+            ...(type === "lines" ? {lines: normalizeTokens(tokens)} : {}),
+            ...(returnCode ? {code: returnCode === "original" ? originalCode : code} : {}),
             ...args,
-          })
-        )
+          }),
+        ),
       )
     }
   }
@@ -138,13 +138,13 @@ function normalizeTokens(tokens) {
       const splitByNewlines = content.split(newlineRe)
       const newlineCount = splitByNewlines.length
 
-      currentLine.push({ types, content: splitByNewlines[0] })
+      currentLine.push({types, content: splitByNewlines[0]})
 
       // Create a new line for each string on a new line
       for (let i = 1; i < newlineCount; i++) {
         normalizeEmptyLines(currentLine)
         acc.push((currentLine = []))
-        currentLine.push({ types, content: splitByNewlines[i] })
+        currentLine.push({types, content: splitByNewlines[i]})
       }
     }
 

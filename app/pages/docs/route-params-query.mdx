@@ -5,7 +5,10 @@ sidebar_label: URL Params & Query
 
 ## `useParams` {#use-params}
 
-This hook returns all the parameters for the current route as an object. The default parameter type is `undefined | string | string[]`, but you can optionally provide a type argument to narrow the parameters and types that are returned.
+This hook returns all the parameters for the current route as an object.
+The default parameter type is `undefined | string | string[]`, but you can
+optionally provide a type argument to narrow the parameters and types that
+are returned.
 
 ```tsx
 import {useParams} from "blitz"
@@ -51,7 +54,9 @@ const params = useParams("array")
 
 ## `useParam` {#use-param}
 
-This hook return a single parameters for the current route. The default return type is `undefined | string | string[]`, but you can optionally provide a type argument to cast the return type.
+This hook return a single parameters for the current route. The default
+return type is `undefined | string | string[]`, but you can optionally
+provide a type argument to cast the return type.
 
 ```tsx
 import {useParam} from "blitz"
@@ -93,7 +98,8 @@ const slug = useParam("slug", "string")
 
 ## `useRouterQuery` {#use-router-query}
 
-This hook returns all the query parameters from the URL as an object. Parameter type is always `string`.
+This hook returns all the query parameters from the URL as an object.
+Parameter type is always `string`.
 
 ```tsx
 // URL: /products?sort=asc&limit=10

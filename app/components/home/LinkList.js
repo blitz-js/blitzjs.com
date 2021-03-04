@@ -1,4 +1,4 @@
-const LinkList = ({ title, className = "", children }) => {
+const LinkList = ({title, className = "", children}) => {
   return (
     <div className={`text-sm space-y-2 flex flex-col font-secondary ${className}`}>
       <h3 className="font-semibold">{title}</h3>
@@ -7,4 +7,4 @@ const LinkList = ({ title, className = "", children }) => {
   )
 }
 
-export { LinkList }
+export {LinkList}

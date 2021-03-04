@@ -3,9 +3,11 @@ title: Query Resolvers
 sidebar_label: Query Resolvers
 ---
 
-Blitz queries are plain, asynchronous JavaScript functions that always run on the server.
+Blitz queries are plain, asynchronous JavaScript functions that always run
+on the server.
 
-**1. Queries must be inside a `queries` folder. All of the following are valid:**
+**1. Queries must be inside a `queries` folder. All of the following are
+valid:**
 
 - `app/queries/getProject.ts`
 - `app/projects/queries/getProject.ts`
@@ -13,14 +15,20 @@ Blitz queries are plain, asynchronous JavaScript functions that always run on th
 
 **2. Queries must export a function as the default export**
 
-You can write any normal Node.js code here, including database access and fetching from third-party APIs.
+You can write any normal Node.js code here, including database access and
+fetching from third-party APIs.
 
 #### Arguments
 
 - `input: any`
-  - The first argument is anything you need for your query. There are no special requirements.
+  - The first argument is anything you need for your query. There are no
+    special requirements.
 - `ctx: Ctx`
-  - This context object is automatically provided by Blitz at run time. This is used by [HTTP Middleware](./middleware) to provide data or functions to your query. For example, authentication middleware can provide `ctx.session` with all the data about the current user session.
+  - This context object is automatically provided by Blitz at run time.
+    This is used by [HTTP Middleware](./middleware) to provide data or
+    functions to your query. For example, authentication middleware can
+    provide `ctx.session` with all the data about the current user
+    session.
 
 #### Example Query
 
@@ -33,7 +41,10 @@ type GetProjectInput = {
   where: FindOneProjectArgs["where"]
 }
 
-export default async function getProject({where}: GetProjectInput, ctx: Ctx) {
+export default async function getProject(
+  {where}: GetProjectInput,
+  ctx: Ctx,
+) {
   // Can do any processing, fetching from other APIs, etc
 
   const project = await db.project.findOne({where})
@@ -42,6 +53,8 @@ export default async function getProject({where}: GetProjectInput, ctx: Ctx) {
 }
 ```
 
-_We automatically alias the root of your project, so `import db from 'db'` is importing `<project_root>/db/index.ts`_
+_We automatically alias the root of your project, so `import db from 'db'`
+is importing `<project_root>/db/index.ts`_
 
-Next, [read these docs](./query-usage) to see how to use these queries in your components.
+Next, [read these docs](./query-usage) to see how to use these queries in
+your components.

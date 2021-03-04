@@ -8,7 +8,8 @@ There are two basic ways to run Postgres locally:
 1. Natively on your computer
 2. Via Docker
 
-Most people run Postgres natively without Docker as it's simpler, runs all the time in the background, and because Docker uses extra resources.
+Most people run Postgres natively without Docker as it's simpler, runs all
+the time in the background, and because Docker uses extra resources.
 
 ## Natively on your computer {#natively-on-your-computer}
 
@@ -34,11 +35,13 @@ And then you are good to go!
 
 ### On Windows {#on-windows}
 
-The easiest way is to download and run the installer from [the Postgres website](https://www.postgresql.org/download/windows/).
+The easiest way is to download and run the installer from
+[the Postgres website](https://www.postgresql.org/download/windows/).
 
 ## Via Docker {#via-docker}
 
-1. Create a `docker-compose.yml` file inside the root of your project with the following content
+1. Create a `docker-compose.yml` file inside the root of your project with
+   the following content
 
 ```yaml
 version: "3.7"
@@ -56,7 +59,8 @@ volumes:
   data:
 ```
 
-2. Inside your `.env.local` file add 3 new environment variables which are required by docker
+2. Inside your `.env.local` file add 3 new environment variables which are
+   required by docker
 
 ```bash
 POSTGRES_USER=your_user
@@ -64,7 +68,8 @@ POSTGRES_PASSWORD=your_password
 POSTGRES_DB=your_database_name
 ```
 
-Given these values your `DATABASE_URL` should look like this `postgresql://your_user:your_password@localhost:5432/your_database_name`
+Given these values your `DATABASE_URL` should look like this
+`postgresql://your_user:your_password@localhost:5432/your_database_name`
 
 3. Modify your `package.json` to start the database before Blitz
 
@@ -75,4 +80,5 @@ Given these values your `DATABASE_URL` should look like this `postgresql://your_
 }
 ```
 
-4. Run `blitz prisma migrate dev --preview-feature` to get your new database to the latest version of your migrations
+4. Run `blitz prisma migrate dev --preview-feature` to get your new
+   database to the latest version of your migrations

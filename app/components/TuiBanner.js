@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect } from "react"
+import {useRef, useState, useEffect} from "react"
 import clsx from "clsx"
 import logo from "@/img/tailwind-ui-logo-on-dark.svg"
-import { wait } from "@/utils/wait"
-import { loadImage } from "@/utils/loadImage"
+import {wait} from "@/utils/wait"
+import {loadImage} from "@/utils/loadImage"
 
 export function TuiBanner() {
   let ref = useRef()
@@ -31,7 +31,7 @@ export function TuiBanner() {
     if (state === "hidden") {
       let node = ref.current
       let removeBanner = () => setState("removed")
-      node.addEventListener("transitionend", removeBanner, { once: true })
+      node.addEventListener("transitionend", removeBanner, {once: true})
       return () => {
         node.removeEventListener("transitionend", removeBanner)
       }

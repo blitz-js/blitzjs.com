@@ -3,13 +3,18 @@ title: Testing
 sidebar_label: Testing
 ---
 
-The `blitz` dependency also automatically installs and configures `jest`, `@testing-library/react`, `@testing-library/react-hooks`, and `@testing-libary/jest-dom` for you.
+The `blitz` dependency also automatically installs and configures `jest`,
+`@testing-library/react`, `@testing-library/react-hooks`, and
+`@testing-libary/jest-dom` for you.
 
 ## Jest {#jest}
 
-[Jest](https://jestjs.io/) is a delightful testing framework that's simple to use. To run tests in your app, you will run `jest` or `jest --watch` from the terminal.
+[Jest](https://jestjs.io/) is a delightful testing framework that's simple
+to use. To run tests in your app, you will run `jest` or `jest --watch`
+from the terminal.
 
-To make a new test, make a file named `something.test.ts` (or `.js`, `.tsx`, etc). Here's an example:
+To make a new test, make a file named `something.test.ts` (or `.js`,
+`.tsx`, etc). Here's an example:
 
 ```ts
 import something from "./somewhere"
@@ -20,13 +25,17 @@ it("does something", () => {
 })
 ```
 
-> For more details on using Jest, [read the Jest documentation](https://jestjs.io/docs/en/using-matchers)
+> For more details on using Jest,
+> [read the Jest documentation](https://jestjs.io/docs/en/using-matchers)
 
 ### Jest Config {#jest-config}
 
-Blitz provides a Jest preset that configures lots of complex things for you, including Typescript support.
+Blitz provides a Jest preset that configures lots of complex things for
+you, including Typescript support.
 
-If you need to [customize the jest config](https://jestjs.io/docs/en/configuration), you can do so in `jest.config.js`.
+If you need to
+[customize the jest config](https://jestjs.io/docs/en/configuration), you
+can do so in `jest.config.js`.
 
 ```ts
 // jest.config.js
@@ -46,9 +55,12 @@ All other files will run in the Jest client environment (with jsdom).
 
 ## @testing-library {#testing-library}
 
-[@testing-library](https://testing-library.com/docs/) is family of packages helps you test UI components in a user-centric way. It's a better alternative to Enzyme, if you've used that in the past.
+[@testing-library](https://testing-library.com/docs/) is family of
+packages helps you test UI components in a user-centric way. It's a better
+alternative to Enzyme, if you've used that in the past.
 
-The following packages are installed for you. Refer to their documentation as needed.
+The following packages are installed for you. Refer to their documentation
+as needed.
 
 - [@testing-library/dom](https://testing-library.com/docs/dom-testing-library/intro)
 - [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom)

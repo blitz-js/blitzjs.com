@@ -1,5 +1,5 @@
 // @preval
-const { defaultConfig } = require("./defaultConfig")
+const {defaultConfig} = require("./defaultConfig")
 const Prism = require("prismjs")
 const stringify = require("stringify-object")
 
@@ -13,11 +13,11 @@ module.exports = {
         (variant) =>
           `${variant}: ${stringify(defaultConfig.variants[variant], {
             inlineCharacterLimit: Infinity,
-          })}`
+          })}`,
       )
       .join(",\n    ")}
   }
 }`,
   Prism.languages.js,
-  "js"
+  "js",
 )

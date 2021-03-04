@@ -1,4 +1,4 @@
-export function Token({ token, parentTypes, children }) {
+export function Token({token, parentTypes, children}) {
   return <span className={`token ${token[0]}`}>{children}</span>
 }
 

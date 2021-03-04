@@ -3,13 +3,18 @@ title: Database Overview
 sidebar_label: Overview
 ---
 
+<!-- prettier-ignore-start -->
 :::info
-If you are totally new to Databases, check out [Prisma's Data Guide](https://www.prisma.io/dataguide/) which covers the very large majority of everything you might want to know.
+If you are totally new to Databases, check out
+[Prisma's Data Guide](https://www.prisma.io/dataguide/) which covers the
+very large majority of everything you might want to know.
 :::
+<!-- prettier-ignore-end -->
 
 By default, Blitz uses Prisma 2 which is a strongly typed database client.
 
-> Prisma 2 is not required for Blitz. You can use anything you want, such as Mongo, TypeORM, etc.
+> Prisma 2 is not required for Blitz. You can use anything you want, such
+> as Mongo, TypeORM, etc.
 
 ##### [Read the Prisma documentation here](https://www.prisma.io/docs/understand-prisma/introduction)
 
@@ -32,18 +37,23 @@ model Task {
 }
 ```
 
-> If you need, [reference the Prisma Schema documentation](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model)
+> If you need,
+> [reference the Prisma Schema documentation](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model)
 
-2. Then run `blitz prisma migrate dev --preview-feature` in your terminal to apply the changes
-3. Now you can import `db` from `db/index.ts` and create a model like this:
+2. Then run `blitz prisma migrate dev --preview-feature` in your terminal
+   to apply the changes
+3. Now you can import `db` from `db/index.ts` and create a model like
+   this:
    - `db.project.create({data: {name: 'Hello'}})`
 
 ## Switch to PostgreSQL {#switch-to-postgre-sql}
 
-By default, a Blitz app is created with a local SQLite database. If you want to use PostgreSQL instead, you need to perform the following steps:
+By default, a Blitz app is created with a local SQLite database. If you
+want to use PostgreSQL instead, you need to perform the following steps:
 
 1. [Install and run Postgres locally](./postgres).
-1. Open `db/schema.prisma` and change the db provider value from `"sqlite"` to `"postgres"` as follows:
+1. Open `db/schema.prisma` and change the db provider value from
+   `"sqlite"` to `"postgres"` as follows:
 
 ```prisma
 datasource db {
@@ -52,6 +62,10 @@ datasource db {
 }
 ```
 
-2. In `.env.local`, change `DATABASE_URL`. For convenience, there is a commented-out PostgreSQL `DATABASE_URL` there already. Depending on your setup, you may need to modify the URL.
+2. In `.env.local`, change `DATABASE_URL`. For convenience, there is a
+   commented-out PostgreSQL `DATABASE_URL` there already. Depending on
+   your setup, you may need to modify the URL.
 3. Delete the `db/migrations` folder
-4. Run `blitz prisma migrate dev --preview-feature`. This command will create the database (if it does not already exist) and tables based on your schema.
+4. Run `blitz prisma migrate dev --preview-feature`. This command will
+   create the database (if it does not already exist) and tables based on
+   your schema.

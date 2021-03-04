@@ -1,4 +1,4 @@
-import { defaultConfig } from "@/utils/defaultConfig"
+import {defaultConfig} from "@/utils/defaultConfig"
 
 const variantListInverted = Object.entries(defaultConfig.variants).reduce(
   (reduced, [plugin, variants]) => {
@@ -11,10 +11,10 @@ const variantListInverted = Object.entries(defaultConfig.variants).reduce(
     })
     return reduced
   },
-  {}
+  {},
 )
 
-export function VariantEnabledList({ variant }) {
+export function VariantEnabledList({variant}) {
   if (!variantListInverted[variant]) {
     return (
       <p>

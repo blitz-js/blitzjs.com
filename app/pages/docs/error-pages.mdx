@@ -5,11 +5,13 @@ sidebar_label: Error Pages
 
 ## 404 Page {#404-page}
 
-A 404 page may be accessed very often so Blitz provides a static 404 page by default without having to add any additional files.
+A 404 page may be accessed very often so Blitz provides a static 404 page
+by default without having to add any additional files.
 
 ### Customizing The 404 Page {#customizing-the-404-page}
 
-To create a custom 404 page you can create a `app/pages/404.js` file. This file is statically generated at build time.
+To create a custom 404 page you can create a `app/pages/404.js` file. This
+file is statically generated at build time.
 
 ```jsx
 // app/pages/404.js
@@ -20,17 +22,24 @@ export default function Custom404() {
 
 ## 500 Page {#500-page}
 
-By default Blitz provides a 500 error page that matches the default 404 page’s style. This page is not statically optimized as it allows server-side errors to be reported. This is why 404 and 500 (other errors) are separated.
+By default Blitz provides a 500 error page that matches the default 404
+page’s style. This page is not statically optimized as it allows
+server-side errors to be reported. This is why 404 and 500 (other errors)
+are separated.
 
 ### Customizing The Error Page {#customizing-the-error-page}
 
-500 errors are handled both client-side and server-side by the `Error` component. If you wish to override it, define the file `app/pages/_error.js` and add the following code:
+500 errors are handled both client-side and server-side by the `Error`
+component. If you wish to override it, define the file
+`app/pages/_error.js` and add the following code:
 
 ```jsx
 function Error({statusCode}) {
   return (
     <p>
-      {statusCode ? `An error ${statusCode} occurred on server` : "An error occurred on client"}
+      {statusCode
+        ? `An error ${statusCode} occurred on server`
+        : "An error occurred on client"}
     </p>
   )
 }
@@ -43,7 +52,9 @@ Error.getInitialProps = ({res, err}) => {
 export default Error
 ```
 
-> `app/pages/_error.js` is only used in production. In development you’ll get an error with the call stack to know where the error originated from.
+> `app/pages/_error.js` is only used in production. In development you’ll
+> get an error with the call stack to know where the error originated
+> from.
 
 ## Reusing the built-in error page {#reusing-the-built-in-error-page}
 

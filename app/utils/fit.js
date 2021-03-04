@@ -5,7 +5,7 @@ export function fit(
   childHeight,
   scale = 1,
   offsetX = 0.5,
-  offsetY = 0.5
+  offsetY = 0.5,
 ) {
   const childRatio = childWidth / childHeight
   const parentRatio = parentWidth / parentHeight

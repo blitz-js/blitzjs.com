@@ -20,7 +20,7 @@ Here's an example custom server:
 // server.js
 const {createServer} = require("http")
 const {parse} = require("url")
-const blitz = require("@blitzjs/server")
+const blitz = require("blitz/custom-server")
 
 const dev = process.env.NODE_ENV !== "production"
 const app = blitz({dev})

@@ -33,10 +33,10 @@ side redirects, you can use
 from the server. Here's how you can do that:
 
 ```ts
-import {getSessionContext} from "@blitzjs/server"
+import {getSession} from "blitz"
 
 export const getServerSideProps = async ({req, res}) => {
-  const session = await getSessionContext(req, res)
+  const session = await getSession(req, res)
 
   if (!session.userId) {
     return {

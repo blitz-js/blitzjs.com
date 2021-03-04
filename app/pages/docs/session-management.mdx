@@ -102,13 +102,13 @@ export default async function someQuery(input: any, ctx: Ctx) {
 ### In `getServerSideProps` or API Routes {#in-get-server-side-props-or-api-routes}
 
 You can also get the session context inside `getServerSideProps` or inside
-API routes with `getSessionContext` like this:
+API routes with `getSession` like this:
 
 ```ts
-import {getSessionContext} from "@blitzjs/server"
+import {getSession} from "blitz"
 
 export const getServerSideProps = async ({req, res}) => {
-  const session = await getSessionContext(req, res)
+  const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
   return {props: {}}
@@ -149,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
 }) => {
-  const session = await getSessionContext(req, res)
+  const session = await getSession(req, res)
 
   return {props: {publicData: session.$publicData}}
 }
@@ -205,8 +205,7 @@ If using Typescript, first update the `Session.PublicData` type in
 `types.ts` like this:
 
 ```diff
-import {DefaultCtx, SessionContext} from "blitz"
-import {SimpleRolesIsAuthorized} from "@blitzjs/server"
+import {DefaultCtx, SessionContext, SimpleRolesIsAuthorized} from "blitz"
 import {User} from "db"
 
 // Note: You should switch to Postgres and then use a DB enum for role type
@@ -276,10 +275,7 @@ You can customize session management by passing an object to the
 
 ```js
 // blitz.config.js
-const {
-  sessionMiddleware,
-  simpleRolesIsAuthorized,
-} = require("@blitzjs/server")
+const {sessionMiddleware, simpleRolesIsAuthorized} = require("blitz")
 
 module.exports = {
   middleware: [
@@ -357,10 +353,10 @@ if (antiCSRFToken) {
 And then you can get the sessionContext in the API route like this:
 
 ```ts
-import {getSessionContext} from "@blitzjs/server"
+import {getSession} from "blitz"
 
 export default async function ({req, res}) {
-  const session = await getSessionContext(req, res)
+  const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
   res.json({userId})

@@ -63,7 +63,7 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
   // highlight-start
   ctx.session.$authorize(),
   // highlight-end
-  
+
   // TODO: in multi-tenant app, you must add validation to ensure correct tenant
   const projects = await db.projects.create({data})
   return projects
@@ -286,10 +286,7 @@ set up by default in new apps).
 
 ```js
 // blitz.config.js
-const {
-  sessionMiddleware,
-  simpleRolesIsAuthorized,
-} = require("@blitzjs/server")
+const {sessionMiddleware, simpleRolesIsAuthorized} = require("blitz")
 
 module.exports = {
   middleware: [
@@ -305,7 +302,7 @@ module.exports = {
 And if using Typescript, set the type in `types.ts` like this:
 
 ```ts
-import {SimpleRolesIsAuthorized} from "@blitzjs/server"
+import {SimpleRolesIsAuthorized} from "blitz"
 
 type Role = "ADMIN" | "USER"
 

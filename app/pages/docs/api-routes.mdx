@@ -63,18 +63,17 @@ of this section.
 
 ## Authentication and Session Context {#authentication-and-session-context}
 
-You can use the `getSessionContext` function to get the session of the
-user. Here is an example using session in a API route
-`app/api/customRoute.tsx`:
+You can use the `getSession` function to get the session of the user. Here
+is an example using session in a API route `app/api/customRoute.tsx`:
 
 ```ts
-import {getSessionContext} from "@blitzjs/server"
+import {getSession} from "blitz"
 
 export default async function customRoute(
   req: BlitzApiRequest,
   res: BlitzApiResponse,
 ) {
-  const session = await getSessionContext(req, res)
+  const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
   res.statusCode = 200

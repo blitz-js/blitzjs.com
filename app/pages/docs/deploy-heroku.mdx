@@ -55,7 +55,7 @@ heroku git:remote --app <APP_NAME>
 ```diff
 "scripts": {
 + "start:production": "blitz start --port $PORT",
-+ "heroku-postbuild": "blitz prisma migrate deploy --preview-feature && blitz build"
++ "heroku-postbuild": "blitz build && blitz prisma migrate deploy --preview-feature"
 }
 ```
 

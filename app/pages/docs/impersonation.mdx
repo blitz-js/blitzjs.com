@@ -68,8 +68,8 @@ export default resolver.pipe(
 import {resolver} from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
-  const userId = ctx.session.publicData.impersonatingFromUserId
+export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
+  const userId = ctx.session.$publicData.impersonatingFromUserId
   if (!userId) {
     console.log("Already not impersonating anyone")
     return
@@ -82,7 +82,7 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
 
   await ctx.session.$create({
     userId: user.id,
-    role: user.admin ? "admin" : "customer",
+    role: user.role,
     orgId: user.organizationId,
     impersonatingFromUserId: undefined,
   })

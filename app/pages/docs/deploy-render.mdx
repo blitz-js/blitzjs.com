@@ -44,13 +44,17 @@ services:
 Update your `render.yaml` to provide the `DATABASE_URL` environment
 variable to connect to your database:
 
+<!-- prettier-ignore-start -->
 ```yaml
 services:
   - type: web
     name: blitzapp
     env: node
     plan: starter
-    buildCommand: yarn --frozen-lockfile --prod=false && blitz build && blitz prisma migrate deploy --preview-feature
+    buildCommand:
+      yarn --frozen-lockfile --prod=false &&
+      blitz build &&
+      blitz prisma migrate deploy --preview-feature
     startCommand: blitz start
     envVars:
       - key: NODE_ENV
@@ -64,3 +68,4 @@ databases:
   - name: blitzapp-db
     plan: starter
 ```
+<!-- prettier-ignore-end -->

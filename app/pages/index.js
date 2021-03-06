@@ -412,7 +412,7 @@ const getStaticProps = async () => {
     auth: process.env.GITHUB_AUTH_TOKEN,
   })
 
-  const {contributors} = getGitHubFile({
+  const {contributors} = await getGitHubFile({
     octokit,
     owner: "blitz-js",
     repo: "blitz",

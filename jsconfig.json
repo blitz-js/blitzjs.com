@@ -7,8 +7,7 @@
       "@/utils/*": ["app/utils/*"],
       "@/hooks/*": ["app/hooks/*"],
       "@/img/*": ["app/img/*"],
-      "@/navs/*": ["app/navs/*"],
-      "@/macros/*": ["app/macros/*"]
+      "@/navs/*": ["app/navs/*"]
     }
   }
 }

@@ -15,13 +15,11 @@ const admonitions = require("remark-admonitions")
 const fallbackLayouts = {
   // Have to use compiled locations
   "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
-  "pages/course/**/*": ["@/layouts/CourseLayout", "CourseLayout"],
 }
 
 const fallbackDefaultExports = {
   // Have to use compiled locations
   "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
-  "pages/course/**/*": ["@/layouts/VideoLayout", "VideoLayout"],
 }
 
 module.exports = withBundleAnalyzer({

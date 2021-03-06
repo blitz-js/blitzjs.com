@@ -1,4 +1,4 @@
-import {useRouter} from "next/router"
+import {useRouter} from "blitz"
 
 export function useIsDocsIndex() {
   return useRouter().pathname === "/docs"

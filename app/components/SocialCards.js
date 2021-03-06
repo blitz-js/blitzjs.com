@@ -1,4 +1,4 @@
-import Head from "next/head"
+import {Head} from "blitz"
 
 export const SocialCards = ({imageUrl}) => {
   return (

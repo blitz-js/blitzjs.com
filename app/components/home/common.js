@@ -1,4 +1,4 @@
-import NextLink from "next/link"
+import {Link as BlitzLink} from "blitz"
 
 export function IconContainer({as: Component = "div", color, className = "", ...props}) {
   return (
@@ -38,13 +38,13 @@ export function Paragraph({as: Component = "p", className = "", ...props}) {
 
 export function Link({className = "", href, ...props}) {
   return (
-    <NextLink href={href}>
+    <BlitzLink href={href}>
       {/* eslint-disable-next-line */}
       <a
         className={`inline-flex text-lg sm:text-2xl font-medium transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-current focus:outline-none rounded-md ${className}`}
         {...props}
       />
-    </NextLink>
+    </BlitzLink>
   )
 }
 

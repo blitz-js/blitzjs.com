@@ -7,7 +7,7 @@ import {Link} from "blitz"
 import {Search} from "@/components/Search"
 import Logo from "@/components/Logo"
 import ColoredLogo from "@/components/ColoredLogo"
-import Router from "next/router"
+import {useRouter} from "blitz"
 import {FaHeart} from "react-icons/fa"
 import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
 import {NavLink} from "@/components/NavLink"
@@ -58,6 +58,7 @@ const Header = ({
   hasFade,
   onNavToggle,
 }) => {
+  const router = useRouter()
   const isDesktop = useIsDesktop()
   let [isOpen, setIsOpen] = useState(false)
 
@@ -66,11 +67,11 @@ const Header = ({
     function handleRouteChange() {
       setIsOpen(false)
     }
-    Router.events.on("routeChangeComplete", handleRouteChange)
+    router.events.on("routeChangeComplete", handleRouteChange)
     return () => {
-      Router.events.off("routeChangeComplete", handleRouteChange)
+      router.events.off("routeChangeComplete", handleRouteChange)
     }
-  }, [isOpen])
+  }, [isOpen, router.events])
 
   const onToggle = () => {
     const newValue = !isOpen

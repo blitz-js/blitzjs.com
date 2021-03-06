@@ -5,9 +5,8 @@ import "@/css/main.css"
 import "focus-visible"
 import {Fragment, useEffect} from "react"
 import {Title} from "@/components/Title"
-import Router from "next/router"
+import {Head} from "blitz"
 // import ProgressBar from "@badrap/bar-of-progress"
-import Head from "next/head"
 import {ThemeProvider} from "next-themes"
 import * as Fathom from "fathom-client"
 
@@ -26,10 +25,10 @@ import * as Fathom from "fathom-client"
 // }
 
 // Router.events.on("routeChangeStart", progress.start)
-Router.events.on("routeChangeComplete", () => {
-  // progress.finish()
-  window.scrollTo(0, 0)
-})
+// Router.events.on("routeChangeComplete", () => {
+// progress.finish()
+// window.scrollTo(0, 0)
+// })
 // Router.events.on("routeChangeError", progress.finish)
 
 export default function App({Component, pageProps, router}) {
@@ -47,6 +46,10 @@ export default function App({Component, pageProps, router}) {
 
     function onRouteChangeComplete() {
       Fathom.trackPageview()
+
+      if (typeof window !== "undefined") {
+        window.scrollTo(0, 0)
+      }
     }
     // Record a pageview when route changes
     router.events.on("routeChangeComplete", onRouteChangeComplete)

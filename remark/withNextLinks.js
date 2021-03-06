@@ -1,8 +1,8 @@
-const {addDefaultImport} = require("./utils")
+const {addImport} = require("./utils")
 
 module.exports.withNextLinks = () => {
   return (tree) => {
-    const component = addDefaultImport(tree, "next/link", "Link")
+    const component = addImport(tree, "blitz", "Link")
 
     function walk(root) {
       if (!root.children) return

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import {Link} from "blitz"
 import {Icon} from "@/components/home/Icon"
 import {LinkList} from "@/components/home/LinkList"
 import {NewsletterForm} from "@/components/home/NewsletterForm"

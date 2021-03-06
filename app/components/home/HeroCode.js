@@ -1,7 +1,7 @@
-import {CodeWindow} from "../CodeWindow"
-import tokenize from "../../macros/tokenize.macro"
+import {CodeWindow} from "@/components/CodeWindow"
+import tokenize from "@/macros/tokenize.macro"
 import {useState} from "react"
-import {useIsDesktop} from "app/hooks/useIsDesktop"
+import {useIsDesktop} from "@/hooks/useIsDesktop"
 
 const pageTokenized = tokenize.jsx(
   `// app/pages/projects/new.tsx

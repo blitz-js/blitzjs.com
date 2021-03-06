@@ -1,7 +1,7 @@
 import "typeface-libre-franklin"
 import "typeface-roboto"
 import "typeface-roboto-mono"
-import "../css/main.css"
+import "@/css/main.css"
 import "focus-visible"
 import {Fragment, useEffect} from "react"
 import {Title} from "@/components/Title"

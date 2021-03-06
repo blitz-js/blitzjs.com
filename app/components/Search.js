@@ -1,7 +1,7 @@
-import {useState, useCallback, useRef, useEffect} from "react"
-import {createPortal} from "react-dom"
-import {Link, Head, useRouter} from "blitz"
 import {DocSearchModal, useDocSearchKeyboardEvents} from "@docsearch/react"
+import {Head, Link, useRouter} from "blitz"
+import {useCallback, useEffect, useRef, useState} from "react"
+import {createPortal} from "react-dom"
 import {BiSearch} from "react-icons/bi"
 
 const ACTION_KEY_DEFAULT = ["Ctrl ", "Control"]

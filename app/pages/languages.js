@@ -1,7 +1,8 @@
-import {Header} from "@/components/Header"
 import {Octokit} from "@octokit/rest"
+import {useEffect, useState} from "react"
+
+import {Header} from "@/components/Header"
 import {Footer} from "@/components/home/Footer"
-import {useState, useEffect} from "react"
 import {SocialCards} from "@/components/SocialCards"
 import {getGitHubFile} from "@/utils/getGitHubFile"
 

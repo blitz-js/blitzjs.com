@@ -1,4 +1,4 @@
-import {Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/} from "blitz"
+import {BlitzScript, Document, DocumentHead, Html, Main} from "blitz"
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {

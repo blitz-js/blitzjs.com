@@ -3,12 +3,14 @@ import "typeface-roboto"
 import "typeface-roboto-mono"
 import "@/css/main.css"
 import "focus-visible"
-import {Fragment, useEffect} from "react"
-import {Title} from "@/components/Title"
+
 import {Head} from "blitz"
+import * as Fathom from "fathom-client"
 // import ProgressBar from "@badrap/bar-of-progress"
 import {ThemeProvider} from "next-themes"
-import * as Fathom from "fathom-client"
+import {Fragment, useEffect} from "react"
+
+import {Title} from "@/components/Title"
 
 // const progress = new ProgressBar({
 //   size: 2,

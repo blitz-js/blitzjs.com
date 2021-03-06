@@ -1,11 +1,11 @@
-import {useState, useEffect} from "react"
-import {SidebarLayout} from "@/layouts/SidebarLayout"
-import {Title} from "@/components/Title"
+import {useEffect, useState} from "react"
+
 import {Header} from "@/components/Header"
 import {Footer} from "@/components/home/Footer"
-
-import {documentationNav} from "@/navs/documentation"
 import {SocialCards} from "@/components/SocialCards"
+import {Title} from "@/components/Title"
+import {SidebarLayout} from "@/layouts/SidebarLayout"
+import {documentationNav} from "@/navs/documentation"
 
 export function DocumentationLayout(props) {
   const [navIsOpen, setNavIsOpen] = useState(false)

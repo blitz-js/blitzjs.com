@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react"
 import {useRect} from "@reach/rect"
+import {useEffect, useState} from "react"
 
 export function useTop(ref) {
   let [top, setTop] = useState()

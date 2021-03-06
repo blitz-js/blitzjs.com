@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react"
 import {useTheme} from "next-themes"
+import {useEffect, useState} from "react"
 import {BiToggleLeft, BiToggleRight} from "react-icons/bi"
 
 const DarkModeToggle = ({className}) => {

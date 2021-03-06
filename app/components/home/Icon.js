@@ -1,12 +1,12 @@
-import {IoLayers} from "react-icons/io5"
-import {IoMdThumbsUp, IoMdCube} from "react-icons/io"
-import {FaPlug, FaCircle} from "react-icons/fa"
-import {BsBarChartFill, BsArrowUp} from "react-icons/bs"
 import {AiFillDatabase} from "react-icons/ai"
+import {BsArrowUp, BsBarChartFill} from "react-icons/bs"
+import {FaCircle, FaPlug} from "react-icons/fa"
+import {FaMedal} from "react-icons/fa"
 import {HiLightningBolt} from "react-icons/hi"
+import {IoMdCube, IoMdThumbsUp} from "react-icons/io"
+import {IoLayers} from "react-icons/io5"
 import {RiFileCodeFill} from "react-icons/ri"
 import {SiTypescript} from "react-icons/si"
-import {FaMedal} from "react-icons/fa"
 
 const Icon = ({
   name,

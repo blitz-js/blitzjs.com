@@ -1,5 +1,7 @@
 import {forwardRef, useMemo} from "react"
+
 import {Code} from "@/components/Code"
+
 import styles from "./CodeWindow.module.css"
 
 export function CodeWindow({

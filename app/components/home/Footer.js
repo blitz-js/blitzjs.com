@@ -1,9 +1,10 @@
 import {Link} from "blitz"
+import clsx from "clsx"
+import {IoLogoVercel} from "react-icons/io5"
+
 import {Icon} from "@/components/home/Icon"
 import {LinkList} from "@/components/home/LinkList"
 import {NewsletterForm} from "@/components/home/NewsletterForm"
-import {IoLogoVercel} from "react-icons/io5"
-import clsx from "clsx"
 
 export function Footer({className, hasDarkMode}) {
   return (

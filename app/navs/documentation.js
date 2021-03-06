@@ -1,5 +1,6 @@
-import {createPageList} from "@/utils/createPageList"
 import {Image} from "blitz"
+
+import {createPageList} from "@/utils/createPageList"
 
 const pages = createPageList(
   // use compiled location

@@ -3,11 +3,13 @@ module.exports = {
     es2020: true,
   },
   extends: ["react-app", "plugin:jsx-a11y/recommended"],
-  plugins: ["jsx-a11y"],
+  plugins: ["jsx-a11y", "simple-import-sort"],
   rules: {
     "import/no-anonymous-default-export": "error",
     "import/no-webpack-loader-syntax": "off",
     "react/react-in-jsx-scope": "off", // React is always in scope with Blitz
     "jsx-a11y/anchor-is-valid": "off", //Doesn't play well with Blitz/Next <Link> usage
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
   },
 }

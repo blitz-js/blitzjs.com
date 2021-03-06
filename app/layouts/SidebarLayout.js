@@ -1,11 +1,12 @@
 import {Link, useRouter} from "blitz"
-import {createContext, forwardRef, useRef, Fragment, useEffect} from "react"
-import {useIsomorphicLayoutEffect} from "@/hooks/useIsomorphicLayoutEffect"
 import clsx from "clsx"
-import {TableOfContents} from "@/layouts/ContentsLayout"
-import {useIsDocsIndex} from "@/hooks/useIsDocsIndex"
-import {useIsDesktop} from "@/hooks/useIsDesktop"
+import {createContext, forwardRef, Fragment, useEffect, useRef} from "react"
+
 import {PageHeader} from "@/components/PageHeader"
+import {useIsDesktop} from "@/hooks/useIsDesktop"
+import {useIsDocsIndex} from "@/hooks/useIsDocsIndex"
+import {useIsomorphicLayoutEffect} from "@/hooks/useIsomorphicLayoutEffect"
+import {TableOfContents} from "@/layouts/ContentsLayout"
 
 export const SidebarContext = createContext()
 

@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import {motion, AnimateSharedLayout} from "framer-motion"
+import {AnimateSharedLayout, motion} from "framer-motion"
 
 export function Tabs({
   tabs,

@@ -1,7 +1,8 @@
-import {useEffect, useContext, useRef} from "react"
-import {ContentsContext} from "@/layouts/ContentsLayout"
-import {useTop} from "@/hooks/useTop"
 import clsx from "clsx"
+import {useContext, useEffect, useRef} from "react"
+
+import {useTop} from "@/hooks/useTop"
+import {ContentsContext} from "@/layouts/ContentsLayout"
 
 export function Heading({
   level,

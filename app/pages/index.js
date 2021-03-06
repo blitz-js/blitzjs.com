@@ -12,8 +12,9 @@ import {StyledLink} from "@/components/home/StyledLink"
 import {Hand} from "@/components/home/Hand"
 import Scrollbar from "@/components/Scrollbar"
 import {useState, useEffect} from "react"
-import {SocialCards} from "../components/SocialCards"
-import {SponsorPack} from "../components/SponsorPack"
+import {SocialCards} from "@/components/SocialCards"
+import {SponsorPack} from "@/components/SponsorPack"
+import {getGitHubFile} from "@/utils/getGitHubFile"
 
 const Home = ({randomContributors}) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
@@ -215,17 +216,17 @@ const Home = ({randomContributors}) => {
                   The Blitz Community - Our Most Important Aspect
                 </h2>
                 <div className="z-10 grid grid-cols-5 gap-1 md:grid-cols-6 lg:grid-cols-5 grid-rows-8 overflow-clip">
-                  {randomContributors.map((contributor) => (
+                  {randomContributors.map((contributor, i) => (
                     <a
                       href={`https://github.com/${contributor.login}`}
-                      key={contributor.id}
+                      key={i}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <img
                         src={contributor.avatar_url}
-                        alt={contributor.login}
-                        title={contributor.login}
+                        alt={contributor.name}
+                        title={contributor.name}
                         className="w-full"
                       />
                     </a>
@@ -410,15 +411,13 @@ const getStaticProps = async () => {
     auth: process.env.GITHUB_AUTH_TOKEN,
   })
 
-  let contributors = []
-
-  for await (const response of octokit.paginate.iterator(octokit.repos.listContributors, {
+  const {contributors} = getGitHubFile({
+    octokit,
     owner: "blitz-js",
     repo: "blitz",
-    per_page: 100,
-  })) {
-    contributors.push(...response.data)
-  }
+    path: ".all-contributorsrc",
+    json: true,
+  })
 
   let randomIndexes = []
   while (randomIndexes.length < MAX_CONTRIBUTORS) {

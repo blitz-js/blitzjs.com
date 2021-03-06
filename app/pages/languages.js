@@ -2,7 +2,8 @@ import {Header} from "@/components/Header"
 import {Octokit} from "@octokit/rest"
 import {Footer} from "@/components/home/Footer"
 import {useState, useEffect} from "react"
-import {SocialCards} from "../components/SocialCards"
+import {SocialCards} from "@/components/SocialCards"
+import {getGitHubFile} from "@/utils/getGitHubFile"
 
 const LanguagesPage = ({languages}) => {
   const [navIsOpen, setNavIsOpen] = useState(false)
@@ -84,12 +85,14 @@ const getStaticProps = async () => {
 
   const languages = await Promise.all(
     data.map(async (lang) => {
-      const [{data: langJson}, {data: langIssue}] = await Promise.all([
+      const [langMeta, {data: langIssue}] = await Promise.all([
         // Gets each lang.json content, because it doesn't come with the first request `data`
-        octokit.repos.getContent({
+        getGitHubFile({
+          octokit,
           owner: "blitz-js",
           repo: "blitzjs.com-translation",
           path: lang.path,
+          json: true,
         }),
         octokit.issues.get({
           owner: "blitz-js",
@@ -97,10 +100,6 @@ const getStaticProps = async () => {
           issue_number: 1,
         }),
       ])
-
-      const langMeta = JSON.parse(
-        Buffer.from(langJson.content, langJson.encoding).toString("utf-8"),
-      )
 
       const checkedBoxes = langIssue.body.match(/\* \[x\]/gi)
       const totalBoxes = langIssue.body.match(/\* \[(x| )?\]/gi)

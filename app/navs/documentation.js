@@ -176,7 +176,7 @@ export const documentationNav = [
         iconDarkPath="/img/deploying-to-production-white.svg"
       />
     ),
-    pages: [pages["deploy-render"], pages["deploy-vercel"], pages["deploy-heroku"]],
+    pages: [pages["deploy-render"], pages["deploy-heroku"], pages["deploy-vercel"]],
   },
   {
     title: (

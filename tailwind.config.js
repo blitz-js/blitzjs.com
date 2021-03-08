@@ -175,7 +175,7 @@ module.exports = {
               fontWeight: "inherit",
             },
             strong: {
-              fontWeight: theme("fontWeight.medium"),
+              fontWeight: theme("fontWeight.bold"),
             },
             "a strong": {
               color: "inherit",

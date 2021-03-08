@@ -79,9 +79,8 @@ export default passportAuth({
 
 #### Access Middleware Context
 
-You can access the session context by providing a callback to the
-`passportAuth` adapter. The first argument of the callback is the session
-context.
+You can access the middleware context by providing a callback to the
+`passportAuth` adapter. The first argument of the callback is `ctx`. You can then access the session context via `ctx.session`
 
 ```ts
 // app/api/auth/[...auth].ts

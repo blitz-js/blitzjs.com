@@ -77,6 +77,36 @@ export default passportAuth({
 })
 ```
 
+#### Access Middleware Context
+
+You can access the middleware context by providing a callback to the
+`passportAuth` adapter. The first argument of the callback is `ctx`. You can then access the session context via `ctx.session`
+
+```ts
+// app/api/auth/[...auth].ts
+import {passportAuth} from "blitz"
+import db from "db"
+
+export default passportAuth((ctx) => ({
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  strategies: [
+    {
+      strategy: new TwitterStrategy(
+        {
+          consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
+          consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
+          /*...*/
+        }
+    }
+  ],
+}))
+```
+
+Note: If your environment variables are not typed, you must add a type
+assertion to each environment variable when using the callback (as shown
+in the example above).
+
 ### 2. Add a Passport Strategy {#2-add-a-passport-strategy}
 
 Add a strategy to the `strategies` array argument for `passportAuth` in

@@ -11,8 +11,8 @@ serverless environment:
 ### Problem 1: Separate Locations for App and Database {#locations}
 
 Because Vercel doesn't provide databases, you will use a separate platform
-for your database. And therefore it's too easy to accidentally deploy your
-app to a different region than your database.
+for your database. And therefore people accidentally deploy their app to a
+different region than their database.
 
 **Solution:** Deploy your app and database to the same region. By default
 Vercel apps are deployed to Washington D.C., so your database should be as
@@ -31,7 +31,8 @@ database tier on Digital Ocean has a limit of 22 connections.
 
 **Solution:** The solution to this problem is to use a connection pool in
 front of your database. Pgbouncer is the most popular connection pool for
-postgres. Both Digital Ocean and Heroku allow you to easily add pgbouncer.
+postgres. Both Digital Ocean and Heroku have a feature to simply add
+pgbouncer.
 
 ### Problem 3: Database Throughput {#database-throughput}
 

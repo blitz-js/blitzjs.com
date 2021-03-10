@@ -5,17 +5,18 @@ sidebar_label: blitz export
 
 **Alias: `blitz e`**
 
-Exports your Blitz app as a static application. Not compatible with
-Queries / Mutations! Run `blitz build` before.
-
-[More Information](https://nextjs.org/docs/advanced-features/static-html-export)
+Exports your Blitz app as a [static application](static-html-export). Make
+sure to run `blitz build` before!
 
 #### Options
 
-None
+| Option | Description               | Default |
+| ------ | ------------------------- | ------- |
+| `-o`   | Set the output directory. | `out/`  |
 
 #### Examples
 
 ```bash
+blitz build
 blitz export
 ```

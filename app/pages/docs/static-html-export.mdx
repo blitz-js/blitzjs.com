@@ -6,9 +6,10 @@ sidebar_label: Static HTML Export
 [`blitz export`](cli-export) allows you to export your app to static HTML,
 which can be run standalone without the need of a Node.js server.
 
-The exported app supports almost every feature of Blitz, including
+The exported app supports only some features of Blitz, like
 [dynamic routes](routing#dynamic-route-segments), prefetching, preloading
 and dynamic imports.
+It does **not** support queries / mutations, authentication or database access.
 
 `blitz export` works by prerendering all pages to HTML. For dynamic
 routes, your page can export a [`getStaticPaths`](get-static-paths)

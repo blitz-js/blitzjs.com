@@ -32,11 +32,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: blitzapp-db
-          property: connectionString
-    startCommand: blitz start -H 0.0.0.0
 ```
 
 #### With Postgres database:

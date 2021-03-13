@@ -99,6 +99,7 @@ const slug = useParam("slug", "string")
 ## `useRouterQuery` {#use-router-query}
 
 This hook returns all the query parameters from the URL as an object.
+Parameter type is always `string`.
 
 ```tsx
 // URL: /products?sort=asc&limit=10
@@ -107,22 +108,5 @@ import {useRouterQuery} from "blitz"
 
 const query = useRouterQuery()
 
-// query = {sort: "asc", limit: 10}
-```
-
-Unlike `useParams`, this hook will parse all values to their respective
-types. For example:
-
-```ts
-// ?sort=asc&limit=10
-query = {sort: "asc", limit: 10}
-
-// ?yea=true&nay=false
-query = {yea: true, nay: false}
-
-// ?include=clients&include=products
-query = {include: ["clients", "products"]}
-
-// ?all-types=str&all-types=1.2&all-types=false
-query = {"all-types": ["str", 1.2, false]}
+// query = {sort: "asc", limit: "10"}
 ```

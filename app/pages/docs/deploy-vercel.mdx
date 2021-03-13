@@ -91,6 +91,7 @@ This also assumes you already have a [Vercel](https://vercel.com) account.
    running `vercel env add DATABASE_URL`
 6. Add your `SESSION_SECRET_KEY` environment variable (It needs to be 32
    characters long)
+   - On macOS and Linux, you can generate it by running `openssl rand -hex 16` in your terminal.
 7. Run `git push` if using the
    [Git Integration](https://vercel.com/docs/v2/git-integrations) or
    `vercel` if using Vercel CLI

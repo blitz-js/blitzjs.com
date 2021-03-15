@@ -12,14 +12,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 const admonitions = require("remark-admonitions")
 
-const fallbackLayouts = {
-  // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
-}
-
 const fallbackDefaultExports = {
   // Have to use compiled locations
-  "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
+  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
 module.exports = withBundleAnalyzer({
@@ -132,18 +127,6 @@ module.exports = withBundleAnalyzer({
 
           let extra = []
           let resourcePath = path.relative(__dirname, this.resourcePath)
-
-          if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
-            for (let glob in fallbackLayouts) {
-              if (minimatch(resourcePath, glob)) {
-                extra.push(
-                  `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-                  "export const Layout = _Layout",
-                )
-                break
-              }
-            }
-          }
 
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {

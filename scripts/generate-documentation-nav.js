@@ -28,7 +28,7 @@ async function main() {
 
   await fs.writeFile(
     path.resolve(process.cwd(), "app", "core", "navs", "documentation.js"),
-    "export const documentationNav = " + JSON.stringify(finalDocumentation),
+    "export const documentationNav = " + JSON.stringify(finalDocumentation, null, 2),
     {encoding: "utf-8"},
   )
 

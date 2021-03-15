@@ -3,6 +3,7 @@ import clsx from "clsx"
 import {createContext, forwardRef, Fragment, useEffect, useRef} from "react"
 
 import {PageHeader} from "@/components/PageHeader"
+import {SidebarTitle} from "@/components/SidebarTitle"
 import {useIsDesktop} from "@/hooks/useIsDesktop"
 import {useIsDocsIndex} from "@/hooks/useIsDocsIndex"
 import {useIsomorphicLayoutEffect} from "@/hooks/useIsomorphicLayoutEffect"
@@ -64,8 +65,8 @@ function Nav({nav, children, fallbackHref, toc}) {
                 let publishedItems = category.pages.filter((item) => item.published !== false)
                 if (publishedItems.length === 0 && !fallbackHref) return null
                 return (
-                  <li key={category.title.props.title} className="">
-                    {category.title}
+                  <li key={category.title.title} className="">
+                    <SidebarTitle {...category.title} />
                     <ul>
                       {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
                         <Fragment key={i}>
@@ -94,7 +95,7 @@ function Nav({nav, children, fallbackHref, toc}) {
   )
 }
 
-export function SidebarLayout({children, nav, sidebar, fallbackHref, layoutProps}) {
+export function SidebarLayout({children, nav, sidebar, fallbackHref, tableOfContents}) {
   const router = useRouter()
   const isDocsIndex = useIsDocsIndex()
   const isDesktop = useIsDesktop()
@@ -118,11 +119,7 @@ export function SidebarLayout({children, nav, sidebar, fallbackHref, layoutProps
             id="sidebar"
             className="hidden fixed z-40 inset-0 flex-none h-full bg-opacity-25 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-80 xl:w-96 lg:block"
           >
-            <Nav
-              nav={nav}
-              fallbackHref={fallbackHref}
-              toc={layoutProps && layoutProps.tableOfContents}
-            >
+            <Nav nav={nav} fallbackHref={fallbackHref} toc={tableOfContents}>
               {sidebar}
             </Nav>
           </div>
@@ -135,11 +132,7 @@ export function SidebarLayout({children, nav, sidebar, fallbackHref, layoutProps
                 <div className="px-4 lg:px-8">
                   <PageHeader title="Docs" />
                 </div>
-                <Nav
-                  nav={nav}
-                  fallbackHref={fallbackHref}
-                  toc={layoutProps && layoutProps.tableOfContents}
-                >
+                <Nav nav={nav} fallbackHref={fallbackHref} toc={tableOfContents}>
                   {sidebar}
                 </Nav>
               </div>

@@ -1,7 +1,7 @@
 import "typeface-libre-franklin"
 import "typeface-roboto"
 import "typeface-roboto-mono"
-import "app/css/main.css"
+import "@/styles/main.css"
 import "focus-visible"
 
 import {Head} from "blitz"

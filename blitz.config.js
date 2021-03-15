@@ -5,7 +5,7 @@ const frontMatter = require("front-matter")
 const {withTableOfContents} = require("./remark/withTableOfContents")
 const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
 const {withProse} = require("./remark/withProse")
-const {withNextLinks} = require("./remark/withNextLinks")
+const {withBlitzLinks} = require("./remark/withBlitzLinks")
 const minimatch = require("minimatch")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
@@ -98,7 +98,7 @@ module.exports = withBundleAnalyzer({
               withProse,
               withTableOfContents,
               withSyntaxHighlighting,
-              withNextLinks,
+              withBlitzLinks,
               [
                 admonitions,
                 {

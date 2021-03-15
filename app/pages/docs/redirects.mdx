@@ -9,7 +9,7 @@ One common use case is conditionally redirecting a user to a different
 page based on their session data. Here's how you can do that:
 
 ```tsx
-import {router, useSession} from "blitz"
+import {useRouter, useSession} from "blitz"
 
 const LoginPage: BlitzPage = () => {
   const router = useRouter()

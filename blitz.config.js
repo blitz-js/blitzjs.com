@@ -1,7 +1,7 @@
 const path = require("path")
 const querystring = require("querystring")
 const {createLoader} = require("simple-functional-loader")
-const frontMatter = require("front-matter")
+const matter = require("gray-matter")
 const {withTableOfContents} = require("./remark/withTableOfContents")
 const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
 const {withProse} = require("./remark/withProse")
@@ -121,7 +121,7 @@ module.exports = withBundleAnalyzer({
         },
         createLoader(function (source) {
           let {meta: fields} = querystring.parse(this.resourceQuery.substr(1))
-          let {attributes: meta, body} = frontMatter(source)
+          let {data: meta, content: body} = matter(source)
           if (fields) {
             for (let field in meta) {
               if (!fields.split(",").includes(field)) {

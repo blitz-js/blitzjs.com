@@ -3,6 +3,7 @@ import clsx from "clsx"
 import {createContext, forwardRef, Fragment, useEffect, useRef} from "react"
 
 import {PageHeader} from "@/components/PageHeader"
+import {SidebarTitle} from "@/components/SidebarTitle"
 import {useIsDesktop} from "@/hooks/useIsDesktop"
 import {useIsDocsIndex} from "@/hooks/useIsDocsIndex"
 import {useIsomorphicLayoutEffect} from "@/hooks/useIsomorphicLayoutEffect"
@@ -64,8 +65,8 @@ function Nav({nav, children, fallbackHref, toc}) {
                 let publishedItems = category.pages.filter((item) => item.published !== false)
                 if (publishedItems.length === 0 && !fallbackHref) return null
                 return (
-                  <li key={category.title.props.title} className="">
-                    {category.title}
+                  <li key={category.title.title} className="">
+                    <SidebarTitle {...category.title} />
                     <ul>
                       {(fallbackHref ? category.pages : publishedItems).map((item, i) => (
                         <Fragment key={i}>

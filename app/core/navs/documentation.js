@@ -175,6 +175,11 @@ export const documentationNav = [
         href: "/docs/preview-mode",
       },
       {
+        title: "Static HTML Export",
+        sidebar_label: "Static HTML Export",
+        href: "/docs/static-html-export",
+      },
+      {
         title: "Code Splitting",
         sidebar_label: "Code Splitting",
         href: "/docs/code-splitting",
@@ -505,6 +510,11 @@ export const documentationNav = [
         title: "blitz build",
         sidebar_label: "blitz build",
         href: "/docs/cli-build",
+      },
+      {
+        title: "blitz export",
+        sidebar_label: "blitz export",
+        href: "/docs/cli-export",
       },
       {
         title: "blitz db",

@@ -409,6 +409,11 @@ export const documentationNav = [
     },
     pages: [
       {
+        title: "Deploy to a Server on Qovery",
+        sidebar_label: "To Qovery",
+        href: "/docs/deploy-wovery",
+      },
+      {
         title: "Deploy to a Server on Render.com",
         sidebar_label: "To Render.com",
         href: "/docs/deploy-render",

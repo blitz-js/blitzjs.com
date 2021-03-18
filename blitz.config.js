@@ -1,3 +1,4 @@
+const fs = require("fs")
 const path = require("path")
 const querystring = require("querystring")
 const {createLoader} = require("simple-functional-loader")
@@ -147,6 +148,38 @@ module.exports = withBundleAnalyzer({
               ? `export const meta = ${JSON.stringify(meta)}`
               : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`,
           ].join("\n\n")
+        }),
+      ],
+    })
+
+    config.module.rules.push({
+      test: /navs\/documentation\.json$/,
+      use: [
+        createLoader(function (source) {
+          const documentation = JSON.parse(source)
+          let finalDocumentation = []
+
+          for (const category of documentation) {
+            let pages = []
+            for (const page of category.pages) {
+              const pageFile = fs.readFileSync(
+                path.resolve(process.cwd(), "pages", "docs", `${page}.mdx`),
+                {encoding: "utf-8"},
+              )
+              const {data} = matter(pageFile)
+
+              pages.push({
+                ...data,
+                href: `/docs/${page}`,
+              })
+            }
+            finalDocumentation.push({
+              ...category,
+              pages,
+            })
+          }
+
+          return JSON.stringify(finalDocumentation)
         }),
       ],
     })

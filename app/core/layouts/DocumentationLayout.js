@@ -6,7 +6,7 @@ import {SocialCards} from "@/components/SocialCards"
 import {Title} from "@/components/Title"
 import {ContentsLayout} from "@/layouts/ContentsLayout"
 import {SidebarLayout} from "@/layouts/SidebarLayout"
-import {documentationNav} from "@/navs/documentation"
+import documentationNav from "@/navs/documentation.json"
 
 export function DocumentationLayout({children, ...props}) {
   const [navIsOpen, setNavIsOpen] = useState(false)

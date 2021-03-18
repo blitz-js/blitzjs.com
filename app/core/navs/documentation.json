@@ -73,7 +73,8 @@
       "link",
       "route-params-query",
       "router",
-      "api-routes"
+      "api-routes",
+      "shallow-routing"
     ]
   },
   {

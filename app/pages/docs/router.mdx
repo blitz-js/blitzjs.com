@@ -66,7 +66,8 @@ Here's the definition of the `router` object returned by `useRouter` and
 - [`prefetch()`](#router-prefetch): Prefetch pages for faster client-side
   transitions
 - [`events`](#router-events): Subscribe to various router events
-- [`beforePopState()`](#router-before-pop-state): For advanced routing needs
+- [`beforePopState()`](#router-before-pop-state): For advanced routing
+  needs
 
 ### Router API {#router-api}
 
@@ -88,8 +89,8 @@ Router.push(url, as, options)
 - `as` - Optional decorator for the URL that will be shown in the browser.
   Defaults to `url`
 - `options` - Optional object with the following configuration options:
-  - [`shallow`](#todo): Update the path of the current page without
-    rerunning [`getStaticProps`](./get-static-props) or
+  - [`shallow`](./shallow-routing): Update the path of the current page
+    without rerunning [`getStaticProps`](./get-static-props) or
     [`getServerSideProps`](./get-server-side-props). Defaults to `false`
 
 > You don't need to use `Router` for external URLs,
@@ -324,8 +325,8 @@ useEffect(() => {
 
 ### Router.beforePopState {#router-before-pop-state}
 
-In some cases (for example, if using a [Custom Server](./custom-server)), you may
-wish to listen to
+In some cases (for example, if using a [Custom Server](./custom-server)),
+you may wish to listen to
 [popstate](https://developer.mozilla.org/en-US/docs/Web/Events/popstate)
 and do something before the router acts on it.
 
@@ -359,4 +360,5 @@ Router.beforePopState(({url, as, options}) => {
 
 If the function you pass into `beforePopState` returns `false`, `Router`
 will not handle `popstate` and you'll be responsible for handling it, in
-that case. See [Disabling file-system routing](./custom-server#disabling-file-system-routing).
+that case. See
+[Disabling file-system routing](./custom-server#disabling-file-system-routing).

@@ -69,7 +69,7 @@ const Home = ({randomContributors}) => {
                       variant="outline"
                       className="w-1/3 lg:w-auto rounded-r-xl"
                     >
-                      Github
+                      GitHub
                     </ButtonLink>
                   </div>
                 </div>

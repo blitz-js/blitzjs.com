@@ -75,10 +75,6 @@
 }
 
 .token.comment {
-  @apply text-blue-dark;
-}
-
-.token.comment {
   @apply text-gray-600;
 }
 
@@ -96,7 +92,7 @@
 }
 
 .token.inserted:not(.prefix) {
-  @apply block bg-green-600 bg-opacity-25 -mx-4 px-4;
+  @apply block bg-green-600 bg-opacity-25 -ml-2 -mb-4;
 }
 
 .token.inserted.prefix {
@@ -108,7 +104,7 @@
 }
 
 .token.highlighted:not(.prefix) {
-  @apply block bg-purple-light bg-opacity-25 -mx-4 px-4;
+  @apply block bg-purple-light bg-opacity-25 -mx-4 px-4 -mb-4;
 }
 .token.highlighted:not(.prefix).not(:first-child) {
   margin-top: -1.5em;
@@ -124,10 +120,7 @@
   margin-top: 0rem;
   margin-bottom: -1.4em;
 }
-.token.highlighted:not(.prefix) > .comment:last-child {
-  height: 0;
-  display: block;
-  overflow: hidden;
-  margin-top: -1.4em;
-  margin-bottom: 0;
+
+.token.highlighted.highlighted-line {
+  @apply -mx-6;
 }

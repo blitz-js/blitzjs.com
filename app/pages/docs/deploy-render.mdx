@@ -49,7 +49,7 @@ services:
     buildCommand:
       yarn --frozen-lockfile --prod=false &&
       blitz build &&
-      blitz prisma migrate deploy --preview-feature
+      blitz prisma migrate deploy
     startCommand: blitz start
     envVars:
       - key: NODE_ENV

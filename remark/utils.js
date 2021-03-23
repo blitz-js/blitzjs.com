@@ -118,7 +118,6 @@ module.exports.highlightCode = function highlightCode(code, prismLanguage) {
   code = code
     .replace(/[^\S\r\n]*(?=\/\/ highlight-start)/g, "")
     .replace(/[^\S\r\n]*(?=\/\/ highlight-end)/g, "")
-    .replace(/.*\/\/ highlight-line$/gm, (text) => `highlightlinestart ${text} highlightlineend`)
   let highlighted = Prism.highlight(code, grammar, prismLanguage)
 
   return highlighted
@@ -129,10 +128,8 @@ module.exports.highlightCode = function highlightCode(code, prismLanguage) {
     .replace(/\w*\/\/ ?highlight-start\w*/g, "")
     .replace(/\w*\/\/ ?highlight-end\w*/g, "")
     .replace(
-      /(highlightlinestart )[\S\s]*?( highlightlineend)/g,
-      (text) => `<div class="token highlighted highlighted-line">${text}</div>`,
+      /^.*\/\/ ?highlight-line.*$/gm,
+      (text) => `<div class="token highlighted">${text}</div>`,
     )
-    .replace(/highlightlinestart/g, "")
-    .replace(/highlightlineend/g, "")
-    .replace(/\/\/ highlight-line/g, "")
+    .replace(/<span class="token comment">\/\/ ?highlight-line<\/span>/g, "")
 }

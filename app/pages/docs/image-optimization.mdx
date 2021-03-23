@@ -126,7 +126,7 @@ found, then `max-age` is used. If no `max-age` is found, then 60 seconds
 is used.
 
 You can configure [`deviceSizes`](#device-sizes) and
-[`imageSizes`](#device-sizes) to reduce the total number of possible
+[`imageSizes`](#image-sizes) to reduce the total number of possible
 generated images.
 
 ## Advanced {#advanced}
@@ -213,20 +213,20 @@ The `Image` component requires the following properties.
 
 The path or URL to the source image. This is required.
 
-When using an external URL, you must add it to [domains](#domains) in
+When using an external URL, you must add it to [`domains`](#domains) in
 `blitz.config.js`.
 
 #### width
 
 The width of the image, in pixels. Must be an integer without a unit.
 
-Required unless [layout="fill"`](#layout).
+Required unless `layout="fill"`.
 
 #### height
 
 The height of the image, in pixels. Must be an integer without a unit.
 
-Required unless [layout="fill"`](#layout).
+Required unless `layout="fill"`.
 
 ### Optional Props {#optional-props}
 
@@ -261,13 +261,13 @@ Try it out:
 ### loader {#loader-1}
 
 A custom function used to resolve URLs. Defaults to
-[`images` object in `blitz.config.js`](/docs/basic-features/image-optimization.md#loader).
+[`images` object in `blitz.config.js`](#loader).
 
 `loader` is a function returning a string, given the following parameters:
 
-- [`src`](#src)
-- [`width`](#width)
-- [`quality`](#quality)
+- `src`
+- `width`
+- `quality`
 
 ```js
 import {Image} from "blitz"
@@ -305,7 +305,7 @@ is the best quality. Defaults to 75.
 
 #### priority
 
-When true, the image will be considered high priority and
+When `true`, the image will be considered high priority and
 [preload](https://web.dev/preload-responsive-images/).
 
 Should only be used when the image is visible above the fold. Defaults to
@@ -320,21 +320,25 @@ optionally accepts the following advanced properties.
 
 The image fit when using `layout="fill"`.
 
-[Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
+[Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit).
 
 #### objectPosition
 
 The image position when using `layout="fill"`.
 
-[Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position)
+[Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position).
 
 #### loading
 
-> **Attention**: This property is only meant for advanced usage. Switching
-> an image to load with `eager` will normally **hurt performance**.
->
-> We recommend using the [`priority`](#priority) property instead, which
-> properly loads the image eagerly for nearly all use cases.
+<!-- prettier-ignore-start -->
+:::caution
+This property is only meant for advanced usage. Switching an image to
+load with `eager` will normally **hurt performance**.
+
+We recommend using the `priority` property instead, which properly loads
+the image eagerly for nearly all use cases.
+:::
+<!-- prettier-ignore-end -->
 
 The loading behavior of the image. Defaults to `lazy`.
 
@@ -343,12 +347,12 @@ distance from the viewport.
 
 When `eager`, load the image immediately.
 
-[Learn more](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-loading)
+[Learn more](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-loading).
 
 #### unoptimized
 
-When true, the source image will be served as-is instead of changing
-quality, size, or format. Defaults to false.
+When `true`, the source image will be served as-is instead of changing
+quality, size, or format. Defaults to `false`.
 
 ### Other Props {#other-props}
 

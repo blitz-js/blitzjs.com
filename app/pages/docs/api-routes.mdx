@@ -67,7 +67,7 @@ You can use the `getSession` function to get the session of the user. Here
 is an example using session in a API route `app/api/customRoute.tsx`:
 
 ```ts
-import {getSession} from "blitz"
+import {getSession, BlitzApiRequest, BlitzApiResponse} from "blitz"
 
 export default async function customRoute(
   req: BlitzApiRequest,

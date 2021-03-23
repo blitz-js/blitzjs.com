@@ -94,8 +94,8 @@ This also assumes you already have a [Vercel](https://vercel.com) account.
       must add `&pgbouncer=true` to the end of your connection string for
       Prisma to work correctly.
 4. Change your build script in package.json to be
-   `NODE_ENV=production blitz build && blitz prisma migrate deploy --preview-feature`
-   so that the production DB will be migrated on each deploy
+   `NODE_ENV=production blitz build && blitz prisma migrate deploy` so
+   that the production DB will be migrated on each deploy
 5. Add your DB url as a secret environment variable
    [using the UI](https://vercel.com/blog/environment-variables-ui) or by
    running `vercel env add DATABASE_URL`

@@ -92,7 +92,7 @@
 }
 
 .token.inserted:not(.prefix) {
-  @apply block bg-green-600 bg-opacity-25 -ml-2 -mb-4;
+  @apply block bg-green-600 bg-opacity-25 px-4 -mx-4;
 }
 
 .token.inserted.prefix {

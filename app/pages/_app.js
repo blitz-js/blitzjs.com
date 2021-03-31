@@ -1,14 +1,14 @@
 import "typeface-libre-franklin"
 import "typeface-roboto"
 import "typeface-roboto-mono"
-import "app/css/main.css"
+import "@/styles/main.css"
 import "focus-visible"
 
 import {Head} from "blitz"
 import * as Fathom from "fathom-client"
 // import ProgressBar from "@badrap/bar-of-progress"
 import {ThemeProvider} from "next-themes"
-import {Fragment, useEffect} from "react"
+import {useEffect} from "react"
 
 import {Title} from "@/components/Title"
 
@@ -34,10 +34,7 @@ import {Title} from "@/components/Title"
 // Router.events.on("routeChangeError", progress.finish)
 
 export default function App({Component, pageProps, router}) {
-  const Layout = Component.layoutProps?.Layout || Fragment
-  const layoutProps = Component.layoutProps?.Layout ? {layoutProps: Component.layoutProps} : {}
-  const meta = Component.layoutProps?.meta || {}
-  const description = meta.metaDescription || meta.description
+  const meta = Component.meta || {}
 
   useEffect(() => {
     // Initialize Fathom when the app loads
@@ -68,16 +65,14 @@ export default function App({Component, pageProps, router}) {
       <Head>
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:site" name="twitter:site" content="@blitz_js" />
-        <meta key="twitter:description" name="twitter:description" content={description} />
+        <meta key="twitter:description" name="twitter:description" content={meta.description} />
         <meta key="twitter:creator" name="twitter:creator" content="@blitz_js" />
         <meta key="og:url" property="og:url" content={`https://blitzjs.com${router.pathname}`} />
         <meta key="og:type" property="og:type" content="article" />
-        <meta key="og:description" property="og:description" content={description} />
+        <meta key="og:description" property="og:description" content={meta.description} />
       </Head>
       <ThemeProvider defaultTheme="dark" attribute="class">
-        <Layout {...layoutProps}>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   )

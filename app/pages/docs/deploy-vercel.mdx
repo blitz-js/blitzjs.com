@@ -3,6 +3,16 @@ title: Deploy Serverless to Vercel
 sidebar_label: To Vercel
 ---
 
+<!-- prettier-ignore-start -->
+:::caution
+We do not recommend deploying Blitz to Vercel. Vercel is a platform
+optimized for frontend deployments, not fullstack. While you can deploy to
+Vercel, most people run into too many issues and give up. Direct SQL
+database connections are one of the biggest issues. You have to pay for a
+very expensive database to support any amount of scale.
+:::
+<!-- prettier-ignore-end -->
+
 ## Serverless Peculiarities for SQL Databases {#peculiarities}
 
 There are two main issues when it comes to using SQL databases in a
@@ -91,7 +101,8 @@ This also assumes you already have a [Vercel](https://vercel.com) account.
    running `vercel env add DATABASE_URL`
 6. Add your `SESSION_SECRET_KEY` environment variable (It needs to be 32
    characters long)
-   - On macOS and Linux, you can generate it by running `openssl rand -hex 16` in your terminal.
+   - On macOS and Linux, you can generate it by running
+     `openssl rand -hex 16` in your terminal.
 7. Run `git push` if using the
    [Git Integration](https://vercel.com/docs/v2/git-integrations) or
    `vercel` if using Vercel CLI

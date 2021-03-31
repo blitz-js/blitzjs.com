@@ -4,10 +4,10 @@ sidebar_label: To Render.com
 ---
 
 1. Add one of the `render.yaml` files shown below
-2. Push code to your github repo
+2. Push code to your GitHub repo
 3. Log in to [Render.com](https://render.com)
 4. Click on the "YAML" menu item, then click the "New from YAML" button
-5. Connect your github account then select your blitz app repo
+5. Connect your GitHub account then select your blitz app repo
 6. Click approve
 7. Go to "Services", click on your new Blitz service, click on
    "Environment"
@@ -32,6 +32,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: SESSION_SECRET_KEY
+        generateValue: true
 ```
 
 #### With Postgres database:
@@ -58,6 +60,8 @@ services:
         fromDatabase:
           name: blitzapp-db
           property: connectionString
+      - key: SESSION_SECRET_KEY
+        generateValue: true
 
 databases:
   - name: blitzapp-db

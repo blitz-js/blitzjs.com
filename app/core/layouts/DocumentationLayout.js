@@ -4,10 +4,11 @@ import {Header} from "@/components/Header"
 import {Footer} from "@/components/home/Footer"
 import {SocialCards} from "@/components/SocialCards"
 import {Title} from "@/components/Title"
+import {ContentsLayout} from "@/layouts/ContentsLayout"
 import {SidebarLayout} from "@/layouts/SidebarLayout"
-import {documentationNav} from "@/navs/documentation"
+import documentationNav from "@/navs/documentation.json"
 
-export function DocumentationLayout(props) {
+export function DocumentationLayout({children, ...props}) {
   const [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export function DocumentationLayout(props) {
 
   return (
     <div className="bg-white dark:bg-purple-deep py-1 md:py-3">
-      <Title>{props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}</Title>
+      <Title>{props?.meta?.title}</Title>
 
       <SocialCards imageUrl="/social-docs.png" />
       <Header
@@ -30,7 +31,9 @@ export function DocumentationLayout(props) {
         }}
       />
       <div className="max-w-7xl mx-auto font-secondary dark:">
-        <SidebarLayout nav={documentationNav} {...props} />
+        <SidebarLayout nav={documentationNav} {...props}>
+          <ContentsLayout {...props}>{children}</ContentsLayout>
+        </SidebarLayout>
       </div>
       <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />
     </div>

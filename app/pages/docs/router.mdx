@@ -31,7 +31,7 @@ export default Thing
 > `useRouter` is a
 > [React Hook](https://reactjs.org/docs/hooks-intro.html), meaning it
 > cannot be used with classes. You can either use
-> [withRouter](#withRouter) or wrap your class in a function component.
+> [withRouter](#with-router) or wrap your class in a function component.
 
 ## `withRouter` {#with-router}
 
@@ -58,15 +58,16 @@ Here's the definition of the `router` object returned by `useRouter` and
   route. Parameter types are `string` or `string[]`.
 - `asPath`: `String` - Actual path (including the query) shown in the
   browser
-- [`push()`](#routerpush): Make page navigation
-- [`replace()`](#routerreplace): Make page navigation without adding to
+- [`push()`](#router-push): Make page navigation
+- [`replace()`](#router-replace): Make page navigation without adding to
   browser history
-- [`back()`](#routerback): Navigate to previous history location
-- [`reload()`](#routerreload): Reload the page
-- [`prefetch()`](#routerprefetch): Prefetch pages for faster client-side
+- [`back()`](#router-back): Navigate to previous history location
+- [`reload()`](#router-reload): Reload the page
+- [`prefetch()`](#router-prefetch): Prefetch pages for faster client-side
   transitions
-- [`events`](#routerevents): Subscribe to various router events
-- [`beforePopState()`](#routerbeforepopstate): For advanced routing needs
+- [`events`](#router-events): Subscribe to various router events
+- [`beforePopState()`](#router-before-pop-state): For advanced routing
+  needs
 
 ### Router API {#router-api}
 
@@ -88,8 +89,8 @@ Router.push(url, as, options)
 - `as` - Optional decorator for the URL that will be shown in the browser.
   Defaults to `url`
 - `options` - Optional object with the following configuration options:
-  - [`shallow`](#todo): Update the path of the current page without
-    rerunning [`getStaticProps`](./get-static-props) or
+  - [`shallow`](./shallow-routing): Update the path of the current page
+    without rerunning [`getStaticProps`](./get-static-props) or
     [`getServerSideProps`](./get-server-side-props). Defaults to `false`
 
 > You don't need to use `Router` for external URLs,
@@ -161,7 +162,7 @@ Router.replace("/home")
 ```
 
 The API for `Router.replace` is exactly the same as that used for
-[`Router.push`](#routerpush).
+[`Router.push`](#router-push).
 
 ### Router.back {#router-back}
 
@@ -324,8 +325,8 @@ useEffect(() => {
 
 ### Router.beforePopState {#router-before-pop-state}
 
-In some cases (for example, if using a [Custom Server](#todo)), you may
-wish to listen to
+In some cases (for example, if using a [Custom Server](./custom-server)),
+you may wish to listen to
 [popstate](https://developer.mozilla.org/en-US/docs/Web/Events/popstate)
 and do something before the router acts on it.
 
@@ -355,8 +356,9 @@ Router.beforePopState(({url, as, options}) => {
     name of a `page`
   - `as`: `String` - the url that will be shown in the browser
   - `options`: `Object` - Additional options sent by
-    [Router.push](#router.push)
+    [Router.push](#router-push)
 
 If the function you pass into `beforePopState` returns `false`, `Router`
 will not handle `popstate` and you'll be responsible for handling it, in
-that case. See [Disabling file-system routing](#todo).
+that case. See
+[Disabling file-system routing](./custom-server#disabling-file-system-routing).

@@ -1,0 +1,190 @@
+[
+  {
+    "title": {
+      "title": "Introduction",
+      "iconPath": "/img/introduction.svg",
+      "iconDarkPath": "/img/introduction-white.svg"
+    },
+    "pages": ["get-started", "tutorial", "what-is-nextjs", "why-blitz", "tradeoffs", "stickers"]
+  },
+  {
+    "title": {
+      "title": "Community",
+      "iconPath": "/img/people-purple.svg",
+      "iconDarkPath": "/img/people-white.svg"
+    },
+    "pages": [
+      "how-the-community-operates",
+      "manifesto",
+      "community-history",
+      "contributing",
+      "maintainers",
+      "code-of-conduct",
+      "translations"
+    ]
+  },
+  {
+    "title": {
+      "title": "Basics",
+      "iconPath": "/img/basics.svg",
+      "iconDarkPath": "/img/basics-white.svg"
+    },
+    "pages": [
+      "file-structure",
+      "app-component",
+      "css",
+      "image-optimization",
+      "static-files",
+      "environment-variables",
+      "error-handling",
+      "testing"
+    ]
+  },
+  {
+    "title": {
+      "title": "Pages",
+      "iconPath": "/img/pages.svg",
+      "iconDarkPath": "/img/pages-white.svg"
+    },
+    "pages": [
+      "pages",
+      "redirects",
+      "error-pages",
+      "head-component",
+      "document-component",
+      "preview-mode",
+      "static-html-export",
+      "code-splitting",
+      "get-static-props",
+      "get-static-paths",
+      "get-server-side-props"
+    ]
+  },
+  {
+    "title": {
+      "title": "Routing",
+      "iconPath": "/img/routing.svg",
+      "iconDarkPath": "/img/routing-white.svg"
+    },
+    "pages": [
+      "routing",
+      "routing-conventions",
+      "i18n-routing",
+      "link",
+      "route-params-query",
+      "router",
+      "api-routes",
+      "shallow-routing"
+    ]
+  },
+  {
+    "title": {
+      "title": "Auth",
+      "iconPath": "/img/shield-purple.svg",
+      "iconDarkPath": "/img/shield-white.svg"
+    },
+    "pages": [
+      "auth",
+      "session-management",
+      "authorization",
+      "auth-utils",
+      "passportjs",
+      "impersonation"
+    ]
+  },
+  {
+    "title": {
+      "title": "Database",
+      "iconPath": "/img/database.svg",
+      "iconDarkPath": "/img/database-white.svg"
+    },
+    "pages": ["database-overview", "postgres", "database-seeds", "prisma", "fauna"]
+  },
+  {
+    "title": {
+      "title": "Queries & Mutations",
+      "iconPath": "/img/queries.svg",
+      "iconDarkPath": "/img/queries-white.svg"
+    },
+    "pages": [
+      "query-resolvers",
+      "query-usage",
+      "mutation-resolvers",
+      "mutation-usage",
+      "resolver-client-utilities",
+      "resolver-server-utilities",
+      "use-query",
+      "use-paginated-query",
+      "use-infinite-query",
+      "use-mutation"
+    ]
+  },
+  {
+    "title": {
+      "title": "Backend Architecture",
+      "iconPath": "/img/mutations.svg",
+      "iconDarkPath": "/img/mutations-white.svg"
+    },
+    "pages": ["background-processing-with-quirrel", "middleware", "custom-server"]
+  },
+  {
+    "title": {
+      "title": "Deploying to Production",
+      "iconPath": "/img/deploying-to-production.svg",
+      "iconDarkPath": "/img/deploying-to-production-white.svg"
+    },
+    "pages": ["deploy-render", "deploy-heroku", "deploy-vercel"]
+  },
+  {
+    "title": {
+      "title": "Recipes",
+      "iconPath": "/img/recipe-purple.svg",
+      "iconDarkPath": "/img/recipe-white.svg"
+    },
+    "pages": ["using-recipes", "writing-recipes"]
+  },
+  {
+    "title": {
+      "title": "Configuration",
+      "iconPath": "/img/config-purple.svg",
+      "iconDarkPath": "/img/config-white.svg"
+    },
+    "pages": [
+      "blitz-config",
+      "webpack-config",
+      "postcss-config",
+      "rpc-specification",
+      "measuring-performance"
+    ]
+  },
+  {
+    "title": {
+      "title": "CLI",
+      "iconPath": "/img/terminal-purple.svg",
+      "iconDarkPath": "/img/terminal-white.svg"
+    },
+    "pages": [
+      "cli-overview",
+      "cli-new",
+      "cli-dev",
+      "cli-start",
+      "cli-build",
+      "cli-export",
+      "cli-db",
+      "cli-prisma",
+      "cli-generate",
+      "cli-console",
+      "cli-install",
+      "cli-autocomplete",
+      "cli-routes"
+    ]
+  },
+  {
+    "title": {
+      "title": "Templates",
+      "iconPath": "/img/template-purple.svg",
+      "iconDarkPath": "/img/template-white.svg"
+    },
+    "pages": ["templates"]
+  }
+]

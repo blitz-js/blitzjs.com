@@ -1,25 +1,21 @@
+const fs = require("fs")
 const path = require("path")
 const querystring = require("querystring")
 const {createLoader} = require("simple-functional-loader")
-const frontMatter = require("front-matter")
+const matter = require("gray-matter")
 const {withTableOfContents} = require("./remark/withTableOfContents")
 const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
 const {withProse} = require("./remark/withProse")
-const {withNextLinks} = require("./remark/withNextLinks")
+const {withBlitzLinks} = require("./remark/withBlitzLinks")
 const minimatch = require("minimatch")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 })
 const admonitions = require("remark-admonitions")
 
-const fallbackLayouts = {
-  // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
-}
-
 const fallbackDefaultExports = {
   // Have to use compiled locations
-  "pages/{docs,components}/**/*": ["@/layouts/ContentsLayout", "ContentsLayout"],
+  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
 module.exports = withBundleAnalyzer({
@@ -98,7 +94,7 @@ module.exports = withBundleAnalyzer({
               withProse,
               withTableOfContents,
               withSyntaxHighlighting,
-              withNextLinks,
+              withBlitzLinks,
               [
                 admonitions,
                 {
@@ -121,7 +117,7 @@ module.exports = withBundleAnalyzer({
         },
         createLoader(function (source) {
           let {meta: fields} = querystring.parse(this.resourceQuery.substr(1))
-          let {attributes: meta, body} = frontMatter(source)
+          let {data: meta, content: body} = matter(source)
           if (fields) {
             for (let field in meta) {
               if (!fields.split(",").includes(field)) {
@@ -132,18 +128,6 @@ module.exports = withBundleAnalyzer({
 
           let extra = []
           let resourcePath = path.relative(__dirname, this.resourcePath)
-
-          if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
-            for (let glob in fallbackLayouts) {
-              if (minimatch(resourcePath, glob)) {
-                extra.push(
-                  `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-                  "export const Layout = _Layout",
-                )
-                break
-              }
-            }
-          }
 
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
@@ -164,6 +148,38 @@ module.exports = withBundleAnalyzer({
               ? `export const meta = ${JSON.stringify(meta)}`
               : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`,
           ].join("\n\n")
+        }),
+      ],
+    })
+
+    config.module.rules.push({
+      test: /navs\/documentation\.json$/,
+      use: [
+        createLoader(function (source) {
+          const documentation = JSON.parse(source)
+          let finalDocumentation = []
+
+          for (const category of documentation) {
+            let pages = []
+            for (const page of category.pages) {
+              const pageFile = fs.readFileSync(
+                path.resolve(process.cwd(), "pages", "docs", `${page}.mdx`),
+                {encoding: "utf-8"},
+              )
+              const {data} = matter(pageFile)
+
+              pages.push({
+                ...data,
+                href: `/docs/${page}`,
+              })
+            }
+            finalDocumentation.push({
+              ...category,
+              pages,
+            })
+          }
+
+          return JSON.stringify(finalDocumentation)
         }),
       ],
     })

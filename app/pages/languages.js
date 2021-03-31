@@ -129,11 +129,9 @@ const getStaticProps = async () => {
   }
 }
 
-LanguagesPage.layoutProps = {
-  meta: {
-    title: "Languages - Blitz.js",
-    description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
-  },
+LanguagesPage.meta = {
+  title: "Languages - Blitz.js",
+  description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
 }
 
 export default LanguagesPage

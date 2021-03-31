@@ -2,14 +2,12 @@ import {Link, useRouter} from "blitz"
 import clsx from "clsx"
 import {createContext, Fragment, useCallback, useEffect, useState} from "react"
 import {BiChevronLeft} from "react-icons/bi"
-import {BsCaretDownFill, BsCaretUpFill} from "react-icons/bs"
+import {BsArrowLeft, BsCaretDownFill, BsCaretUpFill} from "react-icons/bs"
 import {FaGithub} from "react-icons/fa"
 import Select, {components} from "react-select"
 
 import {PageHeader} from "@/components/PageHeader"
 import {usePrevNext} from "@/hooks/usePrevNext"
-import {ReactComponent as ArrowIcon} from "@/img/icons/nav-arrow.svg"
-import {SidebarLayout} from "@/layouts/SidebarLayout"
 
 export const ContentsContext = createContext()
 
@@ -110,30 +108,6 @@ function useTableOfContents(tableOfContents) {
   return {currentSection, registerHeading, unregisterHeading}
 }
 
-export function ContentsLayoutOuter({children, layoutProps, ...props}) {
-  const {currentSection, registerHeading, unregisterHeading} = useTableOfContents(
-    layoutProps.tableOfContents,
-  )
-
-  return (
-    <SidebarLayout
-      sidebar={
-        <div className="mb-8">
-          <TableOfContents
-            tableOfContents={layoutProps.tableOfContents}
-            currentSection={currentSection}
-          />
-        </div>
-      }
-      {...props}
-    >
-      <ContentsContext.Provider value={{registerHeading, unregisterHeading}}>
-        {children}
-      </ContentsContext.Provider>
-    </SidebarLayout>
-  )
-}
-
 const DropdownIndicator = (props) => {
   return (
     components.DropdownIndicator && (
@@ -209,7 +183,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
                 rel="noopener noreferrer"
                 className="flex items-center py-2 text-sm"
               >
-                <FaGithub className="mr-3" /> Idea for improving this page? Edit it on Github.
+                <FaGithub className="mr-3" /> Idea for improving this page? Edit it on GitHub.
               </a>
               {(prev || next) && (
                 <>
@@ -217,7 +191,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
                     {prev && (
                       <Link href={prev.href}>
                         <a className="flex items-center">
-                          <ArrowIcon className="mr-2 fill-current" />{" "}
+                          <BsArrowLeft className="icon-large mr-2 fill-current" />{" "}
                           {prev.sidebar_label || prev.title}
                         </a>
                       </Link>
@@ -228,7 +202,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
                         <a className="flex justify-end">
                           <div className="flex items-center">
                             {next.sidebar_label || next.title}{" "}
-                            <ArrowIcon className="ml-2 fill-current transform rotate-180" />
+                            <BsArrowLeft className="icon-large ml-2 fill-current transform rotate-180" />
                           </div>
                         </a>
                       </Link>

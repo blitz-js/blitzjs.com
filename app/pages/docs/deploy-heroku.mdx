@@ -47,7 +47,7 @@ heroku git:remote --app <APP_NAME>
 1. Configure the application to use postgres instead of the default sqlite
    by following the
    [“Switch to PostgreSQL” guide](/docs/database-overview#switch-to-postgresql).
-2. In your package.json add a `start:production` and an `build` command.
+2. In your package.json add a `start:production` and a `build` command.
    We'll call the start script in the `Procfile` below. And Heroku will
    run the `build` script for you on deploy.
 
@@ -84,7 +84,9 @@ heroku open
 _Note:_ While the application should now be working you will not be able
 to use authentication until you provide Heroku with a `SESSION_SECRET_KEY`
 envivonment variable. You can do this with the following command replacing
-`<MY_SECRET>` with your secret (at least 32 characters long). On macOS and Linux, you can generate it by running `openssl rand -hex 16` in your terminal.
+`<MY_SECRET>` with your secret (at least 32 characters long). On macOS and
+Linux, you can generate it by running `openssl rand -hex 16` in your
+terminal.
 
 ```
 heroku config:set SESSION_SECRET_KEY=<SESSION_SECRET_KEY>

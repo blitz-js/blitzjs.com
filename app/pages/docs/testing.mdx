@@ -67,16 +67,16 @@ as needed.
 - [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro)
 - [@testing-library/react-hooks](https://react-hooks-testing-library.com/)
 
-## Utilities
+## Testing Utilities {#testing-utilities}
 
 Blitz provides some basic testing utilities in the generated
 `test/utils.tsx` file. These are intended for use with Jest and React
 Testing Library to allow advanced configuration for your testing
 environment. Customizing this file can be useful for testing things like
-global providers, but also testing certain parts of your app which Blitz
-handles internally such as routing and data querying.
+global providers as well as certain parts of your app which Blitz handles
+internally such as routing and data querying.
 
-### `BlitzProvider`
+### `BlitzProvider` {#blitz-provider}
 
 This component works as the global provider for data queries and mutations
 in your tests. Internally, it wraps the `QueryClient` component from
@@ -84,12 +84,12 @@ in your tests. Internally, it wraps the `QueryClient` component from
 
 `BlitzProvider` accepts the following props:
 
--`client` - The global query client used by React Query. The default
-`queryClient` exported from `blitz` can be used here.
+- `client` - The global query client used by React Query. The default
+  `queryClient` exported from `blitz` can be used here.
 
--`contextSharing` - Controls whether or not the provider context can be
-shared across multiple applications. This can be useful when working with
-micro-frontends. Defaults to `false`.
+- `contextSharing` - Controls whether or not the provider context can be
+  shared across multiple applications. This can be useful when working in
+  certain environments such as micro-frontends. Defaults to `false`.
 
 - `dehydratedState` - The server state passed along to the application
   containing the results of server-side queries. Useful for testing

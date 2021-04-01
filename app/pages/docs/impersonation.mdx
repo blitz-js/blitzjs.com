@@ -94,8 +94,7 @@ export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
 Add a form similar to this in order to switch users.
 
 ```tsx
-import {useMutation} from "blitz"
-import {queryCache} from "react-query"
+import {useMutation, queryClient} from "blitz"
 import impersonateUser, {
   ImpersonateUserInput,
 } from "app/auth/mutations/impersonateUser"
@@ -112,7 +111,7 @@ export const ImpersonateUserForm = () => {
       onSubmit={async (values) => {
         try {
           await impersonateUserMutation(values)
-          queryCache.clear()
+          queryClient.clear()
         } catch (error) {
           return {
             [FORM_ERROR]:
@@ -132,8 +131,7 @@ Lastly, add the following component at the top of your Layout(s).
 
 ```tsx
 // app/core/components/ImpersonatingUserNotice.tsx
-import {invoke, useSession} from "blitz"
-import {queryCache} from "react-query"
+import {invoke, useSession, queryClient} from "blitz"
 import stopImpersonating from "app/auth/mutations/stopImpersonating"
 
 export const ImpersonatingUserNotice = () => {
@@ -147,7 +145,7 @@ export const ImpersonatingUserNotice = () => {
         className="appearance-none bg-transparent text-black uppercase"
         onClick={async () => {
           await invoke(stopImpersonating, {})
-          queryCache.clear()
+          queryClient.clear()
         }}
       >
         Exit

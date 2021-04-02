@@ -84,8 +84,8 @@ in your tests. Internally, it wraps the `QueryClient` component from
 
 `BlitzProvider` accepts the following props:
 
-- `client` - The global query client used by React Query. The default
-  `queryClient` exported from `blitz` can be used here.
+- `client` - The global query client used by React Query. By default the
+  `queryClient` exported from `blitz` is used unless you override it.
 
 - `contextSharing` - Controls whether or not the provider context can be
   shared across multiple applications. This can be useful when working in

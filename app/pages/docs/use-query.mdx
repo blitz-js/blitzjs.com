@@ -73,6 +73,7 @@ const [
     refetch,
     remove,
     status,
+    setQueryData,
   }
 ] = useQuery(queryResolver, queryInputArguments, {
   cacheTime,
@@ -117,7 +118,7 @@ const [
 
 - `enabled: boolean`
   - Set this to `false` to disable this query from automatically running.
-  - Can be used for [Dependent Queries](../guides/dependent-queries).
+  - Can be used for [Dependent Queries](./query-usage#dependent-queries).
 - `retry: boolean | number | (failureCount: number, error: TError) => boolean`
   - If `false`, failed queries will not retry by default.
   - If `true`, failed queries will retry infinitely.
@@ -324,6 +325,7 @@ const [
     cancelled before a new request is made
 - `remove: () => void`
   - A function to remove the query from the cache.
+- `setQueryData()` - `Function(newData, opts) => Promise<void>
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the
     old data and returns the new data

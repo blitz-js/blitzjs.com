@@ -131,7 +131,7 @@ const promise = invoke(inputArguments, {
 
 `[mutate, mutationExtras]`
 
-##### `mutate: (variables: TVariables, { onSuccess, onSettled, onError }) => void`
+##### `mutate: (variables: TVariables, { onSuccess, onSettled, onError }) => Promise<TData>`
 
 - The mutation function you can call with variables to trigger the
   mutation and optionally override options passed to `useMutation`.

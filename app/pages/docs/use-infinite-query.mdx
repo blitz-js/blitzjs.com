@@ -92,7 +92,7 @@ export default async function getProjects(
 <!-- prettier-ignore -->
 ```js
 const [
-  infiniteQueryResult,
+  queryResult,
   {
     pageParams,
     fetchNextPage,
@@ -146,9 +146,9 @@ The options are identical to the options for the
 
 ### Returns {#returns}
 
-`[infiniteQueryResult, queryExtras]`
+`[queryResult, queryExtras]`
 
-##### `infiniteQueryResult: TData[]`
+##### `queryResult: TData[]`
 
 - Array containing all pages.
 

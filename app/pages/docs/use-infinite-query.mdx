@@ -135,8 +135,8 @@ The options are identical to the options for the
   - When new data is received for this query, this function receives both
     the last page of the infinite list of data and the full array of all
     pages.
-  - It should return a **single variable** that will be passed as the last
-    optional parameter to `getQueryInputArguments()`.
+  - It should return a **single variable** that will be passed as the
+    argument to `getQueryInputArguments()`.
   - Return `undefined` to indicate there is no next page available.
 - `getPreviousPageParam: (firstPage, allPages) => unknown | undefined`
   - When new data is received for this query, this function receives both

@@ -324,7 +324,7 @@ const [
     cancelled before a new request is made
 - `remove: () => void`
   - A function to remove the query from the cache.
-- `setQueryData()` - `Function(newData, opts) => Promise<void>
+- `setQueryData()` - `Function(newData, opts) => Promise<void>`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the
     old data and returns the new data
@@ -334,4 +334,157 @@ const [
     ensure the data is correct. Disable refetch by passing an options
     object `{refetch: false}` as the second argument.
   - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for
-    example usage of `setQueryData()`
+    example usage of `setQueryData()`.
+
+### Pagination {#pagination}
+
+The useQuery hook can also be used for paginated queries. Achieving
+pagination can be as simple as specifying the `skip` and `take` query
+input arguments:
+
+```ts
+import {Suspense} from "react"
+import {Link, BlitzPage, useQuery, useRouterQuery, useRouter} from "blitz"
+import getProjects from "app/projects/queries/getProjects"
+
+const ITEMS_PER_PAGE = 3
+
+const Projects = () => {
+  const router = useRouter()
+  const {page = 0} = useRouterQuery()
+  const [{projects, hasMore}] = useQuery(getProjects, {
+    skip: ITEMS_PER_PAGE * Number(page),
+    take: ITEMS_PER_PAGE,
+  })
+
+  const goToPreviousPage = () =>
+    router.push({query: {page: Number(page) - 1}})
+  const goToNextPage = () => {
+    router.push({query: {page: Number(page) + 1}})
+  }
+
+  return (
+    <div>
+      {projects.map((project) => (
+        <p key={project.id}>
+          <Link href={`/projects/${project.id}`}>
+            <a>{project.name}</a>
+          </Link>
+        </p>
+      ))}
+      <button disabled={page === 0} onClick={goToPreviousPage}>
+        Previous
+      </button>
+      <button disabled={!hasMore} onClick={goToNextPage}>
+        Next
+      </button>
+    </div>
+  )
+}
+```
+
+Using the query:
+
+```ts
+import {paginate} from "blitz"
+import db, {Prisma, Project} from "db"
+
+type GetProjectsInput = {
+  where?: Prisma.ProjectFindManyArgs["where"]
+  orderBy?: Prisma.ProjectFindManyArgs["orderBy"]
+  skip?: number
+  take?: number
+}
+
+export default async function getProjects(
+  {where, orderBy, take, skip}: GetProjectsInput,
+  ctx: Record<any, unknown> = {},
+) {
+  const projects = await db.project.findMany({
+    where,
+    orderBy,
+    take,
+    skip,
+  })
+  if (ctx.referer) {
+    console.log("HTTP referer:", ctx.referer)
+  }
+
+  const {items: projects, hasMore, nextPage, count} = await paginate({
+    skip,
+    take,
+    count: () => db.project.count({where}),
+    query: (paginateArgs) =>
+      db.project.findMany({...paginateArgs, where, orderBy}),
+  })
+
+  return {
+    projects,
+    nextPage,
+    hasMore,
+    count,
+  }
+}
+```
+
+While this approach is fine, you may notice loading indicators when
+navigating between pages. This behavior is expected, since updating the
+page index triggers a new query. By setting `keepPreviousData: true` in
+the query options and tracking `isPreviousData`, you can improve user
+experience by continuing to render the current data until the next page of
+data is available.
+
+In the updated example below, a user navigates to the next page,
+triggering a query for new data. The previous data continues to render
+until the query resolves, at which point the previous results are swapped
+out with the new ones, bypassing the interim loading state entirely.
+
+```ts
+import {Suspense} from "react"
+import {Link, BlitzPage, useQuery, useRouterQuery, useRouter} from "blitz"
+import getProjects from "app/projects/queries/getProjects"
+
+const ITEMS_PER_PAGE = 3
+
+const Projects = () => {
+  const router = useRouter()
+  const {page = 0} = useRouterQuery()
+  const [{projects, hasMore}, {isPreviousData}] = useQuery(
+    getProjects,
+    {
+      skip: ITEMS_PER_PAGE * Number(page),
+      take: ITEMS_PER_PAGE,
+    },
+    {keepPreviousData: true},
+  )
+
+  const goToPreviousPage = () =>
+    router.push({query: {page: Number(page) - 1}})
+  const goToNextPage = () => {
+    if (!isPreviousData && hasMore) {
+      router.push({query: {page: Number(page) + 1}})
+    }
+  }
+
+  return (
+    <div>
+      {projects.map((project) => (
+        <p key={project.id}>
+          <Link href={`/projects/${project.id}`}>
+            <a>{project.name}</a>
+          </Link>
+        </p>
+      ))}
+      <button disabled={page === 0} onClick={goToPreviousPage}>
+        Previous
+      </button>
+      <button
+        disabled={isPreviousData || !hasMore}
+        onClick={goToNextPage}
+      >
+        Next
+      </button>
+    </div>
+  )
+}
+```

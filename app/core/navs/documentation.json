@@ -114,7 +114,6 @@
       "resolver-client-utilities",
       "resolver-server-utilities",
       "use-query",
-      "use-paginated-query",
       "use-infinite-query",
       "use-mutation"
     ]

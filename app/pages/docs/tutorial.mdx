@@ -403,14 +403,13 @@ Jump over to `app/pages/questions/index.tsx`. Notice that a
 export const QuestionsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{questions, hasMore}, {isPreviousData}] = useQuery(
+  const [{questions, hasMore}, {isPreviousData}] = usePaginatedQuery(
     getQuestions,
     {
       orderBy: {id: "asc"},
       skip: ITEMS_PER_PAGE * page,
       take: ITEMS_PER_PAGE,
     },
-    {keepPreviousData: true},
   )
 
   const goToPreviousPage = () => router.push({query: {page: page - 1}})
@@ -457,13 +456,12 @@ with `question.text`:
 export const QuestionsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{questions, hasMore}, {isPreviousData}] = useQuery(
+  const [{questions, hasMore}, {isPreviousData}] = usePaginatedQuery(
     getQuestions, {
       orderBy: {id: "asc"},
       skip: ITEMS_PER_PAGE * page,
       take: ITEMS_PER_PAGE,
     },
-    {keepPreviousData: true},
   )
 
   const goToPreviousPage = () => router.push({query: {page: page - 1}})

@@ -148,3 +148,27 @@ well, otherwise you'll see an error like:
 ```bash
 Error: Cannot find module 'less'
 ```
+
+## TypeScript Support for CSS Modules {#typescript-support}
+
+If you are using TypeScript and want typechecking and autocompletition for
+CSS Modules, you can install `typescript-plugin-css-modules`:
+
+```bash
+yarn add -D typescript-plugin-css-modules
+# or
+npm install -D typescript-plugin-css-modules
+```
+
+And add it to your `tsconfig.json`:
+
+```diff
+{
+  "compilerOptions": {
++   "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  }
+}
+```
+
+If you are having troubles using this plugin, check
+[their documentation](https://github.com/mrmckeb/typescript-plugin-css-modules).

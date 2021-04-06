@@ -115,11 +115,7 @@ Navigating `pages/post/[pid].js`, which is a dynamic route:
 import {Router} from "blitz"
 
 function Page() {
-  return (
-    <span onClick={() => Router.push("/post/[pid]", "/post/abc")}>
-      Click me
-    </span>
-  )
+  return <span onClick={() => Router.push("/post/abc")}>Click me</span>
 }
 ```
 

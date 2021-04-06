@@ -35,10 +35,7 @@ const Projects = () => {
     <div>
       {projects.map((project) => (
         <p key={project.id}>
-          <Link
-            href="/projects/[handle]"
-            as={`/projects/${project.handle}`}
-          >
+          <Link href={`/projects/${project.handle}`}>
             <a>{project.name}</a>
           </Link>
         </p>

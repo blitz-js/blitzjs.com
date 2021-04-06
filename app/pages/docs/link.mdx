@@ -5,21 +5,21 @@ sidebar_label: <Link>
 
 `<Link>` is used to navigate between pages
 
-An example of linking to `/` and `/about`:
+An example of linking to `Home` and `About`:
 
 ```jsx
-import {Link} from "blitz"
+import {Link, Routes} from "blitz"
 
 function Home() {
   return (
     <ul>
       <li>
-        <Link href="/">
+        <Link href={Routes.Home}>
           <a>Home</a>
         </Link>
       </li>
       <li>
-        <Link href="/about">
+        <Link href={Routes.About}>
           <a>About Us</a>
         </Link>
       </li>
@@ -33,7 +33,7 @@ export default Home
 `Link` accepts the following props:
 
 - `href` - The path inside `pages` directory. This is the only required
-  prop
+  prop. Examples show usage of [Route Manifest](./route-manifest)
 - `as` - The path that will be rendered in the browser URL bar. Used for
   dynamic routes
 - [`passHref`](#if-the-child-is-a-custom-component-that-wraps-an-a-tag) -
@@ -62,7 +62,7 @@ A `Link` to a dynamic route is a combination of the `href` and `as` props.
 A link to the page `pages/post/[pid].js` will look like this:
 
 ```jsx
-<Link href="/post/[pid]" as="/post/abc">
+<Link href={Routes.Post({pid: "abc"})}>
   <a>First Post</a>
 </Link>
 ```
@@ -76,7 +76,7 @@ links:
 const pids = ["id1", "id2", "id3"]
 {
   pids.map((pid) => (
-    <Link href="/post/[pid]" as={`/post/${pid}`}>
+    <Link href={Routes.Post({pid})}>
       <a>Post {pid}</a>
     </Link>
   ))
@@ -123,7 +123,7 @@ If the child of `Link` is a function component, in addition to using
 [`React.forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref):
 
 ```jsx
-import {Link} from "blitz"
+import {Link, Routes} from "blitz"
 
 // `onClick`, `href`, and `ref` need to be passed to the DOM element
 // for proper handling
@@ -137,7 +137,7 @@ const MyButton = React.forwardRef(({onClick, href}, ref) => {
 
 function Home() {
   return (
-    <Link href="/about" passHref>
+    <Link href={Routes.About} passHref>
       <MyButton />
     </Link>
   )
@@ -178,7 +178,7 @@ the `history` stack. You can use the `replace` prop to prevent adding a
 new entry, as in the following example:
 
 ```jsx
-<Link href="/about" replace>
+<Link href={Routes.About} replace>
   <a>About us</a>
 </Link>
 ```
@@ -189,7 +189,7 @@ new entry, as in the following example:
 case you don't provide an `<a>` tag, consider the following example:
 
 ```jsx
-<Link href="/about">
+<Link href={Routes.About}>
   <img src="/static/image.png" alt="image" />
 </Link>
 ```

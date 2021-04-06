@@ -74,7 +74,8 @@
       "route-params-query",
       "router",
       "api-routes",
-      "shallow-routing"
+      "shallow-routing",
+      "route-manifest"
     ]
   },
   {

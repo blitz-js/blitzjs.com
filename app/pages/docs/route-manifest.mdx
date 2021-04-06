@@ -1,0 +1,34 @@
+---
+title: Route Manifest
+sidebar_label: Route Manifest
+---
+
+Blitz generates a _Route Manifest_ for you. It allows you to refer to a
+page by _name_ instead of _location_:
+
+```ts
+// Assume you have a page at app/pages/products/[productId].tsx
+export default function ProductPage() { ...
+
+// You can then use Routes...
+import { Link, Routes } from "blitz"
+
+// ...to refer to it by name...
+<Link href={Routes.ProductsPage({ productId: 123 })} />
+
+// ...instead of looking up the location!
+<Link href={`/products/${123}`} />
+```
+
+The _Route Manifest_ is a purely optional feature. It has some advantages,
+though:
+
+- improved expressiveness
+- makes it easy to move pages to new locations
+
+<details>
+  <summary>🤫 Interested in how this works?</summary>
+  Take a look at your <code>node_modules/.blitz</code> directory! It's very
+  similar to how <a href="https://www.prisma.io">Prisma</a> works, where the
+  inspiration for this feature comes from.
+</details>

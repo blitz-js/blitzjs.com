@@ -181,6 +181,10 @@ body.cursor-grabbing * {
   @apply text-black;
 }
 
+.dark .admonition .admonition-content.admonition-content strong {
+  color: inherit;
+}
+
 .topic-select .topic-select__placeholder,
 .topic-select .topic-select__menu-list,
 .topic-select .topic-select__single-value {

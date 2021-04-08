@@ -26,9 +26,10 @@ though:
 - improved expressiveness
 - simplifies moving pages to new locations
 
-<details>
-  <summary>🤫 Interested in how this works?</summary>
-  Take a look at your <code>node_modules/.blitz</code> directory! It's very
-  similar to how <a href="https://www.prisma.io">Prisma</a> works, where the
-  inspiration for this feature comes from.
-</details>
+## Generating the Manifest {#generating}
+
+The Route Manifest is generated into `node_modules/.blitz` directly from
+your source code into. Both [`blitz build`](./cli-build) and
+[`blitz dev`](./cli-dev) will automatically keep it up-to-date.  
+If you need to manually generate the route manifest, for example for a
+typecheck in CI, use [`blitz codegen`](./cli-codegen).

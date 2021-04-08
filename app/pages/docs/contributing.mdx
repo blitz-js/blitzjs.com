@@ -30,6 +30,9 @@ Issues with the label
 [`status/ready-to-work-on`](https://github.com/blitz-js/blitz/labels/status%2Fready-to-work-on)
 are the best place to start.
 
+We also label issues as `good first issue` and `good second issue` when
+appropriate.
+
 If you find one that looks interesting and no one else is already working
 on it, comment in the issue that you are going to work on it. But only
 claim an issue if you can start work on it within a couple days.
@@ -128,13 +131,67 @@ development or example development
 yarn dev
 ```
 
-**5.** Run tests
+## Running Tests {#running-tests}
+
+### Blitz.js Tests {#blitz-tests}
+
+#### Unit Tests
+
+Most Blitz packages in `packages/` have jest unit tests.
+
+- Run tests in a single package by running `yarn test` inside that package
+  folder (like `packages/core/`)
+- Run all unit tests from the repo root by running
+  `yarn testonly:packages`. (Make sure you have ran `yarn build` or
+  `yarn dev` prior to running this)
+
+#### Integration Tests
+
+Blitz integration tests are inside the root `test/` folder.
+
+You can run all integration tests by running `yarn test:integration` from
+the repo root. Or you can run `yarn testheadles` to run them in headless
+mode (so it doesn't open a web browser window).
+
+To run a specific integration test, you can run this:
 
 ```sh
-yarn test
+yarn testheadless --testPathPattern "integration/queries"
 ```
 
-### Testing Development Version of Blitz {#testing-development-version-of-blitz}
+where `integration/queries` is the path inside `test/`.
+
+You can manually run the integration app by running `blitz dev` inside the
+integration test folder, like `test/integration/queries/`.
+
+#### Example App Tests (to be deprecated)
+
+The example apps have been functioning as our integration tests, but we'll
+be moving those tests into the above integation test setup.
+
+To run an example app, first run `yarn build` or `yarn dev` from the repo
+root. Then in another window, change to the example app folder like
+`examples/auth/` and run `blitz dev`.
+
+To run the example app tests, run `yarn test` from the example app folder.
+
+### Next.js Tests {#nextjs-tests}
+
+All Next.js tests are inside `nextjs/test/`. There are a **lot** of tests,
+so probably you will want to run only one at a time.
+
+To run these tests, run the following inside the `nextjs/` folder.
+
+- To run in normal mode (open a browser):
+  `yarn testonly --testPathPattern "integration/basic"`
+- To run in headless mode:
+  `yarn testheadless --testPathPattern "integration/basic"`
+
+The typical workflow will be only run next.js integation tests related to
+your change. Then push to CI and see if any other intergration tests fail.
+If they do, then locally run the one that fails and fix the issue.
+
+### Testing Development Version of Blitz Inside and App {#testing-development-version-of-blitz}
 
 <!-- prettier-ignore-start -->
 :::info
@@ -171,30 +228,6 @@ yarn link blitz
 // `yarn unlink blitz`
 // `yarn unlink-cli`  will unlink
 ```
-
-#### Develop a Blitz `package`
-
-**1.** Change to a package directory
-
-```sh
-cd packages/core
-```
-
-**2.** Start the test runner
-
-```sh
-yarn test:watch
-```
-
-#### Develop a Blitz `example`
-
-**1.** Change to an example directory
-
-```sh
-cd examples/store
-```
-
-**2.** Follow instructions in the example's README
 
 ## Troubleshooting {#troubleshooting}
 

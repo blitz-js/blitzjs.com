@@ -285,10 +285,7 @@ const Page: BlitzPage<PageProps> = function ({products}) {
       <div id="products">
         {products.map((product) => (
           <p key={product.id}>
-            <Link
-              href="/products/[handle]"
-              as={`/products/${product.handle}`}
-            >
+            <Link href={`/products/${product.handle}`}>
               <a>{product.name}</a>
             </Link>
           </p>

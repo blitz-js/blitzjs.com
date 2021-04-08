@@ -58,25 +58,22 @@ such cases instead.
 
 ## Dynamic routes {#dynamic-routes}
 
-A `Link` to a dynamic route is a combination of the `href` and `as` props.
-A link to the page `pages/post/[pid].js` will look like this:
+A `Link` to a dynamic route works like the other links. A link to the page
+`pages/post/[pid].js` will look like this:
 
 ```jsx
-<Link href="/post/[pid]" as="/post/abc">
+<Link href="/post/abc">
   <a>First Post</a>
 </Link>
 ```
 
-`href` is a file system path used by the page and it shouldn't change at
-runtime. `as` on the other hand, will be dynamic most of the time
-according to your needs. Here's an example of how to create a list of
-links:
+Here's an example of how to create a list of links:
 
 ```jsx
 const pids = ["id1", "id2", "id3"]
 {
   pids.map((pid) => (
-    <Link href="/post/[pid]" as={`/post/${pid}`}>
+    <Link href={`/post/${pid}`}>
       <a>Post {pid}</a>
     </Link>
   ))

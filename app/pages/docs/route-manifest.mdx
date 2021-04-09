@@ -26,6 +26,18 @@ though:
 - improved expressiveness
 - simplifies moving pages to new locations
 
+## Query Parameters {#query-parameters}
+
+Query parameters can be specified together with route parameters.
+
+```ts
+// instead of ...
+<Link href={`/products/${pid}?offerCode=capybara`} />
+
+// ... you can do:
+<Link href={Routes.Product({ pid, offerCode: "capybara" })} />
+```
+
 ## Generating the Manifest {#generating}
 
 The Route Manifest is generated into `node_modules/.blitz` directly from

@@ -91,3 +91,7 @@ terminal.
 ```
 heroku config:set SESSION_SECRET_KEY=<SESSION_SECRET_KEY>
 ```
+
+#### SSL Certificates
+
+On the free tier, Heroku does not supply you with SSL certificates. These are crucial for secure authentication, though - and Blitz' built-in authentication won't work without. You can use [Cloudflare SSL](https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-Cloudflare-and-Heroku-over-HTTPS) to get free SSL certificates.

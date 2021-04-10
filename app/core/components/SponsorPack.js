@@ -50,6 +50,13 @@ const sponsors = [
     tier: 4,
     cost: 100,
   },
+  {
+    name: "userTrack",
+    href: "https://www.usertrack.net/?ref=blitzjs_web",
+    imageUrl: "https://i.imgur.com/UDBeazC.png",
+    tier: 4,
+    cost: 100,
+  },
 ]
 
 const pack = {

@@ -93,13 +93,12 @@ export default passportAuth((ctx) => ({
   errorRedirectUrl: "/",
   strategies: [
     {
-      strategy: new TwitterStrategy(
-        {
-          consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
-          consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
-          /*...*/
-        }
-    }
+      strategy: new TwitterStrategy({
+        consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
+        consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
+        /*...*/
+      }),
+    },
   ],
 }))
 ```

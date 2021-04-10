@@ -304,8 +304,8 @@ re-building as the value is inlined in the client-side bundles.
 
 ### Links {#links}
 
-When linking to other pages using `blitz/link` and `blitz/router` the
-`basePath` will be automatically applied.
+When linking to other pages using `Link` and `Router` the `basePath` will
+be automatically applied.
 
 For example using `/about` will automatically become `/docs/about` when
 `basePath` is set to `/docs`.
@@ -314,7 +314,7 @@ For example using `/about` will automatically become `/docs/about` when
 export default function HomePage() {
   return (
     <>
-      <Link href="/about">
+      <Link href={Routes.About()}>
         <a>About Page</a>
       </Link>
     </>

@@ -14,8 +14,8 @@ function Home() {
   return (
     <ul>
       <li>
-        <Link href={Routes.Home()}> // using Route manifest
-        <Link href="/"> // using location
+        <Link href={Routes.Home()}> // Option 1: use Route manifest
+        <Link href="/"> // Option 2: use string or location object
           <a>Home</a>
         </Link>
       </li>

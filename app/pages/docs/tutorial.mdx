@@ -276,8 +276,9 @@ blitz generate resource choice text votes:int:default=0 belongsTo:question
 ```
 If you get an error run `blitz prisma format`
 
-Again, hit **Enter** when prompted to run the migration and enter a name
-for the migration.
+Note that this doesn't require a database migration because we haven't added the 
+`Choice` field to the `Question` model yet. So we are choosing `false` when 
+prompted to run the migration:
 
 ```
 CREATE    app/choices/queries/getChoice.ts
@@ -298,7 +299,7 @@ CREATE    app/choices/mutations/updateChoice.ts
 >   questionId Int
 > }
 
-? Run 'prisma migrate dev' to update your database? (Y/n) › true
+? Run 'prisma migrate dev' to update your database? (Y/n) › false
 ```
 
 #### Lastly let's update the `Question` model to have a relationship back to `Choice`.
@@ -316,9 +317,13 @@ model Question {
 }
 ```
 
-And then run `blitz prisma generate` to update prisma client for that
-schema change. This doesn't require a database migration because there's
-not an actual field being added to the `Question` model in the database.
+And then run 
+
+```sh
+blitz prisma generate
+```
+
+to update prisma client for that schema change. 
 
 ## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
 

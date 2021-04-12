@@ -317,7 +317,30 @@ model Question {
 }
 ```
 
-And then run 
+Now we can run the migration to update our database: 
+
+```sh
+blitz prisma migrate dev
+```
+
+And again, enter a name for the migration, like "add choice":
+
+```
+Environment variables loaded from .env
+Prisma schema loaded from db/schema.prisma
+Datasource "db": SQLite database "db.sqlite" at "file:./db.sqlite"
+
+✔ Name of migration … add choice
+The following migration(s) have been created and applied from new schema changes:
+
+migrations/
+  └─ 20210412175528_add_choice/
+    └─ migration.sql
+
+Your database is now in sync with your schema.
+```
+
+And then run:
 
 ```sh
 blitz prisma generate

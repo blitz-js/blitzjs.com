@@ -5,7 +5,15 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": ["get-started", "tutorial", "what-is-nextjs", "why-blitz", "tradeoffs", "stickers"]
+    "pages": [
+      "get-started",
+      "tutorial",
+      "learning-path",
+      "what-is-nextjs",
+      "why-blitz",
+      "tradeoffs",
+      "stickers"
+    ]
   },
   {
     "title": {

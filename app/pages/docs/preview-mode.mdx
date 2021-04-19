@@ -32,11 +32,12 @@ can be used by `getStaticProps` (more on this later). For now, we’ll use
 `{}`.
 
 ```js
-export default (req, res) => {
+const handler = (req, res) => {
   // ...
   res.setPreviewData({})
   // ...
 }
+export default handler
 ```
 
 `res.setPreviewData` sets some **cookies** on the browser which turns on
@@ -51,10 +52,11 @@ accessing it from your browser manually:
 // A simple example for testing it manually from your browser.
 // If this is located at app/api/preview.js, then
 // open /api/preview from your browser.
-export default (req, res) => {
+const handler = (req, res) => {
   res.setPreviewData({})
   res.end("Preview mode enabled")
 }
+export default handler
 ```
 
 If you use your browser’s developer tools, you’ll notice that the

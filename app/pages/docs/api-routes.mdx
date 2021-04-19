@@ -19,11 +19,12 @@ For example, the following API route `app/api/hello.js` handles a `json`
 response:
 
 ```ts
-export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
   res.end(JSON.stringify({name: "John Doe"}))
 }
+export default handler
 ```
 
 For an API route to work, you need to export as default a function (a.k.a
@@ -40,13 +41,14 @@ To handle different HTTP methods in an API route, you can use `req.method`
 in your request handler, like so:
 
 ```ts
-export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   if (req.method === "POST") {
     // Process a POST request
   } else {
     // Handle any other HTTP method
   }
 }
+export default handler
 ```
 
 To fetch API endpoints, take a look into any of the examples at the start
@@ -105,13 +107,14 @@ Dynamic API routes follow the same file naming rules used for `pages`.
 For example, the API route `app/api/post/[pid].js` has the following code:
 
 ```ts
-export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {pid},
   } = req
 
   res.end(`Post: ${pid}`)
 }
+export default handler
 ```
 
 Now, a request to `/api/post/abc` will respond with the text: `Post: abc`.
@@ -163,13 +166,14 @@ parameters will be added to the array, like so:
 An API route for `app/api/post/[...slug].js` could look like this:
 
 ```ts
-export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   const {
     query: {slug},
   } = req
 
   res.end(`Post: ${slug.join(", ")}`)
 }
+export default handler
 ```
 
 Now, a request to `/api/post/a/b/c` will respond with the text:
@@ -209,9 +213,10 @@ the developer experience and increase the speed of creating new API
 endpoints, take a look at the following example:
 
 ```ts
-export default (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.status(200).json({name: "Blitz.js"})
 }
+export default handler
 ```
 
 The included helpers are:

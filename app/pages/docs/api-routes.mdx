@@ -37,11 +37,23 @@ For an API route to work, you need to export as default a function (a.k.a
   [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse),
   plus some helper functions you can see [here](#response-helpers)
 
+If you want to avoid writting the types `BlitzApiRequest` and
+`BlitzApiResponse` everywhere, you can use `BlitzApiHandler`:
+
+```ts
+const handler: BlitzApiHandler = (req, res) => {
+  res.statusCode = 200
+  res.setHeader("Content-Type", "application/json")
+  res.end(JSON.stringify({name: "John Doe"}))
+}
+export default handler
+```
+
 To handle different HTTP methods in an API route, you can use `req.method`
 in your request handler, like so:
 
 ```ts
-const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler: BlitzApiHandler = (req, res) => {
   if (req.method === "POST") {
     // Process a POST request
   } else {
@@ -107,7 +119,7 @@ Dynamic API routes follow the same file naming rules used for `pages`.
 For example, the API route `app/api/post/[pid].js` has the following code:
 
 ```ts
-const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler: BlitzApiHandler = (req, res) => {
   const {
     query: {pid},
   } = req
@@ -166,7 +178,7 @@ parameters will be added to the array, like so:
 An API route for `app/api/post/[...slug].js` could look like this:
 
 ```ts
-const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler: BlitzApiHandler = (req, res) => {
   const {
     query: {slug},
   } = req
@@ -213,7 +225,7 @@ the developer experience and increase the speed of creating new API
 endpoints, take a look at the following example:
 
 ```ts
-const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const handler: BlitzApiHandler = (req, res) => {
   res.status(200).json({name: "Blitz.js"})
 }
 export default handler

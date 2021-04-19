@@ -1,6 +1,6 @@
-const slugify = require("@sindresorhus/slugify")
-const fs = require("fs/promises")
-const path = require("path")
+import slugify from "@sindresorhus/slugify"
+import fs from "fs/promises"
+import path from "path"
 
 async function main() {
   const docsPath = path.resolve(process.cwd(), "app", "pages", "docs")

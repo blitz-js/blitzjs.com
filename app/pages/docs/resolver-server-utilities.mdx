@@ -3,14 +3,50 @@ title: Server Utilities
 sidebar_label: Server Utilities
 ---
 
+Blitz exports a `resolver` object which contains a few utilities.
+"Resolver" as used here and for [queries](./query-resolvers) and
+[mutations](./mutation-resolvers) refers to a function that takes some
+input and "resolves" that into some output or side effect. This term is
+commonly used for GraphQL. A resolver is separate from an API endpoint,
+because in an API endpoint you have full access to the Node request and
+response objects and you are responsible for managing the http stuff. But
+resolvers are a layer removed from raw API handlers.
+
+The below utilities are exported under the `resolver` object instead of
+`resolverPipe` and `resolverZod` since they are commonly used together.
+This cleans up your imports and makes it easy to discover any other
+utilites on the `resolver` object.
+
 ## `resolver.pipe` {#resolver-pipe}
 
-This is a functional utility that makes it easier and cleaner to write
+This is a functional pipe that makes it easier and cleaner to write
 complex resolvers.
 
+A pipe automatically pipes the output of one function into the next
+function. Here's a non-Blitz example:
+
+```ts
+// Without pipe
+export function (input1) {
+  const output1 = function1(input1)
+  const output2 = function2(output1)
+  const output3 = function3(output2)
+  return output3
+}
+
+// With pipe
+export pipe(
+  function1,
+  function2,
+  function3,
+}
+```
+
+**Benefits:**
+
 - It reduces the need for explicit Typescript types
-- Validate input data with a zod schema with `resolver.zod()`
-- Authorize users with `resolver.authorize()`
+- One line to validate input data with a zod schema with `resolver.zod()`
+- One line to authorize users with `resolver.authorize()`
 - Enables functional composition
 
 ### Example {#example}
@@ -91,9 +127,15 @@ which is the standard resolver type.
 
 ## `resolver.zod` {#resolver-zod}
 
-This is a resolver adapter for [Zod](https://github.com/colinhacks/zod),
-an awesome input validation library. It takes a zod schema and runs
-`schema.parse` on the input data.
+This is a handly utility for using
+[Zod](https://github.com/colinhacks/zod), an awesome input validation
+library. It takes a zod schema and runs `schema.parse` on the input data.
+
+You don't have to use this. You can add
+`const safeInput = CreateProject.parse(input)` directly in your main
+resolver function. But then you also have to manually type the function
+interface. The utility does everything in one step, setting input type and
+validating the input data at runtime.
 
 ### Example {#example-1}
 
@@ -256,6 +298,7 @@ import {
   Link,
   BlitzPage,
   PromiseReturnType,
+  Routes,
 } from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
@@ -285,10 +328,7 @@ const Page: BlitzPage<PageProps> = function ({products}) {
       <div id="products">
         {products.map((product) => (
           <p key={product.id}>
-            <Link
-              href="/products/[handle]"
-              as={`/products/${product.handle}`}
-            >
+            <Link href={Routes.Product({handle: product.handle})}>
               <a>{product.name}</a>
             </Link>
           </p>

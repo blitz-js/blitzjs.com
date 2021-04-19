@@ -57,21 +57,17 @@ It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import {AppProps, ErrorComponent} from "blitz"
+import {AppProps, ErrorComponent, useQueryErrorResetBoundary} from "blitz"
 import {ErrorBoundary} from "react-error-boundary"
-import {queryCache} from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
 
 export default function App({Component, pageProps}: AppProps) {
+  // This ensures the Blitz useQuery hooks will automatically refetch
+  // data any time you reset the error boundary
+  const {reset} = useQueryErrorResetBoundary()
+
   return (
-    <ErrorBoundary
-      FallbackComponent={RootErrorFallback}
-      onReset={() => {
-        // This ensures the Blitz useQuery hooks will automatically refetch
-        // data any time you reset the error boundary
-        queryCache.resetErrorBoundaries()
-      }}
-    >
+    <ErrorBoundary FallbackComponent={RootErrorFallback} onReset={reset}>
       <Component {...pageProps} />
     </ErrorBoundary>
   )
@@ -100,7 +96,9 @@ function RootErrorFallback({error, resetErrorBoundary}) {
 
 That means all errors will at least be caught at the root level. However,
 you can also add `<ErrorBoundary>` anywhere else in your app for more
-localized error handiling. If an error is caught by an `<ErrorBoundary>`
+localized error handling. To do this, declare a separate
+`useQueryErrorResetBoundary` in your component and pass it along to the
+local ErrorBoundary. If an error is caught by an `<ErrorBoundary>`
 somewhere down inside your app tree, then it will not reach the root
 ErrorBoundary unless you re-throw it.
 
@@ -165,4 +163,5 @@ can handle the error in your form submit handler like this.
 
 ## Error Pages {#error-pages}
 
-See the [Error Pages documentation](./error-pages) to learn about custom error pages and error fallback components.
+See the [Error Pages documentation](./error-pages) to learn about custom
+error pages and error fallback components.

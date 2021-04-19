@@ -120,6 +120,51 @@ const project = await getProject({where: {id: props.id}})
 </a>
 ```
 
+Blitz also supports prefetching multiple queries on the server and then
+dehydrating those queries to the internal query client. This allows Blitz
+to prerender markup that is immediately available on page load. Once
+JavaScript is available in the browser, Blitz will hydrate those queries
+and refetch them if they have become stale since the time they were
+rendered on the server.
+
+The following example demonstrates how prefetching works in Blitz.
+
+```tsx
+import {QueryClient, getQueryKey, useQuery, dehydrate} from "blitz"
+
+import getProject from "app/projects/queries/getProject"
+
+export const getStaticProps = async (context) => {
+  const queryClient = new QueryClient()
+  const queryKey = getQueryKey(getProject)
+
+  await queryClient.prefetchQuery(queryKey, () =>
+    getProject({where: {id: context.params?.projectId}}),
+  )
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
+}
+
+function ProjectPage({project}) {
+  const [project] = useQuery(getProject, {where: {id: props.id}})
+  return <div>{project.name}</div>
+}
+
+export default ProjectPage
+```
+
+To ensure data is not shared between users and requests, a new query
+client is created for each page request. You can prefetch your data by
+invoking the `prefetchQuery` method on the newly-created client, passing in
+the query key and resolver along with any relevant input arguments. Once
+the data has been fetched, dehydrate the queries to the query client using
+the `dehydrate` method and pass the result to the page via the
+`dehydratedState` prop.
+
 ## On the Server {#on-the-server}
 
 ### `getStaticProps` {#get-static-props}

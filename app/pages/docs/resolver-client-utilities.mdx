@@ -108,7 +108,7 @@ This allows you to get the query key for a query
 ### Example {#example-2}
 
 ```tsx
-import {getQueryKey} from "blitz"
+import {getQueryKey, queryClient} from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({products}) {
@@ -117,10 +117,10 @@ const Page = function ({products}) {
       <button
         onClick={async () => {
           const queryKey = getQueryKey(getProducts)
-          queryCache.invalidateQueries(queryKey)
+          queryClient.invalidateQueries(queryKey)
 
           const queryKey = getQueryKey(getProducts, {where: {ordId: 1}})
-          queryCache.invalidateQueries(queryKey)
+          queryClient.invalidateQueries(queryKey)
         }}
       >
         Invalidate

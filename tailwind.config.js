@@ -4,6 +4,7 @@ const {default: flattenColorPalette} = require("tailwindcss/lib/util/flattenColo
 const {toRgba} = require("tailwindcss/lib/util/withAlphaVariable")
 
 module.exports = {
+  mode: "jit",
   purge: {
     content: ["{app,pages,remark}/**/*.{js,jsx,ts,tsx}"],
     options: {

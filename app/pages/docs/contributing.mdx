@@ -147,7 +147,15 @@ Most Blitz packages in `packages/` have jest unit tests.
 
 #### Integration Tests
 
+
 Blitz integration tests are inside the root `test/` folder.
+
+Make sure you have `chromedriver` installed for your Chrome version. You can install it with
+
+- `brew install --cask chromedriver` on Mac OS X
+- `chocolatey install chromedriver` on Windows
+- Or manually download the version that matches your installed chrome version (if there's no match, download a version under it, but not above) from the [chromedriver repo](https://chromedriver.storage.googleapis.com/index.html) and add the binary to `<blitz-repo>/node_modules/.bin`
+
 
 You can run all integration tests by running `yarn test:integration` from
 the repo root. Or you can run `yarn testheadles` to run them in headless

@@ -3,6 +3,12 @@ title: useInfiniteQuery
 sidebar_label: useInfiniteQuery
 ---
 
+Use `useInfiniteQuery` instead of `useQuery`, if you want to show large
+data gradually more. For instance, you have many numbered pages, and you
+want to show the first ten pages initially. After clicking on
+`Show more pages`, the user should see three pages more than before. For
+this case, you can `useInfiniteQuery` as shown in the following example.
+
 ### Example {#example}
 
 ```ts

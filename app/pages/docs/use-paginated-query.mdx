@@ -3,6 +3,13 @@ title: usePaginatedQuery
 sidebar_label: usePaginatedQuery
 ---
 
+Use `usePaginatedQuery` instead of `useQuery`, if you want to divide large
+data into smaller contiguous intervals of data. For instance, you have
+many numbered pages, and you want to show the first three pages initially.
+After clicking on `Show next pages`, the user should see the following
+three pages only. For this case, you can `usePaginatedQuery` as shown in
+the following example.
+
 ### Example {#example}
 
 ```ts

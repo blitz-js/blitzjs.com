@@ -20,10 +20,6 @@
 }
 
 .content {
-  > :last-child {
-    @apply mb-0;
-  }
-
   * {
     @apply text-black;
   }

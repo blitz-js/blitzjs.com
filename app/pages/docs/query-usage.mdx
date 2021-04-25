@@ -159,10 +159,10 @@ export default ProjectPage
 
 To ensure data is not shared between users and requests, a new query
 client is created for each page request. You can prefetch your data by
-invoking the `prefetchQuery` method on the newly-created client, passing in
-the query key and resolver along with any relevant input arguments. Once
-the data has been fetched, dehydrate the queries to the query client using
-the `dehydrate` method and pass the result to the page via the
+invoking the `prefetchQuery` method on the newly-created client, passing
+in the query key and resolver along with any relevant input arguments.
+Once the data has been fetched, dehydrate the queries to the query client
+using the `dehydrate` method and pass the result to the page via the
 `dehydratedState` prop.
 
 ## On the Server {#on-the-server}

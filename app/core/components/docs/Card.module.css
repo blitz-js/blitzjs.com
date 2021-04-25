@@ -24,9 +24,11 @@
     @apply mb-0;
   }
 
-  *,
-  strong,
-  b {
-    @apply !text-black;
+  * {
+    @apply text-black;
+  }
+
+  strong {
+    color: inherit !important;
   }
 }

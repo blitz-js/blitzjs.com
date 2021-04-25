@@ -79,12 +79,6 @@ module.exports = {
         string: "#A2F679",
         highlight: "rgba(134, 239, 172, 0.25)",
       },
-
-      supplementary: {
-        yellow: "#FDEA69",
-        blue: "#69C6FD",
-        red: "#FF003D",
-      },
     },
     fontSize: {
       xxs: "0.75rem", // 12px

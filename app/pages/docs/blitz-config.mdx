@@ -144,8 +144,8 @@ module.exports = {
 
 ### Proxy support {#proxy-support}
 
-Proxy support is enabled automatically for recipe install if `http_proxy`
-environment variable is present. You can also set proxy option using:
+Proxy support is enabled automatically for recipe install if either `http_proxy` or `https_proxy`
+environment variable is present. You can also set proxy using:
 
 ```js
 module.exports = {
@@ -157,8 +157,7 @@ module.exports = {
 }
 ```
 
-Proxy configuration in `blitz.config.js` will override environment proxy
-configuration.
+Please note that proxy configuration in `blitz.config.js` will override environment proxy configuration.
 
 ## CDN Support with Asset Prefix {#cdn-support-with-asset-prefix}
 

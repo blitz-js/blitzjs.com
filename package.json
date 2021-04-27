@@ -65,7 +65,6 @@
     "postcss-nested": "5.0.5",
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
-    "remark-admonitions": "1.2.1",
     "simple-functional-loader": "1.2.1",
     "tailwindcss": "2.1.2"
   },

@@ -130,61 +130,6 @@ body.cursor-grabbing * {
   background-repeat: no-repeat;
 }
 
-/* Like doing `!important`, but worse */
-.admonition.admonition.admonition {
-  @apply px-5 pt-5 pb-px rounded-xl text-black;
-
-  a {
-    /* Remember to change this if you update the a (anchor, link) styles */
-    @apply text-purple-light font-medium no-underline hover:underline;
-  }
-}
-
-.admonition-content > *:first-child {
-  @apply mt-2;
-}
-
-.admonition.admonition-caution {
-  @apply bg-supplementary-yellow;
-}
-
-.admonition.admonition-info {
-  @apply bg-supplementary-blue;
-}
-
-.admonition.admonition-note {
-  @apply bg-blue-primary;
-}
-
-.admonition .admonition-heading {
-  @apply capitalize font-bold;
-}
-
-.admonition .admonition-heading > * {
-  @apply flex items-center;
-  margin-top: 0;
-}
-
-.admonition .admonition-icon {
-  @apply mr-2;
-}
-
-.admonition .admonition-icon {
-  @apply mr-2;
-}
-
-.dark .admonition .admonition-heading h5 {
-  @apply text-black;
-}
-
-.dark .admonition .admonition-content.admonition-content {
-  @apply text-black;
-}
-
-.dark .admonition .admonition-content.admonition-content strong {
-  color: inherit;
-}
-
 .topic-select .topic-select__placeholder,
 .topic-select .topic-select__menu-list,
 .topic-select .topic-select__single-value {

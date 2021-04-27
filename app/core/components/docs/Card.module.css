@@ -1,0 +1,30 @@
+.container {
+  @apply p-5 mb-4 rounded-xl;
+
+  a {
+    /* Remember to change this if you update the a (anchor, link) styles */
+    @apply text-purple-light font-medium no-underline hover:underline;
+  }
+}
+
+.heading {
+  @apply mt-0 mb-4 capitalize font-bold flex items-center text-black;
+}
+
+.icon {
+  @apply inline-block align-middle mr-2;
+
+  svg {
+    @apply block w-4 h-4 stroke-0;
+  }
+}
+
+.content {
+  * {
+    @apply text-black;
+  }
+
+  strong {
+    color: inherit !important;
+  }
+}

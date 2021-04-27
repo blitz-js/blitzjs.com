@@ -187,11 +187,15 @@ testing, the tests are quick to write:
 
 ```typescript
 import j from "jscodeshift"
+import { customTsParser } from "@blitzjs/installer";
+
 
 const sampleFile = `export default function Comp() {
   return <div>hello!</div>;
 })`
-expect(addImport(j(sampleFile), newImport).toSource()).toMatchSnapshot()
+expect(addImport(j(sampleFile, {
+  parser: customTsParser
+}), newImport).toSource()).toMatchSnapshot()
 ```
 
 #### Modifying Non-JS files

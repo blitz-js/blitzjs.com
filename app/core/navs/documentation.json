@@ -126,7 +126,7 @@
       "iconPath": "/img/mutations.svg",
       "iconDarkPath": "/img/mutations-white.svg"
     },
-    "pages": ["background-processing-with-quirrel", "middleware", "custom-server"]
+    "pages": ["multitenancy", "background-processing-with-quirrel", "middleware", "custom-server"]
   },
   {
     "title": {

@@ -12,16 +12,20 @@ this case, you can `useInfiniteQuery` as shown in the following example.
 ### Example {#example}
 
 ```ts
-import {useInfiniteQuery} from "blitz"
+import { useInfiniteQuery } from "blitz"
 import getProjects from "app/projects/queries/getProjects"
 
 function Projects(props) {
   const [
     projectPages,
-    {isFetching, isFetchingNextPage, fetchNextPage, hasNextPage},
-  ] = useInfiniteQuery(getProjects, (page = {take: 3, skip: 0}) => page, {
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-  })
+    { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage },
+  ] = useInfiniteQuery(
+    getProjects,
+    (page = { take: 3, skip: 0 }) => page,
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    }
+  )
   return (
     <>
       {projectPages.map((group, i) => (
@@ -54,8 +58,8 @@ function Projects(props) {
 And here's the query to work with that:
 
 ```ts
-import {paginate} from "blitz"
-import db, {Prisma, Project} from "db"
+import { paginate } from "blitz"
+import db, { Prisma, Project } from "db"
 
 type GetProjectsInput = {
   where?: Prisma.ProjectFindManyArgs["where"]
@@ -65,8 +69,8 @@ type GetProjectsInput = {
 }
 
 export default async function getProjects(
-  {where, orderBy, take, skip}: GetProjectsInput,
-  ctx: Record<any, unknown> = {},
+  { where, orderBy, take, skip }: GetProjectsInput,
+  ctx: Record<any, unknown> = {}
 ) {
   const projects = await db.project.findMany({
     where,
@@ -78,12 +82,12 @@ export default async function getProjects(
     console.log("HTTP referer:", ctx.referer)
   }
 
-  const {items: projects, hasMore, nextPage, count} = await paginate({
+  const { items: projects, hasMore, nextPage, count } = await paginate({
     skip,
     take,
-    count: () => db.project.count({where}),
+    count: () => db.project.count({ where }),
     query: (paginateArgs) =>
-      db.project.findMany({...paginateArgs, where, orderBy}),
+      db.project.findMany({ ...paginateArgs, where, orderBy }),
   })
 
   return {

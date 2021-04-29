@@ -44,7 +44,7 @@ set that up.
 
 ```typescript
 // index.ts
-import {RecipeBuilder} from "@blitzjs/installer"
+import { RecipeBuilder } from "@blitzjs/installer"
 
 export default RecipeBuilder().build()
 ```
@@ -60,7 +60,7 @@ they can look for support if they need it.
 RecipeBuilder()
   .setName("My Package")
   .setDescription(
-    "A little bit of information about what exactly is being installed.",
+    "A little bit of information about what exactly is being installed."
   )
   .setOwner("Fake Author <blitz@blitzjs.com>")
   .setRepoLink("https://github.com/fake-author/my-recipe")
@@ -107,8 +107,8 @@ builder.addAddDependenciesStep({
   stepName: "Add npm dependencies",
   explanation: `We'll install the Tailwind library itself, as well as PostCSS for removing unused styles from our production bundles.`,
   packages: [
-    {name: "tailwindcss", version: "1"},
-    {name: "postcss-preset-env", version: "latest", isDevDep: true},
+    { name: "tailwindcss", version: "1" },
+    { name: "postcss-preset-env", version: "latest", isDevDep: true },
   ],
 })
 ```
@@ -130,7 +130,7 @@ anywhere in your recipe's file structure, you supply the path as a part of
 the recipe definition.
 
 ```typescript
-import {join} from "path"
+import { join } from "path"
 
 builder.addNewFilesStep({
   stepId: "addStyles",
@@ -161,7 +161,7 @@ path is a glob pattern, the installer process will prompt the user to
 select a file matching the pattern.
 
 ```typescript
-import {addImport, paths} from "@blitzjs/installer"
+import { addImport, paths } from "@blitzjs/installer"
 import j from "jscodeshift"
 import Collection from "jscodeshift/src/Collection"
 
@@ -173,7 +173,7 @@ builder.addTransformFilesStep({
   transform(program: Collection<j.Program>) {
     const stylesImport = j.importDeclaration(
       [],
-      j.literal("app/styles/index.css"),
+      j.literal("app/styles/index.css")
     )
     return addImport(program, stylesImport)!
   },
@@ -187,15 +187,19 @@ testing, the tests are quick to write:
 
 ```typescript
 import j from "jscodeshift"
-import { customTsParser } from "@blitzjs/installer";
-
+import { customTsParser } from "@blitzjs/installer"
 
 const sampleFile = `export default function Comp() {
   return <div>hello!</div>;
 })`
-expect(addImport(j(sampleFile, {
-  parser: customTsParser
-}), newImport).toSource()).toMatchSnapshot()
+expect(
+  addImport(
+    j(sampleFile, {
+      parser: customTsParser,
+    }),
+    newImport
+  ).toSource()
+).toMatchSnapshot()
 ```
 
 #### Modifying Non-JS files

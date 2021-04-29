@@ -21,11 +21,11 @@ automatically provides awesome features such as automatic caching and
 revalidation.
 
 ```ts
-import {useQuery} from "blitz"
+import { useQuery } from "blitz"
 import getProject from "app/projects/queries/getProject"
 
 function App() {
-  const [project] = useQuery(getProject, {where: {id: 1}})
+  const [project] = useQuery(getProject, { where: { id: 1 } })
 }
 ```
 
@@ -88,10 +88,10 @@ before they can execute. To do this, use the enabled option to tell a
 query when it is ready to turn on:
 
 ```tsx
-const [user] = useQuery(getUser, {where: {id: props.query.id}})
+const [user] = useQuery(getUser, { where: { id: props.query.id } })
 const [projects] = useQuery(
   getProjects,
-  () => ({where: {userId: user.id}}, {enabled: user}),
+  () => ({ where: { userId: user.id } }, { enabled: user })
 )
 ```
 
@@ -111,11 +111,11 @@ Use the [`useInfiniteQuery`](./use-infinite-query) hook
 Both of the following will cache the `getProject` query.
 
 ```ts
-const project = await getProject({where: {id: props.id}})
+const project = await getProject({ where: { id: props.id } })
 ```
 
 ```tsx
-<a onMouseEnter={() => getProject({where: {id: projectId}})}>
+<a onMouseEnter={() => getProject({ where: { id: projectId } })}>
   View Project
 </a>
 ```
@@ -130,7 +130,7 @@ rendered on the server.
 The following example demonstrates how prefetching works in Blitz.
 
 ```tsx
-import {QueryClient, getQueryKey, useQuery, dehydrate} from "blitz"
+import { QueryClient, getQueryKey, useQuery, dehydrate } from "blitz"
 
 import getProject from "app/projects/queries/getProject"
 
@@ -139,7 +139,7 @@ export const getStaticProps = async (context) => {
   const queryKey = getQueryKey(getProject)
 
   await queryClient.prefetchQuery(queryKey, () =>
-    getProject({where: {id: context.params?.projectId}}),
+    getProject({ where: { id: context.params?.projectId } })
   )
 
   return {
@@ -149,8 +149,8 @@ export const getStaticProps = async (context) => {
   }
 }
 
-function ProjectPage({project}) {
-  const [project] = useQuery(getProject, {where: {id: props.id}})
+function ProjectPage({ project }) {
+  const [project] = useQuery(getProject, { where: { id: props.id } })
   return <div>{project.name}</div>
 }
 
@@ -177,12 +177,12 @@ import getProject from "app/projects/queries/getProject"
 
 export const getStaticProps = async (context) => {
   const project = await getProject({
-    where: {id: context.params?.projectId},
+    where: { id: context.params?.projectId },
   })
-  return {props: {project}}
+  return { props: { project } }
 }
 
-function ProjectPage({project}) {
+function ProjectPage({ project }) {
   return <div>{project.name}</div>
 }
 

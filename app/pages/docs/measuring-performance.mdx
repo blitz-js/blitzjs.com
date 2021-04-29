@@ -15,7 +15,7 @@ export function reportWebVitals(metric) {
   console.log(metric)
 }
 
-function MyApp({Component, pageProps}) {
+function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
 
@@ -161,7 +161,7 @@ export function reportWebVitals(metric) {
   if (navigator.sendBeacon) {
     navigator.sendBeacon(url, body)
   } else {
-    fetch(url, {body, method: "POST", keepalive: true})
+    fetch(url, { body, method: "POST", keepalive: true })
   }
 }
 ```
@@ -172,7 +172,7 @@ export function reportWebVitals(metric) {
 > (to calculate percentiles, etc...).
 >
 > ```js
-> export function reportWebVitals({id, name, label, value}) {
+> export function reportWebVitals({ id, name, label, value }) {
 >   ga("send", "event", {
 >     eventCategory:
 >       label === "web-vital" ? "Web Vitals" : "Blitz custom metric",

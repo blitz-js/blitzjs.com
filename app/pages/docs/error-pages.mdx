@@ -34,7 +34,7 @@ component. If you wish to override it, define the file
 `app/pages/_error.js` and add the following code:
 
 ```jsx
-function Error({statusCode}) {
+function Error({ statusCode }) {
   return (
     <p>
       {statusCode
@@ -44,9 +44,9 @@ function Error({statusCode}) {
   )
 }
 
-Error.getInitialProps = ({res, err}) => {
+Error.getInitialProps = ({ res, err }) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return {statusCode}
+  return { statusCode }
 }
 
 export default Error
@@ -66,7 +66,7 @@ in suspense.
 In essence, the default configuration is:
 
 ```tsx
-export default function App({Component, pageProps}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback} {...etc}>
       {getLayout(<Component {...pageProps} />)}
@@ -159,7 +159,7 @@ It accepts two props:
 - `title` - a string to display as the error message
 
 ```jsx
-import {ErrorComponent} from "blitz"
+import { ErrorComponent } from "blitz"
 
 export default function Page() {
   return <ErrorComponent statusCode={404} />
@@ -167,7 +167,7 @@ export default function Page() {
 ```
 
 ```jsx
-import {ErrorComponent} from "blitz"
+import { ErrorComponent } from "blitz"
 
 export default function Page() {
   return <ErrorComponent statusCode={401} title="Unauthorized" />

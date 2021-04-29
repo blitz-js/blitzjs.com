@@ -30,7 +30,7 @@ curious, you can
 [see the source code for these](https://github.com/blitz-js/blitz/blob/canary/packages/core/src/errors.ts).
 
 ```ts
-import {AuthenticationError} from "blitz"
+import { AuthenticationError } from "blitz"
 
 try {
   throw new AuthenticationError()
@@ -57,14 +57,18 @@ It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import {AppProps, ErrorComponent, useQueryErrorResetBoundary} from "blitz"
-import {ErrorBoundary} from "react-error-boundary"
+import {
+  AppProps,
+  ErrorComponent,
+  useQueryErrorResetBoundary,
+} from "blitz"
+import { ErrorBoundary } from "react-error-boundary"
 import LoginForm from "app/auth/components/LoginForm"
 
-export default function App({Component, pageProps}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   // This ensures the Blitz useQuery hooks will automatically refetch
   // data any time you reset the error boundary
-  const {reset} = useQueryErrorResetBoundary()
+  const { reset } = useQueryErrorResetBoundary()
 
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback} onReset={reset}>
@@ -73,7 +77,7 @@ export default function App({Component, pageProps}: AppProps) {
   )
 }
 
-function RootErrorFallback({error, resetErrorBoundary}) {
+function RootErrorFallback({ error, resetErrorBoundary }) {
   if (error.name === "AuthenticationError") {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error.name === "AuthorizationError") {
@@ -127,7 +131,7 @@ import SuperJson from "superjson"
 
 export class UsernameTakenError extends Error {
   name = "UsernameTakenError"
-  constructor({suggestedUserName}) {
+  constructor({ suggestedUserName }) {
     super()
     this.suggestedUserName = suggestedUserName
   }
@@ -136,7 +140,7 @@ export class UsernameTakenError extends Error {
 SuperJson.registerClass(UsernameTakenError)
 SuperJson.allowErrorProps("suggestedUserName")
 
-throw new UsernameTakenError({suggestedUserName: "second_best"})
+throw new UsernameTakenError({ suggestedUserName: "second_best" })
 ```
 
 Note that you **must register it with SuperJson** as shown above in order

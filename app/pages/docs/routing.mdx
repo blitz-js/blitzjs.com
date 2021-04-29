@@ -45,7 +45,7 @@ to match named parameters.
 Consider the following page `app/pages/post/[pid].js`:
 
 ```jsx
-import {useParam} from "blitz"
+import { useParam } from "blitz"
 
 const Post = () => {
   const pid = useParam("pid")
@@ -64,14 +64,14 @@ parameters.
 For example, the route `/post/abc` will have the following `query` object:
 
 ```json
-{"pid": "abc"}
+{ "pid": "abc" }
 ```
 
 Similarly, the route `/post/abc?foo=bar` will have the following `query`
 object:
 
 ```json
-{"foo": "bar", "pid": "abc"}
+{ "foo": "bar", "pid": "abc" }
 ```
 
 However, route parameters will override query parameters with the same
@@ -79,7 +79,7 @@ name. For example, the route `/post/abc?pid=123` will have the following
 `query` object:
 
 ```json
-{"pid": "abc"}
+{ "pid": "abc" }
 ```
 
 Multiple dynamic route segments work the same way. The page
@@ -87,7 +87,7 @@ Multiple dynamic route segments work the same way. The page
 `/post/abc/a-comment` and its `query` object will be:
 
 ```json
-{"pid": "abc", "comment": "a-comment"}
+{ "pid": "abc", "comment": "a-comment" }
 ```
 
 ### Catch all routes {#catch-all-routes}
@@ -105,14 +105,14 @@ example) to the page, and it will always be an array, so, the path
 `/post/a` will have the following `query` object:
 
 ```json
-{"slug": ["a"]}
+{ "slug": ["a"] }
 ```
 
 And in the case of `/post/a/b`, and any other matching path, new
 parameters will be added to the array, like so:
 
 ```json
-{"slug": ["a", "b"]}
+{ "slug": ["a", "b"] }
 ```
 
 ### Optional catch all routes {#optional-catch-all-routes}

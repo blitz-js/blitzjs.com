@@ -20,7 +20,7 @@ module.exports = {
 You can also use a function:
 
 ```js
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   return {
     /* config options here */
   }
@@ -33,9 +33,9 @@ can see the available phases
 Phases can be imported from `next/constants`:
 
 ```js
-const {PHASE_DEVELOPMENT_SERVER} = require("next/constants")
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants")
 
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       /* development only config options here */
@@ -1041,16 +1041,22 @@ Original pages:
 module.exports = {
   exportPathMap: async function (
     defaultPathMap,
-    {dev, dir, outDir, distDir, buildId},
+    { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      "/": {page: "/"},
-      "/about": {page: "/about"},
-      "/p/hello-nextjs": {page: "/post", query: {title: "hello-nextjs"}},
-      "/p/learn-nextjs": {page: "/post", query: {title: "learn-nextjs"}},
+      "/": { page: "/" },
+      "/about": { page: "/about" },
+      "/p/hello-nextjs": {
+        page: "/post",
+        query: { title: "hello-nextjs" },
+      },
+      "/p/learn-nextjs": {
+        page: "/post",
+        query: { title: "learn-nextjs" },
+      },
       "/p/deploy-nextjs": {
         page: "/post",
-        query: {title: "deploy-nextjs"},
+        query: { title: "deploy-nextjs" },
       },
     }
   },

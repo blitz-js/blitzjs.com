@@ -176,9 +176,38 @@ const projects = await db.project.findMany({
 
 ## Mutations {#mutations}
 
-You must also filter mutations by `organizationId` to ensure another
-user's data can't be updated. And when creating new entities, ensure you
-set `organizationId` to the current organization (`ctx.session.orgId`).
+When creating new entities, make sure you attach them to the current
+organization. Here's an example of how to do that:
+
+```ts
+import {resolver} from "blitz"
+import db from "db"
+import * as z from "zod"
+
+const CreateProject = z
+  .object({
+    name: z.string(),
+  })
+  .nonstrict()
+
+export default resolver.pipe(
+  resolver.zod(CreateProject),
+  resolver.authorize(),
+  async (input, ctx) => {
+    const project = await db.project.create({
+      data: {
+        ...input,
+        organizationId: ctx.session.orgId,
+      },
+    })
+
+    return project
+  },
+)
+```
+
+You must also filter update and delete mutations by `organizationId` to
+ensure another user's data can't be changed.
 
 Here's an example where a mutation accepts `id` that could be the id of an
 entity belonging to a different organization. You could first make a

@@ -3,11 +3,8 @@ title: blitz.config.js
 sidebar_label: blitz.config.js
 ---
 
-You can customize advanced behavior of Blitz with `blitz.config.js`.
-
-`blitz.config.js` is a regular Node.js module, not a JSON file. It gets
-used by the Blitz server and build phases, and it's not included in the
-browser build.
+You can customize advanced behavior of Blitz with `blitz.config.js` or
+`blitz.config.ts`.
 
 Take a look at the following `blitz.config.js` example:
 
@@ -33,7 +30,7 @@ can see the available phases
 Phases can be imported from `next/constants`:
 
 ```js
-const {PHASE_DEVELOPMENT_SERVER} = require("next/constants")
+import {PHASE_DEVELOPMENT_SERVER} from "next/constants"
 
 module.exports = (phase, {defaultConfig}) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
@@ -56,10 +53,6 @@ However, none of the configs are required, and it's not necessary to
 understand what each config does, instead, search for the features you
 need to enable or modify in this section and they will show you what to
 do.
-
-> Avoid using new JavaScript features not available in your target Node.js
-> version. `blitz.config.js` will not be parsed by Webpack, Babel or
-> TypeScript.
 
 ## Webpack Config {#webpack-config}
 
@@ -92,9 +85,6 @@ module.exports = {
   target: "serverless",
 }
 ```
-
-> Deployments to [Vercel](https://vercel.com) will automatically enable
-> this target. You should not opt-into it yourself.
 
 ## Middleware {#middleware}
 
@@ -144,8 +134,9 @@ module.exports = {
 
 ### Proxy support {#proxy-support}
 
-Proxy support is enabled automatically for recipe install if either `http_proxy` or `https_proxy`
-environment variable is present. You can also set proxy using:
+Proxy support is enabled automatically for recipe install if either
+`http_proxy` or `https_proxy` environment variable is present. You can
+also set proxy using:
 
 ```js
 module.exports = {
@@ -157,7 +148,8 @@ module.exports = {
 }
 ```
 
-Please note that proxy configuration in `blitz.config.js` will override environment proxy configuration.
+Please note that proxy configuration in `blitz.config.js` will override
+environment proxy configuration.
 
 ## CDN Support with Asset Prefix {#cdn-support-with-asset-prefix}
 

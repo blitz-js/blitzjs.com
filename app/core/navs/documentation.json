@@ -48,7 +48,6 @@
     },
     "pages": [
       "pages",
-      "redirects",
       "error-pages",
       "head-component",
       "document-component",
@@ -73,6 +72,9 @@
       "link",
       "route-params-query",
       "router",
+      "redirects",
+      "rewrites",
+      "headers",
       "api-routes",
       "shallow-routing",
       "route-manifest"

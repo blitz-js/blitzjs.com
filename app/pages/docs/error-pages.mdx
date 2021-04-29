@@ -58,27 +58,31 @@ export default Error
 
 ## Customize the Error Boundary Fallback Component {#custom-error-boundary-component}
 
-The default `app/pages/_app.tsx` configures an error boundary which catches errors that happen during render, on the client side. This will also catch errors within `useQuery` or `useMutation` because they happen in suspense.
+The default `app/pages/_app.tsx` configures an error boundary which
+catches errors that happen during render, on the client side. This will
+also catch errors within `useQuery` or `useMutation` because they happen
+in suspense.
 
 In essence, the default configuration is:
 
 ```tsx
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({Component, pageProps}: AppProps) {
   return (
-    <ErrorBoundary
-      FallbackComponent={RootErrorFallback}
-      {...etc}
-    >
+    <ErrorBoundary FallbackComponent={RootErrorFallback} {...etc}>
       {getLayout(<Component {...pageProps} />)}
     </ErrorBoundary>
   )
 }
 ```
 
-The `RootErrorFallback` is rendered when a error happens within render, or a suspended mutation or query. By default:
+The `RootErrorFallback` is rendered when a error happens within render, or
+a suspended mutation or query. By default:
 
 ```tsx
-function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+function RootErrorFallback({
+  error,
+  resetErrorBoundary,
+}: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error instanceof AuthorizationError) {
@@ -90,7 +94,10 @@ function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
     )
   } else {
     return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+      <ErrorComponent
+        statusCode={error.statusCode || 400}
+        title={error.message || error.name}
+      />
     )
   }
 }
@@ -98,27 +105,47 @@ function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
 
 ### Authentication Error Component (401) {#custom-authentication-error-component}
 
-If your query, mutation, or render function `throw new AuthenticationError()` when the user is not authenticated, you can detect that within the error fallback:
+If your query, mutation, or render function
+`throw new AuthenticationError()` when the user is not authenticated, you
+can detect that within the error fallback:
 
 ```tsx
-function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+function RootErrorFallback({
+  error,
+  resetErrorBoundary,
+}: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
     return <MyCustomError error={error} onRetry={resetErrorBoundary} />
   }
-  return <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+  return (
+    <ErrorComponent
+      statusCode={error.statusCode || 400}
+      title={error.message || error.name}
+    />
+  )
 }
 ```
 
 ### Authorization Error Component (403) {#custom-authorization-error-component}
 
-Your query, mutation, or render function may call `throw new AuthorizationError()` when a user is authenticated but not authorized to do something. The error fallback may handle that:
+Your query, mutation, or render function may call
+`throw new AuthorizationError()` when a user is authenticated but not
+authorized to do something. The error fallback may handle that:
 
 ```tsx
-function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+function RootErrorFallback({
+  error,
+  resetErrorBoundary,
+}: ErrorFallbackProps) {
   if (error instanceof AuthorizationError) {
     return <MyCustomError error={error} onRetry={resetErrorBoundary} />
   }
-  return <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+  return (
+    <ErrorComponent
+      statusCode={error.statusCode || 400}
+      title={error.message || error.name}
+    />
+  )
 }
 ```
 

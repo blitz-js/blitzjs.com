@@ -401,13 +401,13 @@ undefined
 
 ## Update generated code for our model attributes {#update-generated-code-for-our-model-attributes}
 
-<!-- prettier-ignore-start -->
-:::info
-Before running the app again, we need to customize some of the
-code that has been generated. Ultimately, these fixes will not be needed -
-but for now, we need to work around a couple outstanding issues.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info">
+
+Before running the app again, we need to customize some of the code that
+has been generated. Ultimately, these fixes will not be needed - but for
+now, we need to work around a couple outstanding issues.
+
+</Card>
 
 The generated page content does not currently use the actual model
 attributes you defined during generation. It will soon, but in the
@@ -828,7 +828,7 @@ this!
 #### Now it’s time to add voting!
 
 First we need to open `app/choices/mutations/updateChoice.ts`, update the
-zod schema, and add add a vote increment.
+zod schema, and add a vote increment.
 
 ```diff
 const UpdateChoice = z

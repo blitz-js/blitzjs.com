@@ -31,14 +31,14 @@ function App() {
 
 For complete details, see the [`useQuery` documentation](./use-query).
 
-<!-- prettier-ignore-start -->
-:::info 🤔
-You may be wondering how that can work since it's importing
-server code into your component: At build time, the direct function import
-is swapped out with a network call. So the query function code is never
-included in your client code.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info" title="🤔">
+
+You may be wondering how that can work since it's importing server code
+into your component: At build time, the direct function import is swapped
+out with a network call. So the query function code is never included in
+your client code.
+
+</Card>
 
 ### Defaults to Keep in Mind {#defaults-to-keep-in-mind}
 
@@ -159,10 +159,10 @@ export default ProjectPage
 
 To ensure data is not shared between users and requests, a new query
 client is created for each page request. You can prefetch your data by
-invoking the `prefetchQuery` method on the newly-created client, passing in
-the query key and resolver along with any relevant input arguments. Once
-the data has been fetched, dehydrate the queries to the query client using
-the `dehydrate` method and pass the result to the page via the
+invoking the `prefetchQuery` method on the newly-created client, passing
+in the query key and resolver along with any relevant input arguments.
+Once the data has been fetched, dehydrate the queries to the query client
+using the `dehydrate` method and pass the result to the page via the
 `dehydratedState` prop.
 
 ## On the Server {#on-the-server}

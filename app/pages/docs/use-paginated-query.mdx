@@ -28,22 +28,18 @@ const ITEMS_PER_PAGE = 3
 
 const Projects = () => {
   const router = useRouter()
-  const { page = 0 } = useRouterQuery()
-  const [{ projects, hasMore }, { isPreviousData }] = usePaginatedQuery(
+  const page = Number(router.query.page) || 0
+  const [{ projects, hasMore }] = usePaginatedQuery(
     getProjects,
     {
-      skip: ITEMS_PER_PAGE * Number(page),
+      orderBy: {id: "asc"},
+      skip: ITEMS_PER_PAGE * page,
       take: ITEMS_PER_PAGE,
     }
   )
 
-  const goToPreviousPage = () =>
-    router.push({ query: { page: Number(page) - 1 } })
-  const goToNextPage = () => {
-    if (!isPreviousData && hasMore) {
-      router.push({ query: { page: Number(page) + 1 } })
-    }
-  }
+  const goToPreviousPage = () => router.push({query: {page: page - 1}})
+  const goToNextPage = () => router.push({query: {page: page + 1}})
 
   return (
     <div>
@@ -57,10 +53,7 @@ const Projects = () => {
       <button disabled={page === 0} onClick={goToPreviousPage}>
         Previous
       </button>
-      <button
-        disabled={isPreviousData || !hasMore}
-        onClick={goToNextPage}
-      >
+      <button disabled={!hasMore} onClick={goToNextPage}>
         Next
       </button>
     </div>
@@ -71,25 +64,30 @@ const Projects = () => {
 And here's the query to work with that:
 
 ```ts
-export default async function getProjects(
-  { where, orderBy, cursor, take, skip }: GetProjectsInput,
-  ctx: Record<any, any> = {}
-) {
-  const projects = await db.project.findMany({
-    where,
-    orderBy,
-    take,
-    skip,
-  })
+import { paginate, resolver } from "blitz"
+import db, { Prisma } from "db"
 
-  const count = await db.project.count()
-  const hasMore = skip! + take! < count
+interface GetProjectsInput
+  extends Pick<Prisma.ProjectFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
 
-  return {
-    projects,
-    hasMore,
+export default resolver.pipe(
+  resolver.authorize(),
+  async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
+    const { items: projects, hasMore, nextPage, count } = await paginate({
+      skip,
+      take,
+      count: () => db.project.count({ where }),
+      query: (paginateArgs) => db.project.findMany({ ...paginateArgs, where, orderBy }),
+    })
+
+    return {
+      projects,
+      nextPage,
+      hasMore,
+      count,
+    }
   }
-}
+)
 ```
 
 ## API {#api}

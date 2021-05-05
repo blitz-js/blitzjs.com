@@ -10,7 +10,7 @@ Sign up for an account on [Railway](https://railway.app) - they have a
 
 ![Screen Shot 2021-05-04 at 6 11 09 PM](https://user-images.githubusercontent.com/19371989/117007314-13ee3580-ad1c-11eb-9705-2ca9b5f545bd.png)
 
-## Set up a new project
+## Set up a new project {#setup}
 
 1. Create a new project (via your
    [Dashboard](https://railway.app/dashboard) or `⌘ + /` shortcut)
@@ -101,12 +101,11 @@ following the [GUI](#gui) steps below from Step 2 onward.
 
 Blitz requires the `SESSION_SECRET_KEY` variable to be set. Go to your
 project on the GUI, select the **Variables** link and enter
-`SESSION_SECRET_KEY` as the name of the variables a random 32-key secret
+`SESSION_SECRET_KEY` as the name of the variable and a random 32-key secret
 as its value. Click **Add** to add the variable.
 
 Enter other environment variables that you require. The `DATABASE_URL`
-variable will be automatically set by Railway if you provision a
-PostgreSQL database.
+variable will be automatically set by Railway if you provision a database.
 
 2. Go to the **Deployments** section. If your project is on GitHub, you
    can click on **Connect GitHub** to deploy and connect directly to your

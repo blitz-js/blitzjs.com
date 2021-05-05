@@ -3,23 +3,32 @@ title: Deploy to a Server on Railway
 sidebar_label: To Railway
 ---
 
-1. Sign up for an account on [Railway](https://railway.app) - they have a
+## If you don't have a Railway account {#signup}
+
+Sign up for an account on [Railway](https://railway.app) - they have a
    free tier that is sufficient for small applications.
 
 ![Screen Shot 2021-05-04 at 6 11 09 PM](https://user-images.githubusercontent.com/19371989/117007314-13ee3580-ad1c-11eb-9705-2ca9b5f545bd.png)
 
-2. Create a new project (via your
-   [Dashboard](https://railway.app/dashboard) if not prompted)
+## Set up a new project
+
+1. Create a new project (via your
+   [Dashboard](https://railway.app/dashboard) or `⌘ + /` shortcut)
 
 ![Screen Shot 2021-05-04 at 5 19 28 PM](https://user-images.githubusercontent.com/19371989/117007376-28323280-ad1c-11eb-90a5-9fa5c165f5df.png)
 
-3. If a database is required, select **Provision PostgreSQL** (or
+2. If a database is required, select **Provision PostgreSQL** (or
    MongoDB/MySQL/Redis - whichever flavour your app requires). Once the
    database is provisioned, you will see the Project Setup page.
 
 ![Screen Shot 2021-05-04 at 6 01 16 PM](https://user-images.githubusercontent.com/19371989/117007600-6deefb00-ad1c-11eb-876c-22a374c1f535.png)
 
 If a database is not required, select **Deploy From Repo**.
+
+There are two ways to set up your project on Railway:
+
+1. [Via the command line interface (CLI)](#cli)
+2. [Via Railway's user interface (GUI)](#gui)
 
 ### Via CLI {#cli}
 

@@ -1016,6 +1016,9 @@ export default resolver.pipe(
 +         })),
 +       },
 +     },
++     include: {
++       choices: true,
++     },
 +   })
 
     return question
@@ -1028,6 +1031,12 @@ is a special operation that means, "If this item exists, update it. Else
 create it". This is perfect for this case because we didn't require the
 user to add three choices when creating the question. So if later the user
 adds another choice by editing the question, then it'll be created here.
+
+## Cleanup
+
+In order for `yarn tsc` or `git push` to succeed, you'll need to delete
+`app/choices/mutations/createChoice.ts` (unused) or update the
+CreateChoice zod schema to include the required fields.
 
 ## Conclusion {#conclusion}
 

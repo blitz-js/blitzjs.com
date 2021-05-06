@@ -162,7 +162,7 @@ export default passportAuth({
             roles: [user.role],
             source: "twitter",
           }
-          done(null, { publicData })
+          done(undefined, { publicData })
         }
       ),
     },
@@ -200,7 +200,7 @@ app**.
 from your `verify` callback.
 
 ```ts
-done(null, result)
+done(undefined, result)
 ```
 
 where `result` is an object of type `VerifyCallbackResult`
@@ -245,7 +245,7 @@ should be sent after they are authenticated. They are listed here in order
 of priority. A URL provided with method #1 will override all other URLs.
 
 1. Add `redirectUrl` to the `verify` callback result
-   - Example: `done(null, {publicData, redirectUrl: '/'})`
+   - Example: `done(undefined, {publicData, redirectUrl: '/'})`
 2. Add a `redirectUrl` query parameter to the "initiate login" url
    - Example: `example.com/api/auth/twitter?redirectUrl=/dashboard`
    - Example:

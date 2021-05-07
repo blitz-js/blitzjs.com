@@ -52,12 +52,12 @@ pages.
 
 ### First Render UX {#first-render-ux}
 
-Blitz tries to automatically pre-render the HTML for your pages, but if
-your page contains dynamic data fetched with [useQuery](./use-query)
-hooks, Blitz will fallback to the page's loading state and you will not
-see much benefit from the automatic pre-rendering, because the application
-will need to immediately make another request to fetch the data it needs
-to satisfy the query.
+To provide a better User Experience (UX), Blitz tries to automatically
+pre-render the HTML for your pages, but if your page contains dynamic data
+fetched with [useQuery](./use-query) hooks, Blitz will fallback to the
+page's loading state and you will not see much benefit from the automatic
+pre-rendering, because the application will need to immediately make
+another request to fetch the data it needs to satisfy the query.
 
 In this case you can set `Page.suppressFirstRenderFlicker = true`, and
 Blitz will hide the first render's content. This will result in a tiny
@@ -78,7 +78,7 @@ export default Page
 You can also consider prefetching all of the necessary queries that your
 page needs to complete its first render. You can use either the
 `getStaticProps` or `getServerSideProps` page functions, depending on what
-you needs.
+you need.
 
 If you create an instance of QueryClient and populate it with query data,
 then you can pass it as `dehydratedState` to your page props. Blitz will

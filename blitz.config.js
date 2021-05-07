@@ -27,8 +27,8 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: "/meetup",
-        destination: "https://us02web.zoom.us/j/85901497017?pwd=MVFMUXJOQndqbDNJaU1BK2N0ZjNpQT09",
+        source: "/joinmeetup",
+        destination: "https://us02web.zoom.us/j/85901497017?pwd=eVo4YlhsU2E3UHQvUmgxTmtRUDBIZz09",
         permanent: false,
       },
     ]

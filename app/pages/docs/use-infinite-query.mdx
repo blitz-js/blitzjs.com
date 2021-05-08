@@ -28,7 +28,7 @@ function Projects(props) {
   )
   return (
     <>
-      {projectPages.map((group, i) => (
+      {projectPages.map((page, i) => (
         <React.Fragment key={i}>
           {page.projects.map((project) => (
             <p key={project.id}>{project.name}</p>

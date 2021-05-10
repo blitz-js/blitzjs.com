@@ -89,10 +89,7 @@ query when it is ready to turn on:
 
 ```tsx
 const [user] = useQuery(getUser, { where: { id: props.query.id } })
-const [projects] = useQuery(
-  getProjects,
-  () => ({ where: { userId: user.id } }, { enabled: user })
-)
+const [projects] = useQuery(getProjects, { where: { userId: user.id } }, { enabled: user }))
 ```
 
 ### Pagination {#pagination}

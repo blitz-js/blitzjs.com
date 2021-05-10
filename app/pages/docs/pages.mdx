@@ -86,6 +86,15 @@ automatically use the state to build the query cache later when the page
 tries to render.
 
 ```tsx
+import {
+  useQuery, 
+  getQueryKey, 
+  invokeWithMiddleware, 
+  dehydrate, 
+  QueryClient, 
+  BlitzPage, 
+  GetServerSidePropsContext
+} from 'blitz'
 const Page: BlitzPage = () => {
   // highlight-start
   const [organization] = useQuery(getCurrentOrganization, null)

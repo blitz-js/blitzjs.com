@@ -34,7 +34,7 @@ fetching from third-party APIs.
 
 ```ts
 // app/products/mutations/createProduct.tsx
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -46,7 +46,7 @@ const CreateProject = z
 
 export default async function createProject(
   input: z.infer<typeof CreateProject>,
-  ctx: Ctx,
+  ctx: Ctx
 ) {
   // Validate input - very importnant for security
   const data = CreateProject.parse(input)
@@ -54,7 +54,7 @@ export default async function createProject(
   // Require user to be logged in
   ctx.session.$authorize()
 
-  const project = await db.project.create({data})
+  const project = await db.project.create({ data })
 
   // Can do any processing, fetching from other APIs, etc
 

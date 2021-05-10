@@ -17,7 +17,7 @@ module.exports = {
 You can also use a function:
 
 ```js
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   return {
     /* config options here */
   }
@@ -30,9 +30,9 @@ can see the available phases
 Phases can be imported from `next/constants`:
 
 ```js
-import {PHASE_DEVELOPMENT_SERVER} from "next/constants"
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants"
 
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       /* development only config options here */

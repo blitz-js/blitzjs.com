@@ -43,7 +43,7 @@ project (this is included in new apps by default).
 
 ```ts
 // types.ts
-import {DefaultCtx, SessionContext} from "blitz"
+import { DefaultCtx, SessionContext } from "blitz"
 
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {
@@ -56,7 +56,7 @@ Whatever types you add to `Ctx` add will be automatically available in
 your queries and mutations as shown here.
 
 ```ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function getThing(input, ctx: Ctx) {
   // Properly typed
@@ -71,8 +71,8 @@ by exporting a `middleware` array from a query or mutation.
 
 ```ts
 // app/products/queries/getProduct.tsx
-import {Middleware} from "blitz"
-import db, {FindOneProjectArgs} from "db"
+import { Middleware } from "blitz"
+import db, { FindOneProjectArgs } from "db"
 
 type GetProjectInput = {
   where: FindOneProjectArgs["where"]
@@ -89,11 +89,11 @@ export const middleware: Middleware[] = [
 ]
 
 export default async function getProject(
-  {where}: GetProjectInput,
-  ctx: Record<any, unknown> = {},
+  { where }: GetProjectInput,
+  ctx: Record<any, unknown> = {}
 ) {
   console.log("Referer:", ctx.referer)
-  return await db.project.findOne({where})
+  return await db.project.findOne({ where })
 }
 ```
 
@@ -106,7 +106,7 @@ middleware by doing `return next()` or `await next()`. See below for the
 `connectMiddleware()` adapter for existing connect middleware.
 
 ```js
-import {Middleware} from "blitz"
+import { Middleware } from "blitz"
 
 const middleware: Middleware = async (req, res, next) => {
   res.blitzCtx.referer = req.headers.referer
@@ -213,7 +213,7 @@ middleware to Blitz middleware.
 
 ```ts
 // blitz.config.js
-const {connectMiddleware} = require("blitz")
+const { connectMiddleware } = require("blitz")
 const Cors = require("cors")
 
 const cors = Cors({

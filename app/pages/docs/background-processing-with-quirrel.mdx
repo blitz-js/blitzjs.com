@@ -57,7 +57,7 @@ First, you define your
 ```ts
 // app/api/booking-reminder
 import db from "db"
-import {Queue} from "quirrel/blitz"
+import { Queue } from "quirrel/blitz"
 import sms from "some-sms-provider"
 
 // it's important to export it as default
@@ -65,15 +65,15 @@ export default Queue(
   "api/booking-reminder", // 👈 the route that it's reachable on
   async (bookingId: number) => {
     const booking = await db.booking.findUnique({
-      where: {id: bookingId},
-      include: {user: true, event: true},
+      where: { id: bookingId },
+      include: { user: true, event: true },
     })
 
     await sms.send({
       to: booking.user.phoneNumber,
       content: `Put on your dancing shoes for ${booking.event.title} 🕺`,
     })
-  },
+  }
 )
 ```
 
@@ -137,7 +137,7 @@ the perfect fit.
 ```ts
 // app/api/monthly-invoice
 import db from "db"
-import {CronJob} from "quirrel/blitz"
+import { CronJob } from "quirrel/blitz"
 import stripe from "stripe"
 
 export default CronJob(
@@ -148,9 +148,9 @@ export default CronJob(
     await Promise.all(
       customers.map(async (customer) => {
         await stripe.finalizeInvoice(customer.stripeId)
-      }),
+      })
     )
-  },
+  }
 )
 ```
 
@@ -161,8 +161,8 @@ Again, [`CronJob`](https://docs.quirrel.dev/api/cronjob) is a great fit.
 ```ts
 // app/api/remove-old-data
 import db from "db"
-import {CronJob} from "quirrel/blitz"
-import {subDays} from "date-fns"
+import { CronJob } from "quirrel/blitz"
+import { subDays } from "date-fns"
 
 export default CronJob(
   "api/remove-old-data", // 👈 the route that it's reachable on
@@ -178,7 +178,7 @@ export default CronJob(
         },
       },
     })
-  },
+  }
 )
 ```
 
@@ -204,7 +204,7 @@ import csvProcessingQueue from "app/api/process-csv"
 
 export default async function uploadCsvForProcessing(data: string) {
   const record = await db.uploadedCsv.create({
-    data: {data},
+    data: { data },
   })
 
   await csvProcessingQueue.enqueue(record.id)
@@ -221,16 +221,16 @@ set it to true).
 ```ts
 // app/api/process-csv
 import db from "db"
-import {Queue} from "quirrel/blitz"
+import { Queue } from "quirrel/blitz"
 
 export default Queue("api/process-csv", async (uploadId: number) => {
   const upload = await db.uplodadedCsv.findUnique({
-    where: {id: uploadId},
+    where: { id: uploadId },
   })
 
   await doYourProcessing(upload.data)
 
-  await db.uplodadedCsv.delete({where: {id: uploadId}})
+  await db.uplodadedCsv.delete({ where: { id: uploadId } })
 })
 ```
 
@@ -242,7 +242,7 @@ can look it up in your own database:
 import db from "db"
 
 export default async function hasFinishedProcessing(uploadId: number) {
-  const count = await db.uploadedCsv.count({where: {uploadId}})
+  const count = await db.uploadedCsv.count({ where: { uploadId } })
   return count === 0
 }
 ```

@@ -12,19 +12,23 @@ this case, you can `useInfiniteQuery` as shown in the following example.
 ### Example {#example}
 
 ```ts
-import {useInfiniteQuery} from "blitz"
+import { useInfiniteQuery } from "blitz"
 import getProjects from "app/projects/queries/getProjects"
 
 function Projects(props) {
   const [
     projectPages,
-    {isFetching, isFetchingNextPage, fetchNextPage, hasNextPage},
-  ] = useInfiniteQuery(getProjects, (page = {take: 3, skip: 0}) => page, {
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-  })
+    { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage },
+  ] = useInfiniteQuery(
+    getProjects,
+    (page = { take: 3, skip: 0 }) => page,
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    }
+  )
   return (
     <>
-      {projectPages.map((group, i) => (
+      {projectPages.map((page, i) => (
         <React.Fragment key={i}>
           {page.projects.map((project) => (
             <p key={project.id}>{project.name}</p>
@@ -54,45 +58,34 @@ function Projects(props) {
 And here's the query to work with that:
 
 ```ts
-import {paginate} from "blitz"
-import db, {Prisma, Project} from "db"
+import { paginate, resolver } from "blitz"
+import db, { Prisma } from "db"
 
-type GetProjectsInput = {
-  where?: Prisma.ProjectFindManyArgs["where"]
-  orderBy?: Prisma.ProjectFindManyArgs["orderBy"]
-  skip?: number
-  take?: number
-}
+interface GetProjectsInput
+  extends Pick<
+    Prisma.ProjectFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"
+  > {}
 
-export default async function getProjects(
-  {where, orderBy, take, skip}: GetProjectsInput,
-  ctx: Record<any, unknown> = {},
-) {
-  const projects = await db.project.findMany({
-    where,
-    orderBy,
-    take,
-    skip,
-  })
-  if (ctx.referer) {
-    console.log("HTTP referer:", ctx.referer)
+export default resolver.pipe(
+  resolver.authorize(),
+  async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
+    const { items: projects, hasMore, nextPage, count } = await paginate({
+      skip,
+      take,
+      count: () => db.project.count({ where }),
+      query: (paginateArgs) =>
+        db.project.findMany({ ...paginateArgs, where, orderBy }),
+    })
+
+    return {
+      projects,
+      nextPage,
+      hasMore,
+      count,
+    }
   }
-
-  const {items: projects, hasMore, nextPage, count} = await paginate({
-    skip,
-    take,
-    count: () => db.project.count({where}),
-    query: (paginateArgs) =>
-      db.project.findMany({...paginateArgs, where, orderBy}),
-  })
-
-  return {
-    projects,
-    nextPage,
-    hasMore,
-    count,
-  }
-}
+)
 ```
 
 ## API {#api}

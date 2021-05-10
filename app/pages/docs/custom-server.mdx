@@ -20,13 +20,13 @@ Here's an example custom server:
 ```ts
 // server.ts
 import blitz from "blitz/custom-server"
-import {createServer} from "http"
-import {parse} from "url"
-import {log} from "@blitzjs/display"
+import { createServer } from "http"
+import { parse } from "url"
+import { log } from "@blitzjs/display"
 
-const {PORT = "3000"} = process.env
+const { PORT = "3000" } = process.env
 const dev = process.env.NODE_ENV !== "production"
-const app = blitz({dev})
+const app = blitz({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
@@ -34,7 +34,7 @@ app.prepare().then(() => {
     // Be sure to pass `true` as the second argument to `url.parse`.
     // This tells it to parse the query portion of the URL.
     const parsedUrl = parse(req.url!, true)
-    const {pathname} = parsedUrl
+    const { pathname } = parsedUrl
 
     if (pathname === "/hello") {
       res.writeHead(200).end("world")

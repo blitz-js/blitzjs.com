@@ -11,7 +11,7 @@ optionally provide a type argument to narrow the parameters and types that
 are returned.
 
 ```tsx
-import {useParams} from "blitz"
+import { useParams } from "blitz"
 
 const params = useParams()
 // ReturnType: Record<string, undefined | string | string[]>
@@ -31,7 +31,7 @@ const params = useParams("array")
 ```tsx
 // File: app/products/pages/products/[id].tsx
 // URL: /products/2
-import {useParams} from "blitz"
+import { useParams } from "blitz"
 
 const params = useParams()
 // params = {id: "2"}
@@ -40,7 +40,7 @@ const params = useParams()
 ```tsx
 // File: app/pages/blog/[category]/[...slug].tsx
 // URL: /blog/tech/2020/1
-import {useParams} from "blitz"
+import { useParams } from "blitz"
 
 const params = useParams()
 // params = {category: "tech", slug: ["2020", "1"]}
@@ -59,7 +59,7 @@ return type is `undefined | string | string[]`, but you can optionally
 provide a type argument to cast the return type.
 
 ```tsx
-import {useParam} from "blitz"
+import { useParam } from "blitz"
 
 const param = useParam("id")
 // ReturnType: undefined | string | string[]
@@ -79,7 +79,7 @@ const param = useParam("id", "array")
 ```tsx
 // File: app/locations/pages/locations/[id]/[[...zipcode]].tsx
 // URL: /locations/2/02137
-import {useParam} from "blitz"
+import { useParam } from "blitz"
 
 const id = useParam("id", "number")
 // id = 2
@@ -90,7 +90,7 @@ const zipcodes = useParam("zipcode", "array")
 ```tsx
 // File: app/pages/blog/[slug].tsx
 // URL: /blog/hello-world
-import {useParam} from "blitz"
+import { useParam } from "blitz"
 
 const slug = useParam("slug", "string")
 // slug = "hello-world"
@@ -104,7 +104,7 @@ Parameter type is always `string`.
 ```tsx
 // URL: /products?sort=asc&limit=10
 
-import {useRouterQuery} from "blitz"
+import { useRouterQuery } from "blitz"
 
 const query = useRouterQuery()
 

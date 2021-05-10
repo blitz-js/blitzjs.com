@@ -180,7 +180,7 @@ When creating new entities, make sure you attach them to the current
 organization. Here's an example of how to do that:
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -202,7 +202,7 @@ export default resolver.pipe(
     })
 
     return project
-  },
+  }
 )
 ```
 
@@ -217,7 +217,7 @@ entity belonging to a different organization. You could first make a
 fail if the organizationId doesn't match.
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -231,7 +231,7 @@ const UpdateProject = z
 export default resolver.pipe(
   resolver.zod(UpdateProject),
   resolver.authorize(),
-  async ({id, ...data}, ctx) => {
+  async ({ id, ...data }, ctx) => {
     const project = await db.project.update({
       where: {
         id,
@@ -242,7 +242,7 @@ export default resolver.pipe(
     })
 
     return project
-  },
+  }
 )
 ```
 
@@ -252,8 +252,8 @@ You can do more advanced things like calling `ctx.session.$authorize()`
 inside an if/else
 
 ```ts
-import {resolver} from "blitz"
-import db, {GlobalRole, MembershipRole} from "db"
+import { resolver } from "blitz"
+import db, { GlobalRole, MembershipRole } from "db"
 import * as z from "zod"
 
 const UpdateProject = z
@@ -268,7 +268,7 @@ export default resolver.pipe(
   resolver.zod(UpdateProject),
   // Ensure all users are logged in
   resolver.authorize(),
-  async ({id, organizationId, ...data}, ctx) => {
+  async ({ id, organizationId, ...data }, ctx) => {
     // if organizationId doesn't match current organization
     if (organizationId !== ctx.session.orgId) {
       // Require SUPERADMIN role
@@ -288,7 +288,7 @@ export default resolver.pipe(
     })
 
     return project
-  },
+  }
 )
 ```
 
@@ -300,7 +300,7 @@ regular users to access the organization they are currently logged in to.
 
 ```ts
 // app/orders/queries/getOrder.ts
-import {NotFoundError, resolver} from "blitz"
+import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 import {
@@ -323,7 +323,7 @@ export default resolver.pipe(
   // But now we need to enforce input.organizationId matches
   // session.orgId unless user is a SUPERADMIN
   enforceSuperAdminIfNotCurrentOrganization, //highlight-line
-  async ({id, organizationId}) => {
+  async ({ id, organizationId }) => {
     const order = await db.getOrder({
       where: {
         id,
@@ -333,39 +333,39 @@ export default resolver.pipe(
     })
     if (!order) throw new NotFoundError()
     return order
-  },
+  }
 )
 ```
 
 ```ts
 // app/core/utils.ts
-import {Ctx} from "blitz"
-import {Prisma, GloblRole} from "db"
+import { Ctx } from "blitz"
+import { Prisma, GloblRole } from "db"
 
 export default function assert(
   condition: any,
-  message: string,
+  message: string
 ): asserts condition {
   if (!condition) throw new Error(message)
 }
 
 export const setDefaultOrganizationId = <T extends Record<any, any>>(
   input: T,
-  {session}: Ctx,
-): T & {organizationId: Prisma.IntNullableFilter | number} => {
+  { session }: Ctx
+): T & { organizationId: Prisma.IntNullableFilter | number } => {
   assert(
     session.orgId,
-    "Missing session.orgId in setDefaultOrganizationId",
+    "Missing session.orgId in setDefaultOrganizationId"
   )
   if (input.organizationId) {
     // Pass through the input
-    return input as T & {organizationId: number}
+    return input as T & { organizationId: number }
   } else if (session.roles?.includes(GloblRole.SUPERADMIN)) {
     // Allow viewing any organization
-    return {...input, organizationId: {not: 0}}
+    return { ...input, organizationId: { not: 0 } }
   } else {
     // Set organizationId to session.orgId
-    return {...input, organizationId: session.orgId}
+    return { ...input, organizationId: session.orgId }
   }
 }
 
@@ -373,7 +373,7 @@ export const enforceSuperAdminIfNotCurrentOrganization = <
   T extends Record<any, any>
 >(
   input: T,
-  ctx: Ctx,
+  ctx: Ctx
 ): T => {
   assert(ctx.session.orgId, "missing session.orgId")
   assert(input.organizationId, "missing input.organizationId")

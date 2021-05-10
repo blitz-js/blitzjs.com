@@ -22,7 +22,7 @@ response:
 const handler = (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({name: "John Doe"}))
+  res.end(JSON.stringify({ name: "John Doe" }))
 }
 export default handler
 ```
@@ -44,7 +44,7 @@ If you want to avoid writting the types `BlitzApiRequest` and
 const handler: BlitzApiHandler = (req, res) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({name: "John Doe"}))
+  res.end(JSON.stringify({ name: "John Doe" }))
 }
 export default handler
 ```
@@ -81,25 +81,25 @@ You can use the `getSession` function to get the session of the user. Here
 is an example using session in a API route `app/api/customRoute.tsx`:
 
 ```ts
-import {getSession, BlitzApiRequest, BlitzApiResponse} from "blitz"
+import { getSession, BlitzApiRequest, BlitzApiResponse } from "blitz"
 
 export default async function customRoute(
   req: BlitzApiRequest,
-  res: BlitzApiResponse,
+  res: BlitzApiResponse
 ) {
   const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
   res.statusCode = 200
   res.setHeader("Content-Type", "application/json")
-  res.end(JSON.stringify({userId: session.userId}))
+  res.end(JSON.stringify({ userId: session.userId }))
 }
 ```
 
 This is called in the frontend like this:
 
 ```ts
-import {getAntiCSRFToken} from "blitz"
+import { getAntiCSRFToken } from "blitz"
 
 const antiCSRFToken = getAntiCSRFToken()
 const response = await window.fetch("/api/customRoute", {
@@ -121,7 +121,7 @@ For example, the API route `app/api/post/[pid].js` has the following code:
 ```ts
 const handler: BlitzApiHandler = (req, res) => {
   const {
-    query: {pid},
+    query: { pid },
   } = req
 
   res.end(`Post: ${pid}`)
@@ -165,14 +165,14 @@ example) to the api handler, and it will always be an array, so, the path
 `/api/post/a` will have the following `query` object:
 
 ```json
-{"slug": ["a"]}
+{ "slug": ["a"] }
 ```
 
 And in the case of `/api/post/a/b`, and any other matching path, new
 parameters will be added to the array, like so:
 
 ```json
-{"slug": ["a", "b"]}
+{ "slug": ["a", "b"] }
 ```
 
 An API route for `app/api/post/[...slug].js` could look like this:
@@ -180,7 +180,7 @@ An API route for `app/api/post/[...slug].js` could look like this:
 ```ts
 const handler: BlitzApiHandler = (req, res) => {
   const {
-    query: {slug},
+    query: { slug },
   } = req
 
   res.end(`Post: ${slug.join(", ")}`)
@@ -226,7 +226,7 @@ endpoints, take a look at the following example:
 
 ```ts
 const handler: BlitzApiHandler = (req, res) => {
-  res.status(200).json({name: "Blitz.js"})
+  res.status(200).json({ name: "Blitz.js" })
 }
 export default handler
 ```
@@ -355,7 +355,7 @@ async function handler(req: BlitzApiRequest, res: BlitzApiResponse) {
   await runMiddleware(req, res, cors)
 
   // Rest of the API logic
-  res.json({message: "Hello Everyone!"})
+  res.json({ message: "Hello Everyone!" })
 }
 
 export default handler

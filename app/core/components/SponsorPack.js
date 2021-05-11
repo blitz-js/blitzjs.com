@@ -21,6 +21,14 @@ const sponsors = [
     cost: 250,
   },
   {
+    name: "RIT",
+    href:
+      "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rit_logo.png",
+    tier: 3,
+    cost: 250,
+  },
+  {
     name: "Andreas",
     href: "https://andreas.fyi/",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/andreas.jpg",

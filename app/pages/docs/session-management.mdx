@@ -26,7 +26,7 @@ mutation like the one shown below.
 
 ```ts
 // app/auth/mutations/login.ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function login(input: SomeTSInputType, ctx: Ctx) {
   // 1. Validate input data
@@ -34,7 +34,7 @@ export default async function login(input: SomeTSInputType, ctx: Ctx) {
   // 3. Fetch user data
 
   // 4. Create a new session (log in)
-  await ctx.session.$create({userId: user.id, role: user.role}) // highlight-line
+  await ctx.session.$create({ userId: user.id, role: user.role }) // highlight-line
 }
 ```
 
@@ -49,7 +49,7 @@ sensitive data in the cache is deleted.
 
 ```ts
 // app/auth/muations/logout.ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function logout(_: any, ctx: Ctx) {
   // 1. Revoke the current user session, logging them out.
@@ -69,11 +69,11 @@ You can change the session public data in any query or mutation like this:
 
 ```ts
 // app/mutations/someMutation.ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function someMutation(input: any, ctx: Ctx) {
   // This merges the input data with whatever is already in current publicData
-  await ctx.session.$setPublicData({orgId: 1}) // highlight-line
+  await ctx.session.$setPublicData({ orgId: 1 }) // highlight-line
 }
 ```
 
@@ -87,7 +87,7 @@ the `sessionMiddleware` that's in `blitz.config.js`.
 
 ```ts
 // app/queries/someQuery.ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function someQuery(input: any, ctx: Ctx) {
   // Access the SessionContext class
@@ -105,13 +105,13 @@ You can also get the session context inside `getServerSideProps` or inside
 API routes with `getSession` like this:
 
 ```ts
-import {getSession} from "blitz"
+import { getSession } from "blitz"
 
-export const getServerSideProps = async ({req, res}) => {
+export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
-  return {props: {}}
+  return { props: {} }
 }
 ```
 
@@ -126,7 +126,7 @@ component above it in the tree. Or you can set
 `useSession({suspense: false})` to disable suspense.
 
 ```ts
-import {useSession} from "blitz"
+import { useSession } from "blitz"
 
 function SomeComponent() {
   const session = useSession()
@@ -143,7 +143,7 @@ can pass the session public data to `useSession()` with the
 `initialPublicData` option.
 
 ```ts
-import {useSession, GetServerSideProps} from "blitz"
+import { useSession, GetServerSideProps } from "blitz"
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
@@ -151,11 +151,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const session = await getSession(req, res)
 
-  return {props: {publicData: session.$publicData}}
+  return { props: { publicData: session.$publicData } }
 }
 
-const SomePage: BlitzPage = ({initialPublicData}) => {
-  const session = useSession({initialPublicData})
+const SomePage: BlitzPage = ({ initialPublicData }) => {
+  const session = useSession({ initialPublicData })
 
   return /*... */
 }
@@ -232,7 +232,7 @@ declare module "blitz" {
 Then change all uses of `ctx.session.$create()` to pass in the new fields.
 
 ```ts
-ctx.session.$create({userId: 1, role: "ADMIN", orgId: 1})
+ctx.session.$create({ userId: 1, role: "ADMIN", orgId: 1 })
 ```
 
 You can also use `ctx.session.$setPublicData()` to update session data for
@@ -240,13 +240,13 @@ an already logged in user. This will _merge_ values with the existing
 public data.
 
 ```ts
-ctx.session.$setPublicData({orgId: 1})
+ctx.session.$setPublicData({ orgId: 1 })
 ```
 
 To access public data on the client:
 
 ```ts
-import {useSession} from "blitz"
+import { useSession } from "blitz"
 
 function SomeComponent() {
   const session = useSession()
@@ -261,7 +261,7 @@ To access public data on the server:
 
 ```ts
 // app/queries/someQuery.ts
-import {Ctx} from "blitz"
+import { Ctx } from "blitz"
 
 export default async function someQuery(input: any, ctx: Ctx) {
   // Access the SessionContext class
@@ -278,7 +278,7 @@ You can customize session management by passing an object to the
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, simpleRolesIsAuthorized} = require("blitz")
+const { sessionMiddleware, simpleRolesIsAuthorized } = require("blitz")
 
 module.exports = {
   middleware: [
@@ -305,10 +305,10 @@ type SessionConfig = {
   createSession: (session: SessionModel) => Promise<SessionModel>
   updateSession: (
     handle: string,
-    session: Partial<SessionModel>,
+    session: Partial<SessionModel>
   ) => Promise<SessionModel>
   deleteSession: (handle: string) => Promise<SessionModel>
-  isAuthorized: ({ctx: any, args: [...unknown]}) => boolean
+  isAuthorized: ({ ctx: any, args: [...unknown] }) => boolean
 }
 ```
 
@@ -344,7 +344,7 @@ When making a request from the client to an API route, you need to include
 the anti-CSRF token in the `anti-csrf` header like this:
 
 ```ts
-import {getAntiCSRFToken} from "blitz"
+import { getAntiCSRFToken } from "blitz"
 
 const antiCSRFToken = getAntiCSRFToken()
 
@@ -356,13 +356,13 @@ if (antiCSRFToken) {
 And then you can get the sessionContext in the API route like this:
 
 ```ts
-import {getSession} from "blitz"
+import { getSession } from "blitz"
 
-export default async function ({req, res}) {
+export default async function ({ req, res }) {
   const session = await getSession(req, res)
   console.log("User ID:", session.userId)
 
-  res.json({userId})
+  res.json({ userId })
 }
 ```
 
@@ -429,14 +429,14 @@ interface SessionContext extends PublicData {
   ) => this is AuthenticatedSessionContext
   $create: (
     publicData: PublicData,
-    privateData?: Record<any, any>,
+    privateData?: Record<any, any>
   ) => Promise<void>
   $revoke: () => Promise<void>
   $revokeAll: () => Promise<void>
   $getPrivateData: () => Promise<Record<any, any>>
   $setPrivateData: (data: Record<any, any>) => Promise<void>
   $setPublicData: (
-    data: Partial<Omit<PublicData, "userId">>,
+    data: Partial<Omit<PublicData, "userId">>
   ) => Promise<void>
 }
 ```

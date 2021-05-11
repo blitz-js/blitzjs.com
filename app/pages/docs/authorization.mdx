@@ -78,7 +78,7 @@ which we include in all our code generation templates. Without this, users
 may be able to access data or perform actions that are forbidden.
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -97,9 +97,9 @@ export default resolver.pipe(
   resolver.authorize(),
   async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const projects = await db.projects.create({data: input})
+    const projects = await db.projects.create({ data: input })
     return projects
-  },
+  }
 )
 ```
 
@@ -221,7 +221,7 @@ on first load. You can fix that by setting
 [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
 
 ```tsx
-import {useSession} from "blitz"
+import { useSession } from "blitz"
 
 const session = useSession()
 
@@ -238,7 +238,7 @@ New Blitz apps by default have a `useCurrentUser()` hook and a
 corresponding `getCurrentUser` query.
 
 ```tsx
-import {useCurrentUser} from "app/hooks/useCurrentUser"
+import { useCurrentUser } from "app/hooks/useCurrentUser"
 
 const user = useCurrentUser()
 
@@ -265,15 +265,15 @@ Always returns a boolean indicating if user is authorized
 commonly use to secure your queries and mutations.
 
 ```ts
-import {Ctx} from "blitz"
-import {GetUserInput} from "./somewhere"
+import { Ctx } from "blitz"
+import { GetUserInput } from "./somewhere"
 
-export default async function getUser({where}: GetUserInput, ctx: Ctx) {
+export default async function getUser({ where }: GetUserInput, ctx: Ctx) {
   // highlight-start
   ctx.session.$authorize("admin")
   // highlight-end
 
-  return await db.user.findOne({where})
+  return await db.user.findOne({ where })
 }
 ```
 
@@ -286,7 +286,7 @@ set up by default in new apps).
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, simpleRolesIsAuthorized} = require("blitz")
+const { sessionMiddleware, simpleRolesIsAuthorized } = require("blitz")
 
 module.exports = {
   middleware: [
@@ -302,7 +302,7 @@ module.exports = {
 And if using Typescript, set the type in `types.ts` like this:
 
 ```ts
-import {SimpleRolesIsAuthorized} from "blitz"
+import { SimpleRolesIsAuthorized } from "blitz"
 
 type Role = "ADMIN" | "USER"
 
@@ -354,7 +354,10 @@ type CustomIsAuthorizedArgs = {
   ctx: any
   args: [/* args that you want for session.$authorize(...args) */]
 }
-export function customIsAuthorized({ctx, args}: CustomIsAuthorizedArgs) {
+export function customIsAuthorized({
+  ctx,
+  args,
+}: CustomIsAuthorizedArgs) {
   // can access ctx.session, ctx.session.userId, etc
 }
 ```

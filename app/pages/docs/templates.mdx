@@ -43,14 +43,14 @@ If you access a variable that _isn't_ a template value it is ignored,
 allowing functionality like dead code elimination via
 `process.env.NODE_ENV` into template to work properly.
 
-:::info
+<Card type="info">
 
 The conditions are not dynamically evaluated, they're only checked for
 truthiness. This means that for dynamic evaluation you'll need to do the
 check ahead of time and pass it into the template as context, a check like
 `if (process.env.componentName === 'SomeComp')` will not work properly.
 
-:::
+</Card>
 
 ```typescript
 // Input
@@ -123,13 +123,13 @@ prop on the `if` statement is read out of the template context. If its
 value is truthy the first child of `<if />` will be rendered, otherwise
 the contents of the `<else />` element will be rendered.
 
-:::info
+<Card type="info">
 
 Both `<if />` and `<else />` only accept a **single child component.** You
 will see unexpected behavior and errors if you try to provide a fragment
 or multiple elements.
 
-:::
+</Card>
 
 ```tsx
 // input

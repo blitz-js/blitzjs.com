@@ -40,14 +40,14 @@ function (props) {
 For complete details, see the
 [`useMutation` documentation](./use-mutation).
 
-<!-- prettier-ignore-start -->
-:::info 🤔
-You may be wondering how that can work since it's importing
-server code into your component: At build time, the direct function import
-is swapped out with a network call. So the query function code is never
-included in your client code.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info" title="🤔">
+
+You may be wondering how that can work since it's importing server code
+into your component: At build time, the direct function import is swapped
+out with a network call. So the query function code is never included in
+your client code.
+
+</Card>
 
 ## Error Handling {#error-handling}
 
@@ -66,9 +66,9 @@ exactly like you'd expect. So you can wrap the `invoke` in
   passing an options object `{refetch: false}` as the second argument.
 
 ```tsx
-export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {
-    where: {id: props.query.id},
+export default function (props: { query: { id: number } }) {
+  const [product, { setQueryData }] = useQuery(getProduct, {
+    where: { id: props.query.id },
   })
   const [updateProjectMutation] = useMutation(updateProject)
 
@@ -97,8 +97,8 @@ trigger a query reload.
 
 ```tsx
 export default function (props) {
-  const [product, {refetch}] = useQuery(getProduct, {
-    where: {id: props.id},
+  const [product, { refetch }] = useQuery(getProduct, {
+    where: { id: props.id },
   })
   const [updateProjectMutation] = useMutation(updateProject)
 
@@ -131,10 +131,10 @@ function provided by `blitz`.
 ##### Example
 
 ```tsx
-import {invalidateQuery} from "blitz" // highlight-line
+import { invalidateQuery } from "blitz" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
-const Page = function ({products}) {
+const Page = function ({ products }) {
   return (
     <div>
       <button
@@ -176,9 +176,9 @@ Here's a simple form component with an `onSubmit` function that calls an
 `updateProduct` mutation to save edits.
 
 ```tsx
-export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {
-    where: {id: props.query.id},
+export default function (props: { query: { id: number } }) {
+  const [product, { setQueryData }] = useQuery(getProduct, {
+    where: { id: props.query.id },
   })
   const [updateProjectMutation] = useMutation(updateProject)
 
@@ -208,9 +208,9 @@ function to prevent the mutation triggering a refetch of stale data while
 we wait for the response.
 
 ```tsx
-export default function (props: {query: {id: number}}) {
-  const [product, {setQueryData}] = useQuery(getProduct, {
-    where: {id: props.query.id},
+export default function (props: { query: { id: number } }) {
+  const [product, { setQueryData }] = useQuery(getProduct, {
+    where: { id: props.query.id },
   })
   const [updateProjectMutation] = useMutation(updateProject)
 
@@ -220,7 +220,7 @@ export default function (props: {query: {id: number}}) {
       onSubmit={async (values) => {
         try {
           // Update local cache with form values without triggering refetch
-          setQueryData(values, {refetch: false}) // highlight-line
+          setQueryData(values, { refetch: false }) // highlight-line
           const product = await updateProjectMutation(values)
           // Update local cache with result, then refetch
           setQueryData(product)

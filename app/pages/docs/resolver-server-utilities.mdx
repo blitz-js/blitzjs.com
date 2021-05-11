@@ -52,7 +52,7 @@ export pipe(
 ### Example {#example}
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -66,7 +66,10 @@ export default resolver.pipe(
   resolver.zod(CreateProject),
   resolver.authorize(),
   // Set default orgId
-  (input, {session}) => ({...input, orgId: input.orgId ?? session.orgId}),
+  (input, { session }) => ({
+    ...input,
+    orgId: input.orgId ?? session.orgId,
+  }),
   async (input, ctx) => {
     console.log("Creating project...", input.orgId)
     const project = await db.project.create({
@@ -74,19 +77,19 @@ export default resolver.pipe(
     })
     console.log("Created project")
     return project
-  },
+  }
 )
 ```
 
-<!-- prettier-ignore-start -->
-:::info
-The input type of the entire composed resolver function is
-determined by the input type of the **first** argument to pipe.
+<Card type="info">
+
+The input type of the entire composed resolver function is determined by
+the input type of the **first** argument to pipe.
 
 This means you will almost always want `resolver.zod()` to be the first in
 the pipe.
-:::
-<!-- prettier-ignore-end -->
+
+</Card>
 
 ### API {#api}
 
@@ -217,8 +220,8 @@ This is a handy utility for query pagination
 ### Example {#example-3}
 
 ```ts
-import {paginate, Ctx} from "blitz"
-import db, {Prisma} from "db"
+import { paginate, Ctx } from "blitz"
+import db, { Prisma } from "db"
 
 interface GetProjectSInput
   extends Pick<
@@ -227,15 +230,15 @@ interface GetProjectSInput
   > {}
 
 export default async function getProjects(
-  {where, orderBy, skip = 0, take = 100}: GetProjectsInput,
-  ctx: Ctx,
+  { where, orderBy, skip = 0, take = 100 }: GetProjectsInput,
+  ctx: Ctx
 ) {
   ctx.session.$authorize()
 
-  const {items: projects, hasMore, nextPage, count} = await paginate({
-    count: () => db.project.count({where}),
+  const { items: projects, hasMore, nextPage, count } = await paginate({
+    count: () => db.project.count({ where }),
     query: (paginateArgs) =>
-      db.project.findMany({...paginateArgs, where, orderBy}),
+      db.project.findMany({ ...paginateArgs, where, orderBy }),
     skip,
     take,
   })
@@ -312,23 +315,23 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({
 }) => {
   const products = await invokeWithMiddleware(
     getProducts,
-    {orderBy: {id: "desc"}},
-    {req, res},
+    { orderBy: { id: "desc" } },
+    { req, res }
   )
 
   return {
-    props: {products},
+    props: { products },
   }
 }
 
-const Page: BlitzPage<PageProps> = function ({products}) {
+const Page: BlitzPage<PageProps> = function ({ products }) {
   return (
     <div>
       <h1>Products</h1>
       <div id="products">
         {products.map((product) => (
           <p key={product.id}>
-            <Link href={Routes.Product({handle: product.handle})}>
+            <Link href={Routes.Product({ handle: product.handle })}>
               <a>{product.name}</a>
             </Link>
           </p>

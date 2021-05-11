@@ -8,7 +8,8 @@ some other direct control over the web server itself.
 
 ### How {#how}
 
-1. Add a `server.js` file in your project root. See below for an example.
+1. Add a `server.ts` or `server.js` file in your project root. See below
+   for an example.
 2. Now `blitz dev` and `blitz start` will automatically detect and use
    your custom server.
 
@@ -16,48 +17,52 @@ some other direct control over the web server itself.
 
 Here's an example custom server:
 
-```js
-// server.js
-const {createServer} = require("http")
-const {parse} = require("url")
-const blitz = require("blitz/custom-server")
+```ts
+// server.ts
+import blitz from "blitz/custom-server"
+import { createServer } from "http"
+import { parse } from "url"
+import { log } from "@blitzjs/display"
 
+const { PORT = "3000" } = process.env
 const dev = process.env.NODE_ENV !== "production"
-const app = blitz({dev})
+const app = blitz({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   createServer((req, res) => {
     // Be sure to pass `true` as the second argument to `url.parse`.
     // This tells it to parse the query portion of the URL.
-    const parsedUrl = parse(req.url, true)
-    const {pathname, query} = parsedUrl
+    const parsedUrl = parse(req.url!, true)
+    const { pathname } = parsedUrl
 
-    if (pathname === "/a") {
+    if (pathname === "/hello") {
+      res.writeHead(200).end("world")
+      return
+    }
+
+    if (pathname === "/hello") {
+      res.writeHead(200).end("world")
+      return
+    } else if (pathname === "/a") {
       app.render(req, res, "/a", query)
     } else if (pathname === "/b") {
       app.render(req, res, "/b", query)
     } else {
       handle(req, res, parsedUrl)
     }
-  }).listen(3000, (err) => {
-    if (err) throw err
-    console.log("> Ready on http://localhost:3000")
+
+    handle(req, res, parsedUrl)
+  }).listen(PORT, () => {
+    log.success(`Ready on http://localhost:${PORT}`)
   })
 })
 ```
 
-> `server.js` doesn't go through babel or webpack. Make sure the syntax
-> and sources this file requires are compatible with the current node
-> version you are running.
-
 ---
 
-The custom server uses the following import to connect the server with the
-Blitz application:
-
-The above `blitz` import is a function that receives an object with the
-following options:
+The above `blitz/custom-server` import is a function that receives an
+object with the following options:
 
 - `dev`: `Boolean` - Whether or not to launch Blitz in dev mode. Defaults
   to `false`
@@ -72,10 +77,10 @@ required.
 
 ## Disabling file-system routing {#disabling-file-system-routing}
 
-By default, `blitz` will serve each file in the `pages` folder under a
-pathname matching the filename. If your project uses a custom server, this
-behavior may result in the same content being served from multiple paths,
-which can present problems with SEO and UX.
+By default, `blitz` will serve each file `pages` folders under a pathname
+matching the filename. If your project uses a custom server, this behavior
+may result in the same content being served from multiple paths, which can
+present problems with SEO and UX.
 
 To disable this behavior and prevent routing based on files in `pages`,
 open `blitz.config.js` and disable the `useFileSystemPublicRoutes` config:

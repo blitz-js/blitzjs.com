@@ -10,7 +10,7 @@ sidebar_label: Hooks & Utilities
 ### Example {#example}
 
 ```ts
-import {useSession} from "blitz"
+import { useSession } from "blitz"
 
 const session = useSession()
 ```
@@ -36,7 +36,7 @@ This will throw `AuthenticationError` if the user is not logged in
 ### Example {#example-1}
 
 ```ts
-import {useAuthenticatedSession} from "blitz"
+import { useAuthenticatedSession } from "blitz"
 
 const session = useAuthenticatedSession()
 ```
@@ -62,7 +62,7 @@ This will throw `AuthenticationError` if the user is not logged in
 ### Example {#example-2}
 
 ```ts
-import {useAuthorize} from "blitz"
+import { useAuthorize } from "blitz"
 
 useAuthorize()
 ```
@@ -85,7 +85,7 @@ for logged out users.
 ### Example {#example-3}
 
 ```ts
-import {useRedirectAuthenticated} from "blitz"
+import { useRedirectAuthenticated } from "blitz"
 
 useRedirectAuthenticated("/dashboard")
 ```
@@ -111,7 +111,7 @@ like password resets.
 #### Example Usage
 
 ```ts
-import {generateToken} from "blitz"
+import { generateToken } from "blitz"
 
 const token = generateToken()
 ```
@@ -128,7 +128,7 @@ tokens before saving them in the database.
 #### Example Usage
 
 ```ts
-import {hash256} from "blitz"
+import { hash256 } from "blitz"
 
 const hashedToken = hash256(token)
 ```
@@ -140,7 +140,7 @@ const hashedToken = hash256(token)
 a nice way to hash passwords and verify password hashes.
 
 ```ts
-import {SecurePassword} from "blitz"
+import { SecurePassword } from "blitz"
 
 await SecurePassword.hash(password)
 await SecurePassword.verify(passwordHash, password)
@@ -180,31 +180,31 @@ Size of the `hash` Buffer returned by `hash` and `hashSync` and used by
 #### Example Usage
 
 ```ts
-import {SecurePassword, AuthenticationError} from "blitz"
+import { SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
 
 export const authenticateUser = async (
   email: string,
-  password: string,
+  password: string
 ) => {
-  const user = await db.user.findFirst({where: {email}})
+  const user = await db.user.findFirst({ where: { email } })
   if (!user) throw new AuthenticationError()
 
   const result = await SecurePassword.verify(
     user.hashedPassword,
-    password,
+    password
   )
 
   if (result === SecurePassword.VALID_NEEDS_REHASH) {
     // Upgrade hashed password with a more secure hash
     const improvedHash = await SecurePassword.hash(password)
     await db.user.update({
-      where: {id: user.id},
-      data: {hashedPassword: improvedHash},
+      where: { id: user.id },
+      data: { hashedPassword: improvedHash },
     })
   }
 
-  const {hashedPassword, ...rest} = user
+  const { hashedPassword, ...rest } = user
   return rest
 }
 ```

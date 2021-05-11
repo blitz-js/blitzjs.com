@@ -16,8 +16,8 @@ To enable shallow routing, set the `shallow` option to `true`. Consider
 the following example:
 
 ```ts
-import {useEffect} from "react"
-import {useRouter} from "blitz"
+import { useEffect } from "react"
+import { useRouter } from "blitz"
 
 // Current URL is '/'
 function Page() {
@@ -25,7 +25,7 @@ function Page() {
 
   useEffect(() => {
     // Always do navigations after the first render
-    router.push("/?counter=10", undefined, {shallow: true})
+    router.push("/?counter=10", undefined, { shallow: true })
   }, [])
 
   useEffect(() => {
@@ -60,7 +60,7 @@ let's assume we have another page called `pages/about.ts`, and you run
 this:
 
 ```ts
-router.push("/?counter=10", "/about?counter=10", {shallow: true})
+router.push("/?counter=10", "/about?counter=10", { shallow: true })
 ```
 
 Since that's a new page, it'll unload the current page, load the new one

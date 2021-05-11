@@ -3,8 +3,8 @@ title: getStaticProps API
 sidebar_label: getStaticProps API
 ---
 
-<!-- prettier-ignore-start -->
-:::info
+<Card type="info">
+
 `getStaticProps` should only be used for pages that do not require
 authentication. The statically generated pages will be publicly available
 via your server and via a CDN if you have one. Therefore they cannot
@@ -13,8 +13,8 @@ contain any personal or sensitive data.
 Also, this is why there is no `req` and `res` objects for
 `getStaticProps`, because the pages are generated at build time, not at
 runtime. And at build time, there is no user http request to handle.
-:::
-<!-- prettier-ignore-end -->
+
+</Card>
 
 If you export an `async` function called `getStaticProps` from a page,
 Blitz will pre-render this page at build time using the props returned by
@@ -170,7 +170,7 @@ You should use `getStaticProps` if:
 For TypeScript, you can use the `GetStaticProps` type from `blitz`:
 
 ```ts
-import {GetStaticProps} from "blitz"
+import { GetStaticProps } from "blitz"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // ...
@@ -181,7 +181,7 @@ If you want to get inferred typings for your props, you can use
 `InferGetStaticPropsType<typeof getStaticProps>`, like this:
 
 ```tsx
-import {InferGetStaticPropsType} from "blitz"
+import { InferGetStaticPropsType } from "blitz"
 
 type Post = {
   author: string
@@ -199,7 +199,7 @@ export const getStaticProps = async () => {
   }
 }
 
-function Blog({posts}: InferGetStaticPropsType<typeof getStaticProps>) {
+function Blog({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   // will resolve posts to type Post[]
 }
 
@@ -222,7 +222,7 @@ Consider our previous [`getStaticProps` example](#simple-example), but now
 with regeneration enabled:
 
 ```jsx
-function Blog({posts}) {
+function Blog({ posts }) {
   return (
     <ul>
       {posts.map((post) => (
@@ -297,7 +297,7 @@ import fs from "fs"
 import path from "path"
 
 // posts will be populated at build time by getStaticProps()
-function Blog({posts}) {
+function Blog({ posts }) {
   return (
     <ul>
       {posts.map((post) => (

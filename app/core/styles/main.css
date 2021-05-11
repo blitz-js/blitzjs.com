@@ -11,6 +11,7 @@
 
 html {
   font-family: "Libre Franklin", sans-serif;
+  scroll-behavior: smooth;
 }
 
 .player-wrapper {

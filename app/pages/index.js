@@ -224,8 +224,8 @@ const Home = ({randomContributors}) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
-                        loading="lazy"
+                      <Image
+                        layout="fill"
                         src={contributor.avatar_url}
                         alt={contributor.name}
                         title={contributor.name}

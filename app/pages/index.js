@@ -225,7 +225,9 @@ const Home = ({randomContributors}) => {
                       rel="noopener noreferrer"
                     >
                       <Image
-                        layout="fill"
+                        layout="responsive"
+                        width="100%"
+                        height="100%"
                         src={contributor.avatar_url}
                         alt={contributor.name}
                         title={contributor.name}

@@ -132,12 +132,17 @@ pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect
 logged in users to another page.
 
 ```tsx
+import { Routes } from "blitz"
+
 const Page: BlitzPage = () => {
   return <div>{/* ... */}</div>
 }
 
 // highlight-start
+// using full path
 Page.redirectAuthenticatedTo = "/"
+// using route manifest
+Page.redirectAuthenticatedTo = Routes.Home()
 // highlight-end
 
 export default Page

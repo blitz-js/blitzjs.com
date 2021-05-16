@@ -63,6 +63,10 @@ Page.suppressFirstRenderFlicker = true
 
 export default Page
 ```
+In case you have set `Page.authenticate = true` or `Page.redirectAuthenticatedTo = true`,
+Blitz will hide the first render's content. For these cases, you can simply ignore setting
+`Page.suppressFirstRenderFlicker = true`.
+ 
 
 ### Static Page Generation for Unauthenticated Pages {#static-page-generation-for-unauthenticated-pages}
 

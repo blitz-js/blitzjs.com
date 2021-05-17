@@ -102,17 +102,16 @@ Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
 ### Prefetching {#prefetching}
 
-- All queries are automatically cached, so manually calling a query
-  function will cache its data
-
-Both of the following will cache the `getProject` query.
+All queries are automatically cached, so both of the following will cache the `getProject` query.
 
 ```ts
-const project = await getProject({ where: { id: props.id } })
+import {invoke} from 'blitz'
+
+const project = await invoke(getProject, { where: { id: props.id } })
 ```
 
 ```tsx
-<a onMouseEnter={() => getProject({ where: { id: projectId } })}>
+<a onMouseEnter={() => invoke(getProject, { where: { id: props.id } })}>
   View Project
 </a>
 ```

@@ -29,17 +29,15 @@ const ITEMS_PER_PAGE = 3
 const Projects = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{ projects, hasMore }] = usePaginatedQuery(
-    getProjects,
-    {
-      orderBy: {id: "asc"},
-      skip: ITEMS_PER_PAGE * page,
-      take: ITEMS_PER_PAGE,
-    }
-  )
+  const [{ projects, hasMore }] = usePaginatedQuery(getProjects, {
+    orderBy: { id: "asc" },
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
+  })
 
-  const goToPreviousPage = () => router.push({query: {page: page - 1}})
-  const goToNextPage = () => router.push({query: {page: page + 1}})
+  const goToPreviousPage = () =>
+    router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   return (
     <div>
@@ -68,7 +66,10 @@ import { paginate, resolver } from "blitz"
 import db, { Prisma } from "db"
 
 interface GetProjectsInput
-  extends Pick<Prisma.ProjectFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
+  extends Pick<
+    Prisma.ProjectFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"
+  > {}
 
 export default resolver.pipe(
   resolver.authorize(),
@@ -77,7 +78,8 @@ export default resolver.pipe(
       skip,
       take,
       count: () => db.project.count({ where }),
-      query: (paginateArgs) => db.project.findMany({ ...paginateArgs, where, orderBy }),
+      query: (paginateArgs) =>
+        db.project.findMany({ ...paginateArgs, where, orderBy }),
     })
 
     return {

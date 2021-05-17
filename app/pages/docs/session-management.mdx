@@ -284,6 +284,7 @@ module.exports = {
   middleware: [
     sessionMiddleware({
       // highlight-start
+      cookiePrefix: "my-app",
       sessionExpiryMinutes: 1234,
       isAuthorized: simpleRolesIsAuthorized,
       // highlight-end
@@ -296,6 +297,7 @@ Available options:
 
 ```ts
 type SessionConfig = {
+  cookiePrefix?: string /* default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */

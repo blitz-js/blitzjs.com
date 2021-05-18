@@ -284,6 +284,7 @@ module.exports = {
   middleware: [
     sessionMiddleware({
       // highlight-start
+      cookiePrefix: "my-app",
       sessionExpiryMinutes: 1234,
       isAuthorized: simpleRolesIsAuthorized,
       // highlight-end
@@ -296,6 +297,7 @@ Available options:
 
 ```ts
 type SessionConfig = {
+  cookiePrefix?: string /* default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
@@ -336,7 +338,7 @@ defined above in `SessionConfig`. The functions can do anything, but they
 must conform to the defined input and outputs types.
 
 For reference, here's
-[the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/server/src/supertokens.ts#L62-L85).
+[the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/packages/core/src/server/auth/sessions.ts#L65-L88).
 
 ## Manual API Requests {#manual-api-requests}
 

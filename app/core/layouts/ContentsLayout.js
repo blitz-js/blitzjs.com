@@ -176,7 +176,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
               <a
                 href={
                   "https://github.com/blitz-js/blitzjs.com/edit/main/app/pages" +
-                  router.asPath +
+                  router.asPath.split("#")[0] +
                   ".mdx"
                 }
                 target="_blank"

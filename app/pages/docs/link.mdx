@@ -48,8 +48,12 @@ you can link to it with `Routes.About`. For more information, see the
   `false`
 - `prefetch` - Prefetch the page in the background. Defaults to `true`.
   Any `<Link />` that is in the viewport (initially or through scroll)
-  will be preloaded. Pages using [Static Generation](./get-static-props)
-  will preload `JSON` files with the data for faster page transitions.
+  will be preloaded. Prefetch can be disabled by passing
+  `prefetch={false}`. When `prefetch` is set to `false`, prefetching will
+  still occur on hover. Pages using
+  [Static Generation](./get-static-props.mdx) will preload `JSON` files
+  with the data for faster page transitions. Prefetching is only enabled
+  in production.
 - [`replace`](#replace-the-url-instead-of-push) - Replace the current
   `history` state instead of adding a new url into the stack. Defaults to
   `false`

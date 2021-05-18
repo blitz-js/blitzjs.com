@@ -39,14 +39,25 @@ file called `app/pages/posts/[id].js`, then it will be accessible at
 By default, Blitz pre-renders the static HTML for every page unless you
 explicitly opt-in to server-side rendering.
 
-For pages with dynamic data, the page's loading state will be
-pre-rendered.
-
-#### First Render UX
+For pages with dynamic data, the page's loading fallback state will be
+rendered unless you [prefetch](./query-usage#prefetching) the data to
+populate the cache.
 
 In some cases, the static optimization can cause an undesirable UX where
 the first render shows one thing but the second render shows another. For
 example this happens when using `useSession()`.
+
+Next, we'll introduce some ways to improve the way Blitz pre-renders your
+pages.
+
+### First Render UX {#first-render-ux}
+
+To provide a better User Experience (UX), Blitz tries to automatically
+pre-render the HTML for your pages, but if your page contains dynamic data
+fetched with [useQuery](./use-query) hooks, Blitz will fallback to the
+page's loading state and you will not see much benefit from the automatic
+pre-rendering, because the application will need to immediately make
+another request to fetch the data it needs to satisfy the query.
 
 In this case you can set `Page.suppressFirstRenderFlicker = true`, and
 Blitz will hide the first render's content. This will result in a tiny
@@ -63,6 +74,66 @@ Page.suppressFirstRenderFlicker = true
 
 export default Page
 ```
+In case you have set `Page.authenticate = true` or `Page.redirectAuthenticatedTo = true`,
+Blitz will hide the first render's content. For these cases, you can simply ignore setting
+`Page.suppressFirstRenderFlicker = true`.
+ 
+
+You can also consider prefetching all of the necessary queries that your
+page needs to complete its first render. You can use either the
+`getStaticProps` or `getServerSideProps` page functions, depending on what
+you need.
+
+If you create an instance of QueryClient and populate it with query data,
+then you can pass it as `dehydratedState` to your page props. Blitz will
+automatically use the state to build the query cache later when the page
+tries to render.
+
+```tsx
+import {
+  useQuery, 
+  getQueryKey, 
+  invokeWithMiddleware, 
+  dehydrate, 
+  QueryClient, 
+  BlitzPage, 
+  GetServerSidePropsContext
+} from 'blitz'
+const Page: BlitzPage = () => {
+  // highlight-start
+  const [organization] = useQuery(getCurrentOrganization, null)
+  // highlight-end
+
+  return <div>You have selected: {organization.name}</div>
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const queryClient = new QueryClient()
+
+  // highlight-start
+  const queryKey = getQueryKey(getCurrentOrganization, null)
+  await queryClient.prefetchQuery(queryKey, () =>
+    invokeWithMiddleware(getCurrentOrganization, null, ctx),
+  )
+  // highlight-end
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
+}
+```
+
+In this way, the pre-rendered version of your page HTML will not have to
+make a request as soon as it loads to fetch any data and will avoid any
+screen flickering. This is very useful for Search Engine Optimization and
+the Link Previews used by Social Media sites like Facebook and Twitter.
+
+You can also use prefetching to pre-populate queries that a user might
+need shortly after the page loads--such a common searches or filter
+criteria--by setting a [staleTime](./use-query#options) on the query being
+prefetched.
 
 ### Static Page Generation for Unauthenticated Pages {#static-page-generation-for-unauthenticated-pages}
 
@@ -91,5 +162,5 @@ To use Server-side Rendering for a page, you need to `export` an `async`
 function called `getServerSideProps`. This function will be called by the
 server on every request.
 
-See the [`getServerSideProps` documentation](./get-server-side-props) for
+See the `getServerSideProps` [documentation](./get-server-side-props) for
 more details.

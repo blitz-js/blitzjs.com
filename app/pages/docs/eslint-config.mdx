@@ -1,0 +1,43 @@
+---
+title: Custom ESLint Config
+sidebar_label: ESLint Config
+---
+
+Blitz extends the
+[create-react-app](https://create-react-app.dev/docs/setting-up-your-editor/#experimental-extending-the-eslint-config)
+eslint config.
+
+Our configuration contains a few modifications, and the full preset can be
+found on github
+[here](https://github.com/blitz-js/blitz/blob/canary/packages/eslint-config/index.js),
+
+This configuration is found in .eslintrc.js, and by default is
+
+```js
+module.exports = {
+  extends: ["blitz"],
+}
+```
+
+## Extending or replacing the default Blitz ESLint config {#extending}
+
+You can extend the base Blitz ESLint config, or replace it completely if you need.
+
+There are a few things to remember:
+
+1. We highly recommend extending the base config, as removing it could introduce hard-to-find issues.
+2. It's important to note that any rules that are set to "error" will stop the project from building.
+
+In the below example:
+
+  - the base config has been extended by a shared ESLint config,
+  - a new rule has been set that applies to all JavaScript and TypeScript files
+
+```js
+module.exports = {
+  extends: ["blitz", "shared-config"],
+  rules: {
+    "additional-rule": "warn"
+  },
+}
+```

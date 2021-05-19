@@ -156,6 +156,7 @@
       "blitz-config",
       "webpack-config",
       "postcss-config",
+      "eslint-config",
       "rpc-specification",
       "measuring-performance"
     ]

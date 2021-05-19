@@ -157,6 +157,7 @@
       "webpack-config",
       "postcss-config",
       "eslint-config",
+      "prettier-config",
       "rpc-specification",
       "measuring-performance"
     ]

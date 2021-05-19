@@ -53,7 +53,7 @@ export default resolver.pipe(
 
     await ctx.session.$create({
       userId: user.id,
-      role: "admin",
+      role: user.role,
       orgId: user.organizationId,
       impersonatingFromUserId: ctx.session.userId,
     })
@@ -98,7 +98,7 @@ import { useMutation, queryClient } from "blitz"
 import impersonateUser, {
   ImpersonateUserInput,
 } from "app/auth/mutations/impersonateUser"
-import Form from "app/core/components/Form"
+import { Form, FORM_ERROR } from "app/core/components/Form"
 import LabeledTextField from "app/core/components/LabeledTextField"
 
 export const ImpersonateUserForm = () => {

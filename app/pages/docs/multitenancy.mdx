@@ -33,7 +33,6 @@ The prisma schema looks like this:
 model Organization {
   id         Int @id @default(autoincrement())
   name       String
-  role       GlobalRole
 
   membership Membership[]
 }
@@ -71,6 +70,7 @@ model User {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  role           GlobalRole
   name           String?
   email          String   @unique
 

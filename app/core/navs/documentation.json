@@ -157,7 +157,6 @@
       "webpack-config",
       "postcss-config",
       "eslint-config",
-      "prettier-config",
       "husky-config",
       "rpc-specification",
       "measuring-performance"

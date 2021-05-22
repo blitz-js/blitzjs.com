@@ -180,6 +180,12 @@ A function to give `resolver.pipe` of type
 
 ## `resolver.authorize` {#resolver-authorize}
 
+Using `resolver.authorize` in `resolver.pipe` is a simple way to check
+whether the user has the authorization to call the query or mutation or
+not. For this, blitz uses
+[`session.$authorize`](./authorization#isauthorized-adapters) from the
+context object.
+
 ### Example {#example-2}
 
 <!-- prettier-ignore -->

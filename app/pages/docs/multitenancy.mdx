@@ -340,7 +340,7 @@ export default resolver.pipe(
 ```ts
 // app/core/utils.ts
 import { Ctx } from "blitz"
-import { Prisma, GloblRole } from "db"
+import { Prisma, GlobalRole } from "db"
 
 export default function assert(
   condition: any,
@@ -360,7 +360,7 @@ export const setDefaultOrganizationId = <T extends Record<any, any>>(
   if (input.organizationId) {
     // Pass through the input
     return input as T & { organizationId: number }
-  } else if (session.roles?.includes(GloblRole.SUPERADMIN)) {
+  } else if (session.roles?.includes(GlobalRole.SUPERADMIN)) {
     // Allow viewing any organization
     return { ...input, organizationId: { not: 0 } }
   } else {
@@ -379,7 +379,7 @@ export const enforceSuperAdminIfNotCurrentOrganization = <
   assert(input.organizationId, "missing input.organizationId")
 
   if (input.organizationId !== ctx.session.orgId) {
-    ctx.session.$authorize(GloblRole.SUPERADMIN)
+    ctx.session.$authorize(GlobalRole.SUPERADMIN)
   }
   return input
 }

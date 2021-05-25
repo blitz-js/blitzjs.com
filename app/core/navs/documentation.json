@@ -158,6 +158,7 @@
       "postcss-config",
       "eslint-config",
       "husky-config",
+      "prettier-config",
       "rpc-specification",
       "measuring-performance"
     ]

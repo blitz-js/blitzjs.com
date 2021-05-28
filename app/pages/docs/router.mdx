@@ -51,7 +51,7 @@ Here's the definition of the `router` object returned by `useRouter` and
 `withRouter`:
 
 - `pathname`: `String` - Current route. That is the path of the page in
-  `/pages`
+  `/pages`, the configured `basePath` or `locale` is not included.
 - `query`: `Object` - All the query string parameters from the current
   url. Parameter type is always `string`.
 - `params`: `Object` - All the dynamic route parameters for the current
@@ -92,6 +92,7 @@ Router.push(url, as, options)
   - [`shallow`](./shallow-routing): Update the path of the current page
     without rerunning [`getStaticProps`](./get-static-props) or
     [`getServerSideProps`](./get-server-side-props). Defaults to `false`
+- `locale` - Optional string, indicates locale of the new page
 
 > You don't need to use `Router` for external URLs,
 > [window.location](https://developer.mozilla.org/en-US/docs/Web/API/Window/location)

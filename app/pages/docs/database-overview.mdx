@@ -66,6 +66,7 @@ datasource db {
    commented-out PostgreSQL `DATABASE_URL` there already. Depending on
    your setup, you may need to modify the URL.
 3. Update `.env.test.local` as well to use PostgreSQL in your test runs.
+   (It has to point to different database than your `.env.local`)
 4. Delete the `db/migrations` folder
 5. Run `blitz prisma migrate dev`. This command will create the database
    (if it does not already exist) and tables based on your schema.

@@ -55,6 +55,12 @@ services:
     ports:
       - "5432:5432"
 
+  db-test:
+    image: postgres:latest
+    env_file: ./.env.test.local
+    ports:
+      - 5433:5432
+
 volumes:
   data:
 ```
@@ -71,6 +77,10 @@ POSTGRES_DB=your_database_name
 Given these values, update `DATABASE_URL` in `.env.local` to something
 similar like
 `postgresql://your_user:your_password@localhost:5432/your_database_name`
+and in `.env.test.local` to
+`postgresql://your_user:your_password@localhost:5433/your_database_name`
+
+Please note that test database is using port `5433` instead of `5432`
 
 3. Modify your `package.json` to start the database before Blitz
 

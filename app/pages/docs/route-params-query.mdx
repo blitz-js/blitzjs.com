@@ -5,13 +5,10 @@ sidebar_label: URL Params & Query
 
 ## `useParams` {#use-params}
 
-This hook returns all the parameters for the current route as an object.
-The default parameter type is `undefined | string | string[]`, but you can
-optionally provide a type argument to narrow the parameters and types that
-are returned.
-
-Use `useParams` to evaluate the path of a
-[dynamic route](./routing#dynamic-route-segments) for example.
+This hook returns all the [parameters](./routing#dynamic-route-segments)
+for the current route as an object. The default parameter type is
+`undefined | string | string[]`, but you can optionally provide a type
+argument to narrow the parameters and types that are returned.
 
 ```tsx
 import { useParams } from "blitz"
@@ -57,12 +54,10 @@ const params = useParams("array")
 
 ## `useParam` {#use-param}
 
-This hook return a single parameters for the current route. The default
-return type is `undefined | string | string[]`, but you can optionally
-provide a type argument to cast the return type.
-
-Use `useParam` to evaluate the path of a
-[dynamic route](./routing#dynamic-route-segments) for example.
+This hook returns a single [parameter](./routing#dynamic-route-segments)
+for the current route. The default return type is
+`undefined | string | string[]`, but you can optionally provide a type
+argument to cast the return type.
 
 ```tsx
 import { useParam } from "blitz"

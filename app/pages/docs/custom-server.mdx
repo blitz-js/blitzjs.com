@@ -100,3 +100,17 @@ module.exports = {
 > You may also wish to configure the client-side router to disallow
 > client-side redirects to filename routes; for that refer to
 > [`router.beforePopState`](./router#router-object).
+
+## Disabling hot reloading in development {#disabling-hot-reloading}
+
+The default value for `customServer.hotReload` is `true`. Should you need
+to disable hot reloading for your custom server, you can change the value
+of it to `false`.
+
+```js
+module.exports = {
+  customServer: {
+    hotReload: false,
+  },
+}
+```

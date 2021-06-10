@@ -1,0 +1,18 @@
+---
+title: Utilities
+sidebar_label: Utilities
+---
+
+Blitz provides utility functions
+
+### `validateZodSchema` {#validate-zod-schema}
+
+This utility function will validate input using a `zod` schema, and format
+any errors to be usable with your form library.
+
+```ts
+    <FinalForm
+      initialValues={initialValues}
+      validate={validateZodSchema(schema)}
+      ...
+```

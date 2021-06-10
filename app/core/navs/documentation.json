@@ -38,7 +38,8 @@
       "static-files",
       "environment-variables",
       "error-handling",
-      "testing"
+      "testing",
+      "utilities"
     ]
   },
   {

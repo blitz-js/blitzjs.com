@@ -38,6 +38,7 @@
       "static-files",
       "environment-variables",
       "error-handling",
+      "error-boundary",
       "testing",
       "utilities"
     ]

@@ -24,6 +24,13 @@ application.
   - `name`: "NotFoundError"
   - `statusCode`: 404
   - Default `message`: "This could not be found"
+- `RedirectError`
+  - `name`: "RedirectError"
+  - You can throw this error from a render function if you want to
+    redirect the user while also preventing the user from seeing on the
+    current render path. Our `ErrorBoundary` component will automatically
+    handle this redirect for you.
+  - Example: `throw new RedirectError('/login')`
 
 To use, import from `blitz` and use like any JavaScript Error. If you're
 curious, you can

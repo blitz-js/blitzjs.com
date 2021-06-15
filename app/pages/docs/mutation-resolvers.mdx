@@ -48,7 +48,7 @@ export default async function createProject(
   input: z.infer<typeof CreateProject>,
   ctx: Ctx
 ) {
-  // Validate input - very importnant for security
+  // Validate input - very important for security
   const data = CreateProject.parse(input)
 
   // Require user to be logged in

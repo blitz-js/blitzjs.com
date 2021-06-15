@@ -221,7 +221,7 @@ This is available on the client without making a network call to the
 backend, so it's available faster than the `useCurrentUser()` approach
 described below.
 
-However, due to the nature of static pre-rendering, the `session` will not
+Note: due to the nature of static pre-rendering, the `session` will not
 exist on the very first render on the client. This causes a quick "flash"
 on first load. You can fix that by setting
 [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
@@ -240,8 +240,8 @@ if (session.role === "admin") {
 
 #### `useCurrentUser()`
 
-New Blitz apps by default have a `useCurrentUser()` hook and a
-corresponding `getCurrentUser` query.
+The second way is to use the `useCurrentUser()` hook. New Blitz apps by default have a `useCurrentUser()` hook and a
+corresponding `getCurrentUser` query. Unlike the `useSession()` approach above, `useCurrentUser()` will require a network call and thus be slower. However, if you need access to user data that would be insecure to store in the session's `publicData`, you would need to use `useCurrentUser()` instead of `useSession()`.
 
 ```tsx
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"

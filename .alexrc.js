@@ -9,5 +9,6 @@ exports.allow = [
   "her-him",
   "herself-himself",
   "obvious",
-  "easy",
+  "host",
+  "host-hostess",
 ]

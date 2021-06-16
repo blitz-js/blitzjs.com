@@ -17,10 +17,12 @@ others with the same API.
 ### Example {#validate-zod-schema-example}
 
 ```ts
-    <FinalForm
-      initialValues={initialValues}
-      validate={validateZodSchema(schema)}
-      ...
+import {validateZodSchema} from 'blitz'
+
+<FinalForm
+  initialValues={initialValues}
+  validate={validateZodSchema(schema)}
+  ...
 ```
 
 ### API {#validate-zod-schema-api}
@@ -43,3 +45,44 @@ accepts some values and returns an object containing any errors.
 ```
 (values: any) => Object
 ```
+
+## `formatZodError` {#format-zod-error}
+
+This utility function will take a ZodError and format it nicely to be
+usable with your form library.
+
+This is currently compatible with both React Final Form and Formik and any
+others with the same API.
+
+### Example {#format-zod-error-example}
+
+```ts
+import {formatZodError} from 'blitz'
+
+<FinalForm
+  initialValues={initialValues}
+  validate={values => {
+    try {
+      schema.parse(values)
+    } catch (error) {
+      return formatZodError(error)
+    }
+  }}
+  ...
+```
+
+### API {#format-zod-error-api}
+
+<!-- prettier-ignore -->
+```js
+const formattedErrorsObject = formatZodError(myZodError)
+```
+
+#### Arguments
+
+- `ZodError:` a [zod](https://github.com/colinhacks/zod) error
+  - **Required**
+
+#### Returns
+
+An object with errors that makes the same shape as the original schema

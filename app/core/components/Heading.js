@@ -17,19 +17,19 @@ export function Heading({
   ...props
 }) {
   let Component = `h${level}`
-  const {registerHeading, unregisterHeading} = useContext(ContentsContext)
+  // const {registerHeading, unregisterHeading} = useContext(ContentsContext)
 
   let ref = useRef()
   let top = useTop(ref)
 
-  useEffect(() => {
-    if (toc && typeof top !== "undefined") {
-      registerHeading(id, top)
-    }
-    return () => {
-      unregisterHeading(id)
-    }
-  }, [toc, top, id, registerHeading, unregisterHeading])
+  // useEffect(() => {
+  //   if (toc && typeof top !== "undefined") {
+  //     registerHeading(id, top)
+  //   }
+  //   return () => {
+  //     unregisterHeading(id)
+  //   }
+  // }, [toc, top, id, registerHeading, unregisterHeading])
 
   return (
     <Component

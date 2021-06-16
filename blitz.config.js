@@ -14,10 +14,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const fallbackDefaultExports = {
   // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "pages/docs/**/*": ["app/core/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
 module.exports = withBundleAnalyzer({
+  webpack5: false,
   pageExtensions: ["js", "jsx", "mdx"],
   images: {
     domains: [
@@ -30,7 +31,7 @@ module.exports = withBundleAnalyzer({
       "avatars4.githubusercontent.com",
       "avatars5.githubusercontent.com",
       "avatars6.githubusercontent.com",
-    ]
+    ],
   },
   async redirects() {
     return [
@@ -106,6 +107,7 @@ module.exports = withBundleAnalyzer({
           },
         },
         createLoader(function (source) {
+          console.log("WEBPACK MDX LOADER")
           let {meta: fields} = querystring.parse(this.resourceQuery.substr(1))
           let {data: meta, content: body} = matter(source)
           if (fields) {
@@ -150,6 +152,7 @@ module.exports = withBundleAnalyzer({
       test: /navs\/documentation\.json$/,
       use: [
         createLoader(function (source) {
+          console.log("WEBPACK NAV LOADER")
           const documentation = JSON.parse(source)
           let finalDocumentation = []
 

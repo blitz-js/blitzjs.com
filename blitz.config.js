@@ -18,7 +18,6 @@ const fallbackDefaultExports = {
 }
 
 module.exports = withBundleAnalyzer({
-  webpack5: false,
   pageExtensions: ["js", "jsx", "mdx"],
   images: {
     domains: [
@@ -107,7 +106,6 @@ module.exports = withBundleAnalyzer({
           },
         },
         createLoader(function (source) {
-          console.log("WEBPACK MDX LOADER")
           let {meta: fields} = querystring.parse(this.resourceQuery.substr(1))
           let {data: meta, content: body} = matter(source)
           if (fields) {
@@ -119,7 +117,7 @@ module.exports = withBundleAnalyzer({
           }
 
           let extra = []
-          let resourcePath = path.relative(__dirname, this.resourcePath)
+          let resourcePath = path.relative(process.cwd(), this.resourcePath)
 
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
@@ -152,7 +150,6 @@ module.exports = withBundleAnalyzer({
       test: /navs\/documentation\.json$/,
       use: [
         createLoader(function (source) {
-          console.log("WEBPACK NAV LOADER")
           const documentation = JSON.parse(source)
           let finalDocumentation = []
 

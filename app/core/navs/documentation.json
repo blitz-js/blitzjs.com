@@ -32,13 +32,16 @@
     "pages": [
       "file-structure",
       "app-component",
+      "image-component",
+      "script-component",
       "css",
-      "image-optimization",
       "font-optimization",
       "static-files",
       "environment-variables",
       "error-handling",
-      "testing"
+      "error-boundary",
+      "testing",
+      "utilities"
     ]
   },
   {

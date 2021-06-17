@@ -14,7 +14,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const fallbackDefaultExports = {
   // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "pages/docs/**/*": ["app/core/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
 module.exports = withBundleAnalyzer({
@@ -30,7 +30,7 @@ module.exports = withBundleAnalyzer({
       "avatars4.githubusercontent.com",
       "avatars5.githubusercontent.com",
       "avatars6.githubusercontent.com",
-    ]
+    ],
   },
   async redirects() {
     return [
@@ -117,7 +117,7 @@ module.exports = withBundleAnalyzer({
           }
 
           let extra = []
-          let resourcePath = path.relative(__dirname, this.resourcePath)
+          let resourcePath = path.relative(process.cwd(), this.resourcePath)
 
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {

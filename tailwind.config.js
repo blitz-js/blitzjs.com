@@ -359,10 +359,30 @@ module.exports = {
           "0%": {backgroundColor: "rgba(134, 239, 172, 0.25)"},
           "100%": {backgroundColor: "transparent"},
         },
+        "slide-in": {
+          "0%": {
+            transform: "translateY(-20%)",
+            display: "flex",
+          },
+          "100%": {
+            transform: "translateY(0)",
+          },
+        },
+        "slide-out": {
+          "0%": {
+            transform: "translateY(0%)",
+          },
+          "100%": {
+            transform: "translateY(-20%)",
+            display: "none",
+          },
+        },
       },
       animation: {
         "flash-code": "flash-code 1s forwards",
         "flash-code-slow": "flash-code 2s forwards",
+        "slide-in": "slide-in 0.5s 1",
+        "slide-out": "slide-out 0.5s 1",
       },
       cursor: {
         grab: "grab",

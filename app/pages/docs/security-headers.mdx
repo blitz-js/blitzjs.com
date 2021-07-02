@@ -29,7 +29,7 @@ module.exports = {
 
 ## Options {#options}
 
-### [X-DNS-Prefetch-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control) {#x-dns-prefetch-control}
+### X-DNS-Prefetch-Control {#x-dns-prefetch-control}
 
 This header controls DNS prefetching, allowing browsers to proactively
 perform domain name resolution on external links, images, CSS, JavaScript,
@@ -45,7 +45,9 @@ reduces latency when the user clicks a link.
 }
 ```
 
-### [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) {#strict-transport-security}
+[X-DNS-Prefetch-Control documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control)
+
+### Strict-Transport-Security {#strict-transport-security}
 
 This header informs browsers it should only be accessed using HTTPS,
 instead of using HTTP. Using the configuration below, all present and
@@ -64,7 +66,9 @@ deployments.
 }
 ```
 
-### [X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) {#x-xss-protection}
+[Strict-Transport-Security documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
+
+### X-XSS-Protection {#x-xss-protection}
 
 This header stops pages from loading when they detect reflected cross-site
 scripting (XSS) attacks. Although this protection is not necessary when
@@ -80,7 +84,9 @@ older web browsers that don't support CSP.
 }
 ```
 
-### [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) {#x-frame-options}
+[X-XSS-Protection documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)
+
+### X-Frame-Options {#x-frame-options}
 
 This header indicates whether the site should be allowed to be displayed
 within an `iframe`. This can prevent against clickjacking attacks. This
@@ -94,7 +100,9 @@ better support in modern browsers.
 }
 ```
 
-### [Permissions-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) {#permission-policy}
+[X-Frame-Options documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
+
+### Permissions-Policy {#permission-policy}
 
 This header allows you to control which features and APIs can be used in
 the browser. It was previously named `Feature-Policy`. You can view the
@@ -108,7 +116,9 @@ full list of permission options
 }
 ```
 
-### [X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) {#x-content-type-options}
+[Permissions-Policy documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy)
+
+### X-Content-Type-Options {#x-content-type-options}
 
 This header prevents the browser from attempting to guess the type of
 content if the `Content-Type` header is not explicitly set. This can
@@ -125,7 +135,9 @@ only valid value for this header is `nosniff`.
 }
 ```
 
-### [Referrer-Policy](https://scotthelme.co.uk/a-new-security-header-referrer-policy/) {#referrer-policy}
+[X-Content-Type-Options documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)
+
+### Referrer-Policy {#referrer-policy}
 
 This header controls how much information the browser includes when
 navigating from the current website (origin) to another. You can read
@@ -139,7 +151,9 @@ about the different options
 }
 ```
 
-### [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) {#content-security-policy}
+[Referrer-Policy documentation](https://scotthelme.co.uk/a-new-security-header-referrer-policy/)
+
+### Content-Security-Policy {#content-security-policy}
 
 This header helps prevent cross-site scripting (XSS), clickjacking and
 other code injection attacks. Content Security Policy (CSP) can specify
@@ -155,6 +169,8 @@ You can read about the many different CSP options
   value: // Your CSP Policy
 }
 ```
+
+[Content-Security-Policy documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 
 ### References {#references}
 

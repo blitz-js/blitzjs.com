@@ -132,7 +132,13 @@
       "iconPath": "/img/mutations.svg",
       "iconDarkPath": "/img/mutations-white.svg"
     },
-    "pages": ["multitenancy", "background-processing-with-quirrel", "middleware", "custom-server"]
+    "pages": [
+      "multitenancy",
+      "background-processing-with-quirrel",
+      "middleware",
+      "custom-server",
+      "security-headers"
+    ]
   },
   {
     "title": {

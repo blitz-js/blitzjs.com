@@ -56,8 +56,22 @@ Here's the definition of the `router` object returned by `useRouter` and
   url. Parameter type is always `string`.
 - `params`: `Object` - All the dynamic route parameters for the current
   route. Parameter types are `string` or `string[]`.
-- `asPath`: `String` - Actual path (including the query) shown in the
-  browser
+- `asPath`: `String` - The path (including the query) shown in the browser
+  without the configured `basePath` or `locale`.
+- `isFallback`: `boolean` - Whether the current page is in
+  [fallback mode](/docs/basic-features/data-fetching.md#fallback-pages).
+- `basePath`: `String` - The active [basePath](./blitz-config#base-path)
+  (if enabled).
+- `locale`: `String` - The active locale (if enabled).
+- `locales`: `String[]` - All supported locales (if enabled).
+- `defaultLocale`: `String` - The current default locale (if enabled).
+- `domainLocales`: `Array<{domain, defaultLocale, locales}>` - Any
+  configured domain locales.
+- `isReady`: `boolean` - Whether the router fields are updated client-side
+  and ready for use. Should only be used inside of `useEffect` methods and
+  not for conditionally rendering on the server.
+- `isPreview`: `boolean` - Whether the application is currently in
+  [preview mode](/docs/advanced-features/preview-mode.md). browser
 - [`push()`](#router-push): Make page navigation
 - [`replace()`](#router-replace): Make page navigation without adding to
   browser history
@@ -189,7 +203,7 @@ Prefetch pages for faster client-side transitions. This method is only
 useful for navigations without [`<Link>`](./link) because it takes care of
 prefetching pages automatically.
 
-> This is a production only feature. Next.js doesn't prefetch pages on
+> This is a production only feature. Blitz.js doesn't prefetch pages on
 > development.
 
 ```jsx

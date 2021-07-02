@@ -11,15 +11,27 @@ const minimatch = require("minimatch")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 })
-const admonitions = require("remark-admonitions")
 
 const fallbackDefaultExports = {
   // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "pages/docs/**/*": ["app/core/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
 module.exports = withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "mdx"],
+  images: {
+    domains: [
+      "raw.githubusercontent.com",
+      "avatars.githubusercontent.com",
+      "avatars0.githubusercontent.com",
+      "avatars1.githubusercontent.com",
+      "avatars2.githubusercontent.com",
+      "avatars3.githubusercontent.com",
+      "avatars4.githubusercontent.com",
+      "avatars5.githubusercontent.com",
+      "avatars6.githubusercontent.com",
+    ],
+  },
   async redirects() {
     return [
       {
@@ -28,8 +40,8 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: "/meetup",
-        destination: "https://us02web.zoom.us/j/85901497017?pwd=MVFMUXJOQndqbDNJaU1BK2N0ZjNpQT09",
+        source: "/joinmeetup",
+        destination: "https://us02web.zoom.us/j/85901497017?pwd=eVo4YlhsU2E3UHQvUmgxTmtRUDBIZz09",
         permanent: false,
       },
     ]
@@ -90,29 +102,7 @@ module.exports = withBundleAnalyzer({
         {
           loader: "@mdx-js/loader",
           options: {
-            remarkPlugins: [
-              withProse,
-              withTableOfContents,
-              withSyntaxHighlighting,
-              withBlitzLinks,
-              [
-                admonitions,
-                {
-                  customTypes: {
-                    caution: {
-                      keyword: "caution",
-                      svg:
-                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
-                    },
-                    info: {
-                      keyword: "info",
-                      svg:
-                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
-                    },
-                  },
-                },
-              ],
-            ],
+            remarkPlugins: [withProse, withTableOfContents, withSyntaxHighlighting, withBlitzLinks],
           },
         },
         createLoader(function (source) {
@@ -127,7 +117,7 @@ module.exports = withBundleAnalyzer({
           }
 
           let extra = []
-          let resourcePath = path.relative(__dirname, this.resourcePath)
+          let resourcePath = path.relative(process.cwd(), this.resourcePath)
 
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
@@ -139,6 +129,10 @@ module.exports = withBundleAnalyzer({
                 break
               }
             }
+          }
+
+          if (/^<\/Card>$/m.test(source)) {
+            extra.push(`import { Card } from '@/components/docs/Card'`)
           }
 
           return [

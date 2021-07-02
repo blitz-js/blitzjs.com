@@ -5,11 +5,17 @@ sidebar_label: Get Started
 
 ### Set Up Your Computer {#set-up-your-computer}
 
-You need Node.js 12 or newer
+You need Node.js 12 or newer. You can verify this by running `node -v` in
+your terminal. If you don't have Node or need a newer version, we
+recommend using a node version manager like
+[fnm](https://github.com/Schniz/fnm). That will allow you to change node
+versions and even have different versions for each project.
 
 ### Install Blitz {#install-blitz}
 
-Run `npm install -g blitz`
+Run `yarn global add blitz` or `npm install -g blitz --legacy-peer-deps`
+(legacy-peer-deps is needed because npm totally change behavior of peer
+deps and some dependencies haven't caught up)
 
 ### Create a New App {#create-a-new-app}
 

@@ -5,21 +5,23 @@ sidebar_label: <Link>
 
 `<Link>` is used to navigate between pages
 
-An example of linking to `/` and `/about`:
+An example of linking to `Home` and `About`:
 
 ```jsx
-import {Link} from "blitz"
+import {Link, Routes} from "blitz"
 
 function Home() {
   return (
     <ul>
       <li>
-        <Link href="/">
+        <Link href={Routes.Home()}> // Option 1: use Route manifest
+        <Link href="/"> // Option 2: use string or location object
           <a>Home</a>
         </Link>
       </li>
       <li>
-        <Link href="/about">
+        <Link href={Routes.About()}> // Option 1: use Route manifest
+        <Link href="/about"> // Option 2: use string or location object
           <a>About Us</a>
         </Link>
       </li>
@@ -30,10 +32,15 @@ function Home() {
 export default Home
 ```
 
+The `Routes` object imported from `blitz` is automatically generated based
+on the pages in your app. If your page component is named `About`, then
+you can link to it with `Routes.About`. For more information, see the
+[Route Manifest documentation](./route-manifest).
+
 `Link` accepts the following props:
 
 - `href` - The path inside `pages` directory. This is the only required
-  prop
+  prop.
 - `as` - The path that will be rendered in the browser URL bar. Used for
   dynamic routes
 - [`passHref`](#if-the-child-is-a-custom-component-that-wraps-an-a-tag) -
@@ -41,8 +48,12 @@ export default Home
   `false`
 - `prefetch` - Prefetch the page in the background. Defaults to `true`.
   Any `<Link />` that is in the viewport (initially or through scroll)
-  will be preloaded. Pages using [Static Generation](./get-static-props)
-  will preload `JSON` files with the data for faster page transitions.
+  will be preloaded. Prefetch can be disabled by passing
+  `prefetch={false}`. When `prefetch` is set to `false`, prefetching will
+  still occur on hover. Pages using
+  [Static Generation](./get-static-props.mdx) will preload `JSON` files
+  with the data for faster page transitions. Prefetching is only enabled
+  in production.
 - [`replace`](#replace-the-url-instead-of-push) - Replace the current
   `history` state instead of adding a new url into the stack. Defaults to
   `false`
@@ -62,7 +73,7 @@ A `Link` to a dynamic route works like the other links. A link to the page
 `pages/post/[pid].js` will look like this:
 
 ```jsx
-<Link href="/post/abc">
+<Link href={Routes.Post({ pid: "abc" })}>
   <a>First Post</a>
 </Link>
 ```
@@ -73,7 +84,8 @@ Here's an example of how to create a list of links:
 const pids = ["id1", "id2", "id3"]
 {
   pids.map((pid) => (
-    <Link href={`/post/${pid}`}>
+    <Link href={Routes.Post({pid})}> // using Routes Manifest
+    <Link href={`/posts/${pid}`}> // using location
       <a>Post {pid}</a>
     </Link>
   ))
@@ -89,7 +101,7 @@ the `<a>` tag will not have the `href` attribute, which might hurt your
 site’s SEO.
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 import styled from "styled-components"
 
 // This creates a custom component that wraps an <a> tag
@@ -97,7 +109,7 @@ const RedLink = styled.a`
   color: red;
 `
 
-function NavLink({href, name}) {
+function NavLink({ href, name }) {
   // Must add passHref to Link
   return (
     <Link href={href} passHref>
@@ -120,11 +132,11 @@ If the child of `Link` is a function component, in addition to using
 [`React.forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref):
 
 ```jsx
-import {Link} from "blitz"
+import { Link, Routes } from "blitz"
 
 // `onClick`, `href`, and `ref` need to be passed to the DOM element
 // for proper handling
-const MyButton = React.forwardRef(({onClick, href}, ref) => {
+const MyButton = React.forwardRef(({ onClick, href }, ref) => {
   return (
     <a href={href} onClick={onClick} ref={ref}>
       Click Me
@@ -134,7 +146,7 @@ const MyButton = React.forwardRef(({onClick, href}, ref) => {
 
 function Home() {
   return (
-    <Link href="/about" passHref>
+    <Link href={Routes.About()} passHref>
       <MyButton />
     </Link>
   )
@@ -149,12 +161,12 @@ export default Home
 to create the URL string. Here's how to do it:
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 
 function Home() {
   return (
     <div>
-      <Link href={{pathname: "/about", query: {name: "test"}}}>
+      <Link href={{ pathname: "/about", query: { name: "test" } }}>
         <a>About us</a>
       </Link>
     </div>
@@ -175,7 +187,7 @@ the `history` stack. You can use the `replace` prop to prevent adding a
 new entry, as in the following example:
 
 ```jsx
-<Link href="/about" replace>
+<Link href={Routes.About()} replace>
   <a>About us</a>
 </Link>
 ```
@@ -186,7 +198,7 @@ new entry, as in the following example:
 case you don't provide an `<a>` tag, consider the following example:
 
 ```jsx
-<Link href="/about">
+<Link href={Routes.About()}>
   <img src="/static/image.png" alt="image" />
 </Link>
 ```

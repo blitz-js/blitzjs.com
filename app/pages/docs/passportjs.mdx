@@ -19,7 +19,7 @@ contents.
 
 ```ts
 // app/api/auth/[...auth].ts
-import {passportAuth} from "blitz"
+import { passportAuth } from "blitz"
 import db from "db"
 
 export default passportAuth({
@@ -64,7 +64,7 @@ located behind SSL proxy (Nginx). Proxy should be set to manage
 
 ```ts
 // app/api/auth/[...auth].ts
-import {passportAuth} from "blitz"
+import { passportAuth } from "blitz"
 import db from "db"
 
 export default passportAuth({
@@ -85,7 +85,7 @@ can then access the session context via `ctx.session`
 
 ```ts
 // app/api/auth/[...auth].ts
-import {passportAuth} from "blitz"
+import { passportAuth } from "blitz"
 import db from "db"
 
 export default passportAuth((ctx) => ({
@@ -93,14 +93,12 @@ export default passportAuth((ctx) => ({
   errorRedirectUrl: "/",
   strategies: [
     {
-      strategy: new TwitterStrategy(
-        {
-          consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
-          consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
-          /*...*/
-        }
-      )
-    }
+      strategy: new TwitterStrategy({
+        consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
+        consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
+        /*...*/
+      }),
+    },
   ],
 }))
 ```
@@ -120,9 +118,9 @@ Note that the `callbackURL` uses the callback endpoint as described above
 (`/api/auth/twitter/callback`)
 
 ```ts
-import {passportAuth} from "blitz"
+import { passportAuth } from "blitz"
 import db from "db"
-import {Strategy as TwitterStrategy} from "passport-twitter"
+import { Strategy as TwitterStrategy } from "passport-twitter"
 
 export default passportAuth({
   successRedirectUrl: "/",
@@ -146,17 +144,17 @@ export default passportAuth({
           if (!email) {
             // This can happen if you haven't enabled email access in your twitter app permissions
             return done(
-              new Error("Twitter OAuth response doesn't have email."),
+              new Error("Twitter OAuth response doesn't have email.")
             )
           }
 
           const user = await db.user.upsert({
-            where: {email},
+            where: { email },
             create: {
               email,
               name: profile.displayName,
             },
-            update: {email},
+            update: { email },
           })
 
           const publicData = {
@@ -164,8 +162,8 @@ export default passportAuth({
             roles: [user.role],
             source: "twitter",
           }
-          done(null, {publicData})
-        },
+          done(undefined, { publicData })
+        }
       ),
     },
     // highlight-end
@@ -202,7 +200,7 @@ app**.
 from your `verify` callback.
 
 ```ts
-done(null, result)
+done(undefined, result)
 ```
 
 where `result` is an object of type `VerifyCallbackResult`
@@ -247,7 +245,7 @@ should be sent after they are authenticated. They are listed here in order
 of priority. A URL provided with method #1 will override all other URLs.
 
 1. Add `redirectUrl` to the `verify` callback result
-   - Example: `done(null, {publicData, redirectUrl: '/'})`
+   - Example: `done(undefined, {publicData, redirectUrl: '/'})`
 2. Add a `redirectUrl` query parameter to the "initiate login" url
    - Example: `example.com/api/auth/twitter?redirectUrl=/dashboard`
    - Example:
@@ -270,9 +268,9 @@ inside the `passport.authenticate()` method. Add these options to the
 `passportAuth` object like this:
 
 ```ts
-import {passportAuth} from "blitz"
+import { passportAuth } from "blitz"
 import db from "db"
-import {Strategy as Auth0Strategy} from "passport-auth0"
+import { Strategy as Auth0Strategy } from "passport-auth0"
 
 export default passportAuth({
   successRedirectUrl: "/",
@@ -280,7 +278,7 @@ export default passportAuth({
   strategies: [
     {
       // highlight-start
-      authenticateOptions: {scope: "openid email profile"},
+      authenticateOptions: { scope: "openid email profile" },
       // highlight-end
       strategy: new Auth0Strategy(
         {
@@ -297,24 +295,24 @@ export default passportAuth({
           _tokenSecret,
           extraParams,
           profile,
-          done,
+          done
         ) {
           const email = profile.emails && profile.emails[0]?.value
 
           if (!email) {
             // This can happen if you haven't enabled email access in your twitter app permissions
             return done(
-              new Error("GitHub OAuth response doesn't have email."),
+              new Error("GitHub OAuth response doesn't have email.")
             )
           }
 
           const user = await db.user.upsert({
-            where: {email},
+            where: { email },
             create: {
               email,
               name: profile.displayName,
             },
-            update: {email},
+            update: { email },
           })
 
           const publicData = {
@@ -322,8 +320,8 @@ export default passportAuth({
             roles: [user.role],
             source: "auth0",
           }
-          done(undefined, {publicData})
-        },
+          done(undefined, { publicData })
+        }
       ),
     },
   ],

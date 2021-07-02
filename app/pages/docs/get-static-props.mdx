@@ -3,8 +3,8 @@ title: getStaticProps API
 sidebar_label: getStaticProps API
 ---
 
-<!-- prettier-ignore-start -->
-:::info
+<Card type="info">
+
 `getStaticProps` should only be used for pages that do not require
 authentication. The statically generated pages will be publicly available
 via your server and via a CDN if you have one. Therefore they cannot
@@ -13,12 +13,12 @@ contain any personal or sensitive data.
 Also, this is why there is no `req` and `res` objects for
 `getStaticProps`, because the pages are generated at build time, not at
 runtime. And at build time, there is no user http request to handle.
-:::
-<!-- prettier-ignore-end -->
 
-If you export an `async` function called `getStaticProps` from a page,
-Blitz will pre-render this page at build time using the props returned by
-`getStaticProps`.
+</Card>
+
+If you export an `async` function called `getStaticProps` from a
+[page](./pages), Blitz will pre-render this page at build time using the
+props returned by `getStaticProps`.
 
 ```jsx
 export async function getStaticProps(context) {
@@ -170,7 +170,7 @@ You should use `getStaticProps` if:
 For TypeScript, you can use the `GetStaticProps` type from `blitz`:
 
 ```ts
-import {GetStaticProps} from "blitz"
+import { GetStaticProps } from "blitz"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   // ...
@@ -181,7 +181,7 @@ If you want to get inferred typings for your props, you can use
 `InferGetStaticPropsType<typeof getStaticProps>`, like this:
 
 ```tsx
-import {InferGetStaticPropsType} from "blitz"
+import { InferGetStaticPropsType } from "blitz"
 
 type Post = {
   author: string
@@ -199,7 +199,7 @@ export const getStaticProps = async () => {
   }
 }
 
-function Blog({posts}: InferGetStaticPropsType<typeof getStaticProps>) {
+function Blog({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   // will resolve posts to type Post[]
 }
 
@@ -222,7 +222,7 @@ Consider our previous [`getStaticProps` example](#simple-example), but now
 with regeneration enabled:
 
 ```jsx
-function Blog({posts}) {
+function Blog({ posts }) {
   return (
     <ul>
       {posts.map((post) => (
@@ -297,7 +297,7 @@ import fs from "fs"
 import path from "path"
 
 // posts will be populated at build time by getStaticProps()
-function Blog({posts}) {
+function Blog({ posts }) {
   return (
     <ul>
       {posts.map((post) => (
@@ -376,8 +376,8 @@ the exported JSON is used.
 
 #### Only allowed in a page
 
-`getStaticProps` can only be exported from a **page**. You can’t export it
-from non-page files.
+`getStaticProps` can only be exported from a [page](./pages). You can’t
+export it from non-page files.
 
 One of the reasons for this restriction is that React needs to have all
 the required data before the page is rendered.
@@ -390,6 +390,17 @@ component.
 
 In development (`blitz dev`), `getStaticProps` will be called on every
 request.
+
+#### First Render UX
+
+Even though a page with `getStaticProps` will be pre-rendered on the
+server, it may fallback to the page's loading state if your page contains
+queries that request data missing from the initial page props. This can
+create a flickering effect where the contents of the page rapidly changes
+when the query data gets loaded into the app.
+
+[Click here](./pages#first-render-ux) to discover ways you can improve the
+first render User Experience (UX) of your pages.
 
 #### Preview Mode
 

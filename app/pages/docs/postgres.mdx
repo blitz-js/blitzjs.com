@@ -55,6 +55,12 @@ services:
     ports:
       - "5432:5432"
 
+  db-test:
+    image: postgres:latest
+    env_file: ./.env.test.local
+    ports:
+      - 5433:5432
+
 volumes:
   data:
 ```
@@ -68,8 +74,13 @@ POSTGRES_PASSWORD=your_password
 POSTGRES_DB=your_database_name
 ```
 
-Given these values your `DATABASE_URL` should look like this
+Given these values, update `DATABASE_URL` in `.env.local` to something
+similar like
 `postgresql://your_user:your_password@localhost:5432/your_database_name`
+and in `.env.test.local` to
+`postgresql://your_user:your_password@localhost:5433/your_database_name`
+
+Please note that test database is using port `5433` instead of `5432`
 
 3. Modify your `package.json` to start the database before Blitz
 
@@ -80,5 +91,6 @@ Given these values your `DATABASE_URL` should look like this
 }
 ```
 
-4. Run `blitz prisma migrate dev --preview-feature` to get your new
-   database to the latest version of your migrations
+4. Start your new database and get it to the latest version of your
+   migrations by running `docker-compose up -d` and
+   `blitz prisma migrate dev`.

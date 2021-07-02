@@ -3,11 +3,8 @@ title: blitz.config.js
 sidebar_label: blitz.config.js
 ---
 
-You can customize advanced behavior of Blitz with `blitz.config.js`.
-
-`blitz.config.js` is a regular Node.js module, not a JSON file. It gets
-used by the Blitz server and build phases, and it's not included in the
-browser build.
+You can customize advanced behavior of Blitz with `blitz.config.js` or
+`blitz.config.ts`.
 
 Take a look at the following `blitz.config.js` example:
 
@@ -20,7 +17,7 @@ module.exports = {
 You can also use a function:
 
 ```js
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   return {
     /* config options here */
   }
@@ -33,9 +30,9 @@ can see the available phases
 Phases can be imported from `next/constants`:
 
 ```js
-const {PHASE_DEVELOPMENT_SERVER} = require("next/constants")
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants"
 
-module.exports = (phase, {defaultConfig}) => {
+module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       /* development only config options here */
@@ -56,10 +53,6 @@ However, none of the configs are required, and it's not necessary to
 understand what each config does, instead, search for the features you
 need to enable or modify in this section and they will show you what to
 do.
-
-> Avoid using new JavaScript features not available in your target Node.js
-> version. `blitz.config.js` will not be parsed by Webpack, Babel or
-> TypeScript.
 
 ## Webpack Config {#webpack-config}
 
@@ -92,9 +85,6 @@ module.exports = {
   target: "serverless",
 }
 ```
-
-> Deployments to [Vercel](https://vercel.com) will automatically enable
-> this target. You should not opt-into it yourself.
 
 ## Middleware {#middleware}
 
@@ -129,6 +119,8 @@ module.exports = {
 
 ## CLI {#cli}
 
+### Clear Console On Blitz Dev {#clear-console-on-blitz-dev}
+
 When you run `blitz dev`, the console gets cleared. You can disable it by
 setting the `cli.clearConsoleOnBlitzDev` to `false`:
 
@@ -139,6 +131,25 @@ module.exports = {
   },
 }
 ```
+
+### Proxy support {#proxy-support}
+
+Proxy support is enabled automatically for recipe install if either
+`http_proxy` or `https_proxy` environment variable is present. You can
+also set proxy using:
+
+```js
+module.exports = {
+  cli: {
+    httpProxy: "http://127.0.0.1:8080",
+    httpsProxy: "http://127.0.0.1:8080",
+    noProxy: "localhost",
+  },
+}
+```
+
+Please note that proxy configuration in `blitz.config.js` will override
+environment proxy configuration.
 
 ## CDN Support with Asset Prefix {#cdn-support-with-asset-prefix}
 
@@ -155,12 +166,39 @@ module.exports = {
 }
 ```
 
-Blitz will automatically use your prefix in the scripts it loads, but this
-has no effect whatsoever on the [public](./static-files) folder; if you
-want to serve those assets over a CDN, you'll have to introduce the prefix
-yourself. One way of introducing a prefix that works inside your
-components and varies by environment is documented
-[in this example](https://github.com/vercel/next.js/tree/canary/examples/with-universal-configuration-build-time).
+Blitz.js will automatically use your asset prefix for the JavaScript and
+CSS files it loads from the `/_next/` path (`.next/static/` folder). For
+example, with the above configuration, the following request for a JS
+chunk:
+
+```
+/_next/static/chunks/4b9b41aaa062cbbfeff4add70f256968c51ece5d.4d708494b3aed70c04f0.js
+```
+
+Would instead become:
+
+```
+https://cdn.mydomain.com/_next/static/chunks/4b9b41aaa062cbbfeff4add70f256968c51ece5d.4d708494b3aed70c04f0.js
+```
+
+The exact configuration for uploading your files to a given CDN will
+depend on your CDN of choice. The only folder you need to host on your CDN
+is the contents of `.next/static/`, which should be uploaded as
+`_next/static/` as the above URL request indicates. **Do not upload the
+rest of your `.next/` folder**, as you should not expose your server code
+and other configuration to the public.
+
+While `assetPrefix` covers requests to `_next/static`, it does not
+influence the following paths:
+
+- Files in the [public](./static-files) folder; if you want to serve those
+  assets over a CDN, you'll have to introduce the prefix yourself
+- `/_next/data/` requests for `getServerSideProps` pages. These requests
+  will always be made against the main domain since they're not static.
+- `/_next/data/` requests for `getStaticProps` pages. These requests will
+  always be made against the main domain to support
+  [Incremental Static Generation](./get-static-props), even if you're not
+  using it (for consistency).
 
 ## Custom Page Extensions {#custom-page-extensions}
 
@@ -304,8 +342,8 @@ re-building as the value is inlined in the client-side bundles.
 
 ### Links {#links}
 
-When linking to other pages using `blitz/link` and `blitz/router` the
-`basePath` will be automatically applied.
+When linking to other pages using `Link` and `Router` the `basePath` will
+be automatically applied.
 
 For example using `/about` will automatically become `/docs/about` when
 `basePath` is set to `/docs`.
@@ -314,7 +352,7 @@ For example using `/about` will automatically become `/docs/about` when
 export default function HomePage() {
   return (
     <>
-      <Link href="/about">
+      <Link href={Routes.About()}>
         <a>About Page</a>
       </Link>
     </>
@@ -330,732 +368,6 @@ Output html:
 
 This makes sure that you don't have to change all links in your
 application when changing the `basePath` value.
-
-## Rewrites {#rewrites}
-
-Rewrites allow you to map an incoming request path to a different
-destination path.
-
-Rewrites are only available on the Node.js environment and do not affect
-client-side routing.
-
-Rewrites are not able to override public files or routes in the pages
-directory as these have higher priority than rewrites. For example, if you
-have `pages/index.js` you are not able to rewrite `/` to another location
-unless you rename the `pages/index.js` file.
-
-To use rewrites you can use the `rewrites` key in `blitz.config.js`:
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/about",
-        destination: "/",
-      },
-    ]
-  },
-}
-```
-
-`rewrites` is an async function that expects an array to be returned
-holding objects with `source` and `destination` properties:
-
-- `source` is the incoming request path pattern.
-- `destination` is the path you want to route to.
-
-### Rewrite parameters {#rewrite-parameters}
-
-When using parameters in a rewrite the parameters will be passed in the
-query by default when none of the parameters are used in the
-`destination`.
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/old-about/:path*",
-        destination: "/about", // The :path parameter isn't used here so will be automatically passed in the query
-      },
-    ]
-  },
-}
-```
-
-If a parameter is used in the destination none of the parameters will be
-automatically passed in the query.
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/docs/:path*",
-        destination: "/:path*", // The :path parameter is used here so will not be automatically passed in the query
-      },
-    ]
-  },
-}
-```
-
-You can still pass the parameters manually in the query if one is already
-used in the destination by specifying the query in the `destination`.
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/:first/:second",
-        destination: "/:first?second=:second",
-        // Since the :first parameter is used in the destination the :second parameter
-        // will not automatically be added in the query although we can manually add it
-        // as shown above
-      },
-    ]
-  },
-}
-```
-
-### Path Matching {#path-matching}
-
-Path matches are allowed, for example `/blog/:slug` will match
-`/blog/hello-world` (no nested paths):
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/blog/:slug",
-        destination: "/news/:slug", // Matched parameters can be used in the destination
-      },
-    ]
-  },
-}
-```
-
-#### Wildcard Path Matching
-
-To match a wildcard path you can use `*` after a parameter, for example
-`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/blog/:slug*",
-        destination: "/news/:slug*", // Matched parameters can be used in the destination
-      },
-    ]
-  },
-}
-```
-
-#### Regex Path Matching
-
-To match a regex path you can wrap the regex in parenthesis after a
-parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but
-not `/blog/abc`:
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/old-blog/:post(\\d{1,})",
-        destination: "/blog/:post", // Matched parameters can be used in the destination
-      },
-    ]
-  },
-}
-```
-
-### Rewriting to an external URL {#rewriting-to-an-external-url}
-
-Rewrites allow you to rewrite to an external url. This is especially
-useful for incrementally adopting Next.js.
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/blog/:slug",
-        destination: "https://example.com/blog/:slug", // Matched parameters can be used in the destination
-      },
-    ]
-  },
-}
-```
-
-#### Incremental adoption of Blitz
-
-You can also make Blitz check the application routes before falling back
-to proxying to the previous website.
-
-This way you don't have to change the rewrites configuration when
-migrating more pages to Blitz
-
-```js
-module.exports = {
-  async rewrites() {
-    return [
-      // we need to define a no-op rewrite to trigger checking
-      // all pages/static files before we attempt proxying
-      {
-        source: "/:path*",
-        destination: "/:path*",
-      },
-      {
-        source: "/:path*",
-        destination: `https://custom-routes-proxying-endpoint.vercel.app/:path*`,
-      },
-    ]
-  },
-}
-```
-
-#### Rewrites with basePath support
-
-When leveraging [`basePath` support](#base-path) with rewrites each
-`source` and `destination` is automatically prefixed with the `basePath`
-unless you add `basePath: false` to the rewrite:
-
-```js
-module.exports = {
-  basePath: "/docs",
-
-  async rewrites() {
-    return [
-      {
-        source: "/with-basePath", // automatically becomes /docs/with-basePath
-        destination: "/another", // automatically becomes /docs/another
-      },
-      {
-        // does not add /docs to /without-basePath since basePath: false is set
-        // Note: this can not be used for internal rewrites e.g. `destination: '/another'`
-        source: "/without-basePath",
-        destination: "https://example.com",
-        basePath: false,
-      },
-    ]
-  },
-}
-```
-
-#### Rewrites with i18n support
-
-When leveraging [`i18n` support](/docs/i18n-routing) with rewrites each
-`source` and `destination` is automatically prefixed to handle the
-configured `locales` unless you add `locale: false` to the rewrite. If
-`locale: false` is used you must prefix the `source` and `destination`
-with a locale for it to be matched correctly.
-
-```js
-module.exports = {
-  i18n: {
-    locales: ["en", "fr", "de"],
-    defaultLocale: "en",
-  },
-
-  async rewrites() {
-    return [
-      {
-        source: "/with-locale", // automatically handles all locales
-        destination: "/another", // automatically passes the locale on
-      },
-      {
-        // does not handle locales automatically since locale: false is set
-        source: "/nl/with-locale-manual",
-        destination: "/nl/another",
-        locale: false,
-      },
-      {
-        // this matches '/' since `en` is the defaultLocale
-        source: "/en",
-        destination: "/en/another",
-        locale: false,
-      },
-    ]
-  },
-}
-```
-
-## Redirects {#redirects}
-
-Redirects allow you to redirect an incoming request path to a different
-destination path.
-
-Redirects are only available on the Node.js environment and do not affect
-client-side routing.
-
-To use Redirects you can use the `redirects` key in `blitz.config.js`:
-
-```js
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/about",
-        destination: "/",
-        permanent: true,
-      },
-    ]
-  },
-}
-```
-
-`redirects` is an async function that expects an array to be returned
-holding objects with `source`, `destination`, and `permanent` properties:
-
-- `source` is the incoming request path pattern.
-- `destination` is the path you want to route to.
-- `permanent` if the redirect is permanent or not.
-
-### Path Matching {#path-matching-1}
-
-Path matches are allowed, for example `/old-blog/:slug` will match
-`/old-blog/hello-world` (no nested paths):
-
-```js
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/old-blog/:slug",
-        destination: "/news/:slug", // Matched parameters can be used in the destination
-        permanent: true,
-      },
-    ]
-  },
-}
-```
-
-#### Wildcard Path Matching
-
-To match a wildcard path you can use `*` after a parameter, for example
-`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
-
-```js
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/blog/:slug*",
-        destination: "/news/:slug*", // Matched parameters can be used in the destination
-        permanent: true,
-      },
-    ]
-  },
-}
-```
-
-#### Regex Path Matching
-
-To match a regex path you can wrap the regex in parenthesis after a
-parameter, for example `/post/:slug(\\d{1,})` will match `/post/123` but
-not `/post/abc`:
-
-```js
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/post/:slug(\\d{1,})",
-        destination: "/news/:slug", // Matched parameters can be used in the destination
-        permanent: false,
-      },
-    ]
-  },
-}
-```
-
-#### Redirects with basePath support
-
-When leveraging [`basePath` support](#base-path) with redirects each
-`source` and `destination` is automatically prefixed with the `basePath`
-unless you add `basePath: false` to the redirect:
-
-```js
-module.exports = {
-  basePath: "/docs",
-
-  async redirects() {
-    return [
-      {
-        source: "/with-basePath", // automatically becomes /docs/with-basePath
-        destination: "/another", // automatically becomes /docs/another
-        permanent: false,
-      },
-      {
-        // does not add /docs since basePath: false is set
-        source: "/without-basePath",
-        destination: "/another",
-        basePath: false,
-        permanent: false,
-      },
-    ]
-  },
-}
-```
-
-#### Redirects with i18n support
-
-When leveraging [`i18n` support](/docs/i18n-routing) with redirects each
-`source` and `destination` is automatically prefixed to handle the
-configured `locales` unless you add `locale: false` to the redirect. If
-`locale: false` is used you must prefix the `source` and `destination`
-with a locale for it to be matched correctly.
-
-```js
-module.exports = {
-  i18n: {
-    locales: ["en", "fr", "de"],
-    defaultLocale: "en",
-  },
-
-  async redirects() {
-    return [
-      {
-        source: "/with-locale", // automatically handles all locales
-        destination: "/another", // automatically passes the locale on
-        permanent: false,
-      },
-      {
-        // does not handle locales automatically since locale: false is set
-        source: "/nl/with-locale-manual",
-        destination: "/nl/another",
-        locale: false,
-        permanent: false,
-      },
-      {
-        // this matches '/' since `en` is the defaultLocale
-        source: "/en",
-        destination: "/en/another",
-        locale: false,
-        permanent: false,
-      },
-    ]
-  },
-}
-```
-
-In some rare cases, you might need to assign a custom status code for
-older HTTP Clients to properly redirect. In these cases, you can use the
-`statusCode` property instead of the `permanent` property, but not both.
-Note: to ensure IE11 compatibility a `Refresh` header is automatically
-added for the 308 status code.
-
-## Headers {#headers}
-
-Headers allow you to set custom HTTP headers for an incoming request path.
-
-To set custom HTTP headers you can use the `headers` key in
-`blitz.config.js`:
-
-```js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: "/about",
-        headers: [
-          {
-            key: "x-custom-header",
-            value: "my custom header value",
-          },
-          {
-            key: "x-another-custom-header",
-            value: "my other custom header value",
-          },
-        ],
-      },
-    ]
-  },
-}
-```
-
-`headers` is an async function that expects an array to be returned
-holding objects with `source` and `headers` properties:
-
-- `source` is the incoming request path pattern.
-- `headers` is an array of header objects with the `key` and `value`
-  properties.
-
-### Header Overriding Behavior {#header-overriding-behavior}
-
-If two headers match the same path and set the same header key, the last
-header key will override the first. Using the below headers, the path
-`/hello` will result in the header `x-hello` being `world` due to the last
-header value set being `world`.
-
-```js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'x-hello',
-            value: 'there',
-          },
-        ],
-      },
-      {
-        source: '/hello',
-        headers: [
-          {
-            key: 'x-hello',
-            value: 'world',
-          },
-        ],
-      },
-    ],
-  },
-}
-```
-
-### Path Matching {#path-matching-2}
-
-Path matches are allowed, for example `/blog/:slug` will match
-`/blog/hello-world` (no nested paths):
-
-```js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: '/blog/:slug',
-        headers: [
-          {
-            key: 'x-slug',
-            value: ':slug', // Matched parameters can be used in the value
-          },
-          {
-            key: 'x-slug-:slug', // Matched parameters can be used in the key
-            value: 'my other custom header value',
-          },
-        ],
-      },
-    ],
-  },
-}
-```
-
-#### Wildcard Path Matching
-
-To match a wildcard path you can use `*` after a parameter, for example
-`/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
-
-```js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: '/blog/:slug*',
-        headers: [
-          {
-            key: 'x-slug',
-            value: ':slug*', // Matched parameters can be used in the value
-          },
-          {
-            key: 'x-slug-:slug*', // Matched parameters can be used in the key
-            value: 'my other custom header value',
-          },
-        ],
-      },
-    ],
-  },
-}
-```
-
-#### Regex Path Matching
-
-To match a regex path you can wrap the regex in parenthesis after a
-parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but
-not `/blog/abc`:
-
-```js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: '/blog/:post(\\d{1,})',
-        headers: [
-          {
-            key: 'x-post',
-            value: ':post',
-          },
-        ],
-      },
-    ],
-  },
-}
-```
-
-#### Headers with basePath support
-
-When leveraging [`basePath` support](#base-path) with headers each
-`source` is automatically prefixed with the `basePath` unless you add
-`basePath: false` to the header:
-
-```js
-module.exports = {
-  basePath: "/docs",
-
-  async headers() {
-    return [
-      {
-        source: "/with-basePath", // becomes /docs/with-basePath
-        headers: [
-          {
-            key: "x-hello",
-            value: "world",
-          },
-        ],
-      },
-      {
-        source: "/without-basePath", // is not modified since basePath: false is set
-        headers: [
-          {
-            key: "x-hello",
-            value: "world",
-          },
-        ],
-        basePath: false,
-      },
-    ]
-  },
-}
-```
-
-#### Headers with i18n support
-
-When leveraging [`i18n` support](/docs/i18n-routing) with headers each
-`source` is automatically prefixed to handle the configured `locales`
-unless you add `locale: false` to the header. If `locale: false` is used
-you must prefix the `source` with a locale for it to be matched correctly.
-
-```js
-module.exports = {
-  i18n: {
-    locales: ["en", "fr", "de"],
-    defaultLocale: "en",
-  },
-
-  async headers() {
-    return [
-      {
-        source: "/with-locale", // automatically handles all locales
-        headers: [
-          {
-            key: "x-hello",
-            value: "world",
-          },
-        ],
-      },
-      {
-        // does not handle locales automatically since locale: false is set
-        source: "/nl/with-locale-manual",
-        locale: false,
-        headers: [
-          {
-            key: "x-hello",
-            value: "world",
-          },
-        ],
-      },
-      {
-        // this matches '/' since `en` is the defaultLocale
-        source: "/en",
-        locale: false,
-        headers: [
-          {
-            key: "x-hello",
-            value: "world",
-          },
-        ],
-      },
-    ]
-  },
-}
-```
-
-#### Cache-Control
-
-Cache-Control headers set in blitz.config.js will be overwritten in
-production to ensure that static assets can be cached effectively. If you
-need to revalidate the cache of a page that has been
-[statically generated](/docs/get-static-props#when-should-i-use-getstaticprops),
-you can do so by setting `revalidate` in the page's
-[`getStaticProps`](/docs/get-static-props) function.
-
-## Export Path Map {#export-path-map}
-
-`exportPathMap` allows you to specify a mapping of request paths to page
-destinations, to be used during [export](static-html-export). Paths
-defined in `exportPathMap` will also be available when using `blitz dev`.
-
-`exportPathMap` is an async function that receives 2 arguments: the first
-one is `defaultPathMap`, which is the default map used by Blitz. The
-second argument is an object with:
-
-- `dev` - `true` when `exportPathMap` is being called in development.
-  `false` when running `blitz export`. In development `exportPathMap` is
-  used to define routes.
-- `dir` - Absolute path to the project directory
-- `outDir` - Absolute path to the `out/` directory
-  ([configurable with `-o`](cli-export)). When `dev` is `true` the value
-  of `outDir` will be `null`.
-- `distDir` - Absolute path to the `.next/` directory (configurable with
-  the [`distDir` config](#setting-a-custom-build-directory))
-- `buildId` - The generated build id
-
-The returned object is a map of pages where the `key` is the `pathname`
-and the `value` is an object that accepts the following fields:
-
-- `page`: `String` - the page inside the pages directory to render
-- `query`: `Object` - the query object passed to `getStaticProps` when
-  prerendering. Defaults to `{}`
-
-> The exported `pathname` can also be a filename (for example,
-> `/readme.md`), but you may need to set the `Content-Type` header to
-> `text/html` when serving its content if it is different than `.html`.
-
-#### Example
-
-Original pages:
-
-- `pages/index.js`
-- `pages/about.js`
-- `pages/post.js`
-
-`blitz.config.js`:
-
-```js
-module.exports = {
-  exportPathMap: async function (
-    defaultPathMap,
-    {dev, dir, outDir, distDir, buildId},
-  ) {
-    return {
-      "/": {page: "/"},
-      "/about": {page: "/about"},
-      "/p/hello-nextjs": {page: "/post", query: {title: "hello-nextjs"}},
-      "/p/learn-nextjs": {page: "/post", query: {title: "learn-nextjs"}},
-      "/p/deploy-nextjs": {
-        page: "/post",
-        query: {title: "deploy-nextjs"},
-      },
-    }
-  },
-}
-```
 
 ## Trailing Slash {#trailing-slash}
 
@@ -1074,6 +386,12 @@ module.exports = {
 ```
 
 With this option set, urls like `/about` will redirect to `/about/`.
+
+## Custom Server {#custom-server}
+
+You can setup and configure some items in the blitz config regarding
+custom servers. [See the custom server documentation](./custom-server) for
+full details.
 
 ## Experimental {#experimental}
 
@@ -1095,19 +413,18 @@ module.exports = {
 }
 ```
 
-### React Mode {#react-mode}
+### React Root Mode {#react-mode}
 
 By default Blitz uses
 [React Concurrent Mode](https://reactjs.org/docs/concurrent-mode-intro.html).
-You can disable it by changing `experimental.reactMode` to `legacy`.
+You can disable it by changing `experimental.reactRoot` to `false`.
 
-- Default: `concurrent`
-- Options: `concurrent` | `legacy`
+- Default: `true`
 
 ```js
 module.exports = {
   experimental: {
-    reactMode: "legacy",
+    reactRoot: false,
   },
 }
 ```

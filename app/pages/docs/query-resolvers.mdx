@@ -34,20 +34,27 @@ fetching from third-party APIs.
 
 ```ts
 // app/products/queries/getProduct.tsx
-import {Ctx} from "blitz"
-import db, {FindOneProjectArgs} from "db"
+import { Ctx } from "blitz"
+import db from "db"
+import * as z from "zod"
 
-type GetProjectInput = {
-  where: FindOneProjectArgs["where"]
-}
+const GetProject = z.object({
+  id: z.number(),
+})
 
 export default async function getProject(
-  {where}: GetProjectInput,
-  ctx: Ctx,
+  input: z.infer<typeof GetProject>,
+  ctx: Ctx
 ) {
-  // Can do any processing, fetching from other APIs, etc
+  // Validate the input
+  const data = GetProject.parse(input)
 
-  const project = await db.project.findOne({where})
+  // Require user to be logged in
+  ctx.session.$authorize()
+
+  const project = await db.project.findOne({ where: { id: data.id } })
+
+  // Can do any processing, fetching from other APIs, etc
 
   return project
 }

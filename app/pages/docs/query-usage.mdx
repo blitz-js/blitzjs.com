@@ -21,24 +21,24 @@ automatically provides awesome features such as automatic caching and
 revalidation.
 
 ```ts
-import {useQuery} from "blitz"
+import { useQuery } from "blitz"
 import getProject from "app/projects/queries/getProject"
 
 function App() {
-  const [project] = useQuery(getProject, {where: {id: 1}})
+  const [project] = useQuery(getProject, { where: { id: 1 } })
 }
 ```
 
 For complete details, see the [`useQuery` documentation](./use-query).
 
-<!-- prettier-ignore-start -->
-:::info 🤔
-You may be wondering how that can work since it's importing
-server code into your component: At build time, the direct function import
-is swapped out with a network call. So the query function code is never
-included in your client code.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info" title="🤔">
+
+You may be wondering how that can work since it's importing server code
+into your component: At build time, the direct function import is swapped
+out with a network call. So the query function code is never included in
+your client code.
+
+</Card>
 
 ### Defaults to Keep in Mind {#defaults-to-keep-in-mind}
 
@@ -88,11 +88,8 @@ before they can execute. To do this, use the enabled option to tell a
 query when it is ready to turn on:
 
 ```tsx
-const [user] = useQuery(getUser, {where: {id: props.query.id}})
-const [projects] = useQuery(
-  getProjects,
-  () => ({where: {userId: user.id}}, {enabled: user}),
-)
+const [user] = useQuery(getUser, { where: { id: props.query.id } })
+const [projects] = useQuery(getProjects, { where: { userId: user.id } }, { enabled: user }))
 ```
 
 ### Pagination {#pagination}
@@ -105,20 +102,64 @@ Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
 ### Prefetching {#prefetching}
 
-- All queries are automatically cached, so manually calling a query
-  function will cache its data
-
-Both of the following will cache the `getProject` query.
+All queries are automatically cached, so both of the following will cache the `getProject` query.
 
 ```ts
-const project = await getProject({where: {id: props.id}})
+import {invoke} from 'blitz'
+
+const project = await invoke(getProject, { where: { id: props.id } })
 ```
 
 ```tsx
-<a onMouseEnter={() => getProject({where: {id: projectId}})}>
+<a onMouseEnter={() => invoke(getProject, { where: { id: props.id } })}>
   View Project
 </a>
 ```
+
+Blitz also supports prefetching multiple queries on the server and then
+dehydrating those queries to the internal query client. This allows Blitz
+to prerender markup that is immediately available on page load. Once
+JavaScript is available in the browser, Blitz will hydrate those queries
+and refetch them if they have become stale since the time they were
+rendered on the server.
+
+The following example demonstrates how prefetching works in Blitz.
+
+```tsx
+import { QueryClient, getQueryKey, useQuery, dehydrate } from "blitz"
+
+import getProject from "app/projects/queries/getProject"
+
+export const getStaticProps = async (context) => {
+  const queryClient = new QueryClient()
+  const queryKey = getQueryKey(getProject)
+
+  await queryClient.prefetchQuery(queryKey, () =>
+    getProject({ where: { id: context.params?.projectId } })
+  )
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
+}
+
+function ProjectPage({ project }) {
+  const [project] = useQuery(getProject, { where: { id: props.id } })
+  return <div>{project.name}</div>
+}
+
+export default ProjectPage
+```
+
+To ensure data is not shared between users and requests, a new query
+client is created for each page request. You can prefetch your data by
+invoking the `prefetchQuery` method on the newly-created client, passing
+in the query key and resolver along with any relevant input arguments.
+Once the data has been fetched, dehydrate the queries to the query client
+using the `dehydrate` method and pass the result to the page via the
+`dehydratedState` prop.
 
 ## On the Server {#on-the-server}
 
@@ -132,12 +173,12 @@ import getProject from "app/projects/queries/getProject"
 
 export const getStaticProps = async (context) => {
   const project = await getProject({
-    where: {id: context.params?.projectId},
+    where: { id: context.params?.projectId },
   })
-  return {props: {project}}
+  return { props: { project } }
 }
 
-function ProjectPage({project}) {
+function ProjectPage({ project }) {
   return <div>{project.name}</div>
 }
 

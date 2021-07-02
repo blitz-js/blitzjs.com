@@ -1,4 +1,4 @@
-import ReactPlayer from "react-player"
+import ReactPlayer from "react-player/lazy"
 
 const VideoPlayer = ({url, className = ""}) => {
   return (
@@ -9,6 +9,7 @@ const VideoPlayer = ({url, className = ""}) => {
         width="100%"
         height="100%"
         controls={true}
+        light={true}
       />
     </div>
   )

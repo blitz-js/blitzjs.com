@@ -3,19 +3,19 @@ title: Deploy Serverless to Vercel
 sidebar_label: To Vercel
 ---
 
-<!-- prettier-ignore-start -->
-:::caution
+<Card type="caution">
+
 We do not recommend deploying Blitz to Vercel. Vercel is a platform
 optimized for frontend deployments, not fullstack. While you can deploy to
 Vercel, most people run into too many issues and give up. Direct SQL
 database connections are one of the biggest issues. You have to pay for a
 very expensive database to support any amount of scale.
-:::
-<!-- prettier-ignore-end -->
+
+</Card>
 
 ## Serverless Peculiarities for SQL Databases {#peculiarities}
 
-There are two main issues when it comes to using SQL databases in a
+There are three main issues when it comes to using SQL databases in a
 serverless environment:
 
 ### Problem 1: Separate Locations for App and Database {#locations}
@@ -35,35 +35,34 @@ outside your API handler (this is the default setup in Blitz apps). This
 optimizes performance because subsequent requests to the same lambda
 already have an active database connection.
 
-However, this can result in a large number of idle connections. A larger
-number than what your database can support. For reference, the lowest
-database tier on Digital Ocean has a limit of 22 connections.
+However, this can result in a large number of idle connections, larger
+than what your database can support. For reference, the lowest database
+tier on Digital Ocean has a limit of 22 connections.
 
-**Solution:** The solution to this problem is to use a connection pool in
-front of your database. Pgbouncer is the most popular connection pool for
-postgres. Both Digital Ocean and Heroku have a feature to simply add
-pgbouncer.
+**Solution:** Use a connection pool in front of your database. PgBouncer
+is the most popular connection pool for PostgreSQL. Both Digital Ocean and
+Heroku have a feature to simply add PgBouncer.
 
 ### Problem 3: Database Throughput {#database-throughput}
 
-Pgbouncer for PostgreSQL is advertised as allowing you to have
+PgBouncer for PostgreSQL is advertised as allowing you to have
 5,000-10,000 active database connections, but **it's critical to
-understand that those are idle connections.** **Pgbouncer does not
+understand that those are idle connections.** **PgBouncer does not
 increase your core database capacity.** If your database has a max of 22
 connections, then you can only have 22 simultaneous transactions,
-regardless of whether you have pgbouncer in front of it or not.
+regardless of whether you have PgBouncer in front of it or not.
 
 **Solution:** Increase your database size to meet the traffic needs for
 your app. But be aware this can become very expensive.
 
-Note: slow database transactions will greatly decrease your throughput. If
-it seems you are running out of connections before you should based on
+Note: Slow database transactions will greatly decrease your throughput. If
+it seems you are running out of connections before you should, based on
 your app traffic, then turn on logging for your database queries and look
 for long transactions.
 
 ## Databases to Consider {#databases}
 
-1. PostgreSQL + Pgbouncer
+1. PostgreSQL + PgBouncer
 2. [PlanetScaleDB](https://www.planetscale.com) - This is MySQL but seems
    to have solved the connection limit issue for serverless environments
 
@@ -90,12 +89,12 @@ This also assumes you already have a [Vercel](https://vercel.com) account.
    [read the Prisma docs on this](https://www.prisma.io/docs/reference/database-connectors/postgresql#connection-details).
    1. Make sure you get the connection string to your connection pool, not
       directly to the DB.
-   2. If using pgBouncer (default connection pool on Digital Ocean), you
+   2. If using PgBouncer (default connection pool on Digital Ocean), you
       must add `&pgbouncer=true` to the end of your connection string for
       Prisma to work correctly.
 4. Change your build script in package.json to be
-   `NODE_ENV=production blitz build && blitz prisma migrate deploy --preview-feature`
-   so that the production DB will be migrated on each deploy
+   `NODE_ENV=production blitz build && blitz prisma migrate deploy` so
+   that the production DB will be migrated on each deploy
 5. Add your DB url as a secret environment variable
    [using the UI](https://vercel.com/blog/environment-variables-ui) or by
    running `vercel env add DATABASE_URL`

@@ -3,16 +3,27 @@ title: Server Utilities
 sidebar_label: Server Utilities
 ---
 
-Blitz exports a `resolver` object which contains a few utilities. "Resolver" as used here and for [queries](./query-resolvers) and [mutations](./mutation-resolvers) refers to a function that takes some input and "resolves" that into some output or side effect. This term is commonly used for GraphQL. A resolver is separate from an API endpoint, because in an API endpoint you have full access to the Node request and response objects and you are responsible for managing the http stuff. But resolvers are a layer removed from raw API handlers.
+Blitz exports a `resolver` object which contains a few utilities.
+"Resolver" as used here and for [queries](./query-resolvers) and
+[mutations](./mutation-resolvers) refers to a function that takes some
+input and "resolves" that into some output or side effect. This term is
+commonly used for GraphQL. A resolver is separate from an API endpoint,
+because in an API endpoint you have full access to the Node request and
+response objects and you are responsible for managing the http stuff. But
+resolvers are a layer removed from raw API handlers.
 
-The below utilities are exported under the `resolver` object instead of `resolverPipe` and `resolverZod` since they are commonly used together. This cleans up your imports and makes it easy to discover any other utilites on the `resolver` object.
+The below utilities are exported under the `resolver` object instead of
+`resolverPipe` and `resolverZod` since they are commonly used together.
+This cleans up your imports and makes it simple to discover any other
+utilites on the `resolver` object.
 
 ## `resolver.pipe` {#resolver-pipe}
 
 This is a functional pipe that makes it easier and cleaner to write
 complex resolvers.
 
-A pipe automatically pipes the output of one function into the next function. Here's a non-Blitz example:
+A pipe automatically pipes the output of one function into the next
+function. Here's a non-Blitz example:
 
 ```ts
 // Without pipe
@@ -41,7 +52,7 @@ export pipe(
 ### Example {#example}
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -55,7 +66,10 @@ export default resolver.pipe(
   resolver.zod(CreateProject),
   resolver.authorize(),
   // Set default orgId
-  (input, {session}) => ({...input, orgId: input.orgId ?? session.orgId}),
+  (input, { session }) => ({
+    ...input,
+    orgId: input.orgId ?? session.orgId,
+  }),
   async (input, ctx) => {
     console.log("Creating project...", input.orgId)
     const project = await db.project.create({
@@ -63,19 +77,19 @@ export default resolver.pipe(
     })
     console.log("Created project")
     return project
-  },
+  }
 )
 ```
 
-<!-- prettier-ignore-start -->
-:::info
-The input type of the entire composed resolver function is
-determined by the input type of the **first** argument to pipe.
+<Card type="info">
+
+The input type of the entire composed resolver function is determined by
+the input type of the **first** argument to pipe.
 
 This means you will almost always want `resolver.zod()` to be the first in
 the pipe.
-:::
-<!-- prettier-ignore-end -->
+
+</Card>
 
 ### API {#api}
 
@@ -116,11 +130,15 @@ which is the standard resolver type.
 
 ## `resolver.zod` {#resolver-zod}
 
-This is a handly utility for using [Zod](https://github.com/colinhacks/zod),
-an awesome input validation library. It takes a zod schema and runs
-`schema.parse` on the input data.
+This is a handly utility for using
+[Zod](https://github.com/colinhacks/zod), an awesome input validation
+library. It takes a zod schema and runs `schema.parse` on the input data.
 
-You don't have to use this. You can add `const safeInput = CreateProject.parse(input)` directly in your main resolver function. But then you also have to manually type the function interface. The utility does everything in one step, setting input type and validating the input data at runtime.
+You don't have to use this. You can add
+`const safeInput = CreateProject.parse(input)` directly in your main
+resolver function. But then you also have to manually type the function
+interface. The utility does everything in one step, setting input type and
+validating the input data at runtime.
 
 ### Example {#example-1}
 
@@ -162,6 +180,12 @@ A function to give `resolver.pipe` of type
 
 ## `resolver.authorize` {#resolver-authorize}
 
+Using `resolver.authorize` in `resolver.pipe` is a simple way to check
+whether the user has the authorization to call the query or mutation or
+not. For this, blitz uses
+[`session.$authorize`](./authorization#isauthorized-adapters) from the
+context object.
+
 ### Example {#example-2}
 
 <!-- prettier-ignore -->
@@ -202,8 +226,8 @@ This is a handy utility for query pagination
 ### Example {#example-3}
 
 ```ts
-import {paginate, Ctx} from "blitz"
-import db, {Prisma} from "db"
+import { paginate, Ctx } from "blitz"
+import db, { Prisma } from "db"
 
 interface GetProjectSInput
   extends Pick<
@@ -212,15 +236,15 @@ interface GetProjectSInput
   > {}
 
 export default async function getProjects(
-  {where, orderBy, skip = 0, take = 100}: GetProjectsInput,
-  ctx: Ctx,
+  { where, orderBy, skip = 0, take = 100 }: GetProjectsInput,
+  ctx: Ctx
 ) {
   ctx.session.$authorize()
 
-  const {items: projects, hasMore, nextPage, count} = await paginate({
-    count: () => db.project.count({where}),
+  const { items: projects, hasMore, nextPage, count } = await paginate({
+    count: () => db.project.count({ where }),
     query: (paginateArgs) =>
-      db.project.findMany({...paginateArgs, where, orderBy}),
+      db.project.findMany({ ...paginateArgs, where, orderBy }),
     skip,
     take,
   })
@@ -283,6 +307,7 @@ import {
   Link,
   BlitzPage,
   PromiseReturnType,
+  Routes,
 } from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
@@ -296,23 +321,23 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({
 }) => {
   const products = await invokeWithMiddleware(
     getProducts,
-    {orderBy: {id: "desc"}},
-    {req, res},
+    { orderBy: { id: "desc" } },
+    { req, res }
   )
 
   return {
-    props: {products},
+    props: { products },
   }
 }
 
-const Page: BlitzPage<PageProps> = function ({products}) {
+const Page: BlitzPage<PageProps> = function ({ products }) {
   return (
     <div>
       <h1>Products</h1>
       <div id="products">
         {products.map((product) => (
           <p key={product.id}>
-            <Link href={`/products/${product.handle}`}>
+            <Link href={Routes.Product({ handle: product.handle })}>
               <a>{product.name}</a>
             </Link>
           </p>

@@ -34,7 +34,7 @@ In the following example, the module `../components/hello` will be
 dynamically loaded by the page:
 
 ```jsx
-import {dynamic} from "blitz"
+import { dynamic } from "blitz"
 
 const DynamicComponent = dynamic(() => import("../components/hello"))
 
@@ -55,6 +55,14 @@ export default Home
 `../components/hello`. It works like a regular React Component, and you
 can pass props to it as you normally would.
 
+> **Note**: In `import('path/to/component')`, the path must be explicitly
+> written. It can't be a template string nor a variable. Furthermore the
+> `import()` has to be inside the `dynamic()` call for Next.js to be able
+> to match webpack bundles / module ids to the specific `dynamic()` call
+> and preload them before rendering. `dynamic()` can't be used inside of
+> React rendering as it needs to be marked in the top level of the module
+> for preloading to work, similar to `React.lazy`.
+
 ## With named exports {#with-named-exports}
 
 If the dynamic component is not the default export, you can use a named
@@ -74,10 +82,10 @@ returned by
 like so:
 
 ```jsx
-import {dynamic} from "blitz"
+import { dynamic } from "blitz"
 
 const DynamicComponent = dynamic(() =>
-  import("../components/hello").then((mod) => mod.Hello),
+  import("../components/hello").then((mod) => mod.Hello)
 )
 
 function Home() {
@@ -99,13 +107,13 @@ An optional `loading` component can be added to render a loading state
 while the dynamic component is being loaded. For example:
 
 ```jsx
-import {dynamic} from "blitz"
+import { dynamic } from "blitz"
 
 const DynamicComponentWithCustomLoading = dynamic(
   () => import("../components/hello"),
   {
     loading: () => <p>...</p>,
-  },
+  }
 )
 
 function Home() {
@@ -129,13 +137,13 @@ when the module includes a library that only works in the browser.
 Take a look at the following example:
 
 ```jsx
-import {dynamic} from "blitz"
+import { dynamic } from "blitz"
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import("../components/hello3"),
   {
     ssr: false,
-  },
+  }
 )
 
 function Home() {

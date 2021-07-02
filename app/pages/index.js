@@ -54,9 +54,9 @@ const Home = ({randomContributors}) => {
                     The Fullstack React Framework
                   </h2>
                   <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
-                    Blitz is a batteries-included framework that's inspired by Ruby on Rails, is
-                    built on Next.js, and features a "Zero-API" data layer abstraction that
-                    eliminates the need for REST/GraphQL.
+                    Blitz is a batteries-included framework that&apos;s inspired by Ruby on Rails,
+                    is built on Next.js, and features a &quot;Zero-API&quot; data layer abstraction
+                    that eliminates the need for REST/GraphQL.
                   </p>
                   <div className="flex space-x-4">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
@@ -161,7 +161,7 @@ const Home = ({randomContributors}) => {
                         free to do so.
                       </p>
                       <p>
-                        And nearly everything is pluggable. For example, we don't mandate which
+                        And nearly everything is pluggable. For example, we don&apos;t mandate which
                         styling or form libraries you use.
                       </p>
                     </Feature>
@@ -181,8 +181,8 @@ const Home = ({randomContributors}) => {
                     </Feature>
                     <Feature title="Stability">
                       <p>
-                        Once we reach version 1.0, we'll switch to a stable, predictable release
-                        cycle with multiple channels like stable, LTS, and beta.
+                        Once we reach version 1.0, we&apos;ll switch to a stable, predictable
+                        release cycle with multiple channels like stable, LTS, and beta.
                       </p>
                       <p>We are taking a lot inspiration from Ember in this regard.</p>
                     </Feature>
@@ -203,7 +203,12 @@ const Home = ({randomContributors}) => {
                   href="https://codesandbox.io/s/flamboyant-meninsky-j63yq?file=/app/projects/mutations/createProject.ts"
                   className="h-sandbox xl:h-xl-sandbox block relative"
                 >
-                  <Image src="/img/sandbox-pic.png" layout="fill" className="object-cover" />
+                  <Image
+                    src="/img/sandbox-pic.png"
+                    layout="fill"
+                    className="object-cover"
+                    alt="Codesandbox placeholder"
+                  />
                   <div className="absolute inset-0 bg-gray-800 opacity-0 hover:opacity-70 flex items-center justify-center text-white text-6xl font-bold">
                     Click to Open in New Tab
                   </div>
@@ -224,7 +229,10 @@ const Home = ({randomContributors}) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
+                      <Image
+                        layout="intrinsic"
+                        width="100%"
+                        height="100%"
                         src={contributor.avatar_url}
                         alt={contributor.name}
                         title={contributor.name}
@@ -268,7 +276,7 @@ const Home = ({randomContributors}) => {
                       similar than we are different. We love to work together.
                     </p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
-                      We invite you to help make Blitz the best framework we've ever had!
+                      We invite you to help make Blitz the best framework we&apos;ve ever had!
                     </p>
                   </div>
                   <Link href="/docs/contributing" passHref>

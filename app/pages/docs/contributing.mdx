@@ -149,6 +149,17 @@ Most Blitz packages in `packages/` have jest unit tests.
 
 Blitz integration tests are inside the root `test/` folder.
 
+Make sure you have `chromedriver` installed for your Chrome version. You
+can install it with
+
+- `brew install --cask chromedriver` on Mac OS X
+- `chocolatey install chromedriver` on Windows
+- Or manually download the version that matches your installed chrome
+  version (if there's no match, download a version under it, but not
+  above) from the
+  [chromedriver repo](https://chromedriver.storage.googleapis.com/index.html)
+  and add the binary to `<blitz-repo>/node_modules/.bin`
+
 You can run all integration tests by running `yarn test:integration` from
 the repo root. Or you can run `yarn testheadles` to run them in headless
 mode (so it doesn't open a web browser window).
@@ -191,18 +202,18 @@ The typical workflow will be only run next.js integation tests related to
 your change. Then push to CI and see if any other intergration tests fail.
 If they do, then locally run the one that fails and fix the issue.
 
-### Testing Development Version of Blitz Inside and App {#testing-development-version-of-blitz}
+### Testing Development Version of Blitz Inside an App {#testing-development-version-of-blitz}
 
-<!-- prettier-ignore-start -->
-:::info
-Currently, to test the local dev version of Blitz, you can
-**only** test an app inside the `blitz/examples/` folder. In there, the
-blitz dependency will automatically use the local dev version. We mainly
-use the `auth` and `store` example apps. We use them for development
-testing and for blitz integration tests. You must also make sure you are
-running `yarn dev` in the `blitz` folder at the same time.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info">
+
+Currently, to test the local dev version of Blitz, you can **only** test
+an app inside the `blitz/examples/` folder. In there, the blitz dependency
+will automatically use the local dev version. We mainly use the `auth` and
+`store` example apps. We use them for development testing and for blitz
+integration tests. You must also make sure you are running `yarn dev` in
+the `blitz` folder at the same time.
+
+</Card>
 
 For using in apps outside the repo,
 [yalc](https://github.com/whitecolor/yalc) should work, but hasn't been
@@ -269,3 +280,9 @@ If you run into symlink and EPERM errors when trying to run Preconstruct
 on Windows, you may need to enable
 [Windows Developer Mode](https://www.howtogeek.com/292914/what-is-developer-mode-in-windows-10/)
 so that Preconstruct can create symlinks.
+
+#### Missing files in Windows
+
+If you have errors about missing files even after you run `yarn build`,
+try cloning again your repository with the configuration `core.symlinks`
+set to `true` like this: `git clone -c core.symlinks=true <URL>`.

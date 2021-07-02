@@ -3,8 +3,7 @@ title: Deploy to a Server on Heroku
 sidebar_label: To Heroku
 ---
 
-<!-- prettier-ignore-start -->
-:::info
+<Card type="info">
 
 This guide assumes the following:
 
@@ -16,8 +15,7 @@ This guide assumes the following:
 4. That deployments will be made with git and the
    [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
 
-:::
-<!-- prettier-ignore-end -->
+</Card>
 
 **In Heroku:**
 
@@ -62,7 +60,7 @@ heroku git:remote --app <APP_NAME>
    following content.
 
 ```
-release: npx blitz prisma migrate deploy --preview-feature
+release: npx blitz prisma migrate deploy
 web: npm run start:production
 ```
 
@@ -94,4 +92,8 @@ heroku config:set SESSION_SECRET_KEY=<SESSION_SECRET_KEY>
 
 #### SSL Certificates
 
-On the free tier, Heroku does not supply you with SSL certificates. These are crucial for secure authentication, though - and Blitz' built-in authentication won't work without. You can use [Cloudflare SSL](https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-Cloudflare-and-Heroku-over-HTTPS) to get free SSL certificates.
+On the free tier, Heroku does not supply you with SSL certificates. These
+are crucial for secure authentication, though - and Blitz' built-in
+authentication won't work without. You can use
+[Cloudflare SSL](https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-Cloudflare-and-Heroku-over-HTTPS)
+to get free SSL certificates.

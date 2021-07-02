@@ -24,13 +24,20 @@ application.
   - `name`: "NotFoundError"
   - `statusCode`: 404
   - Default `message`: "This could not be found"
+- `RedirectError`
+  - `name`: "RedirectError"
+  - You can throw this error from a render function if you want to
+    redirect the user while also preventing the user from seeing on the
+    current render path. Our `ErrorBoundary` component will automatically
+    handle this redirect for you.
+  - Example: `throw new RedirectError('/login')`
 
 To use, import from `blitz` and use like any JavaScript Error. If you're
 curious, you can
 [see the source code for these](https://github.com/blitz-js/blitz/blob/canary/packages/core/src/errors.ts).
 
 ```ts
-import {AuthenticationError} from "blitz"
+import { AuthenticationError } from "blitz"
 
 try {
   throw new AuthenticationError()
@@ -48,36 +55,37 @@ on the server or on the client.
 
 ## Catching and Handling Errors on the Client {#catching-and-handling-errors-on-the-client}
 
-By default, new Blitz applications come with
-[`react-error-boundary`](https://github.com/bvaughn/react-error-boundary)
-installed with a top-level `ErrorBoundary` and `FallbackComponent` in
-`app/pages/_app.tsx`.
+You handle errors on the client by using
+[`<ErrorBoundary>`](./error-boundary).
+
+By default, new Blitz applications include a top-level `ErrorBoundary` and
+`FallbackComponent` in `app/pages/_app.tsx`.
 
 It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import {AppProps, ErrorComponent} from "blitz"
-import {ErrorBoundary} from "react-error-boundary"
-import {queryCache} from "react-query"
+import {
+  AppProps,
+  ErrorBoundary,
+  ErrorComponent,
+  useQueryErrorResetBoundary,
+} from "blitz"
 import LoginForm from "app/auth/components/LoginForm"
 
-export default function App({Component, pageProps}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
+  // This ensures the Blitz useQuery hooks will automatically refetch
+  // data any time you reset the error boundary
+  const { reset } = useQueryErrorResetBoundary()
+
   return (
-    <ErrorBoundary
-      FallbackComponent={RootErrorFallback}
-      onReset={() => {
-        // This ensures the Blitz useQuery hooks will automatically refetch
-        // data any time you reset the error boundary
-        queryCache.resetErrorBoundaries()
-      }}
-    >
+    <ErrorBoundary FallbackComponent={RootErrorFallback} onReset={reset}>
       <Component {...pageProps} />
     </ErrorBoundary>
   )
 }
 
-function RootErrorFallback({error, resetErrorBoundary}) {
+function RootErrorFallback({ error, resetErrorBoundary }) {
   if (error.name === "AuthenticationError") {
     return <LoginForm onSuccess={resetErrorBoundary} />
   } else if (error.name === "AuthorizationError") {
@@ -100,7 +108,9 @@ function RootErrorFallback({error, resetErrorBoundary}) {
 
 That means all errors will at least be caught at the root level. However,
 you can also add `<ErrorBoundary>` anywhere else in your app for more
-localized error handiling. If an error is caught by an `<ErrorBoundary>`
+localized error handling. To do this, declare a separate
+`useQueryErrorResetBoundary` in your component and pass it along to the
+local ErrorBoundary. If an error is caught by an `<ErrorBoundary>`
 somewhere down inside your app tree, then it will not reach the root
 ErrorBoundary unless you re-throw it.
 
@@ -129,7 +139,7 @@ import SuperJson from "superjson"
 
 export class UsernameTakenError extends Error {
   name = "UsernameTakenError"
-  constructor({suggestedUserName}) {
+  constructor({ suggestedUserName }) {
     super()
     this.suggestedUserName = suggestedUserName
   }
@@ -138,7 +148,7 @@ export class UsernameTakenError extends Error {
 SuperJson.registerClass(UsernameTakenError)
 SuperJson.allowErrorProps("suggestedUserName")
 
-throw new UsernameTakenError({suggestedUserName: "second_best"})
+throw new UsernameTakenError({ suggestedUserName: "second_best" })
 ```
 
 Note that you **must register it with SuperJson** as shown above in order
@@ -165,4 +175,5 @@ can handle the error in your form submit handler like this.
 
 ## Error Pages {#error-pages}
 
-See the [Error Pages documentation](./error-pages) to learn about custom error pages and error fallback components.
+See the [Error Pages documentation](./error-pages) to learn about custom
+error pages and error fallback components.

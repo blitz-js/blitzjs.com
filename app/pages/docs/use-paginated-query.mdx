@@ -3,16 +3,24 @@ title: usePaginatedQuery
 sidebar_label: usePaginatedQuery
 ---
 
+Use `usePaginatedQuery` instead of `useQuery`, if you want to divide large
+data into smaller contiguous intervals of data. For instance, you have
+many numbered pages, and you want to show the first three pages initially.
+After clicking on `Show next pages`, the user should see the following
+three pages only. For this case, you can `usePaginatedQuery` as shown in
+the following example.
+
 ### Example {#example}
 
 ```ts
-import {Suspense} from "react"
+import { Suspense } from "react"
 import {
   Link,
   BlitzPage,
   usePaginatedQuery,
   useRouterQuery,
   useRouter,
+  Routes,
 } from "blitz"
 import getProjects from "app/products/queries/getProjects"
 
@@ -20,22 +28,22 @@ const ITEMS_PER_PAGE = 3
 
 const Projects = () => {
   const router = useRouter()
-  const {page = 0} = useRouterQuery()
-  const [{projects, hasMore}] = usePaginatedQuery(getProjects, {
-    skip: ITEMS_PER_PAGE * Number(page),
+  const page = Number(router.query.page) || 0
+  const [{ projects, hasMore }] = usePaginatedQuery(getProjects, {
+    orderBy: { id: "asc" },
+    skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
 
   const goToPreviousPage = () =>
-    router.push({query: {page: Number(page) - 1}})
-  const goToNextPage = () =>
-    router.push({query: {page: Number(page) + 1}})
+    router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   return (
     <div>
       {projects.map((project) => (
         <p key={project.id}>
-          <Link href={`/projects/${project.handle}`}>
+          <Link href={Routes.Project({ handle: project.handle })}>
             <a>{project.name}</a>
           </Link>
         </p>
@@ -54,25 +62,34 @@ const Projects = () => {
 And here's the query to work with that:
 
 ```ts
-export default async function getProjects(
-  {where, orderBy, cursor, take, skip}: GetProjectsInput,
-  ctx: Record<any, any> = {},
-) {
-  const projects = await db.project.findMany({
-    where,
-    orderBy,
-    take,
-    skip,
-  })
+import { paginate, resolver } from "blitz"
+import db, { Prisma } from "db"
 
-  const count = await db.project.count()
-  const hasMore = skip! + take! < count
+interface GetProjectsInput
+  extends Pick<
+    Prisma.ProjectFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"
+  > {}
 
-  return {
-    projects,
-    hasMore,
+export default resolver.pipe(
+  resolver.authorize(),
+  async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
+    const { items: projects, hasMore, nextPage, count } = await paginate({
+      skip,
+      take,
+      count: () => db.project.count({ where }),
+      query: (paginateArgs) =>
+        db.project.findMany({ ...paginateArgs, where, orderBy }),
+    })
+
+    return {
+      projects,
+      nextPage,
+      hasMore,
+      count,
+    }
   }
-}
+)
 ```
 
 ## API {#api}
@@ -82,12 +99,28 @@ export default async function getProjects(
 const [
   queryResult,
   {
-    latestData,
-    isFetching,
+    dataUpdatedAt,
+    error,
+    errorUpdatedAt,
     failureCount,
+    isError,
+    isFetched,
+    isFetchedAfterMount,
+    isFetching,
+    isIdle,
+    isLoading,
+    isLoadingError,
+    isPlaceholderData,
+    isPreviousData,
+    isRefetchError,
+    isStale,
+    isSuccess,
     refetch,
+    remove,
+    status,
+    setQueryData,
   }
-] = useQuery(queryResolver, queryInputArguments, options)
+] = usePaginatedQuery(queryResolver, queryInputArguments, options)
 ```
 
 ### Arguments {#arguments}
@@ -109,33 +142,86 @@ The options are identical to the options for the
 
 `[queryResult, queryExtras]`
 
-##### `queryResult: Any`
+##### `queryResult: TData`
 
 - Defaults to `undefined`.
 - The last successfully resolved data for the query.
-- When fetching with new input arguments, the value will resolve to the
-  last known successful value, regardless of input arguments
 
 ##### `queryExtras: Object`
 
-- `latestData: Any`
+- `status: String`
+  - Will be:
+    - `idle` if the query is idle. This only happens if a query is
+      initialized with `enabled: false` and no initial data is available.
+    - `loading` if the query is in a "hard" loading state. This means
+      there is no cached data and the query is currently fetching, eg
+      `isFetching === true`
+    - `error` if the query attempt resulted in an error. The corresponding
+      `error` property has the error received from the attempted fetch
+    - `success` if the query has received a response with no errors and is
+      ready to display its data. The corresponding `data` property on the
+      query is the data received from the successful fetch or if the
+      query's `enabled` property is set to `false` and has not been
+      fetched yet `data` is the first `initialData` supplied to the query
+      on initialization.
+- `isIdle: boolean`
+  - A derived boolean from the `status` variable above, provided for
+    convenience.
+- `isLoading: boolean`
+  - A derived boolean from the `status` variable above, provided for
+    convenience.
+- `isSuccess: boolean`
+  - A derived boolean from the `status` variable above, provided for
+    convenience.
+- `isError: boolean`
+  - A derived boolean from the `status` variable above, provided for
+    convenience.
+- `isLoadingError: boolean`
+  - Will be `true` if the query failed while fetching for the first time.
+- `isRefetchError: boolean`
+  - Will be `true` if the query failed while refetching.
+- `data: TData`
   - Defaults to `undefined`.
-  - The actual data object for this query and its specific input arguments
-  - When fetching an uncached query, this value will be `undefined`
-- `isFetching: Boolean`
+  - The last successfully resolved data for the query.
+- `dataUpdatedAt: number`
+  - The timestamp for when the query most recently returned the `status`
+    as `"success"`.
+- `error: null | TError`
+  - Defaults to `null`
+  - The error object for the query, if an error was thrown.
+- `errorUpdatedAt: number`
+  - The timestamp for when the query most recently returned the `status`
+    as `"error"`.
+- `isStale: boolean`
+  - Will be `true` if the data in the cache is invalidated or if the data
+    is older than the given `staleTime`.
+- `isPlaceholderData: boolean`
+  - Will be `true` if the data shown is the placeholder data.
+- `isPreviousData: boolean`
+  - Will be `true` when data from the previous query is returned.
+- `isFetched: boolean`
+  - Will be `true` if the query has been fetched.
+- `isFetchedAfterMount: boolean`
+  - Will be `true` if the query has been fetched after the component
+    mounted.
+  - This property can be used to not show any previously cached data.
+- `isFetching: boolean`
+  - Defaults to `true` so long as `enabled` is set to `false`
   - Will be `true` if the query is currently fetching, including
     background fetching.
-- `failureCount: Integer`
+- `failureCount: number`
   - The failure count for the query.
   - Incremented every time the query fails.
   - Reset to `0` when the query succeeds.
-- `refetch: Function({ force, throwOnError }) => void`
-  - A function to manually refetch the query if it is stale.
-  - To bypass the stale check, you can pass the `force: true` option and
-    refetch it regardless of it's freshness
+- `refetch: (options: { throwOnError: boolean, cancelRefetch: boolean }) => Promise<UseQueryResult>`
+  - A function to manually refetch the query.
   - If the query errors, the error will only be logged. If you want an
     error to be thrown, pass the `throwOnError: true` option
-- `setQueryData()` - `Function(newData, opts) => void`
+  - If `cancelRefetch` is `true`, then the current request will be
+    cancelled before a new request is made
+- `remove: () => void`
+  - A function to remove the query from the cache.
+- `setQueryData()` - `Function(newData, opts) => Promise<void>`
   - A function to manually update the cache for a query.
   - `newData` can be an object of new data or a function that receives the
     old data and returns the new data
@@ -145,4 +231,4 @@ The options are identical to the options for the
     ensure the data is correct. Disable refetch by passing an options
     object `{refetch: false}` as the second argument.
   - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for
-    example usage of `setQueryData()`
+    example usage of `setQueryData()`.

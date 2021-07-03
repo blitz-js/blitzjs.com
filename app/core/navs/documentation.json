@@ -32,12 +32,16 @@
     "pages": [
       "file-structure",
       "app-component",
+      "image-component",
+      "script-component",
       "css",
-      "image-optimization",
+      "font-optimization",
       "static-files",
       "environment-variables",
       "error-handling",
-      "testing"
+      "error-boundary",
+      "testing",
+      "utilities"
     ]
   },
   {
@@ -128,7 +132,13 @@
       "iconPath": "/img/mutations.svg",
       "iconDarkPath": "/img/mutations-white.svg"
     },
-    "pages": ["multitenancy", "background-processing-with-quirrel", "middleware", "custom-server"]
+    "pages": [
+      "multitenancy",
+      "background-processing-with-quirrel",
+      "middleware",
+      "custom-server",
+      "security-headers"
+    ]
   },
   {
     "title": {
@@ -157,6 +167,7 @@
       "webpack-config",
       "postcss-config",
       "eslint-config",
+      "husky-config",
       "prettier-config",
       "rpc-specification",
       "measuring-performance"

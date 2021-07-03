@@ -208,3 +208,28 @@ export const authenticateUser = async (
   return rest
 }
 ```
+
+## `setPublicDataForUser()` {#set-public-data-for-user}
+
+#### `setPublicDataForUser(userId: PublicData['userId'], publicData: Record<any, any>) => void`
+
+This can be used to update the `publicData` of a user's sessions. It can
+be useful when changing a user's role, since the new permissions can be
+enforced as soon as the user is doing the next request.
+
+#### Example Usage
+
+```ts
+import { setPublicDataForUser } from "blitz"
+import db from "db"
+
+export const updateUserRole = async (
+  userId: PublicData["userId"],
+  role: string
+) => {
+  // update the user's role
+  await db.user.update({ where: { id: userId }, data: { role } })
+  // update role in all active sessions
+  await setPublicDataForUser(userId, { role })
+}
+```

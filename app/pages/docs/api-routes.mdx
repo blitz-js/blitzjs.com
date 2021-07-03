@@ -37,7 +37,7 @@ For an API route to work, you need to export as default a function (a.k.a
   [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse),
   plus some helper functions you can see [here](#response-helpers)
 
-If you want to avoid writting the types `BlitzApiRequest` and
+If you want to avoid writing the types `BlitzApiRequest` and
 `BlitzApiResponse` everywhere, you can use `BlitzApiHandler`:
 
 ```ts
@@ -236,8 +236,8 @@ The included helpers are:
 - `res.status(code)` - A function to set the status code. `code` must be a
   valid
   [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
-- `res.json(json)` - Sends a JSON response. `json` must be a valid JSON
-  object
+- `res.json(body)` - Sends a JSON response. `body` must be a valid
+  [serialiazable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)
 - `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an
   `object` or a `Buffer`
 

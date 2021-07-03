@@ -24,6 +24,13 @@ application.
   - `name`: "NotFoundError"
   - `statusCode`: 404
   - Default `message`: "This could not be found"
+- `RedirectError`
+  - `name`: "RedirectError"
+  - You can throw this error from a render function if you want to
+    redirect the user while also preventing the user from seeing on the
+    current render path. Our `ErrorBoundary` component will automatically
+    handle this redirect for you.
+  - Example: `throw new RedirectError('/login')`
 
 To use, import from `blitz` and use like any JavaScript Error. If you're
 curious, you can
@@ -48,10 +55,11 @@ on the server or on the client.
 
 ## Catching and Handling Errors on the Client {#catching-and-handling-errors-on-the-client}
 
-By default, new Blitz applications come with
-[`react-error-boundary`](https://github.com/bvaughn/react-error-boundary)
-installed with a top-level `ErrorBoundary` and `FallbackComponent` in
-`app/pages/_app.tsx`.
+You handle errors on the client by using
+[`<ErrorBoundary>`](./error-boundary).
+
+By default, new Blitz applications include a top-level `ErrorBoundary` and
+`FallbackComponent` in `app/pages/_app.tsx`.
 
 It looks something like this:
 
@@ -59,10 +67,10 @@ It looks something like this:
 // app/pages/_app.tsx
 import {
   AppProps,
+  ErrorBoundary,
   ErrorComponent,
   useQueryErrorResetBoundary,
 } from "blitz"
-import { ErrorBoundary } from "react-error-boundary"
 import LoginForm from "app/auth/components/LoginForm"
 
 export default function App({ Component, pageProps }: AppProps) {

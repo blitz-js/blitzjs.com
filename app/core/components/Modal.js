@@ -1,7 +1,5 @@
 import {forwardRef, useImperativeHandle, useState} from "react"
 
-import {Icon} from "./home/Icon"
-
 const Modal = forwardRef(({children, onCloseModal}, ref) => {
   let [modalClassName, setModalClassName] = useState("hidden")
 

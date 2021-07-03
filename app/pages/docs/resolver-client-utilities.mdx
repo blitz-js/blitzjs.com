@@ -55,7 +55,9 @@ const results = await invoke(resolver, resolverInputArguments)
 
 ## `invalidateQuery` {#invalidate-query}
 
-This allows you to invalidate a specific query.
+This allows you to invalidate a specific query. Use `invalidateQuery` if
+you know for sure that a query's data is stale and you don't want to wait
+for the automatic refetch.
 
 ### Example {#example-1}
 
@@ -105,7 +107,10 @@ are done being refetched.
 
 ## `getQueryKey` {#get-query-key}
 
-This allows you to get the query key for a query
+This allows you to get the query key for a query. The `queryClient`
+manages query based on query keys. For a more detailed explanation, see
+the [`React Query`](https://react-query.tanstack.com/guides/query-keys)
+documentation.
 
 ### Example {#example-2}
 

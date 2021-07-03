@@ -1,29 +1,17 @@
-import {useEffect, useRef, useState} from "react"
+import {useEffect, useState} from "react"
 
 import {Header} from "@/components/Header"
 import {Footer} from "@/components/home/Footer"
-import {Icon} from "@/components/home/Icon"
-import {Modal} from "@/components/Modal"
 import {ShowcaseThumbnail} from "@/components/ShowcaseThumbnail"
 import {SocialCards} from "@/components/SocialCards"
 import showcaseList from "@/utils/showcaseList"
 
-const LanguagesPage = ({showcase}) => {
+const ShowcasePage = () => {
   const [navIsOpen, setNavIsOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
-  const modalRef = useRef()
 
   useEffect(() => {
     document.body.style.overflow = navIsOpen ? "hidden" : "unset"
   }, [navIsOpen])
-
-  const openModal = ({title, thumbnail, description, URL}) => {
-    setSelectedItem({title, thumbnail, description, URL})
-    modalRef.current?.openModal()
-  }
-  const closeModal = () => {
-    modalRef.current?.closeModal()
-  }
 
   return (
     <div className="relative py-1 md:py-3 min-h-screen bg-white dark:bg-purple-deep">
@@ -52,18 +40,8 @@ const LanguagesPage = ({showcase}) => {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {showcase.map(({title, thumbnail, description, URL}, index) => {
-            return (
-              <ShowcaseThumbnail
-                onClick={() => {
-                  openModal({title, thumbnail, description, URL})
-                }}
-                key={index}
-                title={title}
-                thumbnail={thumbnail}
-                URL={URL}
-              />
-            )
+          {showcaseList.map(({title, thumbnail, URL}, index) => {
+            return <ShowcaseThumbnail key={index} title={title} thumbnail={thumbnail} URL={URL} />
           })}
         </div>
         <div className="font-secondary text-base text-gray-600 dark:text-gray-300">
@@ -79,52 +57,12 @@ const LanguagesPage = ({showcase}) => {
         </div>
       </main>
       <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />
-      <Modal ref={modalRef} onCloseModal={closeModal}>
-        {selectedItem !== null && (
-          <div className="rounded overflow-hidden w-full bg-white mx-3 md:mx-0 lg:mx-0">
-            <span className="cursor-pointer absolute top-0 right-0 m-2" onClick={closeModal}>
-              <Icon name="modalClose" />
-            </span>
-            <a href={selectedItem.URL} rel="noreferrer" target="_blank">
-              <img
-                className="w-full bg-cover"
-                src={selectedItem.thumbnail}
-                alt={selectedItem.title}
-              />
-            </a>
-            <div className="p-5">
-              <a
-                className="font-primary text-sm lg:text-md xl:text-lg text-gray-600 hover:underline font-semibold hover:text-purple-light"
-                href={selectedItem.URL}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {selectedItem.title}
-              </a>
-              <h4 className="font-secondary text-sm lg:text-md xl:text-md text-gray-600 my-1">
-                {selectedItem.description}
-              </h4>
-            </div>
-          </div>
-        )}
-      </Modal>
     </div>
   )
 }
-
-const getStaticProps = async () => {
-  return {
-    props: {
-      showcase: showcaseList,
-    },
-    revalidate: 3 * 60 * 60, // 3 hours
-  }
-}
-
-LanguagesPage.meta = {
+ShowcasePage.meta = {
   title: "Showcase - Blitz.js",
   description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
 }
 
-export default LanguagesPage
-export {getStaticProps}
+export default ShowcasePage

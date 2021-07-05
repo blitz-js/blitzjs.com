@@ -30,6 +30,7 @@ module.exports = withBundleAnalyzer({
       "avatars4.githubusercontent.com",
       "avatars5.githubusercontent.com",
       "avatars6.githubusercontent.com",
+      "media-exp1.licdn.com",
     ],
   },
   async redirects() {

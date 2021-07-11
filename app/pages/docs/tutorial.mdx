@@ -992,7 +992,7 @@ const UpdateQuestion = z
     id: z.number(),
     text: z.string(),
 +   choices: z.array(
-+     z.object({id: z.number().optional(), text: z.string()}).nonstrict(),
++     z.object({id: z.number().optional(), text: z.string()}),
 +   ),
   })
   .nonstrict()

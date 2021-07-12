@@ -87,6 +87,10 @@ const Header = ({
       name: "Documentation",
       href: isDesktop ? "/docs/get-started" : "/docs",
     },
+    {
+      name: "Showcase",
+      href: "/showcase",
+    },
     {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
     {name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki"},
     {name: "Swag", href: "https://store.blitzjs.com"},
@@ -130,7 +134,7 @@ const Header = ({
               rel="noopener noreferrer"
               href="https://github.com/sponsors/blitz-js"
             >
-              <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+              <FaHeart className="inline mr-1 align-text-top" /> Sponsor
               <FiArrowUpRight size="0.70rem" className="opacity-50 absolute top-2 right-0" />
             </NavLink>
           </div>

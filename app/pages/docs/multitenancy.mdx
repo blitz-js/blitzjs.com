@@ -33,15 +33,8 @@ The prisma schema looks like this:
 model Organization {
   id         Int @id @default(autoincrement())
   name       String
-  role       GlobalRole
 
   membership Membership[]
-}
-
-// The owners of the SaaS (you) can have a SUPERADMIN role to access all data
-enum GlobalRole {
-  SUPERADMIN
-  CUSTOMER
 }
 
 model Membership {
@@ -67,12 +60,19 @@ enum MembershipRole {
   USER
 }
 
+// The owners of the SaaS (you) can have a SUPERADMIN role to access all data
+enum GlobalRole {
+  SUPERADMIN
+  CUSTOMER
+}
+
 model User {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   name           String?
   email          String   @unique
+  role           GlobalRole
 
   memberships Membership[]
 }

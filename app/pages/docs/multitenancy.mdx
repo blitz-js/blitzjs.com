@@ -118,6 +118,9 @@ Update `types.ts` like this:
 ```diff
 +import { GlobalRole, MembershipRole, Organization } from "db"
 
+-export type Role = "ADMIN" | "USER"
++ type Role = MembershipRole & GlobalRole
+
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {
     session: SessionContext
@@ -126,7 +129,7 @@ declare module "blitz" {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
        userId: User["id"]
-+      roles: Array<MembershipRole & GlobalRole>
++      roles: Array<Role>
 +      orgId: Organization["id"]
     }
   }

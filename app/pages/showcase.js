@@ -47,7 +47,7 @@ const ShowcasePage = () => {
         <div className="font-secondary text-base text-gray-600 dark:text-gray-300">
           Want to submit your website?{" "}
           <a
-            href="https://github.com/blitz-js/blitzjs.com-translation#starting-a-new-translation"
+            href="https://github.com/blitz-js/blitzjs.com/"
             target="_blank"
             rel="noreferrer"
             className="text-purple-light dark:text-purple-extralight font-medium dark:font-bold no-underline dark:underline hover:underline"

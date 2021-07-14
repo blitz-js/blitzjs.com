@@ -43,14 +43,6 @@ const sponsors = [
     cost: 100,
   },
   {
-    name: "React Bricks",
-    href:
-      "https://reactbricks.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
-    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/reactbricks_icon.svg",
-    tier: 4,
-    cost: 100,
-  },
-  {
     name: "Digsas",
     href:
       "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",

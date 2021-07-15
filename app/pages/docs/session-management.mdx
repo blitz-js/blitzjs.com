@@ -151,7 +151,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const session = await getSession(req, res)
 
-  return { props: { publicData: session.$publicData } }
+  return { props: { initialPublicData: session.$publicData } }
 }
 
 const SomePage: BlitzPage = ({ initialPublicData }) => {

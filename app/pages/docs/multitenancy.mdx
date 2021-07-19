@@ -130,7 +130,7 @@ declare module "blitz" {
     PublicData: {
        userId: User["id"]
 +      roles: Array<Role>
-+      orgId: Organization["id"]
++      orgId?: Organization["id"]
     }
   }
 }
@@ -235,6 +235,7 @@ export default resolver.pipe(
   resolver.zod(UpdateProject),
   resolver.authorize(),
   async ({ id, ...data }, ctx) => {
+    if (!ctx.session.orgId) throw new Error("Missing session.orgId")
     const project = await db.project.update({
       where: {
         id,

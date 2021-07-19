@@ -80,7 +80,15 @@ const Header = ({
     onNavToggle(newValue)
   }
 
-  const bannerMsg = "Blitz is in beta! 🎉 1.0 expected in Q3 this year"
+  const bannerMsg = (
+    <div>
+      🚀
+      <a href="https://flightcontrol.dev" rel="noreferrer" target="_blank" className="underline">
+        Announcing Flightcontrol
+      </a>{" "}
+      - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀
+    </div>
+  )
 
   const menuLinks = [
     {
@@ -90,6 +98,7 @@ const Header = ({
     {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
     {name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki"},
     {name: "Swag", href: "https://store.blitzjs.com"},
+    {name: "Flightcontrol Cloud", href: "https://flightcontrol.dev"},
   ]
 
   return (
@@ -130,7 +139,7 @@ const Header = ({
               rel="noopener noreferrer"
               href="https://github.com/sponsors/blitz-js"
             >
-              <FaHeart className="inline mr-1 align-text-top" /> Donate/Sponsor
+              <FaHeart className="inline mr-1 align-text-top" /> Sponsor
               <FiArrowUpRight size="0.70rem" className="opacity-50 absolute top-2 right-0" />
             </NavLink>
           </div>

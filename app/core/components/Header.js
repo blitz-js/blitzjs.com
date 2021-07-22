@@ -100,7 +100,6 @@ const Header = ({
       href: "/showcase",
     },
     {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
-    {name: "Wiki", href: "https://github.com/blitz-js/blitz/wiki"},
     {name: "Swag", href: "https://store.blitzjs.com"},
     {name: "Flightcontrol Cloud", href: "https://flightcontrol.dev"},
   ]

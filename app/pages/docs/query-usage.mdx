@@ -145,7 +145,7 @@ export const getStaticProps = async (context) => {
   }
 }
 
-function ProjectPage({ project }) {
+function ProjectPage() {
   const [project] = useQuery(getProject, { where: { id: props.id } })
   return <div>{project.name}</div>
 }

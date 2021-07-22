@@ -61,6 +61,9 @@ export function Footer({className, hasDarkMode}) {
                     Twitter
                   </a>
                 </Link>
+                <Link href="/showcase">
+                  <a>Showcase</a>
+                </Link>
               </LinkList>
 
               <LinkList title="Other">

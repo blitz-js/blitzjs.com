@@ -226,6 +226,7 @@ CREATE    app/pages/questions/[questionId].tsx
 CREATE    app/pages/questions/[questionId]/edit.tsx
 CREATE    app/pages/questions/index.tsx
 CREATE    app/pages/questions/new.tsx
+✔ Compiled
 CREATE    app/questions/components/QuestionForm.tsx
 CREATE    app/questions/queries/getQuestion.ts
 CREATE    app/questions/queries/getQuestions.ts
@@ -233,33 +234,32 @@ CREATE    app/questions/mutations/createQuestion.ts
 CREATE    app/questions/mutations/deleteQuestion.ts
 CREATE    app/questions/mutations/updateQuestion.ts
 
-✔ Model for 'question' created in schema.prisma:
+✔ Model 'Question' created in schema.prisma:
 
+>
 > model Question {
->   id        Int      @default(autoincrement()) @id
+>   id        Int      @id @default(autoincrement())
 >   createdAt DateTime @default(now())
 >   updatedAt DateTime @updatedAt
 >   text      String
 > }
+>
 
-? Run 'prisma migrate dev' to update your database? (Y/n) › true
-```
-
-```
+✔ Run 'prisma migrate dev' to update your database? (Y/n) · true
 Environment variables loaded from .env
 Prisma schema loaded from db/schema.prisma
 Datasource "db": SQLite database "db.sqlite" at "file:./db.sqlite"
 
-✔ Name of migration … add question
+✔ Enter a name for the new migration: … add question
 The following migration(s) have been created and applied from new schema changes:
 
 migrations/
-  └─ 20210217035805_add_question/
+  └─ 20210722070215_add_question/
     └─ migration.sql
 
-✔ Generated Prisma Client (2.17.0) to ./node_modules/@prisma/client in 103ms
+Your database is now in sync with your schema.
 
-Everything is now in sync.
+✔ Generated Prisma Client (2.27.0) to ./node_modules/@prisma/client in 187ms
 ```
 
 The `generate` command with a type of `all` generates a model and queries,

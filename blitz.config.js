@@ -122,6 +122,7 @@ const config = withBundleAnalyzer({
           let extra = []
           let resourcePath = path.relative(process.cwd(), this.resourcePath)
 
+          // If no custom layout, use the default layout
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
               if (minimatch(resourcePath, glob)) {
@@ -134,8 +135,16 @@ const config = withBundleAnalyzer({
             }
           }
 
-          if (/^<\/Card>$/m.test(source)) {
+          // If there are any cards, impory the component
+          if (/^<\/Card>$/m.test(body)) {
             extra.push(`import { Card } from '@/components/docs/Card'`)
+
+            // Until MDX v2 is available, all content inside a component must
+            // have extra spaces. Here are added just in case.
+            // https://mdxjs.com/guides/markdown-in-components
+            body = body
+              .replace(/<Card .+?>\n*/g, (tag) => tag.trimEnd() + "\n\n")
+              .replace(/\n*<\/Card>/g, (tag) => "\n\n" + tag.trimStart())
           }
 
           return [

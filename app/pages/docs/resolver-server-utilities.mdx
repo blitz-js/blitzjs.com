@@ -241,7 +241,12 @@ export default async function getProjects(
 ) {
   ctx.session.$authorize()
 
-  const { items: projects, hasMore, nextPage, count } = await paginate({
+  const {
+    items: projects,
+    hasMore,
+    nextPage,
+    count,
+  } = await paginate({
     count: () => db.project.count({ where }),
     query: (paginateArgs) =>
       db.project.findMany({ ...paginateArgs, where, orderBy }),

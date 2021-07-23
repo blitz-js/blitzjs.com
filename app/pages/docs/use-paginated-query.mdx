@@ -74,7 +74,12 @@ interface GetProjectsInput
 export default resolver.pipe(
   resolver.authorize(),
   async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
-    const { items: projects, hasMore, nextPage, count } = await paginate({
+    const {
+      items: projects,
+      hasMore,
+      nextPage,
+      count,
+    } = await paginate({
       skip,
       take,
       count: () => db.project.count({ where }),

@@ -5,16 +5,14 @@ import React from "react"
 const sponsors = [
   {
     name: "Fauna",
-    href:
-      "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
+    href: "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/Fauna_Logo_Blue.png",
     tier: 2,
     cost: 500,
   },
   {
     name: "Render",
-    href:
-      "https://render.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
+    href: "https://render.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl:
       "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/render-logo-color2.png",
     tier: 3,
@@ -22,8 +20,7 @@ const sponsors = [
   },
   {
     name: "RIT",
-    href:
-      "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    href: "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rit_logo.png",
     tier: 3,
     cost: 250,
@@ -44,8 +41,7 @@ const sponsors = [
   },
   {
     name: "Digsas",
-    href:
-      "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
+    href: "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/digsas.svg",
     tier: 4,
     cost: 100,

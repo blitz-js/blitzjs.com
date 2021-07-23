@@ -1,5 +1,5 @@
 // https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.js
-module.exports = (Prism) => {
+export const prismLineNumbers = (Prism) => {
   /**
    * Plugin name which is used as a class name for <pre> which is activating the plugin
    * @type {String}

@@ -1,23 +1,25 @@
-const fs = require("fs")
-const path = require("path")
-const querystring = require("querystring")
-const {createLoader} = require("simple-functional-loader")
-const matter = require("gray-matter")
-const {withTableOfContents} = require("./remark/withTableOfContents")
-const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
-const {withProse} = require("./remark/withProse")
-const {withBlitzLinks} = require("./remark/withBlitzLinks")
-const minimatch = require("minimatch")
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+import bundleAnalyzer from "@next/bundle-analyzer"
+import fs from "fs"
+import matter from "gray-matter"
+import minimatch from "minimatch"
+import path from "path"
+import querystring from "querystring"
+import {createLoader} from "simple-functional-loader"
+
+import {withBlitzLinks} from "./remark/withBlitzLinks"
+import {withProse} from "./remark/withProse"
+import {withSyntaxHighlighting} from "./remark/withSyntaxHighlighting"
+import {withTableOfContents} from "./remark/withTableOfContents"
+
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 })
 
 const fallbackDefaultExports = {
-  // Have to use compiled locations
-  "pages/docs/**/*": ["app/core/layouts/DocumentationLayout", "DocumentationLayout"],
+  "app/pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
-module.exports = withBundleAnalyzer({
+const config = withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "mdx"],
   images: {
     domains: [
@@ -158,7 +160,7 @@ module.exports = withBundleAnalyzer({
             let pages = []
             for (const page of category.pages) {
               const pageFile = fs.readFileSync(
-                path.resolve(process.cwd(), "pages", "docs", `${page}.mdx`),
+                path.resolve(process.cwd(), "app", "pages", "docs", `${page}.mdx`),
                 {encoding: "utf-8"},
               )
               const {data} = matter(pageFile)
@@ -182,3 +184,5 @@ module.exports = withBundleAnalyzer({
     return config
   },
 })
+
+export default config

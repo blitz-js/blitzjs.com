@@ -1,7 +1,8 @@
-const visit = require("unist-util-visit")
-const {highlightCode} = require("./utils")
+import visit from "unist-util-visit"
 
-module.exports.withSyntaxHighlighting = () => {
+import {highlightCode} from "./utils"
+
+export const withSyntaxHighlighting = () => {
   return (tree) => {
     visit(tree, "code", (node) => {
       let lang = node.lang || "bash"

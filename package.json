@@ -43,7 +43,7 @@
     "typeface-libre-franklin": "1.1.13",
     "typeface-roboto": "1.1.13",
     "typeface-roboto-mono": "1.1.13",
-    "unist-util-visit": "2.0.3"
+    "unist-util-visit": "3.1.0"
   },
   "devDependencies": {
     "@mdx-js/loader": "1.6.22",

@@ -105,7 +105,6 @@ data that will be sent to the client.
 The Typescript types are automatically inferred from one function to the
 next.
 
-<!-- prettier-ignore -->
 ```js
 // 1 function
 const resolver = resolver.pipe((input: ResolverInput, ctx: Ctx) => ResolverOutput)
@@ -142,9 +141,8 @@ validating the input data at runtime.
 
 ### Example {#example-1}
 
-<!-- prettier-ignore -->
 ```ts
-import {resolver} from 'blitz'
+import { resolver } from "blitz"
 import * as z from "zod"
 
 export const CreateProject = z.object({
@@ -157,13 +155,12 @@ export default resolver.pipe(
   resolver.zod(CreateProject), // highlight-line
   async (input, ctx) => {
     // stuff
-  },
+  }
 )
 ```
 
 ### API {#api-1}
 
-<!-- prettier-ignore -->
 ```js
 const pipeFn = resolver.zod(MyZodSchema)
 ```
@@ -188,24 +185,22 @@ context object.
 
 ### Example {#example-2}
 
-<!-- prettier-ignore -->
 ```ts
-import {resolver} from 'blitz'
+import { resolver } from "blitz"
 
 export default resolver.pipe(
-// highlight-start
+  // highlight-start
   resolver.authorize(),
   // resolver.authorize('admin'),
-// highlight-end
+  // highlight-end
   async (input, ctx) => {
     // stuff
-  },
+  }
 )
 ```
 
 ### API {#api-2}
 
-<!-- prettier-ignore -->
 ```js
 const pipeFn = resolver.authorize(...isAuthorizedArgs)
 ```
@@ -265,7 +260,6 @@ export default async function getProjects(
 
 ### API {#api-3}
 
-<!-- prettier-ignore -->
 ```js
 const paginationData = await paginate(paginateArguments))
 ```
@@ -356,7 +350,6 @@ export default Page
 
 ### API {#api-4}
 
-<!-- prettier-ignore -->
 ```js
 const results = await invokeWithMiddleware(resolver, resolverInputArguments, {req, res}))
 ```

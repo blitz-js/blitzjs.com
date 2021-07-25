@@ -95,7 +95,6 @@ export default resolver.pipe(
 
 ## API {#api}
 
-<!-- prettier-ignore -->
 ```js
 const [
   pagesOfQueryResults,
@@ -108,7 +107,7 @@ const [
     isFetchingNextPage,
     isFetchingPreviousPage,
     ...extras
-  }
+  },
 ] = useInfiniteQuery(queryResolver, getQueryInputArguments, {
   ...options,
   getNextPageParam: (lastPage, allPages) => lastPage.nextPage,

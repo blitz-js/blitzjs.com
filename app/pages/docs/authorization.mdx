@@ -19,16 +19,16 @@ Those will throw `AuthenticationError` if the user is not logged in, and
 it will throw `AuthorizationError` if the user is logged in but doesn't
 have the required permissions.
 
-<!-- prettier-ignore -->
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
 const CreateProject = z
   .object({
     name: z.string(),
-  }).nonstrict()
+  })
+  .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(CreateProject),
@@ -37,15 +37,14 @@ export default resolver.pipe(
   // highlight-end
   async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const projects = await db.projects.create({data: input})
+    const projects = await db.projects.create({ data: input })
     return projects
-  },
+  }
 )
 ```
 
 or
 
-<!-- prettier-ignore -->
 ```ts
 import {Ctx} from "blitz"
 import db from "db"

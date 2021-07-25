@@ -64,7 +64,7 @@ With direct `import`s, `width`, `height`, and `blurDataURL` will be
 automatically provided to the image component. Alt text is still needed
 separately.
 
-```js
+```jsx
 import { Image } from "blitz"
 import profilePic from "../public/me.png"
 
@@ -325,7 +325,7 @@ A custom function used to resolve URLs. Defaults to
 - `width`
 - `quality`
 
-```js
+```jsx
 import { Image } from "blitz"
 
 const myLoader = ({ src, width, quality }) => {

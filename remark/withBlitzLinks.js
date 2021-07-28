@@ -1,6 +1,6 @@
-const {addImport} = require("./utils")
+import {addImport} from "./utils"
 
-module.exports.withBlitzLinks = () => {
+export const withBlitzLinks = () => {
   return (tree) => {
     const component = addImport(tree, "blitz", "Link")
 

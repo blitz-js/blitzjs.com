@@ -57,10 +57,16 @@ The project ID is taken from the **Project Setup** page.
 
 4. Enter your required environment variables
 
-Blitz requires the `SESSION_SECRET_KEY` variable to be set. Go to your
-project on the GUI, select the Variables link and enter
-`SESSION_SECRET_KEY` as the name of the variables a random 32-key secret
-as its value. Click **Add** to add the variable.
+Set the `SESSION_SECRET_KEY` variable to a random string of 32 characters
+and the `PORT` variable to `3000`:
+
+```
+railway variables set SESSION_SECRET_KEY=<your_key>
+railway variables set PORT=3000
+```
+
+Instead of setting the `PORT` here, you could also modify the `start`
+script in the `package.json` file to `blitz start --port ${PORT-3000}`.
 
 Enter other environment variables that you require. The `DATABASE_URL`
 variable will be automatically set by Railway if you provision a
@@ -103,6 +109,8 @@ Blitz requires the `SESSION_SECRET_KEY` variable to be set. Go to your
 project on the GUI, select the **Variables** link and enter
 `SESSION_SECRET_KEY` as the name of the variable and a random 32-key
 secret as its value. Click **Add** to add the variable.
+
+Set a variable `PORT` to `3000`.
 
 Enter other environment variables that you require. The `DATABASE_URL`
 variable will be automatically set by Railway if you provision a database.

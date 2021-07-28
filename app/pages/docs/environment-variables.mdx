@@ -56,23 +56,23 @@ browser.
 
 There are two ways you can expose a variable to the browser.
 
-### Option 1: `NEXT_PUBLIC_` Prefix {#option-1-next-public-prefix}
+### Option 1: `BLITZ_PUBLIC_` or `NEXT_PUBLIC_` Prefix {#option-1-next-public-prefix}
 
-Prefix the variable with `NEXT_PUBLIC_`. For example:
+Prefix the variable with `BLITZ_PUBLIC_` or `NEXT_PUBLIC_`. For example:
 
 ```bash
-NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
+BLITZ_PUBLIC_ANALYTICS_ID=abcdefghijk
 ```
 
 The value will be inlined into JavaScript sent to the browser because of
-the `NEXT_PUBLIC_` prefix.
+the `BLITZ_PUBLIC_` prefix.
 
 ```jsx
 // pages/index.js
 import setupAnalyticsService from "../lib/my-analytics-service"
 
-// NEXT_PUBLIC_ANALYTICS_ID can be used here as it's prefixed by NEXT_PUBLIC_
-setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)
+// BLITZ_PUBLIC_ANALYTICS_ID can be used here as it's prefixed by BLITZ_PUBLIC_
+setupAnalyticsService(process.env.BLITZ_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
   return <h1>Hello World</h1>

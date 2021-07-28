@@ -67,7 +67,7 @@ export function Footer({className, hasDarkMode}) {
               </LinkList>
 
               <LinkList title="Other">
-                <Link href="https://flightcontrol.dev">
+                <Link href="https://flightcontrol.dev?ref=blitzjs">
                   <a target="_blank" rel="noopener noreferrer">
                     Deploy with Flightcontrol
                   </a>

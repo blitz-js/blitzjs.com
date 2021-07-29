@@ -83,7 +83,12 @@ const Header = ({
   const bannerMsg = (
     <div>
       🚀
-      <a href="https://flightcontrol.dev" rel="noreferrer" target="_blank" className="underline">
+      <a
+        href="https://flightcontrol.dev?ref=blitzjs"
+        rel="noreferrer"
+        target="_blank"
+        className="underline"
+      >
         Announcing Flightcontrol
       </a>{" "}
       - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀

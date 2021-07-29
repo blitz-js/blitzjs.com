@@ -1,16 +1,19 @@
-const {addImport, addExport} = require("./utils")
+import {addExport, addImport} from "./utils"
 
 /**
  * Extract slug
- * @param {*} headingText in the form of "This is my title {#this-is-my-title}"
+ * @param {string} headingText
  * @returns {[title: string, slug: string]}
+ * @example
+ * extractSlug("This is my title {#this-is-my-title}")
+ * // => "this-is-my-title"
  */
 function extractSlug(headingText) {
   const [title, rest] = headingText.split(" {#", 2)
   return [title, rest.substr(0, rest.length - 1)]
 }
 
-module.exports.withTableOfContents = () => {
+export const withTableOfContents = () => {
   return (tree) => {
     const component = addImport(tree, "@/components/Heading", "Heading")
     const contents = []

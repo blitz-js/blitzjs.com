@@ -1,11 +1,17 @@
-const Prism = require("prismjs")
+import Prism from "prismjs"
 global.Prism = Prism
-const loadLanguages = require("prismjs/components/")
-loadLanguages()
-require("./prism-diff-highlight")(Prism)
-// require("./prism-line-numbers")(Prism)
 
-const HTML_TAG = /<\/?(?!\d)[^\s>/=$<%]+(?:\s(?:\s*[^\s>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/gi
+import loadLanguages from "prismjs/components/index"
+loadLanguages()
+
+import {prismDiffHighlight} from "./prism-diff-highlight"
+// import {prismLineNumbers} from "./prism-line-numbers"
+
+prismDiffHighlight(Prism)
+// prismLineNumbers(Prism)
+
+const HTML_TAG =
+  /<\/?(?!\d)[^\s>/=$<%]+(?:\s(?:\s*[^\s>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/gi
 const PSEUDO_CLASSES = [
   "active",
   "any-link",
@@ -84,7 +90,7 @@ Prism.hooks.add("wrap", (env) => {
   }
 })
 
-module.exports.addImport = function addImport(tree, mod, name) {
+export function addImport(tree, mod, name) {
   tree.children.unshift({
     type: "import",
     value: `import { ${name} as _${name} } from '${mod}'`,
@@ -92,7 +98,7 @@ module.exports.addImport = function addImport(tree, mod, name) {
   return `_${name}`
 }
 
-module.exports.addDefaultImport = function addImport(tree, mod, name) {
+export function addDefaultImport(tree, mod, name) {
   tree.children.unshift({
     type: "import",
     value: `import _${name} from '${mod}'`,
@@ -100,14 +106,14 @@ module.exports.addDefaultImport = function addImport(tree, mod, name) {
   return `_${name}`
 }
 
-module.exports.addExport = function addExport(tree, name, value) {
+export function addExport(tree, name, value) {
   tree.children.push({
     type: "export",
     value: `export const ${name} = ${JSON.stringify(value)}`,
   })
 }
 
-module.exports.highlightCode = function highlightCode(code, prismLanguage) {
+export function highlightCode(code, prismLanguage) {
   const isDiff = prismLanguage.startsWith("diff-")
   const language = isDiff ? prismLanguage.substr(5) : prismLanguage
   const grammar = Prism.languages[isDiff ? "diff" : language]

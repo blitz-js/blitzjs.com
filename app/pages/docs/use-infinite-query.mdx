@@ -11,7 +11,7 @@ this case, you can `useInfiniteQuery` as shown in the following example.
 
 ### Example {#example}
 
-```ts
+```tsx
 import { useInfiniteQuery } from "blitz"
 import getProjects from "app/projects/queries/getProjects"
 
@@ -70,7 +70,12 @@ interface GetProjectsInput
 export default resolver.pipe(
   resolver.authorize(),
   async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
-    const { items: projects, hasMore, nextPage, count } = await paginate({
+    const {
+      items: projects,
+      hasMore,
+      nextPage,
+      count,
+    } = await paginate({
       skip,
       take,
       count: () => db.project.count({ where }),
@@ -90,7 +95,6 @@ export default resolver.pipe(
 
 ## API {#api}
 
-<!-- prettier-ignore -->
 ```js
 const [
   pagesOfQueryResults,
@@ -103,7 +107,7 @@ const [
     isFetchingNextPage,
     isFetchingPreviousPage,
     ...extras
-  }
+  },
 ] = useInfiniteQuery(queryResolver, getQueryInputArguments, {
   ...options,
   getNextPageParam: (lastPage, allPages) => lastPage.nextPage,

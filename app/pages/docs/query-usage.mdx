@@ -102,10 +102,11 @@ Use the [`useInfiniteQuery`](./use-infinite-query) hook
 
 ### Prefetching {#prefetching}
 
-All queries are automatically cached, so both of the following will cache the `getProject` query.
+All queries are automatically cached, so both of the following will cache
+the `getProject` query.
 
 ```ts
-import {invoke} from 'blitz'
+import { invoke } from "blitz"
 
 const project = await invoke(getProject, { where: { id: props.id } })
 ```
@@ -145,7 +146,7 @@ export const getStaticProps = async (context) => {
   }
 }
 
-function ProjectPage({ project }) {
+function ProjectPage() {
   const [project] = useQuery(getProject, { where: { id: props.id } })
   return <div>{project.name}</div>
 }

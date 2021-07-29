@@ -12,7 +12,7 @@ the following example.
 
 ### Example {#example}
 
-```ts
+```tsx
 import { Suspense } from "react"
 import {
   Link,
@@ -74,7 +74,12 @@ interface GetProjectsInput
 export default resolver.pipe(
   resolver.authorize(),
   async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
-    const { items: projects, hasMore, nextPage, count } = await paginate({
+    const {
+      items: projects,
+      hasMore,
+      nextPage,
+      count,
+    } = await paginate({
       skip,
       take,
       count: () => db.project.count({ where }),
@@ -94,7 +99,6 @@ export default resolver.pipe(
 
 ## API {#api}
 
-<!-- prettier-ignore -->
 ```js
 const [
   queryResult,
@@ -119,7 +123,7 @@ const [
     remove,
     status,
     setQueryData,
-  }
+  },
 ] = usePaginatedQuery(queryResolver, queryInputArguments, options)
 ```
 

@@ -220,6 +220,36 @@ builder
 
 This step would append "Paul Plain was here!" to the user's README.md
 
+#### Creating a custom message
+
+Sometimes you need to print a simple message, or give some instructions,
+you can achieve that with `printMessage`
+
+```ts
+builder.printMessage({
+  successIcon: "ℹ️",
+  stepId: "oops",
+  stepName: "Contributors needed!",
+  message: "If you like this recipe, consider helping out!",
+})
+```
+
+This step would print "If you like this recipe, consider helping out!" to
+terminal and wait for the user to go to the next step.
+
+#### Custom step icons
+
+If you want to customize your recipe even further, you can pass an
+optional `successIcon` param to your steps.
+
+```ts
+builder
+  .addTransformFilesStep({
+     successIcon: "🔧",
+     ...
+   })
+```
+
 #### Modifying Prisma schemas
 
 A lot of recipes may need to add or modify models in the schema.prisma

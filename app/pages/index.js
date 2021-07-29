@@ -294,6 +294,7 @@ const Home = ({randomContributors}) => {
               <div className="w-full">
                 <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
                   <div className="px-6 architecture-diagram" style={{paddingBottom: "2px"}}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="img/architecture.svg" alt="Architecture diagram" />
                   </div>
                 </Scrollbar>

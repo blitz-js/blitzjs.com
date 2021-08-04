@@ -97,6 +97,7 @@ const user = await db.user.create({
       },
     },
   },
+  include: { memberships: true },
 })
 ```
 

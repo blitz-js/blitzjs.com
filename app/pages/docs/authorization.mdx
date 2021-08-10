@@ -145,7 +145,7 @@ Page.redirectAuthenticatedTo = "/"
 Page.redirectAuthenticatedTo = Routes.Home()
 // using function
 Page.redirectAuthenticatedTo = ({ session }) =>
-  session?.role === "admin" ? "/admin" : Routes.Home()
+  session.role === "admin" ? "/admin" : Routes.Home()
 // highlight-end
 
 export default Page

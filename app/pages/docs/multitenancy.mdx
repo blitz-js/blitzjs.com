@@ -97,6 +97,7 @@ const user = await db.user.create({
       },
     },
   },
+  include: { memberships: true },
 })
 ```
 
@@ -119,7 +120,7 @@ Update `types.ts` like this:
 +import { GlobalRole, MembershipRole, Organization } from "db"
 
 -export type Role = "ADMIN" | "USER"
-+ type Role = MembershipRole & GlobalRole
++ type Role = MembershipRole | GlobalRole
 
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {

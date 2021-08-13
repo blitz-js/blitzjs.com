@@ -332,8 +332,8 @@ const Home = ({randomContributors}) => {
                   background processing, generating PDFs, etc. Currently we have minimal backend
                   guides, but are working on developing more patterns and adding more docs.
                 </FeatureIconTitle>
-                <FeatureIconTitle icon="typescript" title="First Class Typescript Support">
-                  Blitz is built with Typescript and the Blitz data layer is fully end-to-end
+                <FeatureIconTitle icon="typescript" title="First Class TypeScript Support">
+                  Blitz is built with TypeScript and the Blitz data layer is fully end-to-end
                   typesafe. All types are completely static without needing a separate type
                   generation process!
                 </FeatureIconTitle>

@@ -143,6 +143,9 @@ const Page: BlitzPage = () => {
 Page.redirectAuthenticatedTo = "/"
 // using route manifest
 Page.redirectAuthenticatedTo = Routes.Home()
+// using function
+Page.redirectAuthenticatedTo = ({ session }) =>
+  session.role === "admin" ? "/admin" : Routes.Home()
 // highlight-end
 
 export default Page
@@ -309,7 +312,7 @@ module.exports = {
 }
 ```
 
-And if using Typescript, set the type in `types.ts` like this:
+And if using TypeScript, set the type in `types.ts` like this:
 
 ```ts
 import { SimpleRolesIsAuthorized } from "blitz"

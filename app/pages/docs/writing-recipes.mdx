@@ -187,7 +187,7 @@ testing, the tests are quick to write:
 
 ```typescript
 import j from "jscodeshift"
-import { customTsParser } from "@blitzjs/installer"
+import { addImport, customTsParser } from "@blitzjs/installer"
 
 const sampleFile = `export default function Comp() {
   return <div>hello!</div>;

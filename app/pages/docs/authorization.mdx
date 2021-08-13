@@ -143,6 +143,9 @@ const Page: BlitzPage = () => {
 Page.redirectAuthenticatedTo = "/"
 // using route manifest
 Page.redirectAuthenticatedTo = Routes.Home()
+// using function
+Page.redirectAuthenticatedTo = ({ session }) =>
+  session.role === "admin" ? "/admin" : Routes.Home()
 // highlight-end
 
 export default Page

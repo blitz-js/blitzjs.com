@@ -51,7 +51,9 @@ The `context` parameter is an object containing the following keys:
   the page component. It should be a
   [serializable object](https://en.wikipedia.org/wiki/Serialization)
 - `revalidate` - An **optional** amount in seconds after which a page
-  re-generation can occur. More on
+  re-generation can occur. Defaults to `false`. When `revalidate` is
+  `false` it means that there is no revalidation, so the page will be
+  cached as built until your next build. More on
   [Incremental Static Regeneration](/docs/get-static-props#incremental-static-regeneration)
 - `notFound` - An **optional** boolean value to allow the page to return a
   404 status and page. Below is an example of how it works:
@@ -125,7 +127,7 @@ The `context` parameter is an object containing the following keys:
 >
 > Fetching from an external API is fine!
 
-### Simple Example {#simple-example}
+### Example {#example}
 
 **Example**: Your blog page needs to load it's data from your database or
 from a CMS (content management system).

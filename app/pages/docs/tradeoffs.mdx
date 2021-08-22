@@ -78,12 +78,17 @@ to Blitz by default or via simple opt-in. We have an
 [ongoing discussion](https://github.com/blitz-js/blitz/discussions/1841)
 that we'd love you to chime in on if you have ideas.
 
-## Single Threaded When Not Deployed Serverless {#single-threaded-when-not-deployed-serverless}
+## Single Threaded {#single-threaded}
 
-This is a tradeoff of Next.js specifically. Next.js is single threaded
+This is a tradeoff of Node.js in general. Node.js is single threaded
 which means if you are doing heavy backend processing you may notice that
 all web requests begin to suffer. The solution to this is spawning
 background processing off into other processes.
 
 Running multiple background processes isn't super difficult, but we want
 to add docs and APIs that make this as simple as possible.
+
+This isn't a problem when deployed to some serverless platforms, such as
+Vercel, because these platforms only allow a given Node.js process
+to serve one request at a time anyway. However, note that [deployment
+to Vercel is not recommended for other reasons](./deploy-vercel.mdx).

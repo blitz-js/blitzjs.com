@@ -19,16 +19,16 @@ Those will throw `AuthenticationError` if the user is not logged in, and
 it will throw `AuthorizationError` if the user is logged in but doesn't
 have the required permissions.
 
-<!-- prettier-ignore -->
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
 const CreateProject = z
   .object({
     name: z.string(),
-  }).nonstrict()
+  })
+  .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(CreateProject),
@@ -37,15 +37,14 @@ export default resolver.pipe(
   // highlight-end
   async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const projects = await db.projects.create({data: input})
+    const projects = await db.projects.create({ data: input })
     return projects
-  },
+  }
 )
 ```
 
 or
 
-<!-- prettier-ignore -->
 ```ts
 import {Ctx} from "blitz"
 import db from "db"
@@ -144,6 +143,9 @@ const Page: BlitzPage = () => {
 Page.redirectAuthenticatedTo = "/"
 // using route manifest
 Page.redirectAuthenticatedTo = Routes.Home()
+// using function
+Page.redirectAuthenticatedTo = ({ session }) =>
+  session.role === "admin" ? "/admin" : Routes.Home()
 // highlight-end
 
 export default Page
@@ -240,8 +242,13 @@ if (session.role === "admin") {
 
 #### `useCurrentUser()`
 
-The second way is to use the `useCurrentUser()` hook. New Blitz apps by default have a `useCurrentUser()` hook and a
-corresponding `getCurrentUser` query. Unlike the `useSession()` approach above, `useCurrentUser()` will require a network call and thus be slower. However, if you need access to user data that would be insecure to store in the session's `publicData`, you would need to use `useCurrentUser()` instead of `useSession()`.
+The second way is to use the `useCurrentUser()` hook. New Blitz apps by
+default have a `useCurrentUser()` hook and a corresponding
+`getCurrentUser` query. Unlike the `useSession()` approach above,
+`useCurrentUser()` will require a network call and thus be slower.
+However, if you need access to user data that would be insecure to store
+in the session's `publicData`, you would need to use `useCurrentUser()`
+instead of `useSession()`.
 
 ```tsx
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -305,7 +312,7 @@ module.exports = {
 }
 ```
 
-And if using Typescript, set the type in `types.ts` like this:
+And if using TypeScript, set the type in `types.ts` like this:
 
 ```ts
 import { SimpleRolesIsAuthorized } from "blitz"

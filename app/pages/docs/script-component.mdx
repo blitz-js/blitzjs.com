@@ -35,7 +35,7 @@ optimize loading for the script:
 Previously, you needed to define `script` tags inside the `Head` of your
 Blitz.js page.
 
-```js
+```jsx
 // Before
 
 // pages/index.js
@@ -59,7 +59,7 @@ With `<Script>`, you no longer need to wrap scripts in `<Head>`. Further,
 `<Script>` should **not** be used in `pages/_document.js` as `<Script>`
 has client-side functionality to ensure loading order. For example:
 
-```js
+```jsx
 // After
 
 // pages/index.js
@@ -78,7 +78,7 @@ function Home() {
 
 ### Loading Polyfills {#loading-polyfills}
 
-```js
+```jsx
 import { Script } from "blitz"
 ;<Script
   src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserverEntry%2CIntersectionObserver"
@@ -88,7 +88,7 @@ import { Script } from "blitz"
 
 ### Lazy-Loading {#lazy-loading}
 
-```js
+```jsx
 import { Script } from "blitz"
 ;<Script
   src="https://connect.facebook.net/en_US/sdk.js"
@@ -98,7 +98,7 @@ import { Script } from "blitz"
 
 ### Executing Code After Loading (`onLoad`) {#after-load}
 
-```js
+```jsx
 import { Script } from "blitz"
 ;<Script
   id="stripe-js"
@@ -111,7 +111,7 @@ import { Script } from "blitz"
 
 ### Inline Scripts {#inline}
 
-```js
+```jsx
 import {Script} from 'blitz'
 
 <Script strategy="lazyOnload">
@@ -129,7 +129,7 @@ import {Script} from 'blitz'
 
 ### Forwarding Attributes {#forwarding-attributes}
 
-```js
+```jsx
 import { Script } from "blitz"
 ;<Script
   src="https://www.google-analytics.com/analytics.js"

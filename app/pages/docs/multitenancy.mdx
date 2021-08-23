@@ -33,15 +33,8 @@ The prisma schema looks like this:
 model Organization {
   id         Int @id @default(autoincrement())
   name       String
-  role       GlobalRole
 
   membership Membership[]
-}
-
-// The owners of the SaaS (you) can have a SUPERADMIN role to access all data
-enum GlobalRole {
-  SUPERADMIN
-  CUSTOMER
 }
 
 model Membership {
@@ -67,12 +60,19 @@ enum MembershipRole {
   USER
 }
 
+// The owners of the SaaS (you) can have a SUPERADMIN role to access all data
+enum GlobalRole {
+  SUPERADMIN
+  CUSTOMER
+}
+
 model User {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   name           String?
   email          String   @unique
+  role           GlobalRole
 
   memberships Membership[]
 }
@@ -97,6 +97,7 @@ const user = await db.user.create({
       },
     },
   },
+  include: { memberships: true },
 })
 ```
 
@@ -118,6 +119,9 @@ Update `types.ts` like this:
 ```diff
 +import { GlobalRole, MembershipRole, Organization } from "db"
 
+-export type Role = "ADMIN" | "USER"
++ type Role = MembershipRole | GlobalRole
+
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {
     session: SessionContext
@@ -126,8 +130,8 @@ declare module "blitz" {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
        userId: User["id"]
-+      roles: Array<MembershipRole & GlobalRole>
-+      orgId: Organization["id"]
++      roles: Array<Role>
++      orgId?: Organization["id"]
     }
   }
 }
@@ -232,6 +236,7 @@ export default resolver.pipe(
   resolver.zod(UpdateProject),
   resolver.authorize(),
   async ({ id, ...data }, ctx) => {
+    if (!ctx.session.orgId) throw new Error("Missing session.orgId")
     const project = await db.project.update({
       where: {
         id,
@@ -340,7 +345,7 @@ export default resolver.pipe(
 ```ts
 // app/core/utils.ts
 import { Ctx } from "blitz"
-import { Prisma, GloblRole } from "db"
+import { Prisma, GlobalRole } from "db"
 
 export default function assert(
   condition: any,
@@ -360,7 +365,7 @@ export const setDefaultOrganizationId = <T extends Record<any, any>>(
   if (input.organizationId) {
     // Pass through the input
     return input as T & { organizationId: number }
-  } else if (session.roles?.includes(GloblRole.SUPERADMIN)) {
+  } else if (session.roles?.includes(GlobalRole.SUPERADMIN)) {
     // Allow viewing any organization
     return { ...input, organizationId: { not: 0 } }
   } else {
@@ -379,7 +384,7 @@ export const enforceSuperAdminIfNotCurrentOrganization = <
   assert(input.organizationId, "missing input.organizationId")
 
   if (input.organizationId !== ctx.session.orgId) {
-    ctx.session.$authorize(GloblRole.SUPERADMIN)
+    ctx.session.$authorize(GlobalRole.SUPERADMIN)
   }
   return input
 }

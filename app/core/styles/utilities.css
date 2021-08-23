@@ -169,3 +169,16 @@ body.cursor-grabbing * {
 .topic-select .topic-select__dropdown-indicator {
   @apply flex-wrap flex w-7;
 }
+
+.showcase-block {
+  @apply cursor-pointer w-full p-2;
+}
+.showcase-block div {
+  @apply w-full rounded-md shadow-md transition ease-in-out duration-300;
+}
+.showcase-block:hover div {
+  @apply shadow-xl transform -translate-y-2;
+}
+.showcase-block:hover .showcase-block-title {
+  @apply underline text-purple-light dark:text-purple-extralight;
+}

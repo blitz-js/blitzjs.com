@@ -38,17 +38,23 @@ You can react to errors (e.g. for logging) by providing an `onError`
 callback:
 
 ```jsx
-import {ErrorBoundary} from 'blitz'
+import { ErrorBoundary } from "blitz"
 
-const myErrorHandler = (error: Error, info: {componentStack: string}) => {
+const myErrorHandler = (
+  error: Error,
+  info: { componentStack: string }
+) => {
   // Do something with the error
   // E.g. log to an error logging client here
 }
 
 const ui = (
-  <ErrorBoundary FallbackComponent={ErrorFallback} onError={myErrorHandler}>
+  <ErrorBoundary
+    FallbackComponent={ErrorFallback}
+    onError={myErrorHandler}
+  >
     <ComponentThatMayError />
-  </ErrorBoundary>,
+  </ErrorBoundary>
 )
 ```
 

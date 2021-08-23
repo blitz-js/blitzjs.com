@@ -77,11 +77,9 @@ You can use cards, like the one at the start of [_API Routes_](https://blitzjs.c
 
 ```md
 <Card type="info">
-
-Unlike Next.js, your `api/` folder should be a sibling of `pages/` instead
-of being nested inside. But `pages/api` is still supported for
-compatibility with Next.js.
-
+  Unlike Next.js, your `api/` folder should be a sibling of `pages/` instead
+  of being nested inside. But `pages/api` is still supported for
+  compatibility with Next.js.
 </Card>
 ```
 
@@ -89,5 +87,3 @@ Properties:
 
 - `type`: `'caution' | 'info' | 'note'`
 - `title`: `string` (optional)
-
-**Remember to leave an empty line** between the component tag and the content as shown in the example above.

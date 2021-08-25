@@ -131,7 +131,12 @@ which is the standard resolver type.
 
 This is a handly utility for using
 [Zod](https://github.com/colinhacks/zod), an awesome input validation
-library. It takes a zod schema and runs `schema.parse` on the input data.
+library. It takes a zod schema and runs `schema.parseAsync` on the input
+data.
+
+> **Note**: If you want to run the synchronous version; `schema.parse`,
+> you can pass in the value "sync" to the second parameter of resolver.zod
+> E.g.: `resolver.zod(CreateProject,"sync")`
 
 You don't have to use this. You can add
 `const safeInput = CreateProject.parse(input)` directly in your main

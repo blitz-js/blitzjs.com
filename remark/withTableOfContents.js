@@ -28,7 +28,7 @@ export const withTableOfContents = () => {
           .map((n) => n.value)
           .join("")
 
-        if (!/ {#[a-z0-9-]+}$/.test(headingText)) {
+        if (!/ {#[a-z0-9-]+}$/i.test(headingText)) {
           throw new Error(`This heading is missing a handle:\n${headingText}`)
         }
 

@@ -12,8 +12,7 @@ const sponsors = [
   },
   {
     name: "GraphCMS",
-    href:
-      "https://graphcms.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    href: "https://graphcms.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/graphcms.png",
     tier: 2,
     cost: 500,
@@ -30,6 +29,13 @@ const sponsors = [
     name: "RIT",
     href: "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rit_logo.png",
+    tier: 3,
+    cost: 250,
+  },
+  {
+    name: "Boostry",
+    href: "https://boostry.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/boostry.svg",
     tier: 3,
     cost: 250,
   },

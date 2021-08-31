@@ -217,7 +217,7 @@ Here's an example where a mutation accepts `id` that could be the id of an
 entity belonging to a different organization. You could first make a
 `db.project.findFirst()` query for that id and then manually verify that
 `organizationId` is correct. But the easier way shown here is by adding
-`organizationId` to the `db.update` `where` input. This update call will
+`organizationId` to the `db.project.updateMany` `where` input. This update call will
 fail if the organizationId doesn't match.
 
 ```ts
@@ -237,7 +237,7 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, ...data }, ctx) => {
     if (!ctx.session.orgId) throw new Error("Missing session.orgId")
-    const project = await db.project.update({
+    const project = await db.project.updateMany({
       where: {
         id,
         // Filter by organizationId

@@ -60,7 +60,7 @@ looking for this: `passport.authenticate('github')`. So in this case, the
 
 You may need to set `secureProxy` option to `true` in case your app is
 located behind SSL proxy (Nginx). Proxy should be set to manage
-`x-forwarded-proto` header correctly.
+`forwarded` or `x-forwarded-proto` header correctly.
 
 ```ts
 // app/api/auth/[...auth].ts

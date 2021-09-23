@@ -52,6 +52,11 @@ const config = withBundleAnalyzer({
         destination: "https://twitter.com/flybayer/status/1361334647859384320",
         permanent: false,
       },
+      {
+        source: "/discord",
+        destination: "http://discord.gg/blitzjs",
+        permanent: false,
+      },
     ]
   },
   async rewrites() {

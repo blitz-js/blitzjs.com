@@ -47,6 +47,16 @@ const config = withBundleAnalyzer({
         destination: "https://us02web.zoom.us/j/85901497017?pwd=eVo4YlhsU2E3UHQvUmgxTmtRUDBIZz09",
         permanent: false,
       },
+      {
+        source: "/fame",
+        destination: "https://twitter.com/flybayer/status/1361334647859384320",
+        permanent: false,
+      },
+      {
+        source: "/discord",
+        destination: "http://discord.gg/blitzjs",
+        permanent: false,
+      },
     ]
   },
   async rewrites() {

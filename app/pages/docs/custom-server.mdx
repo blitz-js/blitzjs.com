@@ -45,12 +45,12 @@ app.prepare().then(() => {
     if (pathname === "/hello") {
       res.writeHead(200).end("world")
       return
-    } else if (pathname === "/a") {
+    }
+    
+    if (pathname === "/a") {
+      // renders app/pages/a.tsx
       app.render(req, res, "/a", query)
-    } else if (pathname === "/b") {
-      app.render(req, res, "/b", query)
-    } else {
-      handle(req, res, parsedUrl)
+      return
     }
 
     handle(req, res, parsedUrl)

@@ -74,6 +74,8 @@ Some especially important points:
 - **Responsiveness:** during issue/PR triage, even if we can’t do a full
   review right away, leave a comment thanking them and saying we’ll review
   it soon
+  - Our goal is to respond to all issues and PRs within 2 days, but
+    ideally within 1 day.
 - **Understanding:** it's critical to ensure you understand exactly what
   someone is saying before you respond. Ask plenty of questions if needed.
   It's very bad if someone has to reply to your response and say "actually
@@ -85,6 +87,29 @@ Some especially important points:
 
 - [How to Be Helpful Online](https://nedbatchelder.com/blog/202009/how_to_be_helpful_online.html)
 - [How to Start Reviewing Code](https://shubheksha.com/posts/2019/03/how-to-start-reviewing-code/)
+
+## Monitoring Discord {#discord}
+
+- We want every single question to get a response, ideally within a day,
+  or 2 at max. But this doesn't mean you have to solve their problem. For
+  example, if they ask about some random library you know nothing about,
+  you can respond saying you aren't familiar with that, but that they
+  could try looking for examples/docs on using it with nextjs, since the
+  integration would the same.
+- Ensure threads are used as much as possible to keep channels organized.
+  Even if there are a few messages about a topic in the main channel and
+  the issue/question is not resolved, go ahead and create a thread and
+  respond in the thread.
+- If someone reports something that's likely a bug, kindly ask them to
+  open an issue on Github
+- If someone requests a feature or change, kindly ask them to open a
+  feature request issue on Github
+- If you notice some type of DX issue or opportunity for improvement in
+  any conversation, please open an issue on Github for this. Making lots
+  of tiny improvements over the long has compounding returns
+- If someone asks a question about something that either doesn't have docs
+  or isn't documented well, then take a minute to go add the docs for
+  that. And then paste a link to the new docs you added.
 
 ## Issue Triage {#issue-triage}
 
@@ -104,15 +129,16 @@ Some especially important points:
 ### Actions {#actions}
 
 1. Add tags:
+   - Add a `status/*` tag
    - Add a `kind/*` tag
    - Add a `scope/*` tag
-   - Add a `status/*` tag
    - Add a good first/second issue tag if appropriate
 
 ## Pull Request Triage {#pull-request-triage}
 
 - Are the changes covered by tests?
 - Do the changes look ok? Make sure there's no obvious issues
+- If applicable, has a PR been opened to update the docs?
 
 ### Actions {#actions-1}
 

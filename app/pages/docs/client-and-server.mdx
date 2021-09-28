@@ -23,11 +23,8 @@ about [API Routes](./api-routes).
 
 #### React Components
 
-Everything inside a page or component file happens both server and client.
-However, you can opt-in for a full server-side rendering by exporting an
-async function called `getServerSideProps`. The server will call this
-function on every request. Read more about
-[`getServerSideProps`](./get-server-side-props).
+All code inside a page or component file runs on both server and client, except for 
+[`getServerSideProps`](./get-server-side-props) or [`getStaticProps`](./get-static-props). Code that is imported and ran inside those two functions will only run on the server.
 
 Since React components run both on the server and client, you might face
 issues accessing something only available on the client, such as `window`.

@@ -144,17 +144,24 @@ blitz generate model [fieldName]:[type]:[attribute]
 - `fieldName` is the name of your database column and can be anything
   - Use `belongsTo` to add a model relationship, ex: `belongsTo:user`
 - `type`
+
   - **Optional** - defaults to `string` if not specified
   - **Values:** `string`, `boolean`, `int`, `float`, `dateTime`, `json`,
     or a model name
   - Add `?` to make the type optional like this: `string?`
+
+    **Note:** If you use `zsh` in your terminal, you need to wrap a field
+    in quotes (`""`) to be correctly interpreted. For example:
+    `"name:string?"`
+
   - Add `[]` to make the type a list like: `task[]`
+
 - `attribute` is for adding a
   [prisma field attribute](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-schema/data-model#attributes)
   - **Optional**
   - Supported: `default`, `unique`
   - If the attribute takes an argument, you can include it with `=` like:
-    `default=false` That will set the default value to `false`
+    `default=false`. That will set the default value to `false`
 
 For more details, see the
 [docs on Prisma scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types)

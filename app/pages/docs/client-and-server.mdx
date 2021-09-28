@@ -1,0 +1,35 @@
+---
+id: client-and-server
+title: Client and Server
+sidebar_label: Client and Server
+---
+
+Blitz is focused on making the communication between server and client
+seamless. That means you can import and use server code directly in your
+UI components. However, you might be wondering what runs on the server and
+what runs on the client. Here's a quick overview.
+
+#### Queries and mutations
+
+Queries and mutations only run on the server — at build time, the direct
+function import is replaced with an RPC network call. So the query
+function code is never included in your client code. It's instead moved to
+an API layer.
+
+#### API Routes
+
+API handlers defined in `api/` directory run only on the server. Read more
+about [API Routes](./api-routes).
+
+#### React Components
+
+All code inside a page or component file runs on both server and client, except for 
+[`getServerSideProps`](./get-server-side-props) or [`getStaticProps`](./get-static-props). Code that is imported and ran inside those two functions will only run on the server.
+
+Since React components run both on the server and client, you might face
+issues accessing something only available on the client, such as `window`.
+Remember to check for `undefined` when using it in React render functions.
+
+Some data doesn't exist on the client's first render (e.g. session), which
+causes a quick "flash". You can use
+`Page.suppressFirstRenderFlicker = true` to hide the first render.

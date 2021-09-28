@@ -413,6 +413,88 @@ model if that field already exists.
 To see how the schema file is parsed,
 [click here](https://github.com/MrLeebo/prisma-ast).
 
+### Modifying Blitz config {#modifying-blitz-config}
+
+Some recipes may require modifying the existing Blitz config file.
+
+#### Create a tansformation step
+
+We are fortunate enough to be able to use the `paths` provided by the
+`@blitzjs/installer` package. You can pass this into your
+`singleFileSearch` and use `jscodeshift` to modify it.
+
+```ts
+
+builder.addTransformFilesStep({
+...
+  singleFileSearch: paths.blitzConfig(),
+  transform(program: Collection<j.Program>) {
+    // Perform your transformation here!
+  }
+});
+```
+
+#### Adding middleware {#adding-blitz-middleware}
+
+Using the transform function `addBlitzMiddleware` you can add
+new middleware from a recipe.
+
+The `addBlitzMiddleware` function can be imported from the
+`@blitzjs/installer` package.
+
+```ts
+import { addBlitzMiddleware } from "@blitzjs/installer"
+```
+
+This function takes two arguments `program` and `middleware`. `program`
+being the jscodeshift object we are modifying, and `middleware` being a
+function we want to add as middleware.
+
+Using a transformation step, we can take advantage of `singleFileSearch`,
+construct our middleware, and add it.
+
+```ts
+builder.addTransformFilesStep({
+  ...,
+  singleFileSearch: paths.blitzConfig(),
+  transform(program: Collection<j.Program>) {
+
+    // This is the middleware we want to add
+    const newMiddleware = j.arrowFunctionExpression(
+      [j.identifier("req"), j.identifier("res"), j.identifier("next")],
+      j.blockStatement([
+        j.expressionStatement(
+          j.assignmentExpression(
+            "=",
+            j.memberExpression(j.identifier("res"), j.identifier("blitzCtx.foo")),
+            j.identifier("bar"),
+          ),
+        ),
+        j.returnStatement(j.callExpression(j.identifier("next"), [])),
+      ]),
+    )
+
+    addBlitzMiddleware(program, newMiddleware)
+
+    return program
+  }
+});
+```
+
+In this case, the resulting middleware is added to your blitz config:
+
+```ts
+  ...,
+  middleware: [
+    ...,
+    (req, res, next) => {
+      res.blitzCtx.foo = bar
+      return next()
+    },
+  ],
+  ...,
+```
+
 ### Publishing {#publishing}
 
 That's all you need to build a recipe! At this point, you can commit and

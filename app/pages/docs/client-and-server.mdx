@@ -1,5 +1,4 @@
 ---
-id: client-and-server
 title: Client and Server
 sidebar_label: Client and Server
 ---
@@ -8,6 +7,8 @@ Blitz is focused on making the communication between server and client
 seamless. That means you can import and use server code directly in your
 UI components. However, you might be wondering what runs on the server and
 what runs on the client. Here's a quick overview.
+
+![Architecture diagram](/img/architecture-alt.png)
 
 #### Queries and mutations
 
@@ -23,8 +24,10 @@ about [API Routes](./api-routes).
 
 #### React Components
 
-All code inside a page or component file runs on both server and client, except for 
-[`getServerSideProps`](./get-server-side-props) or [`getStaticProps`](./get-static-props). Code that is imported and ran inside those two functions will only run on the server.
+All code inside a page or component file runs on both server and client,
+except for [`getServerSideProps`](./get-server-side-props) or
+[`getStaticProps`](./get-static-props). Code that is imported and ran
+inside those two functions will only run on the server.
 
 Since React components run both on the server and client, you might face
 issues accessing something only available on the client, such as `window`.

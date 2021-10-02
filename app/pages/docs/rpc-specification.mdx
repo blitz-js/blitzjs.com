@@ -19,15 +19,18 @@ app. For example, from a mobile application or some other app.
 
 ## URL {#url}
 
-All queries and mutations are exposed at a URL corresponding to it's file
-path.
+All queries and mutations are exposed at a URL corresponding to it's path
+relative to the `queries` or `mutations` folder.
 
 ```
 File: app/products/queries/getProduct.ts
-URL: /api/products/queries/getProduct
+URL: /api/rpc/getProduct
 
 File: app/products/mutations/createProduct.ts
-URL: /api/products/mutations/createProduct
+URL: /api/rpc/createProduct
+
+File: app/products/mutations/v2/createProduct.ts
+URL: /api/rpc/v2/createProduct
 ```
 
 ## Request Details {#request-details}

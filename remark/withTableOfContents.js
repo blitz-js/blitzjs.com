@@ -21,15 +21,19 @@ export const withTableOfContents = () => {
     for (let i = 0; i < tree.children.length; i++) {
       let node = tree.children[i]
 
-      if (node.type === "heading" && [2, 3].includes(node.depth)) {
+      if (node.type === "heading" && [2, 3, 4].includes(node.depth)) {
         const level = node.depth
         const headingText = node.children
           .filter((n) => ["text", "inlineCode"].includes(n.type))
           .map((n) => n.value)
           .join("")
 
-        if (!/ {#[a-z0-9-]+}$/.test(headingText)) {
-          throw new Error(`This heading is missing a handle:\n${headingText}`)
+        if (!/ {#[a-z0-9-]+}$/i.test(headingText)) {
+          if (node.depth < 4) {
+            throw new Error(`This heading is missing a handle:\n${headingText}`)
+          } else {
+            continue
+          }
         }
 
         let [title, slug] = extractSlug(headingText)
@@ -44,14 +48,16 @@ export const withTableOfContents = () => {
 
         node.type = "jsx"
 
+        const toc = node.depth < 4
+
         if (node.children[0].type === "jsx" && /^\s*<Heading[\s>]/.test(node.children[0].value)) {
           node.value =
             node.children[0].value.replace(
               /^\s*<Heading([\s>])/,
-              `<Heading level={${level}} id="${slug}" toc={true}$1`,
+              `<Heading level={${level}} id="${slug}" toc={${toc}}$1`,
             ) + title
         } else {
-          node.value = `<${component} level={${level}} id="${slug}" toc={true}>${node.children
+          node.value = `<${component} level={${level}} id="${slug}" toc={${toc}}>${node.children
             .map(({type, value}) => {
               const nodeValue = value
                 .replace(/&/g, "&amp;")
@@ -75,15 +81,6 @@ export const withTableOfContents = () => {
         !/^\s*<Heading[^>]*\sid=/.test(node.value)
       ) {
         throw new Error(`This Heading is missing an "id" tag:\n${node.value}`)
-      } else if (node.type === "heading" && node.depth <= 4) {
-        const headingText = node.children
-          .filter((n) => ["text", "inlineCode"].includes(n.type))
-          .map((n) => n.value)
-          .join("")
-
-        if (/ {#[a-z0-9-]+}$/.test(headingText)) {
-          throw new Error(`Headings lower than 3 can't have a handle:\n${headingText}`)
-        }
       }
     }
 

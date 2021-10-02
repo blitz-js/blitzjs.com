@@ -135,7 +135,23 @@ The following Image Optimization cloud providers are supported:
 - [Imgix](https://www.imgix.com): `loader: 'imgix'`
 - [Cloudinary](https://cloudinary.com): `loader: 'cloudinary'`
 - [Akamai](https://www.akamai.com): `loader: 'akamai'`
-- Default: Works automatically with `blitz dev`, or a custom server
+- Custom: `loader: 'custom'` use a custom cloud provider by implementing
+  the [`loader`](#loader) prop on the `Image` component
+- Default: Works automatically with `blitz dev` or `blitz start`
+
+> The `Image` component's default loader is not supported when using
+> [`blitz export`](./cli-export). However, other loader options will work.
+
+> The `Image` component's default loader uses the
+> ['squoosh'](https://www.npmjs.com/package/@squoosh/lib) library for
+> image resizing and optimization. This library is quick to install and
+> suitable for a dev server environment. For a production environment, it
+> is strongly recommended that you install the optional
+> [`sharp`](https://www.npmjs.com/package/sharp) library by running
+> `yarn add sharp` in your project directory. If sharp is already
+> installed but can't be resolved you can manually pass the path to it via
+> the `BLITZ_SHARP_PATH` environment variable e.g.
+> `BLITZ_SHARP_PATH=/tmp/node_modules/sharp`
 
 ## Caching {#caching}
 
@@ -153,8 +169,11 @@ The expiration (or rather Max Age) is defined by the upstream server's
 `Cache-Control` header.
 
 If `s-maxage` is found in `Cache-Control`, it is used. If no `s-maxage` is
-found, then `max-age` is used. If no `max-age` is found, then 60 seconds
-is used.
+found, then `max-age` is used. If no `max-age` is found, then
+[`minimumCacheTTL`](#minimum-cache-ttl) is used.
+
+You can configure [`minimumCacheTTL`](#minimum-cache-ttl) to increase the
+cache duration when the upstream image does not include `max-age`.
 
 You can configure [`deviceSizes`](#device-sizes) and
 [`imageSizes`](#image-sizes) to reduce the total number of possible
@@ -201,6 +220,25 @@ module.exports = {
   },
 }
 ```
+
+### Minimum Cache TTL {#minimumCacheTTL}
+
+You can configure the time to live (TTL) in seconds for cached optimized
+images. In many cases, its better to use a
+[Static Image Import](#image-Imports) which will handle hashing file
+contents and caching the file forever.
+
+```js
+module.exports = {
+  images: {
+    minimumCacheTTL: 60,
+  },
+}
+```
+
+If you need to add a `Cache-Control` header for the browser (not
+recommended), you can configure [`headers`](./headers) on the upstream
+image e.g. `/some-asset.jpg` not `/_next/image` itself.
 
 ### Disable Static Imports {#disable-static-imports}
 
@@ -300,13 +338,15 @@ When `intrinsic`, the image will scale the dimensions down for smaller
 viewports but maintain the original dimensions for larger viewports.
 
 When `responsive`, the image will scale the dimensions down for smaller
-viewports and scale up for larger viewports.
+viewports and scale up for larger viewports. Note: the responsive layout
+may not work correctly if the parent element uses a display value other
+than `block` such as `display: flex` or `display: grid`.
 
 When `fill`, the image will stretch both width and height to the
-dimensions of the parent element, usually paired with
-[object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit).
-
-Try it out:
+dimensions of the parent element, provided the parent element is relative.
+This is usually paired with the [`objectFit`](#objectFit) property. Ensure
+the parent element has `position: relative` in their stylesheet. Try it
+out:
 
 - [Demo the `fixed` layout](https://image-component.nextjs.gallery/layout-fixed)
 - [Demo the `intrinsic` layout](https://image-component.nextjs.gallery/layout-intrinsic)
@@ -367,7 +407,7 @@ When `true`, the image will be considered high priority and
 Should only be used when the image is visible above the fold. Defaults to
 false.
 
-#### placeholder
+#### placeholder {#placeholder}
 
 A placeholder to use while the image is loading, possible values are
 `blur` or `empty`. Defaults to `empty`.
@@ -395,7 +435,7 @@ Try it out:
 In some cases, you may need more advanced usage. The `Image` component
 optionally accepts the following advanced properties.
 
-#### objectFit
+#### objectFit {#objectFit}
 
 The image fit when using `layout="fill"`.
 
@@ -407,7 +447,18 @@ The image position when using `layout="fill"`.
 
 [Learn more](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position).
 
-#### loading
+#### onLoadingComplete {#onLoadingComplete}
+
+A callback function that is invoked once the image is completely loaded
+and the [placeholder](#placeholder) has been removed.
+
+The `onLoadingComplete` function accepts one parameter, an object with the
+following properties:
+
+- [`naturalWidth`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/naturalWidth)
+- [`naturalHeight`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/naturalHeight)
+
+#### loading {#loading}
 
 <Card type="caution">
 
@@ -448,6 +499,14 @@ Try it out:
 You can also [generate a solid color Data URL](https://png-pixel.com) to
 match the image.
 
+#### lazyBoundary
+
+A string (with similar syntax to the margin property) that acts as the
+bounding box used to detect the intersection of the viewport with the
+image and trigger lazy [loading](#loading). Defaults to `"200px"`.
+
+[Learn more](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin)
+
 #### unoptimized
 
 When `true`, the source image will be served as-is instead of changing
@@ -460,4 +519,5 @@ Other properties on the `Image` component will be passed to the underlying
 
 - `style`. Use `className` instead.
 - `srcSet`. Use [Device Sizes](#device-sizes) instead.
+- `ref`. Use [`onLoadingComplete`](#onloadingcomplete) instead.
 - `decoding`. It is always `"async"`.

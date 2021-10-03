@@ -50,7 +50,8 @@
       "error-boundary",
       "testing",
       "utilities",
-      "client-and-server"
+      "client-and-server",
+      "troubleshooting"
     ]
   },
   {

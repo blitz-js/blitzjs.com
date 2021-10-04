@@ -124,7 +124,7 @@ const Home = ({randomContributors}) => {
                     */}
                 </StyledLink>
               </Link>
-              <VideoPlayer url="https://www.youtube.com/watch?v=UHyx8MtCVVk" />
+              <VideoPlayer url="https://www.youtube.com/watch?v=TTe56M1QscM" />
               <VideoPlayer url="https://www.youtube.com/watch?v=fIexr5UZfhU" />
             </div>
 

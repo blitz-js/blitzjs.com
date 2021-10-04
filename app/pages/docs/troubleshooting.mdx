@@ -40,3 +40,16 @@ Here are the namespace used by Blitz :
 - blitz:rpc
 - blitz:session
 - blitz:utils
+
+### Usage in the browser {#usage-in-the-browser}
+
+You can also have this kind of logging for the client-side part of Blitz.
+To do so simply set the local storage variable debug to `blitz:*` or any
+namespace used by Blitz and then refresh the page.
+
+```
+localStorage.setItem('debug', 'blitz:*')
+```
+
+Please also be sure, that the devtools console, has the verbose level
+enabled.

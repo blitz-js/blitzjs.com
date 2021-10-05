@@ -1,0 +1,54 @@
+---
+id: troubleshooting
+title: Troubleshooting
+sidebar_label: Troubleshooting
+---
+
+## Debug logging {#debug-logging}
+
+If you need a more verbose experience on any Blitz module, for debugging
+purpose, you can enable advanced logging using the DEBUG environment
+variable.
+
+Blitz internally use [debug](https://www.npmjs.com/package/debug) package.
+
+For example, if you want to enable the REPL logging you can run the
+console like so :
+
+```
+DEBUG=blitz:repl blitz console
+```
+
+You can also use a wildcard pattern :
+
+```
+DEBUG=blitz:* blitz console
+```
+
+Here are the namespace used by Blitz :
+
+- `blitz:cli`
+- `blitz:config`
+- `blitz:generate`
+- `blitz:generator`
+- `blitz:installer`
+- `blitz:manifest`
+- `blitz:middleware`
+- `blitz:new`
+- `blitz:postinstall`
+- `blitz:repl`
+- `blitz:rpc`
+- `blitz:session`
+- `blitz:utils`
+
+### Usage in the browser {#usage-in-the-browser}
+
+You can also have this kind of logging for the client-side part of Blitz.
+To do so simply set the local storage variable debug to `blitz:*` or any
+namespace used by Blitz and then refresh the page.
+
+```
+localStorage.debug = 'blitz:*'
+```
+
+Please, be sure that the devtools console has the verbose level enabled.

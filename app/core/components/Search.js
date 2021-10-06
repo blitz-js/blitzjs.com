@@ -80,9 +80,9 @@ export function Search({className = ""}) {
             apiKey="c4db860ae4162be48d4c867e33edcaa2"
             appId="BH4D9OD16A"
             navigator={{
-              navigate({suggestionUrl}) {
+              navigate({itemUrl}) {
                 setIsOpen(false)
-                router.push(suggestionUrl)
+                router.push(itemUrl)
               },
             }}
             hitComponent={Hit}

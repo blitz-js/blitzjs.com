@@ -146,8 +146,9 @@ blitz generate model [fieldName]:[type]:[attribute]
 - `type`
 
   - **Optional** - defaults to `string` if not specified
-  - **Values:** `string`, `boolean`, `int`, `float`, `dateTime`, `json`,
+  - **Values:** `string`, `boolean`, `int`, `float`, `dateTime`, `json`, `uuid`,
     or a model name
+  - `foo:uuid` is a shorthand syntax for `foo:string:default=uuid`
   - Add `?` to make the type optional like this: `string?`
 
     **Note:** If you use `zsh` in your terminal, you need to wrap a field

@@ -305,10 +305,9 @@ module.exports = {
               fontWeight: theme("fontWeight.bold"),
             },
             a: {
-              fontWeight: theme("fontWeight.bold"),
-              textDecoration: "underline",
+              color: theme("colors.purple.extralight"),
+              textDecoration: "none",
               "&:hover": {
-                color: theme("colors.purple.extralight"),
                 textDecoration: "underline",
               },
             },

@@ -3,14 +3,8 @@ title: Deploy Serverless to Vercel
 sidebar_label: To Vercel
 ---
 
-<Card type="caution">
-
-We do not recommend deploying Blitz to Vercel. Vercel is a platform
-optimized for frontend deployments, not fullstack. While you can deploy to
-Vercel, most people run into too many issues and give up. Direct SQL
-database connections are one of the biggest issues. You have to pay for a
-very expensive database to support any amount of scale.
-
+<Card type="info">
+Blitz itself runs great on Vercel. But be aware that Vercel is a platform optimized for frontend deployments, not fullstack. Because of Vercel's serverless nature, you have to do extra work for it to work well with SQL databases. Carefully read through the below database information.
 </Card>
 
 ## Serverless Peculiarities for SQL Databases {#peculiarities}

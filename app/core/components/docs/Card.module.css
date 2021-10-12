@@ -4,6 +4,13 @@
   a {
     /* Remember to change this if you update the a (anchor, link) styles */
     color: #6700eb !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    @apply text-purple-light font-medium no-underline hover:underline;
+  }
+
+  a:hover {
+    text-decoration: underline !important;
   }
 }
 

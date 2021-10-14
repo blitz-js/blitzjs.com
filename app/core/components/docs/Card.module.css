@@ -3,7 +3,11 @@
 
   a {
     /* Remember to change this if you update the a (anchor, link) styles */
-    @apply text-purple-light font-medium no-underline hover:underline;
+    @apply !text-purple-light !font-medium !no-underline hover:!underline;
+  }
+
+  a:hover {
+    text-decoration: underline !important;
   }
 }
 

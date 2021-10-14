@@ -552,8 +552,8 @@ const CreateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
--  .nonstrict() // deprecated
-+  .passthrough()
+   .nonstrict()
+
 // ...
 ```
 
@@ -571,8 +571,7 @@ const UpdateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
--  .nonstrict() // deprecated
-+  .passthrough()
+   .nonstrict()
 // ...
 ```
 
@@ -655,8 +654,7 @@ we will be using it in the next step to create a validation schema for our
       text: z.string().nonempty({message: "You must enter a question."}),
 +     choices: z.array(z.object({text: z.string()})),
     })
--  .nonstrict() // deprecated
-+  .passthrough()
+    .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
@@ -683,6 +681,7 @@ and export it so we can use it for our `QuestionForm` schema in the next step.
  
 ```diff
 // app/pages/questions/validations.ts
+
 + import { CreateQuestion } from "app/questions/mutations/createQuestion"
 
 + export const createQuestionSchema = CreateQuestion
@@ -866,8 +865,8 @@ const UpdateChoice = z
     id: z.number(),
 -   name: z.string(),
   })
--  .nonstrict() // deprecated
-+  .passthrough()
+   .nonstrict()
+
 
 export default resolver.pipe(
   resolver.zod(UpdateChoice),
@@ -1025,8 +1024,7 @@ const UpdateQuestion = z
 +     z.object({id: z.number().optional(), text: z.string()}),
 +   ),
   })
--  .nonstrict() // deprecated
-+  .passthrough()
+   .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(UpdateQuestion),

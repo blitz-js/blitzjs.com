@@ -95,3 +95,14 @@ in your tests. Internally, it wraps the `QueryClient` component from
   containing the results of server-side queries. Useful for testing
   queries that need to be
   [prerendered in markup and hydrated on the client](https://react-query.tanstack.com/guides/ssr#using-hydration).
+
+## End-to-end testing with Cypress {#e2e-cypress}
+
+[Cypress](https://www.cypress.io/) is a front-end testing framework that
+enables testing options for both unit tests and integration tests.
+
+If you plan to integrate it into your Blitz application, you can look at
+our
+[example with a Cypress setup](https://github.com/blitz-js/blitz/tree/canary/examples/cypress).
+It includes a simple factory pattern, a command for creating and logging
+in a user, and a few example tests.

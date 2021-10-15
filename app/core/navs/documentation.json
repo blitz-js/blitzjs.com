@@ -175,6 +175,7 @@
     "pages": [
       "blitz-config",
       "webpack-config",
+      "babel-config",
       "postcss-config",
       "eslint-config",
       "husky-config",

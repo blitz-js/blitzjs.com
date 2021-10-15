@@ -18,15 +18,15 @@ can do for you:
 
 Blitz adds the `blitz/babel` preset to new apps via the `babel.config.js`
 file in the app root. This preset contians everything needed to compile
-React applications and server-side code. The source code transformations
-that enables
-[the import and use](https://blitzjs.com/docs/client-and-server) of server
-code directly in your UI components is also found here.
+React applications and server-side code, including source code
+transformations that enable
+[the import and use of server code](https://blitzjs.com/docs/client-and-server)
+directly in your UI components.
 
 If you want to extend the default Babel configs, this is possible. The
-babel.config.js at the top of your app is considered the source of truth,
-and therefore it needs to define what Blitz needs as well, which is the
-`blitz/babel` preset.
+`babel.config.js` at the top of your app is considered the source of
+truth, and therefore it needs to define what Blitz needs as well, which is
+the `blitz/babel` preset.
 
 Here's the default example `blitz.config.js` file:
 
@@ -73,4 +73,5 @@ documentation site.
 
 Blitz uses the current Node.js version for server-side compilations.
 
-The modules option on "preset-env" should be kept to false, otherwise webpack code splitting is turned off.
+The modules option on "preset-env" should be kept to false, otherwise
+webpack code splitting is turned off.

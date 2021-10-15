@@ -552,8 +552,6 @@ const CreateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-   .nonstrict()
-
 // ...
 ```
 
@@ -571,8 +569,6 @@ const UpdateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-   .nonstrict()
-
 ```
 
 ### `deleteQuestion` mutation {#delete-question-mutation}
@@ -654,7 +650,6 @@ we will be using it in the next step to create a validation schema for our
       text: z.string().nonempty({message: "You must enter a question."}),
 +     choices: z.array(z.object({text: z.string()})),
     })
-     .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
@@ -865,7 +860,6 @@ const UpdateChoice = z
     id: z.number(),
 -   name: z.string(),
   })
-   .nonstrict()
 
 
 export default resolver.pipe(
@@ -1024,7 +1018,6 @@ const UpdateQuestion = z
 +     z.object({id: z.number().optional(), text: z.string()}),
 +   ),
   })
-   .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(UpdateQuestion),

@@ -552,7 +552,6 @@ const CreateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-  .nonstrict()
 // ...
 ```
 
@@ -570,8 +569,6 @@ const UpdateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-  .nonstrict()
-// ...
 ```
 
 ### `deleteQuestion` mutation {#delete-question-mutation}
@@ -638,42 +635,21 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 }
 ```
 
-Next open `app/pages/questions/new.tsx` and set `initialValues` to be as
-follows:
-
-```diff
-      <QuestionForm
-        submitText="Create Question"
--       // initialValues={{ }}
-+       initialValues={{choices: []}}
-        onSubmit={async (values) => {
-          try {
-            const question = await createQuestionMutation(values)
-            router.push(`/questions/${question.id}`)
-          } catch (error) {
-            console.error(error)
-            return {
-              [FORM_ERROR]: error.toString(),
-            }
-          }
-        }}
-      />
-```
-
-Then open `app/questions/mutations/createQuestion.ts` and update the zod
-schema so that the choice data is accepted in the mutation. And we also
-need to update the `db.question.create` call so that the choices will also
-be created.
+Now open `app/questions/mutations/createQuestion.ts` and update the zod
+schema so that the choice data is accepted in the mutation. We also
+need to update the `db.question.create()` call so that the choices will
+be created. After that we need to export the `CreateQuestion` zod schema because
+we will be using it in the next step to create a validation schema for our
+`QuestionForm`.
 
 ```diff
 // app/questions/mutations/createQuestion.ts
 
-const CreateQuestion = z
-  .object({
-    text: z.string(),
-+   choices: z.array(z.object({text: z.string()})),
-  })
-  .nonstrict()
++ export const CreateQuestion = z
+    .object({
+      text: z.string().nonempty({message: "You must enter a question."}),
++     choices: z.array(z.object({text: z.string()})),
+    })
 
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
@@ -690,6 +666,53 @@ export default resolver.pipe(
     return question
   },
 )
+```
+
+Next we're going to create a separate file to store the validation schema for our
+`QuestionForm`. In the `app/pages/questions` folder create a new file called `validations.ts` 
+and import `CreateQuestion` from `app/questions/mutations/createQuestion.ts`. Then
+create a new variable called `createQuestionSchema`, set it equal to `CreateQuestion`,
+and export it so we can use it for our `QuestionForm` schema in the next step.
+ 
+```diff
+// app/pages/questions/validations.ts
+
++ import { CreateQuestion } from "app/questions/mutations/createQuestion"
+
++ export const createQuestionSchema = CreateQuestion
+```
+
+Now open `app/pages/questions/new.tsx` and import `createQuestionSchema` from
+`app/pages/questions/validations.ts` and set it as the schema for `QuestionForm`.
+Also, we need set `{{text: "", choices: []}}` as our `initialValues` for `QuestionForm`:
+
+```diff
+// app/pages/questions/new.tsx
+
++ import {createQuestionSchema} from "app/pages/questions/validations"
+
+
+      <QuestionForm
+        submitText="Create Question"
+-       // TODO use a zod schema for form validation
+-       //  - Tip: extract mutation's schema into a shared `validations.ts` file and
+-       //         then import and use it here
+-       // schema={createQuestion}
+-       // initialValues={{ }}
++       schema={createQuestionSchema}
++       initialValues={{text: "", choices: []}}
+        onSubmit={async (values) => {
+          try {
+            const question = await createQuestionMutation(values)
+            router.push(`/questions/${question.id}`)
+          } catch (error) {
+            console.error(error)
+            return {
+              [FORM_ERROR]: error.toString(),
+            }
+          }
+        }}
+      />
 ```
 
 #### Try it out
@@ -837,7 +860,7 @@ const UpdateChoice = z
     id: z.number(),
 -   name: z.string(),
   })
-  .nonstrict()
+
 
 export default resolver.pipe(
   resolver.zod(UpdateChoice),
@@ -995,7 +1018,6 @@ const UpdateQuestion = z
 +     z.object({id: z.number().optional(), text: z.string()}),
 +   ),
   })
-  .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(UpdateQuestion),

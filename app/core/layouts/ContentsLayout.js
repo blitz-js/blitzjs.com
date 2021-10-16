@@ -139,7 +139,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
       <div id={meta.containerId} className="pt-4 pb-8 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
           <PageHeader title={meta.title} align={meta.titleAlign ?? "left"} />
-          <div className={clsx("lg:hidden", {"mt-5 mb-12": toc.length, "h-px mt-8": !toc.length})}>
+          <div className={clsx("lg:hidden", {"mt-8 mb-12": toc.length, "h-px mt-12": !toc.length})}>
             {!!toc.length && (
               <>
                 <h3 className="dark:text-dark-mode-text mb-2 text-sm">Topics</h3>

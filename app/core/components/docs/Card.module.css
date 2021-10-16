@@ -1,8 +1,7 @@
 .container {
-  @apply p-5 mb-4 rounded-xl;
+  @apply p-5 my-4 rounded-xl;
 
   a {
-    /* Remember to change this if you update the a (anchor, link) styles */
     @apply !text-purple-light !font-medium !no-underline hover:!underline;
   }
 

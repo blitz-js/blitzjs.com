@@ -169,7 +169,7 @@ const config = withBundleAnalyzer({
     })
 
     config.module.rules.push({
-      test: /navs\/documentation\.json$/,
+      test: /navs[/\\]documentation\.json$/, // accept both navs/documentation.json and navs\documentation.json
       use: [
         createLoader(function (source) {
           const documentation = JSON.parse(source)

@@ -10,6 +10,9 @@ Use this command to install a Blitz Recipe into your project.
 Supports both official recipes and custom third-party recipes. Recipe
 names can be specified in any of the following formats:
 
+- `blitz install` select and install from the list of official Blitz Team
+  recipes.
+
 - `blitz install official-recipe` for an official recipe from the Blitz
   team
 - `blitz install ./recipes/my-local-recipes.ts` for a locally-authored
@@ -23,9 +26,19 @@ For more information about recipes, see the official docs for
 
 | Argument | Required | Description                                                                              |
 | -------- | -------- | ---------------------------------------------------------------------------------------- |
-| `name`   | Yes      | The name of the recipe to install, a path to a local recipe, or a GitHub repository name |
+| `name`   | No       | The name of the recipe to install, a path to a local recipe, or a GitHub repository name |
 
 #### Example Output
+
+```bash
+> blitz install
+? Select a recipe to install …
+❯ base-web
+  bumbag-ui
+  chakra-ui
+  emotion
+### and more
+```
 
 ```bash
 > blitz install tailwind
@@ -36,35 +49,4 @@ For more information about recipes, see the official docs for
 ✅ Modified 1 file: app/pages/_app.tsx
 
 🎉 The recipe for Tailwind CSS completed successfully! Its functionality is now fully configured in your Blitz app.
-```
-
-#### Options
-
-| Argument | Shorthand | Description                                                                                                                     | Default |
-| -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `--list` | `-l`      | Displays the list of official recipes at https://github.com/blitz-js/blitz/tree/canary/recipes and the commands to install them | `false` |
-
-#### Examples
-
-```bash
-> blitz install --list
- official recipes          install recipe command
- base-web                  blitz install base-web
- bumbag-ui                 blitz install bumbag-ui
- chakra-ui                 blitz install chakra-ui
- emotion                   blitz install emotion
- gh-action-yarn-mariadb    blitz install gh-action-yarn-mariadb
- gh-action-yarn-postgres   blitz install gh-action-yarn-postgres
- ghost                     blitz install ghost
- graphql-apollo-server     blitz install graphql-apollo-server
- logrocket                 blitz install logrocket
- material-ui               blitz install material-ui
- quirrel                   blitz install quirrel
- reflexjs                  blitz install reflexjs
- render                    blitz install render
- secureheaders             blitz install secureheaders
- stitches                  blitz install stitches
- styled-components         blitz install styled-components
- tailwind                  blitz install tailwind
- theme-ui                  blitz install theme-ui
 ```

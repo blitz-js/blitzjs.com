@@ -44,7 +44,7 @@ Create a file named `.vscode/launch.json` at the root of your project with the f
 }
 ```
 
-`npm run dev` can be replaced with `yarn dev` if you're using Yarn, or with `blitz dev` if you have Blitz installed globally. If you're [changing the port number](<(/docs/api-reference/cli#development)>) your application starts on, replace the `3000` in `http://localhost:3000` with the port you're using instead.
+`npm run dev` can be replaced with `yarn dev` if you're using Yarn, or with `blitz dev` if you have Blitz installed globally. If you're [changing the port number](./cli-dev) your application starts on, replace the `3000` in `http://localhost:3000` with the port you're using instead.
 
 Now go to the Debug panel (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> on Windows/Linux, <kbd>⇧</kbd>+<kbd>⌘</kbd>+<kbd>D</kbd> on macOS), select a launch configuration, then press <kbd>F5</kbd> or select **Debug: Start Debugging** from the Command Palette to start your debugging session.
 
@@ -84,7 +84,7 @@ Once the server starts, open a new tab in Chrome and visit `chrome://inspect`, w
 
 Debugging server-side code here works much like debugging client-side code with Chrome DevTools, except that when you search for files here with <kbd>Ctrl</kbd>+<kbd>P</kbd> or <kbd>⌘</kbd>+<kbd>P</kbd>, your source files will have paths starting with `webpack://{application-name}/./` (where `{application-name}` will be replaced with the name of your application according to your `package.json` file).
 
-## Debug logging {#logging}
+## Debug logging {#debug-logging}
 
 If you need a more verbose experience on any Blitz module, for debugging
 purpose, you can enable advanced logging using the DEBUG environment

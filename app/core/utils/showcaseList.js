@@ -35,6 +35,11 @@ const showcaseList = [
     URL: "https://portal.gitnation.org/",
   },
   {
+    thumbnail: "/showcase/hopscotch-product-tours.png",
+    title: "Hopscotch Product Tours",
+    URL: "https://hopscotch.club/",
+  },
+  {
     thumbnail: "/showcase/hyperlocal.png",
     title: "Hyperlocal",
     URL: "https://hyperlocal.builtforfifty.com/",

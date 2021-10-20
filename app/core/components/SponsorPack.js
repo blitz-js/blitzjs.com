@@ -47,13 +47,6 @@ const sponsors = [
     cost: 100,
   },
   {
-    name: "Robert Malko",
-    href: "https://github.com/malkomalko",
-    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rob_blitz.jpg",
-    tier: 4,
-    cost: 100,
-  },
-  {
     name: "Digsas",
     href: "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/digsas.svg",

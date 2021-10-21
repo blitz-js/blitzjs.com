@@ -64,5 +64,10 @@ const showcaseList = [
     title: "Tansy",
     URL: "https://www.tansy.co/",
   },
+  {
+    thumbnail: "/showcase/topodotink-map-posters.png",
+    title: "Topo.ink",
+    URL: "https://www.topo.ink/",
+  },
 ]
 export default showcaseList

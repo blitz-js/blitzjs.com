@@ -297,9 +297,11 @@ Available options:
 
 ```ts
 type SessionConfig = {
-  cookiePrefix?: string /* default: 'blitz' */
+  cookiePrefix?: string /* Default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
+  method?: "essential" | "advanced" /* Default: 'essential' */
+  secureCookies?: boolean
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
   publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
   getSession: (handle: string) => Promise<SessionModel | null>

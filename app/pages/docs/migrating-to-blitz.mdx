@@ -11,7 +11,7 @@ the missing features and functionality that turns Next into a true
 fullstack framework. That also means that you can migrate to Blitz in a
 few steps.
 
-### 1. Replace dependencies {#replace-deps}
+### 1. Replace Dependencies {#replace-deps}
 
 You need to replace `next` dependency with `blitz`.
 
@@ -20,7 +20,7 @@ yarn remove next ## npm uninstall next
 yarn add blitz ## npm install blitz
 ```
 
-### 2. Update scripts in `package.json` {#update-scripts}
+### 2. Update Scripts in `package.json` {#update-scripts}
 
 Instead of using `next` to run command, you can use `blitz`. There are a
 few other command that you can find useful — read about it
@@ -34,13 +34,13 @@ few other command that you can find useful — read about it
 }
 ```
 
-### 3. Rename configuration file {#rename-config-file}
+### 3. Rename Configuration File {#rename-config-file}
 
 As the third step, you need to rename `next.config.*` to `blitz.config.*`.
 Here you can read more about configuration. To learn more about
 configuration, check out the [docs](/docs/blitz-config).
 
-### What's next? {#what-is-next}
+### Next Steps {#what-is-next}
 
 If you want to start using Blitz's [queries](/docs/query-resolvers) and
 [mutations](/docs/mutation-resolvers), we recommend creating an `app`
@@ -49,7 +49,7 @@ folder and writing your application logic there. You can take a look at
 In the following sections, we'll cover how to setup a database, and
 Blitz's auth.
 
-#### Add a database {#add-database}
+#### Add a Database {#add-database}
 
 By default, Blitz uses Prisma which is a strongly typed database client.
 If you are new to databases, check out
@@ -102,7 +102,7 @@ export default new EnhancedPrisma()
 Check out our [Database Overview docs](/docs/database-overview) to learn
 more about the database setup, Prisma, and some useful utilities.
 
-#### Setup Blitz auth {#setup-blitz-auth}
+#### Setup Blitz's Auth {#setup-blitz-auth}
 
 In order to use Blitz's built-in auth, you need to create required
 database models. Add the following code to your `db/schema.prisma` file:
@@ -180,7 +180,7 @@ mutations and sessions.
 Follow [this documentation](/docs/authorization#is-authorized-adapters) to
 setup authorization.
 
-### Further reading {#further-reading}
+### Further Reading {#further-reading}
 
 - If you're new to Blitz, we recommend checking out our
   [tutorial](/docs/tutorial) to learn about some of the core Blitz's
@@ -190,23 +190,22 @@ setup authorization.
 - Learn more about [queries](/docs/query-resolvers) and
   [mutations](/docs/mutation-resolvers)
 
-## Incrementally Adopting Blitz.js {#migrating-incrementally}
+## Incrementally Adopting Blitz {#migrating-incrementally}
 
 You can adopt Blitz incrementally by starting small and adding more pages
 with time. This way you can prevent derailing feature work by avoiding a
 complete rewrite.
 
-### Using subpath {#subpath}
+### Using Subpath {#subpath}
 
 The first strategy is to configure your server or proxy such that,
-everything under a specific subpath points to a Blitz.js app. For example,
+everything under a specific subpath points to a Blitz app. For example,
 your existing website might be at `example.com`, and you might configure
-your proxy such that `example.com/store` serves a Blitz.js e-commerce
-store.
+your proxy such that `example.com/store` serves a Blitz e-commerce store.
 
-Using [`basePath`](/blitz-config#base-path), you can configure your
-Blitz.js application's assets and links to automatically work with your
-new subpath `/store`. Since each page in Blitz.js is its own
+Using [`basePath`](/blitz-config#base-path), you can configure your Blitz
+application's assets and links to automatically work with your new subpath
+`/store`. Since each page in Blitz is its own
 [standalone route](/routing), pages like `pages/products/index.tsx` will
 route to `example.com/store/products` in your application.
 
@@ -221,17 +220,17 @@ module.exports = {
 To learn more about `basePath`, take a look at our
 [documentation](/blitz-config#base-path).
 
-### Using rewrites {#rewrites}
+### Using Rewrites {#rewrites}
 
-The second strategy is to create a new Blitz.js app that points to the
-root URL of your domain. Then, you can use [`rewrites`](/rewrites) inside
+The second strategy is to create a new Blitz app that points to the root
+URL of your domain. Then, you can use [`rewrites`](/rewrites) inside
 `blitz.config.ts` to have some subpaths to be proxied to your existing
 app.
 
-For example, let's say you created a Blitz.js app to be served from
+For example, let's say you created a Blitz app to be served from
 `example.com` with the following `blitz.config.ts`. Now, requests for the
-pages you’ve added to this Blitz.js app (e.g. `/about` if you’ve added
-`pages/about.tsx`) will be handled by Next.js, and requests for any other
+pages you’ve added to this Blitz app (e.g. `/about` if you’ve added
+`pages/about.tsx`) will be handled by Blitz, and requests for any other
 route (e.g. `/dashboard`) will be proxied to `proxy.example.com`.
 
 ```jsx
@@ -240,7 +239,7 @@ route (e.g. `/dashboard`) will be proxied to `proxy.example.com`.
 module.exports = {
   async rewrites() {
     return {
-      // After checking all Blitz.js pages (including dynamic routes)
+      // After checking all Blitz pages (including dynamic routes)
       // and static files we proxy any other requests
       fallback: [
         {
@@ -255,5 +254,3 @@ module.exports = {
 
 To learn more about rewrites, take a look at our
 [documentation](/docs/rewrites).
-
-<!-- ### FAQ -->

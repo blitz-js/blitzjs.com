@@ -23,7 +23,7 @@ yarn add blitz ## npm install blitz
 ### 2. Update Scripts in `package.json` {#update-scripts}
 
 Instead of using `next` to run command, you can use `blitz`. There are a
-few other command that you can find useful — read about it
+few other commands that you can find useful — read about it
 [here](/docs/cli-overview).
 
 ```diff
@@ -34,11 +34,12 @@ few other command that you can find useful — read about it
 }
 ```
 
-### 3. Rename Configuration File {#rename-config-file}
+### 3. Rename the Configuration File {#rename-config-file}
 
-As the third step, you need to rename `next.config.*` to `blitz.config.*`.
-Here you can read more about configuration. To learn more about
-configuration, check out the [docs](/docs/blitz-config).
+As the third step, you need to rename `next.config.js` to
+`blitz.config.ts` (or if you aren't using TypeScript, to
+`blitz.config.js`). To learn more about the configuration, check out the
+[docs](/docs/blitz-config).
 
 ### Next Steps {#what-is-next}
 
@@ -47,7 +48,7 @@ If you want to start using Blitz's [queries](/docs/query-resolvers) and
 folder and writing your application logic there. You can take a look at
 [the default file structure of newly generated Blitz apps](/docs/file-structure).
 In the following sections, we'll cover how to setup a database, and
-Blitz's auth.
+Blitz's auth, but it isn't required.
 
 #### Add a Database {#add-database}
 
@@ -56,7 +57,7 @@ If you are new to databases, check out
 [Prisma's Data Guide](https://www.prisma.io/dataguide/) which covers the
 very large majority of everything you might want to know.
 
-As the first step, you need to add required dependecies:
+As the first step, you need to add the required dependecies:
 
 ```sh
 yarn add prisma @prisma/client ## npm install prisma @prisma/client
@@ -68,8 +69,9 @@ Once this is done, you can initialize Prisma:
 blitz prisma init
 ```
 
-You can optionally pass `--datasource-provider=sqlite`. The default driver
-is Postgres.
+You can optionally pass `--datasource-provider=sqlite` for a quick SQLite
+database to use in your development enviroment. The default driver is
+Postgres.
 
 The `init` command will create a new folder, `prisma`, with a
 `schema.prisma` file where you can define your database models.
@@ -83,12 +85,12 @@ For Blitz to work properly, you'll need to rename the `prisma` folder to
 },
 ```
 
-Then, you have to create a `client.ts` (or `client.js`) file in the `db`
+Then, you have to create a `index.ts` (or `index.js`) file in the `db`
 folder. Inside we'll use `enhancePrisma` function from Blitz to wrap the
 Prisma's client:
 
 ```ts
-// db/client.ts
+// db/index.ts
 
 import { enhancePrisma } from "blitz"
 import { PrismaClient } from "@prisma/client"
@@ -107,7 +109,7 @@ more about the database setup, Prisma, and some useful utilities.
 In order to use Blitz's built-in auth, you need to create required
 database models. Add the following code to your `db/schema.prisma` file:
 
-```
+```prisma
 model User {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
@@ -155,11 +157,11 @@ model Token {
 Then run `blitz prisma migrate dev` in your terminal to apply the changes
 to your database and update Prisma client.
 
-You also need to update your `blitz.config.*` file and add
+You also need to update your `blitz.config.ts` file and add
 `sessionMiddleware` setup:
 
 ```ts
-// blitz.config.js
+// blitz.config.ts
 import { BlitzConfig, sessionMiddleware } from "blitz"
 
 const config: BlitzConfig = {
@@ -169,6 +171,7 @@ const config: BlitzConfig = {
     }),
   ],
 }
+
 module.exports = config
 ```
 
@@ -193,12 +196,12 @@ setup authorization.
 ## Incrementally Adopting Blitz {#migrating-incrementally}
 
 You can adopt Blitz incrementally by starting small and adding more pages
-with time. This way you can prevent derailing feature work by avoiding a
+over time. This way you can prevent derailing feature work by avoiding a
 complete rewrite.
 
 ### Using Subpath {#subpath}
 
-The first strategy is to configure your server or proxy such that,
+The first strategy is to configure your server or proxy such that
 everything under a specific subpath points to a Blitz app. For example,
 your existing website might be at `example.com`, and you might configure
 your proxy such that `example.com/store` serves a Blitz e-commerce store.
@@ -209,12 +212,15 @@ application's assets and links to automatically work with your new subpath
 [standalone route](/routing), pages like `pages/products/index.tsx` will
 route to `example.com/store/products` in your application.
 
-```jsx
+```ts
 // blitz.config.ts
+import { BlitzConfig } from "blitz"
 
-module.exports = {
+const config: BlitzConfig = {
   basePath: "/store",
 }
+
+module.exports = config
 ```
 
 To learn more about `basePath`, take a look at our
@@ -233,10 +239,11 @@ pages you’ve added to this Blitz app (e.g. `/about` if you’ve added
 `pages/about.tsx`) will be handled by Blitz, and requests for any other
 route (e.g. `/dashboard`) will be proxied to `proxy.example.com`.
 
-```jsx
-// blitz.config.js
+```ts
+// blitz.config.ts
+import { BlitzConfig } from "blitz"
 
-module.exports = {
+const config: BlitzConfig = {
   async rewrites() {
     return {
       // After checking all Blitz pages (including dynamic routes)
@@ -250,6 +257,8 @@ module.exports = {
     }
   },
 }
+
+module.exports = config
 ```
 
 To learn more about rewrites, take a look at our

@@ -11,6 +11,47 @@ the missing features and functionality that turns Next into a true
 fullstack framework. That also means that you can migrate to Blitz in a
 few steps.
 
+We recommend using [TypeScript](https://www.typescriptlang.org/) (but it's
+not a requirement!). If you're not doing it already, you can set up
+TypeScript with following commands:
+
+```sh
+yarn add typescript ## npm install typescript
+yarn tsc init ## npx tsc init
+```
+
+Here's an example `tsconfig.json` that you can use:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "./",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "exclude": ["node_modules"],
+  "include": ["blitz-env.d.ts", "next-env.d.ts" "**/*.ts", "**/*.tsx"]
+}
+```
+
+`"allowJs": true` option will let you keep your JavaScript files so that
+you don't have to migrate your application at once.
+
 ### 1. Replace Dependencies {#replace-deps}
 
 You need to replace `next` dependency with `blitz`.
@@ -47,8 +88,7 @@ If you want to start using Blitz's [queries](/docs/query-resolvers) and
 [mutations](/docs/mutation-resolvers), we recommend creating an `app`
 folder and writing your application logic there. You can take a look at
 [the default file structure of newly generated Blitz apps](/docs/file-structure).
-In the following sections, we'll cover how to setup a database, and
-Blitz's auth, but it isn't required.
+Below, we'll cover how to setup a database, and Blitz's auth.
 
 #### Add a Database {#add-database}
 

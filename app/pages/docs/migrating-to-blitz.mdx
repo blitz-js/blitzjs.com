@@ -11,8 +11,17 @@ the missing features and functionality that turns Next into a true
 fullstack framework. That also means that you can migrate to Blitz in a
 few steps.
 
+### 1. Install Dependencies {#install-deps}
+
+You need to replace `next` dependency with `blitz`.
+
+```sh
+yarn remove next ## npm uninstall next
+yarn add blitz ## npm install blitz
+```
+
 We recommend using [TypeScript](https://www.typescriptlang.org/) (but it's
-not a requirement!). If you're not doing it already, you can set up
+not a requirement!). If you're not doing it already, you can add
 TypeScript with following commands:
 
 ```sh
@@ -20,7 +29,8 @@ yarn add typescript ## npm install typescript
 yarn tsc init ## npx tsc init
 ```
 
-Here's an example `tsconfig.json` that you can use:
+The second command will create a `tsconfig.json` file with TypeScript
+configuration. Here's an example `tsconfig.json` that you can use:
 
 ```json
 {
@@ -51,15 +61,6 @@ Here's an example `tsconfig.json` that you can use:
 
 `"allowJs": true` option will let you keep your JavaScript files so that
 you don't have to migrate your application at once.
-
-### 1. Replace Dependencies {#replace-deps}
-
-You need to replace `next` dependency with `blitz`.
-
-```sh
-yarn remove next ## npm uninstall next
-yarn add blitz ## npm install blitz
-```
 
 ### 2. Update Scripts in `package.json` {#update-scripts}
 

@@ -246,10 +246,10 @@ everything under a specific subpath points to a Blitz app. For example,
 your existing website might be at `example.com`, and you might configure
 your proxy such that `example.com/store` serves a Blitz e-commerce store.
 
-Using [`basePath`](/blitz-config#base-path), you can configure your Blitz
+Using [`basePath`](/docs/blitz-config#base-path), you can configure your Blitz
 application's assets and links to automatically work with your new subpath
 `/store`. Since each page in Blitz is its own
-[standalone route](/routing), pages like `pages/products/index.tsx` will
+[standalone route](/docs/routing), pages like `pages/products/index.tsx` will
 route to `example.com/store/products` in your application.
 
 ```ts
@@ -264,12 +264,12 @@ module.exports = config
 ```
 
 To learn more about `basePath`, take a look at our
-[documentation](/blitz-config#base-path).
+[documentation](/docs/blitz-config#base-path).
 
 ### Using Rewrites {#rewrites}
 
 The second strategy is to create a new Blitz app that points to the root
-URL of your domain. Then, you can use [`rewrites`](/rewrites) inside
+URL of your domain. Then, you can use [`rewrites`](/docs/rewrites) inside
 `blitz.config.ts` to have some subpaths to be proxied to your existing
 app.
 

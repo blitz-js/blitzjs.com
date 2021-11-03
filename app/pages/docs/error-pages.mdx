@@ -67,6 +67,8 @@ In essence, the default configuration is:
 
 ```tsx
 export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout || ((page) => page)
+
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback} {...etc}>
       {getLayout(<Component {...pageProps} />)}

@@ -10,6 +10,8 @@ Use this command to install a Blitz Recipe into your project.
 Supports both official recipes and custom third-party recipes. Recipe
 names can be specified in any of the following formats:
 
+- `blitz install` select and install from the list of official Blitz recipes
+
 - `blitz install official-recipe` for an official recipe from the Blitz
   team
 - `blitz install ./recipes/my-local-recipes.ts` for a locally-authored
@@ -23,9 +25,19 @@ For more information about recipes, see the official docs for
 
 | Argument | Required | Description                                                                              |
 | -------- | -------- | ---------------------------------------------------------------------------------------- |
-| `name`   | Yes      | The name of the recipe to install, a path to a local recipe, or a GitHub repository name |
+| `name`   | No       | The name of the recipe to install, a path to a local recipe, or a GitHub repository name |
 
 #### Example Output
+
+```bash
+> blitz install
+? Select a recipe to install …
+❯ base-web
+  bumbag-ui
+  chakra-ui
+  emotion
+### and more
+```
 
 ```bash
 > blitz install tailwind

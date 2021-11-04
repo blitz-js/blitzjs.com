@@ -151,6 +151,59 @@ Page.redirectAuthenticatedTo = ({ session }) =>
 export default Page
 ```
 
+### Secure Layouts {#secure-layouts}
+
+You can secure layouts as you secure pages:
+
+```tsx
+import { BlitzLayout, BlitzPage } from "blitz"
+
+const Layout: BlitzLayout = ({ children }) => {
+  return <div>{children}</div>
+}
+
+// highlight-start
+Layout.authenticate = true
+// or Layout.authenticate = {redirectTo: '/login'}
+// or Layout.authenticate = {redirectTo: Routes.Login()}
+// or Layout.redirectAuthenticatedTo = Routes.Home()
+// highlight-end
+
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+Page.getLayout = (page) => <Layout>{page}</Layout>
+
+export default Page
+```
+
+Blitz will take the first component it finds from the response of
+`getLayout` with either a `authenticate` key or a
+`redirectAuthenticatedTo` key and uses its values for authentication.
+
+These values can be overwritten in a per-page basis with
+`Page.authenticate` or `Page.redirectAuthenticatedTo`:
+
+```tsx
+const Layout: BlitzLayout = ({ children }) => {
+  return <div>{children}</div>
+}
+
+Layout.authenticate = true
+
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+Page.getLayout = (page) => <Layout>{page}</Layout>
+// highlight-start
+Page.authenticate = false
+// highlight-end
+
+export default Page
+```
+
 ## UX for Unauthorized Users {#ux-for-unauthorized-users}
 
 While you can use redirects to and from a `/login` page, we recommended to

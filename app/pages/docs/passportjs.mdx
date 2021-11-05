@@ -303,9 +303,9 @@ export default passportAuth({
           const email = profile.emails && profile.emails[0]?.value
 
           if (!email) {
-            // This can happen if you haven't enabled email access in your twitter app permissions
+            // This can happen if you haven't enabled email access in your Auth0 app permissions
             return done(
-              new Error("GitHub OAuth response doesn't have email.")
+              new Error("Auth response doesn't have email.")
             )
           }
 

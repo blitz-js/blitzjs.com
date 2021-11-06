@@ -571,10 +571,11 @@ builder.addTransformFilesStep({
 
 The `@blitzjs/installer` package provides two transformers:
 `addBabelPlugin` and `addBabelPreset`. Both take the `program` and the
-plugin/preset. You don't need to worry about jscodeshift stuff, just
-provide a valid JSON object and it will be transformed. This argument has
-to be either the name of the plugin/preset (as a string) or a array with
-two elements: the name of the plugin/preset and its configuration.
+plugin/preset. You don't need to worry about jscodeshift stuff, you only
+need to provide a valid JSON object and it will be transformed. This
+argument has to be either the name of the plugin/preset (as a string) or a
+array with two elements: the name of the plugin/preset and its
+configuration.
 
 ```ts
 builder.addTransformFilesStep({

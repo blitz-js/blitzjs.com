@@ -551,8 +551,9 @@ export default resolver.pipe(
 This mutation will now delete the choices associated with the question
 prior to deleting the question itself.
 
-## Cleanup {#cleanup}
+## Remove unnecessary file {#remove-unnecessary-file}
 
+Our scaffolding created a mutation file for us that is no longer needed.
 In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll need to delete
 `app/choices/mutations/createChoice.ts` (unused) or update the
 CreateChoice zod schema to include the required fields.

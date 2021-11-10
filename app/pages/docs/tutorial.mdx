@@ -344,61 +344,6 @@ Your database is now in sync with your schema.
 Now our database is ready and a Prisma client is also generated. Lets move
 on to play with the Prisma client!
 
-## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
-
-Now, let’s hop into the interactive Blitz shell and play around with the
-Prisma database client that Blitz gives you. To start the Blitz console,
-use this command:
-
-```sh
-blitz console
-```
-
-Once you’re in the console, explore the database client:
-
-```sh
-# No questions are in the system yet.
-⚡ > await db.question.findMany()
-[]
-
-# Create a new Question:
-⚡ > let q = await db.question.create({data: {text: "What's new?"}})
-undefined
-
-# See the entire object:
-⚡ > q
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:06:14.959Z,
-  text: "What's new?"
-}
-
-# Or, access individual values on the object:
-⚡ > q.text
-"What's new?"
-
-# Change values by using the update function:
-⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:13:17.394Z,
-  text: "What's up?"
-}
-
-# db.question.findMany() now displays all the questions in the database:
-⚡ > await db.question.findMany()
-[
-  {
-    id: 1,
-    createdAt: 2020-06-15T15:06:14.959Z,
-    updatedAt: 2020-06-15T15:13:17.394Z,
-    text: "What's up?"
-  }
-]
-```
-
 ## Update generated code for our model attributes {#update-generated-code-for-our-model-attributes}
 
 <Card type="info">
@@ -605,6 +550,67 @@ export default resolver.pipe(
 
 This mutation will now delete the choices associated with the question
 prior to deleting the question itself.
+
+## Cleanup {#cleanup}
+
+In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll need to delete
+`app/choices/mutations/createChoice.ts` (unused) or update the
+CreateChoice zod schema to include the required fields.
+
+## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
+
+Now, let’s hop into the interactive Blitz shell and play around with the
+Prisma database client that Blitz gives you. To start the Blitz console,
+use this command:
+
+```sh
+blitz console
+```
+
+Once you’re in the console, explore the database client:
+
+```sh
+# No questions are in the system yet.
+⚡ > await db.question.findMany()
+[]
+
+# Create a new Question:
+⚡ > let q = await db.question.create({data: {text: "What's new?"}})
+undefined
+
+# See the entire object:
+⚡ > q
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:06:14.959Z,
+  text: "What's new?"
+}
+
+# Or, access individual values on the object:
+⚡ > q.text
+"What's new?"
+
+# Change values by using the update function:
+⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:13:17.394Z,
+  text: "What's up?"
+}
+
+# db.question.findMany() now displays all the questions in the database:
+⚡ > await db.question.findMany()
+[
+  {
+    id: 1,
+    createdAt: 2020-06-15T15:06:14.959Z,
+    updatedAt: 2020-06-15T15:13:17.394Z,
+    text: "What's up?"
+  }
+]
+```
 
 #### Now try creating, updating, and deleting questions
 
@@ -1053,12 +1059,6 @@ is a special operation that means, "If this item exists, update it. Else
 create it". This is perfect for this case because we didn't require the
 user to add three choices when creating the question. So if later the user
 adds another choice by editing the question, then it'll be created here.
-
-## Cleanup {#cleanup}
-
-In order for `yarn tsc` or `git push` to succeed, you'll need to delete
-`app/choices/mutations/createChoice.ts` (unused) or update the
-CreateChoice zod schema to include the required fields.
 
 ## Conclusion {#conclusion}
 

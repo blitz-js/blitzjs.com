@@ -77,6 +77,15 @@ export default async function someMutation(input: any, ctx: Ctx) {
 }
 ```
 
+### Session Expiration / Auto-refresh {#session-expiration-and-auto-refresh}
+
+A session is automatically refreshed after 1/4th of the expiry time has passed.
+The default expiry time is 30 days.
+If you change the session’s [`PublicData`](#publicdata) the session is also automatically
+refreshed.
+You will need to update tokens (access and anti-CSRF) after a session refresh, if you use
+them (e.g. in a mobile app).
+
 ## Access Session on the Server {#access-session-on-the-server}
 
 ### In Queries & Mutations {#in-queries-and-mutations}

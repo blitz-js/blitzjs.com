@@ -60,6 +60,13 @@ const sponsors = [
     tier: 4,
     cost: 100,
   },
+  {
+    name: "MeetKai",
+    href: "https://meetkai.com/?ref=blitzjs_web",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/meetkai.png",
+    tier: 4,
+    cost: 100,
+  },
 ]
 
 const pack = {

@@ -1,5 +1,7 @@
 import {hierarchy, Pack} from "@visx/hierarchy"
 import {ParentSize} from "@visx/responsive"
+import clsx from "clsx"
+import Image from "next/image"
 import React from "react"
 
 const sponsors = [
@@ -99,18 +101,18 @@ export const SponsorPack = () => {
             <style
               dangerouslySetInnerHTML={{
                 __html: `
-              .spon-link {
-                transition: all .2s ease;
-                transform: translate(-50%, -50%);
-              }
-              .spon-link:hover {
-                z-index: 10;
-                transform: translate(-50%, -50%) scale(1.1);
-              }
-              .spon-link:hover .spon-tooltip {
-                opacity: 1;
-              }
-            `,
+                  .spon-link {
+                    transition: all .2s ease;
+                    transform: translate(-50%, -50%);
+                  }
+                  .spon-link:hover {
+                    z-index: 10;
+                    transform: translate(-50%, -50%) scale(1.1);
+                  }
+                  .spon-link:hover .spon-tooltip {
+                    opacity: 1;
+                  }
+                `,
               }}
             />
             <Pack root={root} size={[width, width]} padding={width * 0.1}>
@@ -145,25 +147,31 @@ export const SponsorPack = () => {
                               transform: "translate(-50%, -50%)",
                               width: circle.data.cost > 100 ? "80%" : "50%",
                               height: circle.data.cost > 100 ? "80%" : "50%",
-                              backgroundImage: `url(${circle.data.imageUrl})`,
                             }}
-                          />
+                          >
+                            <Image
+                              src={circle.data.imageUrl}
+                              alt={circle.data.name}
+                              layout="fill"
+                              objectFit="contain"
+                            />
+                          </div>
+
                           <div
-                            className={
-                              `spon-tooltip absolute
-                          text-sm
-                          bg-gray-900 text-white p-2 pointer-events-none
-                          transform opacity-0
-                          shadow-xl rounded-lg
-                          flex flex-col items-center ` +
-                              (tooltipX === "left"
+                            className={clsx(
+                              "spon-tooltip absolute",
+                              "text-sm",
+                              "bg-gray-900 text-white p-2 pointer-events-none",
+                              "transform opacity-0",
+                              "shadow-xl rounded-lg",
+                              "flex flex-col items-center",
+                              tooltipX === "left"
                                 ? `left-1/4 -translate-x-full`
-                                : `right-1/4 translate-x-full`) +
-                              " " +
-                              (tooltipY === "top"
+                                : `right-1/4 translate-x-full`,
+                              tooltipY === "top"
                                 ? `top-1/4 -translate-y-full`
-                                : `bottom-1/4 translate-y-full`)
-                            }
+                                : `bottom-1/4 translate-y-full`,
+                            )}
                           >
                             <p className="whitespace-nowrap font-bold">{circle.data.name}</p>
                             <p className="whitespace-nowrap">${circle.data.cost} / month</p>

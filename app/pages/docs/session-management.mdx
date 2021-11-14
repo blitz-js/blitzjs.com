@@ -48,7 +48,7 @@ causing all queries on the page to be refetched. This ensures any
 sensitive data in the cache is deleted.
 
 ```ts
-// app/auth/muations/logout.ts
+// app/auth/mutations/logout.ts
 import { Ctx } from "blitz"
 
 export default async function logout(_: any, ctx: Ctx) {
@@ -76,6 +76,15 @@ export default async function someMutation(input: any, ctx: Ctx) {
   await ctx.session.$setPublicData({ orgId: 1 }) // highlight-line
 }
 ```
+
+### Session Expiration / Auto-refresh {#session-expiration-and-auto-refresh}
+
+A session is automatically refreshed after 1/4th of the expiry time has passed.
+The default expiry time is 30 days.
+If you change the session’s [`PublicData`](#publicdata) the session is also automatically
+refreshed.
+You will need to update tokens (access and anti-CSRF) after a session refresh, if you use
+them (e.g. in a mobile app).
 
 ## Access Session on the Server {#access-session-on-the-server}
 

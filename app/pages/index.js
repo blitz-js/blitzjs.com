@@ -320,8 +320,8 @@ const Home = ({randomContributors}) => {
                   Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
-                  You can use any database you want. Prisma 2 is the default database client, but
-                  you can remove that and use anything else like Fauna or DynamoDB.
+                  You can use any database you want. Prisma is the default database client, but you
+                  can remove that and use anything else like Fauna or DynamoDB.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="fileCode" title="Recipes">
                   One command to install code and/or packages into your blitz app. Examples: `blitz

@@ -77,7 +77,7 @@ const SecurityPage = () => {
 }
 
 SecurityPage.meta = {
-  title: "Security - Blitz.js",
+  title: "Security Policy - Blitz.js",
   description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
 }
 

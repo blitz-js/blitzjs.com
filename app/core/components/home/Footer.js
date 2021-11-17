@@ -87,7 +87,7 @@ export function Footer({className, hasDarkMode}) {
                     Swag
                   </a>
                 </Link>
-                <Link href="/security">
+                <Link href="/security-policy">
                   <a>Security Policy</a>
                 </Link>
               </LinkList>

@@ -39,12 +39,7 @@ const SecurityPage = () => {
             All security bugs should be reported by email to{" "}
             <SimpleLink href="mailto:security@blitzjs.com">security@blitzjs.com</SimpleLink>. Your
             email will be read by Brandon Bayer, the creator and lead maintainer of Blitz.js, and
-            he&apos;ll answer you with the steps you should follow. If you would like, you can
-            encrypt your report using{" "}
-            <SimpleLink href="/pgp-key.txt" external>
-              our public key
-            </SimpleLink>
-            .
+            he&apos;ll answer you with the steps you should follow.
           </p>
           <p>
             This email address receives a large amount of spam, so be sure to use a descriptive

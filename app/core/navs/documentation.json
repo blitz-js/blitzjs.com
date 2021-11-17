@@ -5,7 +5,16 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": ["get-started", "tutorial", "what-is-nextjs", "why-blitz", "tradeoffs", "stickers"]
+    "pages": [
+      "get-started",
+      "tutorial",
+      "learning-path",
+      "what-is-nextjs",
+      "why-blitz",
+      "migrating-to-blitz",
+      "tradeoffs",
+      "stickers"
+    ]
   },
   {
     "title": {
@@ -32,12 +41,18 @@
     "pages": [
       "file-structure",
       "app-component",
+      "image-component",
+      "script-component",
       "css",
-      "image-optimization",
+      "font-optimization",
       "static-files",
       "environment-variables",
       "error-handling",
-      "testing"
+      "error-boundary",
+      "testing",
+      "utilities",
+      "client-and-server",
+      "troubleshooting"
     ]
   },
   {
@@ -48,7 +63,6 @@
     },
     "pages": [
       "pages",
-      "redirects",
       "error-pages",
       "head-component",
       "document-component",
@@ -73,6 +87,9 @@
       "link",
       "route-params-query",
       "router",
+      "redirects",
+      "rewrites",
+      "headers",
       "api-routes",
       "shallow-routing",
       "route-manifest"
@@ -126,7 +143,13 @@
       "iconPath": "/img/mutations.svg",
       "iconDarkPath": "/img/mutations-white.svg"
     },
-    "pages": ["background-processing-with-quirrel", "middleware", "custom-server"]
+    "pages": [
+      "multitenancy",
+      "background-processing-with-quirrel",
+      "middleware",
+      "custom-server",
+      "security-headers"
+    ]
   },
   {
     "title": {
@@ -134,7 +157,7 @@
       "iconPath": "/img/deploying-to-production.svg",
       "iconDarkPath": "/img/deploying-to-production-white.svg"
     },
-    "pages": ["deploy-render", "deploy-heroku", "deploy-vercel"]
+    "pages": ["deploy-render", "deploy-heroku", "deploy-vercel", "deploy-railway"]
   },
   {
     "title": {
@@ -153,7 +176,11 @@
     "pages": [
       "blitz-config",
       "webpack-config",
+      "babel-config",
       "postcss-config",
+      "eslint-config",
+      "husky-config",
+      "prettier-config",
       "rpc-specification",
       "measuring-performance"
     ]

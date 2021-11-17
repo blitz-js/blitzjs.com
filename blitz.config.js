@@ -1,25 +1,40 @@
-const fs = require("fs")
-const path = require("path")
-const querystring = require("querystring")
-const {createLoader} = require("simple-functional-loader")
-const matter = require("gray-matter")
-const {withTableOfContents} = require("./remark/withTableOfContents")
-const {withSyntaxHighlighting} = require("./remark/withSyntaxHighlighting")
-const {withProse} = require("./remark/withProse")
-const {withBlitzLinks} = require("./remark/withBlitzLinks")
-const minimatch = require("minimatch")
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+import bundleAnalyzer from "@next/bundle-analyzer"
+import fs from "fs"
+import matter from "gray-matter"
+import minimatch from "minimatch"
+import path from "path"
+import querystring from "querystring"
+import {createLoader} from "simple-functional-loader"
+
+import {withBlitzLinks} from "./remark/withBlitzLinks"
+import {withProse} from "./remark/withProse"
+import {withSyntaxHighlighting} from "./remark/withSyntaxHighlighting"
+import {withTableOfContents} from "./remark/withTableOfContents"
+
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 })
-const admonitions = require("remark-admonitions")
 
 const fallbackDefaultExports = {
-  // Have to use compiled locations
-  "pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
+  "app/pages/docs/**/*": ["@/layouts/DocumentationLayout", "DocumentationLayout"],
 }
 
-module.exports = withBundleAnalyzer({
+const config = withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "mdx"],
+  images: {
+    domains: [
+      "raw.githubusercontent.com",
+      "avatars.githubusercontent.com",
+      "avatars0.githubusercontent.com",
+      "avatars1.githubusercontent.com",
+      "avatars2.githubusercontent.com",
+      "avatars3.githubusercontent.com",
+      "avatars4.githubusercontent.com",
+      "avatars5.githubusercontent.com",
+      "avatars6.githubusercontent.com",
+      "media-exp1.licdn.com",
+    ],
+  },
   async redirects() {
     return [
       {
@@ -28,8 +43,18 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: "/meetup",
-        destination: "https://us02web.zoom.us/j/85901497017?pwd=MVFMUXJOQndqbDNJaU1BK2N0ZjNpQT09",
+        source: "/joinmeetup",
+        destination: "https://us02web.zoom.us/j/85901497017?pwd=eVo4YlhsU2E3UHQvUmgxTmtRUDBIZz09",
+        permanent: false,
+      },
+      {
+        source: "/fame",
+        destination: "https://twitter.com/flybayer/status/1361334647859384320",
+        permanent: false,
+      },
+      {
+        source: "/discord",
+        destination: "http://discord.gg/blitzjs",
         permanent: false,
       },
     ]
@@ -84,35 +109,13 @@ module.exports = withBundleAnalyzer({
             return "export default " + meta
           }
           return (
-            source.replace(/export const/gs, "const") + `\nMDXContent.layoutProps = layoutProps\n`
+            source.replace(/^export const/gm, "const") + `\nMDXContent.layoutProps = layoutProps\n`
           )
         }),
         {
           loader: "@mdx-js/loader",
           options: {
-            remarkPlugins: [
-              withProse,
-              withTableOfContents,
-              withSyntaxHighlighting,
-              withBlitzLinks,
-              [
-                admonitions,
-                {
-                  customTypes: {
-                    caution: {
-                      keyword: "caution",
-                      svg:
-                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
-                    },
-                    info: {
-                      keyword: "info",
-                      svg:
-                        '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.75" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M6.81226 4.27344H8.18774V5.91699L7.83179 8.94043H7.177L6.81226 5.91699V4.27344ZM6.84302 9.45898H8.15259V10.729H6.84302V9.45898Z" fill="black"/></svg>',
-                    },
-                  },
-                },
-              ],
-            ],
+            remarkPlugins: [withProse, withTableOfContents, withSyntaxHighlighting, withBlitzLinks],
           },
         },
         createLoader(function (source) {
@@ -127,8 +130,9 @@ module.exports = withBundleAnalyzer({
           }
 
           let extra = []
-          let resourcePath = path.relative(__dirname, this.resourcePath)
+          let resourcePath = path.relative(process.cwd(), this.resourcePath)
 
+          // If no custom layout, use the default layout
           if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ""))) {
             for (let glob in fallbackDefaultExports) {
               if (minimatch(resourcePath, glob)) {
@@ -139,6 +143,18 @@ module.exports = withBundleAnalyzer({
                 break
               }
             }
+          }
+
+          // If there are any cards, impory the component
+          if (/^<\/Card>$/m.test(body)) {
+            extra.push(`import { Card } from '@/components/docs/Card'`)
+
+            // Until MDX v2 is available, all content inside a component must
+            // have extra spaces. Here are added just in case.
+            // https://mdxjs.com/guides/markdown-in-components
+            body = body
+              .replace(/<Card .+?>\n*/g, (tag) => tag.trimEnd() + "\n\n")
+              .replace(/\n*<\/Card>/g, (tag) => "\n\n" + tag.trimStart())
           }
 
           return [
@@ -153,7 +169,7 @@ module.exports = withBundleAnalyzer({
     })
 
     config.module.rules.push({
-      test: /navs\/documentation\.json$/,
+      test: /navs[/\\]documentation\.json$/, // accept both navs/documentation.json and navs\documentation.json
       use: [
         createLoader(function (source) {
           const documentation = JSON.parse(source)
@@ -163,7 +179,7 @@ module.exports = withBundleAnalyzer({
             let pages = []
             for (const page of category.pages) {
               const pageFile = fs.readFileSync(
-                path.resolve(process.cwd(), "pages", "docs", `${page}.mdx`),
+                path.resolve(process.cwd(), "app", "pages", "docs", `${page}.mdx`),
                 {encoding: "utf-8"},
               )
               const {data} = matter(pageFile)
@@ -187,3 +203,5 @@ module.exports = withBundleAnalyzer({
     return config
   },
 })
+
+export default config

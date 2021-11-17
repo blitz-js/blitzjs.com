@@ -3,9 +3,9 @@ title: getServerSideProps API
 sidebar_label: getServerSideProps API
 ---
 
-If you export an `async` function called `getServerSideProps` from a page,
-Blitz will pre-render this page on each request using the data returned by
-`getServerSideProps`.
+If you export an `async` function called `getServerSideProps` from a
+[page](./pages), Blitz will pre-render this page on each request using the
+data returned by `getServerSideProps`.
 
 ```js
 export async function getServerSideProps(context) {
@@ -134,7 +134,7 @@ fetching data on the client side.
 For TypeScript, you can use the `GetServerSideProps` type from `blitz`:
 
 ```ts
-import {GetServerSideProps} from "blitz"
+import { GetServerSideProps } from "blitz"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // ...
@@ -189,9 +189,20 @@ what Blitz eliminates from the client-side bundle.
 
 #### Only allowed in a page
 
-`getServerSideProps` can only be exported from a **page**. You can’t
-export it from non-page files.
+`getServerSideProps` can only be exported from a [page](./pages). You
+can’t export it from non-page files.
 
 Also, you must use `export async function getServerSideProps() {}` — it
 will **not** work if you add `getServerSideProps` as a property of the
 page component.
+
+#### First Render UX
+
+Even though a page with `getServerSideProps` will be pre-rendered on the
+server, it may fallback to the page's loading state if your page contains
+queries that request data missing from the initial page props. This can
+create a flickering effect where the contents of the page rapidly changes
+when the query data gets loaded into the app.
+
+[Click here](./pages#first-render-ux) to discover ways you can improve the
+first render User Experience (UX) of your pages.

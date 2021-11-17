@@ -187,8 +187,8 @@ const Home: BlitzPage = () => {
 ```
 
 Save the file and you should see the page update in your browser. You can
-add customize this as much as you want. When you’re ready, move on to the
-next section.
+customize this as much as you want. When you’re ready, move on to the next
+section.
 
 ## Database setup {#database-setup}
 
@@ -226,6 +226,7 @@ CREATE    app/pages/questions/[questionId].tsx
 CREATE    app/pages/questions/[questionId]/edit.tsx
 CREATE    app/pages/questions/index.tsx
 CREATE    app/pages/questions/new.tsx
+✔ Compiled
 CREATE    app/questions/components/QuestionForm.tsx
 CREATE    app/questions/queries/getQuestion.ts
 CREATE    app/questions/queries/getQuestions.ts
@@ -233,33 +234,32 @@ CREATE    app/questions/mutations/createQuestion.ts
 CREATE    app/questions/mutations/deleteQuestion.ts
 CREATE    app/questions/mutations/updateQuestion.ts
 
-✔ Model for 'question' created in schema.prisma:
+✔ Model 'Question' created in schema.prisma:
 
+>
 > model Question {
->   id        Int      @default(autoincrement()) @id
+>   id        Int      @id @default(autoincrement())
 >   createdAt DateTime @default(now())
 >   updatedAt DateTime @updatedAt
 >   text      String
 > }
+>
 
-? Run 'prisma migrate dev' to update your database? (Y/n) › true
-```
-
-```
+✔ Run 'prisma migrate dev' to update your database? (Y/n) · true
 Environment variables loaded from .env
 Prisma schema loaded from db/schema.prisma
 Datasource "db": SQLite database "db.sqlite" at "file:./db.sqlite"
 
-✔ Name of migration … add question
+✔ Enter a name for the new migration: … add question
 The following migration(s) have been created and applied from new schema changes:
 
 migrations/
-  └─ 20210217035805_add_question/
+  └─ 20210722070215_add_question/
     └─ migration.sql
 
-✔ Generated Prisma Client (2.17.0) to ./node_modules/@prisma/client in 103ms
+Your database is now in sync with your schema.
 
-Everything is now in sync.
+✔ Generated Prisma Client (2.27.0) to ./node_modules/@prisma/client in 187ms
 ```
 
 The `generate` command with a type of `all` generates a model and queries,
@@ -344,70 +344,15 @@ Your database is now in sync with your schema.
 Now our database is ready and a Prisma client is also generated. Lets move
 on to play with the Prisma client!
 
-## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
-
-Now, let’s hop into the interactive Blitz shell and play around with the
-Prisma database client that Blitz gives you. To start the Blitz console,
-use this command:
-
-```sh
-blitz console
-```
-
-Once you’re in the console, explore the database client:
-
-```sh
-# No questions are in the system yet.
-⚡ > await db.question.findMany()
-[]
-
-# Create a new Question:
-⚡ > let q = await db.question.create({data: {text: "What's new?"}})
-undefined
-
-# See the entire object:
-⚡ > q
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:06:14.959Z,
-  text: "What's new?"
-}
-
-# Or, access individual values on the object:
-⚡ > q.text
-"What's new?"
-
-# Change values by using the update function:
-⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:13:17.394Z,
-  text: "What's up?"
-}
-
-# db.question.findMany() now displays all the questions in the database:
-⚡ > await db.question.findMany()
-[
-  {
-    id: 1,
-    createdAt: 2020-06-15T15:06:14.959Z,
-    updatedAt: 2020-06-15T15:13:17.394Z,
-    text: "What's up?"
-  }
-]
-```
-
 ## Update generated code for our model attributes {#update-generated-code-for-our-model-attributes}
 
-<!-- prettier-ignore-start -->
-:::info
-Before running the app again, we need to customize some of the
-code that has been generated. Ultimately, these fixes will not be needed -
-but for now, we need to work around a couple outstanding issues.
-:::
-<!-- prettier-ignore-end -->
+<Card type="info">
+
+Before running the app again, we need to customize some of the code that
+has been generated. Ultimately, these fixes will not be needed - but for
+now, we need to work around a couple outstanding issues.
+
+</Card>
 
 The generated page content does not currently use the actual model
 attributes you defined during generation. It will soon, but in the
@@ -428,20 +373,21 @@ Jump over to `app/pages/questions/index.tsx`. Notice that a
 export const QuestionsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{questions, hasMore}, {isPreviousData}] = usePaginatedQuery(
+  const [{ questions, hasMore }, { isPreviousData }] = usePaginatedQuery(
     getQuestions,
     {
-      orderBy: {id: "asc"},
+      orderBy: { id: "asc" },
       skip: ITEMS_PER_PAGE * page,
       take: ITEMS_PER_PAGE,
-    },
+    }
   )
 
-  const goToPreviousPage = () => router.push({query: {page: page - 1}})
+  const goToPreviousPage = () =>
+    router.push({ query: { page: page - 1 } })
 
   const goToNextPage = () => {
     if (!isPreviousData && hasMore) {
-      router.push({query: {page: page + 1}})
+      router.push({ query: { page: page + 1 } })
     }
   }
 
@@ -551,7 +497,6 @@ const CreateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-  .nonstrict()
 // ...
 ```
 
@@ -569,8 +514,6 @@ const UpdateQuestion = z
 -   name: z.string(),
 +   text: z.string(),
   })
-  .nonstrict()
-// ...
 ```
 
 ### `deleteQuestion` mutation {#delete-question-mutation}
@@ -585,7 +528,7 @@ deleting a `Question`. We need to temporarily augment the generated
 the following to the top of the function body:
 
 ```ts
-await db.choice.deleteMany({where: {questionId: id}})
+await db.choice.deleteMany({ where: { questionId: id } })
 ```
 
 The end result should be as such:
@@ -607,6 +550,68 @@ export default resolver.pipe(
 
 This mutation will now delete the choices associated with the question
 prior to deleting the question itself.
+
+## Remove unnecessary file {#remove-unnecessary-file}
+
+Our scaffolding created a mutation file for us that is no longer needed.
+In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll
+need to delete `app/choices/mutations/createChoice.ts` (unused) or update
+the CreateChoice zod schema to include the required fields.
+
+## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
+
+Now, let’s hop into the interactive Blitz shell and play around with the
+Prisma database client that Blitz gives you. To start the Blitz console,
+use this command:
+
+```sh
+blitz console
+```
+
+Once you’re in the console, explore the database client:
+
+```sh
+# No questions are in the system yet.
+⚡ > await db.question.findMany()
+[]
+
+# Create a new Question:
+⚡ > let q = await db.question.create({data: {text: "What's new?"}})
+undefined
+
+# See the entire object:
+⚡ > q
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:06:14.959Z,
+  text: "What's new?"
+}
+
+# Or, access individual values on the object:
+⚡ > q.text
+"What's new?"
+
+# Change values by using the update function:
+⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:13:17.394Z,
+  text: "What's up?"
+}
+
+# db.question.findMany() now displays all the questions in the database:
+⚡ > await db.question.findMany()
+[
+  {
+    id: 1,
+    createdAt: 2020-06-15T15:06:14.959Z,
+    updatedAt: 2020-06-15T15:13:17.394Z,
+    text: "What's up?"
+  }
+]
+```
 
 #### Now try creating, updating, and deleting questions
 
@@ -637,42 +642,21 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 }
 ```
 
-Next open `app/pages/questions/new.tsx` and set `initialValues` to be as
-follows:
-
-```diff
-      <QuestionForm
-        submitText="Create Question"
--       // initialValues={{ }}
-+       initialValues={{choices: []}}
-        onSubmit={async (values) => {
-          try {
-            const question = await createQuestionMutation(values)
-            router.push(`/questions/${question.id}`)
-          } catch (error) {
-            console.error(error)
-            return {
-              [FORM_ERROR]: error.toString(),
-            }
-          }
-        }}
-      />
-```
-
-Then open `app/questions/mutations/createQuestion.ts` and update the zod
-schema so that the choice data is accepted in the mutation. And we also
-need to update the `db.question.create` call so that the choices will also
-be created.
+Now open `app/questions/mutations/createQuestion.ts` and update the zod
+schema so that the choice data is accepted in the mutation. We also need
+to update the `db.question.create()` call so that the choices will be
+created. After that we need to export the `CreateQuestion` zod schema
+because we will be using it in the next step to create a validation schema
+for our `QuestionForm`.
 
 ```diff
 // app/questions/mutations/createQuestion.ts
 
-const CreateQuestion = z
-  .object({
-    text: z.string(),
-+   choices: z.array(z.object({text: z.string()})),
-  })
-  .nonstrict()
++ export const CreateQuestion = z
+    .object({
+      text: z.string().nonempty({message: "You must enter a question."}),
++     choices: z.array(z.object({text: z.string()})),
+    })
 
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
@@ -689,6 +673,55 @@ export default resolver.pipe(
     return question
   },
 )
+```
+
+Next we're going to create a separate file to store the validation schema
+for our `QuestionForm`. In the `app/pages/questions` folder create a new
+file called `validations.ts` and import `CreateQuestion` from
+`app/questions/mutations/createQuestion.ts`. Then create a new variable
+called `createQuestionSchema`, set it equal to `CreateQuestion`, and
+export it so we can use it for our `QuestionForm` schema in the next step.
+
+```diff
+// app/pages/questions/validations.ts
+
++ import { CreateQuestion } from "app/questions/mutations/createQuestion"
+
++ export const createQuestionSchema = CreateQuestion
+```
+
+Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
+from `app/pages/questions/validations.ts` and set it as the schema for
+`QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
+`initialValues` for `QuestionForm`:
+
+```diff
+// app/pages/questions/new.tsx
+
++ import {createQuestionSchema} from "app/pages/questions/validations"
+
+
+      <QuestionForm
+        submitText="Create Question"
+-       // TODO use a zod schema for form validation
+-       //  - Tip: extract mutation's schema into a shared `validations.ts` file and
+-       //         then import and use it here
+-       // schema={createQuestion}
+-       // initialValues={{ }}
++       schema={createQuestionSchema}
++       initialValues={{text: "", choices: []}}
+        onSubmit={async (values) => {
+          try {
+            const question = await createQuestionMutation(values)
+            router.push(`/questions/${question.id}`)
+          } catch (error) {
+            console.error(error)
+            return {
+              [FORM_ERROR]: error.toString(),
+            }
+          }
+        }}
+      />
 ```
 
 #### Try it out
@@ -828,7 +861,7 @@ this!
 #### Now it’s time to add voting!
 
 First we need to open `app/choices/mutations/updateChoice.ts`, update the
-zod schema, and add add a vote increment.
+zod schema, and add a vote increment.
 
 ```diff
 const UpdateChoice = z
@@ -836,7 +869,7 @@ const UpdateChoice = z
     id: z.number(),
 -   name: z.string(),
   })
-  .nonstrict()
+
 
 export default resolver.pipe(
   resolver.zod(UpdateChoice),
@@ -918,12 +951,14 @@ export const Question = () => {
   const router = useRouter()
   const questionId = useParam("questionId", "number")
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
-  const [question, {refetch}] = useQuery(getQuestion, {id: questionId})
+  const [question, { refetch }] = useQuery(getQuestion, {
+    id: questionId,
+  })
   const [updateChoiceMutation] = useMutation(updateChoice)
 
   const handleVote = async (id: number) => {
     try {
-      await updateChoiceMutation({id})
+      await updateChoiceMutation({ id })
       refetch()
     } catch (error) {
       alert("Error updating choice " + JSON.stringify(error, null, 2))
@@ -955,11 +990,11 @@ export const Question = () => {
           type="button"
           onClick={async () => {
             if (window.confirm("This will be deleted")) {
-              await deleteQuestionMutation({id: question.id})
+              await deleteQuestionMutation({ id: question.id })
               router.push("/questions")
             }
           }}
-          style={{marginLeft: "0.5rem"}}
+          style={{ marginLeft: "0.5rem" }}
         >
           Delete
         </button>
@@ -989,10 +1024,9 @@ const UpdateQuestion = z
     id: z.number(),
     text: z.string(),
 +   choices: z.array(
-+     z.object({id: z.number().optional(), text: z.string()}).nonstrict(),
++     z.object({id: z.number().optional(), text: z.string()}),
 +   ),
   })
-  .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(UpdateQuestion),
@@ -1012,6 +1046,9 @@ export default resolver.pipe(
 +           update: {text: choice.text},
 +         })),
 +       },
++     },
++     include: {
++       choices: true,
 +     },
 +   })
 

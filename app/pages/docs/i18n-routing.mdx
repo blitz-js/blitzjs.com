@@ -9,8 +9,13 @@ routing. You can provide a list of locales, the default locale, and
 domain-specific locales and Blitz will automatically handle the routing.
 
 The i18n routing support is currently meant to complement existing i18n
-library solutions like `react-intl`, `react-i18next`, `lingui`, `rosetta`,
-and others by streamlining the routes and locale parsing.
+library solutions like
+[`react-intl`](https://formatjs.io/docs/getting-started/installation),
+[`react-i18next`](https://react.i18next.com/),
+[`lingui`](https://lingui.js.org/),
+[`rosetta`](https://github.com/lukeed/rosetta),
+[`next-intl`](https://github.com/amannn/next-intl) and others by
+streamlining the routes and locale parsing.
 
 ## Getting started {#getting-started}
 
@@ -52,6 +57,9 @@ module.exports = {
       {
         domain: "example.fr",
         defaultLocale: "fr",
+        // an optional http field can also be used to test
+        // locale domains locally with http instead of https
+        http: true,
       },
     ],
   },
@@ -194,7 +202,7 @@ locale from the currently active one. If no `locale` prop is provided, the
 currently active `locale` is used during client-transitions. For example:
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 
 export default function IndexPage(props) {
   return (
@@ -209,7 +217,7 @@ When using the `Router` methods directly, you can specify the `locale`
 that should be used via the transition options. For example:
 
 ```jsx
-import {useRouter} from "blitz"
+import { useRouter } from "blitz"
 
 export default function IndexPage(props) {
   const router = useRouter()
@@ -217,7 +225,7 @@ export default function IndexPage(props) {
   return (
     <div
       onClick={() => {
-        router.push("/another", "/another", {locale: "fr"})
+        router.push("/another", "/another", { locale: "fr" })
       }}
     >
       to /fr/another
@@ -230,7 +238,7 @@ If you have a `href` that already includes the locale you can opt-out of
 automatically handling the locale prefixing:
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 
 export default function IndexPage(props) {
   return (
@@ -279,7 +287,7 @@ being pre-rendered, you can return `notFound: true` from `getStaticProps`
 and this variant of the page will not be generated.
 
 ```js
-export async function getStaticProps({locale}) {
+export async function getStaticProps({ locale }) {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(`https://.../posts?locale=${locale}`)
@@ -311,11 +319,11 @@ specifying which locale you want to render. For example:
 
 ```js
 // pages/blog/[slug].js
-export const getStaticPaths = ({locales}) => {
+export const getStaticPaths = ({ locales }) => {
   return {
     paths: [
-      {params: {slug: "post-1"}, locale: "en-US"},
-      {params: {slug: "post-1"}, locale: "fr"},
+      { params: { slug: "post-1" }, locale: "en-US" },
+      { params: { slug: "post-1" }, locale: "fr" },
     ],
     fallback: true,
   }

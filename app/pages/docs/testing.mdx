@@ -5,7 +5,7 @@ sidebar_label: Testing
 
 The `blitz` dependency also automatically installs and configures `jest`,
 `@testing-library/react`, `@testing-library/react-hooks`, and
-`@testing-libary/jest-dom` for you.
+`@testing-library/jest-dom` for you.
 
 ## Jest {#jest}
 
@@ -31,13 +31,13 @@ it("does something", () => {
 ### Jest Config {#jest-config}
 
 Blitz provides a Jest preset that configures lots of complex things for
-you, including Typescript support.
+you, including TypeScript support.
 
 If you need to
 [customize the jest config](https://jestjs.io/docs/en/configuration), you
 can do so in `jest.config.js`.
 
-```ts
+```js
 // jest.config.js
 module.exports = {
   preset: "blitz",
@@ -55,9 +55,9 @@ All other files will run in the Jest client environment (with jsdom).
 
 ## @testing-library {#testing-library}
 
-[@testing-library](https://testing-library.com/docs/) is family of
-packages helps you test UI components in a user-centric way. It's a better
-alternative to Enzyme, if you've used that in the past.
+[@testing-library](https://testing-library.com/docs/) is a family of
+packages that help you test UI components in a user-centric way. It's a
+better alternative to Enzyme, if you've used that in the past.
 
 The following packages are installed for you. Refer to their documentation
 as needed.
@@ -95,3 +95,14 @@ in your tests. Internally, it wraps the `QueryClient` component from
   containing the results of server-side queries. Useful for testing
   queries that need to be
   [prerendered in markup and hydrated on the client](https://react-query.tanstack.com/guides/ssr#using-hydration).
+
+## End-to-end testing with Cypress {#e2e-cypress}
+
+[Cypress](https://www.cypress.io/) is a front-end testing framework that
+enables testing options for both unit tests and integration tests.
+
+If you plan to integrate it into your Blitz application, you can look at
+our
+[example with a Cypress setup](https://github.com/blitz-js/blitz/tree/canary/examples/cypress).
+It includes a simple factory pattern, a command for creating and logging
+in a user, and a few example tests.

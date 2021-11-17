@@ -4,7 +4,7 @@ import {FaCircle, FaPlug} from "react-icons/fa"
 import {FaMedal} from "react-icons/fa"
 import {HiLightningBolt} from "react-icons/hi"
 import {IoMdCube, IoMdThumbsUp} from "react-icons/io"
-import {IoLayers} from "react-icons/io5"
+import {IoClose, IoLayers} from "react-icons/io5"
 import {RiFileCodeFill} from "react-icons/ri"
 import {SiTypescript} from "react-icons/si"
 
@@ -53,6 +53,9 @@ const Icon = ({
       break
     case "arrowUp":
       reactIcon = <BsArrowUp className={`icon-large ${iconClassName}`} />
+      break
+    case "modalClose":
+      reactIcon = <IoClose className={iconClassName} />
       break
     case "diamond-sponsor":
       reactIcon = (

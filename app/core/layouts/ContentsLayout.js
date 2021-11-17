@@ -2,7 +2,7 @@ import {Link, useRouter} from "blitz"
 import clsx from "clsx"
 import {createContext, Fragment, useCallback, useEffect, useState} from "react"
 import {BiChevronLeft} from "react-icons/bi"
-import {BsArrowLeft, BsCaretDownFill, BsCaretUpFill} from "react-icons/bs"
+import {BsArrowLeft, BsArrowRight, BsCaretDownFill, BsCaretUpFill} from "react-icons/bs"
 import {FaGithub} from "react-icons/fa"
 import Select, {components} from "react-select"
 
@@ -139,7 +139,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
       <div id={meta.containerId} className="pt-4 pb-8 w-full flex">
         <div className="min-w-0 flex-auto px-6 sm:px-8 xl:px-12">
           <PageHeader title={meta.title} align={meta.titleAlign ?? "left"} />
-          <div className={clsx("lg:hidden", {"mt-5 mb-12": toc.length, "h-px mt-8": !toc.length})}>
+          <div className={clsx("lg:hidden", {"mt-8 mb-12": toc.length, "h-px mt-12": !toc.length})}>
             {!!toc.length && (
               <>
                 <h3 className="dark:text-dark-mode-text mb-2 text-sm">Topics</h3>
@@ -176,7 +176,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
               <a
                 href={
                   "https://github.com/blitz-js/blitzjs.com/edit/main/app/pages" +
-                  router.asPath +
+                  router.asPath.split("#")[0] +
                   ".mdx"
                 }
                 target="_blank"
@@ -202,7 +202,7 @@ export function ContentsLayout({children, meta, tableOfContents: toc}) {
                         <a className="flex justify-end">
                           <div className="flex items-center">
                             {next.sidebar_label || next.title}{" "}
-                            <BsArrowLeft className="icon-large ml-2 fill-current transform rotate-180" />
+                            <BsArrowRight className="icon-large ml-2 fill-current transform rotate-180" />
                           </div>
                         </a>
                       </Link>

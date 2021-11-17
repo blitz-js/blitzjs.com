@@ -1,22 +1,43 @@
 import {hierarchy, Pack} from "@visx/hierarchy"
 import {ParentSize} from "@visx/responsive"
+import clsx from "clsx"
+import Image from "next/image"
 import React from "react"
 
 const sponsors = [
   {
     name: "Fauna",
-    href:
-      "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
+    href: "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/Fauna_Logo_Blue.png",
     tier: 2,
     cost: 500,
   },
   {
+    name: "GraphCMS",
+    href: "https://graphcms.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/graphcms.png",
+    tier: 2,
+    cost: 500,
+  },
+  {
     name: "Render",
-    href:
-      "https://render.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
+    href: "https://render.com/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl:
       "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/render-logo-color2.png",
+    tier: 3,
+    cost: 250,
+  },
+  {
+    name: "RIT",
+    href: "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rit_logo.png",
+    tier: 3,
+    cost: 250,
+  },
+  {
+    name: "Boostry",
+    href: "https://boostry.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/boostry.svg",
     tier: 3,
     cost: 250,
   },
@@ -28,24 +49,8 @@ const sponsors = [
     cost: 100,
   },
   {
-    name: "Robert Malko",
-    href: "https://github.com/malkomalko",
-    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rob_blitz.jpg",
-    tier: 4,
-    cost: 100,
-  },
-  {
-    name: "React Bricks",
-    href:
-      "https://reactbricks.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
-    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/reactbricks_icon.svg",
-    tier: 4,
-    cost: 100,
-  },
-  {
     name: "Digsas",
-    href:
-      "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
+    href: "https://digsas.com/?utm_source=blitzjs&utm_medium=sponsorship&utm_campaign=blitzjs_sponsorship",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/digsas.svg",
     tier: 4,
     cost: 100,
@@ -53,7 +58,14 @@ const sponsors = [
   {
     name: "userTrack",
     href: "https://www.usertrack.net/?ref=blitzjs_web",
-    imageUrl: "https://i.imgur.com/UDBeazC.png",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/usertrack.png",
+    tier: 4,
+    cost: 100,
+  },
+  {
+    name: "MeetKai",
+    href: "https://meetkai.com/?ref=blitzjs_web",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/meetkai.png",
     tier: 4,
     cost: 100,
   },
@@ -89,18 +101,18 @@ export const SponsorPack = () => {
             <style
               dangerouslySetInnerHTML={{
                 __html: `
-              .spon-link {
-                transition: all .2s ease;
-                transform: translate(-50%, -50%);
-              }
-              .spon-link:hover {
-                z-index: 10;
-                transform: translate(-50%, -50%) scale(1.1);
-              }
-              .spon-link:hover .spon-tooltip {
-                opacity: 1;
-              }
-            `,
+                  .spon-link {
+                    transition: all .2s ease;
+                    transform: translate(-50%, -50%);
+                  }
+                  .spon-link:hover {
+                    z-index: 10;
+                    transform: translate(-50%, -50%) scale(1.1);
+                  }
+                  .spon-link:hover .spon-tooltip {
+                    opacity: 1;
+                  }
+                `,
               }}
             />
             <Pack root={root} size={[width, width]} padding={width * 0.1}>
@@ -135,25 +147,31 @@ export const SponsorPack = () => {
                               transform: "translate(-50%, -50%)",
                               width: circle.data.cost > 100 ? "80%" : "50%",
                               height: circle.data.cost > 100 ? "80%" : "50%",
-                              backgroundImage: `url(${circle.data.imageUrl})`,
                             }}
-                          />
+                          >
+                            <Image
+                              src={circle.data.imageUrl}
+                              alt={circle.data.name}
+                              layout="fill"
+                              objectFit="contain"
+                            />
+                          </div>
+
                           <div
-                            className={
-                              `spon-tooltip absolute
-                          text-sm
-                          bg-gray-900 text-white p-2 pointer-events-none
-                          transform opacity-0
-                          shadow-xl rounded-lg
-                          flex flex-col items-center ` +
-                              (tooltipX === "left"
+                            className={clsx(
+                              "spon-tooltip absolute",
+                              "text-sm",
+                              "bg-gray-900 text-white p-2 pointer-events-none",
+                              "transform opacity-0",
+                              "shadow-xl rounded-lg",
+                              "flex flex-col items-center",
+                              tooltipX === "left"
                                 ? `left-1/4 -translate-x-full`
-                                : `right-1/4 translate-x-full`) +
-                              " " +
-                              (tooltipY === "top"
+                                : `right-1/4 translate-x-full`,
+                              tooltipY === "top"
                                 ? `top-1/4 -translate-y-full`
-                                : `bottom-1/4 translate-y-full`)
-                            }
+                                : `bottom-1/4 translate-y-full`,
+                            )}
                           >
                             <p className="whitespace-nowrap font-bold">{circle.data.name}</p>
                             <p className="whitespace-nowrap">${circle.data.cost} / month</p>

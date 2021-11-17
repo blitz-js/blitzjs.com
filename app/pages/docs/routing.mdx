@@ -45,7 +45,7 @@ to match named parameters.
 Consider the following page `app/pages/post/[pid].js`:
 
 ```jsx
-import {useParam} from "blitz"
+import { useParam } from "blitz"
 
 const Post = () => {
   const pid = useParam("pid")
@@ -59,19 +59,22 @@ export default Post
 Any route like `/post/1`, `/post/abc`, etc. will be matched by
 `app/pages/post/[pid].js`. The matched path parameter will be sent as a
 query parameter to the page, and it will be merged with the other query
-parameters.
+parameters. Use [`useParams`](./route-params-query#use-params) or
+[`useParam`](./route-params-query#use-param) to extract the parameter
+values afterwards.
 
 For example, the route `/post/abc` will have the following `query` object:
 
 ```json
-{"pid": "abc"}
+{ "pid": "abc" }
 ```
 
 Similarly, the route `/post/abc?foo=bar` will have the following `query`
-object:
+object, which you can extract with
+[`useRouterQuery`](./route-params-query#use-router-query):
 
 ```json
-{"foo": "bar", "pid": "abc"}
+{ "foo": "bar", "pid": "abc" }
 ```
 
 However, route parameters will override query parameters with the same
@@ -79,7 +82,7 @@ name. For example, the route `/post/abc?pid=123` will have the following
 `query` object:
 
 ```json
-{"pid": "abc"}
+{ "pid": "abc" }
 ```
 
 Multiple dynamic route segments work the same way. The page
@@ -87,7 +90,7 @@ Multiple dynamic route segments work the same way. The page
 `/post/abc/a-comment` and its `query` object will be:
 
 ```json
-{"pid": "abc", "comment": "a-comment"}
+{ "pid": "abc", "comment": "a-comment" }
 ```
 
 ### Catch all routes {#catch-all-routes}
@@ -105,14 +108,14 @@ example) to the page, and it will always be an array, so, the path
 `/post/a` will have the following `query` object:
 
 ```json
-{"slug": ["a"]}
+{ "slug": ["a"] }
 ```
 
 And in the case of `/post/a/b`, and any other matching path, new
 parameters will be added to the array, like so:
 
 ```json
-{"slug": ["a", "b"]}
+{ "slug": ["a", "b"] }
 ```
 
 ### Optional catch all routes {#optional-catch-all-routes}

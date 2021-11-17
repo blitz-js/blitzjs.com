@@ -54,9 +54,9 @@ const Home = ({randomContributors}) => {
                     The Fullstack React Framework
                   </h2>
                   <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
-                    Blitz is a batteries-included framework that's inspired by Ruby on Rails, is
-                    built on Next.js, and features a "Zero-API" data layer abstraction that
-                    eliminates the need for REST/GraphQL.
+                    Blitz is a batteries-included framework that&apos;s inspired by Ruby on Rails,
+                    is built on Next.js, and features a &quot;Zero-API&quot; data layer abstraction
+                    that eliminates the need for REST/GraphQL.
                   </p>
                   <div className="flex space-x-4">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
@@ -124,7 +124,7 @@ const Home = ({randomContributors}) => {
                     */}
                 </StyledLink>
               </Link>
-              <VideoPlayer url="https://www.youtube.com/watch?v=UHyx8MtCVVk" />
+              <VideoPlayer url="https://www.youtube.com/watch?v=TTe56M1QscM" />
               <VideoPlayer url="https://www.youtube.com/watch?v=fIexr5UZfhU" />
             </div>
 
@@ -161,7 +161,7 @@ const Home = ({randomContributors}) => {
                         free to do so.
                       </p>
                       <p>
-                        And nearly everything is pluggable. For example, we don't mandate which
+                        And nearly everything is pluggable. For example, we don&apos;t mandate which
                         styling or form libraries you use.
                       </p>
                     </Feature>
@@ -181,8 +181,8 @@ const Home = ({randomContributors}) => {
                     </Feature>
                     <Feature title="Stability">
                       <p>
-                        Once we reach version 1.0, we'll switch to a stable, predictable release
-                        cycle with multiple channels like stable, LTS, and beta.
+                        Once we reach version 1.0, we&apos;ll switch to a stable, predictable
+                        release cycle with multiple channels like stable, LTS, and beta.
                       </p>
                       <p>We are taking a lot inspiration from Ember in this regard.</p>
                     </Feature>
@@ -203,7 +203,12 @@ const Home = ({randomContributors}) => {
                   href="https://codesandbox.io/s/flamboyant-meninsky-j63yq?file=/app/projects/mutations/createProject.ts"
                   className="h-sandbox xl:h-xl-sandbox block relative"
                 >
-                  <Image src="/img/sandbox-pic.png" layout="fill" className="object-cover" />
+                  <Image
+                    src="/img/sandbox-pic.png"
+                    layout="fill"
+                    className="object-cover"
+                    alt="Codesandbox placeholder"
+                  />
                   <div className="absolute inset-0 bg-gray-800 opacity-0 hover:opacity-70 flex items-center justify-center text-white text-6xl font-bold">
                     Click to Open in New Tab
                   </div>
@@ -224,7 +229,10 @@ const Home = ({randomContributors}) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
+                      <Image
+                        layout="intrinsic"
+                        width="100%"
+                        height="100%"
                         src={contributor.avatar_url}
                         alt={contributor.name}
                         title={contributor.name}
@@ -268,7 +276,7 @@ const Home = ({randomContributors}) => {
                       similar than we are different. We love to work together.
                     </p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
-                      We invite you to help make Blitz the best framework we've ever had!
+                      We invite you to help make Blitz the best framework we&apos;ve ever had!
                     </p>
                   </div>
                   <Link href="/docs/contributing" passHref>
@@ -286,6 +294,7 @@ const Home = ({randomContributors}) => {
               <div className="w-full">
                 <Scrollbar className="lg:hidden" thumbHeight="4px" thumbColor="white">
                   <div className="px-6 architecture-diagram" style={{paddingBottom: "2px"}}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="img/architecture.svg" alt="Architecture diagram" />
                   </div>
                 </Scrollbar>
@@ -311,8 +320,8 @@ const Home = ({randomContributors}) => {
                   Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
-                  You can use any database you want. Prisma 2 is the default database client, but
-                  you can remove that and use anything else like Fauna or DynamoDB.
+                  You can use any database you want. Prisma is the default database client, but you
+                  can remove that and use anything else like Fauna or DynamoDB.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="fileCode" title="Recipes">
                   One command to install code and/or packages into your blitz app. Examples: `blitz
@@ -323,8 +332,8 @@ const Home = ({randomContributors}) => {
                   background processing, generating PDFs, etc. Currently we have minimal backend
                   guides, but are working on developing more patterns and adding more docs.
                 </FeatureIconTitle>
-                <FeatureIconTitle icon="typescript" title="First Class Typescript Support">
-                  Blitz is built with Typescript and the Blitz data layer is fully end-to-end
+                <FeatureIconTitle icon="typescript" title="First Class TypeScript Support">
+                  Blitz is built with TypeScript and the Blitz data layer is fully end-to-end
                   typesafe. All types are completely static without needing a separate type
                   generation process!
                 </FeatureIconTitle>

@@ -19,16 +19,16 @@ Those will throw `AuthenticationError` if the user is not logged in, and
 it will throw `AuthorizationError` if the user is logged in but doesn't
 have the required permissions.
 
-<!-- prettier-ignore -->
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
 const CreateProject = z
   .object({
     name: z.string(),
-  }).nonstrict()
+  })
+  .nonstrict()
 
 export default resolver.pipe(
   resolver.zod(CreateProject),
@@ -37,15 +37,14 @@ export default resolver.pipe(
   // highlight-end
   async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const projects = await db.projects.create({data: input})
+    const projects = await db.projects.create({ data: input })
     return projects
-  },
+  }
 )
 ```
 
 or
 
-<!-- prettier-ignore -->
 ```ts
 import {Ctx} from "blitz"
 import db from "db"
@@ -78,7 +77,7 @@ which we include in all our code generation templates. Without this, users
 may be able to access data or perform actions that are forbidden.
 
 ```ts
-import {resolver} from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -97,9 +96,9 @@ export default resolver.pipe(
   resolver.authorize(),
   async (input, ctx) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const projects = await db.projects.create({data: input})
+    const projects = await db.projects.create({ data: input })
     return projects
-  },
+  }
 )
 ```
 
@@ -120,6 +119,7 @@ const Page: BlitzPage = () => {
 // highlight-start
 Page.authenticate = true
 // or Page.authenticate = {redirectTo: '/login'}
+// or Page.authenticate = {redirectTo: Routes.Login()}
 // highlight-end
 
 export default Page
@@ -132,12 +132,73 @@ pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect
 logged in users to another page.
 
 ```tsx
+import { Routes } from "blitz"
+
 const Page: BlitzPage = () => {
   return <div>{/* ... */}</div>
 }
 
 // highlight-start
+// using full path
 Page.redirectAuthenticatedTo = "/"
+// using route manifest
+Page.redirectAuthenticatedTo = Routes.Home()
+// using function
+Page.redirectAuthenticatedTo = ({ session }) =>
+  session.role === "admin" ? "/admin" : Routes.Home()
+// highlight-end
+
+export default Page
+```
+
+### Secure Layouts {#secure-layouts}
+
+You can secure layouts as you secure pages:
+
+```tsx
+import { BlitzLayout, BlitzPage } from "blitz"
+
+const Layout: BlitzLayout = ({ children }) => {
+  return <div>{children}</div>
+}
+
+// highlight-start
+Layout.authenticate = true
+// or Layout.authenticate = {redirectTo: '/login'}
+// or Layout.authenticate = {redirectTo: Routes.Login()}
+// or Layout.redirectAuthenticatedTo = Routes.Home()
+// highlight-end
+
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+Page.getLayout = (page) => <Layout>{page}</Layout>
+
+export default Page
+```
+
+Blitz will take the first component it finds from the response of
+`getLayout` with either a `authenticate` key or a
+`redirectAuthenticatedTo` key and uses its values for authentication.
+
+These values can be overwritten in a per-page basis with
+`Page.authenticate` or `Page.redirectAuthenticatedTo`:
+
+```tsx
+const Layout: BlitzLayout = ({ children }) => {
+  return <div>{children}</div>
+}
+
+Layout.authenticate = true
+
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+Page.getLayout = (page) => <Layout>{page}</Layout>
+// highlight-start
+Page.authenticate = false
 // highlight-end
 
 export default Page
@@ -215,13 +276,13 @@ This is available on the client without making a network call to the
 backend, so it's available faster than the `useCurrentUser()` approach
 described below.
 
-However, due to the nature of static pre-rendering, the `session` will not
+Note: due to the nature of static pre-rendering, the `session` will not
 exist on the very first render on the client. This causes a quick "flash"
 on first load. You can fix that by setting
 [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
 
 ```tsx
-import {useSession} from "blitz"
+import { useSession } from "blitz"
 
 const session = useSession()
 
@@ -234,11 +295,16 @@ if (session.role === "admin") {
 
 #### `useCurrentUser()`
 
-New Blitz apps by default have a `useCurrentUser()` hook and a
-corresponding `getCurrentUser` query.
+The second way is to use the `useCurrentUser()` hook. New Blitz apps by
+default have a `useCurrentUser()` hook and a corresponding
+`getCurrentUser` query. Unlike the `useSession()` approach above,
+`useCurrentUser()` will require a network call and thus be slower.
+However, if you need access to user data that would be insecure to store
+in the session's `publicData`, you would need to use `useCurrentUser()`
+instead of `useSession()`.
 
 ```tsx
-import {useCurrentUser} from "app/hooks/useCurrentUser"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 const user = useCurrentUser()
 
@@ -265,15 +331,15 @@ Always returns a boolean indicating if user is authorized
 commonly use to secure your queries and mutations.
 
 ```ts
-import {Ctx} from "blitz"
-import {GetUserInput} from "./somewhere"
+import { Ctx } from "blitz"
+import { GetUserInput } from "./somewhere"
 
-export default async function getUser({where}: GetUserInput, ctx: Ctx) {
+export default async function getUser({ where }: GetUserInput, ctx: Ctx) {
   // highlight-start
   ctx.session.$authorize("admin")
   // highlight-end
 
-  return await db.user.findOne({where})
+  return await db.user.findOne({ where })
 }
 ```
 
@@ -286,7 +352,7 @@ set up by default in new apps).
 
 ```js
 // blitz.config.js
-const {sessionMiddleware, simpleRolesIsAuthorized} = require("blitz")
+const { sessionMiddleware, simpleRolesIsAuthorized } = require("blitz")
 
 module.exports = {
   middleware: [
@@ -299,10 +365,10 @@ module.exports = {
 }
 ```
 
-And if using Typescript, set the type in `types.ts` like this:
+And if using TypeScript, set the type in `types.ts` like this:
 
 ```ts
-import {SimpleRolesIsAuthorized} from "blitz"
+import { SimpleRolesIsAuthorized } from "blitz"
 
 type Role = "ADMIN" | "USER"
 
@@ -354,7 +420,10 @@ type CustomIsAuthorizedArgs = {
   ctx: any
   args: [/* args that you want for session.$authorize(...args) */]
 }
-export function customIsAuthorized({ctx, args}: CustomIsAuthorizedArgs) {
+export function customIsAuthorized({
+  ctx,
+  args,
+}: CustomIsAuthorizedArgs) {
   // can access ctx.session, ctx.session.userId, etc
 }
 ```

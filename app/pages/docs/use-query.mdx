@@ -11,15 +11,15 @@ used to display errors. If you need, you can read the
 [React Concurrent Mode Docs](https://reactjs.org/docs/concurrent-mode-intro.html).
 
 ```tsx
-import {Suspense} from "react"
-import {useQuery, useRouter, useParam} from "blitz"
+import { Suspense } from "react"
+import { useQuery, useRouter, useParam } from "blitz"
 import getProject from "app/projects/queries/getProject"
 import ErrorBoundary from "app/components/ErrorBoundary"
 
 function Project() {
   const router = useRouter()
   const projectId = useParam("projectId", "number")
-  const [project] = useQuery(getProject, {where: {id: projectId}})
+  const [project] = useQuery(getProject, { where: { id: projectId } })
 
   return <div>{project.name}</div>
 }
@@ -48,7 +48,6 @@ export default WrappedProject
 
 ## API {#api}
 
-<!-- prettier-ignore -->
 ```js
 const [
   queryResult,
@@ -239,6 +238,12 @@ const [
 - `structuralSharing: boolean`
   - Optional
   - Defaults to `true`
+- `useErrorBoundary: boolean`
+  - Optional
+  - Defaults to the global query config's `useErrorBoundary` value, which
+    is `false`
+  - Set this to true if you want query errors to be thrown in the render
+    phase and propagate to the nearest error boundary.
 
 ### Returns {#returns}
 

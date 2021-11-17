@@ -11,15 +11,17 @@ components.
 ### Example {#example}
 
 ```tsx
-import {invoke} from "blitz"
+import { invoke } from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
-const Page = function ({products}) {
+const Page = function ({ products }) {
   return (
     <div>
       <button
         onClick={async () => {
-          const products = await invoke(getProducts, {where: {orgId: 1}})
+          const products = await invoke(getProducts, {
+            where: { orgId: 1 },
+          })
         }}
       >
         Get Products
@@ -32,7 +34,6 @@ export default Page
 
 ## API {#api}
 
-<!-- prettier-ignore -->
 ```js
 const results = await invoke(resolver, resolverInputArguments)
 ```
@@ -53,15 +54,17 @@ const results = await invoke(resolver, resolverInputArguments)
 
 ## `invalidateQuery` {#invalidate-query}
 
-This allows you to invalidate a specific query.
+This allows you to invalidate a specific query. Use `invalidateQuery` if
+you know for sure that a query's data is stale and you don't want to wait
+for the automatic refetch.
 
 ### Example {#example-1}
 
 ```tsx
-import {invalidateQuery} from "blitz" // highlight-line
+import { invalidateQuery } from "blitz" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
-const Page = function ({products}) {
+const Page = function ({ products }) {
   return (
     <div>
       <button
@@ -79,7 +82,6 @@ export default Page
 
 ## API {#api-1}
 
-<!-- prettier-ignore -->
 ```js
 const refetchedQueries = await invalidateQuery(resolver, inputArgs?)
 ```
@@ -103,15 +105,18 @@ are done being refetched.
 
 ## `getQueryKey` {#get-query-key}
 
-This allows you to get the query key for a query
+This allows you to get the query key for a query. The `queryClient`
+manages query based on query keys. For a more detailed explanation, see
+the [`React Query`](https://react-query.tanstack.com/guides/query-keys)
+documentation.
 
 ### Example {#example-2}
 
 ```tsx
-import {getQueryKey, queryClient} from "blitz"
+import { getQueryKey, queryClient } from "blitz"
 import getProducts from "app/products/queries/getProducts"
 
-const Page = function ({products}) {
+const Page = function ({ products }) {
   return (
     <div>
       <button
@@ -119,7 +124,9 @@ const Page = function ({products}) {
           const queryKey = getQueryKey(getProducts)
           queryClient.invalidateQueries(queryKey)
 
-          const queryKey = getQueryKey(getProducts, {where: {ordId: 1}})
+          const queryKey = getQueryKey(getProducts, {
+            where: { ordId: 1 },
+          })
           queryClient.invalidateQueries(queryKey)
         }}
       >
@@ -133,7 +140,6 @@ export default Page
 
 ## API {#api-2}
 
-<!-- prettier-ignore -->
 ```js
 const queryKey = getQueryKey(resolver, inputArgs?)
 ```
@@ -168,10 +174,12 @@ causing a refetch. Disable refetch by passing an options object
 ### Example {#example-3}
 
 ```tsx
-import {setQueryData} from "blitz"
+import { setQueryData } from "blitz"
 
-export default function (props: {query: {id: number}}) {
-  const [product] = useQuery(getProduct, {where: {id: props.query.id}})
+export default function (props: { query: { id: number } }) {
+  const [product] = useQuery(getProduct, {
+    where: { id: props.query.id },
+  })
   const [updateProjectMutation] = useMutation(updateProject)
 
   return (
@@ -180,7 +188,11 @@ export default function (props: {query: {id: number}}) {
       onSubmit={async (values) => {
         try {
           const product = await updateProjectMutation(values)
-          setQueryData(getProduct, {where: {id: props.query.id}}, product)
+          setQueryData(
+            getProduct,
+            { where: { id: props.query.id } },
+            product
+          )
         } catch (error) {
           alert("Error saving product")
         }
@@ -194,7 +206,6 @@ export default function (props: {query: {id: number}}) {
 
 ## API {#api-3}
 
-<!-- prettier-ignore -->
 ```js
 const promise = setQueryData(resolver, inputArgs, newData, opts?)
 ```

@@ -6,9 +6,9 @@ sidebar_label: Route Manifest
 Blitz generates a _Route Manifest_ for you. It allows you to refer to a
 page by _name_ instead of _location_:
 
-```ts
+```tsx
 // Assume you have a page at app/pages/products/[productId].tsx
-export default function ProductPage() { ...
+export default function ProductsPage() { ...
 
 // You can then use Routes...
 import { Link, Routes } from "blitz"
@@ -30,7 +30,7 @@ though:
 
 Query parameters can be specified together with route parameters.
 
-```ts
+```tsx
 // instead of ...
 <Link href={`/products/${pid}?offerCode=capybara`} />
 
@@ -41,7 +41,7 @@ Query parameters can be specified together with route parameters.
 ## Generating the Manifest {#generating}
 
 The Route Manifest is generated into `node_modules/.blitz` directly from
-your source code into. Both [`blitz build`](./cli-build) and
+your source code. Both [`blitz build`](./cli-build) and
 [`blitz dev`](./cli-dev) will automatically keep it up-to-date.  
-If you need to manually generate the route manifest, for example for a
-typecheck in CI, use [`blitz codegen`](./cli-codegen).
+If you need to manually generate the route manifest (for example for a
+typecheck in CI) use [`blitz codegen`](./cli-codegen).

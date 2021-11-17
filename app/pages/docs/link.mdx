@@ -48,8 +48,12 @@ you can link to it with `Routes.About`. For more information, see the
   `false`
 - `prefetch` - Prefetch the page in the background. Defaults to `true`.
   Any `<Link />` that is in the viewport (initially or through scroll)
-  will be preloaded. Pages using [Static Generation](./get-static-props)
-  will preload `JSON` files with the data for faster page transitions.
+  will be preloaded. Prefetch can be disabled by passing
+  `prefetch={false}`. When `prefetch` is set to `false`, prefetching will
+  still occur on hover. Pages using
+  [Static Generation](./get-static-props.mdx) will preload `JSON` files
+  with the data for faster page transitions. Prefetching is only enabled
+  in production.
 - [`replace`](#replace-the-url-instead-of-push) - Replace the current
   `history` state instead of adding a new url into the stack. Defaults to
   `false`
@@ -69,7 +73,7 @@ A `Link` to a dynamic route works like the other links. A link to the page
 `pages/post/[pid].js` will look like this:
 
 ```jsx
-<Link href={Routes.Post({pid: "abc"})}>
+<Link href={Routes.Post({ pid: "abc" })}>
   <a>First Post</a>
 </Link>
 ```
@@ -97,7 +101,7 @@ the `<a>` tag will not have the `href` attribute, which might hurt your
 site’s SEO.
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 import styled from "styled-components"
 
 // This creates a custom component that wraps an <a> tag
@@ -105,7 +109,7 @@ const RedLink = styled.a`
   color: red;
 `
 
-function NavLink({href, name}) {
+function NavLink({ href, name }) {
   // Must add passHref to Link
   return (
     <Link href={href} passHref>
@@ -128,11 +132,11 @@ If the child of `Link` is a function component, in addition to using
 [`React.forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref):
 
 ```jsx
-import {Link, Routes} from "blitz"
+import { Link, Routes } from "blitz"
 
 // `onClick`, `href`, and `ref` need to be passed to the DOM element
 // for proper handling
-const MyButton = React.forwardRef(({onClick, href}, ref) => {
+const MyButton = React.forwardRef(({ onClick, href }, ref) => {
   return (
     <a href={href} onClick={onClick} ref={ref}>
       Click Me
@@ -157,12 +161,12 @@ export default Home
 to create the URL string. Here's how to do it:
 
 ```jsx
-import {Link} from "blitz"
+import { Link } from "blitz"
 
 function Home() {
   return (
     <div>
-      <Link href={{pathname: "/about", query: {name: "test"}}}>
+      <Link href={{ pathname: "/about", query: { name: "test" } }}>
         <a>About us</a>
       </Link>
     </div>

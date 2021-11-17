@@ -1,16 +1,19 @@
-const {addImport, addExport} = require("./utils")
+import {addExport, addImport} from "./utils"
 
 /**
  * Extract slug
- * @param {*} headingText in the form of "This is my title {#this-is-my-title}"
+ * @param {string} headingText
  * @returns {[title: string, slug: string]}
+ * @example
+ * extractSlug("This is my title {#this-is-my-title}")
+ * // => "this-is-my-title"
  */
 function extractSlug(headingText) {
   const [title, rest] = headingText.split(" {#", 2)
   return [title, rest.substr(0, rest.length - 1)]
 }
 
-module.exports.withTableOfContents = () => {
+export const withTableOfContents = () => {
   return (tree) => {
     const component = addImport(tree, "@/components/Heading", "Heading")
     const contents = []
@@ -18,15 +21,19 @@ module.exports.withTableOfContents = () => {
     for (let i = 0; i < tree.children.length; i++) {
       let node = tree.children[i]
 
-      if (node.type === "heading" && [2, 3].includes(node.depth)) {
+      if (node.type === "heading" && [2, 3, 4].includes(node.depth)) {
         const level = node.depth
         const headingText = node.children
           .filter((n) => ["text", "inlineCode"].includes(n.type))
           .map((n) => n.value)
           .join("")
 
-        if (!/ {#[a-z0-9-]+}$/.test(headingText)) {
-          throw new Error(`This heading is missing a handle:\n${headingText}`)
+        if (!/ {#[a-z0-9-]+}$/i.test(headingText)) {
+          if (node.depth < 4) {
+            throw new Error(`This heading is missing a handle:\n${headingText}`)
+          } else {
+            continue
+          }
         }
 
         let [title, slug] = extractSlug(headingText)
@@ -41,14 +48,16 @@ module.exports.withTableOfContents = () => {
 
         node.type = "jsx"
 
+        const toc = node.depth < 4
+
         if (node.children[0].type === "jsx" && /^\s*<Heading[\s>]/.test(node.children[0].value)) {
           node.value =
             node.children[0].value.replace(
               /^\s*<Heading([\s>])/,
-              `<Heading level={${level}} id="${slug}" toc={true}$1`,
+              `<Heading level={${level}} id="${slug}" toc={${toc}}$1`,
             ) + title
         } else {
-          node.value = `<${component} level={${level}} id="${slug}" toc={true}>${node.children
+          node.value = `<${component} level={${level}} id="${slug}" toc={${toc}}>${node.children
             .map(({type, value}) => {
               const nodeValue = value
                 .replace(/&/g, "&amp;")
@@ -72,15 +81,6 @@ module.exports.withTableOfContents = () => {
         !/^\s*<Heading[^>]*\sid=/.test(node.value)
       ) {
         throw new Error(`This Heading is missing an "id" tag:\n${node.value}`)
-      } else if (node.type === "heading" && node.depth <= 4) {
-        const headingText = node.children
-          .filter((n) => ["text", "inlineCode"].includes(n.type))
-          .map((n) => n.value)
-          .join("")
-
-        if (/ {#[a-z0-9-]+}$/.test(headingText)) {
-          throw new Error(`Headings lower than 3 can't have a handle:\n${headingText}`)
-        }
       }
     }
 

@@ -3,18 +3,19 @@ title: Database Overview
 sidebar_label: Overview
 ---
 
-<!-- prettier-ignore-start -->
-:::info
+<Card type="info">
+
 If you are totally new to Databases, check out
 [Prisma's Data Guide](https://www.prisma.io/dataguide/) which covers the
 very large majority of everything you might want to know.
-:::
-<!-- prettier-ignore-end -->
 
-By default, Blitz uses Prisma 2 which is a strongly typed database client.
+</Card>
 
-> Prisma 2 is not required for Blitz. You can use anything you want, such
-> as Mongo, TypeORM, etc.
+By default, Blitz uses [Prisma](https://prisma.io) which is a strongly
+typed database client.
+
+> Prisma is not required for Blitz. You can use anything you want, such as
+> Mongo, TypeORM, etc.
 
 ##### [Read the Prisma documentation here](https://www.prisma.io/docs/understand-prisma/introduction)
 
@@ -66,6 +67,7 @@ datasource db {
    commented-out PostgreSQL `DATABASE_URL` there already. Depending on
    your setup, you may need to modify the URL.
 3. Update `.env.test.local` as well to use PostgreSQL in your test runs.
+   (It has to point to different database than your `.env.local`)
 4. Delete the `db/migrations` folder
 5. Run `blitz prisma migrate dev`. This command will create the database
    (if it does not already exist) and tables based on your schema.

@@ -677,29 +677,29 @@ export default resolver.pipe(
 ```
 
 Next we're going to create a separate file to store the validation schema
-for our `QuestionForm`. In the `app/pages/questions` folder create a new
-file called `validations.ts` and import `CreateQuestion` from
-`app/questions/mutations/createQuestion.ts`. Then create a new variable
-called `createQuestionSchema`, set it equal to `CreateQuestion`, and
-export it so we can use it for our `QuestionForm` schema in the next step.
+for our `QuestionForm`. In the `app/questions` folder create a new file
+called `validations.ts` and import `CreateQuestion` from
+`./mutations/createQuestion.ts`. Then create a new variable called
+`createQuestionSchema`, set it equal to `CreateQuestion`, and export it so
+we can use it for our `QuestionForm` schema in the next step.
 
 ```diff
-// app/pages/questions/validations.ts
+// app/questions/validations.ts
 
-+ import { CreateQuestion } from "app/questions/mutations/createQuestion"
++ import { CreateQuestion } from "./mutations/createQuestion"
 
 + export const createQuestionSchema = CreateQuestion
 ```
 
 Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
-from `app/pages/questions/validations.ts` and set it as the schema for
+from `app/questions/validations.ts` and set it as the schema for
 `QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
 `initialValues` for `QuestionForm`:
 
 ```diff
 // app/pages/questions/new.tsx
 
-+ import {createQuestionSchema} from "app/pages/questions/validations"
++ import {createQuestionSchema} from "app/questions/validations"
 
 
       <QuestionForm

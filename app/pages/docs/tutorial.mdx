@@ -693,6 +693,14 @@ we can use it for our `QuestionForm` schema in the next step.
 + export const createQuestionSchema = CreateQuestion
 ```
 
+<Card type="info">
+  We create a shared `validations.ts` file because we cannot import
+  anything from a query (or mutation) file other than the query itself
+  into the client. You can read more about why in [Query
+  Usage](https://blitzjs.com/docs/query-usage) and [Mutation
+  Usage](https://blitzjs.com/docs/mutation-usage).
+</Card>
+
 Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
 from `app/questions/validations.ts` and set it as the schema for
 `QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our

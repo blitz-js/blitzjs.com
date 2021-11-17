@@ -834,10 +834,13 @@ Now check `/questions` in the browser. **Magic!**
 Open `app/pages/questions/[questionId].tsx` in your editor. First, we’re
 going to improve this page somewhat.
 
-1. Replace `<h1>Question {question.id}</h1>` with
+1. Replace `<title>Question {question.id}</title>` with
+   `<title>{question.text}</title>`.
+
+2. Replace `<h1>Question {question.id}</h1>` with
    `<h1>{question.text}</h1>`.
 
-2. Delete the `pre` element, and copy in our choices list which we wrote
+3. Delete the `pre` element, and copy in our choices list which we wrote
    before:
 
 ```tsx

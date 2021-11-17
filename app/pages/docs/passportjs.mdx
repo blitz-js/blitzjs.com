@@ -304,9 +304,7 @@ export default passportAuth({
 
           if (!email) {
             // This can happen if you haven't enabled email access in your Auth0 app permissions
-            return done(
-              new Error("Auth response doesn't have email.")
-            )
+            return done(new Error("Auth response doesn't have email."))
           }
 
           const user = await db.user.upsert({

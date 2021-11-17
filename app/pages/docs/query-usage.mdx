@@ -134,7 +134,9 @@ import getProject from "app/projects/queries/getProject"
 export const getServerSideProps = async (context) => {
   const queryClient = new QueryClient()
   // IMPORTANT: the second argument to getQueryKey must exactly match the second argument to useQuery down below
-  const queryKey = getQueryKey(getProject, { where: { id: context.params?.projectId } })
+  const queryKey = getQueryKey(getProject, {
+    where: { id: context.params?.projectId },
+  })
   await queryClient.prefetchQuery(queryKey, () =>
     getProject({ where: { id: context.params?.projectId } })
   )

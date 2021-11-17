@@ -554,9 +554,9 @@ prior to deleting the question itself.
 ## Remove unnecessary file {#remove-unnecessary-file}
 
 Our scaffolding created a mutation file for us that is no longer needed.
-In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll need to delete
-`app/choices/mutations/createChoice.ts` (unused) or update the
-CreateChoice zod schema to include the required fields.
+In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll
+need to delete `app/choices/mutations/createChoice.ts` (unused) or update
+the CreateChoice zod schema to include the required fields.
 
 ## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
 
@@ -643,11 +643,11 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 ```
 
 Now open `app/questions/mutations/createQuestion.ts` and update the zod
-schema so that the choice data is accepted in the mutation. We also
-need to update the `db.question.create()` call so that the choices will
-be created. After that we need to export the `CreateQuestion` zod schema because
-we will be using it in the next step to create a validation schema for our
-`QuestionForm`.
+schema so that the choice data is accepted in the mutation. We also need
+to update the `db.question.create()` call so that the choices will be
+created. After that we need to export the `CreateQuestion` zod schema
+because we will be using it in the next step to create a validation schema
+for our `QuestionForm`.
 
 ```diff
 // app/questions/mutations/createQuestion.ts
@@ -675,12 +675,13 @@ export default resolver.pipe(
 )
 ```
 
-Next we're going to create a separate file to store the validation schema for our
-`QuestionForm`. In the `app/pages/questions` folder create a new file called `validations.ts` 
-and import `CreateQuestion` from `app/questions/mutations/createQuestion.ts`. Then
-create a new variable called `createQuestionSchema`, set it equal to `CreateQuestion`,
-and export it so we can use it for our `QuestionForm` schema in the next step.
- 
+Next we're going to create a separate file to store the validation schema
+for our `QuestionForm`. In the `app/pages/questions` folder create a new
+file called `validations.ts` and import `CreateQuestion` from
+`app/questions/mutations/createQuestion.ts`. Then create a new variable
+called `createQuestionSchema`, set it equal to `CreateQuestion`, and
+export it so we can use it for our `QuestionForm` schema in the next step.
+
 ```diff
 // app/pages/questions/validations.ts
 
@@ -689,9 +690,10 @@ and export it so we can use it for our `QuestionForm` schema in the next step.
 + export const createQuestionSchema = CreateQuestion
 ```
 
-Now open `app/pages/questions/new.tsx` and import `createQuestionSchema` from
-`app/pages/questions/validations.ts` and set it as the schema for `QuestionForm`.
-Also, we need set `{{text: "", choices: []}}` as our `initialValues` for `QuestionForm`:
+Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
+from `app/pages/questions/validations.ts` and set it as the schema for
+`QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
+`initialValues` for `QuestionForm`:
 
 ```diff
 // app/pages/questions/new.tsx

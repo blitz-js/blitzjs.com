@@ -103,6 +103,8 @@ module.exports = {
 
 ## Logging {#logging}
 
+### Log Level {#log-level}
+
 By default Blitz logs various things at runtime. You can adjust the
 verbosity using the log level setting.
 
@@ -113,6 +115,22 @@ verbosity using the log level setting.
 module.exports = {
   log: {
     level: "info",
+  },
+}
+```
+
+### Log Type {#log-type}
+
+It is also possible to adjust the logging type, which could be helpful if
+you prefer to forward the logs in JSON format.
+
+- Default: `pretty`
+- Options: `pretty` | `json` | `hidden`
+
+```js
+module.exports = {
+  log: {
+    type: "pretty",
   },
 }
 ```

@@ -4,17 +4,17 @@ sidebar_label: Using Docker
 ---
 
 [Docker](https://www.docker.com/) is a platform that enables developers to
-package their apps into standarized containers. This containers can be
+package their apps into standardized containers. These containers can be
 deployed to lots of PaaS (like Azure, Google Cloud Platform, AWS, etc.) or
 even to your own servers.
 
 ## A very basic Dockerfile {#basic}
 
 This is a simple
-[Dockerfile](https://docs.docker.com/engine/reference/builder/) aimed to
-only be used in production. This Dockerfile will build your app, migrate
-your database and start your app in the port 3000 (or whatever port you
-pass through a build argument).
+[Dockerfile](https://docs.docker.com/engine/reference/builder/) aimed only
+to be used in production. This Dockerfile will build your app, migrate
+your database and start your app on port 3000 (or whatever port you pass
+through a build argument).
 
 ```dockerfile
 FROM node:16
@@ -38,7 +38,7 @@ EXPOSE ${PORT}
 CMD yarn start -p ${PORT}
 ```
 
-Along your `Dockerfile`, remember to create a `.dockerignore`. We
+Along with your `Dockerfile`, remember to create a `.dockerignore`. We
 recommend to copy and paste your `.gitignore`.
 
 ## Optimized Dockerfiles {#advanced}

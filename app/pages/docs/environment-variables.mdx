@@ -110,3 +110,22 @@ with defaults should be checked into git.
 
 Appending `.local` will override the defaults. Examples: `.env.local`,
 `.env.test.local`. These files should **not** be checked into git.
+
+## Using custom environments {#custom-environments}
+
+The three default environments are `production`, `development`, and
+`test`. However, sometimes, you need an additional environment, e.g.
+`staging`, to store env variables for it in a separate file. You can
+provide an app environment name by passing `-e` (`--env`) flag or setting
+`APP_ENV` directly. For example:
+
+```
+APP_ENV=staging blitz build
+
+blitz prisma generate -e=staging
+
+blitz dev --env staging
+```
+
+This will load additional env files: `.env.<APP_NAME>` and
+`.env.<APP_NAME>.local`.

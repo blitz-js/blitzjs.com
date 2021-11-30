@@ -127,7 +127,7 @@ rendered on the server.
 The following example demonstrates how prefetching works in Blitz.
 
 ```tsx
-import { QueryClient, getQueryKey, useQuery, dehydrate } from "blitz"
+import { QueryClient, getQueryKey, useQuery, invokeWithMiddleware, dehydrate } from "blitz"
 
 import getProject from "app/projects/queries/getProject"
 
@@ -138,7 +138,7 @@ export const getServerSideProps = async (context) => {
     where: { id: context.params?.projectId },
   })
   await queryClient.prefetchQuery(queryKey, () =>
-    getProject({ where: { id: context.params?.projectId } })
+    invokeWithMiddleware(getProject, { where: { id: context.params?.projectId } }, context)
   )
 
   return {

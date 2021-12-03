@@ -164,6 +164,11 @@ Once the data has been fetched, dehydrate the queries to the query client
 using the `dehydrate` method and pass the result to the page via the
 `dehydratedState` prop.
 
+> **Note**: if you want to prefetch an infinite query, you'll have to use
+> `prefetchInfiniteQuery` instead of `prefetchQuery` and
+> [`getInfiniteQueryKey`](docs/resolver-client-utilities#get-infinite-query-key)
+> instead of `getQueryKey`.
+
 ## On the Server {#on-the-server}
 
 ### `getStaticProps` {#get-static-props}

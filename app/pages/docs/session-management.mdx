@@ -307,9 +307,11 @@ Available options:
 type SessionConfig = {
   cookiePrefix?: string /* Default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
-  sameSite?: "strict" | "lax" | "none" /* Default: 'lax' */
+  sameSite?: "strict" | "lax" | "none" /* Default: 'lax'. 
+    If setting this to none, you must also set secureCookies: true. 
+    See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite */
   method?: "essential" | "advanced" /* Default: 'essential' */
-  secureCookies?: boolean
+  secureCookies?: boolean /* Default: undefined. This flag is skipped if running app on hostname `localhost` */
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
   publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
   getSession: (handle: string) => Promise<SessionModel | null>

@@ -216,9 +216,21 @@ ensure another user's data can't be changed.
 Here's an example where a mutation accepts `id` that could be the id of an
 entity belonging to a different organization. You could first make a
 `db.project.findFirst()` query for that id and then manually verify that
-`organizationId` is correct. But the easier way shown here is by adding
-`organizationId` to the `db.update` `where` input. This update call will
-fail if the organizationId doesn't match.
+`organizationId` is correct, but this would require two database calls.
+To verify the `organizationId` in a single `update()` call, you need to add
+a unique constraint to the model, as such (remember to run
+`blitz prisma migrate dev` to push changes to the databse):
+
+```prisma
+model Project {
+  // ...
+  
+  @@unique([id, organizationId])
+}
+```
+
+This way, you will be able to use an `id_organizationId` field to secure the database call:
+
 
 ```ts
 import { resolver } from "blitz"
@@ -239,9 +251,10 @@ export default resolver.pipe(
     if (!ctx.session.orgId) throw new Error("Missing session.orgId")
     const project = await db.project.update({
       where: {
-        id,
-        // Filter by organizationId
-        organizationId: ctx.session.orgId,
+        id_organizationId: {
+          id,
+          // Filter by organizationId
+          organizationId: ctx.session.orgId,
       },
       data,
     })

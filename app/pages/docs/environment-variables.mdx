@@ -129,3 +129,16 @@ blitz dev --env staging
 
 This will load additional env files: `.env.<APP_NAME>` and
 `.env.<APP_NAME>.local`.
+
+If you need to load multiple env files, you can pass all the enviroments
+you want to load like this:
+
+```bash
+blitz dev --env staging,production
+# Loaded .env.staging.local
+# Loaded .env.staging
+# Loaded .env.production.local
+# Loaded .env.production
+# Loaded .env.local
+# Loaded .env
+```

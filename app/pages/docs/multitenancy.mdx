@@ -237,15 +237,12 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, ...data }, ctx) => {
     if (!ctx.session.orgId) throw new Error("Missing session.orgId")
-    const project = await db.project.update({
-      where: {
-        id,
-        // Filter by organizationId
-        organizationId: ctx.session.orgId,
-      },
-      data,
-    })
+    
+    // Looks for both `id` and `organizationId`
+    const project = await db.project.findFirst({where: {id, organizationId}})
+    if (!project) throw new NotFoundError()
 
+    const project = await db.project.update({where: {id}, data})
     return project
   }
 )
@@ -284,13 +281,11 @@ export default resolver.pipe(
       ctx.session.$authorize(MembershipRole.PROJECT_MANAGER)
     }
 
-    const project = await db.project.update({
-      where: {
-        id,
-        organizationId,
-      },
-      data,
-    })
+    // Looks for both `id` and `organizationId`
+    const project = await db.project.findFirst({where: {id, organizationId}})
+    if (!project) throw new NotFoundError()
+
+    const project = await db.project.update({where: {id}, data})
 
     return project
   }

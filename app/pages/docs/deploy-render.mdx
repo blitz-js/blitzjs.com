@@ -21,7 +21,7 @@ services:
   - type: web
     name: blitzapp
     env: node
-    plan: starter
+    plan: free
     buildCommand: yarn --frozen-lockfile --prod=false && blitz build
     startCommand: blitz start
     envVars:
@@ -42,7 +42,7 @@ services:
   - type: web
     name: blitzapp
     env: node
-    plan: starter
+    plan: free
     buildCommand:
       yarn --frozen-lockfile --prod=false &&
       blitz prisma generate &&
@@ -61,6 +61,6 @@ services:
 
 databases:
   - name: blitzapp-db
-    plan: starter
+    plan: free
 ```
 <!-- prettier-ignore-end -->

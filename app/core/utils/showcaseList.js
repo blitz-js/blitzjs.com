@@ -35,6 +35,11 @@ const showcaseList = [
     URL: "https://portal.gitnation.org/",
   },
   {
+    thumbnail: "/showcase/hopscotch-product-tours.png",
+    title: "Hopscotch Product Tours",
+    URL: "https://hopscotch.club/",
+  },
+  {
     thumbnail: "/showcase/hyperlocal.png",
     title: "Hyperlocal",
     URL: "https://hyperlocal.builtforfifty.com/",
@@ -58,6 +63,11 @@ const showcaseList = [
     thumbnail: "/showcase/tansy.png",
     title: "Tansy",
     URL: "https://www.tansy.co/",
+  },
+  {
+    thumbnail: "/showcase/topodotink-map-posters.png",
+    title: "Topo.ink",
+    URL: "https://www.topo.ink/",
   },
 ]
 export default showcaseList

@@ -163,14 +163,13 @@ select a file matching the pattern.
 ```typescript
 import { addImport, paths } from "@blitzjs/installer"
 import j from "jscodeshift"
-import Collection from "jscodeshift/src/Collection"
 
 builder.addTransformFilesStep({
   stepId: "importStyles",
   stepName: "Import stylesheets",
   explanation: `Finaly, we can import the stylesheets we created, into our application. For now we'll put them in document.tsx, but if you'd like to only style a part of your app with tailwind you could import the styles lower down in your component tree.`,
   singleFileSearch: paths.app(),
-  transform(program: Collection<j.Program>) {
+  transform(program: j.Collection<j.Program>) {
     const stylesImport = j.importDeclaration(
       [],
       j.literal("app/styles/index.css")
@@ -208,14 +207,13 @@ Not all modifications can be performed using `jscodeshift`. For any other
 transformations, you can use `transformPlain`:
 
 ```ts
-builder
-  .addTransformFilesStep({
-     ...,
-     singleFileSearch: "README.md",
-     transformPlain(readme: string) {
-       return readme + "\n" + "Paul Plain was here!"
-     },
-   })
+builder.addTransformFilesStep({
+  // ...
+  singleFileSearch: "README.md",
+  transformPlain(readme: string) {
+    return readme + "\n" + "Paul Plain was here!"
+  },
+})
 ```
 
 This step would append "Paul Plain was here!" to the user's README.md
@@ -243,11 +241,10 @@ If you want to customize your recipe even further, you can pass an
 optional `successIcon` param to your steps.
 
 ```ts
-builder
-  .addTransformFilesStep({
-     successIcon: "🔧",
-     ...
-   })
+builder.addTransformFilesStep({
+  successIcon: "🔧",
+  // ...
+})
 ```
 
 #### Modifying Prisma schemas
@@ -378,18 +375,20 @@ are implemented using `produceSchema`.
 
 ```ts
 builder.addTransformFilesStep({
-  ...,
+  // ...
   singleFileSearch: paths.prismaSchema(),
   transformPlain(source: string) {
     return produceSchema(source, (schema) => {
       // find a model named "User"
-      const model = schema.list.find(function(item): item is Model {
+      const model = schema.list.find(function (item): item is Model {
         return item.type === "model" && item.name === "User"
       }) as Model
       if (!model) return
 
       // find a field on the "User" model named "email"
-      const field = model.properties.find(function (property): property is Field {
+      const field = model.properties.find(function (
+        property
+      ): property is Field {
         return property.type === "attribute" && property.name === "email"
       })
       if (!field) return
@@ -398,10 +397,10 @@ builder.addTransformFilesStep({
       field.attributes?.push({
         type: "attribute",
         kind: "field",
-        name: "unique"
+        name: "unique",
       })
     })
-  }
+  },
 })
 ```
 
@@ -415,29 +414,84 @@ To see how the schema file is parsed,
 
 ### Modifying Blitz config {#modifying-blitz-config}
 
-Some recipes may require modifying the existing Blitz config file.
-
-#### Create a tansformation step
-
-We are fortunate enough to be able to use the `paths` provided by the
+Some recipes may require modifying the existing Blitz config file. We are
+fortunate enough to be able to use the `paths` provided by the
 `@blitzjs/installer` package. You can pass this into your
 `singleFileSearch` and use `jscodeshift` to modify it.
 
 ```ts
-
 builder.addTransformFilesStep({
-...
+  // ...
   singleFileSearch: paths.blitzConfig(),
-  transform(program: Collection<j.Program>) {
+  transform(program: j.Collection<j.Program>) {
     // Perform your transformation here!
-  }
-});
+  },
+})
 ```
 
-#### Adding middleware {#adding-blitz-middleware}
+#### Transforming the config
 
-Using the transform function `addBlitzMiddleware` you can add
-new middleware from a recipe.
+The `transformBlitzConfig` function can be imported from the
+`@blitzjs/installer` package. It looks for the configuration object and
+lets you modify it. It takes a `program` and a callback. The callback
+takes the config `j.ObjectExpression` and has to return another
+`j.ObjectExpression`.
+
+```ts
+builder.addTransformFilesStep({
+  // ...
+  singleFileSearch: paths.blitzConfig(),
+  transform(program: j.Collection<j.Program>) {
+    program = transformBlitzConfig(program, (config) => {
+      // perform your transformation
+      return config
+    })
+  },
+})
+```
+
+#### Wrapping the config
+
+There are cases when you want to wrap the configuration object with
+another function, like this:
+
+```ts
+import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin"
+
+const config = {
+  /* ... */
+}
+
+module.export = createVanillaExtractPlugin(config)
+```
+
+The `wrapBlitzConfig` function can be imported from the
+`@blitzjs/installer` package. It looks for the configuration object and
+lets you modify it. It takes the `program` and the name of the function.
+Note that you still need to create the import statement - you can use
+`addImport` for this.
+
+```ts
+builder.addTransformFilesStep({
+  // ...
+  singleFileSearch: paths.blitzConfig(),
+  transform(program: j.Collection<j.Program>) {
+    program = addImport(
+      program,
+      j.importDeclaration(
+        [j.importSpecifier(j.identifier("createVanillaExtractPlugin"))],
+        j.literal("@vanilla-extract/next-plugin")
+      )
+    )
+    return wrapBlitzConfig(program, "createVanillaExtractPlugin")
+  },
+})
+```
+
+#### Adding a middleware {#adding-blitz-middleware}
+
+Using the transform function `addBlitzMiddleware` you can add new
+middleware from a recipe.
 
 The `addBlitzMiddleware` function can be imported from the
 `@blitzjs/installer` package.
@@ -455,10 +509,9 @@ construct our middleware, and add it.
 
 ```ts
 builder.addTransformFilesStep({
-  ...,
+  // ...
   singleFileSearch: paths.blitzConfig(),
-  transform(program: Collection<j.Program>) {
-
+  transform(program: j.Collection<j.Program>) {
     // This is the middleware we want to add
     const newMiddleware = j.arrowFunctionExpression(
       [j.identifier("req"), j.identifier("res"), j.identifier("next")],
@@ -466,33 +519,77 @@ builder.addTransformFilesStep({
         j.expressionStatement(
           j.assignmentExpression(
             "=",
-            j.memberExpression(j.identifier("res"), j.identifier("blitzCtx.foo")),
-            j.identifier("bar"),
-          ),
+            j.memberExpression(
+              j.identifier("res"),
+              j.identifier("blitzCtx.foo")
+            ),
+            j.identifier("bar")
+          )
         ),
         j.returnStatement(j.callExpression(j.identifier("next"), [])),
-      ]),
+      ])
     )
 
     addBlitzMiddleware(program, newMiddleware)
 
     return program
-  }
-});
+  },
+})
 ```
 
 In this case, the resulting middleware is added to your blitz config:
 
 ```ts
-  ...,
+const config = {
+  // ...
   middleware: [
-    ...,
+    // ...
     (req, res, next) => {
       res.blitzCtx.foo = bar
       return next()
     },
   ],
-  ...,
+}
+```
+
+### Modifying Babel config {#modifying-babel-config}
+
+Some recipes may require modifying the existing Babel config file. We are
+fortunate enough to be able to use the `paths` provided by the
+`@blitzjs/installer` package. You can pass this into your
+`singleFileSearch` and use `jscodeshift` to modify it.
+
+```ts
+builder.addTransformFilesStep({
+  // ...
+  singleFileSearch: paths.babelConfig(),
+  transform(program: j.Collection<j.Program>) {
+    // Perform your transformation here!
+  },
+})
+```
+
+The `@blitzjs/installer` package provides two transformers:
+`addBabelPlugin` and `addBabelPreset`. Both take the `program` and the
+plugin/preset. You don't need to worry about jscodeshift stuff, you only
+need to provide a valid JSON object and it will be transformed. This
+argument has to be either the name of the plugin/preset (as a string) or a
+array with two elements: the name of the plugin/preset and its
+configuration.
+
+```ts
+builder.addTransformFilesStep({
+  // ...
+  singleFileSearch: paths.babelConfig(),
+  transform(program: j.Collection<j.Program>) {
+    program = addBabelPlugin(program, "@emotion")
+    program = addBabelPreset(program, [
+      "preset-react",
+      { runtime: "automatic", importSource: "@emotion/react" },
+    ])
+    return program
+  },
+})
 ```
 
 ### Publishing {#publishing}

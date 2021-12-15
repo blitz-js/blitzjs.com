@@ -42,11 +42,6 @@ app.prepare().then(() => {
       return
     }
 
-    if (pathname === "/hello") {
-      res.writeHead(200).end("world")
-      return
-    }
-    
     if (pathname === "/a") {
       // renders app/pages/a.tsx
       app.render(req, res, "/a", query)

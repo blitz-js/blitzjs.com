@@ -136,6 +136,30 @@ need shortly after the page loads--such a common searches or filter
 criteria--by setting a [staleTime](./use-query#options) on the query being
 prefetched.
 
+### Persisting Layout Between Page Changes {#persisting-layouts}
+
+Blitz has a built-in way to implement cross-page layouts, the
+`Page.getLayout` prop. It can be set to a function that receives the page
+as an argument and returns a JSX element:
+
+```tsx
+import { BlitzPage } from "blitz"
+import Layout from "app/core/layouts/Layout"
+
+const Page: BlitzPage = () => {
+  return <div>{/* ... */}</div>
+}
+
+// highlight-start
+Page.getLayout = (page) => <Layout title="Title">{page}</Layout>
+// highlight-end
+
+export default Page
+```
+
+This layout will be rendered over your page. To learn more about layouts,
+check out the [Layout page](./layout).
+
 ### Static Page Generation for Unauthenticated Pages {#static-page-generation-for-unauthenticated-pages}
 
 For pages accessible by anyone without authentication, we recommend using

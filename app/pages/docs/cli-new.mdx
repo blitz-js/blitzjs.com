@@ -3,9 +3,12 @@ title: blitz new
 sidebar_label: blitz new
 ---
 
-Generates a new Blitz project in the current directory. The project will
-include basic scaffolding for a landing page, a database, and all of the
-other configuration that makes Blitz's magic work.
+Generates a new Blitz project in the current directory. You can choose
+between a full Blitz project and a minimal project. The former includes a
+database setup, authentication, and all of the other configuration that
+makes Blitz's magic work. The minimal template is a bare Blitz project
+with a minimum set of dependecies. It has no database or auth included.
+Both templates will include basic scaffolding for a landing page.
 
 ```bash
 blitz new [name]
@@ -17,11 +20,18 @@ blitz new [name]
 
 #### Options
 
-| Argument    | Shorthand | Description                                                                                                     | Default |
-| ----------- | --------- | --------------------------------------------------------------------------------------------------------------- | ------- |
-| `--npm`     |           | Uses `npm` as the project's package manager. If omitted, the project will default to `yarn` if it is installed. | `false` |
-| `--dry-run` | `-d`      | Displays what files would be generated but does not write the files to disk.                                    | `false` |
-| `--no-git`  |           | Skips git repository creation.                                                                                  | `false` |
+| Argument         | Short | Description                                                                                                                                         | Default |
+| ---------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `--template`     |       | Lets you choose a project's template. If omittied, it shows a prompt to choose the template. Options: `full`, `minimal`.                            | None    |
+| `--language`     |       | A new project's language. If omittied, it shows a prompt to choose the language. Options: `typescript`, `javascript`.                               | None    |
+| `--dry-run`      | `-d`  | Displays what files would be generated but does not write the files to disk.                                                                        | `false` |
+| `--no-git`       |       | Skips git repository creation.                                                                                                                      | `false` |
+| `--skip-upgrade` |       | Skip blitz upgrade if outdated.                                                                                                                     | `false` |
+| `--form`         |       | A form library for the full project. If omitted, it shows a prompt to choose the library. Options: `react-final-form`, `react-hook-form`, `formik`. | None    |
+| `--yarn`         |       | Use yarn as the package manager.                                                                                                                    | `false` |
+| `--npm`          |       | Use npm as the package manager.                                                                                                                     | `false` |
+| `--pnpm`         |       | Use pnpm as the package manager.                                                                                                                    | `false` |
+| `--env`          | `-e`  | Set app environment name. [Read more](/docs/environment-variables#custom-environments).                                                             | None    |
 
 #### Examples
 
@@ -31,4 +41,8 @@ blitz new task-manager
 
 ```bash
 blitz new task-manager --npm
+```
+
+```bash
+blitz new landing-page --template=minimal
 ```

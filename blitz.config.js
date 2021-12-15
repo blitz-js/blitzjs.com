@@ -109,7 +109,7 @@ const config = withBundleAnalyzer({
             return "export default " + meta
           }
           return (
-            source.replace(/export const/gs, "const") + `\nMDXContent.layoutProps = layoutProps\n`
+            source.replace(/^export const/gm, "const") + `\nMDXContent.layoutProps = layoutProps\n`
           )
         }),
         {

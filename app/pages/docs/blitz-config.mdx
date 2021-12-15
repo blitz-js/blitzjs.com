@@ -137,7 +137,126 @@ module.exports = {
 
 ## Codegen {#codegen}
 
-> todo
+With [`blitz generate`](/docs/cli-generate) command, you can generate code
+for:
+
+- Prisma models
+- Pages
+- Forms
+- Queries
+- Mutations
+
+To generate the content based on your models, we use templates in forms,
+and `zod` validation schemas. You can see the following lines in the new
+Blitz applications:
+
+```js
+// template: __fieldName__: z.__zodType__(),
+
+/* template: <__component__ name="__fieldName__" label="__Field_Name__" placeholder="__Field_Name__" /> */
+```
+
+We subsitute the template values based on the codegen config. Here's the
+default configuration:
+
+```json
+{
+  "string": {
+    "component": "LabeledTextField",
+    "inputType": "text",
+    "zodType": "string",
+    "prismaType": "String"
+  },
+  "boolean": {
+    "component": "LabeledTextField",
+    "inputType": "text",
+    "zodType": "boolean",
+    "prismaType": "Boolean"
+  },
+  "int": {
+    "component": "LabeledTextField",
+    "inputType": "number",
+    "zodType": "number",
+    "prismaType": "Int"
+  },
+  "number": {
+    "component": "LabeledTextField",
+    "inputType": "number",
+    "zodType": "number",
+    "prismaType": "Int"
+  },
+  "bigint": {
+    "component": "LabeledTextField",
+    "inputType": "number",
+    "zodType": "number",
+    "prismaType": "BigInt"
+  },
+  "float": {
+    "component": "LabeledTextField",
+    "inputType": "number",
+    "zodType": "number",
+    "prismaType": "Float"
+  },
+  "decimal": {
+    "component": "LabeledTextField",
+    "inputType": "number",
+    "zodType": "number",
+    "prismaType": "Decimal"
+  },
+  "datetime": {
+    "component": "LabeledTextField",
+    "inputType": "text",
+    "zodType": "string",
+    "prismaType": "DateTime"
+  },
+  "uuid": {
+    "component": "LabeledTextField",
+    "inputType": "text",
+    "zodType": "string().uuid",
+    "prismaType": "String",
+    "default": "uuid"
+  },
+  "json": {
+    "component": "LabeledTextField",
+    "inputType": "text",
+    "zodType": "any",
+    "prismaType": "Json"
+  }
+}
+```
+
+You can add new types, or override existing ones in your
+`blitz.config.ts`. The `component`, `inputType`, `zodType`, and
+`prismaType` fields are required, and the `default` field is optional — it
+will be used as a default value in the prisma model definition. If you
+want to extend the templates, you can provide a new keys in field's
+config.
+
+An example `blitz.config.ts`:
+
+```ts
+module.exports = {
+  codegen: {
+    fieldTypeMap: {
+      string: {
+        component: "LabeledTextField",
+        inputType: "text",
+        zodType: "string",
+        prismaType: "String",
+      },
+      boolean: {
+        component: "LabeledTextField",
+        inputType: "text",
+        zodType: "boolean",
+        prismaType: "Boolean",
+      },
+      // ...
+  },
+}
+```
+
+If you want to know more about the `blitz generate` command, you can check
+out the [docs](/docs/cli-generate).
 
 ## CLI {#cli}
 

@@ -105,49 +105,6 @@ app/tasks/mutations/updateTask.ts
 Note that this will not generate the relationships between the models,
 only the queries, mutations and pages.
 
-##### `--templateDir`
-
-Shorthand: `-t`
-
-Allows you to specify a custom template directory. If you want to use
-custom templates insetad of the default ones (e.g. with different styles),
-you can pass a path to the local template directory. The template
-directory should have the following structure:
-
-```bash
-.
-├── form
-│   └── __ModelName__Form.tsx
-├── mutation
-│   └── __input__.ts
-├── mutations
-│   ├── create__ModelName__.ts
-│   ├── delete__ModelName__.ts
-│   └── update__ModelName__.ts
-├── page
-│   ├── __modelIdParam__
-│   │   └── edit.tsx
-│   ├── __modelIdParam__.tsx
-│   ├── index.tsx
-│   └── new.tsx
-├── queries
-│   ├── get__ModelName__.ts
-│   └── get__ModelNames__.ts
-└── query
-    └── __name__.ts
-```
-
-If some folders are omitted in your custom template directory,
-`blitz generate` will fallback to the default templates. You can check
-them out
-[here](https://github.com/blitz-js/blitz/tree/canary/packages/generator/templates).
-
-**Usage:**
-
-```bash
-blitz generate all projects -t ./my-custom-templates
-```
-
 ##### `--dry-run`
 
 Shorthand: `-d`
@@ -311,3 +268,10 @@ field to the `Task` model.
 ```bash
 blitz generate model task subheading:string
 ```
+
+### Custom templates {#custom-templates}
+
+If you want to use custom templates with `blitz generate` instead of the
+default ones (e.g. with different styles), you can provide a path to the
+local directory with template files. You can specify it in your
+`blitz.config.ts` file. [Read more here](/docs/blitz-config#codegen).

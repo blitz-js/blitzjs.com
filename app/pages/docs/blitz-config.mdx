@@ -135,6 +135,50 @@ module.exports = {
 }
 ```
 
+## Codegen {#codegen}
+
+If you want to use custom templates with `blitz generate` instead of the
+default ones (e.g. with different styles), you can provide a path to the
+local template directory:
+
+```js
+module.exports = {
+  codegen: {
+    templateDir: "./templates",
+  },
+}
+```
+
+The template directory should have the following structure:
+
+```bash
+.
+├── form
+│   └── __ModelName__Form.tsx
+├── mutation
+│   └── __input__.ts
+├── mutations
+│   ├── create__ModelName__.ts
+│   ├── delete__ModelName__.ts
+│   └── update__ModelName__.ts
+├── page
+│   ├── __modelIdParam__
+│   │   └── edit.tsx
+│   ├── __modelIdParam__.tsx
+│   ├── index.tsx
+│   └── new.tsx
+├── queries
+│   ├── get__ModelName__.ts
+│   └── get__ModelNames__.ts
+└── query
+    └── __name__.ts
+```
+
+If some folders are omitted in your custom template directory,
+`blitz generate` will fallback to the default templates. You can check
+them out
+[here](https://github.com/blitz-js/blitz/tree/canary/packages/generator/templates).
+
 ## CLI {#cli}
 
 ### Clear Console On Blitz Dev {#clear-console-on-blitz-dev}

@@ -239,7 +239,7 @@ export default resolver.pipe(
     if (!ctx.session.orgId) throw new Error("Missing session.orgId")
     
     // Looks for both `id` and `organizationId`
-    const project = await db.project.findFirst({where: {id, organizationId}})
+    const project = await db.project.findFirst({where: {id, organizationId: ctx.session.orgId}})
     if (!project) throw new NotFoundError()
 
     const project = await db.project.update({where: {id}, data})

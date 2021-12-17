@@ -158,7 +158,7 @@ export const getServerSideProps = async (context) => {
   }
 }
 
-function ProjectPage() {
+function ProjectPage(props) {
   const [project] = useQuery(getProject, { where: { id: props.id } })
   return <div>{project.name}</div>
 }

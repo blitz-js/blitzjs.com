@@ -1,6 +1,5 @@
 import {Link} from "blitz"
-import {setCookie, useRouter} from "blitz"
-import clsx from "clsx"
+import {useRouter} from "blitz"
 import {useEffect, useState} from "react"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 import {FaDiscord, FaGithub, FaTwitter} from "react-icons/fa"

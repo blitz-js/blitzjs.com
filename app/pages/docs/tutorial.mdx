@@ -30,7 +30,7 @@ blitz new my-blitz-app
 Blitz will create a `my-blitz-app` folder in your current folder. You will
 be asked how you want your new app to be. For this tutorial, select all
 the default values by only pressing **Enter** when asked (you'll create a
-Full Blitz app with TypeScript, Yarn and React Final From).
+Full Blitz app with TypeScript, Yarn and React Final Form).
 
 Let’s look at what `blitz new` created:
 
@@ -399,7 +399,7 @@ export const QuestionsList = () => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
-            <Link href={`/questions/${question.id}`}>
+            <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
               <a>{question.name}</a>
             </Link>
           </li>
@@ -451,7 +451,7 @@ export const QuestionsList = () => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
-            <Link href={`/questions/${question.id}`}>
+            <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
 -              <a>{question.name}</a>
 +              <a>{question.text}</a>
             </Link>
@@ -724,7 +724,7 @@ from `app/questions/validations.ts` and set it as the schema for
         onSubmit={async (values) => {
           try {
             const question = await createQuestionMutation(values)
-            router.push(`/questions/${question.id}`)
+            router.push(Routes.ShowQuestionPage({ questionId: question.id }))
           } catch (error) {
             console.error(error)
             return {
@@ -821,7 +821,7 @@ choices of each question. And add this code beneath the `Link` in our
 {
   questions.map((question) => (
     <li key={question.id}>
-      <Link href={`/questions/${question.id}`}>
+      <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
         <a>{question.text}</a>
       </Link>
 +     <ul>
@@ -996,7 +996,7 @@ export const Question = () => {
           ))}
         </ul>
 
-        <Link href={`/questions/${question.id}/edit`}>
+        <Link href={Routes.EditQuestionPage({ questionId: question.id })}>
           <a>Edit</a>
         </Link>
 
@@ -1005,7 +1005,7 @@ export const Question = () => {
           onClick={async () => {
             if (window.confirm("This will be deleted")) {
               await deleteQuestionMutation({ id: question.id })
-              router.push("/questions")
+              router.push(Routes.QuestionsPage())
             }
           }}
           style={{ marginLeft: "0.5rem" }}

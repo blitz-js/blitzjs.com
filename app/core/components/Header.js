@@ -1,5 +1,6 @@
 import {Link} from "blitz"
-import {useRouter} from "blitz"
+import {setCookie, useRouter} from "blitz"
+import clsx from "clsx"
 import {useEffect, useState} from "react"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 import {FaDiscord, FaGithub, FaTwitter} from "react-icons/fa"
@@ -50,6 +51,30 @@ const SocialIcons = ({className, variant}) => {
     </div>
   )
 }
+const bannerMsg = (
+  <div>
+    🚀
+    <a
+      href="https://flightcontrol.dev?ref=blitzjs"
+      rel="noreferrer"
+      target="_blank"
+      className="underline"
+    >
+      Announcing Flightcontrol
+    </a>{" "}
+    - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀
+  </div>
+)
+
+const blitzPivotMsg = (
+  <div>
+    ❗️ Blitz pivots to a framework agnostic toolkit.{" "}
+    <span className="underline">
+      <Link href="/docs/blitz-pivot">Click to read more.</Link>{" "}
+    </span>
+    ❗️
+  </div>
+)
 
 const Header = ({
   className = "",
@@ -80,25 +105,10 @@ const Header = ({
     onNavToggle(newValue)
   }
 
-  const bannerMsg = (
-    <div>
-      🚀
-      <a
-        href="https://flightcontrol.dev?ref=blitzjs"
-        rel="noreferrer"
-        target="_blank"
-        className="underline"
-      >
-        Announcing Flightcontrol
-      </a>{" "}
-      - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀
-    </div>
-  )
-
   const menuLinks = [
     {
       name: "Documentation",
-      href: isDesktop ? "/docs/get-started" : "/docs",
+      href: isDesktop ? "/docs/blitz-pivot" : "/docs",
     },
     {
       name: "Showcase",
@@ -111,7 +121,8 @@ const Header = ({
 
   return (
     <>
-      {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
+      <Banner message={blitzPivotMsg} hasLightBg={hasLightBg} />
+      {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} className="pt-3" />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between lg:mt-4 ${className} ${stickyBgClass}`}>
           <div className="pr-8 xl:pr-12 lg:-mt-3">

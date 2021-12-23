@@ -554,6 +554,21 @@ export default resolver.pipe(
 This mutation will now delete the choices associated with the question
 prior to deleting the question itself.
 
+### `updateChoice` mutation {#update-choice-mutation}
+
+In `app/choices/mutations/updateChoice.ts`, we need to update the
+`UpdateChoice` zod validation schema to use `text` instead of `name`.
+
+```diff
+// app/choices/mutations/updateChoice.ts
+
+const UpdateChoice = z
+  .object({
+    id: z.number(),
+-   name: z.string(),
++   text: z.string(),
+  })
+```
 ## Remove unnecessary file {#remove-unnecessary-file}
 
 Our scaffolding created a mutation file for us that is no longer needed.

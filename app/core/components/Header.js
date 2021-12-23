@@ -61,17 +61,7 @@ const bannerMsg = (
     >
       Announcing Flightcontrol
     </a>{" "}
-    - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀
-  </div>
-)
-
-const blitzPivotMsg = (
-  <div>
-    ❗️ Blitz pivots to a framework agnostic toolkit.{" "}
-    <span className="underline">
-      <Link href="/docs/blitz-pivot">Click to read more.</Link>{" "}
-    </span>
-    ❗️
+    - Easily Deploy Blitz.js and Next.js to AWS 🚀
   </div>
 )
 
@@ -120,7 +110,16 @@ const Header = ({
 
   return (
     <>
-      <Banner message={blitzPivotMsg} hasLightBg={hasLightBg} />
+      <div
+        className={`border-b border-opacity-50 border-primary py-4 ${"text-black bg-yellow-500"}`}
+      >
+        <div className="font-semibold mx-auto px-3 sm:px-6 lg:px-8 text-sm text-center">
+          Blitz is pivoting to framework agnostic toolkit.{" "}
+          <span className="underline">
+            <Link href="/docs/blitz-pivot">Click to learn more.</Link>
+          </span>
+        </div>
+      </div>
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} className="pt-3" />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between lg:mt-4 ${className} ${stickyBgClass}`}>

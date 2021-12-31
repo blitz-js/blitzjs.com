@@ -37,6 +37,9 @@ export function Search({className = ""}) {
     },
     [setIsOpen, setInitialQuery],
   )
+  const ConvertToHtmlTag = (value) => {
+    return value.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+  }
 
   useDocSearchKeyboardEvents({
     isOpen,
@@ -97,15 +100,18 @@ export function Search({className = ""}) {
 
                 // The titles are parset to plain text, so these HTML tags needs to be converted.
                 const hierarchy = {...item.hierarchy}
-                hierarchy.lvl0 = hierarchy.lvl0
-                  .replace(/&amp;/g, "&")
-                  .replace(/&lt;/g, "<")
-                  .replace(/&gt;/g, ">")
+                const {_highlightResult} = item
+
+                hierarchy.lvl0 = ConvertToHtmlTag(hierarchy.lvl0)
+
+                _highlightResult.hierarchy.lvl0.value = ConvertToHtmlTag(
+                  _highlightResult.hierarchy.lvl0.value,
+                )
 
                 return {
-                  ...item,
                   hierarchy,
                   url: `${a.pathname}${hash}`,
+                  ...{_highlightResult, ...item},
                 }
               })
             }}

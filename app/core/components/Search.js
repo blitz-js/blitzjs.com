@@ -37,7 +37,8 @@ export function Search({className = ""}) {
     },
     [setIsOpen, setInitialQuery],
   )
-  const ConvertToHtmlTag = (value) => {
+
+  const convertToHtmlTag = (value) => {
     return value.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
   }
 

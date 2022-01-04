@@ -107,13 +107,19 @@ our
 It includes a simple factory pattern, a command for creating and logging
 in a user, and a few example tests.
 
-## Isolated mutation/query testing
+## Isolated mutation/query testing {#query-testing}
 
-If you want to test your mutations/queries in an isolated manner, you will need to mock the ctx object:
+If you want to test your mutations/queries in an isolated manner, you will
+need to mock the ctx object:
 
 ```ts
 // test/createMockContext.ts
-import { Ctx, getSession, MiddlewareRequest as Req, MiddlewareResponse as Res } from "blitz"
+import {
+  Ctx,
+  getSession,
+  MiddlewareRequest as Req,
+  MiddlewareResponse as Res,
+} from "blitz"
 import httpMocks from "node-mocks-http"
 import { User } from "db"
 
@@ -152,7 +158,7 @@ export default async function createMockContext<C extends Ctx>({
     // make sure to add **your** session's public data
     Object.assign(mockRes.blitzCtx.session.$publicData, {
       id: user.id,
-      role: user.role
+      role: user.role,
     })
   }
 

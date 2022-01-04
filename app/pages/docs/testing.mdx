@@ -159,6 +159,7 @@ export default async function createMockContext<C extends Ctx>({
   return { req: mockReq, res: mockRes, ctx: mockRes.blitzCtx }
 }
 ```
+
 Later in your tests you can use it like this:
 
 ```ts

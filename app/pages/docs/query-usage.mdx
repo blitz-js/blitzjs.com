@@ -215,7 +215,7 @@ import {invokeWithMiddleware} from 'blitz'
 import getProject from 'app/projects/queries/getProject'
 
 export const getServerSideProps = async ({params, req, res}) => {
-  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res}))
+  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res})
   return {props: {project}}
 }
 

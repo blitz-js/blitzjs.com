@@ -6,6 +6,7 @@
       "iconDarkPath": "/img/introduction-white.svg"
     },
     "pages": [
+      "blitz-pivot",
       "get-started",
       "tutorial",
       "learning-path",

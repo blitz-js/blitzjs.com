@@ -50,6 +50,20 @@ const SocialIcons = ({className, variant}) => {
     </div>
   )
 }
+const bannerMsg = (
+  <div>
+    🚀
+    <a
+      href="https://flightcontrol.dev?ref=blitzjs"
+      rel="noreferrer"
+      target="_blank"
+      className="underline"
+    >
+      Announcing Flightcontrol
+    </a>{" "}
+    - Easily Deploy Blitz.js and Next.js to AWS 🚀
+  </div>
+)
 
 const Header = ({
   className = "",
@@ -80,25 +94,10 @@ const Header = ({
     onNavToggle(newValue)
   }
 
-  const bannerMsg = (
-    <div>
-      🚀
-      <a
-        href="https://flightcontrol.dev?ref=blitzjs"
-        rel="noreferrer"
-        target="_blank"
-        className="underline"
-      >
-        Announcing Flightcontrol
-      </a>{" "}
-      - Optimized Deployment for Fullstack Blitz.js and Next.js 🚀
-    </div>
-  )
-
   const menuLinks = [
     {
       name: "Documentation",
-      href: isDesktop ? "/docs/get-started" : "/docs",
+      href: isDesktop ? "/docs/blitz-pivot" : "/docs",
     },
     {
       name: "Showcase",
@@ -111,7 +110,17 @@ const Header = ({
 
   return (
     <>
-      {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} />}
+      <div
+        className={`border-b border-opacity-50 border-primary py-4 ${"text-black bg-yellow-500"}`}
+      >
+        <div className="font-semibold mx-auto px-3 sm:px-6 lg:px-8 text-sm text-center">
+          Blitz is pivoting to framework agnostic toolkit.{" "}
+          <span className="underline">
+            <Link href="/docs/blitz-pivot">Click to learn more.</Link>
+          </span>
+        </div>
+      </div>
+      {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} className="pt-3" />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between lg:mt-4 ${className} ${stickyBgClass}`}>
           <div className="pr-8 xl:pr-12 lg:-mt-3">

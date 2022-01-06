@@ -30,7 +30,7 @@ COPY db/ ./db/
 RUN yarn install --frozen-lockfile
 RUN yarn blitz prisma migrate deploy
 
-COPY . /app/
+COPY . .
 RUN yarn build
 
 EXPOSE ${PORT}

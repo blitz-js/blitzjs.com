@@ -592,6 +592,28 @@ builder.addTransformFilesStep({
 })
 ```
 
+### Running an external command {#running-an-external-command}
+
+In case you have a recipe which should run an external command like
+`blitz prisma generate`, you can use `addRunCommandStep`.
+
+Example usage:
+
+```ts
+builder.addRunCommandStep({
+  stepId: "runCommand",
+  stepName: "Generate prisma client",
+  explanation:
+    "Since we added a new generator to the prisma schema, we have to update the prisma client",
+  command: "blitz prisma generate",
+})
+```
+
+<Card type="info">
+  We have suppressed the command output, so the user will not see the
+  result of the executed command.
+</Card>
+
 ### Publishing {#publishing}
 
 That's all you need to build a recipe! At this point, you can commit and

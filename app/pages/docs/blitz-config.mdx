@@ -135,6 +135,54 @@ module.exports = {
 }
 ```
 
+
+### Log Factory {#log-factory}
+
+If you would like full control over the Blitz Logger, you may specify 
+a `log.loggerFactory` function. This is useful if you would like to attach
+custom transports to your logs, as in the example below.
+
+The `loggerFactory` function receives an object with a `logger` 
+and a `settings` object. The `logger` represents the default logger
+that Blitz would normally use. The `settings` represents the settings that 
+configure the logger that Blitz would normally use. The types for `logger` 
+and `settings` come from the `tslog` package that Blitz uses for its logging operations.
+You may find more information about `tslog` here: https://tslog.js.org
+
+```js
+import { ILogObject } from "tslog";
+
+/*
+  This example is from tslog documentation:
+  https://tslog.js.org/#/?id=transports
+  Consult their documentation for more information about custom transports
+*/
+const transportLogs: ILogObject[] = [];
+function logToTransport(logObject: ILogObject) {
+  transportLogs.push(logObject);
+}
+
+module.exports = {
+  log: {
+    loggerFactory: ({ logger }) => {
+      logger.attachTransport(
+        {
+          silly: logToTransport,
+          debug: logToTransport,
+          trace: logToTransport,
+          info: logToTransport,
+          warn: logToTransport,
+          error: logToTransport,
+          fatal: logToTransport,
+        },
+        "debug"
+      );
+      return logger;
+    },
+  },
+};
+```
+
 ## Codegen {#codegen}
 
 If you want to use custom templates with `blitz generate` instead of the

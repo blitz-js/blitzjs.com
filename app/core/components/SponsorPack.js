@@ -49,13 +49,6 @@ const sponsors = [
     cost: 100,
   },
   {
-    name: "userTrack",
-    href: "https://www.usertrack.net/?ref=blitzjs_web",
-    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/usertrack.png",
-    tier: 4,
-    cost: 100,
-  },
-  {
     name: "MeetKai",
     href: "https://meetkai.com/?ref=blitzjs_web",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/meetkai.png",

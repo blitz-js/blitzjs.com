@@ -28,7 +28,7 @@
     "@sindresorhus/slugify": "2.1.0",
     "@visx/hierarchy": "2.1.2",
     "@visx/responsive": "2.4.1",
-    "blitz": "0.44.0",
+    "blitz": "0.45.3",
     "clsx": "1.1.1",
     "fathom-client": "3.2.0",
     "focus-visible": "5.2.0",

@@ -28,8 +28,9 @@ blitz new my-blitz-app
 ```
 
 Blitz will create a `my-blitz-app` folder in your current folder. You will
-be prompted to pick a form library. For this tutorial, select the
-recommended library `React Final Form`.
+be asked how you want your new app to be. For this tutorial, select all
+the default values by only pressing **Enter** when asked (you'll create a
+Full Blitz app with TypeScript, Yarn and React Final Form).
 
 Let’s look at what `blitz new` created:
 
@@ -124,6 +125,8 @@ These files are:
   the same format as `next.config.js`.
 
 - `tsconfig.json` is our recommended setup for TypeScript.
+
+You can read more about the [file structure here](./file-structure).
 
 ## The development server {#the-development-server}
 
@@ -344,61 +347,6 @@ Your database is now in sync with your schema.
 Now our database is ready and a Prisma client is also generated. Lets move
 on to play with the Prisma client!
 
-## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
-
-Now, let’s hop into the interactive Blitz shell and play around with the
-Prisma database client that Blitz gives you. To start the Blitz console,
-use this command:
-
-```sh
-blitz console
-```
-
-Once you’re in the console, explore the database client:
-
-```sh
-# No questions are in the system yet.
-⚡ > await db.question.findMany()
-[]
-
-# Create a new Question:
-⚡ > let q = await db.question.create({data: {text: "What's new?"}})
-undefined
-
-# See the entire object:
-⚡ > q
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:06:14.959Z,
-  text: "What's new?"
-}
-
-# Or, access individual values on the object:
-⚡ > q.text
-"What's new?"
-
-# Change values by using the update function:
-⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
-{
-  id: 1,
-  createdAt: 2020-06-15T15:06:14.959Z,
-  updatedAt: 2020-06-15T15:13:17.394Z,
-  text: "What's up?"
-}
-
-# db.question.findMany() now displays all the questions in the database:
-⚡ > await db.question.findMany()
-[
-  {
-    id: 1,
-    createdAt: 2020-06-15T15:06:14.959Z,
-    updatedAt: 2020-06-15T15:13:17.394Z,
-    text: "What's up?"
-  }
-]
-```
-
 ## Update generated code for our model attributes {#update-generated-code-for-our-model-attributes}
 
 <Card type="info">
@@ -451,7 +399,7 @@ export const QuestionsList = () => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
-            <Link href={`/questions/${question.id}`}>
+            <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
               <a>{question.name}</a>
             </Link>
           </li>
@@ -503,7 +451,7 @@ export const QuestionsList = () => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
-            <Link href={`/questions/${question.id}`}>
+            <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
 -              <a>{question.name}</a>
 +              <a>{question.text}</a>
             </Link>
@@ -606,6 +554,83 @@ export default resolver.pipe(
 This mutation will now delete the choices associated with the question
 prior to deleting the question itself.
 
+### `updateChoice` mutation {#update-choice-mutation}
+
+In `app/choices/mutations/updateChoice.ts`, we need to update the
+`UpdateChoice` zod validation schema to use `text` instead of `name`.
+
+```diff
+// app/choices/mutations/updateChoice.ts
+
+const UpdateChoice = z
+  .object({
+    id: z.number(),
+-   name: z.string(),
++   text: z.string(),
+  })
+```
+## Remove unnecessary file {#remove-unnecessary-file}
+
+Our scaffolding created a mutation file for us that is no longer needed.
+In order for `blitz console`, `yarn tsc` or `git push` to succeed, you'll
+need to delete `app/choices/mutations/createChoice.ts` (unused) or update
+the CreateChoice zod schema to include the required fields.
+
+## Playing with the Prisma database client {#playing-with-the-prisma-database-client}
+
+Now, let’s hop into the interactive Blitz shell and play around with the
+Prisma database client that Blitz gives you. To start the Blitz console,
+use this command:
+
+```sh
+blitz console
+```
+
+Once you’re in the console, explore the database client:
+
+```sh
+# No questions are in the system yet.
+⚡ > await db.question.findMany()
+[]
+
+# Create a new Question:
+⚡ > let q = await db.question.create({data: {text: "What's new?"}})
+undefined
+
+# See the entire object:
+⚡ > q
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:06:14.959Z,
+  text: "What's new?"
+}
+
+# Or, access individual values on the object:
+⚡ > q.text
+"What's new?"
+
+# Change values by using the update function:
+⚡ > q = await db.question.update({where: {id: 1}, data: {text: "What's up?"}})
+{
+  id: 1,
+  createdAt: 2020-06-15T15:06:14.959Z,
+  updatedAt: 2020-06-15T15:13:17.394Z,
+  text: "What's up?"
+}
+
+# db.question.findMany() now displays all the questions in the database:
+⚡ > await db.question.findMany()
+[
+  {
+    id: 1,
+    createdAt: 2020-06-15T15:06:14.959Z,
+    updatedAt: 2020-06-15T15:13:17.394Z,
+    text: "What's up?"
+  }
+]
+```
+
 #### Now try creating, updating, and deleting questions
 
 Great! Now make sure your app is running. If it isn’t, run `blitz dev` in
@@ -636,11 +661,11 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 ```
 
 Now open `app/questions/mutations/createQuestion.ts` and update the zod
-schema so that the choice data is accepted in the mutation. We also
-need to update the `db.question.create()` call so that the choices will
-be created. After that we need to export the `CreateQuestion` zod schema because
-we will be using it in the next step to create a validation schema for our
-`QuestionForm`.
+schema so that the choice data is accepted in the mutation. We also need
+to update the `db.question.create()` call so that the choices will be
+created. After that we need to export the `CreateQuestion` zod schema
+because we will be using it in the next step to create a validation schema
+for our `QuestionForm`.
 
 ```diff
 // app/questions/mutations/createQuestion.ts
@@ -668,28 +693,38 @@ export default resolver.pipe(
 )
 ```
 
-Next we're going to create a separate file to store the validation schema for our
-`QuestionForm`. In the `app/pages/questions` folder create a new file called `validations.ts` 
-and import `CreateQuestion` from `app/questions/mutations/createQuestion.ts`. Then
-create a new variable called `createQuestionSchema`, set it equal to `CreateQuestion`,
-and export it so we can use it for our `QuestionForm` schema in the next step.
- 
-```diff
-// app/pages/questions/validations.ts
+Next we're going to create a separate file to store the validation schema
+for our `QuestionForm`. In the `app/questions` folder create a new file
+called `validations.ts` and import `CreateQuestion` from
+`./mutations/createQuestion.ts`. Then create a new variable called
+`createQuestionSchema`, set it equal to `CreateQuestion`, and export it so
+we can use it for our `QuestionForm` schema in the next step.
 
-+ import { CreateQuestion } from "app/questions/mutations/createQuestion"
+```diff
+// app/questions/validations.ts
+
++ import { CreateQuestion } from "./mutations/createQuestion"
 
 + export const createQuestionSchema = CreateQuestion
 ```
 
-Now open `app/pages/questions/new.tsx` and import `createQuestionSchema` from
-`app/pages/questions/validations.ts` and set it as the schema for `QuestionForm`.
-Also, we need set `{{text: "", choices: []}}` as our `initialValues` for `QuestionForm`:
+<Card type="info">
+  We create a shared `validations.ts` file because we cannot import
+  anything from a query (or mutation) file other than the query itself
+  into the client. You can read more about why in [Query
+  Usage](https://blitzjs.com/docs/query-usage) and [Mutation
+  Usage](https://blitzjs.com/docs/mutation-usage).
+</Card>
+
+Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
+from `app/questions/validations.ts` and set it as the schema for
+`QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
+`initialValues` for `QuestionForm`:
 
 ```diff
 // app/pages/questions/new.tsx
 
-+ import {createQuestionSchema} from "app/pages/questions/validations"
++ import {createQuestionSchema} from "app/questions/validations"
 
 
       <QuestionForm
@@ -704,7 +739,7 @@ Also, we need set `{{text: "", choices: []}}` as our `initialValues` for `Questi
         onSubmit={async (values) => {
           try {
             const question = await createQuestionMutation(values)
-            router.push(`/questions/${question.id}`)
+            router.push(Routes.ShowQuestionPage({ questionId: question.id }))
           } catch (error) {
             console.error(error)
             return {
@@ -801,7 +836,7 @@ choices of each question. And add this code beneath the `Link` in our
 {
   questions.map((question) => (
     <li key={question.id}>
-      <Link href={`/questions/${question.id}`}>
+      <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
         <a>{question.text}</a>
       </Link>
 +     <ul>
@@ -824,10 +859,13 @@ Now check `/questions` in the browser. **Magic!**
 Open `app/pages/questions/[questionId].tsx` in your editor. First, we’re
 going to improve this page somewhat.
 
-1. Replace `<h1>Question {question.id}</h1>` with
+1. Replace `<title>Question {question.id}</title>` with
+   `<title>{question.text}</title>`.
+
+2. Replace `<h1>Question {question.id}</h1>` with
    `<h1>{question.text}</h1>`.
 
-2. Delete the `pre` element, and copy in our choices list which we wrote
+3. Delete the `pre` element, and copy in our choices list which we wrote
    before:
 
 ```tsx
@@ -973,7 +1011,7 @@ export const Question = () => {
           ))}
         </ul>
 
-        <Link href={`/questions/${question.id}/edit`}>
+        <Link href={Routes.EditQuestionPage({ questionId: question.id })}>
           <a>Edit</a>
         </Link>
 
@@ -982,7 +1020,7 @@ export const Question = () => {
           onClick={async () => {
             if (window.confirm("This will be deleted")) {
               await deleteQuestionMutation({ id: question.id })
-              router.push("/questions")
+              router.push(Routes.QuestionsPage())
             }
           }}
           style={{ marginLeft: "0.5rem" }}
@@ -1053,12 +1091,6 @@ is a special operation that means, "If this item exists, update it. Else
 create it". This is perfect for this case because we didn't require the
 user to add three choices when creating the question. So if later the user
 adds another choice by editing the question, then it'll be created here.
-
-## Cleanup {#cleanup}
-
-In order for `yarn tsc` or `git push` to succeed, you'll need to delete
-`app/choices/mutations/createChoice.ts` (unused) or update the
-CreateChoice zod schema to include the required fields.
 
 ## Conclusion {#conclusion}
 

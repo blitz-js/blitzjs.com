@@ -3,12 +3,12 @@ title: Deploy to a Server on Render.com
 sidebar_label: To Render.com
 ---
 
-1. Add one of the `render.yaml` files shown below
+1. Add one of the `render.yaml` files shown below or [use the render recipe](https://github.com/blitz-js/blitz/tree/canary/recipes/render)
 2. Push code to your GitHub repo
 3. Log in to [Render.com](https://render.com)
-4. Click on the "YAML" menu item, then click the "New from YAML" button
+4. Click on the `New +` button and then the `Blueprint` menu item
 5. Connect your GitHub account then select your blitz app repo
-6. Click approve
+6. Follow the directions on the screen and click apply
 7. Your server + database will be automatically configured and started.
    Each git push will trigger a new deploy
 
@@ -21,7 +21,7 @@ services:
   - type: web
     name: blitzapp
     env: node
-    plan: starter
+    plan: free
     buildCommand: yarn --frozen-lockfile --prod=false && blitz build
     startCommand: blitz start
     envVars:
@@ -42,7 +42,7 @@ services:
   - type: web
     name: blitzapp
     env: node
-    plan: starter
+    plan: free
     buildCommand:
       yarn --frozen-lockfile --prod=false &&
       blitz prisma generate &&
@@ -61,6 +61,6 @@ services:
 
 databases:
   - name: blitzapp-db
-    plan: starter
+    plan: free
 ```
 <!-- prettier-ignore-end -->

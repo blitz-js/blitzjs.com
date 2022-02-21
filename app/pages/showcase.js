@@ -14,7 +14,7 @@ const ShowcasePage = () => {
   }, [navIsOpen])
 
   return (
-    <div className="relative py-1 md:py-3 min-h-screen bg-white dark:bg-purple-deep">
+    <div className="relative pb-1 md:pb-3 min-h-screen bg-white dark:bg-purple-deep">
       <SocialCards imageUrl="/social-homepage.png" />
       <Header
         className="px-6 mx-auto max-w-7xl"

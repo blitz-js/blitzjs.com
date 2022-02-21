@@ -26,7 +26,7 @@ module.exports = (phase, { defaultConfig }) => {
 
 `phase` is the current context in which the configuration is loaded. You
 can see the available phases
-[here](https://github.com/vercel/next.js/blob/canary/packages/next/next-server/lib/constants.ts#L1-L4).
+[here](https://github.com/vercel/next.js/blob/canary/packages/next/shared/lib/constants.ts#L1-L4).
 Phases can be imported from `next/constants`:
 
 ```js
@@ -103,6 +103,8 @@ module.exports = {
 
 ## Logging {#logging}
 
+### Log Level {#log-level}
+
 By default Blitz logs various things at runtime. You can adjust the
 verbosity using the log level setting.
 
@@ -116,6 +118,66 @@ module.exports = {
   },
 }
 ```
+
+### Log Type {#log-type}
+
+It is also possible to adjust the logging type, which could be helpful if
+you prefer to forward the logs in JSON format.
+
+- Default: `pretty`
+- Options: `pretty` | `json` | `hidden`
+
+```js
+module.exports = {
+  log: {
+    type: "pretty",
+  },
+}
+```
+
+## Codegen {#codegen}
+
+If you want to use custom templates with `blitz generate` instead of the
+default ones (e.g. with different styles), you can provide a path to the
+local template directory:
+
+```js
+module.exports = {
+  codegen: {
+    templateDir: "./templates",
+  },
+}
+```
+
+The template directory should have the following structure:
+
+```
+.
+├── form
+│   └── __ModelName__Form.tsx
+├── mutation
+│   └── __input__.ts
+├── mutations
+│   ├── create__ModelName__.ts
+│   ├── delete__ModelName__.ts
+│   └── update__ModelName__.ts
+├── page
+│   ├── __modelIdParam__
+│   │   └── edit.tsx
+│   ├── __modelIdParam__.tsx
+│   ├── index.tsx
+│   └── new.tsx
+├── queries
+│   ├── get__ModelName__.ts
+│   └── get__ModelNames__.ts
+└── query
+    └── __name__.ts
+```
+
+If some folders are omitted in your custom template directory,
+`blitz generate` will fallback to the default templates. You can check
+them out
+[here](https://github.com/blitz-js/blitz/tree/canary/packages/generator/templates).
 
 ## CLI {#cli}
 

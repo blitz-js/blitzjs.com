@@ -10,7 +10,8 @@ Use this command to install a Blitz Recipe into your project.
 Supports both official recipes and custom third-party recipes. Recipe
 names can be specified in any of the following formats:
 
-- `blitz install` select and install from the list of official Blitz recipes
+- `blitz install` select and install from the list of official Blitz
+  recipes
 
 - `blitz install official-recipe` for an official recipe from the Blitz
   team
@@ -19,6 +20,13 @@ names can be specified in any of the following formats:
 - `blitz install github-user/my-published-recipe` for a custom recipe
   hosted on GitHub
 
+Also, you can pass arguments to recipe itself in the form of `key=value`
+(if it accept them):
+
+```bash
+$ blitz install my-recipe key=value
+```
+
 For more information about recipes, see the official docs for
 [installing recipes](using-recipes) and
 [writing your own.](writing-recipes)
@@ -26,6 +34,13 @@ For more information about recipes, see the official docs for
 | Argument | Required | Description                                                                              |
 | -------- | -------- | ---------------------------------------------------------------------------------------- |
 | `name`   | No       | The name of the recipe to install, a path to a local recipe, or a GitHub repository name |
+
+#### Options
+
+| Argument | Short | Description                                                                             | Default |
+| -------- | ----- | --------------------------------------------------------------------------------------- | ------- |
+| `--yes`  | `-y`  | Install the recipe automatically without user confirmation.                             | `false` |
+| `--env`  | `-e`  | Set app environment name. [Read more](/docs/environment-variables#custom-environments). | None    |
 
 #### Example Output
 

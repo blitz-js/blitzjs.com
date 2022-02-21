@@ -32,7 +32,7 @@ const Home = ({randomContributors}) => {
           <a name="top" aria-hidden>
             {null}
           </a>
-          <div className="relative grid grid-cols-1 py-1 md:py-3 gap-y-24 xl:gap-y-44">
+          <div className="relative grid grid-cols-1 pb-1 md:pb-3 gap-y-24 xl:gap-y-44">
             <div className="z-30 text-white col-span-full">
               <Header
                 className="px-6 mx-auto max-w-7xl"
@@ -320,8 +320,8 @@ const Home = ({randomContributors}) => {
                   Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
-                  You can use any database you want. Prisma 2 is the default database client, but
-                  you can remove that and use anything else like Fauna or DynamoDB.
+                  You can use any database you want. Prisma is the default database client, but you
+                  can remove that and use anything else like Fauna or DynamoDB.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="fileCode" title="Recipes">
                   One command to install code and/or packages into your blitz app. Examples: `blitz

@@ -16,7 +16,7 @@ export function DocumentationLayout({children, ...props}) {
   }, [navIsOpen])
 
   return (
-    <div className="bg-white dark:bg-purple-deep py-1 md:py-3">
+    <div className="bg-white dark:bg-purple-deep pb-1 md:pb-3">
       <Title>{props?.meta?.title}</Title>
 
       <SocialCards imageUrl="/social-docs.png" />

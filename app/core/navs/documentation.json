@@ -6,6 +6,7 @@
       "iconDarkPath": "/img/introduction-white.svg"
     },
     "pages": [
+      "blitz-pivot",
       "get-started",
       "tutorial",
       "learning-path",
@@ -157,7 +158,14 @@
       "iconPath": "/img/deploying-to-production.svg",
       "iconDarkPath": "/img/deploying-to-production-white.svg"
     },
-    "pages": ["deploy-render", "deploy-heroku", "deploy-vercel", "deploy-railway"]
+    "pages": [
+      "deploy-render",
+      "deploy-heroku",
+      "deploy-vercel",
+      "deploy-railway",
+      "deploy-qovery",
+      "deploy-docker"
+    ]
   },
   {
     "title": {

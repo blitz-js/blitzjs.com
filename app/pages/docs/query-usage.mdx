@@ -127,16 +127,28 @@ rendered on the server.
 The following example demonstrates how prefetching works in Blitz.
 
 ```tsx
-import { QueryClient, getQueryKey, useQuery, dehydrate } from "blitz"
+import {
+  QueryClient,
+  getQueryKey,
+  useQuery,
+  invokeWithMiddleware,
+  dehydrate,
+} from "blitz"
 
 import getProject from "app/projects/queries/getProject"
 
 export const getServerSideProps = async (context) => {
   const queryClient = new QueryClient()
   // IMPORTANT: the second argument to getQueryKey must exactly match the second argument to useQuery down below
-  const queryKey = getQueryKey(getProject, { where: { id: context.params?.projectId } })
+  const queryKey = getQueryKey(getProject, {
+    where: { id: context.params?.projectId },
+  })
   await queryClient.prefetchQuery(queryKey, () =>
-    getProject({ where: { id: context.params?.projectId } })
+    invokeWithMiddleware(
+      getProject,
+      { where: { id: context.params?.projectId } },
+      context
+    )
   )
 
   return {
@@ -146,7 +158,7 @@ export const getServerSideProps = async (context) => {
   }
 }
 
-function ProjectPage() {
+function ProjectPage(props) {
   const [project] = useQuery(getProject, { where: { id: props.id } })
   return <div>{project.name}</div>
 }
@@ -161,6 +173,11 @@ in the query key and resolver along with any relevant input arguments.
 Once the data has been fetched, dehydrate the queries to the query client
 using the `dehydrate` method and pass the result to the page via the
 `dehydratedState` prop.
+
+> **Note**: if you want to prefetch an infinite query, you'll have to use
+> `prefetchInfiniteQuery` instead of `prefetchQuery` and
+> [`getInfiniteQueryKey`](/docs/resolver-client-utilities#get-infinite-query-key)
+> instead of `getQueryKey`.
 
 ## On the Server {#on-the-server}
 
@@ -198,7 +215,7 @@ import {invokeWithMiddleware} from 'blitz'
 import getProject from 'app/projects/queries/getProject'
 
 export const getServerSideProps = async ({params, req, res}) => {
-  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res}))
+  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res})
   return {props: {project}}
 }
 

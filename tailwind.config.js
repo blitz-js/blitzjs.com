@@ -181,6 +181,7 @@ module.exports = {
               color: "#280088",
               backgroundColor: "#f2f0fd",
               borderRadius: 3,
+              overflowWrap: "break-word",
             },
             "pre code": {
               color: theme("colors.black"),

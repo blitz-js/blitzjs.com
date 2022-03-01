@@ -159,6 +159,7 @@
       "iconDarkPath": "/img/deploying-to-production-white.svg"
     },
     "pages": [
+      "deploy-flightcontrol",
       "deploy-render",
       "deploy-heroku",
       "deploy-vercel",

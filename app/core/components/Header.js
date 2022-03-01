@@ -105,7 +105,7 @@ const Header = ({
     },
     {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
     {name: "Swag", href: "https://store.blitzjs.com"},
-    {name: "Flightcontrol Cloud", href: "https://flightcontrol.dev"},
+    {name: "Deploy with Flightcontrol", href: "https://flightcontrol.dev?ref=blitzjs"},
   ]
 
   return (
@@ -151,14 +151,6 @@ const Header = ({
                 </NavLink>
               )
             })}
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/sponsors/blitz-js"
-            >
-              <FaHeart className="inline mr-1 align-text-top" /> Sponsor
-              <FiArrowUpRight size="0.70rem" className="opacity-50 absolute top-2 right-0" />
-            </NavLink>
           </div>
           <div className="flex lg:text-base xl:space-x-4">
             <Search className="self-center" />

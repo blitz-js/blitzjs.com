@@ -10,7 +10,7 @@ const pageTokenized = tokenize.jsx(
 import { Link, Routes, useRouter, useMutation, BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 // Notice how we import the server function directly
-import createProject, {CreateProject} from "app/projects/mutations/createProject"
+import createProject, { CreateProject } from "app/projects/mutations/createProject"
 import { ProjectForm } from "app/projects/components/ProjectForm"
 
 const NewProjectPage: BlitzPage = () => {

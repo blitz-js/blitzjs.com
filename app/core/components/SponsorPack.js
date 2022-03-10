@@ -48,6 +48,13 @@ const sponsors = [
     tier: 4,
     cost: 100,
   },
+  {
+    name: "JDLT",
+    href: "https://jdlt.co.uk/?ref=blitzjs_web",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/jdlt.png",
+    tier: 4,
+    cost: 100,
+  },
 ]
 
 const pack = {

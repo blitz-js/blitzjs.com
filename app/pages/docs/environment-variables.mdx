@@ -7,7 +7,7 @@ Blitz comes with built-in support for environment variables, which allows
 you to do the following:
 
 - [Use `.env*` files to load environment variables](#loading-environment-variables)
-- [Expose environment variables to the browser by prefixing with `BLITZ_PUBLIC_`](#exposing-environment-variables-to-the-browser)
+- [Expose environment variables to the browser by prefixing with `NEXT_PUBLIC_`](#exposing-environment-variables-to-the-browser)
 
 ## Loading Environment Variables {#loading-environment-variables}
 
@@ -56,45 +56,28 @@ browser.
 
 There are two ways you can expose a variable to the browser.
 
-### Option 1: `BLITZ_PUBLIC_` Prefix {#option-1-blitz-public-prefix}
-
-Prefix the variable with `BLITZ_PUBLIC_` or `NEXT_PUBLIC_`. For example:
+If you want to expose a variable to the browser, you can prefix it with
+`NEXT_PUBLIC_`. For example:
 
 ```bash
-BLITZ_PUBLIC_ANALYTICS_ID=abcdefghijk
+NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 ```
 
 The value will be inlined into JavaScript sent to the browser because of
-the `BLITZ_PUBLIC_` prefix.
+the `NEXT_PUBLIC_` prefix.
 
 ```jsx
 // pages/index.js
 import setupAnalyticsService from "../lib/my-analytics-service"
 
-// BLITZ_PUBLIC_ANALYTICS_ID can be used here as it's prefixed by BLITZ_PUBLIC_
-setupAnalyticsService(process.env.BLITZ_PUBLIC_ANALYTICS_ID)
+// NEXT_PUBLIC_ANALYTICS_ID can be used here as it's prefixed by NEXT_PUBLIC_
+setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
   return <h1>Hello World</h1>
 }
 
 export default HomePage
-```
-
-### Option 2: `env` in `blitz.config.js` {#option-2-env-in-blitz-config-js}
-
-Any keys defined in `env` in your Blitz config will be inlined into
-JavaScript sent to the browser.
-
-```js
-// blitz.config.js
-module.exports = {
-  // Env vars defined here will be PUBLIC and included in the client JS bundle
-  env: {
-    STRIPE_KEY: process.env.STRIPE_KEY,
-    SENTRY_DSN: process.env.SENTRY_DSN,
-  },
-}
 ```
 
 ## Different Values per Environment {#different-values-per-environment}

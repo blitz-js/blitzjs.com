@@ -5,17 +5,7 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": [
-      "blitz-pivot",
-      "get-started",
-      "tutorial",
-      "learning-path",
-      "what-is-nextjs",
-      "why-blitz",
-      "migrating-to-blitz",
-      "tradeoffs",
-      "stickers"
-    ]
+    "pages": ["get-started", "learning-path", "why-blitz", "stickers"]
   },
   {
     "title": {

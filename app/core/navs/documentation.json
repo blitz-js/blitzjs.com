@@ -41,11 +41,11 @@
   },
   {
     "title": {
-      "title": "@blitzjs/next",
+      "title": "Framework Adapters",
       "iconPath": "/img/pages.svg",
       "iconDarkPath": "/img/pages-white.svg"
     },
-    "pages": ["error-boundary", "error-pages", "get-static-props", "get-server-side-props"]
+    "pages": ["blitzjs-next"]
   },
   {
     "title": {

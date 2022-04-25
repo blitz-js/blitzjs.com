@@ -36,7 +36,7 @@ export default resolver.pipe(
   resolver.authorize(),
   // highlight-end
   async (input, ctx) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    // *: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({ data: input })
     return projects
   }
@@ -63,7 +63,7 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
   ctx.session.$authorize(),
   // highlight-end
 
-  // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+  // *: in multi-tenant app, you must add validation to ensure correct tenant
   const projects = await db.projects.create({data})
   return projects
 }
@@ -95,7 +95,7 @@ export default resolver.pipe(
   // highlight-end
   resolver.authorize(),
   async (input, ctx) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    // *: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({ data: input })
     return projects
   }

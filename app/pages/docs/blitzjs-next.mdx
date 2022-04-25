@@ -3,10 +3,10 @@ title: blitzjs/next
 sidebar_label: blitzjs/next
 ---
 
-#### Overview
+## Overview {#blitzjs-next-overview}
 The @blitzjs/next adapter exposes functions & components specific for the next.js framework.
 
-#### Setup 
+## Setup {#setup-blitzjs-next}
 You can install `@blitzjs/next` by running the following command:
 
 ```bash
@@ -14,7 +14,7 @@ npm i @blitzjs/next # yarn add @blitzjs/next # pnpm add @blitzjs/next
 ```
 
 
-##### Client
+## Client {#blitzjs-next-client}
 
 Inside `app > blitz-client.ts`
 
@@ -66,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default withBlitz(MyApp)
 ```
 
-##### Server
+## Server {#blitzjs-next-server}
 
 Inside `app > blitz-server.ts`
 
@@ -78,7 +78,7 @@ export const { gSSP, gSP, api } = setupBlitzServer({
 
 The `gSSP`, `gSP` & `api` functions all pass down the context of the session
 
-
+#### gSP {#blitzjs-next-gsp}
 ```ts
 import {gSP} from "app/blitz-server"
 
@@ -96,7 +96,7 @@ export const getStaticProps = gSP(async ({ctx}) => {
   }
 })
 ```
-
+#### gSSP {#blitzjs-next-gssp}
 ```ts
 import {gSSP} from "app/blitz-server"
 
@@ -109,7 +109,7 @@ export const getServerSideProps = gSSP(async ({ctx}) => {
   }
 })
 ```
-
+#### api {#blitzjs-next-api}
 ```ts
 import {api} from "app/blitz-server"
 

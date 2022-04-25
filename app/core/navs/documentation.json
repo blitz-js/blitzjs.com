@@ -35,6 +35,7 @@
       "error-handling",
       "testing",
       "utilities",
+      "client-and-server",
       "troubleshooting"
     ]
   },

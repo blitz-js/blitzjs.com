@@ -35,7 +35,6 @@
       "error-handling",
       "testing",
       "utilities",
-      "client-and-server",
       "troubleshooting"
     ]
   },
@@ -62,6 +61,8 @@
       "iconDarkPath": "/img/queries-white.svg"
     },
     "pages": [
+      "rpc-overview",
+      "rpc-setup",
       "query-resolvers",
       "query-usage",
       "mutation-resolvers",

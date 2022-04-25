@@ -16,7 +16,7 @@ handler or effect.
 [`react-query`](https://github.com/tannerlinsley/react-query).
 
 ```tsx
-import {useMutation} from 'blitz'
+import {useMutation} from '@blitzjs/rpc'
 import updateProject from 'app/projects/mutations/updateProject'
 
 function (props) {
@@ -131,7 +131,7 @@ function provided by `blitz`.
 ##### Example
 
 ```tsx
-import { invalidateQuery } from "blitz" // highlight-line
+import { invalidateQuery } from "@blitzjs/rpc" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({ products }) {

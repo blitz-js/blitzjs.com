@@ -5,7 +5,7 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": ["get-started", "learning-path", "why-blitz", "stickers"]
+    "pages": ["get-started", "get-started-nextjs", "learning-path", "why-blitz", "stickers"]
   },
   {
     "title": {
@@ -35,7 +35,6 @@
       "error-handling",
       "testing",
       "utilities",
-      "client-and-server",
       "troubleshooting"
     ]
   },
@@ -53,7 +52,7 @@
       "iconPath": "/img/shield-purple.svg",
       "iconDarkPath": "/img/shield-white.svg"
     },
-    "pages": ["auth", "session-management", "authorization", "auth-utils"]
+    "pages": ["auth", "auth-setup", "session-management", "authorization", "auth-utils"]
   },
   {
     "title": {
@@ -62,6 +61,8 @@
       "iconDarkPath": "/img/queries-white.svg"
     },
     "pages": [
+      "rpc-overview",
+      "rpc-setup",
       "query-resolvers",
       "query-usage",
       "mutation-resolvers",

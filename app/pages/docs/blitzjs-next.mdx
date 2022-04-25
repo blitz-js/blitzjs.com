@@ -1,10 +1,10 @@
 ---
-title: blitzjs/next
-sidebar_label: blitzjs/next
+title: "@blitzjs/next"
+sidebar_label: "@blitzjs/next"
 ---
 
 ## Overview {#blitzjs-next-overview}
-The @blitzjs/next adapter exposes functions & components specific for the next.js framework.
+The `@blitzjs/next` adapter exposes functions & components specific for the Next.js framework.
 
 ## Setup {#setup-blitzjs-next}
 You can install `@blitzjs/next` by running the following command:
@@ -19,12 +19,16 @@ npm i @blitzjs/next # yarn add @blitzjs/next # pnpm add @blitzjs/next
 Inside `app > blitz-client.ts`
 
 ```ts
+import { setupBlitzClient } from "@blitzjs/next"
+
 export const { withBlitz } = setupBlitzClient({
   plugins: [],
 })
 ```
 
 Then inside `pages > _app.tsx` wrap `MyApp` function with the `withBlitz` HOC component.
+
+**_Note: An `<ErrorBoundary />` provider and `<ErrorComponent />` component is supplied by `@blitzjs/next`_**
 
 ```ts
 import { ErrorFallbackProps, ErrorComponent, ErrorBoundary } from "@blitzjs/next"
@@ -71,12 +75,14 @@ export default withBlitz(MyApp)
 Inside `app > blitz-server.ts`
 
 ```ts
+import { setupBlitzServer } from "@blitzjs/next"
+
 export const { gSSP, gSP, api } = setupBlitzServer({
   plugins: [],
 })
 ```
 
-The `gSSP`, `gSP` & `api` functions all pass down the context of the session
+The `gSSP`, `gSP` & `api` functions all pass down the context of the session if you're using the auth plugin. Read more about the auth plugin here [@blitzjs/auth](/docs/auth).
 
 #### gSP {#blitzjs-next-gsp}
 ```ts
@@ -118,3 +124,5 @@ export default api(async (req, res, ctx) => {
 })
 
 ```
+
+_For more information about Next.js API routes, visit their docs at [https://nextjs.org/docs/api-routes/introduction](https://nextjs.org/docs/api-routes/introduction)_

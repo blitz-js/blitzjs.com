@@ -113,7 +113,7 @@ You can also get the session context inside `getServerSideProps` or inside
 API routes with `getSession` like this:
 
 ```ts
-import { getSession } from "blitz"
+import { getSession } from "@blitzjs/auth"
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
@@ -134,7 +134,7 @@ component above it in the tree. Or you can set
 `useSession({suspense: false})` to disable suspense.
 
 ```ts
-import { useSession } from "blitz"
+import { useSession } from "@blitzjs/auth"
 
 function SomeComponent() {
   const session = useSession()
@@ -151,9 +151,10 @@ can pass the session public data to `useSession()` with the
 `initialPublicData` option.
 
 ```ts
-import { useSession, GetServerSideProps } from "blitz"
+import { useSession, getSession } from "@blitzjs/auth"
+import { gSSP } from "app/blitz-server"
 
-export const getServerSideProps: GetServerSideProps = async ({
+export const getServerSideProps = async gSSP({
   req,
   res,
 }) => {
@@ -216,7 +217,8 @@ If using TypeScript, first update the `Session.PublicData` type in
 `types.ts` like this:
 
 ```diff
-import {DefaultCtx, SessionContext, SimpleRolesIsAuthorized} from "blitz"
+import {DefaultCtx} from "blitz"
+import {SessionContext, SimpleRolesIsAuthorized} from "@blitzjs/auth"
 import {User} from "db"
 
 // Note: You should switch to Postgres and then use a DB enum for role type
@@ -226,6 +228,9 @@ declare module "blitz" {
   export interface Ctx extends DefaultCtx {
     session: SessionContext
   }
+}
+
+declare module "@blitzjs/auth" {
   export interface Session {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
@@ -254,7 +259,7 @@ ctx.session.$setPublicData({ orgId: 1 })
 To access public data on the client:
 
 ```ts
-import { useSession } from "blitz"
+import { useSession } from "@blitzjs/auth"
 
 function SomeComponent() {
   const session = useSession()
@@ -358,7 +363,7 @@ When making a request from the client to an API route, you need to include
 the anti-CSRF token in the `anti-csrf` header like this:
 
 ```ts
-import { getAntiCSRFToken } from "blitz"
+import { getAntiCSRFToken } from "@blitzjs/auth"
 
 const antiCSRFToken = getAntiCSRFToken()
 
@@ -370,7 +375,7 @@ if (antiCSRFToken) {
 And then you can get the sessionContext in the API route like this:
 
 ```ts
-import { getSession } from "blitz"
+import { getSession } from "@blitzjs/auth"
 
 export default async function ({ req, res }) {
   const session = await getSession(req, res)

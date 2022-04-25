@@ -52,7 +52,7 @@
       "iconPath": "/img/shield-purple.svg",
       "iconDarkPath": "/img/shield-white.svg"
     },
-    "pages": ["auth", "session-management", "authorization", "auth-utils"]
+    "pages": ["auth", "auth-setup", "session-management", "authorization", "auth-utils"]
   },
   {
     "title": {

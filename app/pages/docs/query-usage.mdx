@@ -21,7 +21,7 @@ automatically provides awesome features such as automatic caching and
 revalidation.
 
 ```ts
-import { useQuery } from "blitz"
+import { useQuery } from "@blitzjs/rpc"
 import getProject from "app/projects/queries/getProject"
 
 function App() {
@@ -106,7 +106,7 @@ All queries are automatically cached, so both of the following will cache
 the `getProject` query.
 
 ```ts
-import { invoke } from "blitz"
+import { invoke } from "@blitzjs/rpc"
 
 const project = await invoke(getProject, { where: { id: props.id } })
 ```
@@ -133,7 +133,7 @@ import {
   useQuery,
   invokeWithMiddleware,
   dehydrate,
-} from "blitz"
+} from "@blitzjs/rpc"
 
 import getProject from "app/projects/queries/getProject"
 
@@ -211,15 +211,19 @@ which will ensure appropriate middleware is run before/after your query
 function.
 
 ```tsx
-import {invokeWithMiddleware} from 'blitz'
-import getProject from 'app/projects/queries/getProject'
+import { invokeWithMiddleware } from "blitz"
+import getProject from "app/projects/queries/getProject"
 
-export const getServerSideProps = async ({params, req, res}) => {
-  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res}))
-  return {props: {project}}
+export const getServerSideProps = async ({ params, req, res }) => {
+  const project = await invokeWithMiddleware(
+    getProject,
+    { where: { id: params.projectId } },
+    { req, res }
+  )
+  return { props: { project } }
 }
 
-function ProjectPage ({project}) {
+function ProjectPage({ project }) {
   return <div>{project.name}</div>
 }
 

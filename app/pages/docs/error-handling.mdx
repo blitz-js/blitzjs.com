@@ -65,12 +65,8 @@ It looks something like this:
 
 ```tsx
 // app/pages/_app.tsx
-import {
-  AppProps,
-  ErrorBoundary,
-  ErrorComponent,
-  useQueryErrorResetBoundary,
-} from "blitz"
+import { AppProps, ErrorBoundary, ErrorComponent } from "@blitzjs/next"
+import { useQueryErrorResetBoundary } from "@blitzjs/rpc"
 import LoginForm from "app/auth/components/LoginForm"
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -172,8 +168,3 @@ can handle the error in your form submit handler like this.
   }}
 />
 ```
-
-## Error Pages {#error-pages}
-
-See the [Error Pages documentation](./error-pages) to learn about custom
-error pages and error fallback components.

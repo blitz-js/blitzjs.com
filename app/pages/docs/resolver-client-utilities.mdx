@@ -11,7 +11,7 @@ components.
 ### Example {#example}
 
 ```tsx
-import { invoke } from "blitz"
+import { invoke } from "@blitzjs/rpc"
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({ products }) {
@@ -61,7 +61,7 @@ for the automatic refetch.
 ### Example {#example-1}
 
 ```tsx
-import { invalidateQuery } from "blitz" // highlight-line
+import { invalidateQuery } from "@blitzjs/rpc" // highlight-line
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({ products }) {
@@ -113,7 +113,7 @@ documentation.
 ### Example {#example-2}
 
 ```tsx
-import { getQueryKey, queryClient } from "blitz"
+import { getQueryKey, queryClient } from "@blitzjs/rpc"
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({ products }) {
@@ -149,7 +149,7 @@ documentation.
 ### Example {#example-3}
 
 ```tsx
-import { getQueryKey, queryClient } from "blitz"
+import { getQueryKey, queryClient } from "@blitzjs/rpc"
 import getInfiniteProducts from "app/products/queries/getInfiniteProducts"
 
 const Page = function ({ products }) {
@@ -205,7 +205,7 @@ causing a refetch. Disable refetch by passing an options object
 ### Example {#example-4}
 
 ```tsx
-import { setQueryData } from "blitz"
+import { setQueryData } from "@blitzjs/rpc"
 
 export default function (props: { query: { id: number } }) {
   const [product] = useQuery(getProduct, {

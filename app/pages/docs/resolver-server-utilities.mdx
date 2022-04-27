@@ -52,7 +52,7 @@ export pipe(
 ### Example {#example}
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -147,7 +147,7 @@ validating the input data at runtime.
 ### Example {#example-1}
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import * as z from "zod"
 
 export const CreateProject = z.object({
@@ -191,7 +191,7 @@ context object.
 ### Example {#example-2}
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 
 export default resolver.pipe(
   // highlight-start
@@ -226,7 +226,7 @@ This is a handy utility for query pagination
 ### Example {#example-3}
 
 ```ts
-import { paginate, Ctx } from "blitz"
+import { paginate, Ctx } from "@blitzjs/rpc"
 import db, { Prisma } from "db"
 
 interface GetProjectSInput
@@ -305,8 +305,8 @@ ensures appropriate middleware is run before/after your resolver.
 ### Example {#example-4}
 
 ```tsx
+import { invokeWithMiddleware } from "@blitzjs/rpc"
 import {
-  invokeWithMiddleware,
   GetServerSideProps,
   Link,
   BlitzPage,
@@ -356,7 +356,11 @@ export default Page
 ### API {#api-4}
 
 ```js
-const results = await invokeWithMiddleware(resolver, resolverInputArguments, {req, res})
+const results = await invokeWithMiddleware(
+  resolver,
+  resolverInputArguments,
+  { req, res }
+)
 ```
 
 #### Arguments

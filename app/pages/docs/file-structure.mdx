@@ -13,6 +13,8 @@ sidebar_label: File Structure
 
 ```
 ├── app/
+│   ├── blitz-client.ts
+│   ├── blitz-server.ts
 │   ├── core/
 │   │   ├── components/
 │   │   │   ├── Form.tsx
@@ -21,20 +23,6 @@ sidebar_label: File Structure
 │   │   │   └── useCurrentUser.ts
 │   │   └── layouts/
 │   │       └── Layout.tsx
-│   ├── pages/
-│   │   ├── 404.tsx
-│   │   ├── _app.tsx
-│   │   ├── _document.tsx
-│   │   ├── index.test.tsx
-│   │   ├── index.tsx
-│   │   └── projects/
-│   │       ├── [id]/
-│   │       │   └── edit.js
-│   │       ├── [id].js
-│   │       ├── index.js
-│   │       └── new.js
-│   ├── api/
-│   │   └── stripe-webhook.js
 │   ├── auth/
 │   │   ├── components/
 │   │   │   ├── LoginForm.tsx
@@ -66,6 +54,20 @@ sidebar_label: File Structure
 │       └── queries/
 │           ├── getProject.js
 │           └── getProjects.js
+├── pages/
+│   ├── api/
+│   │   └── stripe-webhook.js
+│   ├── 404.tsx
+│   ├── _app.tsx
+│   ├── _document.tsx
+│   ├── index.test.tsx
+│   ├── index.tsx
+│   └── projects/
+│       ├── [id]/
+│       │   └── edit.js
+│       ├── [id].js
+│       ├── index.js
+│       └── new.js
 ├── db/
 │   ├── index.ts
 │   ├── schema.prisma
@@ -98,15 +100,10 @@ Contains all your core application code.
     `projects/`, `users/`, `billing/`, etc.
   - All other folders like `components/` and `hooks/` go inside one of the
     above domain context folders
-- Special Folder Names
-  - Can exist at any level of the hierarchy inside `app`.
-  - `pages/` expose a React component at a URL. Follows the same semantics
-    as the Next.js `pages/` folder.
-  - `api/` expose a Node.js request handler at URL. Same semantics as
-    Next.js `pages/api/` folder.
-  - `queries/` and `mutations/` are for your Blitz queries and mutations.
-    Each query and mutation is exposed at a URL corresponding to its file
-    path.
+- `queries/` and `mutations/` are for your Blitz queries and mutations.
+  Each query and mutation is exposed at a URL corresponding to its file
+  path.
+- `blitz-client.ts` and `blitz-server.ts` contain Blitz Toolkit setup.
 
 #### `db`
 
@@ -122,32 +119,18 @@ configuration.
 
 #### `pages`
 
-The top level `pages` folder and all nested `pages` folders inside `app`
-are merged together at build time. The build will fail if the same route
-is defined in two places.
-
-- This top level pages folder is optional.
-- Has the same semantics as the Next.js `pages` folder. All files in here
-  are mapped to the url corresponding to their file paths.
-- While you can place any route files here, we recommend placing route
-  files inside `app`. But if you want, you can instead place all your
-  route files in this top level folders instead of being spread out in
-  various folders inside `app`
+Has the same semantics as the Next.js `pages` folder. All files in here
+are mapped to the url corresponding to their file paths.
 
 #### `api`
 
-Same as Next.js `pages/api` folder, but not nested inside pages.
-
-And like the `pages` folder, the top level `api` folder and all nested
-`api` folders inside `app` are merged together at build time.
+Any file inside the folder `pages/api` is mapped to `/api/*` and will be
+treated as an API endpoint instead of a page. They are server-side only
+bundles and won't increase your client-side bundle size.
 
 #### `public`
 
 All files in here are served statically from your app's root URL
-
-#### `blitz.config.js`
-
-A configuration file with the same format as `next.config.js`
 
 ### Other Notes {#other-notes}
 

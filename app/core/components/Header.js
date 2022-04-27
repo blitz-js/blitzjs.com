@@ -105,12 +105,12 @@ const Header = ({
     },
     {name: "Releases", href: "https://github.com/blitz-js/blitz/releases"},
     {name: "Swag", href: "https://store.blitzjs.com"},
-    {name: "Flightcontrol Cloud", href: "https://flightcontrol.dev"},
+    {name: "Deploy with Flightcontrol", href: "https://flightcontrol.dev?ref=blitzjs"},
   ]
 
   return (
     <>
-      <div
+      {/* <div
         className={`border-b border-opacity-50 border-primary py-4 ${"text-black bg-yellow-500"}`}
       >
         <div className="font-semibold mx-auto px-3 sm:px-6 lg:px-8 text-sm text-center">
@@ -119,7 +119,7 @@ const Header = ({
             <Link href="/docs/blitz-pivot">Click to learn more.</Link>
           </span>
         </div>
-      </div>
+      </div> */}
       {bannerMsg && <Banner message={bannerMsg} hasLightBg={hasLightBg} className="pt-3" />}
       <nav className={`${stickyBgClass ? "sticky top-0 z-50" : ""}`}>
         <div className={`flex items-center justify-between lg:mt-4 ${className} ${stickyBgClass}`}>
@@ -151,14 +151,6 @@ const Header = ({
                 </NavLink>
               )
             })}
-            <NavLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/sponsors/blitz-js"
-            >
-              <FaHeart className="inline mr-1 align-text-top" /> Sponsor
-              <FiArrowUpRight size="0.70rem" className="opacity-50 absolute top-2 right-0" />
-            </NavLink>
           </div>
           <div className="flex lg:text-base xl:space-x-4">
             <Search className="self-center" />

@@ -141,8 +141,6 @@ const hashedToken = hash256(token)
 [secure-password](https://github.com/emilbayes/secure-password) to provide
 a nice way to hash passwords and verify password hashes.
 
-SecurePassword.hash will return a different hash when given the same string, hence the necessity of SecurePassword.verify to compare hashs.
-
 ```ts
 import { SecurePassword } from "blitz"
 
@@ -156,6 +154,8 @@ This is used when a user sets a new password.
 
 It takes a password string and returns a secure hash for storing in your
 database.
+
+SecurePassword.hash will return a different hash when given the same string, hence the necessity of SecurePassword.verify to compare hashs.
 
 #### `SecurePassword.verify(passwordHash: string, password: string) => Promise<ResultCode>`
 

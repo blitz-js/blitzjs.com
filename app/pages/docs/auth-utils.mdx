@@ -125,6 +125,8 @@ This is a convenience wrapper that uses the node
 the `sha256` algorithm. It is used for things like hashing password reset
 tokens before saving them in the database.
 
+Hash256 is also useful for storing strings like API keys in the database because the returned hash will always be the same for a given string. Therefore, you can still verify that an API key exists in the database when the only value you have to reference is the hashed key.
+
 #### Example Usage
 
 ```ts
@@ -138,6 +140,8 @@ const hashedToken = hash256(token)
 `SecurePassword` is a convenience wrapper around
 [secure-password](https://github.com/emilbayes/secure-password) to provide
 a nice way to hash passwords and verify password hashes.
+
+SecurePassword.hash will return a different hash when given the same string, hence the necessity of SecurePassword.verify to compare hashs.
 
 ```ts
 import { SecurePassword } from "blitz"

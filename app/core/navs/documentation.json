@@ -5,7 +5,7 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": ["get-started", "get-started-nextjs", "learning-path", "why-blitz", "stickers"]
+    "pages": ["get-started", "learning-path", "why-blitz", "stickers"]
   },
   {
     "title": {

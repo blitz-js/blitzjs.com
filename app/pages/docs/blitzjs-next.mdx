@@ -60,9 +60,7 @@ function RootErrorFallback({ error }: ErrorFallbackProps) {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
-      <Suspense fallback="Loading...">
-        <Component {...pageProps} />
-      </Suspense>
+      <Component {...pageProps} />
     </ErrorBoundary>
   )
 }

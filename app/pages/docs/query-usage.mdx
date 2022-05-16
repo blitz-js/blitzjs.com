@@ -127,24 +127,17 @@ rendered on the server.
 The following example demonstrates how prefetching works in Blitz.
 
 ```tsx
-import {
-  QueryClient,
-  getQueryKey,
-  useQuery,
-  invokeWithMiddleware,
-  dehydrate,
-} from "@blitzjs/rpc"
-
+import { gSSP } from "app/blitz-server"
 import getProject from "app/projects/queries/getProject"
 
-export const getServerSideProps = async ({ ctx }) => {
+export const getServerSideProps = gSSP(async ({ ctx }) => {
   // IMPORTANT: the second argument to prefetchBlitzQuery must exactly match the second argument to useQuery down below
   await context.prefetchBlitzQuery(getProject, {
     where: { id: context.params?.projectId },
   })
 
   return { props: {} }
-}
+})
 
 function ProjectPage(props) {
   const [project] = useQuery(getProject, { where: { id: props.id } })

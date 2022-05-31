@@ -297,36 +297,34 @@ const paginationData = await paginate(paginateArguments)
   - `count`: `number` (Total number of items. Resolved by the `count`
     function)
 
-## `invokeWithMiddleware` {#invoke-with-middleware}
+## `invokeWithCtx` {#invoke-with-ctx}
 
-This is for imperatively invoking queries/mutations on the server. It
-ensures appropriate middleware is run before/after your resolver.
+This is for imperatively invoking queries/mutations on the server.
 
 ### Example {#example-4}
 
 ```tsx
-import { invokeWithMiddleware } from "@blitzjs/rpc"
+import { Link } from "next"
+import { PromiseReturnType } from "blitz"
+import { invokeWithCtx } from "@blitzjs/rpc"
 import {
-  GetServerSideProps,
-  Link,
   BlitzPage,
-  PromiseReturnType,
-  Routes,
-} from "blitz"
+  Routes
+} from "@blitzjs/next"
+import { gSSP } from "app/blitz-server"
 import getProducts from "app/products/queries/getProducts"
 
 type PageProps = {
   products: PromiseReturnType<typeof getProducts>
 }
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async ({
-  req,
-  res,
+export const getServerSideProps = gSSP(async ({
+  ctx
 }) => {
-  const products = await invokeWithMiddleware(
+  const products = await invokeWithCtx(
     getProducts,
     { orderBy: { id: "desc" } },
-    { req, res }
+    ctx
   )
 
   return {
@@ -356,11 +354,7 @@ export default Page
 ### API {#api-4}
 
 ```js
-const results = await invokeWithMiddleware(
-  resolver,
-  resolverInputArguments,
-  { req, res }
-)
+const results = await invokeWithCtx(resolver, resolverInputArguments, ctx)
 ```
 
 #### Arguments
@@ -372,16 +366,7 @@ const results = await invokeWithMiddleware(
   - **Required**
   - The arguments that will be passed to `resolver`
 - Other
-  - `req`
-    - **Required**
-    - The BlitzApiRequest object
-  - `res`
-    - **Required**
-    - The BlitzApiResponse object
-  - `middleware`
-    - Optional
-    - Array of middleware that will be ran in addition to global
-      middleware and any local middleware defined on the query/mutation.
+  - `ctx` — Blitz session context
 
 #### Returns
 

@@ -55,8 +55,8 @@ const Home = ({randomContributors}) => {
                   </h2>
                   <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
                     Blitz is a framework-agnostic toolkit. It features a &quot;Zero-API&quot; data
-                    layer abstraction that eliminates the need for REST/GraphQL, a new app
-                    scaffolding and a Blitz Auth plugin — a powerful alternative to next-auth.
+                    layer abstraction that eliminates the need for REST/GraphQL, new app scaffolding
+                    and a Blitz Auth plugin — a powerful alternative to next-auth.
                   </p>
                   <div className="flex space-x-4">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">

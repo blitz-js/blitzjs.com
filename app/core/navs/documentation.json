@@ -5,7 +5,14 @@
       "iconPath": "/img/introduction.svg",
       "iconDarkPath": "/img/introduction-white.svg"
     },
-    "pages": ["get-started", "learning-path", "why-blitz", "stickers"]
+    "pages": [
+      "get-started",
+      "learning-path",
+      "why-blitz",
+      "blitz-with-next",
+      "upgrading-from-framework",
+      "stickers"
+    ]
   },
   {
     "title": {

@@ -108,6 +108,8 @@ the PR.
 
 ## Development Setup {#development-setup}
 
+first make sure you're using node 14, our version of `node-sass` does not work with newer versions and will show a scary and unclear error if tried!
+
 **1.** Fork [the blitz repo](https://github.com/blitz-js/blitz)
 
 **2.** Clone your forked repo
@@ -118,13 +120,21 @@ git clone git@github.com:USERNAME/blitz.git
 cd blitz
 ```
 
-**3.** Install dependencies
+**3.** Install required packages for `sodium-native`
+
+on mac
+
+```sh
+brew install autoconf automake
+```
+
+**4.** Install dependencies
 
 ```sh
 yarn
 ```
 
-**4.** Start the package server. This **must be running** for any package
+**5.** Start the package server. This **must be running** for any package
 development or example development
 
 ```sh

@@ -181,19 +181,18 @@ export default ProjectPage
 ### `getServerSideProps` {#get-server-side-props}
 
 In `getServerSideProps`, pass a query function to
-[`invokeWithMiddleware`](./resolver-server-utilities#invoke-with-middleware)
-which will ensure appropriate middleware is run before/after your query
-function.
+[`invokeWithCtx`](./resolver-server-utilities#invoke-with-ctx) which will
+ensure appropriate middleware is run before/after your query function.
 
 ```tsx
-import { invokeWithMiddleware } from "blitz"
+import { invokeWithCtx } from "@blitzjs/rpc"
 import getProject from "app/projects/queries/getProject"
 
-export const getServerSideProps = async ({ params, req, res }) => {
-  const project = await invokeWithMiddleware(
+export const getServerSideProps = async ({ params, ctx }) => {
+  const project = await invokeWithCtx(
     getProject,
     { where: { id: params.projectId } },
-    { req, res }
+    ctx
   )
   return { props: { project } }
 }

@@ -113,7 +113,7 @@ documentation.
 ### Example {#example-2}
 
 ```tsx
-import { getQueryKey, queryClient } from "@blitzjs/rpc"
+import { getQueryKey, getQueryClient } from "@blitzjs/rpc"
 import getProducts from "app/products/queries/getProducts"
 
 const Page = function ({ products }) {
@@ -122,12 +122,12 @@ const Page = function ({ products }) {
       <button
         onClick={async () => {
           const queryKey = getQueryKey(getProducts)
-          queryClient.invalidateQueries(queryKey)
+          getQueryClient().invalidateQueries(queryKey)
 
           const queryKey = getQueryKey(getProducts, {
             where: { ordId: 1 },
           })
-          queryClient.invalidateQueries(queryKey)
+          getQueryClient().invalidateQueries(queryKey)
         }}
       >
         Invalidate
@@ -149,7 +149,7 @@ documentation.
 ### Example {#example-3}
 
 ```tsx
-import { getQueryKey, queryClient } from "@blitzjs/rpc"
+import { getQueryKey, getQueryClient } from "@blitzjs/rpc"
 import getInfiniteProducts from "app/products/queries/getInfiniteProducts"
 
 const Page = function ({ products }) {
@@ -158,7 +158,7 @@ const Page = function ({ products }) {
       <button
         onClick={async () => {
           const queryKey = getInfiniteQueryKey(getInfiniteProducts)
-          queryClient.invalidateQueries(queryKey)
+          getQueryClient().invalidateQueries(queryKey)
         }}
       >
         Invalidate

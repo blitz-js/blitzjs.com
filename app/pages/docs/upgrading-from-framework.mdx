@@ -232,3 +232,14 @@ wrap them with corresponding functions: `gSSP`, `gSP`, and `api` imported
 from `@blitzjs/next`.
 
 To learn more about it, follow the [`@blitzjs/next` docs](./blitz-next).
+
+### Replacing `queryClient` with `getQueryClient` function {#replace-query-client-with-get-query-client}
+
+If you're using `queryClient` in your code, you can replace it with the
+following code:
+
+```ts
+import { getQueryClient } from "@blitzjs/rpc"
+
+const queryClient = getQueryClient()
+```

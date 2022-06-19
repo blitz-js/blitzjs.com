@@ -243,3 +243,17 @@ import { getQueryClient } from "@blitzjs/rpc"
 
 const queryClient = getQueryClient()
 ```
+
+### `types.ts` changes {#types-changes}
+
+In your `types.ts` file, you'll need to change the module that is being
+augmented:
+
+```diff
+- declare module "@blitzjs/auth" {
++ declare module "@blitzjs/auth" {
+    export interface Session {
+      // ...
+    }
+  }
+```

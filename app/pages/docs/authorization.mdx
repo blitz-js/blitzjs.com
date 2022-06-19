@@ -366,7 +366,7 @@ import { SimpleRolesIsAuthorized } from "@blitzjs/auth"
 
 type Role = "ADMIN" | "USER"
 
-declare module "blitz" {
+declare module "@blitzjs/auth" {
   // highlight-start
   export interface Session {
     isAuthorized: SimpleRolesIsAuthorized<Role>

@@ -184,7 +184,7 @@ const Home = ({randomContributors}) => {
                         Once we reach version 1.0, we&apos;ll switch to a stable, predictable
                         release cycle with multiple channels like stable, LTS, and beta.
                       </p>
-                      <p>We are taking a lot inspiration from Ember in this regard.</p>
+                      <p>We are taking a lot of inspiration from Ember in this regard.</p>
                     </Feature>
                   </div>
                 </Scrollbar>

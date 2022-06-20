@@ -124,8 +124,8 @@ const Home = ({randomContributors}) => {
                     */}
                 </StyledLink>
               </Link>
+              <VideoPlayer url="https://www.youtube.com/watch?v=TWkjl_jg3Jk" />
               <VideoPlayer url="https://www.youtube.com/watch?v=TTe56M1QscM" />
-              <VideoPlayer url="https://www.youtube.com/watch?v=fIexr5UZfhU" />
             </div>
 
             <div className="relative w-full mx-auto space-y-10 lg:space-y-20 xl:space-y-36 max-w-7xl">

@@ -155,7 +155,7 @@ This is used when a user sets a new password.
 It takes a password string and returns a secure hash for storing in your
 database.
 
-SecurePassword.hash will return a different hash when given the same string, hence the necessity of SecurePassword.verify to compare hashs.
+`SecurePassword.hash` will return a different hash when given the same string, hence the necessity of `SecurePassword.verify` to compare hashes.
 
 #### `SecurePassword.verify(passwordHash: string, password: string) => Promise<ResultCode>`
 

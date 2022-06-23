@@ -124,8 +124,8 @@ const Home = ({randomContributors}) => {
                     */}
                 </StyledLink>
               </Link>
+              <VideoPlayer url="https://www.youtube.com/watch?v=TWkjl_jg3Jk" />
               <VideoPlayer url="https://www.youtube.com/watch?v=TTe56M1QscM" />
-              <VideoPlayer url="https://www.youtube.com/watch?v=fIexr5UZfhU" />
             </div>
 
             <div className="relative w-full mx-auto space-y-10 lg:space-y-20 xl:space-y-36 max-w-7xl">
@@ -184,7 +184,7 @@ const Home = ({randomContributors}) => {
                         Once we reach version 1.0, we&apos;ll switch to a stable, predictable
                         release cycle with multiple channels like stable, LTS, and beta.
                       </p>
-                      <p>We are taking a lot inspiration from Ember in this regard.</p>
+                      <p>We are taking a lot of inspiration from Ember in this regard.</p>
                     </Feature>
                   </div>
                 </Scrollbar>

@@ -246,10 +246,7 @@ const Home = ({randomContributors}) => {
                 <Hand variant="community-squiggle" className="xl:hidden -right-18" />
                 <div className="z-10 flex flex-col justify-between space-y-6 lg:justify-end">
                   <div className="flex flex-col space-y-6 lg:h-auto lg:text-transparent text-off-white">
-                    <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
-                      Our community is warm, safe, diverse, inclusive, and fun! LGBTQ+, women, and
-                      minorities are especially welcome.
-                    </p>
+                    <p>Our community is warm, safe, inclusive, and fun!</p>
                     <p className="lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue lg:bg-clip-text">
                       Please read our{" "}
                       <Link href="/docs/code-of-conduct" passHref>

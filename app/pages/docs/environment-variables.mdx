@@ -48,15 +48,16 @@ you to use them on the server.
 > CORRECT=pre\$A # becomes "pre$A"
 > ```
 
-## Exposing Environment Variables to the Browser {#exposing-environment-variables-to-the-browser}
+## Server- and Client-Side Access to Env Vars {#server-and-client-side-access-to-env-vars}
 
-By default all environment variables loaded through `.env*` files are only
-available in the Node.js environment, meaning they won't be exposed to the
-browser.
+Blitz allows you to control where environment variables can be accessed (client
+and/or server) and when environment variables are set (build and/or run time).
+You can mix and match these techniques depending on how each env var fits into
+your build-and-deploy cycle, and to keep confidential information server-side.
 
-There are two ways you can expose a variable to the browser.
+### Option 1: `BLITZ_PUBLIC_` prefix {#option-1-blitz-public-prefix}
 
-### Option 1: `BLITZ_PUBLIC_` Prefix {#option-1-blitz-public-prefix}
+Set at build time; accessible to client and server via `process.env`.
 
 Prefix the variable with `BLITZ_PUBLIC_` or `NEXT_PUBLIC_`. For example:
 
@@ -67,11 +68,12 @@ BLITZ_PUBLIC_ANALYTICS_ID=abcdefghijk
 The value will be inlined into JavaScript sent to the browser because of
 the `BLITZ_PUBLIC_` prefix.
 
+Example use:
+
 ```jsx
 // pages/index.js
 import setupAnalyticsService from "../lib/my-analytics-service"
 
-// BLITZ_PUBLIC_ANALYTICS_ID can be used here as it's prefixed by BLITZ_PUBLIC_
 setupAnalyticsService(process.env.BLITZ_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
@@ -81,20 +83,148 @@ function HomePage() {
 export default HomePage
 ```
 
-### Option 2: `env` in `blitz.config.js` {#option-2-env-in-blitz-config-js}
+### Option 2: Any environment variable (#option-2-any-environment-variable)
 
-Any keys defined in `env` in your Blitz config will be inlined into
-JavaScript sent to the browser.
+Set at run time; accessible to server only via `process.env` (not client).
+
+By default, any environment variable in the runtime environment that's not
+prefixed with `BLITZ_PUBLIC_` or `NEXT_PUBLIC` `is available to the server.
+There is no Blitz config required - the entire environment is available.
+
+Note that these env vars can be overridden or hidden by Option 3 below.
+
+### Option 3: Define an env var in the Blitz `env` config {#option-3-define-an-env-var-in-the-blitz-env-config}
+
+Set at build time; accessible to client and server via `process.env`.
+
+Any keys defined in the `env` section of your Blitz config will be inlined
+into JavaScript sent to the browser. Note that you determine what key will
+be used - it can but doesn't have to match the inbound `process.env` key:
 
 ```js
 // blitz.config.js
 module.exports = {
-  // Env vars defined here will be PUBLIC and included in the client JS bundle
   env: {
     STRIPE_KEY: process.env.STRIPE_KEY,
     SENTRY_DSN: process.env.SENTRY_DSN,
+    RENAMED_ANALYTICS_ID: process.env.ANALYTICS_ID,
   },
 }
+```
+
+Example use:
+
+```jsx
+// pages/index.js
+import setupAnalyticsService from "../lib/my-analytics-service"
+
+// RENAMED_ANALYTICS_ID can be used here as it's been defined in `env` in `blitz.config.js`
+setupAnalyticsService(process.env.RENAMED_ANALYTICS_ID)
+
+function HomePage() {
+  return <h1>Hello World</h1>
+}
+
+export default HomePage
+```
+
+All keys added to `env` override `process.env` for the server-side too, and
+change the server-side use from run-time to build-time. You can avoid that by
+renaming the `env` entry to not match the `process.env` key as shown above.
+
+### Option 4: Define an env var in the Blitz `publicRuntimeConfig` {#option-4-define-an-env-var-in-the-blitz-publicruntimeconfig}
+
+Set at run time; accessible to server and client via a NextJS helper function.
+This is only usable on the client side when `GetServerSideProps` is used.
+
+Any keys defined in the `publicRuntimeConfig` section of your Blitz config will
+be made available to the server and client. Note that you determine what key will
+be used - it can but doesn't have to match the inbound `process.env` key:
+
+```js
+// blitz.config.js
+module.exports = {
+  // env: {},
+  publicRuntimeConfig: {
+    APP_NAME: process.env.APP_NAME,
+    APP_VERSION: process.env.APP_VERSION,
+  },
+}
+```
+
+Example use:
+
+```jsx
+// SomePage.tsx
+import getConfig from "next/config"
+import { GetServerSideProps, Head, BlitzPage } from "blitz"
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
+type PageProps = {}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, res, ...other }) => {
+  return {
+    props: {},
+  }
+}
+
+const EnvVarsPage: BlitzPage<PageProps> = () => {
+  return (
+    <>
+      <Head>
+        <title>Env Vars</title>
+      </Head>
+
+      <Box as="section" py="4">
+        <Box maxW={{ base: "xl", md: "7xl" }} mx="auto" px={{ base: "6", md: "8" }}>
+          <Box overflowX="auto">
+            <Text>{publicRuntimeConfig.APP_NAME}</Text>
+            <Text>{publicRuntimeConfig.APP_VERSION}</Text>
+          </Box>
+        </Box>
+      </Box>
+    </>
+  )
+}
+```
+
+Note that to access these values on the client-side, server-side rendering is
+required. That can be triggered via `getServerSideProps` or `getInitialProps`.
+
+Without SSR, these values are `undefined` on the client, if the env var was
+only provided at run time. Confusingly, if the same env var was provided at
+build time (whether or not it was also provided at run time), in the no-SSR
+case, the client will see the values from build time. Be careful!
+
+Pages that don't need server-side props for other reasons can use a no-op
+invocation of `getServerSideProps` as shown above.
+
+### Option 5: Define an env var in the Blitz `serverRuntimeConfig` {#option-5-define-an-env-var-in-the-blitz-serverruntimeconfig}
+
+Set at run time; accessible to server (not client) via a NextJS helper function.
+
+Any keys defined in the `serverRuntimeConfig` section of your Blitz config will
+be made available to the server. Note that you determine what key will
+be used - it can but doesn't have to match the inbound `process.env` key:
+
+```js
+// blitz.config.js
+module.exports = {
+  // env: {},
+  // publicRuntimeConfig: {},
+  serverRuntimeConfig: {
+    SUPER_SECRET: process.env.SOME_SECRET,
+  },
+}
+```
+
+Example use:
+
+```jsx
+import getConfig from "next/config"
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
+doSomethingSecretive(serverRuntimeConfig.SUPER_SECRET)
 ```
 
 ## Different Values per Environment {#different-values-per-environment}

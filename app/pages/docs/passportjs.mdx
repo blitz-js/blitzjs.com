@@ -20,9 +20,10 @@ contents.
 ```ts
 // app/api/auth/[...auth].ts
 import { passportAuth } from "blitz"
+import { api } from "app/blitz-server"
 import db from "db"
 
-export default passportAuth({
+export default api(passportAuth({
   successRedirectUrl: "/",
   errorRedirectUrl: "/",
   strategies: [
@@ -30,7 +31,7 @@ export default passportAuth({
       strategy: new PassportStrategy(), // Provide initialized passport strategy here
     },
   ],
-})
+}))
 ```
 
 If you need, you can place the api route at a different path but the

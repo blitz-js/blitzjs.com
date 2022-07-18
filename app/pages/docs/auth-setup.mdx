@@ -11,6 +11,8 @@ Install `@blitzjs/auth` plugin with:
 npm i @blitzjs/auth # yarn add @blitzjs/auth # pnpm add @blitzjs/auth
 ```
 
+#### Server setup {#server-setup}
+
 Add the following to the `blitz-server.ts` file:
 
 ```typescript
@@ -46,7 +48,6 @@ import {
   PrismaStorage,
   simpleRolesIsAuthorized,
 } from "@blitzjs/auth"
-import { db } from "db"
 
 const { gSSP, gSP, api } = setupBlitz({
   plugins: [
@@ -67,6 +68,8 @@ const { gSSP, gSP, api } = setupBlitz({
 export { gSSP, gSP, api }
 ```
 
+[**Here's a GitHub gist with a full Redis example.**](https://gist.github.com/beerose/80f37b4b36cbd7ba2745701959e3cb8b)
+
 The storage methods need to conform to the following interface:
 
 ```typescript
@@ -81,6 +84,8 @@ interface SessionConfigMethods {
   deleteSession: (handle: string) => Promise<SessionModel>
 }
 ```
+
+#### Client setup {#client-setup}
 
 Then, add the following to your `blitz-client.ts` file:
 

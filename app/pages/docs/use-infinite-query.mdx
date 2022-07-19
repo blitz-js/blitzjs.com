@@ -12,7 +12,7 @@ this case, you can `useInfiniteQuery` as shown in the following example.
 ### Example {#example}
 
 ```tsx
-import { useInfiniteQuery } from "blitz"
+import { useInfiniteQuery } from "@blitzjs/rpc"
 import getProjects from "app/projects/queries/getProjects"
 
 function Projects(props) {
@@ -58,7 +58,8 @@ function Projects(props) {
 And here's the query to work with that:
 
 ```ts
-import { paginate, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { paginate } from "blitz"
 import db, { Prisma } from "db"
 
 interface GetProjectsInput

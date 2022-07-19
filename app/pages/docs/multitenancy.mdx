@@ -122,10 +122,7 @@ Update `types.ts` like this:
 -export type Role = "ADMIN" | "USER"
 + type Role = MembershipRole | GlobalRole
 
-declare module "blitz" {
-  export interface Ctx extends DefaultCtx {
-    session: SessionContext
-  }
+declare module "@blitzjs/auth" {
   export interface Session {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
@@ -237,12 +234,14 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, ...data }, ctx) => {
     if (!ctx.session.orgId) throw new Error("Missing session.orgId")
-    
+
     // Looks for both `id` and `organizationId`
-    const project = await db.project.findFirst({where: {id, organizationId: ctx.session.orgId}})
+    const project = await db.project.findFirst({
+      where: { id, organizationId: ctx.session.orgId },
+    })
     if (!project) throw new NotFoundError()
 
-    const project = await db.project.update({where: {id}, data})
+    const project = await db.project.update({ where: { id }, data })
     return project
   }
 )
@@ -282,10 +281,12 @@ export default resolver.pipe(
     }
 
     // Looks for both `id` and `organizationId`
-    const project = await db.project.findFirst({where: {id, organizationId}})
+    const project = await db.project.findFirst({
+      where: { id, organizationId },
+    })
     if (!project) throw new NotFoundError()
 
-    const project = await db.project.update({where: {id}, data})
+    const project = await db.project.update({ where: { id }, data })
 
     return project
   }

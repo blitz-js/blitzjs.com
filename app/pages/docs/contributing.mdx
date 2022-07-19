@@ -87,7 +87,7 @@ contributor. **Congratulations!!**
 ## Project Management {#project-management}
 
 We use a
-[GitHub Project Board](https://github.com/blitz-js/blitz/projects/2) to
+[GitHub Project Board](https://github.com/blitz-js/blitz/projects/4) to
 track all issues and PRs.
 
 ## Commit Access {#commit-access}
@@ -134,14 +134,14 @@ brew install autoconf automake
 **4.** Install dependencies
 
 ```sh
-yarn
+pnpm i
 ```
 
 **5.** Start the package server. This **must be running** for any package
 development or example development
 
 ```sh
-yarn dev
+pnpm dev
 ```
 
 ## Running Tests {#running-tests}
@@ -152,15 +152,15 @@ yarn dev
 
 Most Blitz packages in `packages/` have jest unit tests.
 
-- Run tests in a single package by running `yarn test` inside that package
-  folder (like `packages/core/`)
-- Run all unit tests from the repo root by running
-  `yarn testonly:packages`. (Make sure you have ran `yarn build` or
-  `yarn dev` prior to running this)
+- Run tests in a single package by running `pnpm test` inside that package
+  folder (like `packages/blitz-next`)
+- Run all unit tests from the repo root by running `pnpm test`. (Make sure
+  you have ran `pnpm build` or `pnpm dev` prior to running this). Note:
+  this will run all tests, including integration tests.
 
 #### Integration Tests
 
-Blitz integration tests are inside the root `test/` folder.
+Blitz integration tests are inside the root `integration-tests/` folder.
 
 Make sure you have `chromedriver` installed for your Chrome version. You
 can install it with
@@ -173,72 +173,23 @@ can install it with
   [chromedriver repo](https://chromedriver.storage.googleapis.com/index.html)
   and add the binary to `<blitz-repo>/node_modules/.bin`
 
-You can run all integration tests by running `yarn test:integration` from
-the repo root. Or you can run `yarn testheadless` to run them in headless
-mode (so it doesn't open a web browser window).
-
-To run a specific integration test, you can run this:
-
-```sh
-yarn testheadless --testPathPattern "integration/queries"
-```
-
-where `integration/queries` is the path inside `test/`.
+You can run all tests (both unit tests and integration tests) by running
+`pnpm test` from the repo root.
 
 You can manually run the integration app by running `blitz dev` inside the
-integration test folder, like `test/integration/queries/`.
-
-#### Example App Tests (to be deprecated)
-
-The example apps have been functioning as our integration tests, but we'll
-be moving those tests into the above integation test setup.
-
-To run an example app, first run `yarn build` or `yarn dev` from the repo
-root. Then in another window, change to the example app folder like
-`examples/auth/` and run `blitz dev`.
-
-To run the example app tests, run `yarn test` from the example app folder.
-
-### Next.js Tests {#nextjs-tests}
-
-All Next.js tests are inside `nextjs/test/`. There are a **lot** of tests,
-so probably you will want to run only one at a time.
-
-To run these tests, run the following inside the `nextjs/` folder.
-
-- To run in normal mode (open a browser):
-  `yarn testonly --testPathPattern "integration/basic"`
-- To run in headless mode:
-  `yarn testheadless --testPathPattern "integration/basic"`
-
-The typical workflow will be only run next.js integation tests related to
-your change. Then push to CI and see if any other intergration tests fail.
-If they do, then locally run the one that fails and fix the issue.
+integration test folder, like `integration-tests/auth/`.
 
 ### Testing Development Version of Blitz Inside an App {#testing-development-version-of-blitz}
 
 <Card type="info">
 
-Currently, to test the local dev version of Blitz, you can **only** test
-an app inside the `blitz/examples/` folder. In there, the blitz dependency
-will automatically use the local dev version. We mainly use the `auth` and
-`store` example apps. We use them for development testing and for blitz
-integration tests. You must also make sure you are running `yarn dev` in
-the `blitz` folder at the same time.
+Currently, to test the local dev version of Blitz, you can test an app
+inside the `blitz/apps/` folder. In there, the blitz dependency will
+automatically use the local dev version. We use it for development
+testing. You must also make sure you are running `pnpm dev` in the `blitz`
+folder at the same time.
 
 </Card>
-
-For using in apps outside the repo,
-[yalc](https://github.com/whitecolor/yalc) should work, but hasn't been
-tested yet. If you figure out how to use yalc, please make a PR to this
-page explaining how to set it up!
-
-#### Sync your fork
-
-```sh
-./scripts/fetchRemote.sh
-git merge upstream/canary
-```
 
 #### Link the Blitz CLI (Optional)
 
@@ -246,10 +197,7 @@ The following will link the development CLI as a local binary so you can
 use it anywhere for testing.
 
 ```sh
-yarn link-cli
-yarn link blitz
-// `yarn unlink blitz`
-// `yarn unlink-cli`  will unlink
+pnpm link ./packages/blitz
 ```
 
 ## Troubleshooting {#troubleshooting}
@@ -257,33 +205,10 @@ yarn link blitz
 If you run into issues that should be documented here, please submit a PR!
 ❤️
 
-#### Windows Subsystem for Linux
-
-`node-pty` error when running `yarn`. Fix by installing `node-pty dependencies`
-
-```sh
-sudo apt install -y make python build-essential
-```
-
-#### Yarn policies error
-
-This issue is related with yarn > 1.19.1, if you get an error like this in
-your console:
-
-```sh
-An unexpected error occurred: "expected workspace package to exist for \"@wessberg/rollup-plugin-ts\"
-```
-
-Fix it with this command:
-
-```sh
-yarn policies set-version 1.19.1
-```
-
 #### Git errors
 
-Are you unable to commit? Do you get errors like `yarn: command not found`
-or `stdin is not a tty`? That's probably a Husky error! Try checking their
+Are you unable to commit? Do you get errors like `command not found` or
+`stdin is not a tty`? That's probably a Husky error! Try checking their
 [troubleshoot guide](https://typicode.github.io/husky/#/?id=troubleshoot).
 
 #### Preconstruct errors
@@ -295,6 +220,6 @@ so that Preconstruct can create symlinks.
 
 #### Missing files in Windows
 
-If you have errors about missing files even after you run `yarn build`,
+If you have errors about missing files even after you run `pnpm build`,
 try cloning again your repository with the configuration `core.symlinks`
 set to `true` like this: `git clone -c core.symlinks=true <URL>`.

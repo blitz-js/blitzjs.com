@@ -5,7 +5,7 @@ sidebar_label: Get Started
 
 ### Set Up Your Computer {#set-up-your-computer}
 
-You need Node.js 12 or newer. You can verify this by running `node -v` in
+You need Node.js 16 or newer. You can verify this by running `node -v` in
 your terminal. If you don't have Node or need a newer version, we
 recommend using a node version manager like
 [fnm](https://github.com/Schniz/fnm). That will allow you to change node
@@ -13,9 +13,7 @@ versions and even have different versions for each project.
 
 ### Install Blitz {#install-blitz}
 
-Run `yarn global add blitz` or `npm install -g blitz --legacy-peer-deps`
-(legacy-peer-deps is needed because npm totally changed the behavior of
-peer deps and some dependencies haven't caught up)
+Run `yarn global add blitz@alpha` or `npm install -g blitz@alpha`.
 
 <Card type="info">
   Windows users must ensure the result of `yarn global bin` is in PATH in
@@ -34,8 +32,7 @@ peer deps and some dependencies haven't caught up)
 
 ## Welcome to the Blitz Community 👋 {#welcome-to-the-blitz-community}
 
-The Blitz community is warm, safe, diverse, inclusive, and fun! LGBTQ+,
-women, and minorities are especially welcome.
+The Blitz community is warm, safe, diverse, inclusive, and fun!
 
 [Join our Discord Community](https://discord.blitzjs.com) where we help
 each other build Blitz apps. It's also where we collaborate on building
@@ -65,25 +62,3 @@ How you can help:
 1. Any other way you want! We totally appreciate any type of contribution,
    such as documentation, videos, blog posts, etc. If you have an unusual
    idea, feel free to run it past us in Discord! :)
-
-## Next Steps {#next-steps}
-
-### Tutorial {#tutorial}
-
-The [Tutorial](./tutorial) is a full walkthrough through all the
-fundamental parts of Blitz, including adding models to your database and
-reading and updating data from your frontend.
-
-### Learning {#learning}
-
-And here's major aspects of Blitz that you'll want to become familiar
-with.
-
-- How to [make Pages](./pages)
-- How to [use the File-System Routing](./routing)
-- How to set up and [use a Database](./database-overview)
-- How to use Blitz [Queries](./query-resolvers) and
-  [Mutations](./mutation-resolvers) for reading and writing data to your
-  database
-- How to scaffold all the code for database models with the
-  [`blitz generate`](./cli-generate) command

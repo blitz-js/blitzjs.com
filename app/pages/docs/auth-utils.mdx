@@ -10,7 +10,7 @@ sidebar_label: Hooks & Utilities
 ### Example {#example}
 
 ```ts
-import { useSession } from "blitz"
+import { useSession } from "@blitzjs/auth"
 
 const session = useSession()
 ```
@@ -36,7 +36,7 @@ This will throw `AuthenticationError` if the user is not logged in
 ### Example {#example-1}
 
 ```ts
-import { useAuthenticatedSession } from "blitz"
+import { useAuthenticatedSession } from "@blitzjs/auth"
 
 const session = useAuthenticatedSession()
 ```
@@ -62,7 +62,7 @@ This will throw `AuthenticationError` if the user is not logged in
 ### Example {#example-2}
 
 ```ts
-import { useAuthorize } from "blitz"
+import { useAuthorize } from "@blitzjs/auth"
 
 useAuthorize()
 ```
@@ -85,7 +85,7 @@ for logged out users.
 ### Example {#example-3}
 
 ```ts
-import { useRedirectAuthenticated } from "blitz"
+import { useRedirectAuthenticated } from "@blitzjs/auth"
 
 useRedirectAuthenticated("/dashboard")
 ```
@@ -111,7 +111,7 @@ like password resets.
 #### Example Usage
 
 ```ts
-import { generateToken } from "blitz"
+import { generateToken } from "@blitzjs/auth"
 
 const token = generateToken()
 ```
@@ -130,7 +130,7 @@ Hash256 is also useful for storing strings like API keys in the database because
 #### Example Usage
 
 ```ts
-import { hash256 } from "blitz"
+import { hash256 } from "@blitzjs/auth"
 
 const hashedToken = hash256(token)
 ```
@@ -142,7 +142,7 @@ const hashedToken = hash256(token)
 a nice way to hash passwords and verify password hashes.
 
 ```ts
-import { SecurePassword } from "blitz"
+import { SecurePassword } from "@blitzjs/auth"
 
 await SecurePassword.hash(password)
 await SecurePassword.verify(passwordHash, password)
@@ -184,7 +184,8 @@ Size of the `hash` Buffer returned by `hash` and `hashSync` and used by
 #### Example Usage
 
 ```ts
-import { SecurePassword, AuthenticationError } from "blitz"
+import { AuthenticationError } from "blitz"
+import { SecurePassword } from "@blitzjs/auth"
 import db from "db"
 
 export const authenticateUser = async (
@@ -224,7 +225,7 @@ enforced as soon as the user is doing the next request.
 #### Example Usage
 
 ```ts
-import { setPublicDataForUser } from "blitz"
+import { setPublicDataForUser } from "@blitzjs/auth"
 import db from "db"
 
 export const updateUserRole = async (

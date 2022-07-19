@@ -20,7 +20,7 @@ it will throw `AuthorizationError` if the user is logged in but doesn't
 have the required permissions.
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -36,7 +36,7 @@ export default resolver.pipe(
   resolver.authorize(),
   // highlight-end
   async (input, ctx) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    // *: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({ data: input })
     return projects
   }
@@ -63,7 +63,7 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
   ctx.session.$authorize(),
   // highlight-end
 
-  // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+  // *: in multi-tenant app, you must add validation to ensure correct tenant
   const projects = await db.projects.create({data})
   return projects
 }
@@ -77,7 +77,7 @@ which we include in all our code generation templates. Without this, users
 may be able to access data or perform actions that are forbidden.
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -95,7 +95,7 @@ export default resolver.pipe(
   // highlight-end
   resolver.authorize(),
   async (input, ctx) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+    // *: in multi-tenant app, you must add validation to ensure correct tenant
     const projects = await db.projects.create({ data: input })
     return projects
   }
@@ -132,7 +132,7 @@ pages, set `Page.redirectAuthenticatedTo = '/'` to automatically redirect
 logged in users to another page.
 
 ```tsx
-import { Routes } from "blitz"
+import { Routes } from "@blitzjs/next"
 
 const Page: BlitzPage = () => {
   return <div>{/* ... */}</div>
@@ -156,9 +156,7 @@ export default Page
 You can secure layouts as you secure pages:
 
 ```tsx
-import { BlitzLayout, BlitzPage } from "blitz"
-
-const Layout: BlitzLayout = ({ children }) => {
+const Layout = ({ children }) => {
   return <div>{children}</div>
 }
 
@@ -169,7 +167,7 @@ Layout.authenticate = true
 // or Layout.redirectAuthenticatedTo = Routes.Home()
 // highlight-end
 
-const Page: BlitzPage = () => {
+const Page = () => {
   return <div>{/* ... */}</div>
 }
 
@@ -228,12 +226,8 @@ And here's the default `RootErrorFallback` that's in `app/pages/_app.tsx`.
 You can customize it as required for your needs.
 
 ```tsx
-import {
-  ErrorComponent,
-  AuthenticationError,
-  AuthorizationError,
-  ErrorFallbackProps,
-} from "blitz"
+import { AuthenticationError, AuthorizationError } from "blitz"
+import { ErrorComponent, ErrorFallbackProps } from "@blitzjs/next"
 
 function RootErrorFallback({
   error,
@@ -282,7 +276,7 @@ on first load. You can fix that by setting
 [`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
 
 ```tsx
-import { useSession } from "blitz"
+import { useSession } from "@blitzjs/auth"
 
 const session = useSession()
 
@@ -368,11 +362,11 @@ module.exports = {
 And if using TypeScript, set the type in `types.ts` like this:
 
 ```ts
-import { SimpleRolesIsAuthorized } from "blitz"
+import { SimpleRolesIsAuthorized } from "@blitzjs/auth"
 
 type Role = "ADMIN" | "USER"
 
-declare module "blitz" {
+declare module "@blitzjs/auth" {
   // highlight-start
   export interface Session {
     isAuthorized: SimpleRolesIsAuthorized<Role>

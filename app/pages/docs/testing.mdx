@@ -30,18 +30,23 @@ it("does something", () => {
 
 ### Jest Config {#jest-config}
 
-Blitz provides a Jest preset that configures lots of complex things for
-you, including TypeScript support.
-
 If you need to
 [customize the jest config](https://jestjs.io/docs/en/configuration), you
 can do so in `jest.config.js`.
 
 ```js
 // jest.config.js
-module.exports = {
-  preset: "blitz",
+const nextJest = require("@blitzjs/next/jest")
+
+const createJestConfig = nextJest({
+  dir: "./",
+})
+
+const customJestConfig = {
+  testEnvironment: "jest-environment-jsdom",
 }
+
+module.exports = createJestConfig(customJestConfig)
 ```
 
 ### Client vs Server Environments {#client-vs-server-environments}
@@ -85,7 +90,8 @@ in your tests. Internally, it wraps the `QueryClient` component from
 `BlitzProvider` accepts the following props:
 
 - `client` - The global query client used by React Query. By default the
-  `queryClient` exported from `blitz` is used unless you override it.
+  `queryClient` from `@blitzjs/rpc` (that you can access through
+  `getQueryClient` function) is used unless you override it.
 
 - `contextSharing` - Controls whether or not the provider context can be
   shared across multiple applications. This can be useful when working in
@@ -107,6 +113,7 @@ our
 It includes a simple factory pattern, a command for creating and logging
 in a user, and a few example tests.
 
+<!--
 ## Isolated mutation/query testing {#query-testing}
 
 If you want to test your mutations/queries in an isolated manner, you will
@@ -192,4 +199,4 @@ describe("getUsers query", () => {
     }).rejects.toThrow("You are not authorized to access this")
   })
 })
-```
+``` -->

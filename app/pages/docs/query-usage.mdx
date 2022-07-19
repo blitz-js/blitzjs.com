@@ -21,7 +21,7 @@ automatically provides awesome features such as automatic caching and
 revalidation.
 
 ```ts
-import { useQuery } from "blitz"
+import { useQuery } from "@blitzjs/rpc"
 import getProject from "app/projects/queries/getProject"
 
 function App() {
@@ -106,7 +106,7 @@ All queries are automatically cached, so both of the following will cache
 the `getProject` query.
 
 ```ts
-import { invoke } from "blitz"
+import { invoke } from "@blitzjs/rpc"
 
 const project = await invoke(getProject, { where: { id: props.id } })
 ```
@@ -127,36 +127,17 @@ rendered on the server.
 The following example demonstrates how prefetching works in Blitz.
 
 ```tsx
-import {
-  QueryClient,
-  getQueryKey,
-  useQuery,
-  invokeWithMiddleware,
-  dehydrate,
-} from "blitz"
-
+import { gSSP } from "app/blitz-server"
 import getProject from "app/projects/queries/getProject"
 
-export const getServerSideProps = async (context) => {
-  const queryClient = new QueryClient()
-  // IMPORTANT: the second argument to getQueryKey must exactly match the second argument to useQuery down below
-  const queryKey = getQueryKey(getProject, {
+export const getServerSideProps = gSSP(async ({ ctx }) => {
+  // IMPORTANT: the second argument to prefetchBlitzQuery must exactly match the second argument to useQuery down below
+  await context.prefetchBlitzQuery(getProject, {
     where: { id: context.params?.projectId },
   })
-  await queryClient.prefetchQuery(queryKey, () =>
-    invokeWithMiddleware(
-      getProject,
-      { where: { id: context.params?.projectId } },
-      context
-    )
-  )
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  }
-}
+  return { props: {} }
+})
 
 function ProjectPage(props) {
   const [project] = useQuery(getProject, { where: { id: props.id } })
@@ -168,16 +149,10 @@ export default ProjectPage
 
 To ensure data is not shared between users and requests, a new query
 client is created for each page request. You can prefetch your data by
-invoking the `prefetchQuery` method on the newly-created client, passing
-in the query key and resolver along with any relevant input arguments.
-Once the data has been fetched, dehydrate the queries to the query client
-using the `dehydrate` method and pass the result to the page via the
-`dehydratedState` prop.
-
-> **Note**: if you want to prefetch an infinite query, you'll have to use
-> `prefetchInfiniteQuery` instead of `prefetchQuery` and
-> [`getInfiniteQueryKey`](/docs/resolver-client-utilities#get-infinite-query-key)
-> instead of `getQueryKey`.
+invoking the `prefetchBlitzQuery` method which is available on the `ctx`
+object, passing in the resolver along with any relevant input arguments.
+Once the data has been fetched, Blitz handles dehydrating the queries to
+the query client.
 
 ## On the Server {#on-the-server}
 
@@ -189,7 +164,7 @@ In `getStaticProps`, a query function can be called directly without
 ```tsx
 import getProject from "app/projects/queries/getProject"
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async ({ params, ctx }) => {
   const project = await getProject({
     where: { id: context.params?.projectId },
   })
@@ -206,20 +181,24 @@ export default ProjectPage
 ### `getServerSideProps` {#get-server-side-props}
 
 In `getServerSideProps`, pass a query function to
-[`invokeWithMiddleware`](./resolver-server-utilities#invoke-with-middleware)
-which will ensure appropriate middleware is run before/after your query
-function.
+[`invokeWithCtx`](./resolver-server-utilities#invoke-with-ctx) which will
+ensure appropriate middleware is run before/after your query function.
 
 ```tsx
-import {invokeWithMiddleware} from 'blitz'
-import getProject from 'app/projects/queries/getProject'
+import { invokeWithCtx } from "@blitzjs/rpc"
+import getProject from "app/projects/queries/getProject"
+import { gSSP } from "app/blitz-server"
 
-export const getServerSideProps = async ({params, req, res}) => {
-  const project = await invokeWithMiddleware(getProject, {where: {id: params.projectId}}, {req, res})
-  return {props: {project}}
-}
+export const getServerSideProps = gSSP(async ({ params, ctx }) => {
+  const project = await invokeWithCtx(
+    getProject,
+    { where: { id: params.projectId } },
+    ctx
+  )
+  return { props: { project } }
+})
 
-function ProjectPage ({project}) {
+function ProjectPage({ project }) {
   return <div>{project.name}</div>
 }
 

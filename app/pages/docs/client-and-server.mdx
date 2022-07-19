@@ -10,6 +10,14 @@ what runs on the client. Here's a quick overview.
 
 ![Architecture diagram](/img/architecture-alt.png)
 
+#### Framework Adapters
+
+Blitz offers adapters for frameworks that allow you to inject plugins like
+the RPC or auth plugin. For more information regarding specific adapters
+head to the associated section in the documenation.
+
+[@blitzjs/next](/docs/blitzjs-next)
+
 #### Queries and mutations
 
 Queries and mutations only run on the server — at build time, the direct
@@ -17,21 +25,7 @@ function import is replaced with an RPC network call. So the query
 function code is never included in your client code. It's instead moved to
 an API layer.
 
-#### API Routes
-
-API handlers defined in `api/` directory run only on the server. Read more
-about [API Routes](./api-routes).
-
 #### React Components
-
-All code inside a page or component file runs on both server and client,
-except for [`getServerSideProps`](./get-server-side-props) or
-[`getStaticProps`](./get-static-props). Code that is imported and ran
-inside those two functions will only run on the server.
-
-Since React components run both on the server and client, you might face
-issues accessing something only available on the client, such as `window`.
-Remember to check for `undefined` when using it in React render functions.
 
 Some data doesn't exist on the client's first render (e.g. session), which
 causes a quick "flash". You can use

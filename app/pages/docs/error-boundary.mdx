@@ -10,7 +10,7 @@ component that may throw an error. This will handle errors thrown by that
 component and its descendants too.
 
 ```jsx
-import { ErrorBoundary } from "blitz"
+import { ErrorBoundary } from "@blitzjs/next"
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -38,7 +38,7 @@ You can react to errors (e.g. for logging) by providing an `onError`
 callback:
 
 ```jsx
-import { ErrorBoundary } from "blitz"
+import { ErrorBoundary } from "@blitzjs/next"
 
 const myErrorHandler = (
   error: Error,
@@ -62,7 +62,7 @@ You can also use it as a
 [higher-order component](https://reactjs.org/docs/higher-order-components.html):
 
 ```jsx
-import { withErrorBoundary } from "blitz"
+import { withErrorBoundary } from "@blitzjs/next"
 
 const ComponentWithErrorBoundary = withErrorBoundary(
   ComponentThatMayError,

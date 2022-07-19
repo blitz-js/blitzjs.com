@@ -102,7 +102,7 @@ export function SidebarLayout({children, nav, sidebar, fallbackHref, tableOfCont
 
   useEffect(() => {
     if (isDesktop && isDocsIndex) {
-      router.push("/docs/blitz-pivot")
+      router.push("/docs/get-started")
     }
   }, [router, isDesktop, isDocsIndex])
 

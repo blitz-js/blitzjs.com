@@ -6,14 +6,11 @@
       "iconDarkPath": "/img/introduction-white.svg"
     },
     "pages": [
-      "blitz-pivot",
       "get-started",
-      "tutorial",
       "learning-path",
-      "what-is-nextjs",
       "why-blitz",
-      "migrating-to-blitz",
-      "tradeoffs",
+      "blitz-with-next",
+      "upgrading-from-framework",
       "stickers"
     ]
   },
@@ -41,15 +38,8 @@
     },
     "pages": [
       "file-structure",
-      "app-component",
-      "image-component",
-      "script-component",
-      "css",
-      "font-optimization",
-      "static-files",
       "environment-variables",
       "error-handling",
-      "error-boundary",
       "testing",
       "utilities",
       "client-and-server",
@@ -58,74 +48,29 @@
   },
   {
     "title": {
-      "title": "Pages",
+      "title": "Framework Adapters",
       "iconPath": "/img/pages.svg",
       "iconDarkPath": "/img/pages-white.svg"
     },
-    "pages": [
-      "pages",
-      "error-pages",
-      "head-component",
-      "document-component",
-      "preview-mode",
-      "static-html-export",
-      "code-splitting",
-      "get-static-props",
-      "get-static-paths",
-      "get-server-side-props"
-    ]
+    "pages": ["blitzjs-next"]
   },
   {
     "title": {
-      "title": "Routing",
-      "iconPath": "/img/routing.svg",
-      "iconDarkPath": "/img/routing-white.svg"
-    },
-    "pages": [
-      "routing",
-      "routing-conventions",
-      "i18n-routing",
-      "link",
-      "route-params-query",
-      "router",
-      "redirects",
-      "rewrites",
-      "headers",
-      "api-routes",
-      "shallow-routing",
-      "route-manifest"
-    ]
-  },
-  {
-    "title": {
-      "title": "Auth",
+      "title": "@blitzjs/auth",
       "iconPath": "/img/shield-purple.svg",
       "iconDarkPath": "/img/shield-white.svg"
     },
-    "pages": [
-      "auth",
-      "session-management",
-      "authorization",
-      "auth-utils",
-      "passportjs",
-      "impersonation"
-    ]
+    "pages": ["auth", "auth-setup", "session-management", "authorization", "auth-utils"]
   },
   {
     "title": {
-      "title": "Database",
-      "iconPath": "/img/database.svg",
-      "iconDarkPath": "/img/database-white.svg"
-    },
-    "pages": ["database-overview", "postgres", "database-seeds", "prisma", "fauna"]
-  },
-  {
-    "title": {
-      "title": "Queries & Mutations",
+      "title": "@blitzjs/rpc",
       "iconPath": "/img/queries.svg",
       "iconDarkPath": "/img/queries-white.svg"
     },
     "pages": [
+      "rpc-overview",
+      "rpc-setup",
       "query-resolvers",
       "query-usage",
       "mutation-resolvers",
@@ -135,64 +80,17 @@
       "use-query",
       "use-paginated-query",
       "use-infinite-query",
-      "use-mutation"
+      "use-mutation",
+      "rpc-specification"
     ]
   },
   {
     "title": {
-      "title": "Backend Architecture",
-      "iconPath": "/img/mutations.svg",
-      "iconDarkPath": "/img/mutations-white.svg"
+      "title": "Database",
+      "iconPath": "/img/database.svg",
+      "iconDarkPath": "/img/database-white.svg"
     },
-    "pages": [
-      "multitenancy",
-      "background-processing-with-quirrel",
-      "middleware",
-      "custom-server",
-      "security-headers"
-    ]
-  },
-  {
-    "title": {
-      "title": "Deploying to Production",
-      "iconPath": "/img/deploying-to-production.svg",
-      "iconDarkPath": "/img/deploying-to-production-white.svg"
-    },
-    "pages": [
-      "deploy-flightcontrol",
-      "deploy-render",
-      "deploy-heroku",
-      "deploy-vercel",
-      "deploy-railway",
-      "deploy-qovery",
-      "deploy-docker"
-    ]
-  },
-  {
-    "title": {
-      "title": "Recipes",
-      "iconPath": "/img/recipe-purple.svg",
-      "iconDarkPath": "/img/recipe-white.svg"
-    },
-    "pages": ["using-recipes", "writing-recipes"]
-  },
-  {
-    "title": {
-      "title": "Configuration",
-      "iconPath": "/img/config-purple.svg",
-      "iconDarkPath": "/img/config-white.svg"
-    },
-    "pages": [
-      "blitz-config",
-      "webpack-config",
-      "babel-config",
-      "postcss-config",
-      "eslint-config",
-      "husky-config",
-      "prettier-config",
-      "rpc-specification",
-      "measuring-performance"
-    ]
+    "pages": ["database-overview", "postgres", "database-seeds", "prisma"]
   },
   {
     "title": {
@@ -207,13 +105,9 @@
       "cli-start",
       "cli-build",
       "cli-export",
-      "cli-db",
       "cli-prisma",
       "cli-generate",
       "cli-codegen",
-      "cli-console",
-      "cli-install",
-      "cli-autocomplete",
       "cli-routes"
     ]
   },

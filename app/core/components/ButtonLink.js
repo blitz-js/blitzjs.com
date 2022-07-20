@@ -2,8 +2,11 @@ import React from "react"
 import {BsArrowRight} from "react-icons/bs"
 
 const ButtonLink = React.forwardRef(({className, children, variant = "solid", ...props}, ref) => {
-  let classes =
-    "flex items-center justify-center py-2 px-3 lg:px-5 font-secondary text-base font-bold"
+  let classes = "flex items-center justify-center py-2 px-3 lg:px-5 font-secondary font-bold"
+
+  if (!className.includes("text-")) {
+    classes += " text-base"
+  }
 
   switch (variant) {
     case "solid":

@@ -6,7 +6,8 @@ import {useIsDesktop} from "@/hooks/useIsDesktop"
 import tokenize from "../../macros/tokenize.macro.js"
 
 const pageTokenized = tokenize.jsx(
-  `// app/pages/projects/new.tsx
+  `//---- ON THE CLIENT ----
+// app/pages/projects/new.tsx
 import { Link, Routes, useRouter, useMutation, BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 // Notice how we import the server function directly
@@ -43,7 +44,8 @@ export default NewProjectPage`,
 )
 
 const mutationTokenized = tokenize.jsx(
-  `// app/projects/mutations/createProject.ts
+  `// ---- ON THE SERVER ----
+// app/projects/mutations/createProject.ts
 import { resolver } from "blitz"
 import db from "db"
 import * as z from "zod"

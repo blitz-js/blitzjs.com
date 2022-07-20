@@ -96,12 +96,6 @@ export function Footer({className, hasDarkMode}) {
                 "dark:text-off-white text-black": hasDarkMode,
               })}
             >
-              <Link href="https://vercel.com/?utm_source=blitzjs">
-                <a target="_blank" rel="noopener noreferrer">
-                  Hosted on <IoLogoVercel className="inline" /> Vercel
-                </a>
-              </Link>
-              <br />
               Copyright &copy; {new Date().getFullYear()} Brandon Bayer and Blitz.js Contributors
             </div>
           </div>

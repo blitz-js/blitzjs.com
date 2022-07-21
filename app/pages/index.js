@@ -146,8 +146,8 @@ const Home = ({randomContributors}) => {
                   <div className="grid pb-4 ml-6 features-grid lg:gap-y-14">
                     <Feature title="Built for Monoliths and Services">
                       <p>
-                        You can manage everything from the database to your frontend all inside a single
-                        app. Only one thing to develop. Only one thing to deploy.
+                        You can manage everything from the database to your frontend all inside a
+                        single app. Only one thing to develop. Only one thing to deploy.
                       </p>
                       <p>Or not. Your choice.</p>
                     </Feature>

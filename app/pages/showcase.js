@@ -62,7 +62,7 @@ const ShowcasePage = () => {
 }
 ShowcasePage.meta = {
   title: "Showcase - Blitz.js",
-  description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
+  description: `Blitz picks up where Next.js leaves off, providing battle-tested libraries and conventions for shipping and scaling world wide applications.`,
 }
 
 export default ShowcasePage

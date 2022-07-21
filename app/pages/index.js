@@ -49,18 +49,23 @@ const Home = ({randomContributors}) => {
             ></div>
             <div className="relative -mt-6 text-white col-span-full">
               <div className="grid grid-cols-1 gap-10 px-6 mx-auto max-w-7xl lg:grid-cols-2 md:gap-6 xl:-mt-10">
-                <div className="z-10 space-y-10 lg:w-full">
-                  <h2 className="-mt-8 font-medium text-5xl-squashed lg:-mt-0 font-secondary xl:text-6xl xl:font-medium dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue">
-                    The Fullstack JavaScript Toolkit
-                  </h2>
-                  <p className="text-lg xl:text-xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue xl:w-4/5">
-                    Blitz provides everything you need to build a Next.js app for millions of users.
-                    It picks up where Next.js leaves off, providing flexible conventions and
-                    libaries like authentication and typesafe API endpoints.
+                <div className="z-10 lg:w-full">
+                  <div className="flex flex-col -mt-8 lg:mt-16 xl:mt-10">
+                    {/* html is ordered for SEO, then we use flex to flip display order for design */}
+                    <h2 className="order-last font-medium text-2xl xl:text-3xl font-secondary xl:font-medium text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400 dark:from-yellow-100 dark:to-yellow-300">
+                      The Missing Fullstack Toolkit for Next.js
+                    </h2>
+                    <h3 className="font-medium text-7xl font-secondary xl:text-8xl xl:font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-gradient-white to-blue-gradient-light-blue tracking-tight xl:tracking-tighter mb-4 xl:mb-8 ">
+                      Ship. Fast.
+                    </h3>
+                  </div>
+                  <p className="mt-6 xl:mt-8 text-lg xl:text-2xl xl:font-medium text-off-white lg:text-transparent lg:bg-clip-text lg:bg-gradient-to-r lg:from-blue-gradient-white lg:to-blue-gradient-light-blue ">
+                    Blitz picks up where Next.js leaves off, providing battle-tested libraries and
+                    conventions for shipping and scaling world wide applications.
                   </p>
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-10">
                     <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
-                      Read the Docs
+                      Learn to Blitz
                     </ButtonLink>
                     <ButtonLink
                       href="https://github.com/blitz-js/blitz"
@@ -99,12 +104,12 @@ const Home = ({randomContributors}) => {
               <FeatureIcon icon="layers" heading="Typesafe API Layer">
                 Build and iterate on features 10x faster with Blitz RPC than REST, GraphQL, or
                 vanilla API routes. Read and write data from the client with full typesafety and
-                without messing with HTTP or serialization. It. Just. Works.
+                without messing with HTTP or serialization.
               </FeatureIcon>
               <FeatureIcon icon="lighteningBolt" heading="Authentication">
                 Powerful, flexible, and battle tested authentication and authorization for Next.js.
                 You get more control with simpler APIs than alternatives. Easily add social third
-                party integrations.
+                party integrations like Google, Github, and Auth0.
               </FeatureIcon>
               <FeatureIcon icon="graphUp" heading="Conventions & Codegen">
                 Set up a new app in 2 mins instead of 2 weeks. Everything will be set up for you
@@ -427,8 +432,8 @@ const getStaticProps = async () => {
 }
 
 Home.meta = {
-  title: "Blitz.js - The Fullstack React Framework",
-  description: `Blitz is a hyper-productive fullstack React framework that's built on Next.js and features a "Zero-API" data layer.`,
+  title: "Blitz.js - The Missing Fullstack Toolkit for Next.js",
+  description: `Blitz picks up where Next.js leaves off, providing battle-tested libraries and conventions for shipping and scaling world wide applications.`,
 }
 
 export default Home

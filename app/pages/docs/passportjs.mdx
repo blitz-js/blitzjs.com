@@ -23,15 +23,17 @@ import { passportAuth } from "blitz"
 import { api } from "app/blitz-server"
 import db from "db"
 
-export default api(passportAuth({
-  successRedirectUrl: "/",
-  errorRedirectUrl: "/",
-  strategies: [
-    {
-      strategy: new PassportStrategy(), // Provide initialized passport strategy here
-    },
-  ],
-}))
+export default api(
+  passportAuth({
+    successRedirectUrl: "/",
+    errorRedirectUrl: "/",
+    strategies: [
+      {
+        strategy: new PassportStrategy(), // Provide initialized passport strategy here
+      },
+    ],
+  })
+)
 ```
 
 If you need, you can place the api route at a different path but the

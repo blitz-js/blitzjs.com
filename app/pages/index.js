@@ -190,7 +190,7 @@ const Home = ({randomContributors}) => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://codesandbox.io/s/flamboyant-meninsky-j63yq?file=/app/projects/mutations/createProject.ts"
+                  href="https://codesandbox.io/s/blitzjs-2-0-codesandbox-demo-b5v8xy?file=/app/blitz-server.ts"
                   className="h-sandbox xl:h-xl-sandbox block relative"
                 >
                   <Image
@@ -304,9 +304,8 @@ const Home = ({randomContributors}) => {
                   className="hidden xl:block xl:-top-40 xl:-right-52"
                 />
                 <FeatureIconTitle icon="thumbsUp" title="Authentication & Authorization">
-                  Blitz authentication is super easy and very secure. Works with any identity
-                  provider, including self-hosted username and password and third-parties like
-                  Auth0.
+                  Blitz authentication is super easy and secure. Works with any identity provider,
+                  including self-hosted username and password and third-parties like Auth0.
                 </FeatureIconTitle>
                 <FeatureIconTitle icon="database" title="Database Agnostic">
                   You can use any database you want. Prisma is the default database client, but you

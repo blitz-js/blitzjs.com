@@ -40,7 +40,7 @@ export default function App({Component, pageProps, router}) {
     // Initialize Fathom when the app loads
     Fathom.load("NGIOZUKS", {
       includedDomains: ["blitzjs.com"],
-      excludedDomains: ["canary.blitzjs.com"],
+      excludedDomains: ["canary.blitzjs.com", "legacy.blitzjs.com", "alpha.blitzjs.com"],
     })
 
     function onRouteChangeComplete() {

@@ -30,7 +30,7 @@ html {
 }
 
 .features-grid {
-  grid-template-columns: repeat(6, 70vw);
+  grid-template-columns: repeat(4, 70vw);
 }
 
 .icon {
@@ -74,7 +74,7 @@ html {
 
 @screen sm {
   .features-grid {
-    grid-template-columns: repeat(6, 25rem);
+    grid-template-columns: repeat(4, 25rem);
   }
   .architecture-diagram {
     width: 1000px;
@@ -122,7 +122,7 @@ html {
   }
 
   .features-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

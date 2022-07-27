@@ -3,24 +3,23 @@ title: Why use Blitz?
 sidebar_label: Why Blitz?
 ---
 
-### 1. Fullstack instead of Frontend {#1-fullstack-instead-of-frontend}
+### 1. Next.js is Very Minimal {#1-nextjs-is-minimal}
 
-Next.js is mostly a frontend framework. It's designed for building a
-frontend that connects to some other API. Next.js isn't set up by default
-for building a true fullstack application.
+Next.js does amazing at handling all the React and build stuff. But beyond
+that, you are left to your own devices.
 
-Blitz adds all the missing features and functionality that turns Next into
-a true fullstack framework. These key features include direct database
-access, middleware, and authentication.
+Blitz adds all the missing features and functionality that let's you build
+a fullstack Next.js app, like a typesafe API layer, middleware, and
+authentication.
 
-### 2. Data Layer {#2-data-layer}
+### 2. Typesafe Data Layer {#2-data-layer}
 
-The new Blitz data layer is a novel technology for eliminating the API
-while retaining client-side rendering. In a Blitz app, you can import your
-server code directly into the frontend so you don't need to build an API
-and do data fetching from the frontend. At build time, Blitz automatically
-inserts an API call that runs the server code on the server. Essentially,
-Blitz abstracts your API into a compile step.
+Blitz popularized RPC as an alterative to REST or GraphQL APIs. With
+Blitz, you can import your server code directly into the frontend so you
+don't need to build an API and do data fetching from the frontend. At
+build time, Blitz automatically inserts an RPC API call that runs the
+server code on the server. Essentially, Blitz abstracts your API into a
+compile step.
 
 This is a game changer for React app development because it eliminates an
 entire portion of traditional React app architecture. This means it's

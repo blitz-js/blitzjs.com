@@ -93,6 +93,8 @@ module.exports = {
       "5xl": ["2.8125rem", "4.025rem"], // 45px
       "5xl-squashed": ["2.8125rem", "3.0938rem"],
       "6xl": ["3.875rem", "4.84375rem"], // 62px
+      "7xl": ["6rem", "7rem"], // 62px
+      "8xl": ["8.5em", "1.1"], // 62px
       h2: ["2.6rem"],
       h3: ["1.8rem"],
       h4: ["1.5rem"],
@@ -339,6 +341,9 @@ module.exports = {
       width: {
         xl: "36rem",
         "7xl": "80rem",
+      },
+      minHeight: {
+        10: "10rem",
       },
       maxWidth: {
         "4.5xl": "60rem",

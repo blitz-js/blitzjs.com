@@ -37,12 +37,10 @@ that have one or more graphical user interfaces like web or mobile apps.
 ## Foundational Principles {#foundational-principles}
 
 1. Fullstack & Monolithic
-2. API Not Required
-3. Convention over Configuration
-4. Loose Opinions
-5. Easy to Start, Easy to Scale
-6. Stability
-7. Community over Code
+2. Convention over Configuration
+3. Loose Opinions
+4. Easy to Start, Easy to Scale
+5. Community over Code
 
 ### 1. Fullstack & Monolithic {#1-fullstack-and-monolithic}
 
@@ -52,19 +50,7 @@ doesn't mean it will be slow or hard to scale to large teams. Monolithic
 doesn't mean there isn't separation of concerns. Monolithic means you can
 reason about your app as a single entity.
 
-### 2. API Not Required {#2-api-not-required}
-
-Until now, choosing React for your view layer required you to have a REST
-or GraphQL API even if it wasn't used by third-parties. This additional
-complexity is a significant drawback not shared by traditional server
-rendered apps like Ruby on Rails.
-
-Blitz is a framework for the 99% of us at companies with <100 employees.
-The vast majority of these apps don't actually need an API, at least not
-until years down the road when you have the time and resources to build
-one.
-
-### 3. Convention over Configuration {#3-convention-over-configuration}
+### 2. Convention over Configuration {#3-convention-over-configuration}
 
 Starting a new fullstack React app is currently too hard. You have to
 spend days on things like configuring eslint, prettier, husky, jest,
@@ -82,7 +68,7 @@ Convention over configuration doesn't mean no configuration. It means
 configuration is optional. Blitz will provide all the escape hatches you
 need for bespoke customization.
 
-### 4. Loose Opinions {#4-loose-opinions}
+### 3. Loose Opinions {#4-loose-opinions}
 
 Blitz is opinionated. The out-of-the-box experience guides you on a path
 perfect for most applications. However, Blitz isn't arrogant. It
@@ -93,7 +79,7 @@ structure, but, with few exceptions, doesn't _enforce_ it.
 And when there's not community consensus, `blitz new` prompts you to
 choose.
 
-### 5. Easy to Start, Easy to Scale {#5-easy-to-start-easy-to-scale}
+### 4. Easy to Start, Easy to Scale {#5-easy-to-start-easy-to-scale}
 
 A framework that's only easy for one end of an application lifecycle is
 not a good framework. Both starting and scaling must be easy.
@@ -104,28 +90,7 @@ existing Next.js apps to Blitz.
 Scaling is important in all forms: lines of code, number of people working
 in the codebase, and code execution.
 
-### 6. Stability {#6-stability}
-
-In the fast-paced world of JavaScript, a stable, predictable release cycle
-is a breath of fresh air. A stable release cycle ensures minimal breaking
-changes, and it ensures you know exactly what and when a breaking change
-will occur. It also minimizes bugs in stable releases by ensuring features
-are in beta for a minimum amount of time.
-[Ember is the model citizen](https://emberjs.com/releases/) in this
-regard.
-
-The exact details of the Blitz release cycle are to be determined, but
-we'll follow a pattern similar to Ember which strictly follows SemVer with
-stable releases every 6 weeks and LTS releases every 6 months.
-
-Blitz will follow a public RFC (request for comments) process so all users
-and companies can participate in proposing and evaluating new features.
-
-If a Blitz API needs to be removed, it will be deprecated in a minor
-release. Major releases will simply remove APIs already deprecated in a
-previous release.
-
-### 7. Community over Code {#7-community-over-code}
+### 5. Community over Code {#6-community-over-code}
 
 The Blitz community is the most important aspect of the framework, by far.
 We have a comprehensive [Code of Conduct](./code-of-conduct).

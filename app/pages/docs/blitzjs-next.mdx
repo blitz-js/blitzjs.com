@@ -4,15 +4,17 @@ sidebar_label: "@blitzjs/next"
 ---
 
 ## Overview {#blitzjs-next-overview}
-The `@blitzjs/next` adapter exposes functions & components specific for the Next.js framework.
+
+The `@blitzjs/next` adapter exposes functions & components specific for
+the Next.js framework.
 
 ## Setup {#setup-blitzjs-next}
+
 You can install `@blitzjs/next` by running the following command:
 
 ```bash
 npm i @blitzjs/next # yarn add @blitzjs/next # pnpm add @blitzjs/next
 ```
-
 
 ## Client {#blitzjs-next-client}
 
@@ -26,12 +28,18 @@ export const { withBlitz } = setupBlitzClient({
 })
 ```
 
-Then inside `pages > _app.tsx` wrap `MyApp` function with the `withBlitz` HOC component.
+Then inside `pages > _app.tsx` wrap `MyApp` function with the `withBlitz`
+HOC component.
 
-**_Note: An `<ErrorBoundary />` provider and `<ErrorComponent />` component is supplied by `@blitzjs/next`_**
+**_Note: An `<ErrorBoundary />` provider and `<ErrorComponent />`
+component is supplied by `@blitzjs/next`_**
 
 ```ts
-import { ErrorFallbackProps, ErrorComponent, ErrorBoundary } from "@blitzjs/next"
+import {
+  ErrorFallbackProps,
+  ErrorComponent,
+  ErrorBoundary,
+} from "@blitzjs/next"
 import { AuthenticationError, AuthorizationError } from "blitz"
 import type { AppProps } from "next/app"
 import React, { Suspense } from "react"
@@ -80,13 +88,16 @@ export const { gSSP, gSP, api } = setupBlitzServer({
 })
 ```
 
-The `gSSP`, `gSP` & `api` functions all pass down the context of the session if you're using the auth plugin. Read more about the auth plugin here [@blitzjs/auth](/docs/auth).
+The `gSSP`, `gSP` & `api` functions all pass down the context of the
+session if you're using the auth plugin. Read more about the auth plugin
+here [@blitzjs/auth](/docs/auth).
 
 #### gSP {#blitzjs-next-gsp}
-```ts
-import {gSP} from "app/blitz-server"
 
-export const getStaticProps = gSP(async ({ctx}) => {
+```ts
+import { gSP } from "app/blitz-server"
+
+export const getStaticProps = gSP(async ({ ctx }) => {
   return {
     props: {
       data: {
@@ -100,11 +111,13 @@ export const getStaticProps = gSP(async ({ctx}) => {
   }
 })
 ```
-#### gSSP {#blitzjs-next-gssp}
-```ts
-import {gSSP} from "app/blitz-server"
 
-export const getServerSideProps = gSSP(async ({ctx}) => {
+#### gSSP {#blitzjs-next-gssp}
+
+```ts
+import { gSSP } from "app/blitz-server"
+
+export const getServerSideProps = gSSP(async ({ ctx }) => {
   return {
     props: {
       userId: ctx?.session.userId,
@@ -113,14 +126,35 @@ export const getServerSideProps = gSSP(async ({ctx}) => {
   }
 })
 ```
+
 #### api {#blitzjs-next-api}
+
 ```ts
-import {api} from "app/blitz-server"
+import { api } from "app/blitz-server"
 
 export default api(async (req, res, ctx) => {
-  res.status(200).json({userId: ctx?.session.userId})
+  res.status(200).json({ userId: ctx?.session.userId })
 })
-
 ```
 
-_For more information about Next.js API routes, visit their docs at [https://nextjs.org/docs/api-routes/introduction](https://nextjs.org/docs/api-routes/introduction)_
+_For more information about Next.js API routes, visit their docs at
+[https://nextjs.org/docs/api-routes/introduction](https://nextjs.org/docs/api-routes/introduction)_
+
+#### ISR Revalidation
+
+Since Next.js v12.2.0 `getStaticProps` can be manually revalidated i.e. if
+you have static blog posts you can instantly revalidate a post on save.
+
+You can call next.js revalidate inside of api functions with
+`res.revalidate()` or our enhanced `ctx.revalidate()`
+(`res.blitzCtx.revalidate()`) which also accepts generated route
+manifests.
+
+```ts
+const revalidateFn = resolver.pipe(async (_, ctx) => {
+  await ctx.revalidatePage("/my-static-page")
+  return true
+})
+
+export default revalidateFn
+```

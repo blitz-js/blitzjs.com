@@ -125,6 +125,19 @@ Page.authenticate = true
 export default Page
 ```
 
+This can also be done globally for all pages by configuring `pageDefaults`
+in `blitz-client.ts` in `AuthClientPlugin` constructor
+
+```ts
+AuthClientPlugin({
+  cookiePrefix: "web-cookie-prefix",
+  pageDefaults: {
+    authenticate: true,
+    suppressFirstRenderFlicker: true
+  },
+}),
+```
+
 ### Redirecting Logged In Users {#redirecting-logged-in-users}
 
 For pages that are only for logged out users, such as login and signup

@@ -340,28 +340,3 @@ const [
     object `{refetch: false}` as the second argument.
   - See the [Blitz mutation usage docs](./mutation-usage#setQueryData) for
     example usage of `setQueryData()`.
-
-### Query Cancellation {#query-cancellation}
-
-Blitz supports the default React Query's way to cancel queries. You can
-read more about it
-[here](https://react-query-v2.tanstack.com/guides/query-cancellation).
-
-You can also manually cancel queries by using `cancelQueries` method:
-
-```tsx
-import { getQueryClient, getQueryKey, useQuery } from "@blitzjs/rpc"
-
-const [data] = useQuery(getTodos)
-
-return (
-  <button
-    onClick={(e) => {
-      e.preventDefault()
-      getQueryClient.cancelQueries(getQueryKey(getTodos))
-    }}
-  >
-    Cancel
-  </button>
-)
-```

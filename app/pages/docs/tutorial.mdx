@@ -30,14 +30,13 @@ blitz new my-blitz-app
 Blitz will create a `my-blitz-app` folder in your current folder. You will
 be asked how you want your new app to be. For this tutorial, select all
 the default values by only pressing **Enter** when asked (you'll create a
-Full Blitz app with TypeScript, Yarn and React Final Form).
+Full Blitz app with TypeScript, npm and React Final Form).
 
 Let’s look at what `blitz new` created:
 
 ```
 my-blitz-app
 ├── app/
-│   ├── api/
 │   ├── auth/
 │   │   ├── components/
 │   │   │   ├── LoginForm.tsx
@@ -51,11 +50,6 @@ my-blitz-app
 │   │   │   ├── resetPassword.test.ts
 │   │   │   ├── resetPassword.ts
 │   │   │   └── signup.ts
-│   │   ├── pages/
-│   │   │   ├── forgot-password.tsx
-│   │   │   ├── login.tsx
-│   │   │   ├── reset-password.tsx
-│   │   │   └── signup.tsx
 │   │   └── validations.ts
 │   ├── core/
 │   │   ├── components/
@@ -65,15 +59,11 @@ my-blitz-app
 │   │   │   └── useCurrentUser.ts
 │   │   └── layouts/
 │   │       └── Layout.tsx
-│   ├── pages/
-│   │   ├── 404.tsx
-│   │   ├── _app.tsx
-│   │   ├── _document.tsx
-│   │   ├── index.test.tsx
-│   │   └── index.tsx
-│   └── users/
-│       └── queries/
-│           └── getCurrentUser.ts
+│   ├── users/
+│   │   └── queries/
+│   │       └── getCurrentUser.ts
+│   ├── blitz-client.ts
+│   └── blitz-server.ts
 ├── db/
 │   ├── index.ts
 │   ├── schema.prisma
@@ -81,6 +71,18 @@ my-blitz-app
 ├── integrations/
 ├── mailers/
 │   └── forgotPasswordMailer.ts
+├── pages/
+│   ├── api/
+│   │   └── rpc/
+│   │       └── [[...blitz]].ts
+│   ├── auth/
+│   │   └── forgot-password.tsx
+│   │   └── login.tsx
+│   │   └── signup.tsx
+│   ├── _app.tsx
+│   ├── _document.tsx
+│   ├── 404.tsx
+│   └── index.tsx
 ├── public/
 │   ├── favicon.ico*
 │   └── logo.png

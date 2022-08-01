@@ -69,5 +69,10 @@ const showcaseList = [
     title: "Topo.ink",
     URL: "https://www.topo.ink/",
   },
+  {
+    thumbnail: "/showcase/placemark.png",
+    title: "Placemark",
+    URL: "https://www.placemark.io/",
+  },
 ]
 export default showcaseList

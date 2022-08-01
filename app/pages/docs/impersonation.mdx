@@ -15,14 +15,16 @@ First, add a `impersonatingFromUserId` type to your
 
 ```ts
 // types.ts
-import { DefaultCtx, SessionContext, DefaultPublicData } from "blitz"
+import { SessionContext } from "@blitzjs/auth"
 import { User } from "db"
 
-declare module "blitz" {
-  export interface Ctx extends DefaultCtx {
-    session: SessionContext
-  }
-  export interface PublicData extends DefaultPublicData {
+import { SimpleRolesIsAuthorized } from "@blitzjs/auth"
+import { User } from "db"
+
+declare module "@blitzjs/auth" {
+  export interface Session {
+    isAuthorized: SimpleRolesIsAuthorized<Role>
+    PublicData: {
     role: "admin" | "customer"
     userId: User["id"]
     orgId: User["orgId"]
@@ -36,7 +38,7 @@ start the impersonation as well as stopping it.
 
 ```ts
 // app/auth/mutations/impersonateUser.ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -65,7 +67,7 @@ export default resolver.pipe(
 
 ```ts
 // app/auth/mutations/stopImpersonating.ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
 export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
@@ -94,7 +96,7 @@ export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
 Add a form similar to this in order to switch users.
 
 ```tsx
-import { useMutation, queryClient } from "blitz"
+import { useMutation, queryClient } from "@blitzjs/rpc"
 import impersonateUser, {
   ImpersonateUserInput,
 } from "app/auth/mutations/impersonateUser"
@@ -131,7 +133,7 @@ Lastly, add the following component at the top of your Layout(s).
 
 ```tsx
 // app/core/components/ImpersonatingUserNotice.tsx
-import { invoke, useSession, queryClient } from "blitz"
+import { invoke, useSession, queryClient } from "@blitzjs/rpc"
 import stopImpersonating from "app/auth/mutations/stopImpersonating"
 
 export const ImpersonatingUserNotice = () => {

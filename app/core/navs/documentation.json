@@ -7,6 +7,7 @@
     },
     "pages": [
       "get-started",
+      "tutorial",
       "learning-path",
       "why-blitz",
       "blitz-with-next",
@@ -66,7 +67,8 @@
       "session-management",
       "authorization",
       "passportjs",
-      "auth-utils"
+      "auth-utils",
+      "impersonation"
     ]
   },
   {
@@ -90,6 +92,14 @@
       "use-mutation",
       "rpc-specification"
     ]
+  },
+  {
+    "title": {
+      "title": "Backend Architecture",
+      "iconPath": "/img/mutations.svg",
+      "iconDarkPath": "/img/mutations-white.svg"
+    },
+    "pages": ["multitenancy"]
   },
   {
     "title": {

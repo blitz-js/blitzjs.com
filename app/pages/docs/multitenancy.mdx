@@ -181,7 +181,7 @@ When creating new entities, make sure you attach them to the current
 organization. Here's an example of how to do that:
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -218,7 +218,7 @@ entity belonging to a different organization. You could first make a
 fail if the organizationId doesn't match.
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 
@@ -253,7 +253,7 @@ You can do more advanced things like calling `ctx.session.$authorize()`
 inside an if/else
 
 ```ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db, { GlobalRole, MembershipRole } from "db"
 import * as z from "zod"
 
@@ -301,7 +301,8 @@ regular users to access the organization they are currently logged in to.
 
 ```ts
 // app/orders/queries/getOrder.ts
-import { NotFoundError, resolver } from "blitz"
+import { NotFoundError } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 import {

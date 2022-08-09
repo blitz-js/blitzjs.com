@@ -236,3 +236,48 @@ export default function (props: { query: { id: number } }) {
   )
 }
 ```
+
+If the data is not available in the same component where the optimistic
+update occurs, then `getQueryData` can be used to get the cached data.
+
+```tsx
+export default function (props: { query: { id: number } }) {
+  const [updateProjectMutation] = useMutation(updateProject, {
+    onMutate: async (project) => {
+      // Get products from the cache
+      const products = getQueryData(getProjects, {}) //highlight-line
+      // If products is not in the cache, then return
+      if (!products) return
+      // Update local cache with form values without triggering refetch
+      await setQueryData([...products, project], { refetch: false })
+      // Return a context with the previous projects
+      return { projects }
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    onError: async (err, project, context) => {
+      await setQueryData(getProjects, {}, context.projects, {
+        refetch: false,
+      })
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      await invalidateQuery(getProjects, {})
+    },
+  })
+
+  return (
+    <Formik
+      initialValues={product}
+      onSubmit={async (values) => {
+        try {
+          await updateProjectMutation(values)
+        } catch (error) {
+          alert("Error saving product")
+        }
+      }}
+    >
+      {/* ... */}
+    </Formik>
+  )
+}
+```

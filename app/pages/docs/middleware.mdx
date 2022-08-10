@@ -19,21 +19,54 @@ and whatever else they need to do.
 
 ## Global Middleware {#global-middleware}
 
-Global middleware runs for every Blitz query and mutation. It is defined
-in [`blitz.config.js`](./blitz-config) using the `middleware` key.
+Global middleware runs for every Blitz query and mutation. It can be defined in `app/blitz-server` by using a helper function in the plugin array.
 
-```js
-// blitz.config.js
-module.exports = {
-  middleware: [
-    (req, res, next) => {
-      res.blitzCtx.referer = req.headers.referer
-      return next()
-    },
+## `BlitzServerMiddleware` {#blitz-server-middleware}
+
+`BlitzServerMiddleware ` is a utility function that can be used to add a global server middleware.
+It converts a request middleware to a Blitz-compatible server plugin.
+
+### Example {#blitz-server-middleware-example}
+
+```ts
+...
+import {BlitzServerMiddleware} from "blitz"
+import {BlitzGuardMiddleware} from "@blitz-guard/core/dist/middleware"
+...
+
+export const { gSSP, gSP, api } = setupBlitzServer({
+  plugins: [
+    AuthServerPlugin({
+      ...authConfig,
+      storage: PrismaStorage(db),
+      isAuthorized: simpleRolesIsAuthorized,
+    }),
+    BlitzServerMiddleware(BlitzGuardMiddleware({
+      excluded: [
+        '/api/rpc/signup'
+      ]
+    }))
   ],
+})
 ```
 
-### Global Ctx Type {#global-ctx-type}
+### API {#blitz-server-middleware-api}
+
+```ts
+BlitzServerMiddleware(middleware())
+```
+
+#### Arguments
+
+- `middleware:` A request middleware function with `req`, `res` & `next` arguments.
+  - **Required**
+
+#### Returns
+
+A `BlitzServerPlugin` that can be initialized inside the `app/blitz-server` setup file.
+
+
+## Global Ctx Type {#global-ctx-type}
 
 You can access the type of the `res.blitzCtx` parameter by importing `Ctx`
 from `blitz`. The default `Ctx` provided by Blitz is an empty object.
@@ -64,39 +97,6 @@ export default async function getThing(input, ctx: Ctx) {
 }
 ```
 
-## Local Middleware {#local-middleware}
-
-Local middleware only runs for a single query or mutation. It is defined
-by exporting a `middleware` array from a query or mutation.
-
-```ts
-// app/products/queries/getProduct.tsx
-import { Middleware } from "blitz"
-import db, { FindOneProjectArgs } from "db"
-
-type GetProjectInput = {
-  where: FindOneProjectArgs["where"]
-}
-
-export const middleware: Middleware[] = [
-  async (req, res, next) => {
-    res.blitzCtx.referer = req.headers.referer
-    await next()
-    if (req.method !== "HEAD") {
-      console.log("[Middleware] Loaded product:", res.blitzResult)
-    }
-  },
-]
-
-export default async function getProject(
-  { where }: GetProjectInput,
-  ctx: Record<any, unknown> = {}
-) {
-  console.log("Referer:", ctx.referer)
-  return await db.project.findOne({ where })
-}
-```
-
 ## Middleware API {#middleware-api}
 
 This API is essentially the same as connect/Express middleware but with an
@@ -106,9 +106,9 @@ middleware by doing `return next()` or `await next()`. See below for the
 `connectMiddleware()` adapter for existing connect middleware.
 
 ```js
-import { Middleware } from "blitz"
+import { RequestMiddleware } from "blitz"
 
-const middleware: Middleware = async (req, res, next) => {
+const middleware: RequestMiddleware = async (req, res, next) => {
   res.blitzCtx.referer = req.headers.referer
   await next()
   console.log("Query/middleware result:", res.blitzResult)

@@ -41,6 +41,7 @@
       "environment-variables",
       "error-handling",
       "testing",
+      "middleware",
       "utilities",
       "client-and-server",
       "troubleshooting"

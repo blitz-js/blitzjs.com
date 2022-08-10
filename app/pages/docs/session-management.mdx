@@ -154,14 +154,14 @@ can pass the session public data to `useSession()` with the
 import { useSession, getSession } from "@blitzjs/auth"
 import { gSSP } from "app/blitz-server"
 
-export const getServerSideProps = async gSSP({
+export const getServerSideProps = gSSP(async ({
   req,
   res,
 }) => {
   const session = await getSession(req, res)
 
   return { props: { initialPublicData: session.$publicData } }
-}
+})
 
 const SomePage: BlitzPage = ({ initialPublicData }) => {
   const session = useSession({ initialPublicData })

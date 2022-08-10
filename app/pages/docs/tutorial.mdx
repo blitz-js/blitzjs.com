@@ -665,21 +665,46 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 }
 ```
 
-Now open `app/questions/mutations/createQuestion.ts` and update the zod
-schema so that the choice data is accepted in the mutation. We also need
-to update the `db.question.create()` call so that the choices will be
-created. After that we need to export the `CreateQuestion` zod schema
-because we will be using it in the next step to create a validation schema
-for our `QuestionForm`.
+Next we're going to create a separate file to store the validation schema
+for our `QuestionForm`. In the `app/questions` folder create a new file
+called `validations.ts` and copy `CreateQuestion` declaration from
+`./mutations/createQuestion.ts`. Then update the zod schema so that
+the choice data is accepted in the mutation., and export it so
+we can use it for our `QuestionForm` schema in the later step.
+
+```diff
+// app/questions/validations.ts
++ import {z} from 'zod'
+
++ export const CreateQuestion = z
++    .object({
++      text: z.string().nonempty({message: "You must enter a question."}),
++     choices: z.array(z.object({text: z.string()})),
++    })
+```
+
+<Card type="info">
+  We create a shared `validations.ts` file because we cannot import
+  anything from a query (or mutation) file other than the query itself
+  into the client. You can read more about why in [Query
+  Usage](https://blitzjs.com/docs/query-usage) and [Mutation
+  Usage](https://blitzjs.com/docs/mutation-usage).
+</Card>
+
+Now open `app/questions/mutations/createQuestion.ts`, remove old
+CreateQuestion declaration and import new CreateQuestion from
+../validations.ts. We also need to update the `db.question.create()`
+call so that the choices will be created.
 
 ```diff
 // app/questions/mutations/createQuestion.ts
 
-+ export const CreateQuestion = z
-    .object({
-      text: z.string().nonempty({message: "You must enter a question."}),
-+     choices: z.array(z.object({text: z.string()})),
-    })
+- const CreateQuestion = z
+-     .object({
+-       text: z.string().nonempty({message: "You must enter a question."}),
+-       choices: z.array(z.object({text: z.string()})),
+-     })
++ import {CreateQuestion} from '../validations'
 
 export default resolver.pipe(
   resolver.zod(CreateQuestion),
@@ -698,30 +723,7 @@ export default resolver.pipe(
 )
 ```
 
-Next we're going to create a separate file to store the validation schema
-for our `QuestionForm`. In the `app/questions` folder create a new file
-called `validations.ts` and import `CreateQuestion` from
-`./mutations/createQuestion.ts`. Then create a new variable called
-`createQuestionSchema`, set it equal to `CreateQuestion`, and export it so
-we can use it for our `QuestionForm` schema in the next step.
-
-```diff
-// app/questions/validations.ts
-
-+ import { CreateQuestion } from "./mutations/createQuestion"
-
-+ export const createQuestionSchema = CreateQuestion
-```
-
-<Card type="info">
-  We create a shared `validations.ts` file because we cannot import
-  anything from a query (or mutation) file other than the query itself
-  into the client. You can read more about why in [Query
-  Usage](https://blitzjs.com/docs/query-usage) and [Mutation
-  Usage](https://blitzjs.com/docs/mutation-usage).
-</Card>
-
-Now open `app/pages/questions/new.tsx` and import `createQuestionSchema`
+Now open `app/pages/questions/new.tsx` and import `CreateQuestion`
 from `app/questions/validations.ts` and set it as the schema for
 `QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
 `initialValues` for `QuestionForm`:
@@ -729,7 +731,7 @@ from `app/questions/validations.ts` and set it as the schema for
 ```diff
 // app/pages/questions/new.tsx
 
-+ import {createQuestionSchema} from "app/questions/validations"
++ import {CreateQuestion} from "app/questions/validations"
 
 
       <QuestionForm
@@ -739,7 +741,7 @@ from `app/questions/validations.ts` and set it as the schema for
 -       //         then import and use it here
 -       // schema={createQuestion}
 -       // initialValues={{ }}
-+       schema={createQuestionSchema}
++       schema={CreateQuestion}
 +       initialValues={{text: "", choices: []}}
         onSubmit={async (values) => {
           try {

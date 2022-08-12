@@ -8,15 +8,19 @@ import tokenize from "../../macros/tokenize.macro.js"
 const pageTokenized = tokenize.jsx(
   `//---- ON THE CLIENT ----
 // app/pages/projects/new.tsx
-import { Link, Routes, useRouter, useMutation, BlitzPage } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import { BlitzPage, Routes } from "@blitzjs/next";
+import { useRouter } from "next/router";
+import { useMutation } from "@blitzjs/rpc";
+import Layout from "app/core/layouts/Layout";
 // Notice how we import the server function directly
-import createProject, { CreateProject } from "app/projects/mutations/createProject"
-import { ProjectForm } from "app/projects/components/ProjectForm"
+import createProject, {
+  CreateProject,
+} from "app/projects/mutations/createProject";
+import { ProjectForm } from "app/projects/components/ProjectForm";
 
 const NewProjectPage: BlitzPage = () => {
-  const router = useRouter()
-  const [createProjectMutation] = useMutation(createProject)
+  const router = useRouter();
+  const [createProjectMutation] = useMutation(createProject);
 
   return (
     <div>
@@ -27,26 +31,27 @@ const NewProjectPage: BlitzPage = () => {
         schema={CreateProject}
         onSubmit={async (values) => {
           // This is equivalent to calling the server function directly
-          const project = await createProjectMutation(values)
+          const project = await createProjectMutation(values);
           // Notice the 'Routes' object Blitz provides for routing
-          router.push(Routes.ProjectsPage({projectId: project.id}}))
+          router.push(Routes.ProjectsPage({ projectId: project.id }));
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-NewProjectPage.authenticate = true
-NewProjectPage.getLayout = (page) => <Layout>{page}</Layout>
+NewProjectPage.authenticate = true;
+NewProjectPage.getLayout = (page) => <Layout>{page}</Layout>;
 
-export default NewProjectPage`,
+export default NewProjectPage;
+`,
   true,
 )
 
 const mutationTokenized = tokenize.jsx(
   `// ---- ON THE SERVER ----
 // app/projects/mutations/createProject.ts
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
 

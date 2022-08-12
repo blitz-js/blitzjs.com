@@ -13,13 +13,10 @@ the following example.
 ### Example {#example}
 
 ```tsx
-import { Suspense } from "react"
-import {
-  usePaginatedQuery,
-  useRouterQuery,
-  useRouter,
-} from "@blitzjs/rpc"
-import { Link, BlitzPage, Routes } from "blitz"
+import { usePaginatedQuery } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
+import { useRouter } from "next/router"
+import Link from "next/link"
 import getProjects from "app/products/queries/getProjects"
 
 const ITEMS_PER_PAGE = 3
@@ -60,7 +57,8 @@ const Projects = () => {
 And here's the query to work with that:
 
 ```ts
-import { paginate, resolver } from "blitz"
+import { paginate } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db, { Prisma } from "db"
 
 interface GetProjectsInput

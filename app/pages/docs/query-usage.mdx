@@ -188,13 +188,14 @@ In `getStaticProps`, a query function can be called directly without
 
 ```tsx
 import getProject from "app/projects/queries/getProject"
+import { gSP } from "app/blitz-server"
 
-export const getStaticProps = async ({ params, ctx }) => {
+export const getStaticProps = gSP(async ({ params, ctx }) => {
   const project = await getProject({
     where: { id: context.params?.projectId },
   })
   return { props: { project } }
-}
+})
 
 function ProjectPage({ project }) {
   return <div>{project.name}</div>

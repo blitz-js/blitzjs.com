@@ -6,6 +6,13 @@ import React from "react"
 
 const sponsors = [
   {
+    name: "Flightcontrol",
+    href: "https://www.flightcontrol.dev?ref=blitzjs",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/main/assets/flightcontrol.png",
+    tier: 1,
+    cost: 800,
+  },
+  {
     name: "Fauna",
     href: "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/Fauna_Logo_Blue.png",
@@ -152,7 +159,9 @@ export const SponsorPack = () => {
                             )}
                           >
                             <p className="whitespace-nowrap font-bold">{circle.data.name}</p>
-                            <p className="whitespace-nowrap">${circle.data.cost} / month</p>
+                            {circle.data.name !== "Flightcontrol" && (
+                              <p className="whitespace-nowrap">${circle.data.cost} / month</p>
+                            )}
                           </div>
                         </a>
                       )

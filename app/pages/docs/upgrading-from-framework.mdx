@@ -4,36 +4,15 @@ sidebar_label: "Upgrading to Blitz 2.0"
 ---
 
 If you have an existing Blitz.js app, and would like to upgrade it to the
-Blitz 2.0 (Toolkit), you can use our codemods package. You can install it
-globally with:
-
-```sh
-yarn global add @blitzjs/codemod
-
-# or
-
-pnpm add -g @blitzjs/codemod
-
-# or
-
-npm i -g @blitzjs/codemod
-```
-
-Then, inside your Blitz app, you can run:
-
-```sh
-@blitzjs/codemod upgrade-legacy
-```
-
-You can also use npx insetad of installing the package globally:
+Blitz 2.0, you can use our `@blitzjs/codemod` package:
 
 ```sh
 npx @blitzjs/codemod upgrade-legacy
 ```
 
 After running the above command, your Blitz app will be upgraded to the
-Blitz 2.0. If you face any issues with the codemods — let us know! We'd
-appreciate the feedback.
+Blitz 2.0. If you face any issues with the codemod — let us know! You can
+also check out the manual upgrade guide below.
 
 ## Manual Upgrade Steps {#manual-upgrade-steps}
 
@@ -48,9 +27,15 @@ Inside of the config file, you'll also need to wrap the config with
 `withBlitz` function imported from `@blitzjs/next`:
 
 ```js
+// @ts-check
 const { withBlitz } = require("@blitzjs/next")
 
-module.exports = withBlitz()
+/**
+ * @type {import('@blitzjs/next').BlitzConfig}
+ **/
+const config = {}
+
+module.exports = withBlitz(config)
 ```
 
 ### Update dependencies in `package.json` {#update-dependencies}
@@ -68,6 +53,9 @@ list as a reference:
 
 | Import                        | Source Package  |
 | ----------------------------- | --------------- |
+| `NextApiHandler`              | `next`          |
+| `NextApiRequest`              | `next`          |
+| `NextApiResponse`             | `next`          |
 | `GetServerSideProps`          | `next`          |
 | `InferGetServerSidePropsType` | `next`          |
 | `GetServerSidePropsContext`   | `next`          |
@@ -134,6 +122,35 @@ following list as a reference:
 | `Link`         | `next/link`    |
 | `Image`        | `next/image`   |
 | `Head`         | `next/head`    |
+| `dynamic`      | `next/dynamic` |
+
+### Change `queryClient` import to `getQueryClient` {#change-query-client-import}
+
+If you imported `queryClient` from `blitz`, you'd need to change it to the
+following code:
+
+```diff
+- import { queryClient } from 'blitz'
+
++ import { getQueryClient } from '@blitzjs/rpc'
++ const queryClient = getQueryClient()
+```
+
+### Update `BlitzApiRequest`, `BlitzApiResponse`, `BlitzApiHandler` {#update-api-imports}
+
+`blitz` no longer exports `BlitzApiRequest`, `BlitzApiResponse`,
+`BlitzApiHandler`. You'll need to update your imports to the following:
+
+```diff
+- import { BlitzApiRequest } from 'blitz'
++ import { NextApiRequest } from 'next'
+
+- import { BlitzApiResponse } from 'blitz'
++ import { NextApiResponse } from 'next'
+
+- import { BlitzApiHandler } from 'blitz'
++ import { NextApiHandler } from 'next'
+```
 
 ### Create `blitz-server.ts` and `blitz-client.ts` {#create-blitz-files}
 
@@ -144,9 +161,12 @@ project:
 
 ```ts
 import { setupBlitzServer } from "@blitzjs/next"
-import { AuthServerPlugin, PrismaStorage } from "@blitzjs/auth"
+import {
+  AuthServerPlugin,
+  PrismaStorage,
+  simpleRolesIsAuthorized,
+} from "@blitzjs/auth"
 import { db } from "db"
-import { simpleRolesIsAuthorized } from "@blitzjs/auth"
 
 const { gSSP, gSP, api } = setupBlitzServer({
   plugins: [
@@ -181,7 +201,7 @@ export const { withBlitz } = setupBlitzClient({
 ### Create API Route for the Zero-API Layer {#create-api-route}
 
 To setup the Zero-API layer, you'd need to create a
-`pages/api/rpc/[[blitz]].ts` file with the following content:
+`pages/api/rpc/[[...blitz]].ts` file with the following content:
 
 ```ts
 import { rpcHandler } from "@blitzjs/rpc"
@@ -221,6 +241,15 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 export default withBlitz(App)
+```
+
+### Convert `useRouterQuery` to `useRouter` {#convert-use-router-query-to-use-router}
+
+Blitz no longer exports `useRouterQuery`. You'll need to use the
+`useRouter` function instead.
+
+```ts
+import { useRouter } from "next/router"
 ```
 
 ### Wrapping `getServerSideProps`, `getStaticProps`, and API Routes {#wrap-get-ssp-static-props-api-routes}

@@ -64,7 +64,7 @@ const Home = ({randomContributors}) => {
                     conventions for shipping and scaling world wide applications.
                   </p>
                   <div className="flex space-x-4 mt-10">
-                    <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/get-started">
+                    <ButtonLink className="w-2/3 lg:w-auto rounded-tl-xl" href="/docs/why-blitz">
                       Learn to Blitz
                     </ButtonLink>
                     <ButtonLink

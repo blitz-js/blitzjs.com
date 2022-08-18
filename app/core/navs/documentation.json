@@ -6,9 +6,10 @@
       "iconDarkPath": "/img/introduction-white.svg"
     },
     "pages": [
+      "why-blitz",
       "get-started",
       "learning-path",
-      "why-blitz",
+      "tutorial",
       "blitz-with-next",
       "upgrading-from-framework",
       "stickers"

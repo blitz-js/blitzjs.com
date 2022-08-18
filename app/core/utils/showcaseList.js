@@ -74,5 +74,10 @@ const showcaseList = [
     title: "Placemark",
     URL: "https://www.placemark.io/",
   },
+  {
+    thumbnail: "/showcase/hire-win.png",
+    title: "hire.win",
+    URL: "https://hire.win/",
+  },
 ]
 export default showcaseList

@@ -712,7 +712,7 @@ Now open `pages/questions/new.tsx` and import `CreateQuestion` from
 -       //         then import and use it here
 -       // schema={createQuestion}
 -       // initialValues={{ }}
-+       schema={createQuestionSchema}
++       schema={CreateQuestion}
 +       initialValues={{text: "", choices: []}}
         onSubmit={async (values) => {
           try {

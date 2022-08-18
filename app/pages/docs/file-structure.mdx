@@ -31,9 +31,6 @@ sidebar_label: File Structure
 │   │   │   ├── login.ts
 │   │   │   ├── logout.ts
 │   │   │   └── signup.ts
-│   │   ├── pages/
-│   │   │   ├── login.tsx
-│   │   │   └── signup.tsx
 │   │   ├── auth-utils.ts
 │   │   └── validations.ts
 │   ├── users/
@@ -41,33 +38,36 @@ sidebar_label: File Structure
 │   │       └── getCurrentUser.ts
 │   └── projects/
 │       ├── components/
-│       │   ├── Project.js
-│       │   ├── ProjectForm.js
-│       │   └── Projects.js
+│       │   ├── Project.tsx
+│       │   ├── ProjectForm.tsx
+│       │   └── Projects.tsx
 │       ├── mutations/
-│       │   ├── createProject.js
-│       │   ├── createProject.test.js
-│       │   ├── deleteProject.js
-│       │   ├── deleteProject.test.js
-│       │   ├── updateProject.js
-│       │   └── updateProject.test.js
+│       │   ├── createProject.ts
+│       │   ├── createProject.test.ts
+│       │   ├── deleteProject.ts
+│       │   ├── deleteProject.test.ts
+│       │   ├── updateProject.ts
+│       │   └── updateProject.test.ts
 │       └── queries/
-│           ├── getProject.js
-│           └── getProjects.js
+│           ├── getProject.ts
+│           └── getProjects.ts
 ├── pages/
 │   ├── api/
-│   │   └── stripe-webhook.js
+│   │   └── stripe-webhook.ts
 │   ├── 404.tsx
 │   ├── _app.tsx
 │   ├── _document.tsx
 │   ├── index.test.tsx
 │   ├── index.tsx
+│   ├── auth/
+│   │   ├── login.tsx
+│   │   └── signup.tsx
 │   └── projects/
 │       ├── [id]/
-│       │   └── edit.js
-│       ├── [id].js
-│       ├── index.js
-│       └── new.js
+│       │   └── edit.tsx
+│       ├── [id].tsx
+│       ├── index.tsx
+│       └── new.tsx
 ├── db/
 │   ├── index.ts
 │   ├── schema.prisma
@@ -81,8 +81,7 @@ sidebar_label: File Structure
 │   ├── setup.ts
 │   └── utils.tsx
 ├── README.md
-├── babel.config.js
-├── blitz.config.js
+├── next.config.js
 ├── jest.config.js
 ├── package.json
 ├── tsconfig.json

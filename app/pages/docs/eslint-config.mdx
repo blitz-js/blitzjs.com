@@ -9,9 +9,7 @@ Blitz extends the
 This configuration is found in .eslintrc.js, and by default is
 
 ```js
-module.exports = {
-  extends: ["blitz"],
-}
+module.exports = require("@blitzjs/next/eslint")
 ```
 
 ## Extending or replacing the default Blitz ESLint config {#extending}
@@ -34,7 +32,7 @@ In the below example:
 
 ```js
 module.exports = {
-  extends: ["blitz", "shared-config"],
+  extends: ["./node_modules/@blitzjs/next/eslint", "shared-config"],
   rules: {
     "additional-rule": "warn",
   },
@@ -52,11 +50,11 @@ completely.
 
 > Be sure you have configured ESLint to run in a separate part of your
 > workflow (for example, in CI or a pre-commit hook). Open
-> `blitz.config.js` and enable the `ignoreDuringBuilds` option in the
+> `next.config.js` and enable the `ignoreDuringBuilds` option in the
 > `eslint` config:
 
 ```js
-// blitz.config.js
+// next.config.js
 module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -71,7 +69,7 @@ A stricter `next/core-web-vitals` rule set can also be added in
 
 ```
 {
-  "extends": ["blitz", "next/core-web-vitals"]
+  "extends": ["./node_modules/@blitzjs/next/eslint", "next/core-web-vitals"]
 }
 ```
 

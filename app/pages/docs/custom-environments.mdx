@@ -12,11 +12,14 @@ provide an app environment name by passing `-e` (`--env`) flag or setting
 `APP_ENV` directly. For example:
 
 ```
-APP_ENV=staging blitz build
+APP_ENV=staging blitz build    // loads .env.staging
 
-blitz prisma generate -e=staging
+blitz prisma generate -e staging  // loads .env.staging
 
-blitz dev --env staging
+blitz dev --env staging  // loads .env.staging
+
+// it also solves the problem of loading production env variables in dev mode
+blitz dev --e production
 ```
 
 This will load additional env files: `.env.<APP_ENV>` and

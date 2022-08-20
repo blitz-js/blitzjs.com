@@ -7,21 +7,20 @@ sidebar_label: blitz start
 
 Starts the Blitz production server.
 
-The Blitz CLI is a small standalone thing you can use to solve env
-variable loading with Next.js. For example:
+This is a super thin wrapper over Next CLI to improve environment variable
+loading.
 
 ```bash
-blitz start -e staging
+blitz dev -e staging
 ```
 
-This is a super thin wrapper over Next CLI with no performance overhead.
 It does the following:
 
 1. Loads correct `.env.X` and `.env.X.local` files based on the `-e X`
    flag that you specify. Ex: `-e staging` loads `.env.staging`.
 2. Sets `process.env.APP_ENV` to the env name. Ex: `-e staging` =>
    `APP_ENV=staging`.
-3. Passes all other arguments directly to the Next CLI.
+3. Passes all other arguments directly to the next build command
 
 #### Options
 

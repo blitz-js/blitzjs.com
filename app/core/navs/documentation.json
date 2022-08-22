@@ -39,7 +39,7 @@
     },
     "pages": [
       "file-structure",
-      "environment-variables",
+      "custom-environments",
       "error-handling",
       "testing",
       "middleware",

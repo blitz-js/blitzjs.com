@@ -94,7 +94,7 @@ This also assumes you already have a [Vercel](https://vercel.com) account.
    `NODE_ENV=production blitz build && blitz prisma migrate deploy` so
    that the production DB will be migrated on each deploy
 5. Add your DB url as a secret environment variable
-   [using the UI](https://vercel.com/blog/environment-variables-ui) or by
+   [using the UI](https://vercel.com/blog/custom-environments-ui) or by
    running `vercel env add DATABASE_URL`
 6. Add your `SESSION_SECRET_KEY` environment variable (It needs to be 32
    characters long)

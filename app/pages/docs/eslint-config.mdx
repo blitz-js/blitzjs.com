@@ -32,7 +32,7 @@ In the below example:
 
 ```js
 module.exports = {
-  extends: ["./node_modules/@blitzjs/next/eslint", "shared-config"],
+  extends: [require.resolve('@blitzjs/next/eslint-config'), "shared-config"],
   rules: {
     "additional-rule": "warn",
   },
@@ -69,7 +69,7 @@ A stricter `next/core-web-vitals` rule set can also be added in
 
 ```
 {
-  "extends": ["./node_modules/@blitzjs/next/eslint", "next/core-web-vitals"]
+  "extends": [require.resolve('@blitzjs/next/eslint-config'), "next/core-web-vitals"]
 }
 ```
 

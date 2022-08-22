@@ -63,6 +63,7 @@ html {
 }
 
 .hand {
+  pointer-events: none;
   --color-stop: theme("colors.purple.light");
   --page-bg-color: theme("colors.white");
 }

@@ -26,8 +26,8 @@ const showcaseList = [
   },
   {
     thumbnail: "/showcase/fungarzione.png",
-    title: "Fungarzione",
-    URL: "https://fungarzione.com/",
+    title: "Glink",
+    URL: "https://glink.so/",
   },
   {
     thumbnail: "/showcase/git-nation.png",

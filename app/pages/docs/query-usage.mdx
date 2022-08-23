@@ -180,11 +180,12 @@ return (
 ```
 
 ## On the Server {#on-the-server}
+<Card type="info">
+In `getStaticProps` or `getServerSideProps`, a query & mutation function can be called directly.
+</Card>
+
 
 ### `getStaticProps` {#get-static-props}
-
-In `getStaticProps`, a query function can be called directly without
-`useQuery`
 
 ```tsx
 import getProject from "app/projects/queries/getProject"
@@ -206,21 +207,15 @@ export default ProjectPage
 
 ### `getServerSideProps` {#get-server-side-props}
 
-In `getServerSideProps`, pass a query function to
-[`invokeWithCtx`](./resolver-server-utilities#invoke-with-ctx) which will
-ensure appropriate middleware is run before/after your query function.
-
 ```tsx
-import { invokeWithCtx } from "@blitzjs/rpc"
 import getProject from "app/projects/queries/getProject"
 import { gSSP } from "app/blitz-server"
 
 export const getServerSideProps = gSSP(async ({ params, ctx }) => {
-  const project = await invokeWithCtx(
-    getProject,
-    { where: { id: params.projectId } },
-    ctx
-  )
+  const project = await getProject({ 
+    where: { id: params.projectId }
+  }),
+
   return { props: { project } }
 })
 

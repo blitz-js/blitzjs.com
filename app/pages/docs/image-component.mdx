@@ -103,15 +103,7 @@ an absolute url for the Image `src` and specify which `domains` are
 allowed to be optimized. This is needed to ensure that external urls can't
 be abused.
 
-```js
-module.exports = {
-  images: {
-    domains: ["example.com"],
-  },
-}
-```
-
-But if you are using Blitz 2.0 then you need to make changes in `next.config.js`.
+Starting from Blitz 2.0 you need to make certain changes in `next.config.js`.
 
 ```js
 // @ts-check

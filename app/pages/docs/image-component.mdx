@@ -103,8 +103,7 @@ an absolute url for the Image `src` and specify which `domains` are
 allowed to be optimized. This is needed to ensure that external urls can't
 be abused.
 
-Starting from Blitz 2.0 you need to make some configuration changes
-in `next.config.js` In order to add external domains into your project.
+To add external domains to your project, you need to add the `images` property to your `next.config.js` file: 
 
 ```js
 // @ts-check
@@ -115,7 +114,7 @@ const { withBlitz } = require("@blitzjs/next")
  **/
 const config = {
   images: {
-    domains: ["www.example.com"],
+    domains: ["www.example.com"], // hightlight-line
   },
 }
 

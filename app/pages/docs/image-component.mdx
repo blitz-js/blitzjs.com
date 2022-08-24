@@ -94,7 +94,7 @@ and `blurDataURL` manually.
 
 In addition to using properties available to the `Image` component, you
 can optionally configure Image Optimization for more advanced use cases
-via `blitz.config.js`.
+via `next.config.js`.
 
 ### Domains {#domains}
 
@@ -103,12 +103,22 @@ an absolute url for the Image `src` and specify which `domains` are
 allowed to be optimized. This is needed to ensure that external urls can't
 be abused.
 
+To add external domains to your project, you need to add the `images` property to your `next.config.js` file: 
+
 ```js
-module.exports = {
+// @ts-check
+const { withBlitz } = require("@blitzjs/next")
+
+/**
+ * @type {import('@blitzjs/next').BlitzConfig}
+ **/
+const config = {
   images: {
-    domains: ["example.com"],
+    domains: ["www.example.com"], // hightlight-line
   },
 }
+
+module.exports = withBlitz(config)
 ```
 
 ### Loader {#loader}

@@ -346,3 +346,26 @@ export default api(
 
 Note: Without the `authenticateOptions` the `profile` parameter inside the
 `verify` function would not contain any values.
+
+### Custom strategy name {#custom-strategy-name}
+
+When creating auth API routes, Blitz will use a default strategy's name.
+For example, for a Twitter startegy, the API routes will be:
+`/api/auth/twitter` and `api/auth/twitter/callback`. If you want to
+override the name and provide a custom one, you can specify a `name`
+parameter:
+
+```ts
+export default api(
+  passportAuth({
+    successRedirectUrl: "/",
+    errorRedirectUrl: "/",
+    strategies: [
+      {
+        name: "custom-name", // highlight-line
+        strategy: new TwitterStrategy(
+          // ...
+```
+
+The above configuration will result in `example.com/api/auth/custom-name`
+and `api/auth/custom-name/callback` API routes.

@@ -10,11 +10,6 @@ const showcaseList = [
     URL: "https://budg.co/",
   },
   {
-    thumbnail: "/showcase/combox.png",
-    title: "Combox",
-    URL: "https://combox.app/",
-  },
-  {
     thumbnail: "/showcase/dweet.png",
     title: "Dweet",
     URL: "https://www.dweet.com/",

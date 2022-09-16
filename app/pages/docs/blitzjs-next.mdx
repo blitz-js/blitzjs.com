@@ -18,7 +18,9 @@ npm i @blitzjs/next # yarn add @blitzjs/next # pnpm add @blitzjs/next
 
 ## Client {#blitzjs-next-client}
 
-Inside `app > blitz-client.ts`
+### Example {#blitzjs-next-client-example}
+
+Inside `app/blitz-client.ts`:
 
 ```ts
 import { setupBlitzClient } from "@blitzjs/next"
@@ -30,9 +32,6 @@ export const { withBlitz } = setupBlitzClient({
 
 Then inside `pages > _app.tsx` wrap `MyApp` function with the `withBlitz`
 HOC component.
-
-**_Note: An `<ErrorBoundary />` provider and `<ErrorComponent />`
-component is supplied by `@blitzjs/next`_**
 
 ```ts
 import {
@@ -76,8 +75,32 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default withBlitz(MyApp)
 ```
 
+<Card type="note">
+An `<ErrorBoundary />` provider and `<ErrorComponent />`
+component is supplied by `@blitzjs/next`
+</Card>
+
+### API {#blitzjs-next-client-api}
+
+```ts
+setupBlitzClient({
+  plugins: []
+})
+```
+
+#### Arguments
+
+- `plugins:` An array of blitzjs plugins
+  - **Required**
+
+#### Returns
+
+An object with the `withBlitz` HOC wrapper
+
+
 ## Server {#blitzjs-next-server}
 
+### Example {#blitzjs-next-server-example}
 Inside `app > blitz-server.ts`
 
 ```ts
@@ -88,11 +111,33 @@ export const { gSSP, gSP, api } = setupBlitzServer({
 })
 ```
 
-The `gSSP`, `gSP` & `api` functions all pass down the context of the
-session if you're using the auth plugin. Read more about the auth plugin
-here [@blitzjs/auth](/docs/auth).
+<Card type="note">
+  The `gSSP`, `gSP` & `api` functions all pass down the context of the
+  session if you're using the auth plugin. Read more about the auth plugin
+  here [@blitzjs/auth](/docs/auth).
+</Card>
 
-#### gSP {#blitzjs-next-gsp}
+### API {#blitzjs-next-server-api}
+
+```ts
+setupBlitzServer({
+  plugins: [],
+  onError?: (err) => void
+})
+```
+
+#### Arguments
+
+- `plugins:` An array of blitzjs plugins
+  - **Required**
+- `onError:` Catch all errors _(Great for services like sentry)_
+
+#### Returns
+
+An object with the [`gSSP`](#blitzjs-next-gssp), [`gSP`](#blitzjs-next-gsp) & [`api`](#blitzjs-next-api) wrappers.
+
+
+## gSP {#blitzjs-next-gsp}
 
 ```ts
 import { gSP } from "app/blitz-server"
@@ -112,7 +157,7 @@ export const getStaticProps = gSP(async ({ ctx }) => {
 })
 ```
 
-#### gSSP {#blitzjs-next-gssp}
+## gSSP {#blitzjs-next-gssp}
 
 ```ts
 import { gSSP } from "app/blitz-server"
@@ -127,7 +172,7 @@ export const getServerSideProps = gSSP(async ({ ctx }) => {
 })
 ```
 
-#### api {#blitzjs-next-api}
+## api {#blitzjs-next-api}
 
 ```ts
 import { api } from "app/blitz-server"

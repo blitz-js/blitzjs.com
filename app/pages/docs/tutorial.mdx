@@ -620,7 +620,7 @@ for our `QuestionForm`.
 
 + export const CreateQuestion = z
     .object({
-      text: z.string().nonempty({message: "You must enter a question."}),
+      text: z.string(),
 +     choices: z.array(z.object({text: z.string()})),
     })
 

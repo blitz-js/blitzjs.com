@@ -23,7 +23,7 @@ services:
     env: node
     plan: free
     buildCommand: yarn --frozen-lockfile --prod=false && blitz build
-    startCommand: blitz start
+    startCommand: blitz start -p ${PORT}
     envVars:
       - key: NODE_ENV
         value: production
@@ -48,7 +48,7 @@ services:
       blitz prisma generate &&
       blitz build &&
       blitz prisma migrate deploy
-    startCommand: blitz start
+    startCommand: blitz start -p ${PORT}
     envVars:
       - key: NODE_ENV
         value: production

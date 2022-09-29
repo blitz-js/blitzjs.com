@@ -15,9 +15,10 @@ testing and rapid prototype exploration.
 
 #### Options
 
-| Option  | Shorthand | Description                                                                           | Default |
-| ------- | --------- | ------------------------------------------------------------------------------------- | ------- |
-| `--env` | `-e`      | Set app environment name. [Read more](/docs/custom-environments#custom-environments). | None    |
+| Option      | Shorthand | Description                                                                           | Default |
+| ----------- | --------- | ------------------------------------------------------------------------------------- | ------- |
+| `--env`     | `-e`      | Set app environment name. [Read more](/docs/custom-environments#custom-environments). | None    |
+| `--only-db` | `-d`      | Skip preloading queries and mutations. Only load the database module.                 | false   |
 
 #### Examples
 
@@ -26,11 +27,11 @@ testing and rapid prototype exploration.
 
 You have entered the Blitz console
 Tips: - Exit by typing .exit or pressing Ctrl-D
-      - Use your db like this: await db.project.findMany()
-      - Use your queries/mutations like this: await getProjects()
+      - Use your db like this: db.project.findMany()
+      - Use your queries/mutations like this: getProjects()
 ✔ Loading your code
 
-⚡ > await db.question.findMany()
+⚡ > db.question.findMany()
 [
   {
     id: 1,

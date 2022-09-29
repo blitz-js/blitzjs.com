@@ -55,11 +55,11 @@ my-blitz-app
 │   │   ├── components/
 │   │   │   ├── Form.tsx
 │   │   │   └── LabeledTextField.tsx
-│   │   ├── hooks/
-│   │   │   └── useCurrentUser.ts
 │   │   └── layouts/
 │   │       └── Layout.tsx
 │   ├── users/
+│   │   ├── hooks/
+│   │   │   └── useCurrentUser.ts
 │   │   └── queries/
 │   │       └── getCurrentUser.ts
 │   ├── blitz-client.ts
@@ -620,7 +620,7 @@ for our `QuestionForm`.
 
 + export const CreateQuestion = z
     .object({
-      text: z.string().nonempty({message: "You must enter a question."}),
+      text: z.string(),
 +     choices: z.array(z.object({text: z.string()})),
     })
 
@@ -873,7 +873,7 @@ zod schema, and add a vote increment.
 const UpdateChoice = z
   .object({
     id: z.number(),
--   name: z.string(),
+-   text: z.string(),
   })
 
 

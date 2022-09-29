@@ -58,7 +58,7 @@
   },
   {
     "title": {
-      "title": "@blitzjs/auth",
+      "title": "Blitz Auth",
       "iconPath": "/img/shield-purple.svg",
       "iconDarkPath": "/img/shield-white.svg"
     },
@@ -74,7 +74,7 @@
   },
   {
     "title": {
-      "title": "@blitzjs/rpc",
+      "title": "Blitz RPC",
       "iconPath": "/img/queries.svg",
       "iconDarkPath": "/img/queries-white.svg"
     },
@@ -134,7 +134,8 @@
       "cli-prisma",
       "cli-generate",
       "cli-codegen",
-      "cli-routes"
+      "cli-routes",
+      "cli-console"
     ]
   },
   {

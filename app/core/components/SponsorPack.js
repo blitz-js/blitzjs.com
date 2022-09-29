@@ -54,6 +54,13 @@ const sponsors = [
     tier: 4,
     cost: 100,
   },
+  {
+    name: "Simon Lammes",
+    href: "https://github.com/simon-lammes",
+    imageUrl: "https://avatars.githubusercontent.com/u/46446421?v=4",
+    tier: 4,
+    cost: 100,
+  },
 ]
 
 const pack = {

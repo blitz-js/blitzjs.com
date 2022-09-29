@@ -135,7 +135,8 @@
       "cli-generate",
       "cli-codegen",
       "cli-routes",
-      "cli-console"
+      "cli-console",
+      "cli-install"
     ]
   },
   {

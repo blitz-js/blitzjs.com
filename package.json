@@ -10,7 +10,7 @@
     "dev": "blitz dev",
     "start": "blitz start",
     "build": "blitz build",
-    "lint": "yarn lint:code && yarn lint:docs",
+    "lint": "pnpm lint:code && pnpm lint:docs",
     "lint:code": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "lint:docs": "alex app/pages/docs/**/*.mdx",
     "english-slugify": "node scripts/english-slugify.mjs",

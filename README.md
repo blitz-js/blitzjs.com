@@ -73,7 +73,7 @@ If you aren't totally sure how the slug should look like, or just want to automa
 
 ## Cards
 
-You can use cards, like the one at the start of [_API Routes_](https://blitzjs.com/docs/api-routes) like this:
+You can use cards like this:
 
 ```md
 <Card type="info">

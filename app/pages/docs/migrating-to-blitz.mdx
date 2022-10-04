@@ -249,8 +249,9 @@ your proxy such that `example.com/store` serves a Blitz e-commerce store.
 Using [`basePath`](/docs/blitz-config#base-path), you can configure your
 Blitz application's assets and links to automatically work with your new
 subpath `/store`. Since each page in Blitz is its own
-[standalone route](/docs/routing), pages like `pages/products/index.tsx`
-will route to `example.com/store/products` in your application.
+[standalone route](https://nextjs.org/docs/routing/introduction), pages
+like `pages/products/index.tsx` will route to `example.com/store/products`
+in your application.
 
 ```ts
 // blitz.config.ts
@@ -269,9 +270,10 @@ To learn more about `basePath`, take a look at our
 ### Using Rewrites {#rewrites}
 
 The second strategy is to create a new Blitz app that points to the root
-URL of your domain. Then, you can use [`rewrites`](/docs/rewrites) inside
-`blitz.config.ts` to have some subpaths to be proxied to your existing
-app.
+URL of your domain. Then, you can use
+[`rewrites`](https://nextjs.org/docs/api-reference/next.config.js/rewrites)
+inside `blitz.config.ts` to have some subpaths to be proxied to your
+existing app.
 
 For example, let's say you created a Blitz app to be served from
 `example.com` with the following `blitz.config.ts`. Now, requests for the
@@ -301,5 +303,5 @@ const config: BlitzConfig = {
 module.exports = config
 ```
 
-To learn more about rewrites, take a look at our
-[documentation](/docs/rewrites).
+To learn more about rewrites, take a look at the Next.js
+[documentation](https://nextjs.org/docs/api-reference/next.config.js/rewrites).

@@ -125,7 +125,8 @@
       "cli-prisma",
       "cli-generate",
       "cli-codegen",
-      "cli-routes"
+      "cli-routes",
+      "cli-console"
     ]
   },
   {

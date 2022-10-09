@@ -74,5 +74,10 @@ const showcaseList = [
     title: "hire.win",
     URL: "https://hire.win/",
   },
+  {
+    thumbnail: "/showcase/twoclicks.png",
+    title: "Twoclicks",
+    URL: "https://twoclicks.vercel.app",
+  }
 ]
 export default showcaseList

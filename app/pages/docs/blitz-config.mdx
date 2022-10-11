@@ -459,22 +459,6 @@ full details.
 
 These features aren't ready for production and could change at any time.
 
-### Isomorphic Resolver Imports {#isomorphic-resolver-imports}
-
-This enables isomorphic code imports from resolver files (for example
-exporting a zod schema from a mutation and being able to import that in
-client code).
-
-- Default: `false`
-
-```js
-module.exports = {
-  experimental: {
-    isomorphicResolverImports: true,
-  },
-}
-```
-
 ### React Root Mode {#react-mode}
 
 By default Blitz uses

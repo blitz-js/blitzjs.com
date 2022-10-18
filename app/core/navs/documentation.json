@@ -43,6 +43,7 @@
       "error-handling",
       "testing",
       "middleware",
+      "logging",
       "utilities",
       "client-and-server",
       "troubleshooting"

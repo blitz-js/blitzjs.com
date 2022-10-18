@@ -223,7 +223,6 @@ _For more information about Next.js API routes, visit their docs at
 You may want to check if the user is logged in before your page loads. We’re going to use the `getCurrentUser` query inside `getServerSideProps()` by calling the query directly. Then you can check if the user is logged in on the server and use the built-in Next.js redirect property.
 
 ```ts
-...
 import { Routes, BlitzPage } from "@blitzjs/next"
 import { gSSP } from "app/blitz-server"
 import getCurrentUser from "app/users/queries/getCurrentUser"
@@ -247,7 +246,6 @@ export const getServerSideProps = gSSP(async ({ctx}) => {
   }
 
 })
-...
 ```
 
 ### Return types when data fetching on the server {#data-fetching-types}
@@ -256,7 +254,6 @@ You can set the types returned from the Next.js data fetching functions. All Bli
 So for example, we can use some typescript utilities to help use get the types returned by `getCurrentUser()`
 
 ```ts
-...
 import { Routes, BlitzPage } from "@blitzjs/next"
 import { gSSP } from "app/blitz-server"
 import getCurrentUser from "app/users/queries/getCurrentUser"
@@ -280,7 +277,6 @@ export const getServerSideProps = gSSP<{user: TCurrentUser}>(async ({ctx}) => {
       }
     }
   }
-
 })
 
 const Page: BlitzPage<{user: TCurrentUser}> = ({user}) => {
@@ -295,8 +291,6 @@ const Page: BlitzPage<{user: TCurrentUser}> = ({user}) => {
 }
 
 export default Page
-
-...
 ```
 
 ### Handling errors on initial page load {#handle-errors-on-load}
@@ -342,7 +336,6 @@ export const getServerSideProps = gSSP(async ({ ctx }) => {
 You can also catch server errors in `_app.tsx` and show the errors with a toast component.
 
 ```tsx
-...
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   if (pageProps.error) {
@@ -354,6 +347,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ErrorBoundary>
   );
 }
-...
 ```
 

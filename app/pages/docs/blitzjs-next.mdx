@@ -18,7 +18,7 @@ npm i @blitzjs/next # yarn add @blitzjs/next # pnpm add @blitzjs/next
 
 ### Next Config {#blitzjs-next-config}
 
-Blitz.js extends the `next.config.js` file by looking for the blitz property.
+Blitz.js extends the `next.config.js` file by accepting a `blitz` property.
 
 ```ts
 blitz?: {
@@ -108,7 +108,7 @@ setupBlitzClient({
 
 #### Arguments
 
-- `plugins:` An array of blitzjs plugins
+- `plugins:` An array of Blitz.js plugins
   - **Required**
 
 #### Returns
@@ -140,7 +140,7 @@ setupBlitzServer({
 
 #### Arguments
 
-- `plugins:` An array of blitzjs plugins
+- `plugins:` An array of Blitz.js plugins
   - **Required**
 - `onError:` Catch all errors _(Great for services like sentry)_
 
@@ -150,7 +150,9 @@ An object with the [`gSSP`](#blitzjs-next-gssp), [`gSP`](#blitzjs-next-gsp) & [`
 
 ### Custom Server {#custom-next-server}
 
-The Blitz CLI supports running custom Next.js servers. This means you can compile typescript and use the blitz cli to inject env variables. By default, the CLI checks for `server/index.ts` or `server.ts`
+The Blitz CLI supports running custom Next.js servers. This means you can compile both javascript & typescript while using the Blitz.js CLI to inject env variables. By default, the CLI checks for `server/index.[ts | js]` or `server.[ts | js]`
+
+For more information about custom Next.js servers, check the [`official docs`](https://nextjs.org/docs/advanced-features/custom-server)
 
 
 ## Wrappers {#blitzjs-next-server-wrappers}
@@ -249,7 +251,7 @@ export const getServerSideProps = gSSP(async ({ctx}) => {
 ```
 
 ### Return types when data fetching on the server {#data-fetching-types}
-You can set the types returned from the Next.js data fetching functions. All Blitzjs wrappers for the Nextjs functions accept a generic. Same with the `BlitzPage` type.
+You can set the types returned from the Next.js data fetching functions. All Blitz.js wrappers for the Next.js functions accept a generic. Same with the `BlitzPage` type.
 
 So for example, we can use some typescript utilities to help use get the types returned by `getCurrentUser()`
 

@@ -112,6 +112,14 @@
   },
   {
     "title": {
+      "title": "Recipes",
+      "iconPath": "/img/recipe-purple.svg",
+      "iconDarkPath": "/img/recipe-white.svg"
+    },
+    "pages": ["using-recipes", "writing-recipes"]
+  },
+  {
+    "title": {
       "title": "CLI",
       "iconPath": "/img/terminal-purple.svg",
       "iconDarkPath": "/img/terminal-white.svg"
@@ -126,7 +134,8 @@
       "cli-generate",
       "cli-codegen",
       "cli-routes",
-      "cli-console"
+      "cli-console",
+      "cli-install"
     ]
   },
   {

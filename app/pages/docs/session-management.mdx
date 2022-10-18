@@ -146,18 +146,16 @@ function SomeComponent() {
 }
 ```
 
-If you are using [`getServerSideProps`](./get-server-side-props), then you
-can pass the session public data to `useSession()` with the
+If you are using
+[`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props),
+then you can pass the session public data to `useSession()` with the
 `initialPublicData` option.
 
 ```ts
 import { useSession, getSession } from "@blitzjs/auth"
 import { gSSP } from "app/blitz-server"
 
-export const getServerSideProps = gSSP(async ({
-  req,
-  res,
-}) => {
+export const getServerSideProps = gSSP(async ({ req, res }) => {
   const session = await getSession(req, res)
 
   return { props: { initialPublicData: session.$publicData } }

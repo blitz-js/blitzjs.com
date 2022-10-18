@@ -13,7 +13,9 @@ You secure data by calling
 and mutations that you want secured. (Or if using
 [`resolver.pipe`](./resolver-server-utilities#resolverpipe), by using
 [`resolver.authorize`](./resolver-server-utilities#resolverauthorize)).
-You can also secure [API routes](./api-routes) the same way.
+You can also secure
+[API routes](https://nextjs.org/docs/api-routes/introduction) the same
+way.
 
 Those will throw `AuthenticationError` if the user is not logged in, and
 it will throw `AuthorizationError` if the user is logged in but doesn't
@@ -273,7 +275,7 @@ described below.
 Note: due to the nature of static pre-rendering, the `session` will not
 exist on the very first render on the client. This causes a quick "flash"
 on first load. You can fix that by setting
-[`Page.suppressFirstRenderFlicker = true`](./pages##automatic-static-optimization)
+`Page.suppressFirstRenderFlicker = true`.
 
 ```tsx
 import { useSession } from "@blitzjs/auth"

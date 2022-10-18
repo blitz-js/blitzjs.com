@@ -6,20 +6,19 @@ sidebar_label: Writing Recipes
 The incredible power of Blitz Recipes isn't limited to the official
 recipes in the Blitz repo. The API for building recipes is a public API
 (although one that is subject to change) exposed via the
-[`blitz`](https://npm.im/blitz) package from `blitz/installer`, which
-can be installed into your own scripts to write a completely custom
-recipe. Combined with the power of
+[`blitz`](https://npm.im/blitz) package from `blitz/installer`, which can
+be installed into your own scripts to write a completely custom recipe.
+Combined with the power of
 [`jscodeshift`](https://github.com/facebook/jscodeshift) for transforming
 existing files, fully automated code migrations are first-class citizens
-in the Blitz ecosystem. 
+in the Blitz ecosystem.
 
 ### Setup {#setup}
 
 To author your own recipe, you'll want to create a new package and install
 a couple of dependencies. You'll only need the `jscodeshift` dependencies
 if you're using a **transform** step to modify an existing file. If you're
-only creating new files or adding dependencies you'll only need
-`blitz`.
+only creating new files or adding dependencies you'll only need `blitz`.
 
 If you're going to be writing tests for your recipe you'll need a build
 and test setup. We recommend [`tsdx`](https://github.com/jaredpalmer/tsdx)
@@ -415,8 +414,8 @@ To see how the schema file is parsed,
 
 Some recipes may require modifying an existing Next.js config file. We are
 fortunate enough to be able to use the `paths` provided by the
-`blitz/installer` module. You can pass this into your
-`singleFileSearch` and use `jscodeshift` to modify it.
+`blitz/installer` module. You can pass this into your `singleFileSearch`
+and use `jscodeshift` to modify it.
 
 ```ts
 builder.addTransformFilesStep({
@@ -431,9 +430,9 @@ builder.addTransformFilesStep({
 #### Transforming the config
 
 The `transformNextConfig` function can be imported from the
-`blitz/installer` module. It looks for the configuration object and
-lets you modify it. It takes a `program` as an argument, and returns helper functions to use.
-
+`blitz/installer` module. It looks for the configuration object and lets
+you modify it. It takes a `program` as an argument, and returns helper
+functions to use.
 
 ```ts
 builder.addTransformFilesStep({
@@ -453,7 +452,7 @@ another function, like this:
 
 ```js
 const createVanillaExtractPlugin = require("@vanilla-extract/next-plugin")
-const withVanillaExtract = createVanillaExtractPlugin();
+const withVanillaExtract = createVanillaExtractPlugin()
 
 const config = {
   /* ... */
@@ -462,9 +461,12 @@ const config = {
 module.export = withBlitz(withVanillaExtract(config))
 ```
 
-The `wrapConfig` function can be accessed from `transformNextConfig()`. It looks for `withBlitz()` and wraps whatever's inside with the name of the function you supply.
-Note that you still need to create the require statement - you can use
-`transformNextConfig(program).addRequireStatement(identifier, packageName)` for this.
+The `wrapConfig` function can be accessed from `transformNextConfig()`. It
+looks for `withBlitz()` and wraps whatever's inside with the name of the
+function you supply. Note that you still need to create the require
+statement - you can use
+`transformNextConfig(program).addRequireStatement(identifier, packageName)`
+for this.
 
 ```ts
 builder.addTransformFilesStep({
@@ -541,30 +543,35 @@ export const { gSSP, gSP, api } = setupBlitzServer({
   plugins: [
     // ...
     BlitzServerMiddleware((_, res, next) => {
-    res.blitzCtx.foo = bar;
-    return next();
-  }),
+      res.blitzCtx.foo = bar
+      return next()
+    }),
   ],
 })
 ```
 
-### Wrap _app with a provider component {#wrap-app-with-provider}
+### Wrap \_app with a provider component {#wrap-app-with-provider}
 
-You may want to modify the user's `_app` page and wrap whatever is in the return statement:
+You may want to modify the user's `_app` page and wrap whatever is in the
+return statement:
+
 ```ts
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   return (
-      <ChakraProvider>
-        <ErrorBoundary FallbackComponent={RootErrorFallback}>
-          {getLayout(<Component {...pageProps} />)}
-        </ErrorBoundary>
-      </ChakraProvider>
-  );
+    <ChakraProvider>
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
+        {getLayout(<Component {...pageProps} />)}
+      </ErrorBoundary>
+    </ChakraProvider>
+  )
 }
 ```
 
-`wrapAppWithProvider` is exported from `blitz/installer` and requires `program` & `element` (being the name of the jsx component). The function searches for `MyApp` then wraps whatever is returned with a JSX component identified by the element string passed.
+`wrapAppWithProvider` is exported from `blitz/installer` and requires
+`program` & `element` (being the name of the jsx component). The function
+searches for `MyApp` then wraps whatever is returned with a JSX component
+identified by the element string passed.
 
 ```ts
 import {..., wrapAppWithProvider} from "blitz/installer"
@@ -585,8 +592,8 @@ addTransformFilesStep({
 
 Some recipes may require modifying the existing Babel config file. We are
 fortunate enough to be able to use the `paths` provided by the
-`blitz/installer`. You can pass this into your
-`singleFileSearch` and use `jscodeshift` to modify it.
+`blitz/installer`. You can pass this into your `singleFileSearch` and use
+`jscodeshift` to modify it.
 
 ```ts
 builder.addTransformFilesStep({
@@ -598,13 +605,12 @@ builder.addTransformFilesStep({
 })
 ```
 
-`blitz/installer` provides two transformers:
-`addBabelPlugin` and `addBabelPreset`. Both take the `program` and the
-plugin/preset. You don't need to worry about jscodeshift stuff, you only
-need to provide a valid JSON object and it will be transformed. This
-argument has to be either the name of the plugin/preset (as a string) or a
-array with two elements: the name of the plugin/preset and its
-configuration.
+`blitz/installer` provides two transformers: `addBabelPlugin` and
+`addBabelPreset`. Both take the `program` and the plugin/preset. You don't
+need to worry about jscodeshift stuff, you only need to provide a valid
+JSON object and it will be transformed. This argument has to be either the
+name of the plugin/preset (as a string) or a array with two elements: the
+name of the plugin/preset and its configuration.
 
 ```ts
 builder.addTransformFilesStep({

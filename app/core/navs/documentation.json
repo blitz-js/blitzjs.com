@@ -130,7 +130,6 @@
       "cli-dev",
       "cli-start",
       "cli-build",
-      "cli-export",
       "cli-prisma",
       "cli-generate",
       "cli-codegen",

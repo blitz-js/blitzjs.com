@@ -272,8 +272,8 @@ blitz generate model task subheading:string
 ### Custom templates {#custom-templates}
 
 If you want to use custom templates with `blitz generate` instead of the
-default ones (e.g. with different styles). You can specify it in your `app/blitz-server` 
-file by exporting the `cliConfig` object
+default ones (e.g. with different styles). You can specify it in your
+`app/blitz-server` file by exporting the `cliConfig` object
 
 ```ts
 import type { BlitzCliConfig } from "blitz"
@@ -288,6 +288,8 @@ export const cliConfig: BlitzCliConfig = {
 ```bash
 blitz generate custom-templates
 ```
-The above command will generate the default templates used by blitz to a directory of your choosing in order 
-to provide a starting point to use this feature. It will also update the `cliConfig` configuration, in the `app/blitz-server` file, 
-with the latest data to allow immediate usage.
+
+The above command will generate the default templates used by blitz to a
+directory of your choosing in order to provide a starting point to use
+this feature. It will also update the `cliConfig` configuration, in the
+`app/blitz-server` file, with the latest data to allow immediate usage.

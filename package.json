@@ -59,7 +59,7 @@
     "file-loader": "6.2.0",
     "husky": "7.0.4",
     "lint-staged": "12.1.2",
-    "minimatch": "3.0.4",
+    "minimatch": "3.0.8",
     "postcss": "8.4.4",
     "postcss-nested": "5.0.6",
     "prettier": "2.5.1",

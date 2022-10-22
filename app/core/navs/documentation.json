@@ -43,6 +43,7 @@
       "error-handling",
       "testing",
       "middleware",
+      "logging",
       "utilities",
       "client-and-server",
       "troubleshooting"
@@ -112,6 +113,14 @@
   },
   {
     "title": {
+      "title": "Recipes",
+      "iconPath": "/img/recipe-purple.svg",
+      "iconDarkPath": "/img/recipe-white.svg"
+    },
+    "pages": ["using-recipes", "writing-recipes"]
+  },
+  {
+    "title": {
       "title": "CLI",
       "iconPath": "/img/terminal-purple.svg",
       "iconDarkPath": "/img/terminal-white.svg"
@@ -122,12 +131,12 @@
       "cli-dev",
       "cli-start",
       "cli-build",
-      "cli-export",
       "cli-prisma",
       "cli-generate",
       "cli-codegen",
       "cli-routes",
-      "cli-console"
+      "cli-console",
+      "cli-install"
     ]
   },
   {

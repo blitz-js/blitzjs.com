@@ -6,28 +6,26 @@ sidebar_label: Writing Recipes
 The incredible power of Blitz Recipes isn't limited to the official
 recipes in the Blitz repo. The API for building recipes is a public API
 (although one that is subject to change) exposed via the
-[`@blitzjs/installer`](https://npm.im/@blitzjs/installer) package, which
-can be installed into your own scripts to write a completely custom
-recipe. Combined with the power of
+[`blitz`](https://npm.im/blitz) package from `blitz/installer`, which can
+be installed into your own scripts to write a completely custom recipe.
+Combined with the power of
 [`jscodeshift`](https://github.com/facebook/jscodeshift) for transforming
 existing files, fully automated code migrations are first-class citizens
-in the Blitz ecosystem. In fact, in the future we hope that upgrading
-Blitz will actually be possible with a quick `blitz install blitz@1.0.0`.
+in the Blitz ecosystem.
 
 ### Setup {#setup}
 
 To author your own recipe, you'll want to create a new package and install
 a couple of dependencies. You'll only need the `jscodeshift` dependencies
 if you're using a **transform** step to modify an existing file. If you're
-only creating new files or adding dependencies you'll only need
-`@blitzjs/installer`.
+only creating new files or adding dependencies you'll only need `blitz`.
 
 If you're going to be writing tests for your recipe you'll need a build
 and test setup. We recommend [`tsdx`](https://github.com/jaredpalmer/tsdx)
-and Jest for building and running tests.
+and Vitest for building and running tests.
 
 ```bash
-yarn add -EL @blitzjs/installer jscodeshift @types/jscodeshift
+pnpm add blitz jscodeshift @types/jscodeshift
 ```
 
 The Recipe API all revolves around the `RecipeBuilder` factory. Blitz
@@ -44,7 +42,7 @@ set that up.
 
 ```typescript
 // index.ts
-import { RecipeBuilder } from "@blitzjs/installer"
+import { RecipeBuilder } from "blitz/installer"
 
 export default RecipeBuilder().build()
 ```
@@ -156,12 +154,12 @@ setting, and `jscodeshift` for the transform setting.
 Blitz supplies some predefined transforms for you for the most common
 cases, but you can always write a custom transform to modify any
 JavaScript file you want. We also provide a convenience utility for
-accessing common files like `_app.tsx` or `blitz.config.js`. If the file
+accessing common files like `_app.tsx` or `next.config.js`. If the file
 path is a glob pattern, the installer process will prompt the user to
 select a file matching the pattern.
 
 ```typescript
-import { addImport, paths } from "@blitzjs/installer"
+import { addImport, paths } from "blitz/installer"
 import j from "jscodeshift"
 
 builder.addTransformFilesStep({
@@ -186,7 +184,7 @@ testing, the tests are quick to write:
 
 ```typescript
 import j from "jscodeshift"
-import { addImport, customTsParser } from "@blitzjs/installer"
+import { addImport, customTsParser } from "blitz/installer"
 
 const sampleFile = `export default function Comp() {
   return <div>hello!</div>;
@@ -412,12 +410,12 @@ model if that field already exists.
 To see how the schema file is parsed,
 [click here](https://github.com/MrLeebo/prisma-ast).
 
-### Modifying Blitz config {#modifying-blitz-config}
+### Modifying Next config {#modifying-next-config}
 
-Some recipes may require modifying the existing Blitz config file. We are
+Some recipes may require modifying an existing Next.js config file. We are
 fortunate enough to be able to use the `paths` provided by the
-`@blitzjs/installer` package. You can pass this into your
-`singleFileSearch` and use `jscodeshift` to modify it.
+`blitz/installer` module. You can pass this into your `singleFileSearch`
+and use `jscodeshift` to modify it.
 
 ```ts
 builder.addTransformFilesStep({
@@ -431,21 +429,18 @@ builder.addTransformFilesStep({
 
 #### Transforming the config
 
-The `transformBlitzConfig` function can be imported from the
-`@blitzjs/installer` package. It looks for the configuration object and
-lets you modify it. It takes a `program` and a callback. The callback
-takes the config `j.ObjectExpression` and has to return another
-`j.ObjectExpression`.
+The `transformNextConfig` function can be imported from the
+`blitz/installer` module. It looks for the configuration object and lets
+you modify it. It takes a `program` as an argument, and returns helper
+functions to use.
 
 ```ts
 builder.addTransformFilesStep({
   // ...
   singleFileSearch: paths.blitzConfig(),
   transform(program: j.Collection<j.Program>) {
-    program = transformBlitzConfig(program, (config) => {
-      // perform your transformation
-      return config
-    })
+    transformBlitzConfig(program)
+    return program
   },
 })
 ```
@@ -455,21 +450,23 @@ builder.addTransformFilesStep({
 There are cases when you want to wrap the configuration object with
 another function, like this:
 
-```ts
-import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin"
+```js
+const createVanillaExtractPlugin = require("@vanilla-extract/next-plugin")
+const withVanillaExtract = createVanillaExtractPlugin()
 
 const config = {
   /* ... */
 }
 
-module.export = createVanillaExtractPlugin(config)
+module.export = withBlitz(withVanillaExtract(config))
 ```
 
-The `wrapBlitzConfig` function can be imported from the
-`@blitzjs/installer` package. It looks for the configuration object and
-lets you modify it. It takes the `program` and the name of the function.
-Note that you still need to create the import statement - you can use
-`addImport` for this.
+The `wrapConfig` function can be accessed from `transformNextConfig()`. It
+looks for `withBlitz()` and wraps whatever's inside with the name of the
+function you supply. Note that you still need to create the require
+statement - you can use
+`transformNextConfig(program).addRequireStatement(identifier, packageName)`
+for this.
 
 ```ts
 builder.addTransformFilesStep({
@@ -483,7 +480,8 @@ builder.addTransformFilesStep({
         j.literal("@vanilla-extract/next-plugin")
       )
     )
-    return wrapBlitzConfig(program, "createVanillaExtractPlugin")
+    transformNextConfig(program).wrapConfig("withVanillaExtract")
+    return program
   },
 })
 ```
@@ -494,10 +492,10 @@ Using the transform function `addBlitzMiddleware` you can add new
 middleware from a recipe.
 
 The `addBlitzMiddleware` function can be imported from the
-`@blitzjs/installer` package.
+`blitzjs/installer` module.
 
 ```ts
-import { addBlitzMiddleware } from "@blitzjs/installer"
+import { addBlitzMiddleware } from "blitz/installer"
 ```
 
 This function takes two arguments `program` and `middleware`. `program`
@@ -537,27 +535,65 @@ builder.addTransformFilesStep({
 })
 ```
 
-In this case, the resulting middleware is added to your blitz config:
+In this case, the resulting middleware is added to your blitz server file:
 
 ```ts
-const config = {
+export const { gSSP, gSP, api } = setupBlitzServer({
   // ...
-  middleware: [
+  plugins: [
     // ...
-    (req, res, next) => {
+    BlitzServerMiddleware((_, res, next) => {
       res.blitzCtx.foo = bar
       return next()
-    },
+    }),
   ],
+})
+```
+
+### Wrap \_app with a provider component {#wrap-app-with-provider}
+
+You may want to modify the user's `_app` page and wrap whatever is in the
+return statement:
+
+```ts
+function MyApp({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout || ((page) => page)
+  return (
+    <ChakraProvider>
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
+        {getLayout(<Component {...pageProps} />)}
+      </ErrorBoundary>
+    </ChakraProvider>
+  )
 }
+```
+
+`wrapAppWithProvider` is exported from `blitz/installer` and requires
+`program` & `element` (being the name of the jsx component). The function
+searches for `MyApp` then wraps whatever is returned with a JSX component
+identified by the element string passed.
+
+```ts
+import {..., wrapAppWithProvider} from "blitz/installer"
+...
+addTransformFilesStep({
+    stepId: "importProviderAndReset",
+    stepName: "Import ChakraProvider component",
+    explanation: `Import the chakra-ui provider into _app, so it is accessible in the whole app`,
+    singleFileSearch: paths.app(),
+    transform(program) {
+      ...
+      return wrapAppWithProvider(program, "ChakraProvider")
+    },
+  })
 ```
 
 ### Modifying Babel config {#modifying-babel-config}
 
 Some recipes may require modifying the existing Babel config file. We are
 fortunate enough to be able to use the `paths` provided by the
-`@blitzjs/installer` package. You can pass this into your
-`singleFileSearch` and use `jscodeshift` to modify it.
+`blitz/installer`. You can pass this into your `singleFileSearch` and use
+`jscodeshift` to modify it.
 
 ```ts
 builder.addTransformFilesStep({
@@ -569,13 +605,12 @@ builder.addTransformFilesStep({
 })
 ```
 
-The `@blitzjs/installer` package provides two transformers:
-`addBabelPlugin` and `addBabelPreset`. Both take the `program` and the
-plugin/preset. You don't need to worry about jscodeshift stuff, you only
-need to provide a valid JSON object and it will be transformed. This
-argument has to be either the name of the plugin/preset (as a string) or a
-array with two elements: the name of the plugin/preset and its
-configuration.
+`blitz/installer` provides two transformers: `addBabelPlugin` and
+`addBabelPreset`. Both take the `program` and the plugin/preset. You don't
+need to worry about jscodeshift stuff, you only need to provide a valid
+JSON object and it will be transformed. This argument has to be either the
+name of the plugin/preset (as a string) or a array with two elements: the
+name of the plugin/preset and its configuration.
 
 ```ts
 builder.addTransformFilesStep({

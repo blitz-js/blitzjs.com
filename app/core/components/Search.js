@@ -58,9 +58,6 @@ export function Search({className = ""}) {
 
   return (
     <>
-      <Head>
-        <link rel="preconnect" href="https://KXYPTAV8YY-dsn.algolia.net" crossOrigin="true" />
-      </Head>
       <button
         type="button"
         ref={searchButtonRef}
@@ -76,8 +73,8 @@ export function Search({className = ""}) {
             initialQuery={initialQuery}
             initialScrollY={window.scrollY}
             onClose={onClose}
-            indexName="blitzjs"
-            apiKey="f23a61fdc17d37d13b3168686b96b07b"
+            indexName="blitzjs.com"
+            apiKey="423c6bbd6b720188b681670eba1affd9"
             appId="KXYPTAV8YY"
             navigator={{
               navigate({itemUrl}) {

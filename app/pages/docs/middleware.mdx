@@ -69,18 +69,16 @@ A `BlitzServerPlugin` that can be initialized inside the `app/blitz-server` setu
 ## Global Ctx Type {#global-ctx-type}
 
 You can access the type of the `res.blitzCtx` parameter by importing `Ctx`
-from `blitz`. The default `Ctx` provided by Blitz is an empty object.
+from `blitz`.
 
 You can extend the `Ctx` type by placing the following file in your
-project (this is included in new apps by default).
+project.
 
 ```ts
 // types.ts
-import { DefaultCtx, SessionContext } from "blitz"
-
 declare module "blitz" {
-  export interface Ctx extends DefaultCtx {
-    session: SessionContext
+  export interface Ctx {
+    customThing: string | null
   }
 }
 ```
@@ -93,7 +91,7 @@ import { Ctx } from "blitz"
 
 export default async function getThing(input, ctx: Ctx) {
   // Properly typed
-  ctx.session
+  ctx.customThing
 }
 ```
 

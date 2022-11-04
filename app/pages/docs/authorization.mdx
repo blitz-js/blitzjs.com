@@ -110,6 +110,15 @@ Set `Page.authenticate = true` on all pages that require a user to be
 logged in. If a user is not logged in, an `AuthenticationError` will be
 thrown and caught by your top level Error Boundary.
 
+If you want to authorize your pages based on the user's role
+
+```tsx
+// user must be logged in and with role "ADMIN" or "USER"
+Page.authenticate = { role: "ADMIN" }
+// or set role as a list, where user must be logged in and with role "ADMIN" or "USER"
+Page.authenticate = { role: ["ADMIN", "USER"] }
+```
+
 Or if instead you want to redirect the user, set
 `Page.authenticate = {redirectTo: '/login'}`
 
@@ -122,6 +131,7 @@ const Page: BlitzPage = () => {
 Page.authenticate = true
 // or Page.authenticate = {redirectTo: '/login'}
 // or Page.authenticate = {redirectTo: Routes.Login()}
+// or Page.authenticate = { role: "ADMIN", redirectTo: "/login" } // user must be logged in with role "ADMIN" and redirects otherwise
 // highlight-end
 
 export default Page

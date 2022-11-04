@@ -19,12 +19,15 @@ and whatever else they need to do.
 
 ## Global Middleware {#global-middleware}
 
-Global middleware runs for every Blitz query and mutation. It can be defined in `app/blitz-server` by using a helper function in the plugin array.
+Global middleware runs for every Blitz query and mutation. It can be
+defined in `src/blitz-server` by using a helper function in the plugin
+array.
 
 ## `BlitzServerMiddleware` {#blitz-server-middleware}
 
-`BlitzServerMiddleware ` is a utility function that can be used to add a global server middleware.
-It converts a request middleware to a Blitz-compatible server plugin.
+`BlitzServerMiddleware ` is a utility function that can be used to add a
+global server middleware. It converts a request middleware to a
+Blitz-compatible server plugin.
 
 ### Example {#blitz-server-middleware-example}
 
@@ -58,13 +61,14 @@ BlitzServerMiddleware(middleware())
 
 #### Arguments
 
-- `middleware:` A request middleware function with `req`, `res` & `next` arguments.
+- `middleware:` A request middleware function with `req`, `res` & `next`
+  arguments.
   - **Required**
 
 #### Returns
 
-A `BlitzServerPlugin` that can be initialized inside the `app/blitz-server` setup file.
-
+A `BlitzServerPlugin` that can be initialized inside the
+`app/blitz-server` setup file.
 
 ## Global Ctx Type {#global-ctx-type}
 
@@ -83,8 +87,8 @@ declare module "blitz" {
 }
 ```
 
-Whatever types you add to `Ctx` will be automatically available in
-your queries and mutations as shown here.
+Whatever types you add to `Ctx` will be automatically available in your
+queries and mutations as shown here.
 
 ```ts
 import { Ctx } from "blitz"

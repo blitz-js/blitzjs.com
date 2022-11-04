@@ -37,7 +37,7 @@ Create the following two mutations which will give you the ability to
 start the impersonation as well as stopping it.
 
 ```ts
-// app/auth/mutations/impersonateUser.ts
+// src/auth/mutations/impersonateUser.ts
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import * as z from "zod"
@@ -66,7 +66,7 @@ export default resolver.pipe(
 ```
 
 ```ts
-// app/auth/mutations/stopImpersonating.ts
+// src/auth/mutations/stopImpersonating.ts
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
@@ -99,9 +99,9 @@ Add a form similar to this in order to switch users.
 import { useMutation, queryClient } from "@blitzjs/rpc"
 import impersonateUser, {
   ImpersonateUserInput,
-} from "app/auth/mutations/impersonateUser"
-import { Form, FORM_ERROR } from "app/core/components/Form"
-import LabeledTextField from "app/core/components/LabeledTextField"
+} from "src/auth/mutations/impersonateUser"
+import { Form, FORM_ERROR } from "src/core/components/Form"
+import LabeledTextField from "src/core/components/LabeledTextField"
 
 export const ImpersonateUserForm = () => {
   const [impersonateUserMutation] = useMutation(impersonateUser)
@@ -132,9 +132,9 @@ export const ImpersonateUserForm = () => {
 Lastly, add the following component at the top of your Layout(s).
 
 ```tsx
-// app/core/components/ImpersonatingUserNotice.tsx
+// src/core/components/ImpersonatingUserNotice.tsx
 import { invoke, useSession, queryClient } from "@blitzjs/rpc"
-import stopImpersonating from "app/auth/mutations/stopImpersonating"
+import stopImpersonating from "src/auth/mutations/stopImpersonating"
 
 export const ImpersonatingUserNotice = () => {
   const session = useSession()

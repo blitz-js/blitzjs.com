@@ -303,6 +303,7 @@ Available options:
 type SessionConfig = {
   cookiePrefix?: string /* Default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
+  anonSessionExpiryMinutes?: number /* Default: 5 years */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax'. 
     If you set this to 'none', you also have to set `secureCookies: true`. 
     See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite */

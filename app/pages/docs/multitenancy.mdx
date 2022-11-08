@@ -300,7 +300,7 @@ that allows SUPERADMINs to access all organizations but only permits
 regular users to access the organization they are currently logged in to.
 
 ```ts
-// app/orders/queries/getOrder.ts
+// src/orders/queries/getOrder.ts
 import { NotFoundError } from "blitz"
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
@@ -308,7 +308,7 @@ import * as z from "zod"
 import {
   enforceAdminOrProctorIfNotCurrentOrganization,
   setDefaultOrganizationId,
-} from "app/core/utils"
+} from "src/core/utils"
 
 const GetOrder = z.object({
   id: z.number(),
@@ -340,7 +340,7 @@ export default resolver.pipe(
 ```
 
 ```ts
-// app/core/utils.ts
+// src/core/utils.ts
 import { Ctx } from "blitz"
 import { Prisma, GlobalRole } from "db"
 

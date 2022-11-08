@@ -48,7 +48,7 @@ causing all queries on the page to be refetched. This ensures any
 sensitive data in the cache is deleted.
 
 ```ts
-// app/auth/mutations/logout.ts
+// src/auth/mutations/logout.ts
 import { Ctx } from "blitz"
 
 export default async function logout(_: any, ctx: Ctx) {
@@ -68,7 +68,7 @@ id.
 You can change the session public data in any query or mutation like this:
 
 ```ts
-// app/mutations/someMutation.ts
+// src/mutations/someMutation.ts
 import { Ctx } from "blitz"
 
 export default async function someMutation(input: any, ctx: Ctx) {
@@ -94,7 +94,7 @@ provided as the second parameter to all queries and mutations because of
 the `sessionMiddleware` that's in `blitz.config.js`.
 
 ```ts
-// app/queries/someQuery.ts
+// src/queries/someQuery.ts
 import { Ctx } from "blitz"
 
 export default async function someQuery(input: any, ctx: Ctx) {
@@ -153,7 +153,7 @@ then you can pass the session public data to `useSession()` with the
 
 ```ts
 import { useSession, getSession } from "@blitzjs/auth"
-import { gSSP } from "app/blitz-server"
+import { gSSP } from "src/blitz-server"
 
 export const getServerSideProps = gSSP(async ({ req, res }) => {
   const session = await getSession(req, res)

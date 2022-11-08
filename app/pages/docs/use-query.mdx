@@ -13,8 +13,8 @@ used to display errors. If you need, you can read the
 ```tsx
 import { Suspense } from "react"
 import { useQuery, useRouter, useParam } from "@blitzjs/rpc"
-import getProject from "app/projects/queries/getProject"
-import ErrorBoundary from "app/components/ErrorBoundary"
+import getProject from "src/projects/queries/getProject"
+import ErrorBoundary from "src/components/ErrorBoundary"
 
 function Project() {
   const router = useRouter()

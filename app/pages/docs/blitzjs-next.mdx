@@ -39,7 +39,7 @@ blitz?: {
 
 ### Example {#blitzjs-next-client-example}
 
-Inside `app/blitz-client.ts`:
+Inside `src/blitz-client.ts`:
 
 ```ts
 import { setupBlitzClient } from "@blitzjs/next"
@@ -49,8 +49,8 @@ export const { withBlitz } = setupBlitzClient({
 })
 ```
 
-Then inside `pages/_app.tsx` wrap `MyApp` function with the `withBlitz`
-HOC component.
+Then inside `src/pages/_app.tsx` wrap `MyApp` function with the
+`withBlitz` HOC component.
 
 ```ts
 import {
@@ -61,7 +61,7 @@ import {
 import { AuthenticationError, AuthorizationError } from "blitz"
 import type { AppProps } from "next/app"
 import React, { Suspense } from "react"
-import { withBlitz } from "app/blitz-client"
+import { withBlitz } from "src/blitz-client"
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
@@ -120,7 +120,7 @@ An object with the `withBlitz` HOC wrapper
 
 ### Example {#blitzjs-next-server-example}
 
-Inside `app/blitz-server.ts`
+Inside `src/blitz-server.ts`
 
 ```ts
 import { setupBlitzServer } from "@blitzjs/next"
@@ -155,7 +155,7 @@ An object with the [`gSSP`](#blitzjs-next-gssp),
 The Blitz CLI supports running custom Next.js servers. This means you can
 compile both javascript & typescript while using the Blitz.js CLI to
 inject env variables. By default, the CLI checks for
-`server/index.[ts | js]` or `server.[ts | js]`
+`src/server/index.[ts | js]` or `src/server.[ts | js]`
 
 For more information about custom Next.js servers, check the
 [`official docs`](https://nextjs.org/docs/advanced-features/custom-server)
@@ -179,7 +179,7 @@ Next.js request handler.
 #### getStaticProps
 
 ```ts
-import { gSP } from "app/blitz-server"
+import { gSP } from "src/blitz-server"
 
 export const getStaticProps = gSP(async ({ ctx }) => {
   return {
@@ -199,7 +199,7 @@ export const getStaticProps = gSP(async ({ ctx }) => {
 #### getServerSideProps
 
 ```ts
-import { gSSP } from "app/blitz-server"
+import { gSSP } from "src/blitz-server"
 
 export const getServerSideProps = gSSP(async ({ ctx }) => {
   return {
@@ -214,7 +214,7 @@ export const getServerSideProps = gSSP(async ({ ctx }) => {
 #### api
 
 ```ts
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 
 export default api(async (req, res, ctx) => {
   res.status(200).json({ userId: ctx?.session.userId })
@@ -236,8 +236,8 @@ redirect property.
 
 ```ts
 import { Routes, BlitzPage } from "@blitzjs/next"
-import { gSSP } from "app/blitz-server"
-import getCurrentUser from "app/users/queries/getCurrentUser"
+import { gSSP } from "src/blitz-server"
+import getCurrentUser from "src/users/queries/getCurrentUser"
 
 export const getServerSideProps = gSSP(async ({ ctx }) => {
   const currentUser = await getCurrentUser(null, ctx)
@@ -270,8 +270,8 @@ types returned by `getCurrentUser()`
 
 ```ts
 import { Routes, BlitzPage } from "@blitzjs/next"
-import { gSSP } from "app/blitz-server"
-import getCurrentUser from "app/users/queries/getCurrentUser"
+import { gSSP } from "src/blitz-server"
+import getCurrentUser from "src/users/queries/getCurrentUser"
 
 type TCurrentUser = Awaited<ReturnType<typeof getCurrentUser>>
 

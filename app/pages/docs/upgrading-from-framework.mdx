@@ -202,32 +202,28 @@ export const { withBlitz } = setupBlitzClient({
 ### Create API Route for the Zero-API Layer {#create-api-route}
 
 To setup the Zero-API layer, you'd need to create a
-`pages/api/rpc/[[...blitz]].ts` file with the following content:
+`src/pages/api/rpc/[[...blitz]].ts` file with the following content:
 
 ```ts
 import { rpcHandler } from "@blitzjs/rpc"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 
 export default api(rpcHandler())
 ```
-
-### Move `app/pages` to the root of your app {#move-pages-to-root}
-
-Instead of having pages inside of the `app` directory, you'll need to add
-them to the top level of your project.
 
 ### Remove `babel.config.js` {#remove-babel-config}
 
 It's not needed anymore.
 
-### Move all pages to `pages` directory {#move-pages-to-pages}
+### Move all pages to `src/pages` directory {#move-pages-to-pages}
 
 Having pages in separate directories in not supported with Next.js. They
-now have to be consolidated in the top level `pages` directory.
+now have to be consolidated in the top level `pages` directory, or we
+recommend placing it in the `src` directory.
 
-### Move API Routes to `pages/api` directory {#move-api-routes-to-pages-api}
+### Move API Routes to `src/pages/api` directory {#move-api-routes-to-pages-api}
 
-All your API Routes have to be inside of the `pages/api` directory.
+All your API Routes have to be inside of the `src/pages/api` directory.
 
 ### Wrap your App component with `withBlitz` {#wrap-app-with-blitz}
 
@@ -235,7 +231,7 @@ To use Blitz on the client, you also have to use the `withBlitz` function
 in your App component.
 
 ```ts
-import { withBlitz } from "app/blitz-client"
+import { withBlitz } from "src/blitz-client"
 
 function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />

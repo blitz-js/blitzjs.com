@@ -50,7 +50,7 @@ causing all queries on the page to be refetched. This ensures any
 sensitive data in the cache is deleted.
 
 ```ts
-// app/auth/mutations/logout.ts
+// src/auth/mutations/logout.ts
 import { Ctx } from "blitz"
 
 export default async function logout(_: any, ctx: Ctx) {
@@ -70,7 +70,7 @@ id.
 You can change the session public data in any query or mutation like this:
 
 ```ts
-// app/mutations/someMutation.ts
+// src/mutations/someMutation.ts
 import { Ctx } from "blitz"
 
 export default async function someMutation(input: any, ctx: Ctx) {

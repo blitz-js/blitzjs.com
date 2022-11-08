@@ -67,9 +67,12 @@
       "auth",
       "auth-setup",
       "session-management",
+      "auth-server",
+      "auth-client",
       "authorization",
       "passportjs",
       "auth-utils",
+      "auth-config",
       "impersonation"
     ]
   },

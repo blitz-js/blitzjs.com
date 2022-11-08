@@ -1,0 +1,47 @@
+---
+title: Auth Client Usage
+sidebar_label: Client Usage
+---
+
+Blitz provides a `useSession()` hook that returns
+[`PublicData`](#publicdata) with `isLoading` property. This hook can be
+used anywhere in your application.
+
+Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
+component above it in the tree. Or you can set
+`useSession({suspense: false})` to disable suspense.
+
+```ts
+import { useSession } from "@blitzjs/auth"
+
+function SomeComponent() {
+  const session = useSession()
+
+  session.userId
+  session.role
+
+  return /*... */
+}
+```
+
+If you are using
+[`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props),
+then you can pass the session public data to `useSession()` with the
+`initialPublicData` option.
+
+```ts
+import { useSession, getSession } from "@blitzjs/auth"
+import { gSSP } from "src/blitz-server"
+
+export const getServerSideProps = gSSP(async ({ req, res }) => {
+  const session = await getSession(req, res)
+
+  return { props: { initialPublicData: session.$publicData } }
+})
+
+const SomePage: BlitzPage = ({ initialPublicData }) => {
+  const session = useSession({ initialPublicData })
+
+  return /*... */
+}
+```

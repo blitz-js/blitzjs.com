@@ -1,0 +1,106 @@
+---
+title: Configuration
+sidebar_label: Auth Configuration
+---
+
+## Session Configuration {#session-configuration}
+
+You can customize session management by passing an object to the
+`AuthServerPlugin()` in `src/blitz-server`.
+
+```ts
+// src/blitz-server.ts
+import { AuthServerPlugin, PrismaStorage } from "@blitzjs/auth"
+import { simpleRolesIsAuthorized } from "@blitzjs/auth"
+
+setupBlitzServer({
+  plugins: [
+    AuthServerPlugin({
+      cookiePrefix: "web-cookie-prefix",
+      storage: PrismaStorage(db),
+      isAuthorized: simpleRolesIsAuthorized,
+    }),
+  ],
+})
+```
+
+Available options:
+
+```ts
+type SessionConfig = {
+  cookiePrefix?: string /* Default: 'blitz' */
+  sessionExpiryMinutes?: number /* Default: 30 days */
+  anonSessionExpiryMinutes?: number /* Default: 5 years */
+  sameSite?: "strict" | "lax" | "none" /* Default: 'lax'. 
+    If you set this to 'none', you also have to set `secureCookies: true`. 
+    See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite */
+  method?: "essential" | "advanced" /* Default: 'essential' */
+  secureCookies?: boolean /* Default: undefined. This flag is skipped if running app on hostname `localhost` */
+  domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
+  publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
+  getSession: (handle: string) => Promise<SessionModel | null>
+  getSessions: (userId: string | number) => Promise<SessionModel[]>
+  createSession: (session: SessionModel) => Promise<SessionModel>
+  updateSession: (
+    handle: string,
+    session: Partial<SessionModel>
+  ) => Promise<SessionModel>
+  deleteSession: (handle: string) => Promise<SessionModel>
+  isAuthorized: ({ ctx: any, args: [...unknown] }) => boolean
+}
+```
+
+## Customize Session Persistence & Database Access {#customize-session-persistence-and-database-access}
+
+By default, session persistence is zero-config with `PrismaStorage`.
+However, you can customize this to save sessions somewhere else, like
+Redis. You can also customize this if you have Prisma but want to
+customize the attribute names on the user or session model.
+
+Customize session persistence by overriding the database access functions.
+The functions can do anything, but they must conform to the defined input
+and outputs types.
+
+```typescript
+import { setupBlitzServer } from "@blitzjs/next"
+import {
+  AuthServerPlugin,
+  PrismaStorage,
+  simpleRolesIsAuthorized,
+} from "@blitzjs/auth"
+
+const { gSSP, gSP, api } = setupBlitzServer({
+  plugins: [
+    AuthServerPlugin({
+      cookiePrefix: "blitz-app-prefix",
+      isAuthorized: simpleRolesIsAuthorized,
+      storage: {
+        getSession: (handle) => redis.get(`session:${handle}`),
+        createSession: (session) =>
+          redis.set(`session:${handle}`, session),
+        deleteSession: (handle) => redis.del(`session:${handle}`),
+        // ...
+      },
+    }),
+  ],
+})
+
+export { gSSP, gSP, api }
+```
+
+[**Here's a GitHub gist with a full Redis example.**](https://gist.github.com/beerose/80f37b4b36cbd7ba2745701959e3cb8b)
+
+The storage methods need to conform to the following interface:
+
+```typescript
+interface SessionConfigMethods {
+  getSession: (handle: string) => Promise<SessionModel | null>
+  getSessions: (userId: PublicData["userId"]) => Promise<SessionModel[]>
+  createSession: (session: SessionModel) => Promise<SessionModel>
+  updateSession: (
+    handle: string,
+    session: Partial<SessionModel>
+  ) => Promise<SessionModel | undefined>
+  deleteSession: (handle: string) => Promise<SessionModel>
+}
+```

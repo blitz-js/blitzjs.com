@@ -1,0 +1,39 @@
+---
+title: Auth Server Usage
+sidebar_label: Server Usage
+---
+
+### In Queries & Mutations {#in-queries-and-mutations}
+
+`SessionContext` is available off of `ctx` which is provided as the second
+parameter to all queries and mutations.
+
+```ts
+// src/queries/someQuery.ts
+import { Ctx } from "blitz"
+
+export default async function someQuery(input: any, ctx: Ctx) {
+  // Access the SessionContext class
+  ctx.session.userId
+  ctx.session.role
+  ctx.session.$create(/*...*/)
+
+  return
+}
+```
+
+### In `getServerSideProps` or API Routes {#in-get-server-side-props-or-api-routes}
+
+You can also get the session context inside `getServerSideProps` or inside
+API routes with `getSession` like this:
+
+```ts
+import { getSession } from "@blitzjs/auth"
+
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await getSession(req, res)
+  console.log("User ID:", session.userId)
+
+  return { props: {} }
+}
+```

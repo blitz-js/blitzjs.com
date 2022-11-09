@@ -209,8 +209,8 @@ log-out.
 We’ll start by creating a new API Route called `signup`. Inside, we’ll use
 `api` function that we got from `setupBlitzServer` function in
 `src/blitz-server.ts`. It’s a wrapper around Next’s API handlers that
-provides easy access to the Blitz’s `ctx` object, which contains
-auth-related methods and properties.
+provides access to the Blitz’s `ctx` object, which contains auth-related
+methods and properties.
 
 Inside the handler, we’ll use `SecurePassword` from `@blitzjs/auth` to
 hash the password provided by user. Next, we’ll create a new user in the

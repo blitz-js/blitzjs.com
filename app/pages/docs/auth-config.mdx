@@ -25,26 +25,17 @@ setupBlitzServer({
 Available options:
 
 ```ts
-type SessionConfig = {
+type SessionConfigOptions = {
   cookiePrefix?: string /* Default: 'blitz' */
   sessionExpiryMinutes?: number /* Default: 30 days */
   anonSessionExpiryMinutes?: number /* Default: 5 years */
+  method?: "essential" | "advanced" /* Default: 'essential' */
   sameSite?: "strict" | "lax" | "none" /* Default: 'lax'. 
     If you set this to 'none', you also have to set `secureCookies: true`. 
     See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite */
-  method?: "essential" | "advanced" /* Default: 'essential' */
   secureCookies?: boolean /* Default: undefined. This flag is skipped if running app on hostname `localhost` */
   domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
   publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
-  getSession: (handle: string) => Promise<SessionModel | null>
-  getSessions: (userId: string | number) => Promise<SessionModel[]>
-  createSession: (session: SessionModel) => Promise<SessionModel>
-  updateSession: (
-    handle: string,
-    session: Partial<SessionModel>
-  ) => Promise<SessionModel>
-  deleteSession: (handle: string) => Promise<SessionModel>
-  isAuthorized: ({ ctx: any, args: [...unknown] }) => boolean
 }
 ```
 

@@ -87,15 +87,6 @@ passed. The default expiry time is 30 days. If you change the session’s
 You will need to update tokens (access and anti-CSRF) after a session
 refresh, if you use them (e.g. in a mobile app).
 
-## Production Deployment Requirements {#production-deployment-requirements}
-
-In production, you must provide the `SESSION_SECRET_KEY` environment
-variable with at least 32 characters. This is your private key for signing
-JWT tokens.
-
-On macOS and Linux, you can generate it by running `openssl rand -hex 16`
-in your terminal.
-
 ## Anonymous Sessions {#anonymous-sessions}
 
 If a user is not logged in, an anonymous session will automatically be

@@ -3,7 +3,7 @@ title: Setup
 sidebar_label: Setup
 ---
 
-### Blitz Auth with Next.js {#setup-nextjs}
+## Blitz Auth with Next.js {#setup-nextjs}
 
 Install `@blitzjs/auth` plugin with:
 
@@ -11,7 +11,7 @@ Install `@blitzjs/auth` plugin with:
 npm i @blitzjs/auth # yarn add @blitzjs/auth # pnpm add @blitzjs/auth
 ```
 
-#### Client setup {#client-setup}
+### Client setup {#client-setup}
 
 Add the following to your `blitz-client.ts` file:
 
@@ -19,18 +19,18 @@ Add the following to your `blitz-client.ts` file:
 import { AuthClientPlugin } from "@blitzjs/auth"
 import { setupBlitzClient } from "@blitzjs/next"
 
+export const authConfig = {
+  cookiePrefix: "testapp",
+}
+
 const { withBlitz } = setupBlitzClient({
-  plugins: [
-    AuthClientPlugin({
-      cookiePrefix: "blitz-cookie-prefix",
-    }),
-  ],
+  plugins: [AuthClientPlugin(authConfig)],
 })
 
 export { withBlitz }
 ```
 
-#### Server setup {#server-setup}
+### Server setup {#server-setup}
 
 Then, add the following to the `blitz-server.ts` file:
 
@@ -56,3 +56,12 @@ const { gSSP, gSP, api } = setupBlitzServer({
 
 export { gSSP, gSP, api }
 ```
+
+## Production Deployment Requirements {#production-deployment-requirements}
+
+In production, you must provide the `SESSION_SECRET_KEY` environment
+variable with at least 32 characters. This is your private key for signing
+JWT tokens.
+
+On macOS and Linux, you can generate it by running `openssl rand -hex 16`
+in your terminal.

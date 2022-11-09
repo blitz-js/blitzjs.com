@@ -1,15 +1,19 @@
 ---
-title: Auth Client Usage
-sidebar_label: Client Usage
+title: Auth Client-Side APIs
+sidebar_label: Client-Side APIs
 ---
 
-Blitz provides a `useSession()` hook that returns
-[`PublicData`](#publicdata) with `isLoading` property. This hook can be
-used anywhere in your application.
+## `useSession()` {#use-session}
 
-Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
+`useSession(options?) => Partial<PublicData> & {isLoading: boolean}`
+
+<Card type="note">
+  Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
 component above it in the tree. Or you can set
 `useSession({suspense: false})` to disable suspense.
+</Card>
+
+### Example {#example}
 
 ```ts
 import { useSession } from "@blitzjs/auth"
@@ -24,24 +28,87 @@ function SomeComponent() {
 }
 ```
 
-If you are using
-[`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props),
-then you can pass the session public data to `useSession()` with the
-`initialPublicData` option.
+### Arguments {#arguments}
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data
+    from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns {#returns}
+
+- `session: Partial<PublicData> & {isLoading: boolean}`
+
+## `useAuthenticatedSession()` {#use-authenticated-session}
+
+`useAuthenticatedSession(options?) => PublicData & {isLoading: boolean}`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example {#example-1}
 
 ```ts
-import { useSession, getSession } from "@blitzjs/auth"
-import { gSSP } from "src/blitz-server"
+import { useAuthenticatedSession } from "@blitzjs/auth"
 
-export const getServerSideProps = gSSP(async ({ req, res }) => {
-  const session = await getSession(req, res)
-
-  return { props: { initialPublicData: session.$publicData } }
-})
-
-const SomePage: BlitzPage = ({ initialPublicData }) => {
-  const session = useSession({ initialPublicData })
-
-  return /*... */
-}
+const session = useAuthenticatedSession()
 ```
+
+### Arguments {#arguments-1}
+
+- `options:`
+  - Optional
+  - `initialPublicData: PublicData` - Use this with SSR to set public data
+    from the server session
+  - `suspense: boolean` - Defaults to `true`
+
+### Returns {#returns-1}
+
+- `session: PublicData & {isLoading: boolean}`
+
+## `useAuthorize()` {#use-authorize}
+
+`useAuthorize() => void`
+
+This will throw `AuthenticationError` if the user is not logged in
+
+### Example {#example-2}
+
+```ts
+import { useAuthorize } from "@blitzjs/auth"
+
+useAuthorize()
+```
+
+### Arguments {#arguments-2}
+
+- None
+
+### Returns {#returns-2}
+
+- Nothing
+
+## `useRedirectAuthenticated()` {#use-redirect-authenticated}
+
+`useRedirectAuthenticated(to: string) => void`
+
+This will redirect a logged in user to the given url path. It does nothing
+for logged out users.
+
+### Example {#example-3}
+
+```ts
+import { useRedirectAuthenticated } from "@blitzjs/auth"
+
+useRedirectAuthenticated("/dashboard")
+```
+
+### Arguments {#arguments-3}
+
+- `to: string`
+  - **Required**
+  - The url path to redirect logged in users to
+
+### Returns {#returns-3}
+
+- Nothing

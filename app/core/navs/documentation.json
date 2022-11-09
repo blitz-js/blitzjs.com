@@ -66,13 +66,12 @@
     "pages": [
       "auth",
       "auth-setup",
+      "auth-config",
       "session-management",
       "auth-server",
       "auth-client",
       "authorization",
       "passportjs",
-      "auth-utils",
-      "auth-config",
       "impersonation"
     ]
   },

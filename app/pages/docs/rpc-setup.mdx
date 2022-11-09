@@ -55,10 +55,10 @@ Create an `pages/api/rpc` directory in your app root with
 `[[...blitz]].ts` file, and add the following lines:
 
 ```ts
-// pages/api/rpc/[[...blitz]].ts
+// src/pages/api/rpc/[[...blitz]].ts
 
 import { rpcHandler } from "@blitzjs/rpc"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 
 export default api(rpcHandler({}))
 ```

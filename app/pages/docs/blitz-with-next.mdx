@@ -25,7 +25,7 @@ npm i blitz @blitzjs/next
 
 If you want to use Blitz's server functionalities like auth, middlewares,
 rpc, you'd need to create a `blitz-server.ts` file somewhere in your
-project, e.g. in `app/blitz-server.ts`. We'll cover how to add plugins
+project, e.g. in `src/blitz-server.ts`. We'll cover how to add plugins
 later.
 
 ```ts
@@ -44,7 +44,7 @@ const {
 
 Now, if you want Blitz's client functionalities, you'll have to create a
 `blitz-client.ts` file. It can be next to the `blitz-server.ts` in
-`app/blitz-client.ts`.
+`src/blitz-client.ts`.
 
 ```ts
 import { setupBlitzClient } from "@blitzjs/next"
@@ -65,7 +65,7 @@ To use Blitz on the client, you also have to use the `withBlitz` function
 in your App component.
 
 ```ts
-import { withBlitz } from "app/blitz-client"
+import { withBlitz } from "src/blitz-client"
 
 function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />

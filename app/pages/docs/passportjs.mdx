@@ -14,13 +14,13 @@ supported. In the Twitter example below, the second argument to
 
 ### 1. Add the Passport.js API Route {#1-add-the-passport-js-api-route}
 
-Add a new api route at `app/api/auth/[...auth].ts` with the following
-contents.
+Add a new api route at `src/pages/api/auth/[...auth].ts` with the
+following contents.
 
 ```ts
-// app/api/auth/[...auth].ts
+// src/pages/api/auth/[...auth].ts
 import { passportAuth } from "@blitzjs/auth"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 import db from "db"
 
 export default api(
@@ -44,7 +44,8 @@ filename must be `[...auth].js` or `[...auth].ts`.
 The `passportAuth` adapter adds two API endpoints for each installed
 strategy.
 
-With the handler at `app/api/auth/[...auth].ts`, it adds the following:
+With the handler at `src/pages/api/auth/[...auth].ts`, it adds the
+following:
 
 1. `/api/auth/[strategyName]` - URL to initiate login
 2. `/api/auth/[strategyName]/callback` - Callback URL to complete login
@@ -66,9 +67,9 @@ located behind SSL proxy (Nginx). Proxy should be set to manage
 `forwarded` or `x-forwarded-proto` header correctly.
 
 ```ts
-// app/api/auth/[...auth].ts
+// src/pages/api/auth/[...auth].ts
 import { passportAuth } from "@blitzjs/auth"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 import db from "db"
 
 export default api(
@@ -93,9 +94,9 @@ you need to include custom parameters in your passport strategies (e.g.,
 invitation codes, referal codes).
 
 ```ts
-// app/api/auth/[...auth].ts
+// src/pages/api/auth/[...auth].ts
 import { passportAuth } from "@blitzjs/auth"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 import db from "db"
 
 export default api(
@@ -131,7 +132,7 @@ Note that the `callbackURL` uses the callback endpoint as described above
 
 ```ts
 import { passportAuth } from "@blitzjs/auth"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 import db from "db"
 import { Strategy as TwitterStrategy } from "passport-twitter"
 
@@ -284,7 +285,7 @@ inside the `passport.authenticate()` method. Add these options to the
 
 ```ts
 import { passportAuth } from "@blitzjs/auth"
-import { api } from "app/blitz-server"
+import { api } from "src/blitz-server"
 import db from "db"
 import { Strategy as Auth0Strategy } from "passport-auth0"
 

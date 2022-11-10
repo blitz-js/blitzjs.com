@@ -92,7 +92,8 @@
       "use-paginated-query",
       "use-infinite-query",
       "use-mutation",
-      "rpc-specification"
+      "rpc-specification",
+      "rpc-monorepo"
     ]
   },
   {

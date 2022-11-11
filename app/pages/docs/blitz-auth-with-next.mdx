@@ -102,11 +102,7 @@ In this file, we have slightly more things going on:
 - In the server-side configuration of Auth plugin, we need two additional
   things:
   - `storage` : Blitz stores session information in the database, so we
-    need to specify how Blitz Auth can access the storage. We will use
-    `PrismaStorage` and provide the database client, which we will create
-    as the next step. If you’re interested in how it looks with something
-    other than Prisma, you can check out this Redis example:
-    https://gist.github.com/beerose/80f37b4b36cbd7ba2745701959e3cb8b.
+    need to specify how Blitz Auth can access the storage.
   - `isAuthorized`: a function that determines what user roles are
     authorized to access pages and other protected code. We’ll use
     `simpleRoleIsAuthorized` provided by Blitz Auth. You can read more
@@ -141,9 +137,14 @@ declare module "@blitzjs/auth" {
 ### Setup Database Connection {#setup-database}
 
 The Blitz Auth provides a session-based auth system, so we need a database
-to store the session information. The package is database agnostic, but
-the simplest way to set it up is by using Prisma, and that’s what we’ll do
-in this guide.
+to store the session information. New Blitz apps have a Prisma setup by
+default, but the package is database agnostic, so we'll go over two
+options in this guide: with and without using Prisma.
+
+Go to [Without Prisma section](#without-prisma) if you don't want to use
+Prisma.
+
+#### With Prisma {#with-prisma}
 
 First, we’ll install `prisma` and `@prisma/client`:
 
@@ -196,7 +197,167 @@ model Session {
 ```
 
 To apply the changes to the database and generate Prisma’s TypeScript
-types, run: `yarn prisma migrate dev`
+types, run: `yarn prisma migrate dev`.
+
+Go to the next step:
+[adding auth logic](/docs/blitz-auth-with-next/add-auth-logic).
+
+#### Without Prisma {#without-prisma}
+
+In this guide, we’ll show a Redis example, but you can use any other
+database. The `storage` property in the Blitz Auth configuration accepts
+an object that implements the `SessionConfigMethods` interface. You can
+read more about it [here](/docs/auth-setup#server-setup). The methods are:
+
+- `getSession`
+- `createSession`
+- `updateSession`
+- `deleteSession`
+
+Here's an example with Redis:
+
+```ts
+import IoRedis from "ioredis"
+import { setupBlitz } from "@blitzjs/next"
+import {
+  AuthServerPlugin,
+  simpleRolesIsAuthorized,
+  SessionModel,
+  Session,
+} from "@blitzjs/auth"
+
+const dbs: Record<string, IoRedis.Redis | undefined> = {
+  default: undefined,
+  auth: undefined,
+}
+
+export function getRedis(): IoRedis.Redis {
+  if (dbs.default) {
+    return dbs.default
+  }
+  return (dbs.default = createRedis(0))
+}
+
+export function getAuthRedis(): IoRedis.Redis {
+  if (dbs.auth) {
+    return dbs.auth
+  }
+  return (dbs.auth = createRedis(1))
+}
+
+export function createRedis(db: number) {
+  return new IoRedis({
+    port: 6379,
+    host: "localhost",
+    keepAlive: 60,
+    keyPrefix: "auth:",
+    db,
+  })
+}
+
+const { gSSP, gSP, api } = setupBlitz({
+  plugins: [
+    AuthServerPlugin({
+      cookiePrefix: "blitz-app-prefix",
+      isAuthorized: simpleRolesIsAuthorized,
+      storage: {
+        createSession: (session: SessionModel): Promise<SessionModel> => {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis().set(
+              `token:${session.handle}`,
+              JSON.stringify(session),
+              (err) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  getAuthRedis().lpush(
+                    `device:${String(session.userId)}`,
+                    session.handle
+                  )
+                  resolve(session)
+                }
+              }
+            )
+          })
+        },
+        deleteSession(handle: string): Promise<SessionModel> {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((result) => {
+                if (result) {
+                  const session = JSON.parse(result) as SessionModel
+                  const userId = session.userId as unknown as string
+                  getAuthRedis().lrem(userId, 0, handle).catch(reject)
+                }
+                getAuthRedis().del(handle, (err) => {
+                  if (err) {
+                    reject(err)
+                  } else {
+                    resolve({ handle })
+                  }
+                })
+              })
+          })
+        },
+        getSession(handle: string): Promise<SessionModel | null> {
+          return new Promise<SessionModel | null>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((data: string | null) => {
+                if (data) {
+                  resolve(JSON.parse(data))
+                } else {
+                  resolve(null)
+                }
+              })
+              .catch(reject)
+          })
+        },
+        getSessions(
+          userId: Session.PublicData["userId"]
+        ): Promise<SessionModel[]> {
+          return new Promise<SessionModel[]>((resolve, reject) => {
+            getAuthRedis()
+              .lrange(`device:${String(userId)}`, 0, -1)
+              .then((result) => {
+                if (result) {
+                  resolve(
+                    result.map((handle) => {
+                      return this.getSession(handle)
+                    })
+                  )
+                } else {
+                  resolve([])
+                }
+              })
+              .catch(reject)
+          })
+        },
+        updateSession(
+          handle: string,
+          session: Partial<SessionModel>
+        ): Promise<SessionModel> {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((result) => {
+                if (result) {
+                  const oldSession = JSON.parse(result) as SessionModel
+                  const merge = Object.assign(oldSession, session)
+                  getAuthRedis()
+                    .set(`token:${handle}`, JSON.stringify(merge))
+                    .catch(reject)
+                }
+                reject(new Error("cant update session"))
+              })
+          })
+        },
+      },
+    }),
+  ],
+})
+```
 
 ## Adding auth logic {#add-auth-logic}
 
@@ -403,6 +564,31 @@ export const getServerSideProps = gSSP(async ({ ctx }) => {
   // session.$setPublicData
   // etc.
 })
+```
+
+## Access Session on the client {#access-session-on-the-client}
+
+Blitz Auth provides a
+` useSession()`` hook that returns  `PublicData`with`isLoading`` property.
+This hook can be used anywhere in your application.
+
+Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
+component above it in the tree. Or you can set
+`useSession({suspense: false})` to disable suspense.
+
+Here's an example usage:
+
+```tsx
+import { useSession } from "@blitzjs/auth"
+
+function Component() {
+  const session = useSession()
+
+  const userId = session.userId
+  const role = session.role
+
+  return /*... */
+}
 ```
 
 ## Adding authorization to pages {#adding-auth-to-pages}

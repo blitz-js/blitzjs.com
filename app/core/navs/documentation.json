@@ -51,6 +51,14 @@
   },
   {
     "title": {
+      "title": "Guides",
+      "iconDarkPath": "/img/routing-white.svg",
+      "iconPath": "/img/routing.svg"
+    },
+    "pages": ["blitz-auth-with-next"]
+  },
+  {
+    "title": {
       "title": "Framework Adapters",
       "iconPath": "/img/pages.svg",
       "iconDarkPath": "/img/pages-white.svg"

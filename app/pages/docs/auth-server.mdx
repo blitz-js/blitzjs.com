@@ -1,104 +1,78 @@
 ---
-title: Auth Hooks & Utilities
-sidebar_label: Hooks & Utilities
+title: Auth Server-Side APIs
+sidebar_label: Server-Side APIs
 ---
 
-## `useSession()` {#use-session}
+## In Queries & Mutations {#in-queries-and-mutations}
 
-`useSession(options?) => Partial<PublicData> & {isLoading: boolean}`
-
-### Example {#example}
-
-```ts
-import { useSession } from "@blitzjs/auth"
-
-const session = useSession()
-```
-
-### Arguments {#arguments}
-
-- `options:`
-  - Optional
-  - `initialPublicData: PublicData` - Use this with SSR to set public data
-    from the server session
-  - `suspense: boolean` - Defaults to `true`
-
-### Returns {#returns}
-
-- `session: Partial<PublicData> & {isLoading: boolean}`
-
-## `useAuthenticatedSession()` {#use-authenticated-session}
-
-`useAuthenticatedSession(options?) => PublicData & {isLoading: boolean}`
-
-This will throw `AuthenticationError` if the user is not logged in
-
-### Example {#example-1}
+`SessionContext` is available off of `ctx` which is provided as the second
+parameter to all queries and mutations.
 
 ```ts
-import { useAuthenticatedSession } from "@blitzjs/auth"
+// src/queries/someQuery.ts
+import { Ctx } from "blitz"
 
-const session = useAuthenticatedSession()
+export default async function someQuery(input: any, ctx: Ctx) {
+  // Access the SessionContext class
+  ctx.session.userId
+  ctx.session.role
+  ctx.session.$create(/*...*/)
+
+  return
+}
 ```
 
-### Arguments {#arguments-1}
+## `getServerSideProps` {#get-server-side-props}
 
-- `options:`
-  - Optional
-  - `initialPublicData: PublicData` - Use this with SSR to set public data
-    from the server session
-  - `suspense: boolean` - Defaults to `true`
-
-### Returns {#returns-1}
-
-- `session: PublicData & {isLoading: boolean}`
-
-## `useAuthorize()` {#use-authorize}
-
-`useAuthorize() => void`
-
-This will throw `AuthenticationError` if the user is not logged in
-
-### Example {#example-2}
+You can get the session context inside `getServerSideProps` by wrapping it
+with the `gSSP` function exported from `src/blitz-server`:
 
 ```ts
-import { useAuthorize } from "@blitzjs/auth"
+import { SessionContext } from "@blitzjs/auth"
+import { gSSP } from "src/blitz-server"
 
-useAuthorize()
+type Props = {
+  userId: unknown
+  publicData: SessionContext["$publicData"]
+}
+
+export const getServerSideProps = gSSP<Props>(async ({ ctx }) => {
+  const { session } = ctx
+  return {
+    props: {
+      userId: session.userId,
+      publicData: session.$publicData,
+      publishedAt: new Date(0),
+    },
+  }
+})
+
+function PageWithGssp(props: Props) {
+  return <div>{JSON.stringify(props, null, 2)}</div>
+}
+
+export default PageWithGssp
 ```
 
-### Arguments {#arguments-2}
+## API Routes {#api-routes}
 
-- None
-
-### Returns {#returns-2}
-
-- Nothing
-
-## `useRedirectAuthenticated()` {#use-redirect-authenticated}
-
-`useRedirectAuthenticated(to: string) => void`
-
-This will redirect a logged in user to the given url path. It does nothing
-for logged out users.
-
-### Example {#example-3}
+You can get the session context inside API routes by wrapping it with the
+`api` function exported from `src/blitz-server`:
 
 ```ts
-import { useRedirectAuthenticated } from "@blitzjs/auth"
+import { api } from "src/blitz-server"
+import db from "db"
 
-useRedirectAuthenticated("/dashboard")
+export default api(async (_req, res, ctx) => {
+  ctx.session.$authorize()
+  const publicData = ctx.session.$publicData
+
+  res.status(200).json({
+    userId: ctx.session.userId,
+    publicData: { ...publicData },
+  })
+})
 ```
-
-### Arguments {#arguments-3}
-
-- `to: string`
-  - **Required**
-  - The url path to redirect logged in users to
-
-### Returns {#returns-3}
-
-- Nothing
 
 ## `generateToken()` {#generate-token}
 
@@ -125,7 +99,10 @@ This is a convenience wrapper that uses the node
 the `sha256` algorithm. It is used for things like hashing password reset
 tokens before saving them in the database.
 
-Hash256 is also useful for storing strings like API keys in the database because the returned hash will always be the same for a given string. Therefore, you can still verify that an API key exists in the database when the only value you have to reference is the hashed key.
+Hash256 is also useful for storing strings like API keys in the database
+because the returned hash will always be the same for a given string.
+Therefore, you can still verify that an API key exists in the database
+when the only value you have to reference is the hashed key.
 
 #### Example Usage
 
@@ -155,7 +132,8 @@ This is used when a user sets a new password.
 It takes a password string and returns a secure hash for storing in your
 database.
 
-`SecurePassword.hash` will return a different hash when given the same string, hence the necessity of `SecurePassword.verify` to compare hashes.
+`SecurePassword.hash` will return a different hash when given the same
+string, hence the necessity of `SecurePassword.verify` to compare hashes.
 
 #### `SecurePassword.verify(passwordHash: string, password: string) => Promise<ResultCode>`
 

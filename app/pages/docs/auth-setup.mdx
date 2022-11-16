@@ -1,9 +1,7 @@
 ---
-title: Setup
-sidebar_label: Setup
+title: Blitz Auth with Next.js
+sidebar_label: Blitz Auth with Next.js
 ---
-
-### Blitz Auth with Next.js {#setup-nextjs}
 
 Install `@blitzjs/auth` plugin with:
 
@@ -11,9 +9,28 @@ Install `@blitzjs/auth` plugin with:
 npm i @blitzjs/auth # yarn add @blitzjs/auth # pnpm add @blitzjs/auth
 ```
 
-#### Server setup {#server-setup}
+### Client setup {#client-setup}
 
-Add the following to the `blitz-server.ts` file:
+Add the following to your `blitz-client.ts` file:
+
+```typescript
+import { AuthClientPlugin } from "@blitzjs/auth"
+import { setupBlitzClient } from "@blitzjs/next"
+
+export const authConfig = {
+  cookiePrefix: "testapp",
+}
+
+const { withBlitz } = setupBlitzClient({
+  plugins: [AuthClientPlugin(authConfig)],
+})
+
+export { withBlitz }
+```
+
+### Server setup {#server-setup}
+
+Then, add the following to the `blitz-server.ts` file:
 
 ```typescript
 import { setupBlitzServer } from "@blitzjs/next"
@@ -23,11 +40,12 @@ import {
   simpleRolesIsAuthorized,
 } from "@blitzjs/auth"
 import { db } from "db"
+import { authConfig } from "./blitz-client"
 
 const { gSSP, gSP, api } = setupBlitzServer({
   plugins: [
     AuthServerPlugin({
-      cookiePrefix: "blitz-app-prefix",
+      ...authConfig,
       storage: PrismaStorage(db),
       isAuthorized: simpleRolesIsAuthorized,
     }),
@@ -37,69 +55,11 @@ const { gSSP, gSP, api } = setupBlitzServer({
 export { gSSP, gSP, api }
 ```
 
-The `storage` property is needed to handle session and user storage. You
-can use `PrismaStorage` and pass your Prisma client as in the example
-above. You can also define the storage methods yourself:
+## Production Deployment Requirements {#production-deployment-requirements}
 
-```typescript
-import { setupBlitzServer } from "@blitzjs/next"
-import {
-  AuthServerPlugin,
-  PrismaStorage,
-  simpleRolesIsAuthorized,
-} from "@blitzjs/auth"
+In production, you must provide the `SESSION_SECRET_KEY` environment
+variable with at least 32 characters. This is your private key for signing
+JWT tokens.
 
-const { gSSP, gSP, api } = setupBlitzServer({
-  plugins: [
-    AuthServerPlugin({
-      cookiePrefix: "blitz-app-prefix",
-      isAuthorized: simpleRolesIsAuthorized,
-      storage: {
-        getSession: (handle) => redis.get(`session:${handle}`),
-        createSession: (session) =>
-          redis.set(`session:${handle}`, session),
-        deleteSession: (handle) => redis.del(`session:${handle}`),
-        // ...
-      },
-    }),
-  ],
-})
-
-export { gSSP, gSP, api }
-```
-
-[**Here's a GitHub gist with a full Redis example.**](https://gist.github.com/beerose/80f37b4b36cbd7ba2745701959e3cb8b)
-
-The storage methods need to conform to the following interface:
-
-```typescript
-interface SessionConfigMethods {
-  getSession: (handle: string) => Promise<SessionModel | null>
-  getSessions: (userId: PublicData["userId"]) => Promise<SessionModel[]>
-  createSession: (session: SessionModel) => Promise<SessionModel>
-  updateSession: (
-    handle: string,
-    session: Partial<SessionModel>
-  ) => Promise<SessionModel | undefined>
-  deleteSession: (handle: string) => Promise<SessionModel>
-}
-```
-
-#### Client setup {#client-setup}
-
-Then, add the following to your `blitz-client.ts` file:
-
-```typescript
-import { AuthClientPlugin } from "@blitzjs/auth"
-import { setupBlitzClient } from "@blitzjs/next"
-
-const { withBlitz } = setupBlitzClient({
-  plugins: [
-    AuthClientPlugin({
-      cookiePrefix: "web-cookie-prefix",
-    }),
-  ],
-})
-
-export { withBlitz }
-```
+On macOS and Linux, you can generate it by running `openssl rand -hex 16`
+in your terminal.

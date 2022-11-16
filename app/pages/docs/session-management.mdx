@@ -1,6 +1,6 @@
 ---
-title: Session Management
-sidebar_label: Session Management
+title: Sessions
+sidebar_label: Sessions
 ---
 
 Blitz has built in session management that can be used with any type of
@@ -13,11 +13,13 @@ Session management performs the following functions:
    out
 3. Protection against CSRF attacks
 
-## TLDR {#tldr}
+<Card type="note">
+  You login, logout, and otherwise modify the session via the
+  [`SessionContext`](#sessioncontext) object which is [accessible anywhere
+  on the server](#access-session-on-the-server).
+</Card>
 
-You login, logout, and otherwise modify the session via the
-[`SessionContext`](#sessioncontext) object which is
-[accessible anywhere on the server](#access-session-on-the-server).
+## Basics {#session-basics}
 
 ### Login {#login}
 
@@ -25,7 +27,7 @@ For login you will have form component in your UI that will submit a login
 mutation like the one shown below.
 
 ```ts
-// app/auth/mutations/login.ts
+// src/auth/mutations/login.ts
 import { Ctx } from "blitz"
 
 export default async function login(input: SomeTSInputType, ctx: Ctx) {
@@ -84,98 +86,6 @@ passed. The default expiry time is 30 days. If you change the session’s
 [`PublicData`](#publicdata) the session is also automatically refreshed.
 You will need to update tokens (access and anti-CSRF) after a session
 refresh, if you use them (e.g. in a mobile app).
-
-## Access Session on the Server {#access-session-on-the-server}
-
-### In Queries & Mutations {#in-queries-and-mutations}
-
-[`SessionContext`](#sessioncontext) is available off of `ctx` which is
-provided as the second parameter to all queries and mutations because of
-the `sessionMiddleware` that's in `blitz.config.js`.
-
-```ts
-// src/queries/someQuery.ts
-import { Ctx } from "blitz"
-
-export default async function someQuery(input: any, ctx: Ctx) {
-  // Access the SessionContext class
-  ctx.session.userId
-  ctx.session.role
-  ctx.session.$create(/*...*/)
-
-  return
-}
-```
-
-### In `getServerSideProps` or API Routes {#in-get-server-side-props-or-api-routes}
-
-You can also get the session context inside `getServerSideProps` or inside
-API routes with `getSession` like this:
-
-```ts
-import { getSession } from "@blitzjs/auth"
-
-export const getServerSideProps = async ({ req, res }) => {
-  const session = await getSession(req, res)
-  console.log("User ID:", session.userId)
-
-  return { props: {} }
-}
-```
-
-## Access Session on the Client {#access-session-on-the-client}
-
-Blitz provides a `useSession()` hook that returns
-[`PublicData`](#publicdata) with `isLoading` property. This hook can be
-used anywhere in your application.
-
-Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
-component above it in the tree. Or you can set
-`useSession({suspense: false})` to disable suspense.
-
-```ts
-import { useSession } from "@blitzjs/auth"
-
-function SomeComponent() {
-  const session = useSession()
-
-  session.userId
-  session.role
-
-  return /*... */
-}
-```
-
-If you are using
-[`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props),
-then you can pass the session public data to `useSession()` with the
-`initialPublicData` option.
-
-```ts
-import { useSession, getSession } from "@blitzjs/auth"
-import { gSSP } from "src/blitz-server"
-
-export const getServerSideProps = gSSP(async ({ req, res }) => {
-  const session = await getSession(req, res)
-
-  return { props: { initialPublicData: session.$publicData } }
-})
-
-const SomePage: BlitzPage = ({ initialPublicData }) => {
-  const session = useSession({ initialPublicData })
-
-  return /*... */
-}
-```
-
-## Production Deployment Requirements {#production-deployment-requirements}
-
-In production, you must provide the `SESSION_SECRET_KEY` environment
-variable with at least 32 characters. This is your private key for signing
-JWT tokens.
-
-On macOS and Linux, you can generate it by running `openssl rand -hex 16`
-in your terminal.
 
 ## Anonymous Sessions {#anonymous-sessions}
 
@@ -274,80 +184,6 @@ export default async function someQuery(input: any, ctx: Ctx) {
   return
 }
 ```
-
-## Session Configuration {#session-configuration}
-
-You can customize session management by passing an object to the
-`sessionMiddleware` factory function.
-
-```js
-// blitz.config.js
-const { sessionMiddleware, simpleRolesIsAuthorized } = require("blitz")
-
-module.exports = {
-  middleware: [
-    sessionMiddleware({
-      // highlight-start
-      cookiePrefix: "my-app",
-      sessionExpiryMinutes: 1234,
-      isAuthorized: simpleRolesIsAuthorized,
-      // highlight-end
-    }),
-  ],
-}
-```
-
-Available options:
-
-```ts
-type SessionConfig = {
-  cookiePrefix?: string /* Default: 'blitz' */
-  sessionExpiryMinutes?: number /* Default: 30 days */
-  anonSessionExpiryMinutes?: number /* Default: 5 years */
-  sameSite?: "strict" | "lax" | "none" /* Default: 'lax'. 
-    If you set this to 'none', you also have to set `secureCookies: true`. 
-    See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite */
-  method?: "essential" | "advanced" /* Default: 'essential' */
-  secureCookies?: boolean /* Default: undefined. This flag is skipped if running app on hostname `localhost` */
-  domain?: string /* Default: undefined. Can set as `.yourDomain.com` to work across subdomains */
-  publicDataKeysToSyncAcrossSessions?: string[] /* Default: ['role', 'roles'] */
-  getSession: (handle: string) => Promise<SessionModel | null>
-  getSessions: (userId: string | number) => Promise<SessionModel[]>
-  createSession: (session: SessionModel) => Promise<SessionModel>
-  updateSession: (
-    handle: string,
-    session: Partial<SessionModel>
-  ) => Promise<SessionModel>
-  deleteSession: (handle: string) => Promise<SessionModel>
-  isAuthorized: ({ ctx: any, args: [...unknown] }) => boolean
-}
-```
-
-```ts
-interface SessionModel extends Record<any, any> {
-  handle: string
-  userId?: string | number
-  expiresAt?: Date
-  hashedSessionToken?: string
-  antiCSRFToken?: string
-  publicData?: string
-  privateData?: string
-}
-```
-
-## Customize Session Persistence & Database Access {#customize-session-persistence-and-database-access}
-
-By default, session persistence is zero-config with Prisma. However, you
-can customize this to save sessions somewhere else, like Redis. You can
-also customize this if you have Prisma but want to customize the attribute
-names on the user or session model.
-
-Customize session persistence by overriding the database access functions
-defined above in `SessionConfig`. The functions can do anything, but they
-must conform to the defined input and outputs types.
-
-For reference, here's
-[the default config that works with Prisma](https://github.com/blitz-js/blitz/blob/canary/nextjs/packages/next/stdlib-server/auth-sessions.ts#L74).
 
 ## Manual API Requests {#manual-api-requests}
 

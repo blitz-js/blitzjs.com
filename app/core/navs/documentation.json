@@ -92,6 +92,7 @@
     "pages": [
       "rpc-overview",
       "rpc-setup",
+      "rpc-config",
       "query-resolvers",
       "query-usage",
       "mutation-resolvers",

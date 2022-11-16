@@ -17,58 +17,6 @@ app. For example, from a mobile application or some other app.
 
 </Card>
 
-## URL {#url}
-
-There are three options to determine how the RPC path is resolved during
-build.
-
-- `queries|mutations` (default)
-  - Use the `queries` or `mutations` folder as the root
-- `root`
-  - Uses the path starting from the root of the project
-- Custom function
-  - This function gets called for every file path that needs to be
-    resolved.
-
-Example:
-
-```
-File: src/products/queries/getProduct.ts
-"queries|mutations" URL: /api/rpc/getProduct
-"root" URL: src/products/queries/getProduct
-
-File: src/products/mutations/createProduct.ts
-"queries|mutations" URL: /api/rpc/createProduct
-"root" URL: src/products/mutations/createProduct
-
-File: src/products/mutations/v2/createProduct.ts
-"queries|mutations" URL: /api/rpc/v2/createProduct
-"root" URL: src/products/mutations/v2/createProduct
-```
-
-#### Changing resolverPath option
-
-To change how every file path is resolved, you can set the `resolverPath`
-option inside next.config.js to one the three previously mentioned
-options:
-
-```ts
-module.exports = withBlitz({
-  blitz: {
-    resolverPath: "queries|mutations",
-  },
-})
-
-// Or with a custom function
-module.exports = withBlitz({
-  blitz: {
-    resolverPath: (filePath) => {
-      return filePath.replace("app/", "") // Removes `app/` from the path
-    },
-  },
-})
-```
-
 ## Request Details {#request-details}
 
 From an HTTP perspective there is no difference between a query and

@@ -1,0 +1,74 @@
+---
+title: Configuration
+sidebar_label: Configuration
+---
+
+You can configure certain RPC aspects within your `next.config.js` file
+inside the blitz property.
+
+## Changing resolverPath option {#custom-resolver-path}
+
+To change how every file path is resolved, you can set the `resolverPath`
+option inside `next.config.js`.
+
+```ts
+module.exports = withBlitz({
+  blitz: {
+    resolverPath: "queries|mutations",
+  },
+})
+
+// Or with a custom function
+module.exports = withBlitz({
+  blitz: {
+    resolverPath: (filePath) => {
+      return filePath.replace("app/", "") // Removes `app/` from the path
+    },
+  },
+})
+```
+
+There are three options to determine how the RPC path is resolved during
+build.
+
+- `queries|mutations` (default)
+  - Use the `queries` or `mutations` folder as the root
+- `root`
+  - Uses the path starting from the root of the project
+- Custom function
+  - This function gets called for every file path that needs to be
+    resolved.
+
+Example output:
+
+```
+File: src/products/queries/getProduct.ts
+"queries|mutations" URL: /api/rpc/getProduct
+"root" URL: src/products/queries/getProduct
+
+File: src/products/mutations/createProduct.ts
+"queries|mutations" URL: /api/rpc/createProduct
+"root" URL: src/products/mutations/createProduct
+
+File: src/products/mutations/v2/createProduct.ts
+"queries|mutations" URL: /api/rpc/v2/createProduct
+"root" URL: src/products/mutations/v2/createProduct
+```
+
+## Resolvers in a separate folder {#resolvers-separate-folder}
+
+Inside the `blitz` property add the param `includeRPCFolders` as an array
+of relative path folders from your Blitz root folder. For example:
+
+```ts
+module.exports = withBlitz({
+  blitz: {
+    includeRPCFolders: ["../../<YOUR DIRECTORY PATH>"],
+  },
+})
+```
+
+<Card type="note">
+  Your resolvers still need to be placed in `queries` or `mutations`
+  folders.
+</Card>

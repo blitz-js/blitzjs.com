@@ -7,7 +7,7 @@
     "yarn": "1.22.17"
   },
   "scripts": {
-    "dev": "blitz dev",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider && blitz dev",
     "start": "blitz start",
     "build": "blitz build",
     "lint": "yarn lint:code && yarn lint:docs",

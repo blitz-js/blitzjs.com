@@ -35,3 +35,19 @@ const EnhancedPrisma = enhancePrisma(PrismaClient)
 export * from "@prisma/client"
 export default new EnhancedPrisma()
 ```
+
+---
+title: Browser Client
+sidebar_label: Browser Client
+---
+
+- The core prisma client is not accessible in the browser
+- A subset of the prisma client is available 
+
+#### Example Usage
+
+```
+import { Prisma } from ".prisma/client/index-browser"
+
+console.log(Prisma.prismaVersion.client)
+```

@@ -191,20 +191,16 @@ use it anywhere for testing.
 pnpm link ./packages/blitz
 ```
 
-## Doing a release {#doing-a-release}
-
-Depending on your maintainer level, you will have the ability to make a
-blitz release. The way it currently works, isn't set in stone so look here
-for latest updates on how the release system works.
+## Doing A Release {#doing-a-release}
 
 We use the [changesets](https://github.com/changesets/changesets) package
 & a forked version of their GitHub action which can be found here:
 [GitHub - blitz-js/changesets-action](https://github.com/blitz-js/changesets-action).
-Essentially every user facing PR should have a changeset. When that PR
-gets approved and merged to the `main` branch a new PR is either created
-or modified called `Version packages (beta)`. This PR updates each
-internal package's changelog & each blitz package's version by
-incrementing it in the `package.json` files.
+Every user facing PR should have a changeset. When that PR gets approved
+and merged to the `main` branch the "release" PR with the name
+`Version packages (beta)` is automatically created or updated. This PR
+updates each internal package's changelog & each blitz package's version
+by incrementing it in the `package.json` files.
 
 Once the auto generated PR accumulates enough changesets, It's time to do
 a release by merging this PR into the `main` branch. To trigger the

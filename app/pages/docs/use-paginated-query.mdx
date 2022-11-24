@@ -10,14 +10,14 @@ After clicking on `Show next pages`, the user should see the following
 three pages only. For this case, you can `usePaginatedQuery` as shown in
 the following example.
 
-### Example {#example}
+### Simple Prev/Next Example {#prev-next-example}
 
 ```tsx
 import { usePaginatedQuery } from "@blitzjs/rpc"
 import { Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import getProjects from "app/products/queries/getProjects"
+import getProjects from "src/products/queries/getProjects"
 
 const ITEMS_PER_PAGE = 3
 
@@ -87,6 +87,129 @@ export default resolver.pipe(
       projects,
       nextPage,
       hasMore,
+      count,
+    }
+  }
+)
+```
+
+Use `usePaginatedQuery` also supports the ability to navigate between multiple pages. 
+For instance, you have many numbered pages, and you want to show a navigation control 
+to select a specific page from a range of pages. For this case, you can `usePaginatedQuery` as shown in
+the following example.
+
+### Range Pagination Example {#range-example}
+
+```tsx
+import { usePaginatedQuery } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
+import { useRouter } from "next/router"
+import Link from "next/link"
+import getProjects from "src/products/queries/getProjects"
+
+const Projects = () => {
+  const router = useRouter()
+  const page = Number(router.query.page) || 0
+  const [{ projects, count, pageCount, from, to }] = usePaginatedQuery(getProjects, {
+    orderBy: { id: "asc" },
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
+  })
+  
+  function range(start: number, end: number) {
+    const length = end - start + 1;
+    return Array.from({ length }, (_, index) => index + start);
+  }
+
+  return (
+    <div>
+      {projects !== undefined && 
+      <>
+        {projects.map((p) =>
+          <div key={p.id}>
+            <p>name: {p.name}</p>            
+            <hr />
+          </div>
+        )}
+        <div style={{display:"flex", flexDirection:"column"}}>                
+          <nav style={{display:"flex"}}>
+              <button
+                onClick={() => router.push({ query: { page: page - 1 } })}
+                disabled={page == 0}              
+              >
+                <span>&lt; Previous</span>
+              </button>
+              {range(1, pageCount).map((page: number, idx: number) => {
+                return (
+                  <button
+                    key={idx}
+                    style={{"backgroundColor": idx === page ? "#0047AB": "#808080", color:"#FFF"}}
+                    onClick={() => {
+                      router.push({ query: { page: page - 1 } })
+                    }}                  
+                  >
+                    {page}
+                  </button>
+                )
+              })}
+              <button
+                onClick={() => router.push({ query: { page: page + 1 } })}
+                disabled={page == (pageCount-1)}              
+              >
+                <span>Next &gt;</span>
+              </button>
+          </nav>
+          <p>
+            <span>Showing </span>
+            <span>{from}</span>
+            <span> to </span>
+            <span>{to}</span>
+            <span> of </span>
+            <span>{count}</span>
+            <span> results</span>
+          </p>
+        </div>    
+      </>}            
+    </div>
+  )
+}
+```
+
+And here's the query to work with that:
+
+```ts
+import { paginate } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import db, { Prisma } from "db"
+
+interface GetProjectsInput
+  extends Pick<
+    Prisma.ProjectFindManyArgs,
+    "where" | "orderBy" | "skip" | "take"
+  > {}
+
+export default resolver.pipe(
+  resolver.authorize(),
+  async ({ where, orderBy, skip = 0, take = 100 }: GetProjectsInput) => {
+    const {
+      items: projects,
+      pageCount,
+      from,
+      to,
+      count,
+    } = await paginate({
+      skip,
+      take,
+      count: () => db.project.count({ where }),
+      query: (paginateArgs) =>
+        db.project.findMany({ ...paginateArgs, where, orderBy }),
+    })
+
+    return {
+      projects,
+      pageCount,
+      from,
+      to,
       count,
     }
   }

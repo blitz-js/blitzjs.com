@@ -9,9 +9,9 @@ on the server.
 **1. Queries must be inside a `queries` folder. All of the following are
 valid:**
 
-- `app/queries/getProject.ts`
-- `app/projects/queries/getProject.ts`
-- `app/admin/projects/queries/getProject.ts`
+- `src/queries/getProject.ts`
+- `src/projects/queries/getProject.ts`
+- `src/admin/projects/queries/getProject.ts`
 
 **2. Queries must export a function as the default export**
 
@@ -33,7 +33,7 @@ fetching from third-party APIs.
 #### Example Query
 
 ```ts
-// app/products/queries/getProduct.tsx
+// src/products/queries/getProduct.tsx
 import { Ctx } from "blitz"
 import db from "db"
 import * as z from "zod"

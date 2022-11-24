@@ -134,7 +134,7 @@ builder.addNewFilesStep({
   stepId: "addStyles",
   stepName: "Add base Tailwind CSS styles",
   explanation: `Next, we need to actually create some stylesheets! These stylesheets can either be modified to include global styles for your app, or you can stick to using classnames in your components.`,
-  targetDirectory: "./app",
+  targetDirectory: "./src",
   templatePath: join(__dirname, "templates", "styles"),
   templateValues: {},
 })
@@ -170,7 +170,7 @@ builder.addTransformFilesStep({
   transform(program: j.Collection<j.Program>) {
     const stylesImport = j.importDeclaration(
       [],
-      j.literal("app/styles/index.css")
+      j.literal("src/styles/index.css")
     )
     return addImport(program, stylesImport)!
   },

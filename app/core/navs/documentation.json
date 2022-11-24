@@ -51,6 +51,14 @@
   },
   {
     "title": {
+      "title": "Guides",
+      "iconDarkPath": "/img/routing-white.svg",
+      "iconPath": "/img/routing.svg"
+    },
+    "pages": ["blitz-auth-with-next"]
+  },
+  {
+    "title": {
       "title": "Framework Adapters",
       "iconPath": "/img/pages.svg",
       "iconDarkPath": "/img/pages-white.svg"
@@ -66,10 +74,12 @@
     "pages": [
       "auth",
       "auth-setup",
+      "auth-config",
       "session-management",
+      "auth-server",
+      "auth-client",
       "authorization",
       "passportjs",
-      "auth-utils",
       "impersonation"
     ]
   },
@@ -82,6 +92,7 @@
     "pages": [
       "rpc-overview",
       "rpc-setup",
+      "rpc-config",
       "query-resolvers",
       "query-usage",
       "mutation-resolvers",

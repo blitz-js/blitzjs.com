@@ -36,59 +36,59 @@ Let’s look at what `blitz new` created:
 
 ```
 my-blitz-app
-├── app/
-│   ├── auth/
-│   │   ├── components/
-│   │   │   ├── LoginForm.tsx
-│   │   │   └── SignupForm.tsx
-│   │   ├── mutations/
-│   │   │   ├── changePassword.ts
-│   │   │   ├── forgotPassword.test.ts
-│   │   │   ├── forgotPassword.ts
-│   │   │   ├── login.ts
-│   │   │   ├── logout.ts
-│   │   │   ├── resetPassword.test.ts
-│   │   │   ├── resetPassword.ts
-│   │   │   └── signup.ts
-│   │   └── validations.ts
-│   ├── core/
-│   │   ├── components/
-│   │   │   ├── Form.tsx
-│   │   │   └── LabeledTextField.tsx
-│   │   └── layouts/
-│   │       └── Layout.tsx
-│   ├── users/
-│   │   ├── hooks/
-│   │   │   └── useCurrentUser.ts
-│   │   └── queries/
-│   │       └── getCurrentUser.ts
+├── src/
+│   ├── auth/
+│   │   ├── components/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── SignupForm.tsx
+│   │   ├── mutations/
+│   │   │   ├── changePassword.ts
+│   │   │   ├── forgotPassword.test.ts
+│   │   │   ├── forgotPassword.ts
+│   │   │   ├── login.ts
+│   │   │   ├── logout.ts
+│   │   │   ├── resetPassword.test.ts
+│   │   │   ├── resetPassword.ts
+│   │   │   └── signup.ts
+│   │   └── validations.ts
+│   ├── core/
+│   │   ├── components/
+│   │   │   ├── Form.tsx
+│   │   │   └── LabeledTextField.tsx
+│   │   └── layouts/
+│   │       └── Layout.tsx
+│   ├── users/
+│   │   ├── hooks/
+│   │   │   └── useCurrentUser.ts
+│   │   └── queries/
+│   │       └── getCurrentUser.ts
+│   ├── pages/
+│   │   ├── api/
+│   │   │   └── rpc/
+│   │   │       └── [[...blitz]].ts
+│   │   ├── auth/
+│   │   │   ├── forgot-password.tsx
+│   │   │   ├── login.tsx
+│   │   │   └── signup.tsx
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── 404.tsx
+│   │   └── index.tsx
 │   ├── blitz-client.ts
 │   └── blitz-server.ts
 ├── db/
-│   ├── migrations/
-│   ├── index.ts
-│   ├── schema.prisma
-│   └── seeds.ts
+│   ├── migrations/
+│   ├── index.ts
+│   ├── schema.prisma
+│   └── seeds.ts
 ├── integrations/
 ├── mailers/
-│   └── forgotPasswordMailer.ts
-├── pages/
-│   ├── api/
-│   │   └── rpc/
-│   │       └── [[...blitz]].ts
-│   ├── auth/
-│   │   └── forgot-password.tsx
-│   │   └── login.tsx
-│   │   └── signup.tsx
-│   ├── _app.tsx
-│   ├── _document.tsx
-│   ├── 404.tsx
-│   └── index.tsx
+│   └── forgotPasswordMailer.ts
 ├── public/
-│   ├── favicon.ico*
-│   └── logo.png
+│   ├── favicon.ico*
+│   └── logo.png
 ├── test/
-│   ├── setup.ts
+│   └── setup.ts
 ├── README.md
 ├── next.config.js
 ├── jest.config.js
@@ -101,14 +101,14 @@ my-blitz-app
 
 These files are:
 
-- The `app/` folder has Blitz setup files — `blitz-client.ts` and
+- The `src/` folder has Blitz setup files — `blitz-client.ts` and
   `blitz-server.ts`. This is also where you’ll put any queries/mutations
   or some of your components.
 
-- The `pages/` folder is the primary pages folder. You'll put all your
+- The `src/pages/` folder is the primary pages folder. You'll put all your
   pages and API routes here.
 
-- The `app/core/` folder is the main place to put components, hooks, etc
+- The `src/core/` folder is the main place to put components, hooks, etc
   that are used throughout your app.
 
 - `db/` is where your database configuration goes. If you’re writing
@@ -224,16 +224,16 @@ update your database schema with the new model. It will ask for a name, so
 type something like "add question".
 
 ```
-CREATE    pages/questions/[questionId].tsx
-CREATE    pages/questions/[questionId]/edit.tsx
-CREATE    pages/questions/index.tsx
-CREATE    pages/questions/new.tsx
-CREATE    app/questions/components/QuestionForm.tsx
-CREATE    app/questions/queries/getQuestion.ts
-CREATE    app/questions/queries/getQuestions.ts
-CREATE    app/questions/mutations/createQuestion.ts
-CREATE    app/questions/mutations/deleteQuestion.ts
-CREATE    app/questions/mutations/updateQuestion.ts
+CREATE    src/pages/questions/[questionId].tsx
+CREATE    src/pages/questions/[questionId]/edit.tsx
+CREATE    src/pages/questions/index.tsx
+CREATE    src/pages/questions/new.tsx
+CREATE    src/questions/components/QuestionForm.tsx
+CREATE    src/questions/queries/getQuestion.ts
+CREATE    src/questions/queries/getQuestions.ts
+CREATE    src/questions/mutations/createQuestion.ts
+CREATE    src/questions/mutations/deleteQuestion.ts
+CREATE    src/questions/mutations/updateQuestion.ts
 
 ✔ Model 'Question' created in schema.prisma:
 
@@ -283,11 +283,11 @@ added the `Choice` field to the `Question` model yet. So we are choosing
 `false` when prompted to run the migration:
 
 ```
-CREATE    app/choices/queries/getChoice.ts
-CREATE    app/choices/queries/getChoices.ts
-CREATE    app/choices/mutations/createChoice.ts
-CREATE    app/choices/mutations/deleteChoice.ts
-CREATE    app/choices/mutations/updateChoice.ts
+CREATE    src/choices/queries/getChoice.ts
+CREATE    src/choices/queries/getChoices.ts
+CREATE    src/choices/mutations/createChoice.ts
+CREATE    src/choices/mutations/deleteChoice.ts
+CREATE    src/choices/mutations/updateChoice.ts
 
 ✔ Model for 'choice' created in schema.prisma:
 
@@ -365,11 +365,11 @@ meantime, let's fix the generated pages.
   #
   "Remove the following section once `generate` uses actual model attributes"
 
-Jump over to `pages/questions/index.tsx`. Notice that a `QuestionsList`
-component has been generated for you:
+Jump over to `src/pages/questions/index.tsx`. Notice that a
+`QuestionsList` component has been generated for you:
 
 ```tsx
-// pages/questions/index.tsx
+// src/pages/questions/index.tsx
 
 export const QuestionsList = () => {
   const router = useRouter()
@@ -425,7 +425,7 @@ above doesn’t have any `name` field. To fix this, replace `question.name`
 with `question.text`:
 
 ```diff
-// pages/questions/index.tsx
+// src/pages/questions/index.tsx
 
 export const QuestionsList = () => {
   const router = useRouter()
@@ -471,7 +471,7 @@ export const QuestionsList = () => {
 ```
 
 Next, let’s apply a similar fix to
-`app/questions/components/QuestionForm.tsx`. In the form submission,
+`src/questions/components/QuestionForm.tsx`. In the form submission,
 replace the `LabeledTextField` `name` to be `"text"`
 
 ```diff
@@ -489,11 +489,11 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 
 ### `createQuestion` mutation {#create-question-mutation}
 
-In `app/questions/mutations/createQuestion.ts`, we need to update the
+In `src/questions/mutations/createQuestion.ts`, we need to update the
 `CreateQuestion` zod validation schema to use `text` instead of `name`.
 
 ```diff
-// app/questions/mutations/createQuestion.ts
+// src/questions/mutations/createQuestion.ts
 
 const CreateQuestion = z
   .object({
@@ -505,11 +505,11 @@ const CreateQuestion = z
 
 ### `updateQuestion` mutation {#update-question-mutation}
 
-In `app/questions/mutations/updateQuestion.ts`, we need to update the
+In `src/questions/mutations/updateQuestion.ts`, we need to update the
 `UpdateQuestion` zod validation schema to use `text` instead of `name`.
 
 ```diff
-// app/questions/mutations/updateQuestion.ts
+// src/questions/mutations/updateQuestion.ts
 
 const UpdateQuestion = z
   .object({
@@ -527,7 +527,7 @@ Prisma does not yet support "cascading deletes". In the context of this
 tutorial, that means it does not currently delete the `Choice` data when
 deleting a `Question`. We need to temporarily augment the generated
 `deleteQuestion` mutation in order to do this manually. Open up
-`app/questions/mutations/deleteQuestion.ts` in your text editor and add
+`src/questions/mutations/deleteQuestion.ts` in your text editor and add
 the following to the top of the function body:
 
 ```ts
@@ -537,7 +537,7 @@ await db.choice.deleteMany({ where: { questionId: id } })
 The end result should be as such:
 
 ```diff
-// app/questions/mutations/deleteQuestion.ts
+// src/questions/mutations/deleteQuestion.ts
 
 export default resolver.pipe(
   resolver.zod(DeleteQuestion),
@@ -556,11 +556,11 @@ prior to deleting the question itself.
 
 ### `updateChoice` mutation {#update-choice-mutation}
 
-In `app/choices/mutations/updateChoice.ts`, we need to update the
+In `src/choices/mutations/updateChoice.ts`, we need to update the
 `UpdateChoice` zod validation schema to use `text` instead of `name`.
 
 ```diff
-// app/choices/mutations/updateChoice.ts
+// src/choices/mutations/updateChoice.ts
 
 const UpdateChoice = z
   .object({
@@ -574,7 +574,7 @@ const UpdateChoice = z
 
 Our scaffolding created a mutation file for us that is no longer needed.
 In order for `yarn tsc` or `git push` to succeed, you'll need to delete
-`app/choices/mutations/createChoice.ts` (unused) or update the
+`src/choices/mutations/createChoice.ts` (unused) or update the
 CreateChoice zod schema to include the required fields.
 
 [//]: # "Add this section after we add support for blitz console"
@@ -588,7 +588,7 @@ creating questions, editing, and deleting them.
 ## Adding choices to the question form {#adding-choices-to-the-question-form}
 
 You’re doing great so far! The next thing we’ll do is add choices to our
-question form. Open `app/questions/components/QuestionForm.tsx` in your
+question form. Open `src/questions/components/QuestionForm.tsx` in your
 editor.
 
 Add three more `<LabeledTextField>` components as choices.
@@ -608,7 +608,7 @@ export function QuestionForm<S extends z.ZodType<any, any>>(
 }
 ```
 
-Now open `app/questions/mutations/createQuestion.ts` and update the zod
+Now open `src/questions/mutations/createQuestion.ts` and update the zod
 schema so that the choice data is accepted in the mutation. We also need
 to update the `db.question.create()` call so that the choices will be
 created. After that we need to export the `CreateQuestion` zod schema
@@ -616,7 +616,7 @@ because we will be using it in the next step to create a validation schema
 for our `QuestionForm`.
 
 ```diff
-// app/questions/mutations/createQuestion.ts
+// src/questions/mutations/createQuestion.ts
 
 + export const CreateQuestion = z
     .object({
@@ -642,14 +642,14 @@ export default resolver.pipe(
 ```
 
 Next we're going to create a separate file to store the validation schema
-for our `QuestionForm`. In the `app/questions` folder create a new file
+for our `QuestionForm`. In the `src/questions` folder create a new file
 called `validations.ts` and move the `CreateQuestion` variable from
 `./mutations/createQuestion.ts` to the new `validations.ts` file. Then, in
-`app/questions/mutations/createQuestion.ts` import `CreateQuestion` from
+`src/questions/mutations/createQuestion.ts` import `CreateQuestion` from
 `../validations`.
 
 ```diff
-// app/questions/validations.ts
+// src/questions/validations.ts
 
 + import * as z from 'zod';
 
@@ -660,7 +660,7 @@ called `validations.ts` and move the `CreateQuestion` variable from
 ```
 
 ```diff
-// app/questions/mutations/createQuestion.ts
+// src/questions/mutations/createQuestion.ts
 
 import { resolver } from '@blitzjs/rpc';
 import db from 'db';
@@ -694,15 +694,15 @@ export default resolver.pipe(resolver.zod(CreateQuestion), resolver.authorize(),
   Usage](https://blitzjs.com/docs/mutation-usage).
 </Card>
 
-Now open `pages/questions/new.tsx` and import `CreateQuestion` from
-`app/questions/validations.ts` and set it as the schema for
+Now open `src/pages/questions/new.tsx` and import `CreateQuestion` from
+`src/questions/validations.ts` and set it as the schema for
 `QuestionForm`. Also, we need set `{{text: "", choices: []}}` as our
 `initialValues` for `QuestionForm`:
 
 ```diff
-// pages/questions/new.tsx
+// src/pages/questions/new.tsx
 
-+ import {CreateQuestion} from "app/questions/validations"
++ import {CreateQuestion} from "src/questions/validations"
 
 
       <QuestionForm
@@ -743,7 +743,7 @@ to query for nested relations. Change your `getQuestion.ts` and
 `getQuestions.ts` files to look like this:
 
 ```diff
-// app/questions/queries/getQuestion.ts
+// src/questions/queries/getQuestion.ts
 
 const GetQuestion = z.object({
   // This accepts type of undefined, but is required at runtime
@@ -768,7 +768,7 @@ export default resolver.pipe(
 ```
 
 ```diff
-// app/questions/queries/getQuestions.ts
+// src/questions/queries/getQuestions.ts
 
 interface GetQuestionsInput
   extends Pick<
@@ -802,12 +802,13 @@ export default resolver.pipe(
 )
 ```
 
-Now hop back to our main questions page (`pages/questions/index.tsx`)in
-your editor, and we can list the choices of each question. And add this
-code beneath the `Link` in our `QuestionsList`:
+Now hop back to our main questions page
+(`src/pages/questions/index.tsx`)in your editor, and we can list the
+choices of each question. And add this code beneath the `Link` in our
+`QuestionsList`:
 
 ```diff
-// pages/questions/index.tsx
+// src/pages/questions/index.tsx
 
 // ...
 {
@@ -829,12 +830,13 @@ code beneath the `Link` in our `QuestionsList`:
 // ...
 ```
 
-Restart your app — stop dev server and run `yarn dev`, `npm dev`, or `pnpm dev` again. Now check `/questions` in the browser. **Magic!**
+Restart your app — stop dev server and run `yarn dev`, `npm dev`, or
+`pnpm dev` again. Now check `/questions` in the browser. **Magic!**
 
 ## Let’s let people vote on these questions! {#let-people-vote-on-questions}
 
-Open `pages/questions/[questionId].tsx` in your editor. First, we’re going
-to improve this page somewhat.
+Open `src/pages/questions/[questionId].tsx` in your editor. First, we’re
+going to improve this page somewhat.
 
 1. Replace `<title>Question {question.id}</title>` with
    `<title>{question.text}</title>`.
@@ -866,7 +868,7 @@ this!
 
 #### Now it’s time to add voting!
 
-First we need to open `app/choices/mutations/updateChoice.ts`, update the
+First we need to open `src/choices/mutations/updateChoice.ts`, update the
 zod schema, and add a vote increment.
 
 ```diff
@@ -892,8 +894,8 @@ export default resolver.pipe(
 )
 ```
 
-Now go back to `pages/questions/[questionId].tsx` and make the following
-changes:
+Now go back to `src/pages/questions/[questionId].tsx` and make the
+following changes:
 
 In our `li`, add a `button` like so:
 
@@ -908,8 +910,8 @@ Then, import the `updateChoice` mutation we updated and create a
 `handleVote` function in our page:
 
 ```diff
-// pages/questions/[questionId].tsx
-+import updateChoice from "app/choices/mutations/updateChoice"
+// src/pages/questions/[questionId].tsx
++import updateChoice from "src/choices/mutations/updateChoice"
 
 //...
 
@@ -936,7 +938,7 @@ And then we need to update the question `useQuery` call to return the
 `refetch` function which we use inside `handleVote`:
 
 ```diff
-// pages/questions/[questionId].tsx
+// src/pages/questions/[questionId].tsx
 
 //...
 - const [question] = useQuery(getQuestion, {id: questionId})
@@ -1016,11 +1018,11 @@ If you click the **Edit** button on one of your existing questions, you'll
 see it uses the same form as creating questions. So that part is already
 done! We only need to update our mutation.
 
-Open `app/questions/mutations/updateQuestion.ts` and make the following
+Open `src/questions/mutations/updateQuestion.ts` and make the following
 changes:
 
 ```diff
-// app/questions/mutations/updateQuestion.ts
+// src/questions/mutations/updateQuestion.ts
 import {resolver} from "blitz"
 import db from "db"
 import * as z from "zod"

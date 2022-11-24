@@ -1,0 +1,671 @@
+---
+title: Blitz Auth with Next.js
+sidebar_label: Blitz Auth with Next.js
+---
+
+This guide covers how to add Blitz Auth to a Next.js app. We’ll go over
+setting up Blitz with Next.js, creating a basic auth logic, and using
+Blitz Auth features inside of Next’s pages and API handlers.
+
+Should you get stuck while working through the guide, refer to
+[this repo](github.com/beerose/next13-blitz-auth).
+
+## Creating a new Next.js app {#create-new-next-app}
+
+We’ll start by creating a brand new Next application with
+`create-next-app`:
+
+```sh
+npx create-next-app@latest
+```
+
+You can then run `yarn dev` and open `http://localhost:3000` in your
+browser to check it out.
+
+## Blitz setup {#blitz-setup}
+
+### Install dependencies {#install-dependencies}
+
+As the next step, we need to install Blitz.js packages:
+
+- `blitz` — Blitz’s core package consisting of Blitz CLI, utilities and
+  core functions used by other Blitz’s packages.
+- `@blitzjs/next` — Next.js framework adapter required to initialize Blitz
+  in a Next project.
+- `@blitzjs/auth` — the Auth plugin that we’ll explore in this guide.
+
+```sh
+yarn add blitz @blitzjs/next @blitzjs/auth
+```
+
+In order to have Blitz plugins working in your app, we need two
+configuration files — one for the client side and one for the server side.
+Let’s create an `src` directory and start with the former.
+
+### Add a `blitz-client.ts` file {#add-blitz-client}
+
+Create a new file — `blitz-client.ts` and add the following content:
+
+```ts
+// src/blitz-client.ts:
+import { AuthClientPlugin } from "@blitzjs/auth"
+import { setupBlitzClient } from "@blitzjs/next"
+
+export const authConfig = {
+  cookiePrefix: "blitz-auth-with-next-app",
+}
+
+export const { withBlitz } = setupBlitzClient({
+  plugins: [AuthClientPlugin(authConfig)],
+})
+```
+
+Here, we use `setupBlitzClient` from the `@blitzjs/next` and provide a
+configuration for the plugins we want to use. In our case, we’re only
+interested in the Auth plugin. The only thing we need to configure is the
+cookie prefix, and for the rest — we’ll rely on Blitz’s defaults. The
+reason for having `authConfig` as a separate variable is so that we can
+export it and reuse in the server setup.
+
+### Add a `blitz-server.ts` file {#add-blitz-server}
+
+Now we can proceed with the server-side configuration. In the same
+directory, we’ll add `blitz-server.ts` file:
+
+```ts
+// src/blitz-server.ts
+import { setupBlitzServer } from "@blitzjs/next"
+import {
+  AuthServerPlugin,
+  PrismaStorage,
+  simpleRolesIsAuthorized,
+} from "@blitzjs/auth"
+import { BlitzLogger } from "blitz"
+import db from "../prisma"
+import { authConfig } from "./blitz-client"
+
+export const { gSSP, gSP, api } = setupBlitzServer({
+  plugins: [
+    AuthServerPlugin({
+      ...authConfig,
+      storage: PrismaStorage(db),
+      isAuthorized: simpleRolesIsAuthorized,
+    }),
+  ],
+})
+```
+
+In this file, we have slightly more things going on:
+
+- We use `setupBlitzServer` from `@blitzjs/next` (similar as we did in the
+  client config file)
+- In the server-side configuration of Auth plugin, we need two additional
+  things:
+  - `storage` : Blitz stores session information in the database, so we
+    need to specify how Blitz Auth can access the storage.
+  - `isAuthorized`: a function that determines what user roles are
+    authorized to access pages and other protected code. We’ll use
+    `simpleRoleIsAuthorized` provided by Blitz Auth. You can read more
+    about it here:
+    https://blitzjs.com/docs/authorization#is-authorized-adapters.
+
+### Add a `types.ts` file {#add-types}
+
+After creating the `blitz-server.ts` file, you might have noticed some
+TypeScript issues around `storage` property in the Blitz Auth
+configuration. That’s because Blitz uses types augmentation to set how the
+`Session` object should look like. Let’s create a `types.ts` file at the
+root of your project:
+
+```
+import { SimpleRolesIsAuthorized } from "@blitzjs/auth"
+import { User } from "./prisma"
+
+export type Role = "ADMIN" | "USER"
+
+declare module "@blitzjs/auth" {
+  export interface Session {
+    isAuthorized: SimpleRolesIsAuthorized<Role>
+    PublicData: {
+      userId: User["id"]
+      email: string
+    }
+  }
+}
+```
+
+### Setup Database Connection {#setup-database}
+
+The Blitz Auth provides a session-based auth system, so we need a database
+to store the session information. New Blitz apps have a Prisma setup by
+default, but the package is database agnostic, so we'll go over two
+options in this guide: with and without using Prisma.
+
+Go to [Without Prisma section](#without-prisma) if you don't want to use
+Prisma.
+
+#### With Prisma {#with-prisma}
+
+First, we’ll install `prisma` and `@prisma/client`:
+
+```sh
+yarn add prisma @prisma/client
+```
+
+And we’ll use its CLI to initialize a new Prisma client:
+
+```sh
+    yarn prisma init --datasource-provider sqlite
+```
+
+We also need to create a new Prisma client. For that, create an `index.ts`
+file in the `prisma` directory with the following content:
+
+```ts
+// prisma/index.ts
+import { PrismaClient } from "@prisma/client"
+
+export * from "@prisma/client"
+const db = new PrismaClient()
+export default db
+```
+
+##### Modify Prisma schema
+
+Next, we will update the `prisma/schema.prisma` file by adding `User`,
+`Session`, and `Token` database models:
+
+```
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  hashedPassword String?
+  sessions Session[]
+}
+
+model Session {
+  id                 Int       @id @default(autoincrement())
+  expiresAt          DateTime?
+  handle             String    @unique
+  hashedSessionToken String?
+  antiCSRFToken      String?
+  publicData         String?
+  privateData        String?
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+}
+```
+
+To apply the changes to the database and generate Prisma’s TypeScript
+types, run: `yarn prisma migrate dev`.
+
+Go to the next step:
+[adding auth logic](/docs/blitz-auth-with-next/add-auth-logic).
+
+#### Without Prisma {#without-prisma}
+
+In this guide, we’ll show a Redis example, but you can use any other
+database. The `storage` property in the Blitz Auth configuration accepts
+an object that implements the `SessionConfigMethods` interface. You can
+read more about it [here](/docs/auth-setup#server-setup). The methods are:
+
+- `getSession`
+- `createSession`
+- `updateSession`
+- `deleteSession`
+
+Here's an example with Redis:
+
+```ts
+import IoRedis from "ioredis"
+import { setupBlitz } from "@blitzjs/next"
+import {
+  AuthServerPlugin,
+  simpleRolesIsAuthorized,
+  SessionModel,
+  Session,
+} from "@blitzjs/auth"
+
+const dbs: Record<string, IoRedis.Redis | undefined> = {
+  default: undefined,
+  auth: undefined,
+}
+
+export function getRedis(): IoRedis.Redis {
+  if (dbs.default) {
+    return dbs.default
+  }
+  return (dbs.default = createRedis(0))
+}
+
+export function getAuthRedis(): IoRedis.Redis {
+  if (dbs.auth) {
+    return dbs.auth
+  }
+  return (dbs.auth = createRedis(1))
+}
+
+export function createRedis(db: number) {
+  return new IoRedis({
+    port: 6379,
+    host: "localhost",
+    keepAlive: 60,
+    keyPrefix: "auth:",
+    db,
+  })
+}
+
+const { gSSP, gSP, api } = setupBlitz({
+  plugins: [
+    AuthServerPlugin({
+      cookiePrefix: "blitz-app-prefix",
+      isAuthorized: simpleRolesIsAuthorized,
+      storage: {
+        createSession: (session: SessionModel): Promise<SessionModel> => {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis().set(
+              `token:${session.handle}`,
+              JSON.stringify(session),
+              (err) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  getAuthRedis().lpush(
+                    `device:${String(session.userId)}`,
+                    session.handle
+                  )
+                  resolve(session)
+                }
+              }
+            )
+          })
+        },
+        deleteSession(handle: string): Promise<SessionModel> {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((result) => {
+                if (result) {
+                  const session = JSON.parse(result) as SessionModel
+                  const userId = session.userId as unknown as string
+                  getAuthRedis().lrem(userId, 0, handle).catch(reject)
+                }
+                getAuthRedis().del(handle, (err) => {
+                  if (err) {
+                    reject(err)
+                  } else {
+                    resolve({ handle })
+                  }
+                })
+              })
+          })
+        },
+        getSession(handle: string): Promise<SessionModel | null> {
+          return new Promise<SessionModel | null>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((data: string | null) => {
+                if (data) {
+                  resolve(JSON.parse(data))
+                } else {
+                  resolve(null)
+                }
+              })
+              .catch(reject)
+          })
+        },
+        getSessions(
+          userId: Session.PublicData["userId"]
+        ): Promise<SessionModel[]> {
+          return new Promise<SessionModel[]>((resolve, reject) => {
+            getAuthRedis()
+              .lrange(`device:${String(userId)}`, 0, -1)
+              .then((result) => {
+                if (result) {
+                  resolve(
+                    result.map((handle) => {
+                      return this.getSession(handle)
+                    })
+                  )
+                } else {
+                  resolve([])
+                }
+              })
+              .catch(reject)
+          })
+        },
+        updateSession(
+          handle: string,
+          session: Partial<SessionModel>
+        ): Promise<SessionModel> {
+          return new Promise<SessionModel>((resolve, reject) => {
+            getAuthRedis()
+              .get(`token:${handle}`)
+              .then((result) => {
+                if (result) {
+                  const oldSession = JSON.parse(result) as SessionModel
+                  const merge = Object.assign(oldSession, session)
+                  getAuthRedis()
+                    .set(`token:${handle}`, JSON.stringify(merge))
+                    .catch(reject)
+                }
+                reject(new Error("cant update session"))
+              })
+          })
+        },
+      },
+    }),
+  ],
+})
+```
+
+## Adding auth logic {#add-auth-logic}
+
+Now that the setup part is done, we can proceed to implement a simple auth
+logic using Blitz Auth. This guide will cover sign-up, log-in, and
+log-out.
+
+### Add `pages/api/signup.ts` file {#add-signup-route}
+
+We’ll start by creating a new API Route called `signup`. Inside, we’ll use
+`api` function that we got from `setupBlitzServer` function in
+`src/blitz-server.ts`. It’s a wrapper around Next’s API handlers that
+provides access to the Blitz’s `ctx` object, which contains auth-related
+methods and properties.
+
+Inside the handler, we’ll use `SecurePassword` from `@blitzjs/auth` to
+hash the password provided by user. Next, we’ll create a new user in the
+database and create a new authenticated session with the `$create` method.
+The object we provide to `session.$create` is the public data. It contains
+the same properties we specified in the `types.ts` file. Last but not
+least, we’ll send a response to the client.
+
+Note: there’s no error handling because I’m trying to keep this guide
+minimal and focus only on how to setup Blitz Auth with Next.js. Before
+using it in your applications, you should extend and modify it
+accordingly.
+
+```ts
+// pages/api/signup.ts
+
+import { SecurePassword } from "@blitzjs/auth"
+import { api } from "../../src/blitz-server"
+import db from "../../prisma"
+
+const signup = api(async (req, res, ctx) => {
+  // TODO: you can add a runtime validation (e.g. with zod) to ensure password length
+  const hashedPassword = await SecurePassword.hash(req.body.password)
+
+  const email = req.body.email
+  const user = await db.user.create({
+    data: { email, hashedPassword, role: "user" },
+    select: { id: true, name: true, email: true, role: true },
+  })
+  await ctx.session.$create({
+    userId: user.id,
+    email: user.email,
+    role: "USER",
+  })
+  res
+    .status(200)
+    .json({ userId: ctx.session.userId, ...user, email: req.query.email })
+})
+
+export default signup
+```
+
+### Add `/signup` fetch call to signup form’s `onSubmit` method {#add-signup-fetch-call}
+
+As we have the backend logic for sign-up, we can call the new endpoint
+from the client, e.g. when user submits a sign-up form. The call will look
+like this:
+
+```tsx
+import { getAntiCSRFToken } from "@blitzjs/auth"
+
+// handling requests
+const antiCSRFToken = getAntiCSRFToken()
+await fetch("/api/signup", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "anti-csrf": antiCSRFToken,
+  },
+  body: JSON.stringify({ email, password }),
+})
+```
+
+One thing to notice here is the usage of `getAntiCSRFToken`. When making a
+request from the client to an API route, we need to include `anti-csrf`
+header. You can read more about it
+[here](https://blitzjs.com/docs/session-management#manual-api-requests).
+
+### Add `pages/api/login.ts` {#add-login-route}
+
+As before, we’ll add a new API route. Inside, we’ll add an
+`authenticateUser` function to verify the login credentials, and if
+correct, we’ll create a new authenticated session as we did in the signup
+handler.
+
+```ts
+// pages/api/login.ts
+
+import { SecurePassword } from "@blitzjs/auth"
+import { AuthenticationError } from "blitz"
+import db from "../../prisma"
+import { api } from "../../src/blitz-server"
+
+export const authenticateUser = async (
+  email: string,
+  password: string
+) => {
+  const user = await db.user.findFirst({ where: { email } })
+  if (!user) throw new AuthenticationError()
+  const result = await SecurePassword.verify(
+    user.hashedPassword,
+    password
+  )
+  if (result === SecurePassword.VALID_NEEDS_REHASH) {
+    // Upgrade hashed password with a more secure hash
+    const improvedHash = await SecurePassword.hash(password)
+    await db.user.update({
+      where: { id: user.id },
+      data: { hashedPassword: improvedHash },
+    })
+  }
+  const { hashedPassword, ...rest } = user
+  return rest
+}
+
+const login = api(async (req, res, ctx) => {
+  const email = req.body.email
+  const password = req.body.password
+  const user = await authenticateUser(email, password)
+  await ctx.session.$create({
+    email: user.email,
+    userId: user.id,
+    role: "USER",
+  })
+  res
+    .status(200)
+    .json({ email: req.query.email, userId: ctx.session.userId })
+})
+
+export default login
+```
+
+### Add `/login` fetch call to login form’s `onSubmit` method {#add-login-fetch-call}
+
+On the client side, you need to send a request to the `/api/login` in a
+similar way as in case of signup.
+
+```tsx
+import { getAntiCSRFToken } from "@blitzjs/auth"
+
+const antiCSRFToken = getAntiCSRFToken()
+await fetch("/api/login", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "anti-csrf": antiCSRFToken,
+  },
+  body: JSON.stringify({ email, password }),
+})
+```
+
+### Add `pages/api/logout.ts` {#add-logout-route}
+
+One last thing we’ll do on the API side is to add a logout handler. Inside
+we’ll use a `$revoke` function which removes the session and logs the user
+out.
+
+```ts
+// pages/api/logout.ts
+import { api } from "../../src/blitz-server"
+
+const logout = api(async (_req, res, ctx) => {
+  await ctx.session.$revoke()
+  res.status(200).json({ message: "Logged out" })
+})
+
+export default logout
+```
+
+## Using authentication in API Routes, `getServerSideProps`, and `getStaticProps` {#using-auth-gssp-gsp}
+
+We already saw how to use Blitz Auth session’s methods in the Next.js API
+Routes. We can do so by accessing the Blitz context provided as third
+argument in an `api` wrapper:
+
+```ts
+// my-api-routes.ts
+import { api } from "src/blitz-server"
+
+const handler = api(async (req, res, ctx) => {
+  const session = ctx.session
+  // session.$authorize
+  // session.$setPublicData
+  // etc.
+})
+```
+
+A similar thing can be done in the case of `getServerSideProps` and
+`getStaticProps`. `createBlitzServer` returns `gSSP`, and `gSP` functions
+that are wrappers for `getServerSideProps` and `getStaticProps`. Example
+usage:
+
+```tsx
+// MyPage.tsx
+import { gSSP } from "src/blitz-server"
+
+export const getServerSideProps = gSSP(async ({ ctx }) => {
+  const session = ctx.session
+  // session.$authorize
+  // session.$setPublicData
+  // etc.
+})
+```
+
+## Access Session on the client {#access-session-on-the-client}
+
+Blitz Auth provides a
+` useSession()`` hook that returns  `PublicData`with`isLoading`` property.
+This hook can be used anywhere in your application.
+
+Note: `useSession()` uses suspense by default, so you need a `<Suspense>`
+component above it in the tree. Or you can set
+`useSession({suspense: false})` to disable suspense.
+
+Here's an example usage:
+
+```tsx
+import { useSession } from "@blitzjs/auth"
+
+function Component() {
+  const session = useSession()
+
+  const userId = session.userId
+  const role = session.role
+
+  return /*... */
+}
+```
+
+## Adding authorization to pages {#adding-auth-to-pages}
+
+What we did so far is only a part of Blitz Auth features. We’ll also
+quickly explore how to protect the pages. Blitz Auth allows you to add
+`authenticate` or `redirectAuthenticatedTo` properties on your pages or
+layouts. To be able to use them, we need to wrap the `App` component with
+the `withBlitz` HOC. If you don’t have it, add a new `_app.tsx` file to
+the `pages` directory. In this file, we have to wrap the `App` component
+with the `withBlitz`.
+
+```tsx
+import { AppProps } from "next/app"
+import React from "react"
+import { withBlitz } from "../src/blitz-client"
+
+function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
+export default withBlitz(App)
+```
+
+Note: `withBlitz` currently doesn’t work with the new Next 13 layouts.
+Until we add a support for it, you’ll still have to use the old
+`pages/_app.tsx`.
+
+Now, let’s go back to our pages. In the `signup.tsx` and `login.tsx`,
+we’ll use `redirectAuthenticatedTo`:
+
+```tsx
+SignupPage.redirectAuthenticatedTo = "/user"
+export default SignupPage
+```
+
+And in `login.tsx`:
+
+```tsx
+LoginPage.redirectAuthenticatedTo = "/user"
+export default LoginPage
+```
+
+In the `user.tsx`, we’ll use `authenticate` and redirect to the `login`
+page if a user attempting to visit it is not authenticated.
+
+```tsx
+UserPage.authenticate = { redirectTo: "/login" }
+export default UserPage
+```
+
+if you’re interested in exploring other Blitz Auth’s features, it also
+exports a bunch of hooks and utilities that are worth checking out:
+[docs](https://blitzjs.com/docs/auth-utils).
+
+## Summary {#summary}
+
+This guide covered setting up Prisma for Blitz Auth, adding Blitz Auth to
+a new Next.js app, and implementing a basic auth flow. We also explored
+how to use Blitz Auth to protect pages.
+
+If you want to see a full Blitz app with sign-up, login, logout, reset
+password you can check out an
+[example in Blitz’s repo](https://github.com/blitz-js/blitz/tree/main/apps/toolkit-app)
+or run `npx blitz new my-new-blitz-app` to generate a new production-ready
+Blitz app.
+
+A repository with setup from this guide is available
+[here](https://github.com/beerose/next13-blitz-auth).
+
+To learn more about Blitz.js, you can take a look at the following
+resources:
+
+- [Blitz.js Documentation](https://blitzjs.com/docs/) — learn about
+  Blitz.js.
+- [Blitz Auth Documentation](https://blitzjs.com/docs/auth) — learn about
+  Blitz Auth plugin.
+
+And if you have any feedback reach out to us on
+[Discord](https://discord.blitzjs.com/) or
+[GitHub](https://github.com/blitz-js/blitz).

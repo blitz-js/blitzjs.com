@@ -11,7 +11,8 @@ page by _name_ instead of _location_:
 export default function ProductsPage() { ...
 
 // You can then use Routes...
-import { Link, Routes } from "blitz"
+import { Routes } from "@blitzjs/next"
+import Link from "next/link"
 
 // ...to refer to it by name...
 <Link href={Routes.ProductsPage({ productId: 123 })} />

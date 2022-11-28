@@ -3,15 +3,15 @@ title: Testing
 sidebar_label: Testing
 ---
 
-The `blitz` dependency also automatically installs and configures `jest`,
-`@testing-library/react`, `@testing-library/react-hooks`, and
-`@testing-library/jest-dom` for you.
+The `blitz` dependency also automatically installs and configures
+`vitest`, `@testing-library/react`, `@testing-library/react-hooks` for
+you.
 
-## Jest {#jest}
+## Vitest {#vitest}
 
-[Jest](https://jestjs.io/) is a delightful testing framework that's simple
-to use. To run tests in your app, you will run `jest` or `jest --watch`
-from the terminal.
+[Vitest](https://vitest.dev/) is a delightful testing framework that's
+simple to use. To run tests in your app, you will run `vitest run` or
+`vitest` from the terminal.
 
 To make a new test, make a file named `something.test.ts` (or `.js`,
 `.tsx`, etc). Here's an example:
@@ -25,38 +25,47 @@ it("does something", () => {
 })
 ```
 
-> For more details on using Jest,
-> [read the Jest documentation](https://jestjs.io/docs/en/using-matchers)
+> For more details on using Vitest,
+> [read the Vitest documentation](https://vitest.dev/api/#tomatch)
 
-### Jest Config {#jest-config}
+### Vitest Config {#vitest-config}
 
-If you need to
-[customize the jest config](https://jestjs.io/docs/en/configuration), you
-can do so in `jest.config.js`.
+If you need to [customize the vitest config](https://vitest.dev/config/),
+you can do so in `vitest.config.ts`.
 
-```js
-// jest.config.js
-const nextJest = require("@blitzjs/next/jest")
+```ts
+// vitest.config.ts
+import { loadEnvConfig } from "@next/env"
+import { defineConfig } from "vitest/config"
 
-const createJestConfig = nextJest({
-  dir: "./",
+import react from "@vitejs/plugin-react"
+import tsconfigPaths from "vite-tsconfig-paths"
+
+const projectDir = process.cwd()
+loadEnvConfig(projectDir)
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), tsconfigPaths()],
+  test: {
+    dir: "./",
+    globals: true,
+    setupFiles: "./test/setup.ts",
+    coverage: {
+      reporter: ["text", "json", "html"],
+    },
+  },
 })
-
-const customJestConfig = {
-  testEnvironment: "jest-environment-jsdom",
-}
-
-module.exports = createJestConfig(customJestConfig)
 ```
 
 ### Client vs Server Environments {#client-vs-server-environments}
 
-The following test files will run in the Jest server environment:
+The following test files will run in the server environment:
 
 - `*.test.*` files inside an `api`, `queries`, or `mutations` folder
 - `*.server.test.*` files
 
-All other files will run in the Jest client environment (with jsdom).
+All other files will run in the client environment (with jsdom).
 
 ## @testing-library {#testing-library}
 
@@ -75,7 +84,7 @@ as needed.
 ## Testing Utilities {#testing-utilities}
 
 Blitz provides some basic testing utilities in the generated
-`test/utils.tsx` file. These are intended for use with Jest and React
+`test/utils.tsx` file. These are intended for use with Vitest and React
 Testing Library to allow advanced configuration for your testing
 environment. Customizing this file can be useful for testing things like
 global providers as well as certain parts of your app which Blitz handles

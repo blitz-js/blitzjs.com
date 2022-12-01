@@ -5,29 +5,29 @@ sidebar_label: Blitz Client Plugins
 
 ### Overview {#overview}
 
-Plugins can be used to extend the Blitz toolkit with custom functionality.
-Plugins are defined using the `createClientPlugin` function from the
-`blitz` package.
+Plugins can be used to extend the Blitz toolkit with custom functionality
+and are defined using the `createClientPlugin` function from the `blitz`
+package.
 
-The plugin can then be used return the following:
+The plugin can then be used to return the following:
 
 - The `events` object contains the event hooks that the plugin could
   listen to.
 
   - Blitz generates global `Event Listeners` for each `event` which is
     used to trigger the hooks.
-  - The plugin can then perform any actions it needs to when the event is
+  - The plugin can then perform any actions it needs when the event is
     triggered.
   - The code defined by each plugin `event` is executed in `parallel`.
 
 - The `middleware` object contains the middleware hooks that the plugin
   could define.
 
-  - The plugin can then perform any actions it needs to when the
-    middleware is called.
+  - The plugin can then perform any actions it needs when the middleware
+    is called.
   - The code defined by each plugin `middleware` is executed in series
-    through `pipes` so the output of one middleware is passed as the input
-    to the next middleware.
+    through `pipes`, so the output of one middleware is passed as the
+    input to the next middleware.
   - The order in which the middleware is executed is defined by the order
     in which the plugins are defined in the `src/blitz-client` file.
 

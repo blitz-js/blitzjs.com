@@ -58,13 +58,13 @@ The plugin can then be used to return the following:
   - `withProvider` -
     `(component: ComponentType<TProps>) => {(props: TProps): JSX.Element displayName: string}`
 
-  - `exports`
+  - `exports` - `TPluginExports extends object`
 
 ### Middleware and Events Hooks used by Blitz {#middleware-and-events-used-by-blitz}
 
 - Events
   - `onSessionCreated` is used by `Blitz RPC` to reset the `React Query`
-    client
+    client cache when a new session is created.
   - `onRpcError` is used by `Blitz RPC` to handle errors during the
     response phase
 - Middleware

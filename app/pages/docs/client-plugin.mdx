@@ -75,7 +75,7 @@ The plugin can then be used to return the following:
 
 ### Creating a Client Plugin {#creating-a-blitz-client-plugin}
 
-To create a client plugin, create a new file, for example in
+To create a client plugin, create a new file, for example
 `src/custom-plugin/plugin.tsx`, and add the following code:
 
 ```tsx
@@ -139,8 +139,8 @@ export const BlitzCustomPlugin = createClientPlugin<
 
 ### Using a Client Plugin {#using-a-blitz-client-plugin}
 
-To use there client plugin, import it in the `src/blitz-client` file and
-add it to the `plugins` array as shown below:
+To initialise the created client plugin, you could just import it in the
+`src/blitz-client` and add it to the `plugins` array as shown below:
 
 ```ts
 // src/blitz-client.ts

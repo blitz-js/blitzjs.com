@@ -164,13 +164,25 @@ The following example shows how to create a plugin that adds a custom
 header to your RPC requests
 
 ```tsx
-middleware: {
-  beforeHttpRequest: (req) => {
-    req.headers = {
-      ...req.headers,
-      "X-Custom-Header": "Custom Header Value",
-    }
-    return req
-  },
-},
+
+export const BlitzCustomPlugin = createClientPlugin<
+  CustomPluginOptions,
+  {}
+>((options?: CustomPluginOptions) => {
+  // ... plugin code
+  return {
+    middleware: {
+    beforeHttpRequest: (req) => {
+      req.headers = {
+        ...req.headers,
+        "X-Custom-Header": "Custom Header Value",
+      }
+      return req
+    },
+    exports: () => ({
+      // ... plugin exports
+    }),
+  }
+})
+
 ```

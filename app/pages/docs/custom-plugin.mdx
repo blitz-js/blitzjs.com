@@ -1,0 +1,163 @@
+---
+title: Client Plugins
+sidebar_label: Blitz Client Plugins
+---
+
+### Overview {#overview}
+
+Plugins can be used to extend the Blitz toolkit with custom functionality.
+Plugins are defined using the `createClientPlugin` function from the
+`blitz` package.
+
+The plugin can then be used return the following:
+
+- The `events` object contains the event hooks that the plugin could
+  listen to.
+
+  - Blitz generates global `Event Listeners` for each `event` which is
+    used to trigger the hooks.
+  - The plugin can then perform any actions it needs to when the event is
+    triggered.
+  - The code defined by each plugin `event` is executed in `parallel`.
+
+- The `middleware` object contains the middleware hooks that the plugin
+  could define.
+
+  - The plugin can then perform any actions it needs to when the
+    middleware is called.
+  - The code defined by each plugin `middleware` is executed in series
+    through `pipes` so the output of one middleware is passed as the input
+    to the next middleware.
+  - The order in which the middleware is executed is defined by the order
+    in which the plugins are defined in the `src/blitz-client` file.
+
+- The `withProvider` function is used to wrap the root component of the
+  app through the Blitz wrapper `withBlitz`.
+
+- The `exports` object is used to export any functions or variables that
+  the plugin needs to expose to the application through importing from the
+  `src/blitz-client` file.
+
+### API Reference {#api-reference}
+
+- `createClientPlugin` -
+  `(options: TPluginOptions) => ClientPlugin<TPluginExports>`
+
+  - `events`
+    - `onSessionCreated` - `() => Promise<void>`
+      - Called when a new session is created.
+    - `onRpcError` - `(error: Error) => Promise<void>`
+      - Called when an RPC error occurs.
+  - `middleware`
+    - `beforeHttpRequest` - `(request: RequestInit) => RequestInit`
+      - Called before the RPC request is made, allowing the plugin to
+        modify the request parameters.
+    - `beforeHttpResponse` - `(response: Response) => Response`
+      - Called before the RPC response is returned, allowing the plugin to
+        modify the response.
+  - `withProvider` -
+    `(component: ComponentType<TProps>) => {(props: TProps): JSX.Element displayName: string}`
+
+  - `exports`
+
+### Creating a Client Plugin {#creating-a-blitz-client-plugin}
+
+To create a client plugin, create a new file, for example in
+`src/custom-plugin/plugin.tsx`, and add the following code:
+
+```tsx
+// src/custom-plugin/plugin.tsx
+import { createClientPlugin } from "blitz"
+import { BlitzPage } from "@blitzjs/next"
+import { ComponentProps, ComponentType } from "react"
+
+type CustomPluginOptions = {
+  // ... type definitions for options
+}
+
+function withCustomPlugin<TProps = any>(
+  Page: ComponentType<TProps> | BlitzPage<TProps>
+) {
+  const CustomPluginRoot = (props: ComponentProps<any>) => {
+    // ... custom root component
+    return <Page {...props} />
+  }
+  for (let [key, value] of Object.entries(Page)) {
+    CustomPluginRoot[key] = value
+  }
+  if (process.env.NODE_ENV !== "production") {
+    CustomPluginRoot.displayName = `CustomPluginInnerRoot`
+  }
+  return CustomPluginRoot
+}
+
+export const BlitzCustomPlugin = createClientPlugin<
+  CustomPluginOptions,
+  {}
+>((options?: CustomPluginOptions) => {
+  // ... plugin code
+  return {
+    events: {
+      onSessionCreated: async () => {
+        // Called when a new session is created
+        // Usually when the user logs in or logs out
+      },
+      onRpcError: async (error) => {
+        // Called when an RPC call fails
+      },
+    },
+    middleware: {
+      beforeHttpRequest: (req) => {
+        //make changes to the request options before RPC call
+        return req
+      },
+      beforeHttpResponse: (res) => {
+        //make changes to the response before returning to the caller
+        return res
+      },
+    },
+    exports: () => ({
+      // ... plugin exports
+    }),
+    withProvider: withCustomPlugin,
+  }
+})
+```
+
+### Using a Client Plugin {#using-a-blitz-client-plugin}
+
+To use there client plugin, import it in the `src/blitz-client` file and
+add it to the `plugins` array as shown below:
+
+```ts
+// src/blitz-client.ts
+import { AuthClientPlugin } from "@blitzjs/auth"
+import { setupBlitzClient } from "@blitzjs/next"
+import { BlitzRpcPlugin } from "@blitzjs/rpc"
+import { BlitzCustomPlugin } from "./custom-plugin/plugin"
+
+export const { withBlitz } = setupBlitzClient({
+  plugins: [
+    AuthClientPlugin({}),
+    BlitzRpcPlugin({}),
+    BlitzCustomPlugin({}), // <-- add your plugin here
+  ],
+})
+```
+
+### Example {#example}
+
+The following example shows how to create a plugin that adds a custom
+header to all RPC requests.
+
+```tsx
+middleware: {
+  beforeHttpRequest: (req) => {
+    req.headers = {
+      ...req.headers,
+      "X-Custom-Header": "Custom Header Value",
+    }
+    return req
+  },
+},
+```

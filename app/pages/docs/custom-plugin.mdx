@@ -60,6 +60,19 @@ The plugin can then be used return the following:
 
   - `exports`
 
+### Middleware and Events Hooks used by Blitz {#middleware-and-events-used-by-blitz}
+
+- Events
+  - `onSessionCreated` is used by `Blitz RPC` to reset the `React Query`
+    client
+  - `onRpcError` is used by `Blitz RPC` to handle errors during the
+    response phase
+- Middleware
+  - `beforeHttpRequest` is used by `Blitz Auth` to add required
+    authentication headers to the request before its sent by `Blitz RPC`
+  - `beforeHttpResponse` is used by `Blitz Auth` to handle auth related
+    logic before the response is returned by `Blitz RPC`
+
 ### Creating a Client Plugin {#creating-a-blitz-client-plugin}
 
 To create a client plugin, create a new file, for example in
@@ -148,7 +161,7 @@ export const { withBlitz } = setupBlitzClient({
 ### Example {#example}
 
 The following example shows how to create a plugin that adds a custom
-header to all RPC requests.
+header to your RPC requests
 
 ```tsx
 middleware: {

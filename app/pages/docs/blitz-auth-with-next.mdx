@@ -204,17 +204,17 @@ Go to the next step:
 
 #### Without Prisma {#without-prisma}
 
-In this guide, we’ll show a Redis example, but you can use any other
-database. The `storage` property in the Blitz Auth configuration accepts
-an object that implements the `SessionConfigMethods` interface. You can
-read more about it [here](/docs/auth-setup#server-setup). The methods are:
+The `storage` property in the Blitz Auth configuration [accepts
+an object that implements the `SessionConfigMethods` interface]((/docs/auth-config#customize-session-persistence-and-database-access)).
+The methods are:
 
 - `getSession`
+- `getSessions`
 - `createSession`
 - `updateSession`
 - `deleteSession`
 
-Here's an example with Redis:
+You can use any database or API, but in this guide, we’ll show a Redis example:
 
 ```ts
 import IoRedis from "ioredis"

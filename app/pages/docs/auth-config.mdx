@@ -92,4 +92,14 @@ interface SessionConfigMethods {
   ) => Promise<SessionModel | undefined>
   deleteSession: (handle: string) => Promise<SessionModel>
 }
+
+interface SessionModel extends Record<any, any> {
+  handle: string
+  userId?: PublicData["userId"] | null
+  expiresAt?: Date | null
+  hashedSessionToken?: string | null
+  antiCSRFToken?: string | null
+  publicData?: string | null
+  privateData?: string | null
+}
 ```

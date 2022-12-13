@@ -43,6 +43,7 @@
       "error-handling",
       "testing",
       "middleware",
+      "client-plugin",
       "logging",
       "utilities",
       "client-and-server",

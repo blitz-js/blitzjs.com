@@ -88,20 +88,20 @@ type CustomPluginOptions = {
   // ... type definitions for options
 }
 
-function withCustomPlugin<TProps = any>(
+function withCustomProvider<TProps = any>(
   Page: ComponentType<TProps> | BlitzPage<TProps>
 ) {
-  const CustomPluginRoot = (props: ComponentProps<any>) => {
+  const CustomProviderRoot = (props: ComponentProps<any>) => {
     // ... custom root component
     return <Page {...props} />
   }
   for (let [key, value] of Object.entries(Page)) {
-    CustomPluginRoot[key] = value
+    CustomProviderRoot[key] = value
   }
   if (process.env.NODE_ENV !== "production") {
-    CustomPluginRoot.displayName = `CustomPluginInnerRoot`
+    CustomProviderRoot.displayName = `CustomProviderRoot`
   }
-  return CustomPluginRoot
+  return CustomProviderRoot
 }
 
 export const BlitzCustomPlugin = createClientPlugin<

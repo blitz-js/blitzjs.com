@@ -339,7 +339,7 @@ const Home = ({randomContributors}) => {
                 style={{top: "-5.3rem"}}
               />
             </div>
-            <div className="px-6 mx-auto text-center max-w-7xl ">
+            <div className="px-6 mx-auto w-full text-center max-w-7xl ">
               <div className="space-y-7 xl:space-y-10">
                 <h2 className="relative text-3xl font-semibold xl:text-5xl">
                   <Hand

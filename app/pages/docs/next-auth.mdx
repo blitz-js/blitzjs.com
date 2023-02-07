@@ -1,8 +1,6 @@
 ---
-
 title: Third Party Login with NextAuth
 sidebar_label: Third Party Login w/NextAuth
-
 ---
 
 Blitz provides an adapter that allows you to use any [NextAuth Provider](https://next-auth.js.org/providers/) with Blitz session management in any Nextjs application.
@@ -41,7 +39,7 @@ export default api(NextAuthAdapter(config))
 If you need, you can place the api route at a different path but the
 filename must be `[...nextauth].js` or `[...nextauth].ts`.
 
-### Config Structure
+### Config Structure {#config}
 
 ```ts
 export type BlitzNextAuthOptions = AuthOptions & {
@@ -60,7 +58,7 @@ export type BlitzNextAuthOptions = AuthOptions & {
 }
 ```
 
-#### URLs
+#### URLs {#urls}
 
 The `NextAuth` adapter adds two API endpoints for each installed
 strategy.
@@ -75,7 +73,7 @@ following:
 4. `/api/auth/github/callback` - Callback URL to complete login
   You can determine the `provider` with the argument passed to the common callback.
   
-  #### SSL Proxy Configuration
+  #### SSL Proxy Configuration {#ssl}
   
   You may need to set `secureProxy` option to `true` in case your app is
   located behind SSL proxy (Nginx). Proxy should be set to manage

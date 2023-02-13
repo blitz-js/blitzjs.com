@@ -66,8 +66,8 @@ The `NextAuth` adapter adds two API endpoints for each installed strategy.
 With the handler at `src/pages/api/auth/[...nextauth].ts`, it adds the
 following:
 
-1. `/api/auth/[strategyName]/login` - URL to initiate login
-2. `/api/auth/[strategyName]/callback` - Callback URL to complete login
+1. `/api/auth/[providerName]/login` - URL to initiate login
+2. `/api/auth/[providerName]/callback` - Callback URL to complete login
    For example with `GitHubProvider` provider, the URLs for GitHub login
    will be:
 3. `/api/auth/github/login` - URL to initiate login

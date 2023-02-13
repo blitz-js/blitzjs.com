@@ -208,18 +208,16 @@ There are four different ways to determine the redirect URL where a user
 should be sent after they are authenticated. They are listed here in order
 of priority. A URL provided with method #1 will override all other URLs.
 
-1. Add `redirectUrl` return to the required URL depending on the provider
+- Add `redirectUrl` return to the required URL depending on the provider
 
 ```ts
 return { redirectUrl: "/github" }
 ```
 
-2. Add a `redirectUrl` query parameter to the "initiate login" url
+- Add a `redirectUrl` query parameter to the "initiate login" url
+  - Example: `example.com/api/auth/github?redirectUrl=/dashboard`
+  - Example: `example.com/api/auth/github?redirectUrl=${router.pathname}`
 
-1. Example: `example.com/api/auth/github?redirectUrl=/dashboard`
-1. Example: `example.com/api/auth/github?redirectUrl=${router.pathname}`
-
-1. Via the config passed to `NextAuthAdapter`
-
-1. If success, it will use `config.successRedirectUrl`
-1. If error, it will use `config.errorRedirectUrl`
+- Via the config passed to `NextAuthAdapter`
+  - If success, it will use `config.successRedirectUrl`
+  - If error, it will use `config.errorRedirectUrl`

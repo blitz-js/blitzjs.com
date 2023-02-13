@@ -2,17 +2,12 @@
 title: Third Party Login with NextAuth
 sidebar_label: Third Party Login w/NextAuth
 ---
-
 Blitz provides an adapter that allows you to use any [NextAuth Provider](https://next-auth.js.org/providers/) with Blitz session management in any Nextjs application.
 Blitz session management gives you a lot more flexibility & control than NextAuth does
-
 ## Setup {#setup}
-
 ### 1. Add the NextAuth API Route {#1-add-the-nextauth-js-api-route}
-
 Add a new API route at `src/pages/api/auth/[...nextauth].ts` with the
 following contents.
-
 ```ts
 // src/pages/api/auth/[...nextauth].ts
 import { api } from "src/blitz-server"
@@ -35,12 +30,9 @@ const config: BlitzNextAuthOptions = {
 }
 export default api(NextAuthAdapter(config))
 ```
-
 If you need, you can place the api route at a different path but the
 filename must be `[...nextauth].js` or `[...nextauth].ts`.
-
 ### Config Structure {#config}
-
 ```ts
 export type BlitzNextAuthOptions = AuthOptions & {
   // Redirect after successfull authentification
@@ -57,14 +49,11 @@ export type BlitzNextAuthOptions = AuthOptions & {
   ) => Promise<void | {redirectUrl: string}>
 }
 ```
-
 #### URLs {#urls}
-
 The `NextAuth` adapter adds two API endpoints for each installed
 strategy.
 With the handler at `src/pages/api/auth/[...nextauth].ts`, it adds the
 following:
-
 1. `/api/auth/[strategyName]/login` - URL to initiate login
 2. `/api/auth/[strategyName]/callback` - Callback URL to complete login
   For example with `GitHubProvider` provider, the URLs for GitHub login will
@@ -72,152 +61,119 @@ following:
 3. `/api/auth/github/login` - URL to initiate login
 4. `/api/auth/github/callback` - Callback URL to complete login
   You can determine the `provider` with the argument passed to the common callback.
-  
-  #### SSL Proxy Configuration {#ssl}
-  
-  You may need to set `secureProxy` option to `true` in case your app is
-  located behind SSL proxy (Nginx). Proxy should be set to manage
-  `forwarded` or `x-forwarded-proto` header correctly.
-  
-  ```ts
-  // src/pages/api/auth/[...nextauth].ts
-  import { NextAuthAdapter } from "@blitzjs/auth"
-  import { api } from "src/blitz-server"
-  import db from "db"
-  export default api(
-  NextAuthAdapter({
-   successRedirectUrl: "/",
-   errorRedirectUrl: "/",
-   secureProxy: true, // highlight-line
-   strategies: [
-     /*...*/
-   ],
-  })
-  )
-  ```
-  
-  ### 2. Add a Next Auth Provider {#2-add-a-next-auth-provider}
-  
-  Add a provider to the `providers` array argument for `NextAuthAdapter` in
-  the API route, and then follow the providers documentation for further setup.
-  
-  ```ts
-  // src/pages/api/auth/[...nextauth].ts
-  import { api } from "src/blitz-server"
-  import GithubProvider from "next-auth/providers/github"
-  import { NextAuthAdapter, BlitzNextAuthOptions } from "@blitzjs/auth"
-  import db, { User } from "db"
-  import { Role } from "types"
-  
-  const config: BlitzNextAuthOptions = {
-    successRedirectUrl: "/",
-    errorRedirectUrl: "/",
-    // highlight-start
-    providers: [
-      GithubProvider({
-        clientId: process.env.GITHUB_CLIENT_ID as string,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-      }),
-    ],
-    callback: async (user, account, profile, session, provider) => {
-      let newUser: User
-      try {
-        newUser = await db.user.findFirstOrThrow({ where: { name: { equals: user.name } } })
-      } catch (e) {
-        newUser = await db.user.create({
-          data: {
-            email: user.email!,
-            name: user.name || 'unknown',
-            role: "USER",
-          },
-        })
-      }
-      await session.$create({
-        userId: newUser.id,
-        role: newUser.role as Role,
-        source: "github",
+#### SSL Proxy Configuration {#ssl}
+You may need to set `secureProxy` option to `true` in case your app is
+located behind SSL proxy (Nginx). Proxy should be set to manage
+`forwarded` or `x-forwarded-proto` header correctly.
+```ts
+// src/pages/api/auth/[...nextauth].ts
+import { NextAuthAdapter } from "@blitzjs/auth"
+import { api } from "src/blitz-server"
+import db from "db"
+export default api(
+NextAuthAdapter({
+ successRedirectUrl: "/",
+ errorRedirectUrl: "/",
+ secureProxy: true, // highlight-line
+ strategies: [
+   /*...*/
+ ],
+})
+)
+```
+### 2. Add a Next Auth Provider {#2-add-a-next-auth-provider}
+Add a provider to the `providers` array argument for `NextAuthAdapter` in
+the API route, and then follow the providers documentation for further setup.
+```ts
+// src/pages/api/auth/[...nextauth].ts
+import { api } from "src/blitz-server"
+import GithubProvider from "next-auth/providers/github"
+import { NextAuthAdapter, BlitzNextAuthOptions } from "@blitzjs/auth"
+import db, { User } from "db"
+import { Role } from "types"
+
+const config: BlitzNextAuthOptions = {
+  successRedirectUrl: "/",
+  errorRedirectUrl: "/",
+  // highlight-start
+  providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    }),
+  ],
+  callback: async (user, account, profile, session, provider) => {
+    let newUser: User
+    try {
+      newUser = await db.user.findFirstOrThrow({ where: { name: { equals: user.name } } })
+    } catch (e) {
+      newUser = await db.user.create({
+        data: {
+          email: user.email!,
+          name: user.name || 'unknown',
+          role: "USER",
+        },
       })
-      return { redirectUrl: "/github" } 
-      //if no return it will default to successRedirectUrl
-    },
-    // highlight-end
-  }
-  export default api(NextAuthAdapter(config))
-  ```
-  
-  Note: The above `passport-twitter` example requires your `User` prisma
-  model to have `email String @unique` and `name String`.
-  
-  ### 3. Log in with this NextAuth Provider{#3-log-in-with-this-next-auth-provider}
-  
-  Add a link to your app with URL format of `/api/auth/[providerName]/login`.
-  For the above GitHub example, the link would be like this:
-  
-  ```tsx
-  <a href="/api/auth/github">Log In With GitHub</a>
-  ```
-  
-  ## Detailed Usage Instructions {#detailed-usage-instructions}
-  
-  Upon successful authentication with the third-party, the user will be
-  redirected back to the above auth API route. When that happens, the
-  `verify` callback will be called.
-  When the `verify` callback is called, the user has been authenticated with
-  the third-party, but **a session has not yet been created for your Blitz
-  app**.
-  
-  ### Create a Session {#create-a-session}
-  
-  **To create a new Blitz session**, you need to call the use the `session` argument passed to the callback function.
-  
-  ```ts
-  session.$create({
-      ...
-  })
-  ```
-  
-  ### Return an Error {#return-an-error}
-  
-  If instead, you want to prevent creating a session because of some error, then throw an error inside the callback function. Blitz will catch the error and will attach it to the error redirect URL provided.
-  
-  ```ts
-  throw new YourAuthFailureError() 
-  ```
-  
-  ### Showing the Error to the User {#showing-the-error-to-the-user}
-  
-  Any error during this process will be provided as the `authError` query
-  parameter.
-  For example with `errorRedirectUrl = '/'` and
-  `done(new Error("it broke"))`, the user will be redirected to:
-  
-  ```
-  /?authError=it broke
-  ```
-  
-  ### Post Authentication Redirects {#post-authentication-redirects}
-  
-  There are four different ways to determine the redirect URL where a user
-  should be sent after they are authenticated. They are listed here in order
-  of priority. A URL provided with method #1 will override all other URLs.
-  
-  1. Add `redirectUrl` return to the required URL depending on the provider
-    
-    ```ts
+    }
+    await session.$create({
+      userId: newUser.id,
+      role: newUser.role as Role,
+      source: "github",
+    })
     return { redirectUrl: "/github" } 
-    ```
-    
-  
-  2. Add a `redirectUrl` query parameter to the "initiate login" url
-    
-    1. Example: `example.com/api/auth/github?redirectUrl=/dashboard`
-      
-    2. Example:
-      `example.com/api/auth/github?redirectUrl=${router.pathname}`
-      
-  
-  3. Via the config passed to `NextAuthAdapter`
-    
-    1. If success, it will use `config.successRedirectUrl`
-      
-    2. If error, it will use `config.errorRedirectUrl`
+    //if no return it will default to successRedirectUrl
+  },
+  // highlight-end
+}
+export default api(NextAuthAdapter(config))
+```
+Note: The above `GitHubProvider` example requires your `User` prisma
+model to have `email String @unique` and `name String`.
+### 3. Log in with this NextAuth Provider{#3-log-in-with-this-next-auth-provider}
+Add a link to your app with URL format of `/api/auth/[providerName]/login`.
+For the above GitHub example, the link would be like this:
+
+```tsx
+<a href="/api/auth/github">Log In With GitHub</a>
+```
+## Detailed Usage Instructions {#detailed-usage-instructions}
+Upon successful authentication with the third-party, the user will be
+redirected back to the above auth API route. When that happens, the
+`verify` callback will be called.
+When the `verify` callback is called, the user has been authenticated with
+the third-party, but **a session has not yet been created for your Blitz
+app**.
+### Create a Session {#create-a-session}
+**To create a new Blitz session**, you need to call the use the `session` argument passed to the callback function.
+```ts
+session.$create({
+    ...
+})
+```
+### Return an Error {#return-an-error}
+If instead, you want to prevent creating a session because of some error, then throw an error inside the callback function. Blitz will catch the error and will attach it to the error redirect URL provided.
+```ts
+throw new YourAuthFailureError() 
+```
+### Showing the Error to the User {#showing-the-error-to-the-user}
+Any error during this process will be provided as the `authError` query
+parameter.
+For example with `errorRedirectUrl = '/'` and
+`done(new Error("it broke"))`, the user will be redirected to:
+```
+/?authError=it broke
+```
+### Post Authentication Redirects {#post-authentication-redirects}
+There are four different ways to determine the redirect URL where a user
+should be sent after they are authenticated. They are listed here in order
+of priority. A URL provided with method #1 will override all other URLs.
+1. Add `redirectUrl` return to the required URL depending on the provider
+```ts
+return { redirectUrl: "/github" } 
+```
+2. Add a `redirectUrl` query parameter to the "initiate login" url
+- Example: `example.com/api/auth/github?redirectUrl=/dashboard`
+- Example: `example.com/api/auth/github?redirectUrl=${router.pathname}`
+- Via the config passed to `NextAuthAdapter`
+  - If success, it will use `config.successRedirectUrl`
+  - If error, it will use `config.errorRedirectUrl`

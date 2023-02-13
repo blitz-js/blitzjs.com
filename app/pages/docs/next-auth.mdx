@@ -153,7 +153,7 @@ export default api(NextAuthAdapter(config))
 Note: The above `passport-twitter` example requires your `User` prisma
 model to have `email String @unique` and `name String`.
 
-### 3. Log in with this NextAuth Provider{#3-log-in-with-this-next-auth-provider}
+### 3. Log in with this NextAuth Provider {#3-log-in-with-this-next-auth-provider}
 
 Add a link to your app with URL format of
 `/api/auth/[providerName]/login`. For the above GitHub example, the link
@@ -210,10 +210,9 @@ of priority. A URL provided with method #1 will override all other URLs.
 
 1. Add `redirectUrl` return to the required URL depending on the provider
 
-
-    ```ts
-    return { redirectUrl: "/github" }
-    ```
+```ts
+return { redirectUrl: "/github" }
+```
 
 2. Add a `redirectUrl` query parameter to the "initiate login" url
 

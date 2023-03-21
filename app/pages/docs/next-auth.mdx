@@ -10,6 +10,22 @@ gives you a lot more flexibility & control than NextAuth does
 
 ## Setup {#setup}
 
+### 1. Add the NextAuth Adapter for `next.config.js`
+
+```ts
+const { withNextAuthAdapter } = require("@blitzjs/auth/next-auth")
+const { withBlitz } = require("@blitzjs/next")
+
+/**
+ * @type {import('@blitzjs/next').BlitzConfig}
+ **/
+const config = {
+  ...
+}
+
+module.exports = withBlitz(withNextAuthAdapter(config))
+```
+
 ### 1. Add the NextAuth API Route {#1-add-the-nextauth-js-api-route}
 
 Add a new API route at `src/pages/api/auth/[...nextauth].ts` with the
@@ -19,23 +35,33 @@ following contents.
 // src/pages/api/auth/[...nextauth].ts
 import { api } from "src/blitz-server"
 import GithubProvider from "next-auth/providers/github"
-import { NextAuthAdapter, BlitzNextAuthOptions } from "@blitzjs/auth"
+import GoogleProvider from "next-auth/providers/google"
+import { NextAuthAdapter } from "@blitzjs/auth/next-auth"
 import db, { User } from "db"
 import { Role } from "types"
 
-const config: BlitzNextAuthOptions = {
-  successRedirectUrl: "/",
-  errorRedirectUrl: "/",
-  // Next Auth Providers
-  providers: [
-    ...
-  ],
-  // Common Callback for the providers
-  callback: async (user, account, profile, session, provider) => {
-    ...
-  },
-}
-export default api(NextAuthAdapter(config))
+// Has to be defined separately for `profile` to be correctly typed below
+const providers = [
+  GithubProvider({
+    clientId: process.env.GITHUB_CLIENT_ID as string,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+  }),
+  GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+  }),
+]
+
+export default api(
+  NextAuthAdapter({
+    successRedirectUrl: "/",
+    errorRedirectUrl: "/error",
+    providers,
+    callback: async (user, account, profile, session) => {
+      ...
+    },
+  })
+)
 ```
 
 If you need, you can place the api route at a different path but the
@@ -53,6 +79,7 @@ export type BlitzNextAuthOptions = AuthOptions & {
   callback: (
     user: User,
     account: Account,
+    // Automatically Inferred From Providers Declared
     profile: Profile,
     session: SessionContext,
     provider: ProviderName
@@ -83,7 +110,7 @@ located behind SSL proxy (Nginx). Proxy should be set to manage
 
 ```ts
 // src/pages/api/auth/[...nextauth].ts
-import { NextAuthAdapter } from "@blitzjs/auth"
+import { NextAuthAdapter } from "@blitzjs/auth/next-auth"
 import { api } from "src/blitz-server"
 import db from "db"
 export default api(
@@ -108,7 +135,7 @@ setup.
 // src/pages/api/auth/[...nextauth].ts
 import { api } from "src/blitz-server"
 import GithubProvider from "next-auth/providers/github"
-import { NextAuthAdapter, BlitzNextAuthOptions } from "@blitzjs/auth"
+import { NextAuthAdapter, BlitzNextAuthOptions } from "@blitzjs/auth/next-auth"
 import db, { User } from "db"
 import { Role } from "types"
 

@@ -10,7 +10,7 @@ gives you a lot more flexibility & control than NextAuth does
 
 ## Setup {#setup}
 
-### 1. Add the NextAuth Adapter for `next.config.js`
+### 1. Add the NextAuth Adapter for `next.config.js` {#add-next-auth-adapter-next-config}
 
 ```ts
 const { withNextAuthAdapter } = require("@blitzjs/auth/next-auth")
@@ -26,7 +26,7 @@ const config = {
 module.exports = withBlitz(withNextAuthAdapter(config))
 ```
 
-### 1. Add the NextAuth API Route {#1-add-the-nextauth-js-api-route}
+### 2. Add the NextAuth API Route {#add-the-nextauth-js-api-route}
 
 Add a new API route at `src/pages/api/auth/[...nextauth].ts` with the
 following contents.
@@ -125,7 +125,7 @@ export default api(
 )
 ```
 
-### 2. Add a Next Auth Provider {#2-add-a-next-auth-provider}
+### 3. Add a Next Auth Provider {#2-add-a-next-auth-provider}
 
 Add a provider to the `providers` array argument for `NextAuthAdapter` in
 the API route, and then follow the providers documentation for further

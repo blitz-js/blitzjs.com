@@ -73,7 +73,7 @@ import db from "db"
 export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
   const userId = ctx.session.$publicData.impersonatingFromUserId
   if (!userId) {
-    console.log("Already not impersonating anyone")
+    console.log("Not impersonating anyone")
     return
   }
 

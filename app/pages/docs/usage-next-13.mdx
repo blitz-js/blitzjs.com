@@ -56,17 +56,17 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
 #### Blitz Auth {#blitz-auth}
 
-##### getBlitzContext {#get-blitz-context}
+##### getBlitzContext 
 
 This function will use the cookies and headers provided by the server component and returns the current session.
 
-###### API {#get-blitz-context-api}
+###### API
 
 ```ts
 getBlitzContext() => Ctx
 ```
 
-###### Usage {#get-blitz-context-usage}
+###### Usage
 
 Example Usage in React Server Component in app directory in Next 13
 
@@ -85,13 +85,13 @@ export default async function Home() {
 }
 ```
 
-##### useAuthenticatedBlitzContext {#use-authenticated-context}
+##### useAuthenticatedBlitzContext
 
 1. This hook is implemented as the replacement of the [**BlitzPage Security Auth Utilities**](https://blitzjs.com/docs/authorization#secure-your-pages) provided for the pages directory to work with React Server Components in the Next 13 `app` directory
 
 2. It can be used in any asynchronous server component be it in `page.ts` or in the layouts in `layout.ts`
 
-###### API {#use-authenticated-context-api}
+##### API
 
 ```tsx
 useAuthenticatedBlitzContext({
@@ -105,7 +105,7 @@ useAuthenticatedBlitzContext({
 }): Promise<void>
 ```
 
-###### Explaintation of each parameter {#use-authenticated-context-explaintation}
+##### Explaintation of each parameter
 
 1. `redirectTo`
 
@@ -119,7 +119,7 @@ This parameter takes a role (as string) or multipe roles to be used to **authori
 
 The `URL` or `Route` object passed to this parameter will be used to `redirect` **authenticated** (logged-in) users.
 
-###### Usage {#use-authenticated-context-usage}
+##### Usage
 
 Example Usage in React Server Component in app directory in Next 13
 
@@ -137,7 +137,7 @@ await useAuthenticatedBlitzContext({
 
 The following method are to be used to invoke a resolver in a react server component
 
-##### Using `invoke` {#invoke}
+##### Using `invoke`
 
 Let's say there is a requirement to query a resolver in the `(root)/page.js` file to check the details of the curretn user
 
@@ -156,9 +156,9 @@ Now, we can directly invoke the resolver using the invoke function
 const user = await invoke(getCurrentUser, null)
 ```
 
-#### Changes in Blitz-Server and Blitz-Client Files {#changes-required-blitz-files}
+#### Compiled Changes to the Blitz-Server and Blitz-Client Files {#changes-required-blitz-files}
 
-##### `blitz-client` {#blitz-client}
+##### `blitz-client`
 
 ```ts
 "use client"
@@ -177,7 +177,7 @@ export const {withBlitz, BlitzProvider} = setupBlitzClient({
 
 ```
 
-##### `blitz-server` {#blitz-server}
+##### `blitz-server`
 
 ```ts
 import {BlitzLogger} from "blitz"

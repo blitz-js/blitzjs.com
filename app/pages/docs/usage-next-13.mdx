@@ -33,6 +33,29 @@ Add the new `use client` directive to the following files:
 
 This provider should wrap the app and should be placed at the `(root)/layout.ts` file.
 
+**Setup** 
+
+```ts
+// src/blitz-client
+
+"use client"
+import {AuthClientPlugin} from "@blitzjs/auth"
+import {setupBlitzClient} from "@blitzjs/next"
+import {BlitzRpcPlugin} from "@blitzjs/rpc"
+
+export const {withBlitz, BlitzProvider} = setupBlitzClient({
+  plugins: [
+    AuthClientPlugin({
+      cookiePrefix: "web-cookie-prefix",
+    }),
+    BlitzRpcPlugin({}),
+  ],
+})
+
+```
+
+**In root layout.(ts|js) file**
+
 ```tsx
 // layout.ts
 import BlitzProvider from "src/blitz-client"
@@ -68,6 +91,17 @@ getBlitzContext() => Ctx
 ###### Usage
 
 Example Usage in React Server Component in app directory in Next 13
+
+**Setup**
+
+```tsx
+// src/blitz-server.ts
+export const { ... , useAuthenticatedBlitzContext} = setupBlitzServer({
+  ...
+})
+```
+
+**In a RSC page or layout**
 
 ```tsx
 import {getBlitzContext} from "src/blitz-server"
@@ -122,8 +156,19 @@ The `URL` or `Route` object passed to this parameter will be used to `redirect` 
 
 Example Usage in React Server Component in app directory in Next 13
 
+**Setup**
+
 ```tsx
-import {getAppSession, useAuthenticatedBlitzContext} from "src/blitz-server"
+// src/blitz-server.ts
+export const { ... , useAuthenticatedBlitzContext} = setupBlitzServer({
+  ...
+})
+```
+
+**In a RSC Page or Layout**
+
+```tsx
+import {useAuthenticatedBlitzContext} from "src/blitz-server"
 ...
 await useAuthenticatedBlitzContext({
     redirectTo: "/auth/login",
@@ -144,6 +189,17 @@ First import the `invoke` function from the `blitz-server` file.
 
 Note we cannot directly import `invoke` from `@blitzjs/rpc` due to the necessity to run the required middleware in order to make it work effectively.
 
+**Setup**
+
+```tsx
+// src/blitz-server.ts
+export const {... , invoke} = setupBlitzServer({
+  ...
+})
+```
+
+**In a RSC Page or Layout**
+
 ```tsx
 import {invoke} from "src/blitz-server"
 import getCurrentUser from "src/users/queries/getCurrentUser"
@@ -153,48 +209,4 @@ Now, we can directly invoke the resolver using the invoke function
 
 ```tsx
 const user = await invoke(getCurrentUser, null)
-```
-
-#### Compiled Changes to the Blitz-Server and Blitz-Client Files {#changes-required-blitz-files}
-
-##### `blitz-client`
-
-```ts
-"use client"
-import {AuthClientPlugin} from "@blitzjs/auth"
-import {setupBlitzClient} from "@blitzjs/next"
-import {BlitzRpcPlugin} from "@blitzjs/rpc"
-
-export const {withBlitz, BlitzProvider} = setupBlitzClient({
-  plugins: [
-    AuthClientPlugin({
-      cookiePrefix: "web-cookie-prefix",
-    }),
-    BlitzRpcPlugin({}),
-  ],
-})
-
-```
-
-##### `blitz-server`
-
-```ts
-import {BlitzLogger} from "blitz"
-import {setupBlitzServer} from "@blitzjs/next"
-import {AuthServerPlugin, PrismaStorage} from "@blitzjs/auth"
-import {simpleRolesIsAuthorized} from "@blitzjs/auth"
-import {RpcServerPlugin} from "@blitzjs/rpc"
-import db from "db"
-
-export const {api, getBlitzContext, useAuthenticatedBlitzContext, invoke} = setupBlitzServer({
-  plugins: [
-    AuthServerPlugin({
-      cookiePrefix: "web-cookie-prefix",
-      storage: PrismaStorage(db),
-      isAuthorized: simpleRolesIsAuthorized,
-    }),
-    RpcServerPlugin({}),
-  ],
-  logger: BlitzLogger({}),
-})
 ```

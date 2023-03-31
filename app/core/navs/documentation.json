@@ -81,6 +81,7 @@
       "auth-client",
       "authorization",
       "passportjs",
+      "next-auth",
       "impersonation"
     ]
   },

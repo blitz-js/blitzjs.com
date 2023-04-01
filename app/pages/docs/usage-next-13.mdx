@@ -5,9 +5,22 @@ sidebar_label: Usage Guide Next.js 13
 
 ### Migration Guide {#migration-guide}
 
-Blitz **does not require any breaking changes** with the major upgrade of `Next 12` ➔ `Next 13` for usage with the `pages` directory. You can even continue to use the old blitz layout with all your files in `app`. But you'll need to rename that directory if you want to use the new Next.js app router.
+Blitz requires **only a breaking change** with the major upgrade of `Next 12` ➔ `Next 13` for usage with the `pages` directory. You can even continue to use the old blitz layout with all your files in `app`. But you'll need to rename that directory if you want to use the new Next.js app router.
 
 The migration guide provided by the Next.js Team can then be followed to completely upgrade your Next 12 application
+
+### Breaking Changes
+
+#### Blitz RPC
+
+invoke method now returns a promise of the resolvers.
+
+**Change to be made**
+
+```diff
++ const user = await invoke(getCurrentUser, null)
+- const user = invoke(getCurrentUser, null)
+```
 
 #### Upgrading Guide {#upgrading-guide}
 

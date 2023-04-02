@@ -14,15 +14,14 @@ a bit nicer.
   function.
 - It ensures Prisma client is not used in your client bundle.
 - It adds a `db.$reset() => Promise<void>` function for use in tests like
-  this: ???
+  this:
+  ```ts
+  beforeEach(async () => {
+    await db.$reset()
+  })
+  ```
 - It automatically closes the database connection at the end of your tests
   if you are using [the Blitz vitest preset](./testing)
-
-```ts
-beforeEach(async () => {
-  await db.$reset()
-})
-```
 
 #### Example Usage
 

@@ -193,7 +193,13 @@ Note we cannot directly import `invoke` from `@blitzjs/rpc` due to the necessity
 
 ```tsx
 // src/blitz-server.ts
+import {RpcServerPlugin} from "@blitzjs/rpc"
+...
 export const {... , invoke} = setupBlitzServer({
+  plugins: [
+    ...
+    RpcServerPlugin({}),
+  ]
   ...
 })
 ```

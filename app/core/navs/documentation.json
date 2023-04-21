@@ -56,7 +56,7 @@
       "iconDarkPath": "/img/routing-white.svg",
       "iconPath": "/img/routing.svg"
     },
-    "pages": ["blitz-auth-with-next"]
+    "pages": ["blitz-auth-with-next", "usage-next-13"]
   },
   {
     "title": {
@@ -81,6 +81,7 @@
       "auth-client",
       "authorization",
       "passportjs",
+      "next-auth",
       "impersonation"
     ]
   },

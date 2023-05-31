@@ -62,7 +62,7 @@ export default function createProject(input: CreateProjectType, ctx: Ctx) {
   const data = CreateProject.parse(input)
 
   // highlight-start
-  ctx.session.$authorize(),
+  ctx.session.$authorize()
   // highlight-end
 
   // *: in multi-tenant app, you must add validation to ensure correct tenant

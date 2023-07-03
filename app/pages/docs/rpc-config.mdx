@@ -99,6 +99,12 @@ logging?: {
   disablelevel?: "debug" | "info"
 }
 ```
+<Card type="note">
+  Blitz RPC defaults to note:
+  - The `input` and resolver completion time will be logged with the `info` level.
+  - The `result` and `next.js serialization` will be logged with the `debug` level.
+</Card>
+
 ```ts
 import { rpcHandler } from "@blitzjs/rpc"
 import { api } from "src/blitz-server"
@@ -116,12 +122,6 @@ export default api(
   })
 )
 ```
-
-<Card type="note">
-  Blitz RPC defaults to note:
-  - The `input` and resolver completion time will be logged with the `info` level.
-  - The `result` and `next.js serialization` will be logged with the `debug` level.
-</Card>
 
 Example:
 

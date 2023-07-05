@@ -12,7 +12,7 @@ on:
 
 jobs:
   lint:
-    name: Lint
+    name: Build & Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,6 +33,10 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn install --frozen-lockfile --silent
+        env:
+          CI: true
+      - name: Build Blitz Website
+        run: yarn build
         env:
           CI: true
       - name: Lint Blitz Website

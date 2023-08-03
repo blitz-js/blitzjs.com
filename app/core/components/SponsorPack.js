@@ -34,6 +34,13 @@ const sponsors = [
     cost: 250,
   },
   {
+    name: "Byteflow",
+    href: "https://byteflow.dev/?ref=blitzjs",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/main/assets/Byteflow.png",
+    tier: 3,
+    cost: 250,
+  },
+  {
     name: "Andreas",
     href: "https://andreas.fyi/",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/andreas.jpg",

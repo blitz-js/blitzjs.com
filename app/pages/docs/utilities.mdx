@@ -11,7 +11,7 @@ This utility function will validate input using a
 [`zod`](https://github.com/colinhacks/zod) schema, and format any errors
 to be usable with your form library.
 
-This is currently compatible with both React Final Form and Formik and any
+This is currently compatible with both Formik, React Final Form and any
 others with the same API.
 
 ### Example {#validate-zod-schema-example}
@@ -27,7 +27,7 @@ import {validateZodSchema} from 'blitz'
 
 ### API {#validate-zod-schema-api}
 
-```js
+```ts
 const validationFunction = validateZodSchema(MyZodSchema)
 ```
 
@@ -46,7 +46,7 @@ A validation function to pass to a Form component's `validate` prop. It
 accepts some values and returns an Promise or object containing any
 errors.
 
-```
+```ts
 (values: any, parserType?: "sync" | "async") =>  Promise<Object> | Object
 ```
 
@@ -62,7 +62,7 @@ errors.
 This utility function will take a ZodError and format it nicely to be
 usable with your form library.
 
-This is currently compatible with both React Final Form and Formik and any
+This is currently compatible with both Formik, React Final Form and any
 others with the same API.
 
 ### Example {#format-zod-error-example}

@@ -29,6 +29,10 @@ Add the new `use client` directive to the following files:
 1. `src/blitz-client.(ts|js)`
 2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
 
+#### Migrate files to `src/app`
+
+The NextJS `/app` folder needs to be located at `/src/app` in order to work with BlitzJS. More on ["Project Organization and File Colocation"](https://nextjs.org/docs/app/building-your-application/routing/colocation#src-directory) in the NextJS docs.
+
 #### BlitzProvider {#blitz-provider}
 
 This provider should wrap the app and should be placed at the `(root)/layout.ts` file.

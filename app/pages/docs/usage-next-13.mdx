@@ -29,6 +29,12 @@ Add the new `use client` directive to the following files:
 1. `src/blitz-client.(ts|js)`
 2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
 
+#### Migrate `<Suspense>` to `loading.tsx`
+
+In the `/pages` folder, page components are split in two to manually add a `<Suspense>` boundary ([Example](https://github.com/blitz-js/blitz/blob/main/packages/generator/templates/page/__modelIdParam__.tsx#L84-L86)).
+
+Following the `/app` folder [file conventions](https://nextjs.org/docs/app/building-your-application/routing#file-conventions) this logic can be migrated to [special `loading.tsx` files](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming) within each subfolder.
+
 #### BlitzProvider {#blitz-provider}
 
 This provider should wrap the app and should be placed at the `(root)/layout.ts` file.

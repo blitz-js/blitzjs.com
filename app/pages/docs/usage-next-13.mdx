@@ -29,6 +29,10 @@ Add the new `use client` directive to the following files:
 1. `src/blitz-client.(ts|js)`
 2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
 
+**What not to change:**
+
+`/pags/api/rpc/[[...blitz]].ts` stays in the `/pages` folder.
+
 #### BlitzProvider {#blitz-provider}
 
 This provider should wrap the app and should be placed at the `(root)/layout.ts` file.

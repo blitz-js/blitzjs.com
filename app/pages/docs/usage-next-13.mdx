@@ -24,14 +24,13 @@ the following methods and hooks have been implemented to work in the new `app` d
 
 #### Required changes {#required-changes}
 
-Add the new `use client` directive to the following files:
+Add the new `use client` directive to **all** files in the include-tree below [`BlitzProvider`](https://blitzjs.com/docs/usage-next-13#blitz-provider), which is a client component.
 
-1. `src/blitz-client.(ts|js)`
-2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
+This includes `src/blitz-client.(ts|js)` and all Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks or browser actions like `onClick` ([more in the NextJS Docs](https://nextjs.org/docs/app/building-your-application/rendering/client-components#using-client-components-in-nextjs)).
 
 #### BlitzProvider {#blitz-provider}
 
-This provider should wrap the app and should be placed at the `(root)/layout.ts` file.
+This client component is a provider that should wrap the app and should be placed at the `(root)/layout.ts` file. 
 
 **Setup** 
 
@@ -58,6 +57,8 @@ export const {withBlitz, BlitzProvider} = setupBlitzClient({
 
 ```tsx
 // layout.ts
+'use client'
+
 import { BlitzProvider } from "src/blitz-client"
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

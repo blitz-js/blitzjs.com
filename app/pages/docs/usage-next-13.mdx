@@ -29,6 +29,10 @@ Add the new `use client` directive to the following files:
 1. `src/blitz-client.(ts|js)`
 2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
 
+**What not to change:**
+
+`/pags/api/rpc/[[...blitz]].ts` stays in the `/pages` folder.
+
 #### Recommendations
 
 - For Blitz apps that have their pages at `/src/pages` it is recommended to colocate the app directory at `/src/app`. However, a root `/app` App directory is also supported. More on the new NextJS file structure at ["Project Organization and File Colocation"](https://nextjs.org/docs/app/building-your-application/routing/colocation#src-directory).

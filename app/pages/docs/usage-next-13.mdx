@@ -29,6 +29,10 @@ Add the new `use client` directive to the following files:
 1. `src/blitz-client.(ts|js)`
 2. All Files with usage of `useQuery`, `useInfiniteQuery`, `usePaginatedQuery`, `useMutation`, `Hydrate` and other React Query client side hooks.
 
+#### Recommendations
+
+- For Blitz apps that have their pages at `/src/pages` it is recommended to colocate the app directory at `/src/app`. However, a root `/app` App directory is also supported. More on the new NextJS file structure at ["Project Organization and File Colocation"](https://nextjs.org/docs/app/building-your-application/routing/colocation#src-directory).
+
 #### BlitzProvider {#blitz-provider}
 
 This provider should wrap the app and should be placed at the `(root)/layout.ts` file.
@@ -36,28 +40,37 @@ This provider should wrap the app and should be placed at the `(root)/layout.ts`
 **Setup** 
 
 ```ts
-// src/blitz-client
+// src/blitz-client.ts
 
 "use client"
 import {AuthClientPlugin} from "@blitzjs/auth"
 import {setupBlitzClient} from "@blitzjs/next"
 import {BlitzRpcPlugin} from "@blitzjs/rpc"
+import { authConfig } from './blitz-auth-config'
 
 export const {withBlitz, BlitzProvider} = setupBlitzClient({
   plugins: [
-    AuthClientPlugin({
-      cookiePrefix: "web-cookie-prefix",
-    }),
+    AuthClientPlugin(authConfig),
     BlitzRpcPlugin({}),
   ],
 })
-
 ```
 
-**In root layout.(ts|js) file**
+The `authConfig` needs to be in a separate file that is imported in `blitz-client.ts` as well as `blitz-server.ts`:
+
+```ts
+// src/blitz-auth-config.ts
+import { AuthPluginClientOptions } from '@blitzjs/auth'
+
+export const authConfig: AuthPluginClientOptions = {
+  cookiePrefix: "blitz-auth-with-next-app",
+}
+```
+
+**In root layout.ts file**
 
 ```tsx
-// layout.ts
+// src/layout.ts
 import { BlitzProvider } from "src/blitz-client"
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

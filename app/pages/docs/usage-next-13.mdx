@@ -80,7 +80,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 The app router requires a new way to set Metadata. Follow the [NextJS Documentation](https://nextjs.org/docs/app/building-your-application/optimizing/metadata). Thinks to remember for BlitzJS:
 
 * Layouts and pages need to be server components which means you might have to extract interface elements that use hooks or browser APIs into separate client components first.
-* Use the [`invoke` helper](blitz-rpc-invoke) to use the dynamic `function generateMetadata` with BlitJS queries. Example:
+* Use the [`invoke` helper](blitz-rpc-invoke) to use the dynamic [`generateMetadata`](https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata) with BlitJS queries. Example:
   ```ts
   export async function generateMetadata({ params }) {
     const project = await invoke(getProject, { id: params.projectId })

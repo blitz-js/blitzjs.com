@@ -48,7 +48,7 @@ export const ImpersonateUserInput = z.object({
 
 export default resolver.pipe(
   resolver.zod(ImpersonateUserInput),
-  resolver.authorize(),
+  resolver.authorize('admin'), // Only admins can impersonate other users
   async ({ userId }, ctx) => {
     const user = await db.user.findFirst({ where: { id: userId } })
     if (!user) throw new Error("Could not find user id " + userId)

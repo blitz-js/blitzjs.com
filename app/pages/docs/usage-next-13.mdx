@@ -92,6 +92,19 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   )
 }
 ```
+#### Metadata {#metadata}
+
+The app router requires a new way to set Metadata. Follow the [NextJS Documentation](https://nextjs.org/docs/app/building-your-application/optimizing/metadata). Thinks to remember for BlitzJS:
+
+* Layouts and pages need to be server components which means you might have to extract interface elements that use hooks or browser APIs into separate client components first.
+* Use the [`invoke` helper](blitz-rpc-invoke) to use the dynamic [`generateMetadata`](https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata) with BlitJS queries. Example:
+  ```ts
+  export async function generateMetadata({ params }) {
+    const project = await invoke(getProject, { id: params.projectId })
+    return { title: project?.name }
+  }
+  export default function Page() {)
+  ```
 
 #### Blitz Auth {#blitz-auth}
 
@@ -198,7 +211,7 @@ await useAuthenticatedBlitzContext({
 
 The following method are to be used to invoke a resolver in a react server component
 
-##### Using `invoke`
+##### Using `invoke` {#blitz-rpc-invoke}
 
 Let's say there is a requirement to query a resolver in the `(root)/page.js` file to check the details of the current user
 

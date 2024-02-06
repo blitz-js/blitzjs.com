@@ -65,6 +65,14 @@ const config = withBundleAnalyzer({
         source: "/stickers",
         destination: "/docs/stickers",
       },
+      {
+        source: "/security.txt",
+        destination: "/api/security",
+      },
+      {
+        source: "/.well-known/security.txt",
+        destination: "/api/security",
+      },
     ]
   },
   webpack(config, options) {

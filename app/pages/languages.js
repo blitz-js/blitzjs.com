@@ -3,6 +3,7 @@ import {useEffect, useState} from "react"
 
 import {Header} from "@/components/Header"
 import {Footer} from "@/components/home/Footer"
+import SimpleLink from "@/components/SimpleLink"
 import {SocialCards} from "@/components/SocialCards"
 import {getGitHubFile} from "@/utils/getGitHubFile"
 
@@ -57,14 +58,9 @@ const LanguagesPage = ({languages}) => {
         </div>
         <div className="font-secondary text-base text-gray-600 dark:text-gray-300">
           Don&apos;t see your language?{" "}
-          <a
-            href="https://github.com/blitz-js/blitzjs.com-translation#starting-a-new-translation"
-            target="_blank"
-            rel="noreferrer"
-            className="text-purple-light dark:text-purple-extralight font-medium dark:font-bold no-underline dark:underline hover:underline"
-          >
+          <SimpleLink href="https://github.com/blitz-js/blitzjs.com-translation#starting-a-new-translation">
             Read how to start a new translation
-          </a>
+          </SimpleLink>
         </div>
       </main>
       <Footer className="text-black dark:text-dark-mode-text" hasDarkMode />

@@ -6,7 +6,7 @@ import {useIsDesktop} from "@/hooks/useIsDesktop"
 import tokenize from "../../macros/tokenize.macro.js"
 
 const pageTokenized = tokenize.jsx(
-  `//---- ON THE CLIENT ----
+  `// ---- ON THE CLIENT ----
 // app/pages/projects/new.tsx
 import { BlitzPage, Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"

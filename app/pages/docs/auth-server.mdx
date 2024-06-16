@@ -54,7 +54,28 @@ function PageWithGssp(props: Props) {
 export default PageWithGssp
 ```
 
-## API Routes {#api-routes}
+## App Router API Routes {#app-api-routes}
+
+You can get the session context inside API routes by wrapping it with the
+`withBlitzAuth` function exported from `src/blitz-server`:
+
+```ts
+//app/api/logout/route.ts
+import {withBlitzAuth} from "app/blitz-server"
+
+export const POST = withBlitzAuth(async (_request, _params, ctx) => {
+  const session = ctx.session
+  await session.$revoke()
+  return new Response(
+    JSON.stringify({
+      userId: session.userId,
+    }),
+    {status: 200},
+  )
+})
+```
+
+## Pages Router API Routes {#pages-api-routes}
 
 You can get the session context inside API routes by wrapping it with the
 `api` function exported from `src/blitz-server`:

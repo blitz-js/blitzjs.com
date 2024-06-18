@@ -61,7 +61,7 @@ You can get the session context inside API routes by wrapping it with the
 
 ```ts
 //app/api/logout/route.ts
-import {withBlitzAuth} from "app/blitz-server"
+import { withBlitzAuth } from "app/blitz-server"
 
 export const POST = withBlitzAuth(async (_request, _params, ctx) => {
   const session = ctx.session
@@ -70,8 +70,48 @@ export const POST = withBlitzAuth(async (_request, _params, ctx) => {
     JSON.stringify({
       userId: session.userId,
     }),
-    {status: 200},
+    { status: 200 }
   )
+})
+```
+
+#### `withBlitzAuth` API {#with-blitz-auth-api}
+
+The function supports both single handler as an input as well as an object
+of handlers and has the following signature:
+
+```ts
+type Handler = (
+  request: Request,
+  params: any,
+  ctx: Ctx
+) => Promise<Response> | Response
+function withBlitzAuth(fn: Handler): Response | Promise<Response>
+function withBlitzAuth<T extends { [method: string]: Handler }>(fn: T): T
+```
+
+##### Example Usage with multiple handlers
+
+```ts
+import { withBlitzAuth } from "app/blitz-server"
+
+export const { GET, POST } = withBlitzAuth({
+  GET: async (_request, _params, { session }) => {
+    return new Response(
+      JSON.stringify({
+        userId: session.userId,
+      }),
+      { status: 200 }
+    )
+  },
+  POST: async (_request, _params, { session }) => {
+    return new Response(
+      JSON.stringify({
+        userId: session.userId,
+      }),
+      { status: 200 }
+    )
+  },
 })
 ```
 

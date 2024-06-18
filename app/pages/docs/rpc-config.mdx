@@ -75,7 +75,9 @@ module.exports = withBlitz({
 
 ## Logging Setup {#blitz-rpc-logging}
 
-In your `[[...blitz]].ts` api file you can see the following settings in the `rpcHandler`
+In your `[[...blitz]].ts` api file you can see the following settings in
+the `rpcHandler`
+
 ```ts
 logging?: {
   /**
@@ -99,17 +101,35 @@ logging?: {
   disablelevel?: "debug" | "info"
 }
 ```
-<Card type="note">
-  Blitz RPC defaults to:
-  - `verbose` to be true if it not configured.
-  - The `input` and `resolver completion time` will be logged with the `info` level.
-  - The `result` and `next.js serialization time` will be logged with the `debug` level.
-</Card>
 
+<Card type="note">
+  Blitz RPC defaults to: - `verbose` to be true if it not configured. -
+  The `input` and `resolver completion time` will be logged with the
+  `info` level. - The `result` and `next.js serialization time` will be
+  logged with the `debug` level.
+</Card>
 
 Example:
 
 ```ts
+// app router (recommended)
+// app/api/rpc/[[...blitz]]/route.ts
+export default api(
+  rpcAppHandler({
+    onError: console.log,
+    formatError: (error) => {
+      error.message = `FormatError handler: ${error.message}`
+      return error
+    },
+    logging: {
+      verbose: true,
+      blockList: ["getCurrentUser", ...], //just write the resolver name [which is the resolver file name]
+    },
+  })
+)
+
+// pages router
+// src/pages/api/rpc/[[...blitz]].ts
 export default api(
   rpcHandler({
     onError: console.log,
@@ -125,6 +145,5 @@ export default api(
 )
 ```
 
-This is will enable verbose Blitz RPC logging for all resolvers except the resolvers `getCurrentUser` and others mentioned in the `blockList`
-
-
+This is will enable verbose Blitz RPC logging for all resolvers except the
+resolvers `getCurrentUser` and others mentioned in the `blockList`

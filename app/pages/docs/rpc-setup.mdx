@@ -9,7 +9,9 @@ sidebar_label: Setup
 npm i @blitzjs/rpc # yarn add @blitzjs/rpc # pnpm add @blitzjs/rpc
 ```
 
-2. Add the following to your `blitz-client.ts` file:
+### Client setup {#client-setup}
+
+Add the following to your `blitz-client.ts` file:
 
 ```typescript
 import { setupClient } from "@blitzjs/next"
@@ -47,12 +49,12 @@ export { withBlitz }
 You can read more about `react-query`'s `QueryClient` options
 [here](https://react-query.tanstack.com/reference/QueryClient).
 
-3. Add the following to your `blitz-server.ts` file:
+### Server setup {#server-setup}
+
+Add the following to your `blitz-server.ts` file:
 
 ```ts
-const {
-  invoke,
-} = setupBlitzServer({
+const { invoke } = setupBlitzServer({
   plugins: [
     // Other plugins
     RpcServerPlugin({
@@ -60,34 +62,30 @@ const {
         //logging options
       },
       onInvokeError(error) {
-       // Add your custom error handling here
+        // Add your custom error handling here
       },
     }),
   ],
 })
 
-export {
-  invoke,
-}
+export { invoke }
 ```
 
-4. Add Blitz RPC API Route:
+### API setup {#api-setup}
 
-4.1 App router (recommended):
+#### App router (recommended): {#app-router}
 
-Create an `app/api/rpc/[[...blitz]]` directory in your `src` directory with
-a `route.ts` file, and add the following lines:
+Create an `app/api/rpc/[[...blitz]]` directory in your `src` directory
+with a `route.ts` file, and add the following lines:
 
 ```ts
 // app/api/rpc/[[...blitz]]/route.ts
 
-import {rpcAppHandler} from "@blitzjs/rpc"
-import {withBlitzAuth} from "app/blitz-server"
+import { rpcAppHandler } from "@blitzjs/rpc"
+import { withBlitzAuth } from "app/blitz-server"
 
 // With Blitz Auth
-export const {GET, POST, HEAD} = withBlitzAuth(rpcAppHandler(
-  {},
-))
+export const { GET, POST, HEAD } = withBlitzAuth(rpcAppHandler({}))
 
 // Standalone Usage
 // export const {GET, POST, HEAD} = rpcAppHandler(
@@ -95,7 +93,7 @@ export const {GET, POST, HEAD} = withBlitzAuth(rpcAppHandler(
 // )
 ```
 
-4.2 Pages Router:
+#### Pages router: {#pages-router}
 
 Create an `pages/api/rpc` directory in your `src` directory with
 `[[...blitz]].ts` file, and add the following lines:

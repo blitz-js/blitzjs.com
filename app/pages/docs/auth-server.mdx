@@ -84,9 +84,51 @@ of handlers and has the following signature:
 function withBlitzAuth(handlers: { [method: string]: Handler })
 ```
 
+##### Signature
+
+##### Arguments
+
+- `handlers: { [method: string]: Handler })` - An object of handlers where
+  the key is the HTTP method and the value is the handler function.
+
+```ts
+type Handler = (
+  request: Request,
+  params: Record<string, string>,
+  ctx: { session: SessionContext }
+) => Promise<Response>
+```
+
+##### Returns
+
+- `{ [method: string]: Handler }` - The wrapper function returns an object
+  of handlers where the key is the HTTP method and the value is the
+  handler function wrapped with the session management of `@blitzjs/auth`.
+
+  ##### Example Usage with single handler
+
+```ts
+//app/api/logout/route.ts
+import { withBlitzAuth } from "app/blitz-server"
+
+export const { POST } = withBlitzAuth({
+  POST: async (_request, _params, { session }) => {
+    // logout the user
+    await session.$revoke()
+    return new Response(
+      JSON.stringify({
+        userId: session.userId,
+      }),
+      { status: 200 }
+    )
+  },
+})
+```
+
 ##### Example Usage with multiple handlers
 
 ```ts
+//app/api/multiple/route.ts
 import { withBlitzAuth } from "app/blitz-server"
 
 export const { GET, POST } = withBlitzAuth({

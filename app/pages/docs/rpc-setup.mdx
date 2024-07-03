@@ -78,20 +78,26 @@ export { invoke }
 Create an `app/api/rpc/[[...blitz]]` directory in your `src` directory
 with a `route.ts` file, and add the following lines:
 
+##### Standalone Usage
+
 ```ts
 // app/api/rpc/[[...blitz]]/route.ts
+import { rpcAppHandler } from "@blitzjs/rpc"
 
+export const { GET, POST, HEAD } = rpcAppHandler()
+```
+
+##### Blitz Auth Integration
+
+```ts
+// app/api/rpc/[[...blitz]]/route.ts
 import { rpcAppHandler } from "@blitzjs/rpc"
 import { withBlitzAuth } from "app/blitz-server"
 
-// With Blitz Auth
-export const { GET, POST, HEAD } = withBlitzAuth(rpcAppHandler({}))
-
-// Standalone Usage
-// export const {GET, POST, HEAD} = rpcAppHandler(
-//   {},
-// )
+export const { GET, POST, HEAD } = withBlitzAuth(rpcAppHandler())
 ```
+
+View [RPC Configurations](/rpc-config) to view the available options.
 
 #### Pages router: {#pages-router}
 
@@ -106,6 +112,8 @@ import { api } from "src/blitz-server"
 
 export default api(rpcHandler({}))
 ```
+
+View [RPC Configurations](/rpc-config) to view the available options.
 
 ---
 

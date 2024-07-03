@@ -81,13 +81,7 @@ The function supports both single handler as an input as well as an object
 of handlers and has the following signature:
 
 ```ts
-type Handler = (
-  request: Request,
-  params: unknown,
-  ctx: Ctx
-) => Promise<Response> | Response
-function withBlitzAuth(fn: Handler): Response | Promise<Response>
-function withBlitzAuth<T extends { [method: string]: Handler }>(fn: T): T
+function withBlitzAuth(handlers: { [method: string]: Handler })
 ```
 
 ##### Example Usage with multiple handlers

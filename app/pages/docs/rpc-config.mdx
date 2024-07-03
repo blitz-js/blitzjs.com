@@ -109,10 +109,11 @@ logging?: {
   logged with the `debug` level.
 </Card>
 
-Example:
+#### Example:
+
+##### In App Router (recommended)
 
 ```ts
-// app router (recommended)
 // app/api/rpc/[[...blitz]]/route.ts
 export default api(
   rpcAppHandler({
@@ -123,11 +124,15 @@ export default api(
     },
     logging: {
       verbose: true,
-      blockList: ["getCurrentUser", ...], //just write the resolver name [which is the resolver file name]
+      blockList: ["getCurrentUser", ...]
     },
   })
 )
+```
 
+##### In Pages Router
+
+```ts
 // pages router
 // src/pages/api/rpc/[[...blitz]].ts
 export default api(

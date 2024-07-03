@@ -358,10 +358,8 @@ or updated.
 ```ts
 async function handler(request: Request, params: Record<string, string>) {
   const session = await getSession(request)
-  // user defined logic that can mutate the session
   const response = await handler(request, params, { session })
   session.setSession(response)
-  // the response will now container the necessary session context
   return response
 }
 ```
@@ -371,10 +369,12 @@ async function handler(request: Request, params: Record<string, string>) {
 ```ts
 async function handler(req: IncomingMessage, res: ServerResponse) {
   const session = await getSession(req, res)
-  // user defined logic that can mutate the session
-  const response = await handler(req, res, { session })
-  session.setSession(response)
-  // the response will now container the necessary session context
-  return response
+  await handler(req, res, { session })
+  session.setSession(res)
 }
 ```
+
+- `handler` is the function that processes the request and can mutate the
+  session state
+- The `response` | `res` will contain the session state after the handler
+  has been processed

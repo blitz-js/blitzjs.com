@@ -356,7 +356,7 @@ or updated.
 ##### With `Request`
 
 ```ts
-function handler(request: Request, params: Record<string, string>) {
+async function handler(request: Request, params: Record<string, string>) {
   const session = await getSession(request)
   // user defined logic that can mutate the session
   const response = await handler(request, params, { session })
@@ -369,7 +369,7 @@ function handler(request: Request, params: Record<string, string>) {
 ##### With `IncomingMessage` and `ServerResponse`
 
 ```ts
-function handler(req: IncomingMessage, res: ServerResponse) {
+async function handler(req: IncomingMessage, res: ServerResponse) {
   const session = await getSession(req, res)
   // user defined logic that can mutate the session
   const response = await handler(req, res, { session })

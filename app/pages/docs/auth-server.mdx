@@ -354,7 +354,7 @@ or updated.
 #### Example Usage
 
 ```ts
-function handler(request: Request) {
+function handler(request: Request, params: Record<string, string>) {
   const session = await getSession(request)
   // user defined logic that can mutate the session
   const response = await handler(request, params, { session })

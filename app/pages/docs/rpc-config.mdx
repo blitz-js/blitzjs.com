@@ -109,9 +109,34 @@ logging?: {
   logged with the `debug` level.
 </Card>
 
-#### Example:
-
 ##### In App Router (recommended)
+
+#### `rpcAppHandler`:
+
+This function acts as the handler for all the queries and mutations in the
+next.js app directory.
+
+#### Arguments:
+
+- `options` (optional): An object with the following properties:
+  - `onInvokeError` (optional): A function that will be called when an
+    error occurs during the invocation of a resolver.
+  - `formatError` (optional): A function that will be called to format the
+    error before sending it to the client.
+  - `logging` (optional): An object with the following properties:
+    - `allowList` (optional): An array of resolvers that should be logged.
+    - `blockList` (optional): An array of resolvers that should not be
+      logged.
+    - `verbose` (optional): A boolean that determines whether verbose
+      logging should be enabled.
+    - `disablelevel` (optional): A string that determines which level of
+      logging should be disabled.
+
+#### Returns:
+
+An object with the handlers that handle the GET, POST, and HEAD requests.
+
+#### Example:
 
 ```ts
 // app/api/rpc/[[...blitz]]/route.ts
@@ -131,6 +156,31 @@ export default api(
 ```
 
 ##### In Pages Router
+
+#### `rpcHandler`:
+
+This function acts as the handler for all the queries and mutations in the
+next.js pages directory.
+
+#### Arguments:
+
+- `options` (optional): An object with the following properties:
+  - `onInvokeError` (optional): A function that will be called when an
+    error occurs during the invocation of a resolver.
+  - `formatError` (optional): A function that will be called to format the
+    error before sending it to the client.
+  - `logging` (optional): An object with the following properties:
+    - `allowList` (optional): An array of resolvers that should be logged.
+    - `blockList` (optional): An array of resolvers that should not be
+      logged.
+    - `verbose` (optional): A boolean that determines whether verbose
+      logging should be enabled.
+    - `disablelevel` (optional): A string that determines which level of
+      logging should be disabled.
+
+#### Returns:
+
+A function that returns the handler for the RPC API.
 
 ```ts
 // pages router

@@ -313,3 +313,55 @@ export const updateUserRole = async (
   await setPublicDataForUser(userId, { role })
 }
 ```
+
+<Card header="Note">
+  The following functions / patterns are meant for internal usage or for
+  advanced use cases. They are not needed for general use.
+</Card>
+
+## `getSession` {#get-session}
+
+This function is used internally by Blitz to get the session context from
+the request either from an `IncomingMessage` and `ServerResponse` pair or
+from a `Request` object.
+
+### Arguments
+
+- `req: IncomingMessage | Request` - The request object from the server.
+- `res: ServerResponse | never` - The response object from the server.
+- `isRsc: boolean` - A boolean that determines if the request is for a
+  resource.
+
+### Returns
+
+- `SessionContext` - The session context object.
+
+### `SessionContext.setSession` {#session-context-set-session}
+
+//setSession(response: Response | ServerResponse)
+
+This function is used along with [getSession](#get-session) to set the
+session context on the response object after the session has been created
+or updated.
+
+### Arguments
+
+- `response: Response | ServerResponse` - The response object from the
+  server.
+
+### Returns
+
+- `void`
+
+### Example Usage
+
+```ts
+function handler(request: Request) {
+  const session = await getSession(request)
+  // user defined logic that can mutate the session
+  const response = await handler(request, params, { session })
+  session.setSession(response)
+  // the response will now container the necessary session context
+  return response
+}
+```

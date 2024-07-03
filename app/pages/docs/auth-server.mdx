@@ -325,33 +325,33 @@ This function is used internally by Blitz to get the session context from
 the request either from an `IncomingMessage` and `ServerResponse` pair or
 from a `Request` object.
 
-### Arguments
+#### Arguments
 
 - `req: IncomingMessage | Request` - The request object from the server.
 - `res: ServerResponse | never` - The response object from the server.
 - `isRsc: boolean` - A boolean that determines if the request is for a
   resource.
 
-### Returns
+#### Returns
 
 - `SessionContext` - The session context object.
 
-### `SessionContext.setSession` {#session-context-set-session}
+## `SessionContext.setSession` {#session-context-set-session}
 
 This function is used along with [getSession](#get-session) to set the
 session context on the response object after the session has been created
 or updated.
 
-### Arguments
+#### Arguments
 
 - `response: Response | ServerResponse` - The response object from the
   server.
 
-### Returns
+#### Returns
 
 - `void`
 
-### Example Usage
+#### Example Usage
 
 ```ts
 function handler(request: Request) {

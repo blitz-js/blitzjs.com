@@ -353,11 +353,26 @@ or updated.
 
 #### Example Usage
 
+##### With `Request`
+
 ```ts
 function handler(request: Request, params: Record<string, string>) {
   const session = await getSession(request)
   // user defined logic that can mutate the session
   const response = await handler(request, params, { session })
+  session.setSession(response)
+  // the response will now container the necessary session context
+  return response
+}
+```
+
+##### With `IncomingMessage` and `ServerResponse`
+
+```ts
+function handler(req: IncomingMessage, res: ServerResponse) {
+  const session = await getSession(req, res)
+  // user defined logic that can mutate the session
+  const response = await handler(req, res, { session })
   session.setSession(response)
   // the response will now container the necessary session context
   return response

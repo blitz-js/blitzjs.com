@@ -315,8 +315,8 @@ export const updateUserRole = async (
 ```
 
 <Card type="note">
-  The following functions / patterns are meant for internal usage or for
-  advanced use cases. They are not needed for general use.
+  The following methods are meant for internal usage or for advanced use
+  cases. They are not needed for general use.
 </Card>
 
 ## `getSession` {#get-session}
@@ -374,7 +374,7 @@ async function handler(req: IncomingMessage, res: ServerResponse) {
 }
 ```
 
-- `handler` is the function that processes the request and can mutate the
+- `handler` is a function that processes the request and can mutate the
   session state
 - The `response` | `res` will contain the session state after the handler
   has been processed

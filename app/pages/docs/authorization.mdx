@@ -113,7 +113,7 @@ thrown and caught by your top level Error Boundary.
 If you want to authorize your pages based on the user's role
 
 ```tsx
-// user must be logged in and with role "ADMIN" or "USER"
+// user must be logged in and with role "ADMIN"
 Page.authenticate = { role: "ADMIN" }
 // or set role as a list, where user must be logged in and with role "ADMIN" or "USER"
 Page.authenticate = { role: ["ADMIN", "USER"] }

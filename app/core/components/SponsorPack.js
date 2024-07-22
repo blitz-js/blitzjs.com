@@ -7,6 +7,7 @@ import React from "react"
 const sponsors = [
   {
     name: "Flightcontrol",
+    altText: "Flightcontrol",
     href: "https://www.flightcontrol.dev?ref=blitzjs",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/main/assets/flightcontrol.png",
     tier: 1,
@@ -14,6 +15,7 @@ const sponsors = [
   },
   {
     name: "Fauna",
+    altText: "Fauna",
     href: "https://dashboard.fauna.com/accounts/register?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2020",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/Fauna_Logo_Blue.png",
     tier: 2,
@@ -21,6 +23,7 @@ const sponsors = [
   },
   {
     name: "RIT",
+    altText: "RIT",
     href: "https://rit-inc.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/rit_logo.png",
     tier: 3,
@@ -28,6 +31,7 @@ const sponsors = [
   },
   {
     name: "Boostry",
+    altText: "Boostry",
     href: "https://boostry.co.jp/?utm_source=BlitzJS&utm_medium=sponsorship&utm_campaign=BlitzJS_Sponsorship_2021",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/boostry.svg",
     tier: 3,
@@ -35,6 +39,7 @@ const sponsors = [
   },
   {
     name: "Byteflow",
+    altText: "Byteflow",
     href: "https://byteflow.app/?ref=blitzjs",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/main/assets/byteflow.png",
     tier: 3,
@@ -42,6 +47,7 @@ const sponsors = [
   },
   {
     name: "Andreas",
+    altText: "Andreas",
     href: "https://andreas.fyi/",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/andreas.jpg",
     tier: 4,
@@ -49,6 +55,7 @@ const sponsors = [
   },
   {
     name: "MeetKai",
+    altText: "MeetKai",
     href: "https://meetkai.com/?ref=blitzjs_web",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/meetkai.png",
     tier: 4,
@@ -56,6 +63,7 @@ const sponsors = [
   },
   {
     name: "JDLT",
+    altText: "JDLT",
     href: "https://jdlt.co.uk/?ref=blitzjs_web",
     imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/canary/assets/jdlt.png",
     tier: 4,
@@ -63,8 +71,17 @@ const sponsors = [
   },
   {
     name: "Simon Lammes",
+    altText: "Simon Lammes",
     href: "https://github.com/simon-lammes",
     imageUrl: "https://avatars.githubusercontent.com/u/46446421?v=4",
+    tier: 4,
+    cost: 100,
+  },
+  {
+    name: "Route4Me",
+    altText: "Route Optimizer and Route Planning Software",
+    href: "https://route4me.com",
+    imageUrl: "https://raw.githubusercontent.com/blitz-js/blitz/main/assets/route4me.png",
     tier: 4,
     cost: 100,
   },
@@ -150,7 +167,7 @@ export const SponsorPack = () => {
                           >
                             <Image
                               src={circle.data.imageUrl}
-                              alt={circle.data.name}
+                              alt={circle.data.altText}
                               layout="fill"
                               objectFit="contain"
                             />

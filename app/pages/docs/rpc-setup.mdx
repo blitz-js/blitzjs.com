@@ -9,7 +9,9 @@ sidebar_label: Setup
 npm i @blitzjs/rpc # yarn add @blitzjs/rpc # pnpm add @blitzjs/rpc
 ```
 
-2. Add the following to your `blitz-client.ts` file:
+### Client setup {#client-setup}
+
+Add the following to your `blitz-client.ts` file:
 
 ```typescript
 import { setupClient } from "@blitzjs/next"
@@ -47,7 +49,57 @@ export { withBlitz }
 You can read more about `react-query`'s `QueryClient` options
 [here](https://react-query.tanstack.com/reference/QueryClient).
 
-3. Add Blitz RPC API Route:
+### Server setup {#server-setup}
+
+Add the following to your `blitz-server.ts` file:
+
+```ts
+const { invoke } = setupBlitzServer({
+  plugins: [
+    // Other plugins
+    RpcServerPlugin({
+      logging: {
+        //logging options
+      },
+      onInvokeError(error) {
+        // Add your custom error handling here
+      },
+    }),
+  ],
+})
+
+export { invoke }
+```
+
+### API setup {#api-setup}
+
+#### App router (recommended): {#app-router}
+
+Create an `app/api/rpc/[[...blitz]]` directory in your `src` directory
+with a `route.ts` file, and add the following lines:
+
+##### Standalone Usage
+
+```ts
+// app/api/rpc/[[...blitz]]/route.ts
+import { rpcAppHandler } from "@blitzjs/rpc"
+
+export const { GET, POST, HEAD } = rpcAppHandler()
+```
+
+##### Blitz Auth Integration
+
+```ts
+// app/api/rpc/[[...blitz]]/route.ts
+import { rpcAppHandler } from "@blitzjs/rpc"
+import { withBlitzAuth } from "app/blitz-server"
+
+export const { GET, POST, HEAD } = withBlitzAuth(rpcAppHandler())
+```
+
+View [RPC Configurations](/rpc-config) to view the available options.
+
+#### Pages router: {#pages-router}
 
 Create an `pages/api/rpc` directory in your `src` directory with
 `[[...blitz]].ts` file, and add the following lines:
@@ -60,6 +112,8 @@ import { api } from "src/blitz-server"
 
 export default api(rpcHandler({}))
 ```
+
+View [RPC Configurations](/rpc-config) to view the available options.
 
 ---
 

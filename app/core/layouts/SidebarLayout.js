@@ -55,7 +55,7 @@ function Nav({nav, children, fallbackHref, toc}) {
       <nav
         id="nav"
         ref={scrollRef}
-        className="px-1 bg-white dark:bg-purple-deep font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) lg:overflow-y-auto"
+        className="px-1 mb-px bg-white dark:bg-purple-deep font-medium text-base sm:px-3 xl:px-5 pb-10 lg:pb-16 sticky?lg:h-(screen-18) lg:overflow-y-auto"
       >
         <ul className="space-y-16 mt-10">
           {children}

@@ -55,7 +55,7 @@ export default resolver.pipe(
 
     await ctx.session.$create({
       userId: user.id,
-      role: user.role,
+      role: user.role as Role,
       orgId: user.organizationId,
       impersonatingFromUserId: ctx.session.userId,
     })
@@ -84,7 +84,7 @@ export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
 
   await ctx.session.$create({
     userId: user.id,
-    role: user.role,
+    role: user.role as Role,
     orgId: user.organizationId,
     impersonatingFromUserId: undefined,
   })
@@ -96,7 +96,8 @@ export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
 Add a form similar to this in order to switch users.
 
 ```tsx
-import { useMutation, queryClient } from "@blitzjs/rpc"
+// src/auth/components/ImpersonateForm.tsx
+import { useMutation } from "@blitzjs/rpc"
 import impersonateUser, {
   ImpersonateUserInput,
 } from "src/auth/mutations/impersonateUser"
@@ -133,12 +134,18 @@ Lastly, add the following component at the top of your Layout(s).
 
 ```tsx
 // src/core/components/ImpersonatingUserNotice.tsx
-import { invoke, useSession, queryClient } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
+import { invoke } from "@blitzjs/rpc"
 import stopImpersonating from "src/auth/mutations/stopImpersonating"
 
 export const ImpersonatingUserNotice = () => {
   const session = useSession()
-  if (!session.impersonatingFromUserId) return null
+  if (!session.impersonatingFromUserId) 
+    return (
+      <div className="bg-yellow-400 px-2 py-1 text-center font-semibold">
+        Currently not impersonating any user
+      </div>
+    )
 
   return (
     <div className="bg-yellow-400 px-2 py-1 text-center font-semibold">

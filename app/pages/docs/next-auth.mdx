@@ -13,7 +13,7 @@ gives you a lot more flexibility & control than NextAuth does
 ### 1. Add the NextAuth Adapter for `next.config.js` {#add-next-auth-adapter-next-config}
 
 ```ts
-const { withNextAuthAdapter } = require("@blitzjs/auth/next-auth")
+const { withNextAuthAdapter } = require("@blitzjs/auth")
 const { withBlitz } = require("@blitzjs/next")
 
 /**
@@ -187,7 +187,7 @@ Add a link to your app with URL format of
 would be like this:
 
 ```tsx
-<a href="/api/auth/github">Log In With GitHub</a>
+<a href="/api/auth/github/login">Log In With GitHub</a>
 ```
 
 ## Detailed Usage Instructions {#detailed-usage-instructions}

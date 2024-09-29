@@ -49,7 +49,7 @@ function Nav({nav, children, fallbackHref, toc}) {
     <div
       id="navWrapper"
       onClick={(e) => e.stopPropagation()}
-      className="h-full scrolling-touch lg:h-auto lg:block lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white dark:bg-purple-deep mr-24 lg:mr-0"
+      className="h-full mb-px scrolling-touch lg:h-auto lg:block lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white dark:bg-purple-deep mr-24 lg:mr-0"
     >
       <div className="absolute bg-gradient-to-b from-white dark:from-purple-deep h-12 lg:block pointer-events-none w-full z-10"></div>
       <nav
